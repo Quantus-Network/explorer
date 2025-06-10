@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
-import metadata from '@/config/metadata';
 import env from '@/config/env';
+import metadata from '@/config/metadata';
 
 export default function manifest(): MetadataRoute.Manifest {
   const description = metadata.description!;

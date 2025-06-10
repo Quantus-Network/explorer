@@ -1,6 +1,6 @@
-import '../src/app/globals.css';
+import '../src/app/globals.scss';
 
-import type { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/nextjs-vite';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { initialize, mswLoader } from 'msw-storybook-addon';
 
