@@ -1,0 +1,31 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.wordWrapColumn": 150,
+  "search.exclude": {
+    "package-lock.json": true
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint"
+  ],
+  "jest.runMode": {
+    "coverage": false,
+    "type": "watch" // Start the jest with the watch flag
+    // "onStartup": ["all-tests"] // Run all tests upon project launch
+  },
+  "jest.outputConfig": {
+    "revealOn": "error" // Don't automatically open test explorer terminal on launch
+  },
+  // Multiple language settings for json and jsonc files
+  "[json][jsonc][yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.ignorePath": ".gitignore",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  } // Don't run prettier for files listed in .gitignore
+}
