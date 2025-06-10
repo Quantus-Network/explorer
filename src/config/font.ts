@@ -3,7 +3,7 @@
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/fonts#with-tailwind-css}
  */
 
-import { Figtree, Source_Serif_4 } from 'next/font/google';
+import { Inter, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 
 /**
  * This configuration specifies different font weights to load and ensures
@@ -11,11 +11,11 @@ import { Figtree, Source_Serif_4 } from 'next/font/google';
  *
  * The `variable` property allows the font to be used with Tailwind CSS utilities.
  */
-export const figtree = Figtree({
+export const inter = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal'],
-  variable: '--font-figtree'
+  variable: '--font-inter'
 });
 
 /**
@@ -24,9 +24,22 @@ export const figtree = Figtree({
  *
  * The `variable` property allows the font to be used with Tailwind CSS utilities.
  */
-export const sourceSerif = Source_Serif_4({
+export const jetBrains = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['300', '400', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-source-serif'
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  variable: '--font-jet-brains'
+});
+
+/**
+ * This configuration specifies different font weights to load and ensures
+ * optimization for the Latin script.
+ *
+ * The `variable` property allows the font to be used with Tailwind CSS utilities.
+ */
+export const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  variable: '--font-space-grotesk'
 });

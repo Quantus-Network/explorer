@@ -9,7 +9,9 @@ export default function NotFound() {
     <div>
       <h1>404</h1>
       <p>Looks like this page doesn’t exist. Lets try that again!</p>
-      <button onClick={() => router.replace('/')}>Back to Home</button>
+      <button type="button" onClick={() => router.replace('/')}>
+        Back to Home
+      </button>
     </div>
   );
 }

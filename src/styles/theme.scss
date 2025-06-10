@@ -1,0 +1,543 @@
+// ================================
+// BLOCKCHAIN EXPLORER DESIGN TOKENS
+// ================================
+
+// Base Color Palette
+// ------------------
+$color-primary-50: #f0f9ff;
+$color-primary-100: #e0f2fe;
+$color-primary-200: #bae6fd;
+$color-primary-300: #7dd3fc;
+$color-primary-400: #38bdf8;
+$color-primary-500: #0ea5e9;
+$color-primary-600: #0284c7;
+$color-primary-700: #0369a1;
+$color-primary-800: #075985;
+$color-primary-900: #0c4a6e;
+
+$color-secondary-50: #fafaf9;
+$color-secondary-100: #f5f5f4;
+$color-secondary-200: #e7e5e4;
+$color-secondary-300: #d6d3d1;
+$color-secondary-400: #a8a29e;
+$color-secondary-500: #78716c;
+$color-secondary-600: #57534e;
+$color-secondary-700: #44403c;
+$color-secondary-800: #292524;
+$color-secondary-900: #1c1917;
+
+$color-accent-50: #f0fdf4;
+$color-accent-100: #dcfce7;
+$color-accent-200: #bbf7d0;
+$color-accent-300: #86efac;
+$color-accent-400: #4ade80;
+$color-accent-500: #22c55e;
+$color-accent-600: #16a34a;
+$color-accent-700: #15803d;
+$color-accent-800: #166534;
+$color-accent-900: #14532d;
+
+$color-warning-50: #fffbeb;
+$color-warning-100: #fef3c7;
+$color-warning-200: #fde68a;
+$color-warning-300: #fcd34d;
+$color-warning-400: #fbbf24;
+$color-warning-500: #f59e0b;
+$color-warning-600: #d97706;
+$color-warning-700: #b45309;
+$color-warning-800: #92400e;
+$color-warning-900: #78350f;
+
+$color-error-50: #fef2f2;
+$color-error-100: #fee2e2;
+$color-error-200: #fecaca;
+$color-error-300: #fca5a5;
+$color-error-400: #f87171;
+$color-error-500: #ef4444;
+$color-error-600: #dc2626;
+$color-error-700: #b91c1c;
+$color-error-800: #991b1b;
+$color-error-900: #7f1d1d;
+
+$color-neutral-50: #fafafa;
+$color-neutral-100: #f5f5f5;
+$color-neutral-200: #e5e5e5;
+$color-neutral-300: #d4d4d4;
+$color-neutral-400: #a3a3a3;
+$color-neutral-500: #737373;
+$color-neutral-600: #525252;
+$color-neutral-700: #404040;
+$color-neutral-800: #262626;
+$color-neutral-900: #171717;
+
+// Typography Scale
+// ----------------
+$font-family-primary:
+  'Inter',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$font-family-mono: 'JetBrains Mono', 'Fira Code', Monaco, Consolas,
+  'Courier New', monospace;
+$font-family-display: 'Space Grotesk', 'Inter', sans-serif;
+
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-2xl: 1.5rem; // 24px
+$font-size-3xl: 1.875rem; // 30px
+$font-size-4xl: 2.25rem; // 36px
+$font-size-5xl: 3rem; // 48px
+$font-size-6xl: 3.75rem; // 60px
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+$line-height-tight: 1.25;
+$line-height-snug: 1.375;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.625;
+$line-height-loose: 2;
+
+// Spacing Scale
+// -------------
+$spacing-0: 0;
+$spacing-px: 1px;
+$spacing-0-5: 0.125rem; // 2px
+$spacing-1: 0.25rem; // 4px
+$spacing-1-5: 0.375rem; // 6px
+$spacing-2: 0.5rem; // 8px
+$spacing-2-5: 0.625rem; // 10px
+$spacing-3: 0.75rem; // 12px
+$spacing-4: 1rem; // 16px
+$spacing-5: 1.25rem; // 20px
+$spacing-6: 1.5rem; // 24px
+$spacing-8: 2rem; // 32px
+$spacing-10: 2.5rem; // 40px
+$spacing-12: 3rem; // 48px
+$spacing-16: 4rem; // 64px
+$spacing-20: 5rem; // 80px
+$spacing-24: 6rem; // 96px
+$spacing-32: 8rem; // 128px
+$spacing-40: 10rem; // 160px
+$spacing-48: 12rem; // 192px
+$spacing-56: 14rem; // 224px
+$spacing-64: 16rem; // 256px
+
+// Border Radius
+// -------------
+$border-radius-none: 0;
+$border-radius-sm: 0.125rem; // 2px
+$border-radius-base: 0.25rem; // 4px
+$border-radius-md: 0.375rem; // 6px
+$border-radius-lg: 0.5rem; // 8px
+$border-radius-xl: 0.75rem; // 12px
+$border-radius-2xl: 1rem; // 16px
+$border-radius-3xl: 1.5rem; // 24px
+$border-radius-full: 9999px;
+
+// Shadow Scale
+// ------------
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-base:
+  0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-md:
+  0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg:
+  0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl:
+  0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+$shadow-glow: 0 0 20px rgba(14, 165, 233, 0.15);
+$shadow-glow-strong: 0 0 40px rgba(14, 165, 233, 0.25);
+
+// Z-Index Scale
+// -------------
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Transition & Animation
+// ----------------------
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slower: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+$ease-in: cubic-bezier(0.4, 0, 1, 1);
+$ease-out: cubic-bezier(0, 0, 0.2, 1);
+$ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Breakpoints
+// -----------
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// ================================
+// LIGHT THEME SEMANTIC TOKENS
+// ================================
+
+:root {
+  // Brand Colors
+  --color-brand-primary: #{$color-primary-600};
+  --color-brand-primary-hover: #{$color-primary-700};
+  --color-brand-primary-light: #{$color-primary-100};
+  --color-brand-secondary: #{$color-secondary-600};
+  --color-brand-accent: #{$color-accent-500};
+
+  // Background Colors
+  --color-bg-primary: #{$color-neutral-50};
+  --color-bg-secondary: #{$color-neutral-100};
+  --color-bg-tertiary: #{$color-neutral-200};
+  --color-bg-elevated: #ffffff;
+  --color-bg-overlay: rgba(255, 255, 255, 0.95);
+  --color-bg-glass: rgba(255, 255, 255, 0.8);
+
+  // Surface Colors
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #{$color-neutral-50};
+  --color-surface-tertiary: #{$color-neutral-100};
+  --color-surface-elevated: #ffffff;
+  --color-surface-hover: #{$color-neutral-100};
+  --color-surface-pressed: #{$color-neutral-200};
+  --color-surface-selected: #{$color-primary-50};
+  --color-surface-border: #{$color-neutral-200};
+  --color-surface-divider: #{$color-neutral-200};
+
+  // Text Colors
+  --color-text-primary: #{$color-neutral-900};
+  --color-text-secondary: #{$color-neutral-700};
+  --color-text-tertiary: #{$color-neutral-500};
+  --color-text-placeholder: #{$color-neutral-400};
+  --color-text-disabled: #{$color-neutral-300};
+  --color-text-inverse: #ffffff;
+  --color-text-link: #{$color-primary-600};
+  --color-text-link-hover: #{$color-primary-700};
+
+  // Status Colors
+  --color-status-success: #{$color-accent-600};
+  --color-status-success-bg: #{$color-accent-50};
+  --color-status-warning: #{$color-warning-600};
+  --color-status-warning-bg: #{$color-warning-50};
+  --color-status-error: #{$color-error-600};
+  --color-status-error-bg: #{$color-error-50};
+  --color-status-info: #{$color-primary-600};
+  --color-status-info-bg: #{$color-primary-50};
+
+  // Blockchain Specific Colors
+  --color-hash: #{$color-primary-600};
+  --color-hash-bg: #{$color-primary-50};
+  --color-address: #{$color-secondary-700};
+  --color-address-bg: #{$color-secondary-50};
+  --color-transaction: #{$color-accent-600};
+  --color-transaction-bg: #{$color-accent-50};
+  --color-block: #{$color-warning-600};
+  --color-block-bg: #{$color-warning-50};
+  --color-gas: #{$color-error-600};
+  --color-gas-bg: #{$color-error-50};
+
+  // Interactive Colors
+  --color-interactive-primary: #{$color-primary-600};
+  --color-interactive-primary-hover: #{$color-primary-700};
+  --color-interactive-primary-pressed: #{$color-primary-800};
+  --color-interactive-secondary: #{$color-neutral-100};
+  --color-interactive-secondary-hover: #{$color-neutral-200};
+  --color-interactive-secondary-pressed: #{$color-neutral-300};
+
+  // Border Colors
+  --color-border-primary: #{$color-neutral-200};
+  --color-border-secondary: #{$color-neutral-300};
+  --color-border-interactive: #{$color-primary-300};
+  --color-border-focus: #{$color-primary-500};
+  --color-border-error: #{$color-error-300};
+
+  // Shadow Colors
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-strong: rgba(0, 0, 0, 0.15);
+  --shadow-glow-color: rgba(14, 165, 233, 0.15);
+}
+
+// ================================
+// DARK THEME SEMANTIC TOKENS
+// ================================
+
+[data-theme='dark'] {
+  // Brand Colors
+  --color-brand-primary: #{$color-primary-400};
+  --color-brand-primary-hover: #{$color-primary-300};
+  --color-brand-primary-light: #{$color-primary-900};
+  --color-brand-secondary: #{$color-secondary-400};
+  --color-brand-accent: #{$color-accent-400};
+
+  // Background Colors
+  --color-bg-primary: #{$color-neutral-900};
+  --color-bg-secondary: #{$color-neutral-800};
+  --color-bg-tertiary: #{$color-neutral-700};
+  --color-bg-elevated: #{$color-neutral-800};
+  --color-bg-overlay: rgba(23, 23, 23, 0.95);
+  --color-bg-glass: rgba(23, 23, 23, 0.8);
+
+  // Surface Colors
+  --color-surface-primary: #{$color-neutral-800};
+  --color-surface-secondary: #{$color-neutral-700};
+  --color-surface-tertiary: #{$color-neutral-600};
+  --color-surface-elevated: #{$color-neutral-700};
+  --color-surface-hover: #{$color-neutral-700};
+  --color-surface-pressed: #{$color-neutral-600};
+  --color-surface-selected: #{$color-primary-900};
+  --color-surface-border: #{$color-neutral-700};
+  --color-surface-divider: #{$color-neutral-700};
+
+  // Text Colors
+  --color-text-primary: #{$color-neutral-50};
+  --color-text-secondary: #{$color-neutral-300};
+  --color-text-tertiary: #{$color-neutral-400};
+  --color-text-placeholder: #{$color-neutral-500};
+  --color-text-disabled: #{$color-neutral-600};
+  --color-text-inverse: #{$color-neutral-900};
+  --color-text-link: #{$color-primary-400};
+  --color-text-link-hover: #{$color-primary-300};
+
+  // Status Colors
+  --color-status-success: #{$color-accent-400};
+  --color-status-success-bg: #{$color-accent-900};
+  --color-status-warning: #{$color-warning-400};
+  --color-status-warning-bg: #{$color-warning-900};
+  --color-status-error: #{$color-error-400};
+  --color-status-error-bg: #{$color-error-900};
+  --color-status-info: #{$color-primary-400};
+  --color-status-info-bg: #{$color-primary-900};
+
+  // Blockchain Specific Colors
+  --color-hash: #{$color-primary-400};
+  --color-hash-bg: #{$color-primary-900};
+  --color-address: #{$color-secondary-300};
+  --color-address-bg: #{$color-secondary-800};
+  --color-transaction: #{$color-accent-400};
+  --color-transaction-bg: #{$color-accent-900};
+  --color-block: #{$color-warning-400};
+  --color-block-bg: #{$color-warning-900};
+  --color-gas: #{$color-error-400};
+  --color-gas-bg: #{$color-error-900};
+
+  // Interactive Colors
+  --color-interactive-primary: #{$color-primary-500};
+  --color-interactive-primary-hover: #{$color-primary-400};
+  --color-interactive-primary-pressed: #{$color-primary-300};
+  --color-interactive-secondary: #{$color-neutral-700};
+  --color-interactive-secondary-hover: #{$color-neutral-600};
+  --color-interactive-secondary-pressed: #{$color-neutral-500};
+
+  // Border Colors
+  --color-border-primary: #{$color-neutral-700};
+  --color-border-secondary: #{$color-neutral-600};
+  --color-border-interactive: #{$color-primary-600};
+  --color-border-focus: #{$color-primary-400};
+  --color-border-error: #{$color-error-600};
+
+  // Shadow Colors
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-color-strong: rgba(0, 0, 0, 0.5);
+  --shadow-glow-color: rgba(14, 165, 233, 0.25);
+}
+
+// ================================
+// COMPONENT-SPECIFIC TOKENS
+// ================================
+
+// Cards
+// -----
+:root {
+  --card-bg: var(--color-surface-primary);
+  --card-border: var(--color-border-primary);
+  --card-shadow: #{$shadow-base};
+  --card-shadow-hover: #{$shadow-lg};
+  --card-border-radius: #{$border-radius-lg};
+  --card-padding: #{$spacing-6};
+  --card-gap: #{$spacing-4};
+}
+
+// Tables
+// ------
+:root {
+  --table-header-bg: var(--color-surface-secondary);
+  --table-row-hover-bg: var(--color-surface-hover);
+  --table-border: var(--color-border-primary);
+  --table-cell-padding: #{$spacing-3} #{$spacing-4};
+  --table-font-size: #{$font-size-sm};
+}
+
+// Forms
+// -----
+:root {
+  --input-bg: var(--color-surface-primary);
+  --input-border: var(--color-border-primary);
+  --input-border-focus: var(--color-border-focus);
+  --input-text: var(--color-text-primary);
+  --input-placeholder: var(--color-text-placeholder);
+  --input-padding: #{$spacing-3} #{$spacing-4};
+  --input-border-radius: #{$border-radius-md};
+  --input-font-size: #{$font-size-base};
+  --input-height: 2.75rem;
+}
+
+// Buttons
+// -------
+:root {
+  --button-primary-bg: var(--color-interactive-primary);
+  --button-primary-bg-hover: var(--color-interactive-primary-hover);
+  --button-primary-text: var(--color-text-inverse);
+  --button-secondary-bg: var(--color-interactive-secondary);
+  --button-secondary-bg-hover: var(--color-interactive-secondary-hover);
+  --button-secondary-text: var(--color-text-primary);
+  --button-border-radius: #{$border-radius-md};
+  --button-padding: #{$spacing-2-5} #{$spacing-4};
+  --button-font-size: #{$font-size-sm};
+  --button-font-weight: #{$font-weight-medium};
+  --button-height: 2.5rem;
+}
+
+// Navigation
+// ----------
+:root {
+  --nav-bg: var(--color-bg-elevated);
+  --nav-border: var(--color-border-primary);
+  --nav-item-hover: var(--color-surface-hover);
+  --nav-item-active: var(--color-surface-selected);
+  --nav-height: 4rem;
+  --nav-padding: #{$spacing-4} #{$spacing-6};
+}
+
+// Code Blocks
+// -----------
+:root {
+  --code-bg: var(--color-surface-secondary);
+  --code-border: var(--color-border-primary);
+  --code-text: var(--color-text-primary);
+  --code-padding: #{$spacing-4};
+  --code-border-radius: #{$border-radius-md};
+  --code-font-family: #{$font-family-mono};
+  --code-font-size: #{$font-size-sm};
+  --code-line-height: #{$line-height-relaxed};
+}
+
+// Badges & Tags
+// -------------
+:root {
+  --badge-bg: var(--color-surface-tertiary);
+  --badge-text: var(--color-text-secondary);
+  --badge-border-radius: #{$border-radius-full};
+  --badge-padding: #{$spacing-1} #{$spacing-2-5};
+  --badge-font-size: #{$font-size-xs};
+  --badge-font-weight: #{$font-weight-medium};
+}
+
+// Tooltips
+// --------
+:root {
+  --tooltip-bg: var(--color-surface-primary);
+  --tooltip-text: var(--color-text-primary);
+  --tooltip-border: var(--color-border-secondary);
+  --tooltip-shadow: #{$shadow-lg};
+  --tooltip-border-radius: #{$border-radius-md};
+  --tooltip-padding: #{$spacing-2} #{$spacing-3};
+  --tooltip-font-size: #{$font-size-sm};
+  --tooltip-max-width: 16rem;
+}
+
+// ================================
+// UTILITY CLASSES
+// ================================
+
+// Text Utilities
+// --------------
+.text-primary {
+  color: var(--color-text-primary);
+}
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
+.text-link {
+  color: var(--color-text-link);
+}
+.text-hash {
+  color: var(--color-hash);
+}
+.text-address {
+  color: var(--color-address);
+}
+.text-transaction {
+  color: var(--color-transaction);
+}
+.text-success {
+  color: var(--color-status-success);
+}
+.text-warning {
+  color: var(--color-status-warning);
+}
+.text-error {
+  color: var(--color-status-error);
+}
+
+// Background Utilities
+// --------------------
+.bg-primary {
+  background-color: var(--color-bg-primary);
+}
+.bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+.bg-surface {
+  background-color: var(--color-surface-primary);
+}
+.bg-elevated {
+  background-color: var(--color-surface-elevated);
+}
+.bg-glass {
+  background-color: var(--color-bg-glass);
+  backdrop-filter: blur(8px);
+}
+
+// Border Utilities
+// ----------------
+.border-primary {
+  border-color: var(--color-border-primary);
+}
+.border-focus {
+  border-color: var(--color-border-focus);
+}
+
+// Shadow Utilities
+// ----------------
+.shadow-glow {
+  box-shadow: 0 0 20px var(--shadow-glow-color);
+}
+.shadow-card {
+  box-shadow: var(--card-shadow);
+}
+.shadow-card-hover {
+  box-shadow: var(--card-shadow-hover);
+}
