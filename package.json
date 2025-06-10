@@ -16,18 +16,24 @@
     "format": "next lint --fix && prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
     "prepare": "husky",
     "gen-assets": "svgr --template svgr-template.cjs --index-template svgr-index-template.cjs --icon --title-prop --typescript --jsx-runtime automatic --replace-attr-values currentColor=currentColor,#FFEF00=currentColor --filename-case pascal -d src/assets assets",
-    "clean": "rm -rf .next out"
+    "clean": "rm -rf .next out",
+    "gql:compile": "graphql-codegen"
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": "npm run format"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "graphql": "^16.11.0",
     "next": "14.2.19",
     "radix-ui": "^1.4.2",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.7",
+    "@graphql-codegen/client-preset": "^4.8.2",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@next/bundle-analyzer": "^15.3.3",
     "@storybook/addon-a11y": "^9.0.6",
     "@storybook/addon-links": "^9.0.6",
