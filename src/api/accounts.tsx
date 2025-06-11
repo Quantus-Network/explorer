@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
 import { ACCOUNT_SORTS } from '@/constants/query-sorts';
-import type { Account, AccountListResponse } from '@/schemas';
+import type { AccountListResponse, AccountResponse } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 
 export const accounts = {
@@ -34,16 +34,16 @@ export const accounts = {
       }
     );
   },
-  useGetById: (id: string, config?: QueryHookOptions<Account>) => {
+  useGetById: (id: string, config?: QueryHookOptions<AccountResponse>) => {
     const GET_ACCOUNT = gql`
       query GetAccountById($id: String) {
-        accountById(id: $id) {
+        account: accountById(id: $id) {
           id
         }
       }
     `;
 
-    return useQuery<Account>(GET_ACCOUNT, {
+    return useQuery<AccountResponse>(GET_ACCOUNT, {
       ...config,
       variables: {
         id

@@ -11,13 +11,13 @@
   border-bottom: 1px solid theme.$color-secondary-200;
 
   &__container {
-    max-width: theme.$breakpoint-xl;
     margin: 0 auto;
     padding: 0 theme.$spacing-4;
     height: 4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    max-width: theme.$breakpoint-xl;
   }
 
   &__left {

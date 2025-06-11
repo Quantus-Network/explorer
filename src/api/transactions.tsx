@@ -4,11 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
 import { TRANSACTION_SORTS } from '@/constants/query-sorts';
-import type {
-  Transaction,
-  TransactionListResponse,
-  TransactionsTotalCountResponse
-} from '@/schemas';
+import type { TransactionListResponse, TransactionResponse } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 
 export const transactions = {
@@ -19,8 +15,16 @@ export const transactions = {
     >
   ) => {
     const GET_TRANSACTIONS = gql`
-      query GetTransactions($limit: Int, $offset: Int, $orderBy: String) {
-        transfers(limit: $limit, offset: $offset, orderBy: $orderBy) {
+      query GetTransactions(
+        $limit: Int
+        $offset: Int
+        $orderBy: [TransferOrderByInput!]
+      ) {
+        transactions: transfers(
+          limit: $limit
+          offset: $offset
+          orderBy: $orderBy
+        ) {
           id
           fee
           extrinsicHash
@@ -49,10 +53,10 @@ export const transactions = {
       }
     });
   },
-  useGetById: (id: string, config?: QueryHookOptions<Transaction>) => {
+  useGetById: (id: string, config?: QueryHookOptions<TransactionResponse>) => {
     const GET_TRANSACTION = gql`
       query GetTransactionById($id: String) {
-        transferById(id: $id) {
+        transaction: transferById(id: $id) {
           id
           fee
           extrinsicHash
@@ -69,24 +73,11 @@ export const transactions = {
       }
     `;
 
-    return useQuery<Transaction>(GET_TRANSACTION, {
+    return useQuery<TransactionResponse>(GET_TRANSACTION, {
       ...config,
       variables: {
         id
       }
     });
-  },
-  useGetTotalCount: () => {
-    const GET_TRANSACTIONS_TOTAL_COUNT = gql`
-      query GetTransactionsTotalCount {
-        transfersConnection(orderBy: id_ASC) {
-          totalCount
-        }
-      }
-    `;
-
-    return useQuery<TransactionsTotalCountResponse>(
-      GET_TRANSACTIONS_TOTAL_COUNT
-    );
   }
 };

@@ -1,0 +1,36 @@
+@use '../../../../styles/tokens.scss' as theme;
+
+.stats {
+  margin-top: theme.$spacing-12;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: theme.$spacing-6;
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  &__card {
+    background-color: rgba(theme.$color-neutral-50, 0.5);
+    border: 1px solid theme.$color-secondary-200;
+    border-radius: theme.$border-radius-xl;
+    padding: theme.$spacing-6;
+    box-shadow: theme.$shadow-md;
+  }
+
+  &__label {
+    font-size: theme.$font-size-sm;
+    font-weight: theme.$font-weight-medium;
+    color: theme.$color-secondary-500;
+    margin-bottom: theme.$spacing-2;
+  }
+
+  &__value {
+    font-size: theme.$font-size-2xl;
+    font-weight: theme.$font-weight-bold;
+    color: theme.$color-secondary-900;
+  }
+
+  @media (min-width: theme.$breakpoint-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -14,3 +14,9 @@ body {
 body {
   background: var(--color-bg-primary);
 }
+
+
+main {
+  display: flex;
+  flex-direction: column;
+}

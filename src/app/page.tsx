@@ -3,10 +3,10 @@ import { LiveData } from '@/components/features/landing/live-data/LiveData';
 
 const Home = () => {
   return (
-    <main>
+    <>
       <Hero />
       <LiveData />
-    </main>
+    </>
   );
 };
 

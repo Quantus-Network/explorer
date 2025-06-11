@@ -11,10 +11,8 @@ export interface Transaction {
   to: Account;
 }
 
-export interface TransactionsTotalCountResponse {
-  transfersConnection: {
-    totalCount: number;
-  };
+export interface TransactionResponse {
+  transaction: Transaction;
 }
 
 export interface TransactionListResponse {

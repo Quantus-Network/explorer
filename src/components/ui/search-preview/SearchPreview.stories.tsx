@@ -17,7 +17,12 @@ type Story = StoryObj<SearchPreviewProps>;
 
 export const Default: Story = {
   args: {
-    onSearch(val, e) {
+    onKeywordChange(val, e) {
+      if (!val) return;
+
+      console.log(val);
+    },
+    onSearch(val) {
       if (!val) return;
 
       console.log(val);

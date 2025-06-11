@@ -1,7 +1,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useDebounceCallback } from 'usehooks-ts';
 
 import { INPUT_DEBOUNCE_INTERVAL } from '@/constants/debounce-interval';
@@ -9,28 +9,39 @@ import { INPUT_DEBOUNCE_INTERVAL } from '@/constants/debounce-interval';
 import styles from './SearchPreview.module.scss';
 
 export interface SearchPreviewProps {
-  onSearch: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
+  onKeywordChange: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
+  onSearch: (val: string, e: FormEvent<HTMLFormElement>) => void;
 }
 
 export const SearchPreview = (props: SearchPreviewProps) => {
   const debounced = useDebounceCallback(
-    props.onSearch,
+    props.onKeywordChange,
     INPUT_DEBOUNCE_INTERVAL
   );
 
   return (
     <div className={styles.searchPreview}>
-      <input
-        type="text"
-        placeholder="Search blocks, transactions, addresses..."
-        className={styles.searchPreview__input}
-        onChange={(e) => {
-          const { value } = e.currentTarget;
+      <form
+        onSubmit={(e: any) => {
+          e.preventDefault();
 
-          debounced(value, e);
+          props.onSearch(e.target?.keyword?.value, e);
         }}
-      />
-      <Search className={styles.searchPreview__icon} />
+      >
+        <input
+          type="text"
+          name="keyword"
+          placeholder="Search blocks, transactions, addresses..."
+          className={styles.searchPreview__input}
+          onChange={(e) => {
+            const { value } = e.currentTarget;
+
+            debounced(value, e);
+          }}
+          required
+        />
+        <Search className={styles.searchPreview__icon} />
+      </form>
     </div>
   );
 };
