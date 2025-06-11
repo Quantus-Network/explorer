@@ -1,0 +1,10 @@
+@use './tokens.scss' as theme;
+
+@mixin border-bottom(
+  $color: var(--color-border-primary),
+  $size: theme.$border-size-1,
+  $style: solid
+) {
+  border-bottom: $size $style $color;
+}
+

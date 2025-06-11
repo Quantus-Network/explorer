@@ -1,30 +1,36 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
-import { useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useDebounceCallback } from 'usehooks-ts';
+
+import { INPUT_DEBOUNCE_INTERVAL } from '@/constants/debounce-interval';
 
 import styles from './SearchPreview.module.scss';
 
-export const SearchPreview = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+export interface SearchPreviewProps {
+  onSearch: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const SearchPreview = (props: SearchPreviewProps) => {
+  const debounced = useDebounceCallback(
+    props.onSearch,
+    INPUT_DEBOUNCE_INTERVAL
+  );
 
   return (
     <div className={styles.searchPreview}>
-      <motion.div
-        animate={{ width: isExpanded ? '240px' : '40px' }}
-        transition={{ duration: 0.2 }}
-      >
-        <input
-          type="text"
-          placeholder="Search blocks, transactions, addresses..."
-          className={styles.searchPreview__input}
-          style={{ opacity: isExpanded ? 1 : 0 }}
-          onFocus={() => setIsExpanded(true)}
-          onBlur={() => setIsExpanded(false)}
-        />
-        <Search className={styles.searchPreview__icon} />
-      </motion.div>
+      <input
+        type="text"
+        placeholder="Search blocks, transactions, addresses..."
+        className={styles.searchPreview__input}
+        onChange={(e) => {
+          const { value } = e.currentTarget;
+
+          debounced(value, e);
+        }}
+      />
+      <Search className={styles.searchPreview__icon} />
     </div>
   );
 };

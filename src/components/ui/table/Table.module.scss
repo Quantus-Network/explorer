@@ -1,0 +1,42 @@
+@use '../../../styles/tokens.scss' as theme;
+@use '../../../styles/functions';
+@use '../../../styles/mixins';
+
+.table {
+  max-width: 100%;
+  overflow: auto;
+  max-height: functions.px-to-rem(900px);
+
+  table {
+    position: relative;
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg-elevated);
+
+      th {
+        text-wrap: nowrap;
+        padding: theme.$spacing-2;
+        text-align: left;
+        font-weight: bold;
+        @include mixins.border-bottom;
+      }
+    }
+
+    tbody {
+      tr {
+        text-wrap: nowrap;
+
+        td {
+          padding: theme.$spacing-2;
+          @include mixins.border-bottom;
+        }
+      }
+    }
+
+    tr {
+      height: functions.px-to-rem(50px);
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@use './_functions.scss' as functions;
+
 // ================================
 // BLOCKCHAIN EXPLORER DESIGN TOKENS
 // ================================
@@ -143,6 +145,12 @@ $border-radius-xl: 0.75rem; // 12px
 $border-radius-2xl: 1rem; // 16px
 $border-radius-3xl: 1.5rem; // 24px
 $border-radius-full: 9999px;
+
+// Border Size
+// -------------
+$border-size-1: functions.px-to-rem(1px);
+$border-size-2: functions.px-to-rem(2px);
+$border-size-3: functions.px-to-rem(4px);
 
 // Shadow Scale
 // ------------

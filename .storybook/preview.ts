@@ -4,6 +4,8 @@ import type { Preview } from '@storybook/nextjs-vite';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { initialize, mswLoader } from 'msw-storybook-addon';
 
+import { WrapTheme } from './decorators';
+
 initialize();
 
 const viewports = {
@@ -59,13 +61,13 @@ const preview: Preview = {
     backgrounds: {
       default: 'light',
       values: [
-        { name: 'light', value: '#F1F1F1' },
-        { name: 'dark', value: '#131313' }
+        { name: 'light', value: '#fef2f2' },
+        { name: 'dark', value: '#171717' }
       ]
     }
   },
   loaders: [mswLoader],
-  // decorators: [WrapTheme],
+  decorators: [WrapTheme],
   globalTypes: {
     theme: {
       name: 'theme',
@@ -73,7 +75,7 @@ const preview: Preview = {
       defaultValue: 'light',
       toolbar: {
         icon: 'mirror',
-        items: ['light'],
+        items: ['light', 'dark'],
         showName: true
       }
     }

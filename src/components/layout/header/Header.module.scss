@@ -73,7 +73,7 @@
       color: theme.$color-primary-600;
     }
 
-    &[data-active] {
+    &[data-active="true"] {
       color: theme.$color-primary-600;
     }
   }

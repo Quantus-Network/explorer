@@ -2,8 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { Separator } from 'radix-ui';
 
+import { Copyright } from './Copyright';
 import styles from './Footer.module.scss';
+
+export interface FooterProps {}
 
 const footerLinks = {
   product: [
@@ -142,6 +146,8 @@ export const Footer = () => {
           </motion.div>
         </motion.div>
 
+        <Separator.Root className={styles.footer__separator} />
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -149,12 +155,11 @@ export const Footer = () => {
           viewport={{ once: true }}
           className={styles.footer__bottom}
         >
-          <motion.div
+          <Copyright
             variants={itemVariants}
             className={styles.footer__copyright}
-          >
-            © {new Date().getFullYear()} Quantus Explorer. All rights reserved.
-          </motion.div>
+          />
+
           <motion.div variants={itemVariants} className={styles.footer__legal}>
             <a href="#privacy" className={styles.footer__legalLink}>
               Privacy Policy

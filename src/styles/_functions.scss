@@ -1,0 +1,24 @@
+@use 'sass:math';
+
+// SASS function to convert pixel values to rem values.
+// This is useful for maintaining consistent typography and spacing
+// based on the root font size, improving accessibility and scalability.
+
+// @param {Number} $px - The pixel value to convert (e.g., 24px).
+// @param {Number} $base-font-size - The base font size in pixels,
+//   which defaults to 16px if not provided. This typically matches
+//   the root (html) font size of your project.
+// @return {Number} A rem value.
+
+@function px-to-rem($px, $base-font-size: 16px) {
+  // Ensure the input is a number and has a 'px' unit for validation.
+  // Although SASS is forgiving, it's good practice for clarity.
+  @if math.unit($px) == "px" {
+    // Calculate the rem value by dividing the pixel value by the base font size.
+    // SASS handles unit stripping and re-application automatically.
+    @return calc($px / $base-font-size) * 1rem;
+  } @else {
+    // If the input is not in pixels, output an error message.
+    @error "`#{$px}` is not a valid pixel value. Please ensure it has a 'px' unit.";
+  }
+}

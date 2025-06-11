@@ -1,6 +1,8 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 
+import type { TransactionListResponse } from '@/schemas';
+
 export const transactions = {
   useGetAll: (config?: QueryHookOptions) => {
     const GET_TRANSACTIONS = gql`
@@ -22,7 +24,7 @@ export const transactions = {
       }
     `;
 
-    return useQuery(GET_TRANSACTIONS, {
+    return useQuery<TransactionListResponse>(GET_TRANSACTIONS, {
       ...config,
       variables: {
         ...config?.variables,

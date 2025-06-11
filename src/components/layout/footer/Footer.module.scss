@@ -124,4 +124,10 @@
       color: var(--color-primary);
     }
   }
+
+  &__separator {
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-border-primary);
+  }
 } 

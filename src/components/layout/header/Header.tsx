@@ -1,73 +1,45 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { NavigationMenu } from 'radix-ui';
 
-import { SearchPreview } from '@/components/ui/search-preview/SearchPreview';
-import { ThemeToggle } from '@/components/ui/theme-toggle/ThemeToggle';
+import { SITE_NAVIGATIONS } from '@/config/site-navigations';
 
 import styles from './Header.module.scss';
 
-export const Header = () => {
+export interface HeaderProps {}
+
+export const Header = (props: HeaderProps) => {
+  const location = usePathname();
+  const rootPath = location.split('/')[1];
+
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
         <div className={styles.header__left}>
           <Link href="/" className={styles.logo}>
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className={styles.logo__icon}
-            />
-            <span>Quantus</span>
+            <div className={styles.logo__icon} />
+            <span>Quantus Explorer</span>
           </Link>
 
           <NavigationMenu.Root className={styles.nav}>
             <NavigationMenu.List className={styles.nav__list}>
-              <NavigationMenu.Item>
-                <NavigationMenu.Link asChild>
-                  <Link href="/explorer" className={styles.nav__link}>
-                    Explorer
-                  </Link>
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
-              <NavigationMenu.Item>
-                <NavigationMenu.Link asChild>
-                  <Link href="/api" className={styles.nav__link}>
-                    API
-                  </Link>
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
-              <NavigationMenu.Item>
-                <NavigationMenu.Link asChild>
-                  <Link href="/docs" className={styles.nav__link}>
-                    Docs
-                  </Link>
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
-              <NavigationMenu.Item>
-                <NavigationMenu.Link asChild>
-                  <Link href="/about" className={styles.nav__link}>
-                    About
-                  </Link>
-                </NavigationMenu.Link>
-              </NavigationMenu.Item>
+              {SITE_NAVIGATIONS.map((nav) => (
+                <NavigationMenu.Item key={nav.path}>
+                  <NavigationMenu.Link asChild>
+                    <Link
+                      href={nav.path}
+                      className={styles.nav__link}
+                      data-active={rootPath === nav.path.split('/')[1]}
+                    >
+                      {nav.label}
+                    </Link>
+                  </NavigationMenu.Link>
+                </NavigationMenu.Item>
+              ))}
             </NavigationMenu.List>
           </NavigationMenu.Root>
-        </div>
-
-        <div className={styles.header__right}>
-          <SearchPreview />
-          <ThemeToggle />
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={styles.ctaButton}
-          >
-            Start Exploring
-          </motion.button>
         </div>
       </div>
     </header>
