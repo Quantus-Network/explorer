@@ -4,7 +4,7 @@ import type { Preview } from '@storybook/nextjs-vite';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { initialize, mswLoader } from 'msw-storybook-addon';
 
-import { WrapTheme } from './decorators';
+import { WrapTheme } from './decorators/WrapTheme';
 
 initialize();
 

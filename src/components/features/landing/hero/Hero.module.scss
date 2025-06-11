@@ -20,7 +20,11 @@
     font-size: theme.$font-size-5xl;
     font-weight: theme.$font-weight-bold;
     margin-bottom: theme.$spacing-6;
-    background: linear-gradient(to right, theme.$color-primary-600, rgba(theme.$color-primary-600, 0.6));
+    background: linear-gradient(
+      to right,
+      theme.$color-primary-600,
+      rgba(theme.$color-primary-600, 0.6)
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -29,46 +33,8 @@
   &__subtitle {
     font-size: theme.$font-size-xl;
     color: theme.$color-secondary-600;
-    max-width: 42rem;
+    max-width: 30rem;
     margin: 0 auto;
-  }
-
-  &__search {
-    max-width: 48rem;
-    margin: 0 auto;
-  }
-
-  &__search-input {
-    width: 100%;
-    height: 4rem;
-    background-color: theme.$color-neutral-50;
-    border: 2px solid theme.$color-secondary-200;
-    border-radius: theme.$border-radius-xl;
-    padding-left: 4rem;
-    padding-right: theme.$spacing-4;
-    font-size: theme.$font-size-lg;
-    color: theme.$color-secondary-900;
-    transition: all theme.$transition-base;
-
-    &:focus {
-      outline: none;
-      border-color: theme.$color-primary-500;
-      box-shadow: 0 0 0 4px rgba(theme.$color-primary-500, 0.1);
-    }
-
-    &::placeholder {
-      color: theme.$color-secondary-400;
-    }
-  }
-
-  &__search-icon {
-    position: absolute;
-    left: theme.$spacing-6;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1.5rem;
-    height: 1.5rem;
-    color: theme.$color-secondary-400;
   }
 
   &__stats {
@@ -81,27 +47,28 @@
     margin-right: auto;
 
     @media (min-width: theme.$breakpoint-md) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  &__stat-card {
+  &__stat__card {
     background-color: rgba(theme.$color-neutral-50, 0.5);
     border: 1px solid theme.$color-secondary-200;
     border-radius: theme.$border-radius-xl;
     padding: theme.$spacing-6;
+    box-shadow: theme.$shadow-md;
   }
 
-  &__stat-label {
+  &__stat__label {
     font-size: theme.$font-size-sm;
     font-weight: theme.$font-weight-medium;
     color: theme.$color-secondary-500;
     margin-bottom: theme.$spacing-2;
   }
 
-  &__stat-value {
+  &__stat__value {
     font-size: theme.$font-size-2xl;
     font-weight: theme.$font-weight-bold;
     color: theme.$color-secondary-900;
   }
-} 
+}

@@ -2,6 +2,8 @@ import './globals.scss';
 
 import type { Metadata } from 'next';
 
+import { Footer } from '@/components/layout/footer/Footer';
+import { Header } from '@/components/layout/header/Header';
 import { inter } from '@/config/font';
 
 import Providers from './providers';
@@ -19,7 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

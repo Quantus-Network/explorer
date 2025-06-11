@@ -1,6 +1,7 @@
 'use client';
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { NuqsAdapter } from 'nuqs/adapters/next';
 import type { PropsWithChildren } from 'react';
 
 import env from '@/config/env';
@@ -11,7 +12,11 @@ const Providers = ({ children }: PropsWithChildren) => {
     cache: new InMemoryCache()
   });
 
-  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+  return (
+    <NuqsAdapter>
+      <ApolloProvider client={client}>{children}</ApolloProvider>
+    </NuqsAdapter>
+  );
 };
 
 export default Providers;
