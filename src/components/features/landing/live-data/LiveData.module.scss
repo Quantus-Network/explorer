@@ -1,0 +1,132 @@
+@use '../../../../styles/tokens.scss' as theme;
+
+.liveData {
+  padding: theme.$spacing-32 0;
+  background-color: var(--color-background-alt);
+
+  &__container {
+    max-width: theme.$breakpoint-2xl;
+    margin: 0 auto;
+    padding: 0 theme.$spacing-6;
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: theme.$spacing-24;
+  }
+
+  &__title {
+    font-size: theme.$font-size-2xl;
+    font-weight: theme.$font-weight-bold;
+    color: var(--color-text-primary);
+    margin-bottom: theme.$spacing-4;
+  }
+
+  &__subtitle {
+    font-size: theme.$font-size-lg;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: theme.$spacing-8;
+    margin-bottom: theme.$spacing-24;
+  }
+}
+
+.transactionCard {
+  background-color: var(--color-background);
+  border-radius: theme.$border-radius-lg;
+  padding: theme.$spacing-6;
+  box-shadow: theme.$shadow-md;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: theme.$spacing-4;
+  }
+
+  &__type {
+    font-weight: theme.$font-weight-semibold;
+    color: var(--color-primary);
+  }
+
+  &__time {
+    font-size: theme.$font-size-sm;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+  }
+
+  &__hash {
+    font-family: theme.$font-family-mono;
+    font-size: theme.$font-size-sm;
+    color: var(--color-text-secondary);
+    margin-bottom: theme.$spacing-6;
+    word-break: break-all;
+  }
+
+  &__details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: theme.$spacing-4;
+  }
+
+  &__detail {
+    &-label {
+      font-size: theme.$font-size-sm;
+      color: var(--color-text-secondary);
+      margin-bottom: theme.$spacing-1;
+    }
+
+    &-value {
+      font-weight: theme.$font-weight-medium;
+      color: var(--color-text-primary);
+    }
+  }
+}
+
+.networkStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: theme.$spacing-4;
+  padding: theme.$spacing-4;
+  background-color: var(--color-background);
+  border-radius: theme.$border-radius-md;
+  box-shadow: theme.$shadow-sm;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-success);
+    animation: pulse 2s infinite;
+  }
+
+  &__text {
+    font-size: theme.$font-size-sm;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+} 

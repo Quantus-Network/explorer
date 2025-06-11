@@ -1,15 +1,21 @@
-import { DisplayAccounts } from '@/components/ui/display-accounts/DisplayAccounts';
+import { CallToAction } from '@/components/features/landing/call-to-action/CallToAction';
+import { Features } from '@/components/features/landing/features/Features';
+import { Hero } from '@/components/features/landing/hero/Hero';
+import { LiveData } from '@/components/features/landing/live-data/LiveData';
+import { Trust } from '@/components/features/landing/trust/Trust';
+import { Footer } from '@/components/layout/footer/Footer';
+import { Header } from '@/components/layout/header/Header';
 
-const Home = async () => {
+const Home = () => {
   return (
-    <main>
-      <div>Starter template sass next.js minimalist</div>
-
-      <br />
-
-      <div>
-        <DisplayAccounts />
-      </div>
+    <main className="min-h-screen bg-background">
+      <Header />
+      <Hero />
+      <Features />
+      <LiveData />
+      <Trust />
+      <CallToAction />
+      <Footer />
     </main>
   );
 };
