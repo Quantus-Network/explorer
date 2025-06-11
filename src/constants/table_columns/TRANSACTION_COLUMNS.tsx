@@ -3,7 +3,7 @@ import { format } from 'date-fns/format';
 import Link from 'next/link';
 
 import type { Transaction } from '@/schemas';
-import { truncateWallet } from '@/utils/truncateWallet';
+import { truncateWallet } from '@/utils/truncate-wallet';
 
 const columnHelper = createColumnHelper<Transaction>();
 
