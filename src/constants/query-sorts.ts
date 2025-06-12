@@ -44,6 +44,36 @@ export const TRANSACTION_SORTS = {
   }
 } as const;
 
+export const TRANSACTION_SORTS_LITERALS = [
+  'id_ASC',
+  'id_DESC',
+  'timestamp_ASC',
+  'timestamp_DESC',
+  'fee_ASC',
+  'fee_DESC',
+  'extrinsicHash_ASC',
+  'extrinsicHash_DESC',
+  'blockNumber_ASC',
+  'blockNumber_DESC',
+  'amount_ASC',
+  'amount_DESC',
+  'from_id_ASC',
+  'from_id_DESC',
+  'to_id_ASC',
+  'to_id_DESC'
+] as const;
+
+export const TRANSACTION_SORTS_KEY = [
+  'id',
+  'timestamp',
+  'fee',
+  'extrinsicHash',
+  'blockNumber',
+  'amount',
+  'from',
+  'to'
+] as const;
+
 export type TransactionSorts =
   | typeof TRANSACTION_SORTS.id.ASC
   | typeof TRANSACTION_SORTS.id.DESC
@@ -60,4 +90,5 @@ export type TransactionSorts =
   | typeof TRANSACTION_SORTS.from.id_ASC
   | typeof TRANSACTION_SORTS.from.id_DESC
   | typeof TRANSACTION_SORTS.to.id_ASC
-  | typeof TRANSACTION_SORTS.to.id_DESC;
+  | typeof TRANSACTION_SORTS.to.id_DESC
+  | null;

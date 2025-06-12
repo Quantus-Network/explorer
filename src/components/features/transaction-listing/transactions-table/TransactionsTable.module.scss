@@ -1,0 +1,12 @@
+@use '../../../../styles/tokens.scss' as theme;
+
+.liveData {
+  padding: theme.$spacing-16 0;
+  background-color: var(--color-bg-secondary);
+
+  &__container {
+    max-width: theme.$breakpoint-xl;
+    margin: 0 auto;
+    padding: 0 theme.$spacing-6;
+  }
+}

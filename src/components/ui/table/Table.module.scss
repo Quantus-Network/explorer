@@ -23,6 +23,10 @@
         font-weight: bold;
         @include mixins.border-bottom;
       }
+
+      th[data-sortable='true'] {
+        cursor: pointer;
+      }
     }
 
     tbody {
@@ -39,5 +43,15 @@
     tr {
       height: functions.px-to-rem(50px);
     }
+  }
+
+  &__header__container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__sort__icon {
+    width: theme.$font-size-xl;
+    height: theme.$font-size-xl;
   }
 }

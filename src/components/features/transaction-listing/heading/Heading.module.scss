@@ -1,0 +1,10 @@
+@use '../../../../styles/tokens.scss' as theme;
+
+.heading {
+  padding: theme.$spacing-16 0;
+
+  &__container {
+    max-width: theme.$breakpoint-xl;
+    margin: 0 auto;
+  }
+}

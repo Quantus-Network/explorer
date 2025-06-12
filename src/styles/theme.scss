@@ -5,6 +5,9 @@
 // ================================
 
 :root {
+  // Font Base
+  --font-size-base: 16px;
+
   // Brand Colors
   --color-brand-primary: #{$color-primary-600};
   --color-brand-primary-hover: #{$color-primary-700};

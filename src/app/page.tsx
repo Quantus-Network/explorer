@@ -1,11 +1,11 @@
 import { Hero } from '@/components/features/landing/hero/Hero';
-import { LiveData } from '@/components/features/landing/live-data/LiveData';
+import { RecentTransactions } from '@/components/features/landing/recent-transactions/RecentTransactions';
 
 const Home = () => {
   return (
     <>
       <Hero />
-      <LiveData />
+      <RecentTransactions />
     </>
   );
 };

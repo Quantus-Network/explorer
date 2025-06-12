@@ -73,23 +73,8 @@
       color: theme.$color-primary-600;
     }
 
-    &[data-active="true"] {
+    &[data-active='true'] {
       color: theme.$color-primary-600;
     }
   }
 }
-
-.cta-button {
-  padding: theme.$spacing-2 theme.$spacing-4;
-  background-color: theme.$color-primary-500;
-  color: white;
-  border-radius: theme.$border-radius-lg;
-  font-weight: theme.$font-weight-medium;
-  border: none;
-  cursor: pointer;
-  transition: background-color theme.$transition-base;
-
-  &:hover {
-    background-color: theme.$color-primary-600;
-  }
-} 

@@ -9,9 +9,9 @@ import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { TRANSACTION_COLUMNS } from '@/constants/table_columns/TRANSACTION_COLUMNS';
 import type { Transaction } from '@/schemas';
 
-import styles from './LiveData.module.scss';
+import styles from './RecentTransactions.module.scss';
 
-export const LiveData = () => {
+export const RecentTransactions = () => {
   const { loading, data, error } = api.transactions.useGetAll({
     pollInterval: DATA_POOL_INTERVAL
   });
@@ -20,7 +20,8 @@ export const LiveData = () => {
   const transactionTable = useReactTable<Transaction>({
     data: data?.transactions ?? [],
     columns: transactionColumns,
-    getCoreRowModel: getCoreRowModel()
+    getCoreRowModel: getCoreRowModel(),
+    enableSorting: false
   });
 
   const success = !loading && !error;

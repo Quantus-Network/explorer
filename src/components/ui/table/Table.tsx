@@ -1,5 +1,6 @@
 import type { Table as ReactTable } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import * as React from 'react';
 
 import styles from './Table.module.scss';
@@ -24,13 +25,32 @@ export const Table = ({ table, customCellProps = {} }: TableProps) => {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} colSpan={header.colSpan}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                <th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  onClick={header.column.getToggleSortingHandler()}
+                  data-sortable={header.column.getCanSort()}
+                >
+                  <div className={styles.table__header__container}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+
+                    {header.column.getCanSort() && (
+                      <>
+                        {header.column.getIsSorted() === 'asc' && (
+                          <ChevronUp className={styles.table__sort__icon} />
+                        )}
+
+                        {header.column.getIsSorted() === 'desc' && (
+                          <ChevronDown className={styles.table__sort__icon} />
+                        )}
+                      </>
+                    )}
+                  </div>
                 </th>
               ))}
             </tr>
