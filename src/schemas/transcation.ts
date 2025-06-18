@@ -1,15 +1,6 @@
-import type { Account } from './account';
+import type * as gql from '../__generated__/graphql';
 
-export interface Transaction {
-  id: string;
-  timestamp: string; // ISO-8601 date string
-  fee: string;
-  extrinsicHash: string;
-  blockNumber: number;
-  amount: string;
-  from: Account;
-  to: Account;
-}
+export interface Transaction extends gql.Transfer {}
 
 export interface TransactionResponse {
   transaction: Transaction;

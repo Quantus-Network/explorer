@@ -55,7 +55,7 @@ export const transactions = {
   },
   useGetById: (id: string, config?: QueryHookOptions<TransactionResponse>) => {
     const GET_TRANSACTION = gql`
-      query GetTransactionById($id: String) {
+      query GetTransactionById($id: String!) {
         transaction: transferById(id: $id) {
           id
           fee

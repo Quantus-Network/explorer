@@ -19,7 +19,7 @@ const TRANSACTION_COLUMNS = [
     header: 'Transaction Hash',
     cell: (props) => (
       <Link href={`/transactions/${props.getValue()}`}>
-        {truncateWallet(props.getValue())}
+        {truncateWallet(props.getValue() ?? '-')}
       </Link>
     ),
     enableSorting: false

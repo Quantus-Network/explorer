@@ -15,9 +15,15 @@ export const accounts = {
     >
   ) => {
     const GET_ACCOUNTS = gql`
-      query GetAccounts($limit: Int, $offset: Int, $orderBy: String) {
+      query GetAccounts(
+        $limit: Int
+        $offset: Int
+        $orderBy: [AccountOrderByInput!]
+      ) {
         accounts(limit: $limit, offset: $offset, orderBy: $orderBy) {
           id
+          balance
+          lastUpdated
         }
       }
     `;
@@ -36,9 +42,11 @@ export const accounts = {
   },
   useGetById: (id: string, config?: QueryHookOptions<AccountResponse>) => {
     const GET_ACCOUNT = gql`
-      query GetAccountById($id: String) {
+      query GetAccountById($id: String!) {
         account: accountById(id: $id) {
           id
+          balance
+          lastUpdated
         }
       }
     `;

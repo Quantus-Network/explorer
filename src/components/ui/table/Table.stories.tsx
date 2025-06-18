@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import * as React from 'react';
 
