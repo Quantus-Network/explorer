@@ -91,6 +91,7 @@ export const useTransactionsTable = () => {
       sorting: sortingValue,
       pagination: paginationValue
     },
+    rowCount: data?.meta.totalCount ?? 0,
     onSortingChange: handleChangeSorting,
     onPaginationChange: handleChangePagination,
     manualSorting: true,
@@ -100,10 +101,22 @@ export const useTransactionsTable = () => {
   const success = !loading && !fetchError;
   const error = !loading && fetchError;
 
+  const getStatus = () => {
+    switch (true) {
+      case success:
+        return 'success';
+      case !!error:
+        return 'error';
+      case !!loading:
+        return 'loading';
+      default:
+        return 'idle';
+    }
+  };
+
   return {
-    success,
-    error,
     table,
-    loading
+    getStatus,
+    error
   };
 };

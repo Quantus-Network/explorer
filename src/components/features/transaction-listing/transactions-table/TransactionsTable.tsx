@@ -1,20 +1,21 @@
 'use client';
 
-import { Table } from '@/components/ui/table/Table';
+import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 
 import { useTransactionsTable } from './hook';
-import styles from './TransactionsTable.module.scss';
 
 export const TransactionsTable = () => {
-  const { error, success, loading, table } = useTransactionsTable();
+  const { getStatus, table, error } = useTransactionsTable();
 
   return (
-    <section className={styles.liveData}>
-      <div className={styles.liveData__container}>
-        {loading && <p>Loading recent transactions...</p>}
-        {success && <Table table={table} />}
-        {!loading && error && <p>Error : {error.message}</p>}
-      </div>
-    </section>
+    <DataTable
+      table={table}
+      fetch={{
+        status: getStatus(),
+        errorFallback: <p>Error: {error && error.message}</p>,
+        loadingFallback: <p>Loading recent transactions...</p>
+      }}
+      withControls
+    />
   );
 };

@@ -1,11 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
+import { ContentContainer } from '@/components/ui/content-container';
+import { SectionContainer } from '@/components/ui/section-container';
 
-import { SearchPreview } from '@/components/ui/search-preview/SearchPreview';
-
-import { ChainStats } from '../chain-stats/ChainStats';
-import styles from './Hero.module.scss';
+import { ChainStats } from './chain-stats/ChainStats';
 import { useHero } from './hook';
 
 export interface HeroProps {}
@@ -14,42 +13,26 @@ export const Hero = (props: HeroProps) => {
   const { handleSearch, handleKeywordChange } = useHero();
 
   return (
-    <section className={styles.hero}>
-      <div className={styles.hero__container}>
-        <div className={styles.hero__content}>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className={styles.hero__title}
-          >
-            Explore the Blockchain Universe
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className={styles.hero__subtitle}
-          >
+    <SectionContainer>
+      <ContentContainer className="flex flex-col gap-8">
+        <div className="flex flex-col items-center gap-8">
+          <h1>Explore the Quantus Blockchain Network</h1>
+
+          <p className="mx-auto max-w-xl text-center text-3xl text-secondary-foreground">
             Discover, analyze, and track transactions across the blockchain
             network in real-time
-          </motion.p>
+          </p>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className={styles.hero__search}
-        >
-          <SearchPreview
+        <div className="mx-auto w-full max-w-3xl">
+          <SearchBox
             onSearch={handleSearch}
             onKeywordChange={handleKeywordChange}
           />
-        </motion.div>
+        </div>
 
         <ChainStats />
-      </div>
-    </section>
+      </ContentContainer>
+    </SectionContainer>
   );
 };

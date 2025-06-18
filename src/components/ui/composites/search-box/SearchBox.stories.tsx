@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import { SearchPreview, type SearchPreviewProps } from './SearchPreview';
+import { SearchBox, type SearchBoxProps } from './SearchBox';
 
-const meta: Meta<SearchPreviewProps> = {
-  title: 'Components/UI/SearchPreview',
-  component: SearchPreview,
+const meta: Meta<SearchBoxProps> = {
+  title: 'Components/UI/Composites/SearchBox',
+  component: SearchBox,
   parameters: {
     layout: 'fullscreen'
   },
@@ -13,7 +13,7 @@ const meta: Meta<SearchPreviewProps> = {
 
 export default meta;
 
-type Story = StoryObj<SearchPreviewProps>;
+type Story = StoryObj<SearchBoxProps>;
 
 export const Default: Story = {
   args: {

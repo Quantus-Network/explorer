@@ -6,21 +6,22 @@ import { useDebounceCallback } from 'usehooks-ts';
 
 import { INPUT_DEBOUNCE_INTERVAL } from '@/constants/debounce-interval';
 
-import styles from './SearchPreview.module.scss';
+import { Button } from '../../button';
+import { Input } from '../../input';
 
-export interface SearchPreviewProps {
+export interface SearchBoxProps {
   onKeywordChange: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
   onSearch: (val: string, e: FormEvent<HTMLFormElement>) => void;
 }
 
-export const SearchPreview = (props: SearchPreviewProps) => {
+export const SearchBox = (props: SearchBoxProps) => {
   const debounced = useDebounceCallback(
     props.onKeywordChange,
     INPUT_DEBOUNCE_INTERVAL
   );
 
   return (
-    <div className={styles.searchPreview}>
+    <div className="relative">
       <form
         onSubmit={(e: any) => {
           e.preventDefault();
@@ -28,19 +29,24 @@ export const SearchPreview = (props: SearchPreviewProps) => {
           props.onSearch(e.target?.keyword?.value, e);
         }}
       >
-        <input
+        <Input
           type="text"
           name="keyword"
           placeholder="Search blocks, transactions, addresses..."
-          className={styles.searchPreview__input}
           onChange={(e) => {
             const { value } = e.currentTarget;
 
             debounced(value, e);
           }}
+          className="pe-12"
           required
         />
-        <Search className={styles.searchPreview__icon} />
+
+        <Button asChild>
+          <div className="absolute right-3 top-1/2 size-6 -translate-y-1/2">
+            <Search className="text-primary-foreground" />
+          </div>
+        </Button>
       </form>
     </div>
   );

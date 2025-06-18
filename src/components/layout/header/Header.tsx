@@ -2,11 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NavigationMenu } from 'radix-ui';
 
+import { ContentContainer } from '@/components/ui/content-container';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList
+} from '@/components/ui/navigation-menu';
+import env from '@/config/env';
 import { SITE_NAVIGATIONS } from '@/config/site-navigations';
-
-import styles from './Header.module.scss';
 
 export interface HeaderProps {}
 
@@ -15,33 +20,33 @@ export const Header = (props: HeaderProps) => {
   const rootPath = location.split('/')[1];
 
   return (
-    <header className={styles.header}>
-      <div className={styles.header__container}>
-        <div className={styles.header__left}>
-          <Link href="/" className={styles.logo}>
-            <div className={styles.logo__icon} />
-            <span>Quantus Explorer</span>
-          </Link>
+    <header className="fixed left-0 top-0 z-10 w-full border-b border-solid border-secondary bg-neutral-50/80 ring-0 backdrop-blur">
+      <ContentContainer className="flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="size-8 rounded-lg bg-primary" />
+          <span className="text-xl font-bold text-primary">
+            {env.SITE_NAME}
+          </span>
+        </Link>
 
-          <NavigationMenu.Root className={styles.nav}>
-            <NavigationMenu.List className={styles.nav__list}>
-              {SITE_NAVIGATIONS.map((nav) => (
-                <NavigationMenu.Item key={nav.path}>
-                  <NavigationMenu.Link asChild>
-                    <Link
-                      href={nav.path}
-                      className={styles.nav__link}
-                      data-active={rootPath === nav.path.split('/')[1]}
-                    >
-                      {nav.label}
-                    </Link>
-                  </NavigationMenu.Link>
-                </NavigationMenu.Item>
-              ))}
-            </NavigationMenu.List>
-          </NavigationMenu.Root>
-        </div>
-      </div>
+        <NavigationMenu>
+          <NavigationMenuList className="gap-8">
+            {SITE_NAVIGATIONS.map((nav) => (
+              <NavigationMenuItem key={nav.path}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={nav.path}
+                    className="data-[active=true]:font-semibold"
+                    data-active={rootPath === nav.path.split('/')[1]}
+                  >
+                    {nav.label}
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+      </ContentContainer>
     </header>
   );
 };

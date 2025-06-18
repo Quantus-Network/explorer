@@ -3,13 +3,16 @@ export const SITE_NAVIGATIONS = [
   {
     label: 'Transactions',
     path: '/transactions',
-    isNew: false,
     longLabel: 'Transactions'
   },
   {
     label: 'Accounts',
     path: '/accounts',
-    isNew: false,
     longLabel: 'Accounts'
+  },
+  {
+    label: 'Blocks',
+    path: '/blocks',
+    longLabel: 'Blocks'
   }
 ] as const;

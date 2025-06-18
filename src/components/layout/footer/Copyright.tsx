@@ -1,18 +1,12 @@
 'use client';
 
-import type { Variants } from 'framer-motion';
-import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 
 export interface CopyrightProps {
-  variants: Variants;
   className?: string;
 }
 
-export const Copyright: React.FC<CopyrightProps> = ({
-  className,
-  variants
-}) => {
+export const Copyright: React.FC<CopyrightProps> = ({ className }) => {
   const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
@@ -20,8 +14,8 @@ export const Copyright: React.FC<CopyrightProps> = ({
   }, []);
 
   return (
-    <motion.div variants={variants} className={className}>
-      © {year} Quantus Explorer. All rights reserved.
-    </motion.div>
+    <div className={className}>
+      © {year} Quantus Chain Explorer. All rights reserved.
+    </div>
   );
 };

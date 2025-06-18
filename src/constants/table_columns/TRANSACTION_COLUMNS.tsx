@@ -8,12 +8,6 @@ import { truncateWallet } from '@/utils/truncate-wallet';
 const columnHelper = createColumnHelper<Transaction>();
 
 const TRANSACTION_COLUMNS = [
-  columnHelper.display({
-    id: 'number',
-    header: '#',
-    cell: ({ row: { index } }) => `${index + 1}`,
-    enableSorting: false
-  }),
   columnHelper.accessor('extrinsicHash', {
     id: 'tx-hash',
     header: 'Transaction Hash',
@@ -64,7 +58,7 @@ const TRANSACTION_COLUMNS = [
   columnHelper.accessor('amount', {
     id: 'amount',
     header: 'Amount',
-    cell: (props) => `${props.getValue()} Quantus`,
+    cell: (props) => `${props.getValue()}`,
     enableSorting: true
   }),
   columnHelper.accessor('fee', {

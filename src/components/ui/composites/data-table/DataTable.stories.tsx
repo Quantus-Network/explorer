@@ -5,17 +5,17 @@ import * as React from 'react';
 import { TRANSACTION_COLUMNS } from '@/constants/table_columns/TRANSACTION_COLUMNS';
 import type { Transaction } from '@/schemas';
 
-import { Table } from './Table';
+import { DataTable } from './DataTable';
 
 const meta = {
-  title: 'Components/UI/Table',
-  component: Table,
+  title: 'Components/UI/DataTable',
+  component: DataTable,
   parameters: {
     layout: 'centered'
   },
 
   tags: ['autodocs']
-} satisfies Meta<typeof Table>;
+} satisfies Meta<typeof DataTable>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -25,7 +25,7 @@ export const Primary: Omit<Story, 'args'> = {
     (Story) => {
       const transactionColumns = React.useMemo(() => TRANSACTION_COLUMNS, []);
 
-      const transactionTable = useReactTable<Transaction>({
+      const transactionDataTable = useReactTable<Transaction>({
         data: [
           {
             id: '0x1234',
@@ -72,7 +72,7 @@ export const Primary: Omit<Story, 'args'> = {
         getCoreRowModel: getCoreRowModel()
       });
 
-      return <Story args={{ table: transactionTable }} />;
+      return <Story args={{ table: transactionDataTable }} />;
     }
   ]
 };

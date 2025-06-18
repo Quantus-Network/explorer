@@ -2,8 +2,9 @@ import './globals.css';
 
 import { Footer } from '@/components/layout/footer/Footer';
 import { Header } from '@/components/layout/header/Header';
-import { inter } from '@/config/font';
+import { inter, jetBrains } from '@/config/font';
 import defaultMetadata from '@/config/metadata';
+import { cn } from '@/lib/utils';
 
 import Providers from './providers';
 
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(inter.className, inter.variable, jetBrains.variable)}>
         <Providers>
           <Header />
           <main>{children}</main>

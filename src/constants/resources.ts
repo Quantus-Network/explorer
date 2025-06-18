@@ -1,4 +1,5 @@
 export const RESOURCES = {
   transactions: '/transactions',
-  accounts: '/accounts'
+  accounts: '/accounts',
+  blocks: '/blocks'
 } as const;
