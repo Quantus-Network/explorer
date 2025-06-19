@@ -25,6 +25,9 @@ export const accounts = {
           balance
           lastUpdated
         }
+        meta: accountsConnection(orderBy: id_ASC) {
+          totalCount
+        }
       }
     `;
 

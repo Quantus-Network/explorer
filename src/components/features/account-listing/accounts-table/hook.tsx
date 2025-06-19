@@ -8,15 +8,15 @@ import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
 import api from '@/api';
-import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
+import { ACCOUNT_COLUMNS } from '@/components/common/table-columns/ACCOUNT_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { TransactionSorts } from '@/constants/query-sorts';
-import { TRANSACTION_SORTS_LITERALS } from '@/constants/query-sorts';
-import type { Transaction } from '@/schemas';
+import type { AccountSorts } from '@/constants/query-sorts';
+import { ACCOUNT_SORTS_LITERALS } from '@/constants/query-sorts';
+import type { Account } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
-export const useTransactionsTable = () => {
+export const useAccountsTable = () => {
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
   const [limit, setLimit] = useQueryState(
     'limit',
@@ -24,7 +24,7 @@ export const useTransactionsTable = () => {
   );
   const [sortBy, setSortBy] = useQueryState(
     'sortBy',
-    parseAsStringLiteral(TRANSACTION_SORTS_LITERALS)
+    parseAsStringLiteral(ACCOUNT_SORTS_LITERALS)
   );
 
   const sortingValue: SortingState = transformSortLiteral(sortBy);
@@ -41,7 +41,7 @@ export const useTransactionsTable = () => {
         const key = newValue[0].id;
         const order = newValue[0].desc ? 'DESC' : 'ASC';
 
-        const newSortBy = `${key}_${order}` as TransactionSorts;
+        const newSortBy = `${key}_${order}` as AccountSorts;
 
         setSortBy(newSortBy);
       } else {
@@ -51,7 +51,7 @@ export const useTransactionsTable = () => {
       const key = sorting[0].id;
       const order = sorting[0].desc ? 'DESC' : 'ASC';
 
-      const newSortBy = `${key}_${order}` as TransactionSorts;
+      const newSortBy = `${key}_${order}` as AccountSorts;
 
       setSortBy(newSortBy);
     }
@@ -73,7 +73,7 @@ export const useTransactionsTable = () => {
     loading,
     data,
     error: fetchError
-  } = api.transactions.useGetAll({
+  } = api.accounts.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
       orderBy: sortBy,
@@ -81,11 +81,11 @@ export const useTransactionsTable = () => {
       offset: page * limit
     }
   });
-  const transactionColumns = useMemo(() => TRANSACTION_COLUMNS, []);
+  const accountColumns = useMemo(() => ACCOUNT_COLUMNS, []);
 
-  const table = useReactTable<Transaction>({
-    data: data?.transactions ?? [],
-    columns: transactionColumns,
+  const table = useReactTable<Account>({
+    data: data?.accounts ?? [],
+    columns: accountColumns,
     getCoreRowModel: getCoreRowModel(),
     state: {
       sorting: sortingValue,

@@ -67,70 +67,67 @@ export const DataTable = ({
 
   return (
     <div>
+      <div
+        className={cn('border', withControls ? 'rounded-t-md' : 'rounded-md')}
+      >
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    onClick={header.column.getToggleSortingHandler()}
+                    data-sortable={header.column.getCanSort()}
+                    className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-foreground/70"
+                  >
+                    <div className="flex items-center gap-1">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+
+                      {header.column.getCanSort() && (
+                        <>
+                          {header.column.getIsSorted() === 'asc' && <ArrowUp />}
+
+                          {header.column.getIsSorted() === 'desc' && (
+                            <ArrowDown />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => {
+              return (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, {
+                          ...cell.getContext(),
+                          ...customCellProps
+                        })}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+
       {status === 'loading' && fetch?.loadingFallback}
       {status === 'error' && fetch?.errorFallback}
-      {status === 'success' && (
-        <div
-          className={cn('border', withControls ? 'rounded-t-md' : 'rounded-md')}
-        >
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead
-                      key={header.id}
-                      colSpan={header.colSpan}
-                      onClick={header.column.getToggleSortingHandler()}
-                      data-sortable={header.column.getCanSort()}
-                      className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-foreground/70"
-                    >
-                      <div className="flex items-center gap-1">
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-
-                        {header.column.getCanSort() && (
-                          <>
-                            {header.column.getIsSorted() === 'asc' && (
-                              <ArrowUp />
-                            )}
-
-                            {header.column.getIsSorted() === 'desc' && (
-                              <ArrowDown />
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows.map((row) => {
-                return (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
-                      return (
-                        <TableCell key={cell.id}>
-                          {flexRender(cell.column.columnDef.cell, {
-                            ...cell.getContext(),
-                            ...customCellProps
-                          })}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
-      )}
 
       {withControls && (
         <div className="flex items-center justify-between gap-4 rounded-b-md border px-2 py-4">

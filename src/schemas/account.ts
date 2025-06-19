@@ -9,4 +9,7 @@ export interface AccountResponse {
 
 export interface AccountListResponse {
   accounts: Account[];
+  meta: {
+    totalCount: number;
+  };
 }

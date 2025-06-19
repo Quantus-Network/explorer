@@ -2,12 +2,36 @@ export const ACCOUNT_SORTS = {
   id: {
     ASC: 'id_ASC',
     DESC: 'id_DESC'
+  },
+  balance: {
+    ASC: 'balance_ASC',
+    DESC: 'balance_DESC'
+  },
+  lastUpdated: {
+    ASC: 'lastUpdated_ASC',
+    DESC: 'lastUpdated_DESC'
   }
 } as const;
 
+export const ACCOUNT_SORTS_LITERALS = [
+  'id_ASC',
+  'id_DESC',
+  'balance_ASC',
+  'balance_DESC',
+  'lastUpdated_ASC',
+  'lastUpdated_DESC'
+] as const;
+
+export const ACCOUNT_SORTS_KEY = ['id', 'balance', 'lastUpdated'] as const;
+
 export type AccountSorts =
   | typeof ACCOUNT_SORTS.id.ASC
-  | typeof ACCOUNT_SORTS.id.DESC;
+  | typeof ACCOUNT_SORTS.id.DESC
+  | typeof ACCOUNT_SORTS.balance.ASC
+  | typeof ACCOUNT_SORTS.balance.DESC
+  | typeof ACCOUNT_SORTS.lastUpdated.ASC
+  | typeof ACCOUNT_SORTS.lastUpdated.DESC
+  | null;
 
 export const TRANSACTION_SORTS = {
   id: {

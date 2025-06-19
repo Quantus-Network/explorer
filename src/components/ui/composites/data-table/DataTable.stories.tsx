@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import * as React from 'react';
 
-import { TRANSACTION_COLUMNS } from '@/constants/table_columns/TRANSACTION_COLUMNS';
+import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
 import type { Transaction } from '@/schemas';
 
 import { DataTable } from './DataTable';

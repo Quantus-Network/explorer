@@ -2,17 +2,18 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { format } from 'date-fns/format';
 import Link from 'next/link';
 
+import { RESOURCES } from '@/constants/resources';
 import type { Transaction } from '@/schemas';
 import { truncateWallet } from '@/utils/truncate-wallet';
 
 const columnHelper = createColumnHelper<Transaction>();
 
-const TRANSACTION_COLUMNS = [
+export const TRANSACTION_COLUMNS = [
   columnHelper.accessor('extrinsicHash', {
     id: 'tx-hash',
     header: 'Transaction Hash',
     cell: (props) => (
-      <Link href={`/transactions/${props.getValue()}`}>
+      <Link href={`${RESOURCES.transactions}/${props.getValue()}`}>
         {truncateWallet(props.getValue() ?? '-')}
       </Link>
     ),
@@ -68,5 +69,3 @@ const TRANSACTION_COLUMNS = [
     enableSorting: true
   })
 ];
-
-export { TRANSACTION_COLUMNS };
