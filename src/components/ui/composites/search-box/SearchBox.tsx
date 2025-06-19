@@ -12,6 +12,7 @@ import { Input } from '../../input';
 export interface SearchBoxProps {
   onKeywordChange: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
   onSearch: (val: string, e: FormEvent<HTMLFormElement>) => void;
+  placeholder?: string;
 }
 
 export const SearchBox = (props: SearchBoxProps) => {
@@ -32,7 +33,7 @@ export const SearchBox = (props: SearchBoxProps) => {
         <Input
           type="text"
           name="keyword"
-          placeholder="Search blocks, transactions, addresses..."
+          placeholder={props.placeholder}
           onChange={(e) => {
             const { value } = e.currentTarget;
 
