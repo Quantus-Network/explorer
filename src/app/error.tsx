@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+
 export default function Error({
   error,
   reset
@@ -8,11 +10,12 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div>
+    <div className="m-auto flex flex-col items-center justify-center">
       <h1>Something went wrong!</h1>
-      <button type="button" onClick={() => reset()}>
+
+      <Button className="mt-8" type="button" onClick={() => reset()}>
         Try again
-      </button>
+      </Button>
     </div>
   );
 }

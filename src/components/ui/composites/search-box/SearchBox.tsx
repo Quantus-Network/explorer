@@ -42,10 +42,8 @@ export const SearchBox = (props: SearchBoxProps) => {
           required
         />
 
-        <Button asChild>
-          <div className="absolute right-3 top-1/2 size-6 -translate-y-1/2">
-            <Search className="text-primary-foreground" />
-          </div>
+        <Button className="absolute right-3 top-1/2 size-9 -translate-y-1/2">
+          <Search className="text-primary-foreground" />
         </Button>
       </form>
     </div>
