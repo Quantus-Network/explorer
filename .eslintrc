@@ -43,6 +43,10 @@
             "endOfLine": "auto"
           }
         ],
+        "class-methods-use-this":"off",
+        "no-await-in-loop":"warn",
+        "no-underscore-dangle":"off",
+        "max-classes-per-file": "off",
         "import/no-extraneous-dependencies": "off",
         "tailwindcss/no-custom-classname": "off", // tailwind no custom classname rule
         "react/function-component-definition": "off", // Disable Airbnb's specific function type
@@ -54,6 +58,7 @@
         "@next/next/no-img-element": "off", // We currently not using next/image because it isn't supported with SSG mode
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
         "@typescript-eslint/consistent-type-imports": "error", // Ensure `import type` is used when it's necessary
+        "@typescript-eslint/naming-convention": "off",
         "no-restricted-syntax": [
           "error",
           "ForInStatement",

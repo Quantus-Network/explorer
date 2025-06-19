@@ -22,7 +22,7 @@ export const Header = (props: HeaderProps) => {
   return (
     <header className="fixed left-0 top-0 z-10 w-full border-b border-solid border-secondary bg-neutral-50/80 ring-0 backdrop-blur">
       <ContentContainer className="flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 no-underline">
           <div className="size-8 rounded-lg bg-primary" />
           <span className="text-xl font-bold text-primary">
             {env.SITE_NAME}
@@ -36,7 +36,7 @@ export const Header = (props: HeaderProps) => {
                 <NavigationMenuLink asChild>
                   <Link
                     href={nav.path}
-                    className="data-[active=true]:font-semibold"
+                    className="no-underline data-[active=true]:font-semibold"
                     data-active={rootPath === nav.path.split('/')[1]}
                   >
                     {nav.label}

@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import Link from 'next/link';
 
+import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
 import { RESOURCES } from '@/constants/resources';
 import type { Account } from '@/schemas';
 
@@ -11,9 +11,10 @@ export const ACCOUNT_COLUMNS = [
     id: 'id',
     header: 'Identity',
     cell: (props) => (
-      <Link href={`${RESOURCES.accounts}/${props.getValue()}`}>
-        {props.getValue()}
-      </Link>
+      <LinkWithCopy
+        href={`${RESOURCES.accounts}/${props.getValue()}`}
+        text={props.getValue()}
+      />
     ),
     enableSorting: false
   }),

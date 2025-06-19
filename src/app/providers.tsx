@@ -4,6 +4,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { NuqsAdapter } from 'nuqs/adapters/next';
 import type { PropsWithChildren } from 'react';
 
+import { Toaster } from '@/components/ui/sonner';
 import env from '@/config/env';
 
 const Providers = ({ children }: PropsWithChildren) => {
@@ -15,6 +16,7 @@ const Providers = ({ children }: PropsWithChildren) => {
   return (
     <NuqsAdapter>
       <ApolloProvider client={client}>{children}</ApolloProvider>
+      <Toaster />
     </NuqsAdapter>
   );
 };

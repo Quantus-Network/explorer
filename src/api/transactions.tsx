@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
+import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
 import { TRANSACTION_SORTS } from '@/constants/query-sorts';
@@ -13,6 +14,7 @@ import type {
   TransactionsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { getGqlString } from '@/utils/get-gql-string';
 
 export const transactions = {
   useGetAll: (
@@ -130,7 +132,7 @@ export const transactions = {
       }
     });
   },
-  useGetById: (id: string, config?: QueryHookOptions<TransactionResponse>) => {
+  getById: () => {
     const GET_TRANSACTION = gql`
       query GetTransactionById($id: String!) {
         transaction: transferById(id: $id) {
@@ -150,11 +152,27 @@ export const transactions = {
       }
     `;
 
-    return useQuery<TransactionResponse>(GET_TRANSACTION, {
-      ...config,
-      variables: {
-        id
-      }
-    });
+    return {
+      query: (id: string) =>
+        fetchClient.graphql<TransactionResponse>(
+          {
+            query: getGqlString(GET_TRANSACTION),
+            variables: {
+              id
+            },
+            operationName: 'GetTransactionById'
+          },
+          {
+            retries: 0
+          }
+        ),
+      useQuery: (id: string, config?: QueryHookOptions<TransactionResponse>) =>
+        useQuery<TransactionResponse>(GET_TRANSACTION, {
+          ...config,
+          variables: {
+            id
+          }
+        })
+    };
   }
 };
