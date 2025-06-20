@@ -52,6 +52,28 @@ export const accounts = {
           id
           balance
         }
+        transactions: transfersConnection(
+          orderBy: timestamp_DESC
+          first: ${QUERY_DEFAULT_LIMIT}
+          where: {from: {id_eq: $id}, OR: {to: {id_eq: $id}}}
+        ) {
+          edges {
+            node {
+              fee
+              extrinsicHash
+              blockNumber
+              amount
+              timestamp
+              from {
+                id
+              }
+              to {
+                id
+              }
+            }
+          }
+          totalCount
+        }
       }
     `;
 

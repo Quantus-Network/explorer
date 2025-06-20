@@ -6,7 +6,7 @@ export interface Transaction extends Omit<gql.Transfer, 'from' | 'to'> {
 }
 
 export interface TransactionResponse {
-  transaction: Transaction;
+  transactions: [Transaction];
 }
 
 export interface TransactionListResponse {
@@ -21,6 +21,7 @@ export interface RecentTransactionsResponse {
 }
 
 export interface TransactionsStatsResponse {
-  totalCountPast24Hours: number;
-  totalFeePast24Hours: number;
+  last24Hour: {
+    totalCount: number;
+  };
 }

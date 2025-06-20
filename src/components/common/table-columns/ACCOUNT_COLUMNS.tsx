@@ -3,6 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
 import { RESOURCES } from '@/constants/resources';
 import type { Account } from '@/schemas';
+import { formatMonetaryValue } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<Account>();
 
@@ -21,7 +22,7 @@ export const ACCOUNT_COLUMNS = [
   columnHelper.accessor('balance', {
     id: 'balance',
     header: 'Balance',
-    cell: (props) => `${props.getValue()}`,
+    cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   })
   // columnHelper.accessor('lastUpdated', {

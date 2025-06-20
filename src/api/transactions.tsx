@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
+import type { TransferWhereInput } from '@/__generated__/graphql';
 import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
@@ -20,7 +21,7 @@ export const transactions = {
   useGetAll: (
     config?: QueryHookOptions<
       TransactionListResponse,
-      PaginatedQueryVariables<TransactionSorts>
+      PaginatedQueryVariables<TransactionSorts, TransferWhereInput>
     >
   ) => {
     const GET_TRANSACTIONS = gql`
@@ -28,13 +29,14 @@ export const transactions = {
         $limit: Int
         $offset: Int
         $orderBy: [TransferOrderByInput!]
+        $where: TransferWhereInput
       ) {
         transactions: transfers(
           limit: $limit
           offset: $offset
           orderBy: $orderBy
+          where: $where
         ) {
-          id
           fee
           extrinsicHash
           blockNumber
@@ -55,13 +57,14 @@ export const transactions = {
 
     return useQuery<
       TransactionListResponse,
-      PaginatedQueryVariables<TransactionSorts>
+      PaginatedQueryVariables<TransactionSorts, TransferWhereInput>
     >(GET_TRANSACTIONS, {
       ...config,
       variables: {
         orderBy: config?.variables?.orderBy ?? TRANSACTION_SORTS.timestamp.DESC,
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
-        offset: config?.variables?.offset ?? 0
+        offset: config?.variables?.offset ?? 0,
+        where: config?.variables?.where
       }
     });
   },
@@ -79,7 +82,6 @@ export const transactions = {
           offset: $offset
           orderBy: $orderBy
         ) {
-          id
           fee
           extrinsicHash
           blockNumber
@@ -106,7 +108,6 @@ export const transactions = {
       }
     });
   },
-  // TODO: need to update subsquid to properly get the resource needed
   useGetStats: (
     config?: Omit<QueryHookOptions<TransactionsStatsResponse>, 'variables'>
   ) => {
@@ -115,11 +116,11 @@ export const transactions = {
 
     const GET_TRANSACTIONS_STATS = gql`
       query GetTransactionsStats($startDate: DateTime!, $endDate: DateTime!) {
-        transactions: transfers(
+        last24Hour: transfersConnection(
+          orderBy: id_ASC
           where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
         ) {
-          fee
-          amount
+          totalCount
         }
       }
     `;
@@ -132,11 +133,11 @@ export const transactions = {
       }
     });
   },
-  getById: () => {
-    const GET_TRANSACTION = gql`
-      query GetTransactionById($id: String!) {
-        transaction: transferById(id: $id) {
-          id
+  getByHash: () => {
+    const QUERY_NAME = 'GetTransactionByHash';
+    const QUERY = gql`
+      query ${QUERY_NAME}($hash: String!) {
+        transactions: transfers(where: { extrinsicHash_eq: $hash }) {
           fee
           extrinsicHash
           blockNumber
@@ -153,24 +154,27 @@ export const transactions = {
     `;
 
     return {
-      query: (id: string) =>
+      query: (hash: string) =>
         fetchClient.graphql<TransactionResponse>(
           {
-            query: getGqlString(GET_TRANSACTION),
+            query: getGqlString(QUERY),
             variables: {
-              id
+              hash
             },
-            operationName: 'GetTransactionById'
+            operationName: QUERY_NAME
           },
           {
             retries: 0
           }
         ),
-      useQuery: (id: string, config?: QueryHookOptions<TransactionResponse>) =>
-        useQuery<TransactionResponse>(GET_TRANSACTION, {
+      useQuery: (
+        hash: string,
+        config?: QueryHookOptions<TransactionResponse>
+      ) =>
+        useQuery<TransactionResponse>(QUERY, {
           ...config,
           variables: {
-            id
+            hash
           }
         })
     };

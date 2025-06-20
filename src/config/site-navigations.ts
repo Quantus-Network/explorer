@@ -9,10 +9,10 @@ export const SITE_NAVIGATIONS = [
     label: 'Accounts',
     path: '/accounts',
     longLabel: 'Accounts'
-  },
-  {
-    label: 'Blocks',
-    path: '/blocks',
-    longLabel: 'Blocks'
   }
+  // {
+  //   label: 'Blocks',
+  //   path: '/blocks',
+  //   longLabel: 'Blocks'
+  // }
 ] as const;

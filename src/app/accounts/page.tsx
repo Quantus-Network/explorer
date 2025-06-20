@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { AccountsTable } from '@/components/features/account-listing/accounts-table/AccountsTable';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
@@ -8,7 +10,9 @@ const Accounts = () => {
       <ContentContainer className="flex flex-col gap-4">
         <h1>Accounts</h1>
 
-        <AccountsTable />
+        <Suspense>
+          <AccountsTable />
+        </Suspense>
       </ContentContainer>
     </SectionContainer>
   );

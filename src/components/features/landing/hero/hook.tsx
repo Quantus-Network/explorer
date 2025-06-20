@@ -10,7 +10,7 @@ export const useHero = () => {
 
   const handleSearch = (val: string) => {
     switch (true) {
-      case val.includes('-'):
+      case val.startsWith('0x'):
         router.push(`${RESOURCES.transactions}/${val}`);
         break;
 

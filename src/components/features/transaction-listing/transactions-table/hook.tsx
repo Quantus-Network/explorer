@@ -4,6 +4,7 @@ import type {
   SortingState
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { useSearchParams } from 'next/navigation';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
@@ -17,6 +18,8 @@ import type { Transaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useTransactionsTable = () => {
+  const accountId = useSearchParams().get('accountId');
+
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
   const [limit, setLimit] = useQueryState(
     'limit',
@@ -78,7 +81,13 @@ export const useTransactionsTable = () => {
     variables: {
       orderBy: sortBy,
       limit,
-      offset: page * limit
+      offset: page * limit,
+      ...(accountId && {
+        where: {
+          from: { id_eq: accountId },
+          OR: [{ to: { id_eq: accountId } }]
+        }
+      })
     }
   });
   const transactionColumns = useMemo(() => TRANSACTION_COLUMNS, []);

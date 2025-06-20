@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
 import api from '@/api';
@@ -9,6 +10,10 @@ import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 export interface TransactionsStatsProps {}
 
 export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
+  const accountId = useSearchParams().get('accountId');
+
+  if (accountId) return null;
+
   const { loading, data, error } = api.transactions.useGetStats({
     pollInterval: DATA_POOL_INTERVAL
   });
@@ -24,17 +29,8 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p> {success ? `1,234,456` : 'Loading...'}</p>
+          <p> {success ? data?.last24Hour.totalCount : 'Loading...'}</p>
         </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <h3>Total Transactions Fee (24H)</h3>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>{success ? `1,234.56 QUAN` : 'Loading...'}</CardContent>
       </Card>
     </div>
   );

@@ -1,20 +1,32 @@
+import type { QueryResult } from '@apollo/client';
 import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
 import { RESOURCES } from '@/constants/resources';
-import type { Account } from '@/schemas';
+import type { AccountResponse } from '@/schemas';
+import { formatMonetaryValue } from '@/utils/formatter';
 
 export interface AccountInformationProps {
-  account: Account;
+  query: QueryResult<AccountResponse>;
 }
 
 export const AccountInformation: React.FC<AccountInformationProps> = ({
-  account
+  query
 }) => {
+  const { data, loading } = query;
+
+  const account = data?.account;
+  const transactionCount = data?.transactions.totalCount;
+
+  const information = [
+    { id: account?.id, balance: account?.balance, transactionCount }
+  ];
+
   return (
     <DataList
-      data={[account]}
+      loading={loading}
+      data={information}
       fields={[
         {
           label: 'Account ID',
@@ -28,7 +40,12 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
         },
         {
           label: 'Balance',
-          key: 'balance'
+          key: 'balance',
+          render: (value) => formatMonetaryValue(value)
+        },
+        {
+          label: 'Transaction Count',
+          key: 'transactionCount'
         }
       ]}
     />

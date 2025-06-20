@@ -26,7 +26,7 @@ export const Hero = (props: HeroProps) => {
 
         <div className="mx-auto w-full max-w-3xl">
           <SearchBox
-            placeholder="Search block number, transaction id, or account id"
+            placeholder="Search transaction hash or account id"
             onSearch={handleSearch}
             onKeywordChange={handleKeywordChange}
           />

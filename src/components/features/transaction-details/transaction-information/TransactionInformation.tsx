@@ -4,7 +4,7 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
 import { RESOURCES } from '@/constants/resources';
 import type { Transaction } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
+import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface TransactionInformationProps {
   transaction: Transaction;
@@ -18,18 +18,14 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
       data={[transaction]}
       fields={[
         {
-          label: 'Transaction ID',
-          key: 'id',
+          label: 'Transaction Hash',
+          key: 'extrinsicHash',
           render: (value) => (
             <LinkWithCopy
               text={value}
               href={`${RESOURCES.transactions}/${value}`}
             />
           )
-        },
-        {
-          label: 'Transaction Hash',
-          key: 'extrinsicHash'
         },
         {
           label: 'Block',
@@ -62,11 +58,13 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
         },
         {
           label: 'Amount',
-          key: 'amount'
+          key: 'amount',
+          render: (value) => formatMonetaryValue(value)
         },
         {
           label: 'Fee',
-          key: 'fee'
+          key: 'fee',
+          render: (value) => formatMonetaryValue(value)
         }
       ]}
     />

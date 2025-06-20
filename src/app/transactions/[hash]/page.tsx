@@ -10,22 +10,22 @@ import { SectionContainer } from '@/components/ui/section-container';
 export const dynamicParams = true;
 
 export interface TransactionDetailsProps {
-  params: { id: string };
+  params: { hash: string };
 }
 
 const TransactionDetails: React.FC<TransactionDetailsProps> = async ({
   params
 }) => {
-  const { data } = await api.transactions.getById().query(params.id);
+  const { data } = await api.transactions.getByHash().query(params.hash);
 
-  if (!data?.transaction) notFound();
+  if (data?.transactions.length !== 1) notFound();
 
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
         <h1>Transaction Details</h1>
 
-        <TransactionInformation transaction={data.transaction} />
+        <TransactionInformation transaction={data.transactions[0]} />
       </ContentContainer>
     </SectionContainer>
   );

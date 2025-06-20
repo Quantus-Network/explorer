@@ -2,17 +2,17 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
 import { RESOURCES } from '@/constants/resources';
-import type { Transaction } from '@/schemas';
+import type { AccountTransaction } from '@/schemas';
 import {
   formatMonetaryValue,
   formatTimestamp,
   formatTxAddress
 } from '@/utils/formatter';
 
-const columnHelper = createColumnHelper<Transaction>();
+const columnHelper = createColumnHelper<AccountTransaction>();
 
-export const TRANSACTION_COLUMNS = [
-  columnHelper.accessor('extrinsicHash', {
+export const ACCOUNT_TRANSACTION_COLUMNS = [
+  columnHelper.accessor('node.extrinsicHash', {
     id: 'tx-hash',
     header: 'Transaction Hash',
     cell: (props) => (
@@ -24,19 +24,19 @@ export const TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('blockNumber', {
+  columnHelper.accessor('node.blockNumber', {
     id: 'blockNumber',
     header: 'Block',
     cell: (props) => `${props.getValue()}`,
     enableSorting: true
   }),
-  columnHelper.accessor('timestamp', {
+  columnHelper.accessor('node.timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => formatTimestamp(props.getValue()),
     enableSorting: true
   }),
-  columnHelper.accessor('from.id', {
+  columnHelper.accessor('node.from.id', {
     id: 'from',
     header: 'From',
     cell: (props) => (
@@ -48,7 +48,7 @@ export const TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('to.id', {
+  columnHelper.accessor('node.to.id', {
     id: 'to',
     header: 'To',
     cell: (props) => (
@@ -60,13 +60,13 @@ export const TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('amount', {
+  columnHelper.accessor('node.amount', {
     id: 'amount',
     header: 'Amount',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   }),
-  columnHelper.accessor('fee', {
+  columnHelper.accessor('node.fee', {
     id: 'fee',
     header: 'Fee',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
