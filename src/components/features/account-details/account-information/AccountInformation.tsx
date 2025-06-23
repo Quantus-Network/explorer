@@ -4,6 +4,7 @@ import * as React from 'react';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
 import { RESOURCES } from '@/constants/resources';
+import { useChecksum } from '@/hooks/useChecksum';
 import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
 
@@ -15,21 +16,22 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   query
 }) => {
   const { data, loading } = query;
-
   const account = data?.account;
+
+  const { checksum, loading: checksumLoading } = useChecksum(account?.id);
   const transactionCount = data?.transactions.totalCount;
 
   const information = [
-    { id: account?.id, balance: account?.balance, transactionCount }
+    { id: account?.id, balance: account?.balance, transactionCount, checksum }
   ];
 
   return (
     <DataList
-      loading={loading}
+      loading={loading || checksumLoading}
       data={information}
       fields={[
         {
-          label: 'Account ID',
+          label: 'ID',
           key: 'id',
           render: (value) => (
             <LinkWithCopy
@@ -37,6 +39,10 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
               href={`${RESOURCES.accounts}/${value}`}
             />
           )
+        },
+        {
+          label: 'Check Phrase',
+          key: 'checksum'
         },
         {
           label: 'Balance',
