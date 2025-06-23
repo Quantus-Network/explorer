@@ -1,12 +1,20 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
+import api from '@/api';
 import { RESOURCES } from '@/constants/resources';
+import type { SearchAllResponse } from '@/schemas/searchs';
 import { isAlphaNumeric } from '@/utils/alphanumeric-cheker';
 
 export const useHero = () => {
   const router = useRouter();
+
+  const [searchResult, setSearchResult] = useState<SearchAllResponse>();
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchError, setSearchError] = useState<string>();
 
   const handleSearch = (val: string) => {
     switch (true) {
@@ -24,7 +32,33 @@ export const useHero = () => {
     }
   };
 
-  const handleKeywordChange = (val: string) => {};
+  const handleKeywordChange = async (val: string) => {
+    const keyword = val.trim();
 
-  return { handleSearch, handleKeywordChange };
+    if (!keyword) {
+      setSearchResult(undefined);
+      return;
+    }
+
+    try {
+      setSearchLoading(true);
+
+      const { data } = await api.search.all().query(keyword);
+
+      setSearchResult(data);
+      setSearchLoading(false);
+    } catch (err: any) {
+      toast.error(err.message);
+      setSearchError(err.message);
+      setSearchLoading(false);
+    }
+  };
+
+  return {
+    handleSearch,
+    handleKeywordChange,
+    searchResult,
+    searchLoading,
+    searchError
+  };
 };
