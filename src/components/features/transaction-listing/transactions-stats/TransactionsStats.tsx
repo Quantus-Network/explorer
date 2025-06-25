@@ -5,6 +5,7 @@ import React from 'react';
 
 import api from '@/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
 export interface TransactionsStatsProps {}
@@ -29,7 +30,11 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p> {success ? data?.last24Hour.totalCount : 'Loading...'}</p>
+          {success ? (
+            <p>{data?.last24Hour.totalCount}</p>
+          ) : (
+            <Skeleton className="h-6" />
+          )}
         </CardContent>
       </Card>
     </div>

@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
+import { Skeleton } from '../../skeleton';
+
 interface Field<T> {
   label: string;
   key: keyof T;
@@ -25,7 +27,6 @@ interface DataListProps<T> {
   error?: string | null;
   className?: string;
   emptyFallback?: React.ReactNode;
-  loadingFallback?: React.ReactNode;
   errorFallback?: (error: string) => React.ReactNode;
 }
 
@@ -37,18 +38,8 @@ export function DataList<T>({
   error = null,
   className,
   emptyFallback,
-  loadingFallback,
   errorFallback
 }: DataListProps<T>) {
-  if (loading)
-    return (
-      <Alert className={cn('my-4', className)}>
-        <AlertTitle>Loading...</AlertTitle>
-        <AlertDescription>
-          {loadingFallback || 'Please wait while we load your data.'}
-        </AlertDescription>
-      </Alert>
-    );
   if (error)
     return (
       <Alert variant="destructive" className={cn('my-4', className)}>
@@ -58,6 +49,7 @@ export function DataList<T>({
         </AlertDescription>
       </Alert>
     );
+
   if (!data || data.length === 0)
     return (
       <Alert className={cn('my-4', className)}>
@@ -103,11 +95,15 @@ export function DataList<T>({
                           field.label
                         )}
                       </dt>
-                      <dd>
-                        {field.render
-                          ? field.render(item[field.key], item)
-                          : String(item[field.key] ?? '')}
-                      </dd>
+                      {loading && <Skeleton className="h-6" />}
+
+                      {!loading && (
+                        <dd>
+                          {field.render
+                            ? field.render(item[field.key], item)
+                            : String(item[field.key] ?? '')}
+                        </dd>
+                      )}
                     </div>
                   ))}
                 </dl>

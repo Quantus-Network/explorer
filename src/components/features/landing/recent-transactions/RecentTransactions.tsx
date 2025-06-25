@@ -56,8 +56,7 @@ export const RecentTransactions = () => {
           table={transactionTable}
           fetch={{
             status: getStatus(),
-            errorFallback: <p>Error : {error && error.message}</p>,
-            loadingFallback: <p>Loading recent transactions...</p>
+            errorFallback: <p>Error : {error && error.message}</p>
           }}
         />
 

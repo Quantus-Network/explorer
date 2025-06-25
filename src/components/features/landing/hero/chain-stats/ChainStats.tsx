@@ -4,6 +4,7 @@ import React from 'react';
 
 import api from '@/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
 export interface ChainStatsProps {}
@@ -24,7 +25,11 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p> {success ? `#${data?.status?.height}` : 'Loading...'}</p>
+          {success ? (
+            <p>#{data?.status?.height}</p>
+          ) : (
+            <Skeleton className="h-6" />
+          )}
         </CardContent>
       </Card>
 
@@ -35,7 +40,11 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success ? `${data?.transactions?.totalCount}` : 'Loading...'}
+          {success ? (
+            <p>{data?.transactions?.totalCount}</p>
+          ) : (
+            <Skeleton className="h-6" />
+          )}
         </CardContent>
       </Card>
     </div>

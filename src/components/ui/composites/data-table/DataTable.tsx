@@ -28,13 +28,13 @@ import {
   TableHeader,
   TableRow
 } from '../../table';
+import { RowSkeleton } from './RowSkeleton';
 
 interface DataTableProps {
   table: ReactTable<any>;
   fetch?: {
     status: 'idle' | 'loading' | 'success' | 'error';
     errorFallback: React.ReactNode;
-    loadingFallback: React.ReactNode;
   };
   withControls?: boolean;
   customCellProps?: Record<string, any>;
@@ -47,6 +47,7 @@ export const DataTable = ({
   customCellProps = {}
 }: DataTableProps) => {
   const { pageSize, pageIndex } = table.getState().pagination;
+  const columnsLength = table.getAllColumns().length;
 
   const pageCount = table.getPageCount();
   const currentPage = pageIndex + 1;
@@ -105,7 +106,12 @@ export const DataTable = ({
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
+            {status === 'loading' && (
+              <RowSkeleton columnsLength={columnsLength} />
+            )}
+
             {table.getRowModel().rows.map((row) => {
               return (
                 <TableRow key={row.id}>
@@ -126,7 +132,6 @@ export const DataTable = ({
         </Table>
       </div>
 
-      {status === 'loading' && fetch?.loadingFallback}
       {status === 'error' && fetch?.errorFallback}
 
       {withControls && (
