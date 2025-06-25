@@ -45,7 +45,7 @@ export const Header = (props: HeaderProps) => {
         </Button>
       </ContentContainer>
 
-      <MobileMenu isOpen={isOpen} />
+      <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
     </header>
   );
 };

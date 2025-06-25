@@ -85,11 +85,11 @@
   }
 
   h1 {
-    @apply text-5xl;
+    @apply text-4xl sm:text-5xl;
   }
 
   h2 {
-    @apply text-3xl;
+    @apply text-2xl sm:text-3xl;
   }
 
   h3 {

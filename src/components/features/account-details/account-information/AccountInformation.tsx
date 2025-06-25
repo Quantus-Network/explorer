@@ -37,6 +37,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             <LinkWithCopy
               text={value}
               href={`${RESOURCES.accounts}/${value}`}
+              className="break-all"
             />
           )
         },

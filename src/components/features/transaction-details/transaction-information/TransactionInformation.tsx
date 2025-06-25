@@ -24,6 +24,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
             <LinkWithCopy
               text={value}
               href={`${RESOURCES.transactions}/${value}`}
+              className="break-all"
             />
           )
         },
@@ -43,6 +44,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
             <LinkWithCopy
               text={value.id}
               href={`${RESOURCES.accounts}/${value.id}`}
+              className="break-all"
             />
           )
         },
@@ -53,6 +55,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
             <LinkWithCopy
               text={value.id}
               href={`${RESOURCES.accounts}/${value.id}`}
+              className="break-all"
             />
           )
         },

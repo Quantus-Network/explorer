@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -16,9 +14,13 @@ import { cn } from '@/lib/utils';
 
 export interface MobileMenuProps {
   isOpen: boolean;
+  toggleMenu: () => void;
 }
 
-export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen }) => {
+export const MobileMenu: React.FC<MobileMenuProps> = ({
+  isOpen,
+  toggleMenu
+}) => {
   const location = usePathname();
   const rootPath = location.split('/')[1];
 
@@ -38,6 +40,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen }) => {
                   href={nav.path}
                   className="no-underline data-[active=true]:font-semibold"
                   data-active={rootPath === nav.path.split('/')[1]}
+                  onClick={toggleMenu}
                 >
                   {nav.label}
                 </Link>

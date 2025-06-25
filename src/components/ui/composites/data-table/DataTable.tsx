@@ -130,7 +130,7 @@ export const DataTable = ({
       {status === 'error' && fetch?.errorFallback}
 
       {withControls && (
-        <div className="flex items-center justify-between gap-4 rounded-b-md border px-2 py-4">
+        <div className="flex flex-col gap-6 rounded-b-md border px-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <div className="flex items-center gap-2">
             <span>Show:</span>
 
@@ -140,7 +140,7 @@ export const DataTable = ({
                 table.setPageSize(Number(val));
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger className="max-w-16">
                 <SelectValue placeholder="25" />
               </SelectTrigger>
 
@@ -155,8 +155,8 @@ export const DataTable = ({
             <span>Records</span>
           </div>
 
-          <Pagination className="justify-end">
-            <PaginationContent className="flex items-center gap-2">
+          <Pagination className="justify-stretch sm:justify-end">
+            <PaginationContent className="flex w-full items-center justify-between gap-2 sm:w-fit sm:justify-stretch">
               <PaginationItem>
                 <Button
                   variant="outline"
@@ -168,7 +168,7 @@ export const DataTable = ({
               </PaginationItem>
 
               <div className="flex items-center gap-1">
-                <span>Page</span>
+                <span className="hidden sm:inline">Page</span>
 
                 <Input
                   className="h-9 w-12"
