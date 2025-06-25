@@ -12,8 +12,7 @@ export const AccountsTable = () => {
       table={table}
       fetch={{
         status: getStatus(),
-        errorFallback: <p>Error: {error && error.message}</p>,
-        loadingFallback: <p>Loading account list...</p>
+        errorFallback: <p>Error: {error && error.message}</p>
       }}
       withControls
     />

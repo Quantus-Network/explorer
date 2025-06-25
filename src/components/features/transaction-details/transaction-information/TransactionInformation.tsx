@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
+import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { RESOURCES } from '@/constants/resources';
 import type { Transaction } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';

@@ -7,4 +7,7 @@ export interface ChainStatusResponse {
   transactions: {
     totalCount: number;
   };
+  activeAccounts: {
+    totalCount: number;
+  };
 }

@@ -2,15 +2,10 @@ import * as React from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 import { Skeleton } from '../../skeleton';
+import { Info } from '../info/Info';
 
 interface Field<T> {
   label: string;
@@ -80,20 +75,9 @@ export function DataList<T>({
                       className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]"
                     >
                       <dt className="flex items-center gap-1 font-medium text-muted-foreground">
-                        {field.tooltip ? (
-                          <TooltipProvider delayDuration={0}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <span className="cursor-help underline decoration-dotted">
-                                  {field.label}
-                                </span>
-                              </TooltipTrigger>
-                              <TooltipContent>{field.tooltip}</TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        ) : (
-                          field.label
-                        )}
+                        <span>{field.label}</span>
+
+                        {field.tooltip && <Info>{field.tooltip}</Info>}
                       </dt>
                       {loading && <Skeleton className="h-6" />}
 

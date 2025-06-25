@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/link-with-copy';
+import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { RESOURCES } from '@/constants/resources';
 import type { AccountTransaction } from '@/schemas';
 import {

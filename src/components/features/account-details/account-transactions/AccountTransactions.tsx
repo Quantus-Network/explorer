@@ -20,8 +20,7 @@ export const AccountTransactions: React.FC<Props> = ({ query }) => {
       table={table}
       fetch={{
         status: getStatus(),
-        errorFallback: <p>Error: {error && error.message}</p>,
-        loadingFallback: <p>Loading accounts recent transactions...</p>
+        errorFallback: <p>Error: {error && error.message}</p>
       }}
     />
   );
