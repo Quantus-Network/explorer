@@ -1,27 +1,31 @@
 'use client';
 
+import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList
-} from '@/components/ui/navigation-menu';
 import env from '@/config/env';
-import { SITE_NAVIGATIONS } from '@/config/site-navigations';
+import { cn } from '@/lib/utils';
+
+import { DesktopMenu } from './DesktopMenu';
+import { MobileMenu } from './MobileMenu';
 
 export interface HeaderProps {}
 
 export const Header = (props: HeaderProps) => {
-  const location = usePathname();
-  const rootPath = location.split('/')[1];
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="fixed left-0 top-0 z-10 w-full border-b border-solid border-secondary bg-neutral-50/80 ring-0 backdrop-blur">
-      <ContentContainer className="flex h-16 items-center justify-between">
+    <header className="relative z-10 w-full border-b border-solid bg-neutral-50/80">
+      <ContentContainer
+        className={cn(
+          'flex h-16 items-center justify-between',
+          isOpen && 'border-b border-solid'
+        )}
+      >
         <Link href="/" className="flex items-center gap-2 no-underline">
           <div className="size-8 rounded-lg bg-primary" />
           <span className="text-xl font-bold text-primary">
@@ -29,24 +33,19 @@ export const Header = (props: HeaderProps) => {
           </span>
         </Link>
 
-        <NavigationMenu>
-          <NavigationMenuList className="gap-8">
-            {SITE_NAVIGATIONS.map((nav) => (
-              <NavigationMenuItem key={nav.path}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={nav.path}
-                    className="no-underline data-[active=true]:font-semibold"
-                    data-active={rootPath === nav.path.split('/')[1]}
-                  >
-                    {nav.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        <DesktopMenu />
+
+        <Button
+          variant="ghost"
+          size="icon"
+          className="flex items-center justify-center md:hidden"
+          onClick={toggleMenu}
+        >
+          {isOpen ? <X className="!size-6" /> : <Menu className="!size-6" />}
+        </Button>
       </ContentContainer>
+
+      <MobileMenu isOpen={isOpen} />
     </header>
   );
 };

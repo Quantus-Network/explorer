@@ -23,7 +23,9 @@ export const Hero = (props: HeroProps) => {
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-8">
         <div className="flex flex-col items-center gap-8">
-          <h1>Explore the Quantus Blockchain Network</h1>
+          <h1 className="text-center">
+            Explore the Quantus Blockchain Network
+          </h1>
 
           <p className="mx-auto max-w-xl text-center text-3xl text-secondary-foreground">
             Discover, analyze, and track transactions across the blockchain

@@ -1,4 +1,4 @@
-import '../src/app/globals.scss';
+import '../src/app/globals.css';
 
 import type { Preview } from '@storybook/nextjs-vite';
 // eslint-disable-next-line import/no-extraneous-dependencies

@@ -6,7 +6,7 @@ const meta: Meta<HeaderProps> = {
   title: 'Components/Layout/Header',
   component: Header,
   parameters: {
-    layout: 'centered'
+    layout: 'fullscreen'
   },
   argTypes: {}
 };
