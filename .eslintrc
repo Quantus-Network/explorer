@@ -43,7 +43,12 @@
             "endOfLine": "auto"
           }
         ],
-
+        "class-methods-use-this":"off",
+        "no-await-in-loop":"warn",
+        "no-underscore-dangle":"off",
+        "max-classes-per-file": "off",
+        "import/no-extraneous-dependencies": "off",
+        "tailwindcss/no-custom-classname": "off", // tailwind no custom classname rule
         "react/function-component-definition": "off", // Disable Airbnb's specific function type
         "react/destructuring-assignment": "off", // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
         "react/require-default-props": "off", // Allow non-defined react props as undefined
@@ -53,6 +58,7 @@
         "@next/next/no-img-element": "off", // We currently not using next/image because it isn't supported with SSG mode
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
         "@typescript-eslint/consistent-type-imports": "error", // Ensure `import type` is used when it's necessary
+        "@typescript-eslint/naming-convention": "off",
         "no-restricted-syntax": [
           "error",
           "ForInStatement",
@@ -62,10 +68,10 @@
         "import/prefer-default-export": "off", // Named export is easier to refactor automatically
         "simple-import-sort/imports": "error", // Import configuration for `eslint-plugin-simple-import-sort`
         "simple-import-sort/exports": "error", // Export configuration for `eslint-plugin-simple-import-sort`
-        "@typescript-eslint/no-unused-vars": "off",
-        "unused-imports/no-unused-imports": "error",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "unused-imports/no-unused-imports": "warn",
         "unused-imports/no-unused-vars": [
-          "error",
+          "warn",
           { "argsIgnorePattern": "^_" }
         ],
         "react/no-unescaped-entities": "off",

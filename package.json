@@ -1,6 +1,6 @@
 {
   "name": "quantus-block-explorer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "yarn clean && next dev",
@@ -16,23 +16,46 @@
     "format": "next lint --fix && prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
     "prepare": "husky",
     "gen-assets": "svgr --template svgr-template.cjs --index-template svgr-index-template.cjs --icon --title-prop --typescript --jsx-runtime automatic --replace-attr-values currentColor=currentColor,#FFEF00=currentColor --filename-case pascal -d src/assets assets",
-    "clean": "rm -rf .next out"
+    "clean": "rm -rf .next out",
+    "gql:compile": "graphql-codegen"
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": "npm run format"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@radix-ui/react-navigation-menu": "^1.2.13",
+    "@radix-ui/react-popover": "^1.1.14",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
+    "@tanstack/react-table": "^8.21.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "graphql": "^16.11.0",
+    "human-readable-checksum": "./package/human-readable-checksum-0.1.0.tgz",
+    "lucide-react": "^0.516.0",
     "next": "14.2.19",
+    "next-themes": "^0.4.6",
+    "nuqs": "^2.4.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sonner": "^2.0.5",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7",
+    "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.7",
+    "@graphql-codegen/client-preset": "^4.8.2",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@next/bundle-analyzer": "^15.3.3",
     "@storybook/addon-a11y": "^9.0.6",
     "@storybook/addon-links": "^9.0.6",
     "@storybook/addon-onboarding": "^9.0.6",
     "@storybook/nextjs-vite": "^9.0.6",
-    "@storybook/react": "^9.0.6",
     "@storybook/test-runner": "^0.22.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -59,7 +82,8 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-storybook": "^9.0.6",
+    "eslint-plugin-tailwindcss": "^3.18.0",
     "eslint-plugin-testing-library": "^6.2.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "http-server": "^14.1.1",
@@ -70,18 +94,25 @@
     "msw": "^1.3.2",
     "msw-storybook-addon": "^1.10.0",
     "npm-run-all": "^4.1.5",
-    "normalize.css": "^8.0.1",
     "postcss": "^8.5.4",
     "postcss-import": "^16.1.0",
     "prettier": "3.2.4",
-    "sass": "^1.89.2",
     "start-server-and-test": "^2.0.3",
     "storybook": "^9.0.6",
-    "typescript": "^5"
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5",
+    "vite": "^6.3.5"
   },
   "msw": {
     "workerDirectory": [
       "public"
     ]
-  }
+  },
+  "trustedDependencies": [
+    "@swc/core",
+    "esbuild",
+    "msw",
+    "unrs-resolver"
+  ],
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

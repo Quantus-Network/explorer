@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 import app from './package.json' with { type: 'json' };
 

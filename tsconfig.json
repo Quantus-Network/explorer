@@ -15,7 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "allowUnreachableCode": false,
     "noFallthroughCasesInSwitch": true,
 
@@ -54,7 +54,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".storybook/*.ts",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
     ".next/types/**/*.ts"
   ]
 }

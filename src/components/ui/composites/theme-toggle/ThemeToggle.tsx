@@ -1,0 +1,18 @@
+'use client';
+
+import * as Switch from '@radix-ui/react-switch';
+import { Sun } from 'lucide-react';
+
+export const ThemeToggle = () => {
+  return (
+    <Switch.Root className="peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input">
+      <Switch.Thumb asChild>
+        <div className="absolute left-0.5 top-0.5 size-5 translate-x-0 rounded-full bg-secondary transition-transform data-[state=checked]:translate-x-5">
+          <div className="absolute inset-0 size-3 items-center justify-center text-neutral-50">
+            <Sun />
+          </div>
+        </div>
+      </Switch.Thumb>
+    </Switch.Root>
+  );
+};
