@@ -27,7 +27,10 @@ export const Header = (props: HeaderProps) => {
         )}
       >
         <Link href="/" className="flex items-center gap-2 no-underline">
-          <div className="size-8 rounded-lg bg-primary" />
+          <div className="size-10">
+            <img src="/logo.png" alt="Quantus Logo" className="size-full" />
+          </div>
+
           <span className="text-xl font-bold text-primary">
             {env.SITE_NAME}
           </span>

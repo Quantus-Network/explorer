@@ -30,11 +30,9 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success ? (
-            <p>{data?.last24Hour.totalCount}</p>
-          ) : (
-            <Skeleton className="h-6" />
-          )}
+          {success && <p>{data?.last24Hour.totalCount}</p>}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
         </CardContent>
       </Card>
     </div>
