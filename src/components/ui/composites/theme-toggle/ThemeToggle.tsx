@@ -21,10 +21,10 @@ export const ThemeToggle = () => {
     <Switch.Root
       checked={theme === 'dark'}
       onCheckedChange={toggleTheme}
-      className="peer relative flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+      className="relative flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
     >
       <Switch.Thumb asChild>
-        <div className="absolute flex size-8 -translate-x-1 items-center justify-center rounded-full border bg-secondary shadow-sm transition-transform duration-300 ease-in-out data-[state=checked]:translate-x-8">
+        <div className="absolute flex size-7 items-center justify-center rounded-full border bg-secondary shadow-md transition-transform duration-300 ease-in-out data-[state=checked]:translate-x-8">
           {theme === 'dark' ? <Moon /> : <Sun />}
         </div>
       </Switch.Thumb>
