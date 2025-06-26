@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
+import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -24,7 +25,7 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
             <NavigationMenuLink asChild>
               <Link
                 href={nav.path}
-                className="no-underline data-[active=true]:font-semibold"
+                className="no-underline data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
                 data-active={rootPath === nav.path.split('/')[1]}
               >
                 {nav.label}
@@ -32,6 +33,8 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
             </NavigationMenuLink>
           </NavigationMenuItem>
         ))}
+
+        <ThemeToggle />
       </NavigationMenuList>
     </NavigationMenu>
   );

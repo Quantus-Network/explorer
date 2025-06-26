@@ -1,16 +1,31 @@
 'use client';
 
 import * as Switch from '@radix-ui/react-switch';
-import { Sun } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useIsClient } from 'usehooks-ts';
+
+import { Skeleton } from '../../skeleton';
 
 export const ThemeToggle = () => {
+  const isClient = useIsClient();
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = (isDark: boolean) => {
+    setTheme(isDark ? 'dark' : 'light');
+  };
+
+  if (!isClient) return <Skeleton className="h-8 w-16 shrink-0 rounded-full" />;
+
   return (
-    <Switch.Root className="peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input">
+    <Switch.Root
+      checked={theme === 'dark'}
+      onCheckedChange={toggleTheme}
+      className="peer relative flex h-8 w-16 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+    >
       <Switch.Thumb asChild>
-        <div className="absolute left-0.5 top-0.5 size-5 translate-x-0 rounded-full bg-secondary transition-transform data-[state=checked]:translate-x-5">
-          <div className="absolute inset-0 size-3 items-center justify-center text-neutral-50">
-            <Sun />
-          </div>
+        <div className="absolute flex size-8 -translate-x-1 items-center justify-center rounded-full border bg-secondary shadow-sm transition-transform duration-300 ease-in-out data-[state=checked]:translate-x-8">
+          {theme === 'dark' ? <Moon /> : <Sun />}
         </div>
       </Switch.Thumb>
     </Switch.Root>

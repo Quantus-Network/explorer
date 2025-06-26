@@ -19,7 +19,7 @@ export const Header = (props: HeaderProps) => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="relative z-10 w-full border-b border-solid bg-neutral-50/80">
+    <header className="relative z-10 w-full border-b border-solid bg-navbar">
       <ContentContainer
         className={cn(
           'flex h-16 items-center justify-between',

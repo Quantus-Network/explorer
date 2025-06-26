@@ -18,7 +18,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2  md:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -45,7 +45,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="sm:col-[1/3] md:col-auto">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <h3>Active Accounts</h3>
