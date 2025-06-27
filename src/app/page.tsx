@@ -31,6 +31,7 @@ const Home = () => {
   return (
     <>
       <Hero />
+
       <RecentTransactions />
     </>
   );

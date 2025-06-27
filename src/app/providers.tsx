@@ -1,6 +1,7 @@
 'use client';
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ThemeProvider } from 'next-themes';
 import { NuqsAdapter } from 'nuqs/adapters/next';
 import type { PropsWithChildren } from 'react';
 
@@ -15,7 +16,16 @@ const Providers = ({ children }: PropsWithChildren) => {
 
   return (
     <NuqsAdapter>
-      <ApolloProvider client={client}>{children}</ApolloProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </ApolloProvider>
       <Toaster />
     </NuqsAdapter>
   );

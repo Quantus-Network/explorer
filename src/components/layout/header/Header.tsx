@@ -19,7 +19,7 @@ export const Header = (props: HeaderProps) => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <header className="relative z-10 w-full border-b border-solid bg-neutral-50/80">
+    <header className="relative z-10 w-full border-b border-solid bg-navbar">
       <ContentContainer
         className={cn(
           'flex h-16 items-center justify-between',
@@ -27,7 +27,10 @@ export const Header = (props: HeaderProps) => {
         )}
       >
         <Link href="/" className="flex items-center gap-2 no-underline">
-          <div className="size-8 rounded-lg bg-primary" />
+          <div className="size-10">
+            <img src="/logo.png" alt="Quantus Logo" className="size-full" />
+          </div>
+
           <span className="text-xl font-bold text-primary">
             {env.SITE_NAME}
           </span>

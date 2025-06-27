@@ -41,7 +41,7 @@ export default function manifest(): MetadataRoute.Manifest {
       }
     ],
     theme_color: '#FFEF00',
-    background_color: '#F1F1F1',
+    background_color: '#FFFFFF',
     display: 'standalone'
   };
 }
