@@ -1,0 +1,74 @@
+name: CI/CD Pipeline
+
+on:
+  # Trigger CI on pull requests to develop branch
+  pull_request:
+    branches: [develop]
+
+  # Trigger CD on push to main branch (after merge)
+  push:
+    branches: [main]
+
+jobs:
+  # Continuous Integration Job
+  ci:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun.js
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.16
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run linting
+        run: bun lint
+        continue-on-error: false
+
+      # NO TESTS YET
+      # - name: Run tests
+      #   run: bun test
+      #   continue-on-error: false
+
+  # Continuous Deployment Job
+  cd:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            # Navigate to project directory
+            cd ${{ secrets.VPS_PROJECT_PATH }}
+
+            # Pull latest changes
+            git pull origin main
+
+            # Install dependencies
+            yarn
+
+            # Build the application
+            yarn build
+
+            # Restart the application
+            pm2 restart ecosystem.config.js
+
+            # Save PM2 configuration
+            pm2 save
