@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   # Trigger CI on pull requests to develop branch
   pull_request:
-    branches: [develop]
+    branches: [main]
 
   # Trigger CD on push to main branch (after merge)
   push:
@@ -62,10 +62,10 @@ jobs:
             git pull origin main
 
             # Install dependencies
-            yarn
+            bun install
 
             # Build the application
-            yarn build
+            bun run build
 
             # Restart the application
             pm2 restart ecosystem.config.js
