@@ -6,6 +6,7 @@ import { startOfToday } from 'date-fns/startOfToday';
 import type { TransferWhereInput } from '@/__generated__/graphql';
 import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
+import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
 import { TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
@@ -39,7 +40,9 @@ export const transactions = {
         ) {
           fee
           extrinsicHash
-          blockNumber
+          block {
+            height
+          }
           amount
           timestamp
           from {
@@ -84,7 +87,9 @@ export const transactions = {
         ) {
           fee
           extrinsicHash
-          blockNumber
+          block {
+            height
+          }
           amount
           timestamp
           from {
@@ -104,7 +109,7 @@ export const transactions = {
       ...config,
       variables: {
         orderBy: TRANSACTION_SORTS.timestamp.DESC,
-        limit: 10
+        limit: QUERY_RECENT_LIMIT
       }
     });
   },
@@ -140,7 +145,9 @@ export const transactions = {
         transactions: transfers(where: { extrinsicHash_eq: $hash }) {
           fee
           extrinsicHash
-          blockNumber
+          block {
+              height
+          }
           amount
           timestamp
           from {

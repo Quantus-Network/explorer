@@ -29,7 +29,7 @@ export const Primary: Omit<Story, 'args'> = {
         data: [
           {
             id: '0x1234',
-            blockNumber: 293293,
+            block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
             amount: '999999',
@@ -39,7 +39,7 @@ export const Primary: Omit<Story, 'args'> = {
           },
           {
             id: '0x12341111',
-            blockNumber: 293293,
+            block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
             amount: '999999',
@@ -49,7 +49,7 @@ export const Primary: Omit<Story, 'args'> = {
           },
           {
             id: '0x1234aaaa',
-            blockNumber: 293293,
+            block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
             amount: '999999',
@@ -59,7 +59,7 @@ export const Primary: Omit<Story, 'args'> = {
           },
           {
             id: '0x1234zzzzzz',
-            blockNumber: 293293,
+            block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
             amount: '999999',

@@ -10,10 +10,19 @@ export interface TransactionHeadingProps {}
 
 export const TransactionHeading: React.FC<TransactionHeadingProps> = () => {
   const accountId = useSearchParams().get('accountId');
+  const block = useSearchParams().get('block');
 
   return (
     <div>
       <h1>Transactions</h1>
+
+      {block && (
+        <div className="flex gap-1">
+          <span>In block</span>
+          <Link href={`${RESOURCES.blocks}/${block}`}>{block}</Link>
+        </div>
+      )}
+
       {accountId && (
         <div className="flex gap-1">
           <span>By</span>
