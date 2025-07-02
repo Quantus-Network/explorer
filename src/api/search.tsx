@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import fetchClient from '@/config/fetch-client';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
-import type { SearchAllResponse } from '@/schemas/searchs';
+import type { SearchAllResponse } from '@/schemas';
 import { getGqlString } from '@/utils/get-gql-string';
 
 export const search = {

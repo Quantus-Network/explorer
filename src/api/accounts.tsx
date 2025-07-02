@@ -61,7 +61,9 @@ export const accounts = {
             node {
               fee
               extrinsicHash
-              blockNumber
+              block {
+                  height
+              }
               amount
               timestamp
               from {

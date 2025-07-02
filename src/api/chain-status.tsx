@@ -4,7 +4,7 @@ import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 import { subDays } from 'date-fns/subDays';
 
-import type { ChainStatusResponse } from '@/schemas/chain-status';
+import type { ChainStatusResponse } from '@/schemas';
 
 export const chainStatus = {
   useGetStatus: (config?: QueryHookOptions) => {

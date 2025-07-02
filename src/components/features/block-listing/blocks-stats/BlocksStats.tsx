@@ -1,6 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
 import api from '@/api';
@@ -8,15 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
-export interface TransactionsStatsProps {}
+export interface BlocksStatsProps {}
 
-export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
-  const accountId = useSearchParams().get('accountId');
-  const block = useSearchParams().get('block');
-
-  if (accountId || block) return null;
-
-  const { loading, data, error } = api.transactions.useGetStats({
+export const BlocksStats: React.FC<BlocksStatsProps> = () => {
+  const { loading, data, error } = api.chainStatus.useGetStatus({
     pollInterval: DATA_POOL_INTERVAL
   });
 
@@ -27,11 +21,24 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total Transactions (24H)</h3>
+            <h3>Latest Block</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.totalCount}</p>}
+          {success && <p>{data?.status.height}</p>}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <h3>Finalized Block</h3>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {success && <p>{data?.status.finalizedHeight}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

@@ -30,7 +30,14 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
         },
         {
           label: 'Block',
-          key: 'blockNumber'
+          key: 'block',
+          render: (value) => (
+            <LinkWithCopy
+              text={value.id}
+              href={`${RESOURCES.blocks}/${value.height}`}
+              className="break-all"
+            />
+          )
         },
         {
           label: 'Timestamp',

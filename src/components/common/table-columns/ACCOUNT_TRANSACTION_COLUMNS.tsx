@@ -24,10 +24,16 @@ export const ACCOUNT_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.blockNumber', {
+  columnHelper.accessor('node.block.height', {
     id: 'blockNumber',
     header: 'Block',
-    cell: (props) => `${props.getValue()}`,
+    cell: (props) => (
+      <LinkWithCopy
+        href={`${RESOURCES.blocks}/${props.getValue()}`}
+        text={props.getValue().toString()}
+        textCopy={props.getValue().toString()}
+      />
+    ),
     enableSorting: true
   }),
   columnHelper.accessor('node.timestamp', {

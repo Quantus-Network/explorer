@@ -4,23 +4,19 @@ import type {
   SortingState
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useSearchParams } from 'next/navigation';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
 import api from '@/api';
-import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
+import { BLOCK_COLUMNS } from '@/components/common/table-columns/BLOCK_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { TransactionSorts } from '@/constants/query-sorts';
-import { TRANSACTION_SORTS_LITERALS } from '@/constants/query-sorts';
-import type { Transaction } from '@/schemas';
+import type { BlockSorts } from '@/constants/query-sorts';
+import { BLOCK_SORTS_LITERALS } from '@/constants/query-sorts';
+import type { Block } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
-export const useTransactionsTable = () => {
-  const accountId = useSearchParams().get('accountId');
-  const block = useSearchParams().get('block');
-
+export const useBlocksTable = () => {
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
   const [limit, setLimit] = useQueryState(
     'limit',
@@ -28,7 +24,7 @@ export const useTransactionsTable = () => {
   );
   const [sortBy, setSortBy] = useQueryState(
     'sortBy',
-    parseAsStringLiteral(TRANSACTION_SORTS_LITERALS)
+    parseAsStringLiteral(BLOCK_SORTS_LITERALS)
   );
 
   const sortingValue: SortingState = transformSortLiteral(sortBy);
@@ -45,7 +41,7 @@ export const useTransactionsTable = () => {
         const key = newValue[0].id;
         const order = newValue[0].desc ? 'DESC' : 'ASC';
 
-        const newSortBy = `${key}_${order}` as TransactionSorts;
+        const newSortBy = `${key}_${order}` as BlockSorts;
 
         setSortBy(newSortBy);
       } else {
@@ -55,7 +51,7 @@ export const useTransactionsTable = () => {
       const key = sorting[0].id;
       const order = sorting[0].desc ? 'DESC' : 'ASC';
 
-      const newSortBy = `${key}_${order}` as TransactionSorts;
+      const newSortBy = `${key}_${order}` as BlockSorts;
 
       setSortBy(newSortBy);
     }
@@ -77,30 +73,19 @@ export const useTransactionsTable = () => {
     loading,
     data,
     error: fetchError
-  } = api.transactions.useGetAll({
+  } = api.blocks.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
       orderBy: sortBy,
       limit,
-      offset: page * limit,
-      ...(accountId && {
-        where: {
-          from: { id_eq: accountId },
-          OR: [{ to: { id_eq: accountId } }]
-        }
-      }),
-      ...(block && {
-        where: {
-          block: { height_eq: Number(block) }
-        }
-      })
+      offset: page * limit
     }
   });
-  const transactionColumns = useMemo(() => TRANSACTION_COLUMNS, []);
+  const blockColumns = useMemo(() => BLOCK_COLUMNS, []);
 
-  const table = useReactTable<Transaction>({
-    data: data?.transactions ?? [],
-    columns: transactionColumns,
+  const table = useReactTable<Block>({
+    data: data?.blocks ?? [],
+    columns: blockColumns,
     getCoreRowModel: getCoreRowModel(),
     state: {
       sorting: sortingValue,
