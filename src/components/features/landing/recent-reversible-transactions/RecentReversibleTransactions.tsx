@@ -7,18 +7,20 @@ import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 import { RESOURCES } from '@/constants/resources';
 
-import { BlocksTable } from '../block-tables/BlocksTable';
+import { ReversibleTransactionsTable } from '../reversible-transactions-table/ReversibleTransactionsTable';
 
-export const RecentBlocks = () => {
+export const RecentReversibleTransactions = () => {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h2>Recent Blocks</h2>
+        <h2>Recent Reversible Transactions</h2>
 
-        <BlocksTable />
+        <ReversibleTransactionsTable />
 
         <Button variant="link" className="mx-auto w-fit">
-          <Link href={RESOURCES.blocks}>See all transactions</Link>
+          <Link href={RESOURCES.reversibleTransactions}>
+            See all reversible transactions
+          </Link>
         </Button>
       </ContentContainer>
     </SectionContainer>

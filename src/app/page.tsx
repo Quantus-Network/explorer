@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 
 import { Hero } from '@/components/features/landing/hero/Hero';
-import { RecentBlocks } from '@/components/features/landing/recent-blocks/RecentTransactions';
+import { RecentBlocks } from '@/components/features/landing/recent-blocks/RecentBlocks';
+import { RecentReversibleTransactions } from '@/components/features/landing/recent-reversible-transactions/RecentReversibleTransactions';
 import { RecentTransactions } from '@/components/features/landing/recent-transactions/RecentTransactions';
 import defaultMetadata from '@/config/metadata';
 
@@ -34,6 +35,8 @@ const Home = () => {
       <Hero />
 
       <RecentTransactions />
+
+      <RecentReversibleTransactions />
 
       <RecentBlocks />
     </>

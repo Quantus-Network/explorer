@@ -18,7 +18,7 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
   const rootPath = location.split('/')[1];
 
   return (
-    <NavigationMenu className="hidden md:block">
+    <NavigationMenu className="hidden lg:block">
       <NavigationMenuList className="gap-8">
         {SITE_NAVIGATIONS.map((nav) => (
           <NavigationMenuItem key={nav.path}>

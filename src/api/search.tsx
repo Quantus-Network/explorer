@@ -16,6 +16,12 @@ export const search = {
         ) {
           extrinsicHash
         }
+        reversibleTransactions: reversibleTransfers(
+          limit: $limit
+          where: { extrinsicHash_startsWith: $keyword }
+        ) {
+          extrinsicHash
+        }
         accounts(limit: $limit, where: { id_startsWith: $keyword }) {
           id
         }
@@ -57,7 +63,9 @@ export const search = {
           ...config,
           variables: {
             keyword,
-            keyword_number: Number(keyword) || -1, // if the result of conversion is NaN, use -1 as fallback.
+            keyword_number: keyword.startsWith('0x')
+              ? -1
+              : Number(keyword) || -1, // if the result of conversion is NaN, use -1 as fallback.
             limit: SEARCH_PREVIEW_RESULTS_LIMIT
           }
         })

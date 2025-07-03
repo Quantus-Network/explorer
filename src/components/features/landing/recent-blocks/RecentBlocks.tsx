@@ -7,18 +7,18 @@ import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 import { RESOURCES } from '@/constants/resources';
 
-import { TransactionsTable } from '../transactions-table/TransactionsTable';
+import { BlocksTable } from '../block-tables/BlocksTable';
 
-export const RecentTransactions = () => {
+export const RecentBlocks = () => {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h2>Recent Transactions</h2>
+        <h2>Recent Blocks</h2>
 
-        <TransactionsTable />
+        <BlocksTable />
 
         <Button variant="link" className="mx-auto w-fit">
-          <Link href={RESOURCES.transactions}>See all transactions</Link>
+          <Link href={RESOURCES.blocks}>See all blocks</Link>
         </Button>
       </ContentContainer>
     </SectionContainer>

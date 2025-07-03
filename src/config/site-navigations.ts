@@ -6,6 +6,11 @@ export const SITE_NAVIGATIONS = [
     longLabel: 'Transactions'
   },
   {
+    label: 'Reversible Transactions',
+    path: '/reversible-transactions',
+    longLabel: 'Reversible Transactions'
+  },
+  {
     label: 'Accounts',
     path: '/accounts',
     longLabel: 'Accounts'
