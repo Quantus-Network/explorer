@@ -21,7 +21,7 @@ export const useTransactionsTable = () => {
   const accountId = useSearchParams().get('accountId');
   const block = useSearchParams().get('block');
 
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',
     parseAsInteger.withDefault(QUERY_DEFAULT_LIMIT)
@@ -31,10 +31,12 @@ export const useTransactionsTable = () => {
     parseAsStringLiteral(TRANSACTION_SORTS_LITERALS)
   );
 
+  const currentPageIndex = page - 1;
+
   const sortingValue: SortingState = transformSortLiteral(sortBy);
   const paginationValue: PaginationState = {
     pageSize: limit,
-    pageIndex: page
+    pageIndex: currentPageIndex
   };
 
   const handleChangeSorting: OnChangeFn<SortingState> = (sorting) => {
@@ -82,7 +84,7 @@ export const useTransactionsTable = () => {
     variables: {
       orderBy: sortBy,
       limit,
-      offset: page * limit,
+      offset: currentPageIndex * limit,
       ...(accountId && {
         where: {
           from: { id_eq: accountId },

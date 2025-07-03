@@ -28,7 +28,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   return (
     <ContentContainer
       className={cn(
-        'absolute top-16 bg-navbar-mobile-menu transition-opacity duration-300 ease-in-out opacity-100 md:hidden backdrop-blur-sm',
+        'absolute top-16 bg-navbar-mobile-menu transition-opacity duration-300 ease-in-out opacity-100 lg:hidden backdrop-blur-sm',
         !isOpen && 'opacity-0 pointer-events-none'
       )}
     >

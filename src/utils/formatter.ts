@@ -10,7 +10,7 @@ export const formatTimestamp = (timestamp?: string | Date) => {
 };
 
 export const formatMonetaryValue = (value: number, digits?: number) => {
-  const denominator = 10 ** 12;
+  const denominator = 10 ** 9;
   const convertedValue = value / denominator;
 
   if (!digits) return `${convertedValue} QUAN`;

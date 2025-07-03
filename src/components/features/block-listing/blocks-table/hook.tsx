@@ -17,7 +17,7 @@ import type { Block } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useBlocksTable = () => {
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',
     parseAsInteger.withDefault(QUERY_DEFAULT_LIMIT)
@@ -27,10 +27,12 @@ export const useBlocksTable = () => {
     parseAsStringLiteral(BLOCK_SORTS_LITERALS)
   );
 
+  const currentPageIndex = page - 1;
+
   const sortingValue: SortingState = transformSortLiteral(sortBy);
   const paginationValue: PaginationState = {
     pageSize: limit,
-    pageIndex: page
+    pageIndex: currentPageIndex
   };
 
   const handleChangeSorting: OnChangeFn<SortingState> = (sorting) => {
@@ -61,10 +63,10 @@ export const useBlocksTable = () => {
     if (typeof pagination === 'function') {
       const newPagination = pagination(paginationValue);
 
-      setPage(newPagination.pageIndex);
+      setPage(newPagination.pageIndex + 1);
       setLimit(newPagination.pageSize);
     } else {
-      setPage(pagination.pageIndex);
+      setPage(pagination.pageIndex + 1);
       setLimit(pagination.pageSize);
     }
   };
@@ -78,7 +80,7 @@ export const useBlocksTable = () => {
     variables: {
       orderBy: sortBy,
       limit,
-      offset: page * limit
+      offset: currentPageIndex * limit
     }
   });
   const blockColumns = useMemo(() => BLOCK_COLUMNS, []);

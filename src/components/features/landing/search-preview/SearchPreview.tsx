@@ -97,9 +97,16 @@ export const SearchPreview: React.FC<SearchPreviewProps> = ({
   isLoading,
   error
 }) => {
-  const { accounts, transactions } = searchResult || {};
+  const { accounts, transactions, blocks, reversibleTransactions } =
+    searchResult || {};
 
-  if (!isLoading && !transactions) {
+  if (
+    !isLoading &&
+    !transactions &&
+    !blocks &&
+    !accounts &&
+    !reversibleTransactions
+  ) {
     return null;
   }
 
@@ -128,6 +135,21 @@ export const SearchPreview: React.FC<SearchPreviewProps> = ({
             )}
           />
 
+          {/* Reversible Transactions */}
+          <Section
+            title="Reversible Transactions"
+            loading={isLoading}
+            error={error}
+            emptyMsg="No reversible transactions found."
+            items={reversibleTransactions}
+            renderItem={(tx) => (
+              <PreviewLink
+                href={`${RESOURCES.reversibleTransactions}/${tx.extrinsicHash}`}
+                label={`${tx.extrinsicHash}`}
+              />
+            )}
+          />
+
           {/* Accounts */}
           <Section
             title="Accounts"
@@ -139,6 +161,21 @@ export const SearchPreview: React.FC<SearchPreviewProps> = ({
               <PreviewLink
                 href={`${RESOURCES.accounts}/${acc.id}`}
                 label={`${acc.id}`}
+              />
+            )}
+          />
+
+          {/* Blocks */}
+          <Section
+            title="Blocks"
+            loading={isLoading}
+            error={error}
+            emptyMsg="No blocks found."
+            items={blocks}
+            renderItem={(block) => (
+              <PreviewLink
+                href={`${RESOURCES.blocks}/${block.height}`}
+                label={`${block.height}`}
               />
             )}
           />

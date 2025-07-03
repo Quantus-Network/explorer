@@ -11,7 +11,7 @@ import { Input } from '../../input';
 
 export interface SearchBoxProps {
   onKeywordChange: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
-  onSearch: (val: string, e: FormEvent<HTMLFormElement>) => void;
+  onSearch?: (val: string, e: FormEvent<HTMLFormElement>) => void;
   placeholder?: string;
 }
 
@@ -27,7 +27,7 @@ export const SearchBox = (props: SearchBoxProps) => {
         onSubmit={(e: any) => {
           e.preventDefault();
 
-          props.onSearch(e.target?.keyword?.value, e);
+          props.onSearch?.(e.target?.keyword?.value, e);
         }}
       >
         <Input

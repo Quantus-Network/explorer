@@ -4,19 +4,23 @@ import type {
   SortingState
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { useSearchParams } from 'next/navigation';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
 import api from '@/api';
-import { ACCOUNT_COLUMNS } from '@/components/common/table-columns/ACCOUNT_COLUMNS';
+import { REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/REVERSIBLE_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { AccountSorts } from '@/constants/query-sorts';
-import { ACCOUNT_SORTS_LITERALS } from '@/constants/query-sorts';
-import type { Account } from '@/schemas';
+import type { ReversibleTransactionSorts } from '@/constants/query-sorts';
+import { REVERSIBLE_TRANSACTION_SORTS_LITERALS } from '@/constants/query-sorts';
+import type { ReversibleTransaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
-export const useAccountsTable = () => {
+export const useReversibleTransactionsTable = () => {
+  const accountId = useSearchParams().get('accountId');
+  const block = useSearchParams().get('block');
+
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',
@@ -24,7 +28,7 @@ export const useAccountsTable = () => {
   );
   const [sortBy, setSortBy] = useQueryState(
     'sortBy',
-    parseAsStringLiteral(ACCOUNT_SORTS_LITERALS)
+    parseAsStringLiteral(REVERSIBLE_TRANSACTION_SORTS_LITERALS)
   );
 
   const currentPageIndex = page - 1;
@@ -43,7 +47,7 @@ export const useAccountsTable = () => {
         const key = newValue[0].id;
         const order = newValue[0].desc ? 'DESC' : 'ASC';
 
-        const newSortBy = `${key}_${order}` as AccountSorts;
+        const newSortBy = `${key}_${order}` as ReversibleTransactionSorts;
 
         setSortBy(newSortBy);
       } else {
@@ -53,7 +57,7 @@ export const useAccountsTable = () => {
       const key = sorting[0].id;
       const order = sorting[0].desc ? 'DESC' : 'ASC';
 
-      const newSortBy = `${key}_${order}` as AccountSorts;
+      const newSortBy = `${key}_${order}` as ReversibleTransactionSorts;
 
       setSortBy(newSortBy);
     }
@@ -63,10 +67,10 @@ export const useAccountsTable = () => {
     if (typeof pagination === 'function') {
       const newPagination = pagination(paginationValue);
 
-      setPage(newPagination.pageIndex);
+      setPage(newPagination.pageIndex + 1);
       setLimit(newPagination.pageSize);
     } else {
-      setPage(pagination.pageIndex);
+      setPage(pagination.pageIndex + 1);
       setLimit(pagination.pageSize);
     }
   };
@@ -75,19 +79,33 @@ export const useAccountsTable = () => {
     loading,
     data,
     error: fetchError
-  } = api.accounts.useGetAll({
+  } = api.reversibleTransactions.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
       orderBy: sortBy,
       limit,
-      offset: currentPageIndex * limit
+      offset: currentPageIndex * limit,
+      ...(accountId && {
+        where: {
+          who: { id_eq: accountId }
+        }
+      }),
+      ...(block && {
+        where: {
+          block: { height_eq: Number(block) }
+        }
+      })
     }
   });
-  const accountColumns = useMemo(() => ACCOUNT_COLUMNS, []);
 
-  const table = useReactTable<Account>({
-    data: data?.accounts ?? [],
-    columns: accountColumns,
+  const reversibleTransactionColumns = useMemo(
+    () => REVERSIBLE_TRANSACTION_COLUMNS,
+    []
+  );
+
+  const table = useReactTable<ReversibleTransaction>({
+    data: data?.reversibleTransactions ?? [],
+    columns: reversibleTransactionColumns,
     getCoreRowModel: getCoreRowModel(),
     state: {
       sorting: sortingValue,
@@ -119,6 +137,6 @@ export const useAccountsTable = () => {
   return {
     table,
     getStatus,
-    error
+    error: fetchError
   };
 };

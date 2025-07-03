@@ -41,7 +41,7 @@ export const Header = (props: HeaderProps) => {
         <Button
           variant="ghost"
           size="icon"
-          className="flex items-center justify-center md:hidden"
+          className="flex items-center justify-center lg:hidden"
           onClick={toggleMenu}
         >
           {isOpen ? <X className="!size-6" /> : <Menu className="!size-6" />}
