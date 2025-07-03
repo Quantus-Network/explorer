@@ -17,7 +17,7 @@ import type { Account } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useAccountsTable = () => {
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(0));
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',
     parseAsInteger.withDefault(QUERY_DEFAULT_LIMIT)
@@ -27,10 +27,12 @@ export const useAccountsTable = () => {
     parseAsStringLiteral(ACCOUNT_SORTS_LITERALS)
   );
 
+  const currentPageIndex = page - 1;
+
   const sortingValue: SortingState = transformSortLiteral(sortBy);
   const paginationValue: PaginationState = {
     pageSize: limit,
-    pageIndex: page
+    pageIndex: currentPageIndex
   };
 
   const handleChangeSorting: OnChangeFn<SortingState> = (sorting) => {
@@ -78,7 +80,7 @@ export const useAccountsTable = () => {
     variables: {
       orderBy: sortBy,
       limit,
-      offset: page * limit
+      offset: currentPageIndex * limit
     }
   });
   const accountColumns = useMemo(() => ACCOUNT_COLUMNS, []);

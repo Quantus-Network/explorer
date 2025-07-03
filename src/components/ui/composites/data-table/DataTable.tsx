@@ -6,20 +6,6 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 import { Alert, AlertDescription, AlertTitle } from '../../alert';
-import { Button } from '../../button';
-import { Input } from '../../input';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem
-} from '../../pagination';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '../../select';
 import {
   Table,
   TableBody,
@@ -29,6 +15,7 @@ import {
   TableRow
 } from '../../table';
 import { RowSkeleton } from './RowSkeleton';
+import { TableControls } from './TableControl';
 
 interface DataTableProps {
   table: ReactTable<any>;
@@ -46,11 +33,11 @@ export const DataTable = ({
   withControls = false,
   customCellProps = {}
 }: DataTableProps) => {
-  const { pageSize, pageIndex } = table.getState().pagination;
-  const columnsLength = table.getAllColumns().length;
+  const { pageSize } = table.getState().pagination;
 
-  const pageCount = table.getPageCount();
-  const currentPage = pageIndex + 1;
+  const tableRef = React.useRef<HTMLTableElement>(null);
+
+  const columnsLength = table.getAllColumns().length;
   const isEmptyData = table.getRowModel().rows.length === 0;
 
   const status = fetch?.status ?? 'success';
@@ -71,7 +58,7 @@ export const DataTable = ({
       <div
         className={cn('border', withControls ? 'rounded-t-md' : 'rounded-md')}
       >
-        <Table>
+        <Table ref={tableRef}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -109,7 +96,7 @@ export const DataTable = ({
 
           <TableBody>
             {status === 'loading' && (
-              <RowSkeleton columnsLength={columnsLength} />
+              <RowSkeleton rowCount={pageSize} columnsLength={columnsLength} />
             )}
 
             {table.getRowModel().rows.map((row) => {
@@ -134,76 +121,7 @@ export const DataTable = ({
 
       {status === 'error' && fetch?.errorFallback}
 
-      {withControls && (
-        <div className="flex flex-col gap-6 rounded-b-md border px-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-          <div className="flex items-center gap-2">
-            <span>Show:</span>
-
-            <Select
-              value={pageSize.toString()}
-              onValueChange={(val) => {
-                table.setPageSize(Number(val));
-              }}
-            >
-              <SelectTrigger className="max-w-16">
-                <SelectValue placeholder="25" />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectItem value="25">25</SelectItem>
-                <SelectItem value="50">50</SelectItem>
-                <SelectItem value="75">75</SelectItem>
-                <SelectItem value="100">100</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <span>Records</span>
-          </div>
-
-          <Pagination className="justify-stretch sm:justify-end">
-            <PaginationContent className="flex w-full items-center justify-between gap-2 sm:w-fit sm:justify-stretch">
-              <PaginationItem>
-                <Button
-                  variant="outline"
-                  onClick={table.previousPage}
-                  disabled={!table.getCanPreviousPage()}
-                >
-                  Previous
-                </Button>
-              </PaginationItem>
-
-              <div className="flex items-center gap-1">
-                <span className="hidden sm:inline">Page</span>
-
-                <Input
-                  className="h-9 w-12"
-                  defaultValue={currentPage}
-                  onChange={(e) => {
-                    const page = Number(e.target.value);
-
-                    if (page > 0 && page <= pageCount) {
-                      table.setPageIndex(page - 1);
-                    }
-                  }}
-                  disabled={pageCount <= 1}
-                />
-
-                <span>of {pageCount}</span>
-              </div>
-
-              <PaginationItem>
-                <Button
-                  variant="outline"
-                  onClick={table.nextPage}
-                  disabled={!table.getCanNextPage()}
-                >
-                  Next
-                </Button>
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      )}
+      {withControls && <TableControls table={table} tableRef={tableRef} />}
     </div>
   );
 };
