@@ -19,6 +19,9 @@ export const search = {
         accounts(limit: $limit, where: { id_containsInsensitive: $keyword }) {
           id
         }
+        blocks(limit: $limit, where: { hash_containsInsensitive: $keyword }) {
+          height
+        }
       }
     `;
 
