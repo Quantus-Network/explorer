@@ -11,13 +11,8 @@ import { useHero } from './hook';
 export interface HeroProps {}
 
 export const Hero = (props: HeroProps) => {
-  const {
-    handleSearch,
-    handleKeywordChange,
-    searchError,
-    searchLoading,
-    searchResult
-  } = useHero();
+  const { handleKeywordChange, searchError, searchLoading, searchResult } =
+    useHero();
 
   return (
     <SectionContainer>
@@ -35,8 +30,7 @@ export const Hero = (props: HeroProps) => {
 
         <div className="relative mx-auto w-full max-w-3xl">
           <SearchBox
-            placeholder="Search transaction hash, account id, or block number"
-            onSearch={handleSearch}
+            placeholder="Search transaction hash, account id, or block number/hash"
             onKeywordChange={handleKeywordChange}
           />
 

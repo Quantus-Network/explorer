@@ -97,9 +97,9 @@ export const SearchPreview: React.FC<SearchPreviewProps> = ({
   isLoading,
   error
 }) => {
-  const { accounts, transactions } = searchResult || {};
+  const { accounts, transactions, blocks } = searchResult || {};
 
-  if (!isLoading && !transactions) {
+  if (!isLoading && !transactions && !blocks && !accounts) {
     return null;
   }
 
@@ -139,6 +139,21 @@ export const SearchPreview: React.FC<SearchPreviewProps> = ({
               <PreviewLink
                 href={`${RESOURCES.accounts}/${acc.id}`}
                 label={`${acc.id}`}
+              />
+            )}
+          />
+
+          {/* Blocks */}
+          <Section
+            title="Blocks"
+            loading={isLoading}
+            error={error}
+            emptyMsg="No blocks found."
+            items={blocks}
+            renderItem={(block) => (
+              <PreviewLink
+                href={`${RESOURCES.blocks}/${block.height}`}
+                label={`${block.height}`}
               />
             )}
           />

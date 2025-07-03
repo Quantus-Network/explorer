@@ -9,17 +9,23 @@ import { getGqlString } from '@/utils/get-gql-string';
 export const search = {
   all: () => {
     const SEARCH_ALL = gql`
-      query SearchAll($keyword: String, $limit: Int) {
+      query SearchAll($keyword: String, $keyword_number: Int, $limit: Int) {
         transactions: transfers(
           limit: $limit
-          where: { extrinsicHash_containsInsensitive: $keyword }
+          where: { extrinsicHash_startsWith: $keyword }
         ) {
           extrinsicHash
         }
-        accounts(limit: $limit, where: { id_containsInsensitive: $keyword }) {
+        accounts(limit: $limit, where: { id_startsWith: $keyword }) {
           id
         }
-        blocks(limit: $limit, where: { hash_containsInsensitive: $keyword }) {
+        blocks(
+          limit: $limit
+          where: {
+            hash_startsWith: $keyword
+            OR: { height_eq: $keyword_number }
+          }
+        ) {
           height
         }
       }
@@ -31,7 +37,11 @@ export const search = {
           {
             query: getGqlString(SEARCH_ALL),
             variables: {
-              keyword
+              keyword,
+              keyword_number: keyword.startsWith('0x')
+                ? -1
+                : Number(keyword) || -1, // if the result of conversion is NaN, use -1 as fallback.
+              limit: SEARCH_PREVIEW_RESULTS_LIMIT
             },
             operationName: 'SearchAll'
           },
@@ -39,7 +49,7 @@ export const search = {
             retries: 0
           }
         ),
-      useQUery: (
+      useQuery: (
         keyword: string,
         config?: QueryHookOptions<SearchAllResponse>
       ) =>
@@ -47,6 +57,7 @@ export const search = {
           ...config,
           variables: {
             keyword,
+            keyword_number: Number(keyword) || -1, // if the result of conversion is NaN, use -1 as fallback.
             limit: SEARCH_PREVIEW_RESULTS_LIMIT
           }
         })
