@@ -24,8 +24,9 @@ export const accounts = {
       ) {
         accounts(limit: $limit, offset: $offset, orderBy: $orderBy) {
           id
-          balance
-          lastUpdated
+          free
+          frozen
+          reserved
         }
         meta: accountsConnection(orderBy: id_ASC) {
           totalCount
@@ -50,7 +51,9 @@ export const accounts = {
       query GetAccountById($id: String!) {
         account: accountById(id: $id) {
           id
-          balance
+          free
+          frozen
+          reserved
         }
         transactions: transfersConnection(
           orderBy: timestamp_DESC

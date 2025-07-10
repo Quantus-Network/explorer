@@ -28,7 +28,6 @@ export const Primary: Omit<Story, 'args'> = {
       const transactionDataTable = useReactTable<Transaction>({
         data: [
           {
-            id: '0x1234',
             block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
@@ -38,7 +37,6 @@ export const Primary: Omit<Story, 'args'> = {
             timestamp: new Date().toISOString()
           },
           {
-            id: '0x12341111',
             block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
@@ -48,7 +46,6 @@ export const Primary: Omit<Story, 'args'> = {
             timestamp: new Date().toISOString()
           },
           {
-            id: '0x1234aaaa',
             block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',
@@ -58,7 +55,6 @@ export const Primary: Omit<Story, 'args'> = {
             timestamp: new Date().toISOString()
           },
           {
-            id: '0x1234zzzzzz',
             block: { height: 293293 },
             extrinsicHash: '0xjdwjaidwjaidj',
             fee: '120000000',

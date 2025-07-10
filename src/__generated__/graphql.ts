@@ -35,11 +35,12 @@ export type Scalars = {
 
 export type Account = {
   __typename?: 'Account';
-  balance: Scalars['BigInt']['output'];
+  free: Scalars['BigInt']['output'];
+  frozen: Scalars['BigInt']['output'];
   /** Account address */
   id: Scalars['String']['output'];
-  isGenesis: Scalars['Boolean']['output'];
   lastUpdated: Scalars['Int']['output'];
+  reserved: Scalars['BigInt']['output'];
   transfersFrom: Array<Transfer>;
   transfersTo: Array<Transfer>;
 };
@@ -65,44 +66,59 @@ export type AccountEdge = {
 };
 
 export enum AccountOrderByInput {
-  BalanceAsc = 'balance_ASC',
-  BalanceAscNullsFirst = 'balance_ASC_NULLS_FIRST',
-  BalanceAscNullsLast = 'balance_ASC_NULLS_LAST',
-  BalanceDesc = 'balance_DESC',
-  BalanceDescNullsFirst = 'balance_DESC_NULLS_FIRST',
-  BalanceDescNullsLast = 'balance_DESC_NULLS_LAST',
+  FreeAsc = 'free_ASC',
+  FreeAscNullsFirst = 'free_ASC_NULLS_FIRST',
+  FreeAscNullsLast = 'free_ASC_NULLS_LAST',
+  FreeDesc = 'free_DESC',
+  FreeDescNullsFirst = 'free_DESC_NULLS_FIRST',
+  FreeDescNullsLast = 'free_DESC_NULLS_LAST',
+  FrozenAsc = 'frozen_ASC',
+  FrozenAscNullsFirst = 'frozen_ASC_NULLS_FIRST',
+  FrozenAscNullsLast = 'frozen_ASC_NULLS_LAST',
+  FrozenDesc = 'frozen_DESC',
+  FrozenDescNullsFirst = 'frozen_DESC_NULLS_FIRST',
+  FrozenDescNullsLast = 'frozen_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdAscNullsLast = 'id_ASC_NULLS_LAST',
   IdDesc = 'id_DESC',
   IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
   IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  IsGenesisAsc = 'isGenesis_ASC',
-  IsGenesisAscNullsFirst = 'isGenesis_ASC_NULLS_FIRST',
-  IsGenesisAscNullsLast = 'isGenesis_ASC_NULLS_LAST',
-  IsGenesisDesc = 'isGenesis_DESC',
-  IsGenesisDescNullsFirst = 'isGenesis_DESC_NULLS_FIRST',
-  IsGenesisDescNullsLast = 'isGenesis_DESC_NULLS_LAST',
   LastUpdatedAsc = 'lastUpdated_ASC',
   LastUpdatedAscNullsFirst = 'lastUpdated_ASC_NULLS_FIRST',
   LastUpdatedAscNullsLast = 'lastUpdated_ASC_NULLS_LAST',
   LastUpdatedDesc = 'lastUpdated_DESC',
   LastUpdatedDescNullsFirst = 'lastUpdated_DESC_NULLS_FIRST',
-  LastUpdatedDescNullsLast = 'lastUpdated_DESC_NULLS_LAST'
+  LastUpdatedDescNullsLast = 'lastUpdated_DESC_NULLS_LAST',
+  ReservedAsc = 'reserved_ASC',
+  ReservedAscNullsFirst = 'reserved_ASC_NULLS_FIRST',
+  ReservedAscNullsLast = 'reserved_ASC_NULLS_LAST',
+  ReservedDesc = 'reserved_DESC',
+  ReservedDescNullsFirst = 'reserved_DESC_NULLS_FIRST',
+  ReservedDescNullsLast = 'reserved_DESC_NULLS_LAST'
 }
 
 export type AccountWhereInput = {
   AND?: InputMaybe<Array<AccountWhereInput>>;
   OR?: InputMaybe<Array<AccountWhereInput>>;
-  balance_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  balance_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  balance_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  balance_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  balance_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  balance_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  balance_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  balance_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  balance_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  free_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  free_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  free_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  free_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  free_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  free_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  free_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  free_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  free_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  frozen_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  frozen_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  frozen_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  frozen_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  frozen_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  frozen_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  frozen_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  frozen_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  frozen_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   id_contains?: InputMaybe<Scalars['String']['input']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   id_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -120,9 +136,6 @@ export type AccountWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
   id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  isGenesis_eq?: InputMaybe<Scalars['Boolean']['input']>;
-  isGenesis_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  isGenesis_not_eq?: InputMaybe<Scalars['Boolean']['input']>;
   lastUpdated_eq?: InputMaybe<Scalars['Int']['input']>;
   lastUpdated_gt?: InputMaybe<Scalars['Int']['input']>;
   lastUpdated_gte?: InputMaybe<Scalars['Int']['input']>;
@@ -132,6 +145,15 @@ export type AccountWhereInput = {
   lastUpdated_lte?: InputMaybe<Scalars['Int']['input']>;
   lastUpdated_not_eq?: InputMaybe<Scalars['Int']['input']>;
   lastUpdated_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  reserved_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  reserved_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  reserved_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  reserved_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  reserved_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  reserved_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  reserved_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  reserved_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  reserved_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   transfersFrom_every?: InputMaybe<TransferWhereInput>;
   transfersFrom_none?: InputMaybe<TransferWhereInput>;
   transfersFrom_some?: InputMaybe<TransferWhereInput>;
@@ -143,6 +165,230 @@ export type AccountWhereInput = {
 export type AccountsConnection = {
   __typename?: 'AccountsConnection';
   edges: Array<AccountEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type BalanceEvent = {
+  __typename?: 'BalanceEvent';
+  account: Account;
+  amount: Scalars['BigInt']['output'];
+  event?: Maybe<Event>;
+  from?: Maybe<Account>;
+  id: Scalars['String']['output'];
+  to?: Maybe<Account>;
+  type: BalanceEventType;
+};
+
+export type BalanceEventEdge = {
+  __typename?: 'BalanceEventEdge';
+  cursor: Scalars['String']['output'];
+  node: BalanceEvent;
+};
+
+export enum BalanceEventOrderByInput {
+  AccountFreeAsc = 'account_free_ASC',
+  AccountFreeAscNullsFirst = 'account_free_ASC_NULLS_FIRST',
+  AccountFreeAscNullsLast = 'account_free_ASC_NULLS_LAST',
+  AccountFreeDesc = 'account_free_DESC',
+  AccountFreeDescNullsFirst = 'account_free_DESC_NULLS_FIRST',
+  AccountFreeDescNullsLast = 'account_free_DESC_NULLS_LAST',
+  AccountFrozenAsc = 'account_frozen_ASC',
+  AccountFrozenAscNullsFirst = 'account_frozen_ASC_NULLS_FIRST',
+  AccountFrozenAscNullsLast = 'account_frozen_ASC_NULLS_LAST',
+  AccountFrozenDesc = 'account_frozen_DESC',
+  AccountFrozenDescNullsFirst = 'account_frozen_DESC_NULLS_FIRST',
+  AccountFrozenDescNullsLast = 'account_frozen_DESC_NULLS_LAST',
+  AccountIdAsc = 'account_id_ASC',
+  AccountIdAscNullsFirst = 'account_id_ASC_NULLS_FIRST',
+  AccountIdAscNullsLast = 'account_id_ASC_NULLS_LAST',
+  AccountIdDesc = 'account_id_DESC',
+  AccountIdDescNullsFirst = 'account_id_DESC_NULLS_FIRST',
+  AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
+  AccountLastUpdatedAsc = 'account_lastUpdated_ASC',
+  AccountLastUpdatedAscNullsFirst = 'account_lastUpdated_ASC_NULLS_FIRST',
+  AccountLastUpdatedAscNullsLast = 'account_lastUpdated_ASC_NULLS_LAST',
+  AccountLastUpdatedDesc = 'account_lastUpdated_DESC',
+  AccountLastUpdatedDescNullsFirst = 'account_lastUpdated_DESC_NULLS_FIRST',
+  AccountLastUpdatedDescNullsLast = 'account_lastUpdated_DESC_NULLS_LAST',
+  AccountReservedAsc = 'account_reserved_ASC',
+  AccountReservedAscNullsFirst = 'account_reserved_ASC_NULLS_FIRST',
+  AccountReservedAscNullsLast = 'account_reserved_ASC_NULLS_LAST',
+  AccountReservedDesc = 'account_reserved_DESC',
+  AccountReservedDescNullsFirst = 'account_reserved_DESC_NULLS_FIRST',
+  AccountReservedDescNullsLast = 'account_reserved_DESC_NULLS_LAST',
+  AmountAsc = 'amount_ASC',
+  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
+  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
+  AmountDesc = 'amount_DESC',
+  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
+  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
+  EventExtrinsicHashAsc = 'event_extrinsicHash_ASC',
+  EventExtrinsicHashAscNullsFirst = 'event_extrinsicHash_ASC_NULLS_FIRST',
+  EventExtrinsicHashAscNullsLast = 'event_extrinsicHash_ASC_NULLS_LAST',
+  EventExtrinsicHashDesc = 'event_extrinsicHash_DESC',
+  EventExtrinsicHashDescNullsFirst = 'event_extrinsicHash_DESC_NULLS_FIRST',
+  EventExtrinsicHashDescNullsLast = 'event_extrinsicHash_DESC_NULLS_LAST',
+  EventIdAsc = 'event_id_ASC',
+  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
+  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
+  EventIdDesc = 'event_id_DESC',
+  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
+  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
+  EventTimestampAsc = 'event_timestamp_ASC',
+  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
+  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
+  EventTimestampDesc = 'event_timestamp_DESC',
+  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
+  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
+  EventTypeAsc = 'event_type_ASC',
+  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
+  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
+  EventTypeDesc = 'event_type_DESC',
+  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
+  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
+  FromFreeAsc = 'from_free_ASC',
+  FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
+  FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
+  FromFreeDesc = 'from_free_DESC',
+  FromFreeDescNullsFirst = 'from_free_DESC_NULLS_FIRST',
+  FromFreeDescNullsLast = 'from_free_DESC_NULLS_LAST',
+  FromFrozenAsc = 'from_frozen_ASC',
+  FromFrozenAscNullsFirst = 'from_frozen_ASC_NULLS_FIRST',
+  FromFrozenAscNullsLast = 'from_frozen_ASC_NULLS_LAST',
+  FromFrozenDesc = 'from_frozen_DESC',
+  FromFrozenDescNullsFirst = 'from_frozen_DESC_NULLS_FIRST',
+  FromFrozenDescNullsLast = 'from_frozen_DESC_NULLS_LAST',
+  FromIdAsc = 'from_id_ASC',
+  FromIdAscNullsFirst = 'from_id_ASC_NULLS_FIRST',
+  FromIdAscNullsLast = 'from_id_ASC_NULLS_LAST',
+  FromIdDesc = 'from_id_DESC',
+  FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
+  FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
+  FromLastUpdatedAsc = 'from_lastUpdated_ASC',
+  FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
+  FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
+  FromLastUpdatedDesc = 'from_lastUpdated_DESC',
+  FromLastUpdatedDescNullsFirst = 'from_lastUpdated_DESC_NULLS_FIRST',
+  FromLastUpdatedDescNullsLast = 'from_lastUpdated_DESC_NULLS_LAST',
+  FromReservedAsc = 'from_reserved_ASC',
+  FromReservedAscNullsFirst = 'from_reserved_ASC_NULLS_FIRST',
+  FromReservedAscNullsLast = 'from_reserved_ASC_NULLS_LAST',
+  FromReservedDesc = 'from_reserved_DESC',
+  FromReservedDescNullsFirst = 'from_reserved_DESC_NULLS_FIRST',
+  FromReservedDescNullsLast = 'from_reserved_DESC_NULLS_LAST',
+  IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdAscNullsLast = 'id_ASC_NULLS_LAST',
+  IdDesc = 'id_DESC',
+  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  ToFreeAsc = 'to_free_ASC',
+  ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
+  ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
+  ToFreeDesc = 'to_free_DESC',
+  ToFreeDescNullsFirst = 'to_free_DESC_NULLS_FIRST',
+  ToFreeDescNullsLast = 'to_free_DESC_NULLS_LAST',
+  ToFrozenAsc = 'to_frozen_ASC',
+  ToFrozenAscNullsFirst = 'to_frozen_ASC_NULLS_FIRST',
+  ToFrozenAscNullsLast = 'to_frozen_ASC_NULLS_LAST',
+  ToFrozenDesc = 'to_frozen_DESC',
+  ToFrozenDescNullsFirst = 'to_frozen_DESC_NULLS_FIRST',
+  ToFrozenDescNullsLast = 'to_frozen_DESC_NULLS_LAST',
+  ToIdAsc = 'to_id_ASC',
+  ToIdAscNullsFirst = 'to_id_ASC_NULLS_FIRST',
+  ToIdAscNullsLast = 'to_id_ASC_NULLS_LAST',
+  ToIdDesc = 'to_id_DESC',
+  ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
+  ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
+  ToLastUpdatedAsc = 'to_lastUpdated_ASC',
+  ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
+  ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
+  ToLastUpdatedDesc = 'to_lastUpdated_DESC',
+  ToLastUpdatedDescNullsFirst = 'to_lastUpdated_DESC_NULLS_FIRST',
+  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST',
+  ToReservedAsc = 'to_reserved_ASC',
+  ToReservedAscNullsFirst = 'to_reserved_ASC_NULLS_FIRST',
+  ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
+  ToReservedDesc = 'to_reserved_DESC',
+  ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
+  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST',
+  TypeAsc = 'type_ASC',
+  TypeAscNullsFirst = 'type_ASC_NULLS_FIRST',
+  TypeAscNullsLast = 'type_ASC_NULLS_LAST',
+  TypeDesc = 'type_DESC',
+  TypeDescNullsFirst = 'type_DESC_NULLS_FIRST',
+  TypeDescNullsLast = 'type_DESC_NULLS_LAST'
+}
+
+export enum BalanceEventType {
+  BalanceSet = 'BalanceSet',
+  Burned = 'Burned',
+  Deposit = 'Deposit',
+  DustLost = 'DustLost',
+  Endowed = 'Endowed',
+  Frozen = 'Frozen',
+  Locked = 'Locked',
+  Minted = 'Minted',
+  ReserveRepatriated = 'ReserveRepatriated',
+  Reserved = 'Reserved',
+  Restored = 'Restored',
+  Slashed = 'Slashed',
+  Suspended = 'Suspended',
+  Thawed = 'Thawed',
+  Unlocked = 'Unlocked',
+  Unreserved = 'Unreserved',
+  Upgraded = 'Upgraded',
+  Withdraw = 'Withdraw'
+}
+
+export type BalanceEventWhereInput = {
+  AND?: InputMaybe<Array<BalanceEventWhereInput>>;
+  OR?: InputMaybe<Array<BalanceEventWhereInput>>;
+  account?: InputMaybe<AccountWhereInput>;
+  account_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  event?: InputMaybe<EventWhereInput>;
+  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  from?: InputMaybe<AccountWhereInput>;
+  from_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_eq?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_not_eq?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_startsWith?: InputMaybe<Scalars['String']['input']>;
+  to?: InputMaybe<AccountWhereInput>;
+  to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  type_eq?: InputMaybe<BalanceEventType>;
+  type_in?: InputMaybe<Array<BalanceEventType>>;
+  type_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  type_not_eq?: InputMaybe<BalanceEventType>;
+  type_not_in?: InputMaybe<Array<BalanceEventType>>;
+};
+
+export type BalanceEventsConnection = {
+  __typename?: 'BalanceEventsConnection';
+  edges: Array<BalanceEventEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
 };
@@ -276,6 +522,7 @@ export type BlocksConnection = {
 
 export type Event = {
   __typename?: 'Event';
+  balanceEvent?: Maybe<BalanceEvent>;
   block: Block;
   extrinsicHash?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
@@ -292,6 +539,24 @@ export type EventEdge = {
 };
 
 export enum EventOrderByInput {
+  BalanceEventAmountAsc = 'balanceEvent_amount_ASC',
+  BalanceEventAmountAscNullsFirst = 'balanceEvent_amount_ASC_NULLS_FIRST',
+  BalanceEventAmountAscNullsLast = 'balanceEvent_amount_ASC_NULLS_LAST',
+  BalanceEventAmountDesc = 'balanceEvent_amount_DESC',
+  BalanceEventAmountDescNullsFirst = 'balanceEvent_amount_DESC_NULLS_FIRST',
+  BalanceEventAmountDescNullsLast = 'balanceEvent_amount_DESC_NULLS_LAST',
+  BalanceEventIdAsc = 'balanceEvent_id_ASC',
+  BalanceEventIdAscNullsFirst = 'balanceEvent_id_ASC_NULLS_FIRST',
+  BalanceEventIdAscNullsLast = 'balanceEvent_id_ASC_NULLS_LAST',
+  BalanceEventIdDesc = 'balanceEvent_id_DESC',
+  BalanceEventIdDescNullsFirst = 'balanceEvent_id_DESC_NULLS_FIRST',
+  BalanceEventIdDescNullsLast = 'balanceEvent_id_DESC_NULLS_LAST',
+  BalanceEventTypeAsc = 'balanceEvent_type_ASC',
+  BalanceEventTypeAscNullsFirst = 'balanceEvent_type_ASC_NULLS_FIRST',
+  BalanceEventTypeAscNullsLast = 'balanceEvent_type_ASC_NULLS_LAST',
+  BalanceEventTypeDesc = 'balanceEvent_type_DESC',
+  BalanceEventTypeDescNullsFirst = 'balanceEvent_type_DESC_NULLS_FIRST',
+  BalanceEventTypeDescNullsLast = 'balanceEvent_type_DESC_NULLS_LAST',
   BlockHashAsc = 'block_hash_ASC',
   BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
   BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
@@ -328,12 +593,24 @@ export enum EventOrderByInput {
   IdDesc = 'id_DESC',
   IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
   IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  ReversibleTransferAmountAsc = 'reversibleTransfer_amount_ASC',
+  ReversibleTransferAmountAscNullsFirst = 'reversibleTransfer_amount_ASC_NULLS_FIRST',
+  ReversibleTransferAmountAscNullsLast = 'reversibleTransfer_amount_ASC_NULLS_LAST',
+  ReversibleTransferAmountDesc = 'reversibleTransfer_amount_DESC',
+  ReversibleTransferAmountDescNullsFirst = 'reversibleTransfer_amount_DESC_NULLS_FIRST',
+  ReversibleTransferAmountDescNullsLast = 'reversibleTransfer_amount_DESC_NULLS_LAST',
   ReversibleTransferExtrinsicHashAsc = 'reversibleTransfer_extrinsicHash_ASC',
   ReversibleTransferExtrinsicHashAscNullsFirst = 'reversibleTransfer_extrinsicHash_ASC_NULLS_FIRST',
   ReversibleTransferExtrinsicHashAscNullsLast = 'reversibleTransfer_extrinsicHash_ASC_NULLS_LAST',
   ReversibleTransferExtrinsicHashDesc = 'reversibleTransfer_extrinsicHash_DESC',
   ReversibleTransferExtrinsicHashDescNullsFirst = 'reversibleTransfer_extrinsicHash_DESC_NULLS_FIRST',
   ReversibleTransferExtrinsicHashDescNullsLast = 'reversibleTransfer_extrinsicHash_DESC_NULLS_LAST',
+  ReversibleTransferFeeAsc = 'reversibleTransfer_fee_ASC',
+  ReversibleTransferFeeAscNullsFirst = 'reversibleTransfer_fee_ASC_NULLS_FIRST',
+  ReversibleTransferFeeAscNullsLast = 'reversibleTransfer_fee_ASC_NULLS_LAST',
+  ReversibleTransferFeeDesc = 'reversibleTransfer_fee_DESC',
+  ReversibleTransferFeeDescNullsFirst = 'reversibleTransfer_fee_DESC_NULLS_FIRST',
+  ReversibleTransferFeeDescNullsLast = 'reversibleTransfer_fee_DESC_NULLS_LAST',
   ReversibleTransferIdAsc = 'reversibleTransfer_id_ASC',
   ReversibleTransferIdAscNullsFirst = 'reversibleTransfer_id_ASC_NULLS_FIRST',
   ReversibleTransferIdAscNullsLast = 'reversibleTransfer_id_ASC_NULLS_LAST',
@@ -358,12 +635,12 @@ export enum EventOrderByInput {
   ReversibleTransferTimestampDesc = 'reversibleTransfer_timestamp_DESC',
   ReversibleTransferTimestampDescNullsFirst = 'reversibleTransfer_timestamp_DESC_NULLS_FIRST',
   ReversibleTransferTimestampDescNullsLast = 'reversibleTransfer_timestamp_DESC_NULLS_LAST',
-  ReversibleTransferTxAsc = 'reversibleTransfer_tx_ASC',
-  ReversibleTransferTxAscNullsFirst = 'reversibleTransfer_tx_ASC_NULLS_FIRST',
-  ReversibleTransferTxAscNullsLast = 'reversibleTransfer_tx_ASC_NULLS_LAST',
-  ReversibleTransferTxDesc = 'reversibleTransfer_tx_DESC',
-  ReversibleTransferTxDescNullsFirst = 'reversibleTransfer_tx_DESC_NULLS_FIRST',
-  ReversibleTransferTxDescNullsLast = 'reversibleTransfer_tx_DESC_NULLS_LAST',
+  ReversibleTransferTxIdAsc = 'reversibleTransfer_txId_ASC',
+  ReversibleTransferTxIdAscNullsFirst = 'reversibleTransfer_txId_ASC_NULLS_FIRST',
+  ReversibleTransferTxIdAscNullsLast = 'reversibleTransfer_txId_ASC_NULLS_LAST',
+  ReversibleTransferTxIdDesc = 'reversibleTransfer_txId_DESC',
+  ReversibleTransferTxIdDescNullsFirst = 'reversibleTransfer_txId_DESC_NULLS_FIRST',
+  ReversibleTransferTxIdDescNullsLast = 'reversibleTransfer_txId_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
   TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
   TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
@@ -409,6 +686,7 @@ export enum EventOrderByInput {
 }
 
 export enum EventType {
+  Balance = 'BALANCE',
   ReversibleTransfer = 'REVERSIBLE_TRANSFER',
   Transfer = 'TRANSFER'
 }
@@ -416,6 +694,8 @@ export enum EventType {
 export type EventWhereInput = {
   AND?: InputMaybe<Array<EventWhereInput>>;
   OR?: InputMaybe<Array<EventWhereInput>>;
+  balanceEvent?: InputMaybe<BalanceEventWhereInput>;
+  balanceEvent_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   block?: InputMaybe<BlockWhereInput>;
   block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
@@ -494,6 +774,9 @@ export type Query = {
   accountById?: Maybe<Account>;
   accounts: Array<Account>;
   accountsConnection: AccountsConnection;
+  balanceEventById?: Maybe<BalanceEvent>;
+  balanceEvents: Array<BalanceEvent>;
+  balanceEventsConnection: BalanceEventsConnection;
   blockById?: Maybe<Block>;
   blocks: Array<Block>;
   blocksConnection: BlocksConnection;
@@ -525,6 +808,24 @@ export type QueryAccountsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy: Array<AccountOrderByInput>;
   where?: InputMaybe<AccountWhereInput>;
+};
+
+export type QueryBalanceEventByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type QueryBalanceEventsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<BalanceEventOrderByInput>>;
+  where?: InputMaybe<BalanceEventWhereInput>;
+};
+
+export type QueryBalanceEventsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<BalanceEventOrderByInput>;
+  where?: InputMaybe<BalanceEventWhereInput>;
 };
 
 export type QueryBlockByIdArgs = {
@@ -601,15 +902,18 @@ export type QueryTransfersConnectionArgs = {
 
 export type ReversibleTransfer = {
   __typename?: 'ReversibleTransfer';
+  amount: Scalars['BigInt']['output'];
   block: Block;
   event?: Maybe<Event>;
   extrinsicHash?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['BigInt']['output'];
+  from: Account;
   id: Scalars['String']['output'];
   scheduledAt: Scalars['DateTime']['output'];
   status: ReversibleTransferStatus;
   timestamp: Scalars['DateTime']['output'];
-  tx: Scalars['String']['output'];
-  who: Account;
+  to: Account;
+  txId: Scalars['String']['output'];
 };
 
 export type ReversibleTransferEdge = {
@@ -619,6 +923,12 @@ export type ReversibleTransferEdge = {
 };
 
 export enum ReversibleTransferOrderByInput {
+  AmountAsc = 'amount_ASC',
+  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
+  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
+  AmountDesc = 'amount_DESC',
+  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
+  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
   BlockHashAsc = 'block_hash_ASC',
   BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
   BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
@@ -673,6 +983,42 @@ export enum ReversibleTransferOrderByInput {
   ExtrinsicHashDesc = 'extrinsicHash_DESC',
   ExtrinsicHashDescNullsFirst = 'extrinsicHash_DESC_NULLS_FIRST',
   ExtrinsicHashDescNullsLast = 'extrinsicHash_DESC_NULLS_LAST',
+  FeeAsc = 'fee_ASC',
+  FeeAscNullsFirst = 'fee_ASC_NULLS_FIRST',
+  FeeAscNullsLast = 'fee_ASC_NULLS_LAST',
+  FeeDesc = 'fee_DESC',
+  FeeDescNullsFirst = 'fee_DESC_NULLS_FIRST',
+  FeeDescNullsLast = 'fee_DESC_NULLS_LAST',
+  FromFreeAsc = 'from_free_ASC',
+  FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
+  FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
+  FromFreeDesc = 'from_free_DESC',
+  FromFreeDescNullsFirst = 'from_free_DESC_NULLS_FIRST',
+  FromFreeDescNullsLast = 'from_free_DESC_NULLS_LAST',
+  FromFrozenAsc = 'from_frozen_ASC',
+  FromFrozenAscNullsFirst = 'from_frozen_ASC_NULLS_FIRST',
+  FromFrozenAscNullsLast = 'from_frozen_ASC_NULLS_LAST',
+  FromFrozenDesc = 'from_frozen_DESC',
+  FromFrozenDescNullsFirst = 'from_frozen_DESC_NULLS_FIRST',
+  FromFrozenDescNullsLast = 'from_frozen_DESC_NULLS_LAST',
+  FromIdAsc = 'from_id_ASC',
+  FromIdAscNullsFirst = 'from_id_ASC_NULLS_FIRST',
+  FromIdAscNullsLast = 'from_id_ASC_NULLS_LAST',
+  FromIdDesc = 'from_id_DESC',
+  FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
+  FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
+  FromLastUpdatedAsc = 'from_lastUpdated_ASC',
+  FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
+  FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
+  FromLastUpdatedDesc = 'from_lastUpdated_DESC',
+  FromLastUpdatedDescNullsFirst = 'from_lastUpdated_DESC_NULLS_FIRST',
+  FromLastUpdatedDescNullsLast = 'from_lastUpdated_DESC_NULLS_LAST',
+  FromReservedAsc = 'from_reserved_ASC',
+  FromReservedAscNullsFirst = 'from_reserved_ASC_NULLS_FIRST',
+  FromReservedAscNullsLast = 'from_reserved_ASC_NULLS_LAST',
+  FromReservedDesc = 'from_reserved_DESC',
+  FromReservedDescNullsFirst = 'from_reserved_DESC_NULLS_FIRST',
+  FromReservedDescNullsLast = 'from_reserved_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdAscNullsLast = 'id_ASC_NULLS_LAST',
@@ -697,36 +1043,42 @@ export enum ReversibleTransferOrderByInput {
   TimestampDesc = 'timestamp_DESC',
   TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
   TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TxAsc = 'tx_ASC',
-  TxAscNullsFirst = 'tx_ASC_NULLS_FIRST',
-  TxAscNullsLast = 'tx_ASC_NULLS_LAST',
-  TxDesc = 'tx_DESC',
-  TxDescNullsFirst = 'tx_DESC_NULLS_FIRST',
-  TxDescNullsLast = 'tx_DESC_NULLS_LAST',
-  WhoBalanceAsc = 'who_balance_ASC',
-  WhoBalanceAscNullsFirst = 'who_balance_ASC_NULLS_FIRST',
-  WhoBalanceAscNullsLast = 'who_balance_ASC_NULLS_LAST',
-  WhoBalanceDesc = 'who_balance_DESC',
-  WhoBalanceDescNullsFirst = 'who_balance_DESC_NULLS_FIRST',
-  WhoBalanceDescNullsLast = 'who_balance_DESC_NULLS_LAST',
-  WhoIdAsc = 'who_id_ASC',
-  WhoIdAscNullsFirst = 'who_id_ASC_NULLS_FIRST',
-  WhoIdAscNullsLast = 'who_id_ASC_NULLS_LAST',
-  WhoIdDesc = 'who_id_DESC',
-  WhoIdDescNullsFirst = 'who_id_DESC_NULLS_FIRST',
-  WhoIdDescNullsLast = 'who_id_DESC_NULLS_LAST',
-  WhoIsGenesisAsc = 'who_isGenesis_ASC',
-  WhoIsGenesisAscNullsFirst = 'who_isGenesis_ASC_NULLS_FIRST',
-  WhoIsGenesisAscNullsLast = 'who_isGenesis_ASC_NULLS_LAST',
-  WhoIsGenesisDesc = 'who_isGenesis_DESC',
-  WhoIsGenesisDescNullsFirst = 'who_isGenesis_DESC_NULLS_FIRST',
-  WhoIsGenesisDescNullsLast = 'who_isGenesis_DESC_NULLS_LAST',
-  WhoLastUpdatedAsc = 'who_lastUpdated_ASC',
-  WhoLastUpdatedAscNullsFirst = 'who_lastUpdated_ASC_NULLS_FIRST',
-  WhoLastUpdatedAscNullsLast = 'who_lastUpdated_ASC_NULLS_LAST',
-  WhoLastUpdatedDesc = 'who_lastUpdated_DESC',
-  WhoLastUpdatedDescNullsFirst = 'who_lastUpdated_DESC_NULLS_FIRST',
-  WhoLastUpdatedDescNullsLast = 'who_lastUpdated_DESC_NULLS_LAST'
+  ToFreeAsc = 'to_free_ASC',
+  ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
+  ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
+  ToFreeDesc = 'to_free_DESC',
+  ToFreeDescNullsFirst = 'to_free_DESC_NULLS_FIRST',
+  ToFreeDescNullsLast = 'to_free_DESC_NULLS_LAST',
+  ToFrozenAsc = 'to_frozen_ASC',
+  ToFrozenAscNullsFirst = 'to_frozen_ASC_NULLS_FIRST',
+  ToFrozenAscNullsLast = 'to_frozen_ASC_NULLS_LAST',
+  ToFrozenDesc = 'to_frozen_DESC',
+  ToFrozenDescNullsFirst = 'to_frozen_DESC_NULLS_FIRST',
+  ToFrozenDescNullsLast = 'to_frozen_DESC_NULLS_LAST',
+  ToIdAsc = 'to_id_ASC',
+  ToIdAscNullsFirst = 'to_id_ASC_NULLS_FIRST',
+  ToIdAscNullsLast = 'to_id_ASC_NULLS_LAST',
+  ToIdDesc = 'to_id_DESC',
+  ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
+  ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
+  ToLastUpdatedAsc = 'to_lastUpdated_ASC',
+  ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
+  ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
+  ToLastUpdatedDesc = 'to_lastUpdated_DESC',
+  ToLastUpdatedDescNullsFirst = 'to_lastUpdated_DESC_NULLS_FIRST',
+  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST',
+  ToReservedAsc = 'to_reserved_ASC',
+  ToReservedAscNullsFirst = 'to_reserved_ASC_NULLS_FIRST',
+  ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
+  ToReservedDesc = 'to_reserved_DESC',
+  ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
+  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST',
+  TxIdAsc = 'txId_ASC',
+  TxIdAscNullsFirst = 'txId_ASC_NULLS_FIRST',
+  TxIdAscNullsLast = 'txId_ASC_NULLS_LAST',
+  TxIdDesc = 'txId_DESC',
+  TxIdDescNullsFirst = 'txId_DESC_NULLS_FIRST',
+  TxIdDescNullsLast = 'txId_DESC_NULLS_LAST'
 }
 
 export enum ReversibleTransferStatus {
@@ -738,6 +1090,15 @@ export enum ReversibleTransferStatus {
 export type ReversibleTransferWhereInput = {
   AND?: InputMaybe<Array<ReversibleTransferWhereInput>>;
   OR?: InputMaybe<Array<ReversibleTransferWhereInput>>;
+  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   block?: InputMaybe<BlockWhereInput>;
   block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   event?: InputMaybe<EventWhereInput>;
@@ -761,6 +1122,17 @@ export type ReversibleTransferWhereInput = {
   extrinsicHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   extrinsicHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_startsWith?: InputMaybe<Scalars['String']['input']>;
+  fee_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  fee_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  fee_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  fee_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  fee_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  fee_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  fee_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  fee_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  fee_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  from?: InputMaybe<AccountWhereInput>;
+  from_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   id_contains?: InputMaybe<Scalars['String']['input']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   id_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -801,25 +1173,25 @@ export type ReversibleTransferWhereInput = {
   timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
   timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  tx_contains?: InputMaybe<Scalars['String']['input']>;
-  tx_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  tx_endsWith?: InputMaybe<Scalars['String']['input']>;
-  tx_eq?: InputMaybe<Scalars['String']['input']>;
-  tx_gt?: InputMaybe<Scalars['String']['input']>;
-  tx_gte?: InputMaybe<Scalars['String']['input']>;
-  tx_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  tx_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  tx_lt?: InputMaybe<Scalars['String']['input']>;
-  tx_lte?: InputMaybe<Scalars['String']['input']>;
-  tx_not_contains?: InputMaybe<Scalars['String']['input']>;
-  tx_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  tx_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  tx_not_eq?: InputMaybe<Scalars['String']['input']>;
-  tx_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  tx_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  tx_startsWith?: InputMaybe<Scalars['String']['input']>;
-  who?: InputMaybe<AccountWhereInput>;
-  who_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  to?: InputMaybe<AccountWhereInput>;
+  to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  txId_contains?: InputMaybe<Scalars['String']['input']>;
+  txId_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  txId_endsWith?: InputMaybe<Scalars['String']['input']>;
+  txId_eq?: InputMaybe<Scalars['String']['input']>;
+  txId_gt?: InputMaybe<Scalars['String']['input']>;
+  txId_gte?: InputMaybe<Scalars['String']['input']>;
+  txId_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  txId_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  txId_lt?: InputMaybe<Scalars['String']['input']>;
+  txId_lte?: InputMaybe<Scalars['String']['input']>;
+  txId_not_contains?: InputMaybe<Scalars['String']['input']>;
+  txId_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  txId_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  txId_not_eq?: InputMaybe<Scalars['String']['input']>;
+  txId_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  txId_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  txId_startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ReversibleTransfersConnection = {
@@ -927,30 +1299,36 @@ export enum TransferOrderByInput {
   FeeDesc = 'fee_DESC',
   FeeDescNullsFirst = 'fee_DESC_NULLS_FIRST',
   FeeDescNullsLast = 'fee_DESC_NULLS_LAST',
-  FromBalanceAsc = 'from_balance_ASC',
-  FromBalanceAscNullsFirst = 'from_balance_ASC_NULLS_FIRST',
-  FromBalanceAscNullsLast = 'from_balance_ASC_NULLS_LAST',
-  FromBalanceDesc = 'from_balance_DESC',
-  FromBalanceDescNullsFirst = 'from_balance_DESC_NULLS_FIRST',
-  FromBalanceDescNullsLast = 'from_balance_DESC_NULLS_LAST',
+  FromFreeAsc = 'from_free_ASC',
+  FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
+  FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
+  FromFreeDesc = 'from_free_DESC',
+  FromFreeDescNullsFirst = 'from_free_DESC_NULLS_FIRST',
+  FromFreeDescNullsLast = 'from_free_DESC_NULLS_LAST',
+  FromFrozenAsc = 'from_frozen_ASC',
+  FromFrozenAscNullsFirst = 'from_frozen_ASC_NULLS_FIRST',
+  FromFrozenAscNullsLast = 'from_frozen_ASC_NULLS_LAST',
+  FromFrozenDesc = 'from_frozen_DESC',
+  FromFrozenDescNullsFirst = 'from_frozen_DESC_NULLS_FIRST',
+  FromFrozenDescNullsLast = 'from_frozen_DESC_NULLS_LAST',
   FromIdAsc = 'from_id_ASC',
   FromIdAscNullsFirst = 'from_id_ASC_NULLS_FIRST',
   FromIdAscNullsLast = 'from_id_ASC_NULLS_LAST',
   FromIdDesc = 'from_id_DESC',
   FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
   FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsGenesisAsc = 'from_isGenesis_ASC',
-  FromIsGenesisAscNullsFirst = 'from_isGenesis_ASC_NULLS_FIRST',
-  FromIsGenesisAscNullsLast = 'from_isGenesis_ASC_NULLS_LAST',
-  FromIsGenesisDesc = 'from_isGenesis_DESC',
-  FromIsGenesisDescNullsFirst = 'from_isGenesis_DESC_NULLS_FIRST',
-  FromIsGenesisDescNullsLast = 'from_isGenesis_DESC_NULLS_LAST',
   FromLastUpdatedAsc = 'from_lastUpdated_ASC',
   FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
   FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
   FromLastUpdatedDesc = 'from_lastUpdated_DESC',
   FromLastUpdatedDescNullsFirst = 'from_lastUpdated_DESC_NULLS_FIRST',
   FromLastUpdatedDescNullsLast = 'from_lastUpdated_DESC_NULLS_LAST',
+  FromReservedAsc = 'from_reserved_ASC',
+  FromReservedAscNullsFirst = 'from_reserved_ASC_NULLS_FIRST',
+  FromReservedAscNullsLast = 'from_reserved_ASC_NULLS_LAST',
+  FromReservedDesc = 'from_reserved_DESC',
+  FromReservedDescNullsFirst = 'from_reserved_DESC_NULLS_FIRST',
+  FromReservedDescNullsLast = 'from_reserved_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdAscNullsLast = 'id_ASC_NULLS_LAST',
@@ -963,30 +1341,36 @@ export enum TransferOrderByInput {
   TimestampDesc = 'timestamp_DESC',
   TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
   TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  ToBalanceAsc = 'to_balance_ASC',
-  ToBalanceAscNullsFirst = 'to_balance_ASC_NULLS_FIRST',
-  ToBalanceAscNullsLast = 'to_balance_ASC_NULLS_LAST',
-  ToBalanceDesc = 'to_balance_DESC',
-  ToBalanceDescNullsFirst = 'to_balance_DESC_NULLS_FIRST',
-  ToBalanceDescNullsLast = 'to_balance_DESC_NULLS_LAST',
+  ToFreeAsc = 'to_free_ASC',
+  ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
+  ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
+  ToFreeDesc = 'to_free_DESC',
+  ToFreeDescNullsFirst = 'to_free_DESC_NULLS_FIRST',
+  ToFreeDescNullsLast = 'to_free_DESC_NULLS_LAST',
+  ToFrozenAsc = 'to_frozen_ASC',
+  ToFrozenAscNullsFirst = 'to_frozen_ASC_NULLS_FIRST',
+  ToFrozenAscNullsLast = 'to_frozen_ASC_NULLS_LAST',
+  ToFrozenDesc = 'to_frozen_DESC',
+  ToFrozenDescNullsFirst = 'to_frozen_DESC_NULLS_FIRST',
+  ToFrozenDescNullsLast = 'to_frozen_DESC_NULLS_LAST',
   ToIdAsc = 'to_id_ASC',
   ToIdAscNullsFirst = 'to_id_ASC_NULLS_FIRST',
   ToIdAscNullsLast = 'to_id_ASC_NULLS_LAST',
   ToIdDesc = 'to_id_DESC',
   ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
   ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsGenesisAsc = 'to_isGenesis_ASC',
-  ToIsGenesisAscNullsFirst = 'to_isGenesis_ASC_NULLS_FIRST',
-  ToIsGenesisAscNullsLast = 'to_isGenesis_ASC_NULLS_LAST',
-  ToIsGenesisDesc = 'to_isGenesis_DESC',
-  ToIsGenesisDescNullsFirst = 'to_isGenesis_DESC_NULLS_FIRST',
-  ToIsGenesisDescNullsLast = 'to_isGenesis_DESC_NULLS_LAST',
   ToLastUpdatedAsc = 'to_lastUpdated_ASC',
   ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
   ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
   ToLastUpdatedDesc = 'to_lastUpdated_DESC',
   ToLastUpdatedDescNullsFirst = 'to_lastUpdated_DESC_NULLS_FIRST',
-  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST'
+  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST',
+  ToReservedAsc = 'to_reserved_ASC',
+  ToReservedAscNullsFirst = 'to_reserved_ASC_NULLS_FIRST',
+  ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
+  ToReservedDesc = 'to_reserved_DESC',
+  ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
+  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST'
 }
 
 export type TransferWhereInput = {
@@ -1092,6 +1476,7 @@ export type GetStatusQuery = {
 
 export type SearchAllQueryVariables = Exact<{
   keyword?: InputMaybe<Scalars['String']['input']>;
+  keyword_number?: InputMaybe<Scalars['Int']['input']>;
   limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
@@ -1101,7 +1486,12 @@ export type SearchAllQuery = {
     __typename?: 'Transfer';
     extrinsicHash?: string | null;
   }>;
+  reversibleTransactions: Array<{
+    __typename?: 'ReversibleTransfer';
+    extrinsicHash?: string | null;
+  }>;
   accounts: Array<{ __typename?: 'Account'; id: string }>;
+  blocks: Array<{ __typename?: 'Block'; height: number }>;
 };
 
 export type GetTransactionsQueryVariables = Exact<{
@@ -1154,6 +1544,24 @@ export type GetTransactionsStatsQueryVariables = Exact<{
 export type GetTransactionsStatsQuery = {
   __typename?: 'Query';
   last24Hour: { __typename?: 'TransfersConnection'; totalCount: number };
+};
+
+export type GetTransactionByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetTransactionByHashQuery = {
+  __typename?: 'Query';
+  transactions: Array<{
+    __typename?: 'Transfer';
+    fee: any;
+    extrinsicHash?: string | null;
+    amount: any;
+    timestamp: any;
+    block: { __typename?: 'Block'; height: number };
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
 };
 
 export const GetStatusDocument = {
@@ -1311,6 +1719,14 @@ export const SearchAllDocument = {
           kind: 'VariableDefinition',
           variable: {
             kind: 'Variable',
+            name: { kind: 'Name', value: 'keyword_number' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
             name: { kind: 'Name', value: 'limit' }
           },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
@@ -1340,10 +1756,48 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: {
-                        kind: 'Name',
-                        value: 'extrinsicHash_containsInsensitive'
-                      },
+                      name: { kind: 'Name', value: 'extrinsicHash_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsicHash' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'reversibleTransactions' },
+            name: { kind: 'Name', value: 'reversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsicHash_startsWith' },
                       value: {
                         kind: 'Variable',
                         name: { kind: 'Name', value: 'keyword' }
@@ -1383,7 +1837,7 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'id_containsInsensitive' },
+                      name: { kind: 'Name', value: 'id_startsWith' },
                       value: {
                         kind: 'Variable',
                         name: { kind: 'Name', value: 'keyword' }
@@ -1397,6 +1851,60 @@ export const SearchAllDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'blocks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'hash_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword_number' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
               ]
             }
           }
@@ -1784,4 +2292,98 @@ export const GetTransactionsStatsDocument = {
 } as unknown as DocumentNode<
   GetTransactionsStatsQuery,
   GetTransactionsStatsQueryVariables
+>;
+export const GetTransactionByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTransactionByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsicHash_eq' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'hash' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsicHash' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetTransactionByHashQuery,
+  GetTransactionByHashQueryVariables
 >;

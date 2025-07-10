@@ -141,12 +141,12 @@ export const transactions = {
   getByHash: () => {
     const QUERY_NAME = 'GetTransactionByHash';
     const QUERY = gql`
-      query ${QUERY_NAME}($hash: String!) {
+      query GetTransactionByHash($hash: String!) {
         transactions: transfers(where: { extrinsicHash_eq: $hash }) {
           fee
           extrinsicHash
           block {
-              height
+            height
           }
           amount
           timestamp

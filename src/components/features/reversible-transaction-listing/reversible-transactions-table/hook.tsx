@@ -87,7 +87,7 @@ export const useReversibleTransactionsTable = () => {
       offset: currentPageIndex * limit,
       ...(accountId && {
         where: {
-          who: { id_eq: accountId }
+          from: { id_eq: accountId }
         }
       }),
       ...(block && {

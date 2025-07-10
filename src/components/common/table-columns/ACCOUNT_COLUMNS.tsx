@@ -19,21 +19,22 @@ export const ACCOUNT_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('balance', {
-    id: 'balance',
-    header: 'Balance',
+  columnHelper.accessor('free', {
+    id: 'free',
+    header: 'Free',
+    cell: (props) => formatMonetaryValue(props.getValue(), 5),
+    enableSorting: true
+  }),
+  columnHelper.accessor('frozen', {
+    id: 'frozen',
+    header: 'Frozen',
+    cell: (props) => formatMonetaryValue(props.getValue(), 5),
+    enableSorting: true
+  }),
+  columnHelper.accessor('reserved', {
+    id: 'reserved',
+    header: 'Reserved',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   })
-  // columnHelper.accessor('lastUpdated', {
-  //   id: 'last-updated',
-  //   header: 'Last Updated',
-  //   cell: (props) =>
-  //     format(
-  //       (typeof props.getValue() === 'string' && new Date(props.getValue())) ||
-  //         props.getValue(),
-  //       'MM/dd/yyyy, hh:mm:ss'
-  //     ),
-  //   enableSorting: true
-  // })
 ];

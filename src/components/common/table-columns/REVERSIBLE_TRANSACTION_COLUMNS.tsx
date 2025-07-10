@@ -9,24 +9,12 @@ import { formatTimestamp, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<ReversibleTransaction>();
 
 export const REVERSIBLE_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('tx', {
-    id: 'tx',
-    header: 'Transaction',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.transactions}/${props.getValue()}`}
-        text={formatTxAddress(props.getValue() ?? '-')}
-        textCopy={props.getValue() ?? ''}
-      />
-    ),
-    enableSorting: false
-  }),
   columnHelper.accessor('extrinsicHash', {
     id: 'tx-hash',
-    header: 'Reversible Transaction Hash',
+    header: 'Hash',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.transactions}/${props.getValue()}`}
+        href={`${RESOURCES.reversibleTransactions}/${props.getValue()}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />
@@ -56,9 +44,21 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
     cell: (props) => formatTimestamp(props.getValue()),
     enableSorting: true
   }),
-  columnHelper.accessor('who.id', {
-    id: 'who',
-    header: 'Owner',
+  columnHelper.accessor('from.id', {
+    id: 'from',
+    header: 'From',
+    cell: (props) => (
+      <LinkWithCopy
+        href={`${RESOURCES.accounts}/${props.getValue()}`}
+        text={formatTxAddress(props.getValue())}
+        textCopy={props.getValue()}
+      />
+    ),
+    enableSorting: false
+  }),
+  columnHelper.accessor('to.id', {
+    id: 'to',
+    header: 'To',
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.accounts}/${props.getValue()}`}

@@ -14,14 +14,17 @@ const columnHelper = createColumnHelper<Transaction>();
 export const TRANSACTION_COLUMNS = [
   columnHelper.accessor('extrinsicHash', {
     id: 'tx-hash',
-    header: 'Transaction Hash',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.transactions}/${props.getValue()}`}
-        text={formatTxAddress(props.getValue() ?? '-')}
-        textCopy={props.getValue() ?? ''}
-      />
-    ),
+    header: 'Hash',
+    cell: (props) =>
+      props.getValue() ? (
+        <LinkWithCopy
+          href={`${RESOURCES.transactions}/${props.getValue()}`}
+          text={formatTxAddress(props.getValue() ?? '-')}
+          textCopy={props.getValue() ?? ''}
+        />
+      ) : (
+        'Is not available'
+      ),
     enableSorting: false
   }),
   columnHelper.accessor('block.height', {
