@@ -22,7 +22,14 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const transactionCount = data?.transactions.totalCount;
 
   const information = [
-    { id: account?.id, balance: account?.balance, transactionCount, checksum }
+    {
+      id: account?.id,
+      free: account?.free,
+      frozen: account?.frozen,
+      reserved: account?.reserved,
+      transactionCount,
+      checksum
+    }
   ];
 
   return (
@@ -46,9 +53,23 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           key: 'checksum'
         },
         {
-          label: 'Balance',
-          key: 'balance',
-          render: (value) => formatMonetaryValue(value)
+          label: 'Free Balance',
+          key: 'free',
+          render: (value) => formatMonetaryValue(value),
+          tooltip: 'The amount of tokens that can be used.'
+        },
+        {
+          label: 'Frozen Balance',
+          key: 'frozen',
+          render: (value) => formatMonetaryValue(value),
+          tooltip:
+            'The amount of tokens that are locked and cannot be used. It will be released if reversible transaction is cancelled. If the reversible transaction is executed, it will be transferred and this frozen balance will be deducted.'
+        },
+        {
+          label: 'Reserved Balance',
+          key: 'reserved',
+          render: (value) => formatMonetaryValue(value),
+          tooltip: 'The amount of tokens that are locked and cannot be used. '
         },
         {
           label: 'Transaction Count',

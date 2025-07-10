@@ -1,7 +1,8 @@
 import type * as gql from '../__generated__/graphql';
 import type { Transaction } from './transcation';
 
-export interface Account extends Pick<gql.Account, 'id' | 'balance'> {}
+export interface Account
+  extends Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'> {}
 
 export interface AccountResponse {
   account: Account;

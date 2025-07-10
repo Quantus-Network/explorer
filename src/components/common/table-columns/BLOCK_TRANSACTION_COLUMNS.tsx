@@ -14,7 +14,7 @@ const columnHelper = createColumnHelper<BlockTransaction>();
 export const BLOCK_TRANSACTION_COLUMNS = [
   columnHelper.accessor('node.extrinsicHash', {
     id: 'tx-hash',
-    header: 'Transaction Hash',
+    header: 'Hash',
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.transactions}/${props.getValue()}`}

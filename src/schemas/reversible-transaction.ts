@@ -1,8 +1,12 @@
 import type * as gql from '../__generated__/graphql';
 
 export interface ReversibleTransaction
-  extends Omit<gql.ReversibleTransfer, 'id' | 'who' | 'block' | 'event'> {
-  who: Pick<gql.Account, 'id'>;
+  extends Omit<
+    gql.ReversibleTransfer,
+    'id' | 'to' | 'from' | 'block' | 'event'
+  > {
+  to: Pick<gql.Account, 'id'>;
+  from: Pick<gql.Account, 'id'>;
   block: Pick<gql.Block, 'height'>;
 }
 

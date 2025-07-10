@@ -5,7 +5,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
 import type { ReversibleTransaction } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
+import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface ReversibleTransactionInformationProps {
   transaction: ReversibleTransaction;
@@ -19,15 +19,8 @@ export const ReversibleTransactionInformation: React.FC<
       data={[transaction]}
       fields={[
         {
-          label: 'Transaction',
-          key: 'tx',
-          render: (value) => (
-            <LinkWithCopy
-              text={value}
-              href={`${RESOURCES.transactions}/${value}`}
-              className="break-all"
-            />
-          )
+          label: 'ID',
+          key: 'txId'
         },
         {
           label: 'Extrinsic Hash',
@@ -62,8 +55,8 @@ export const ReversibleTransactionInformation: React.FC<
           render: formatTimestamp
         },
         {
-          label: 'Owner',
-          key: 'who',
+          label: 'From',
+          key: 'from',
           render: (value) => (
             <LinkWithCopy
               text={value.id}
@@ -71,6 +64,27 @@ export const ReversibleTransactionInformation: React.FC<
               className="break-all"
             />
           )
+        },
+        {
+          label: 'To',
+          key: 'to',
+          render: (value) => (
+            <LinkWithCopy
+              text={value.id}
+              href={`${RESOURCES.accounts}/${value.id}`}
+              className="break-all"
+            />
+          )
+        },
+        {
+          label: 'Amount',
+          key: 'amount',
+          render: (value) => formatMonetaryValue(value)
+        },
+        {
+          label: 'Fee',
+          key: 'fee',
+          render: (value) => formatMonetaryValue(value)
         },
         {
           label: 'Status',
