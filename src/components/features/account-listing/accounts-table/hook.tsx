@@ -63,10 +63,10 @@ export const useAccountsTable = () => {
     if (typeof pagination === 'function') {
       const newPagination = pagination(paginationValue);
 
-      setPage(newPagination.pageIndex);
+      setPage(newPagination.pageIndex + 1);
       setLimit(newPagination.pageSize);
     } else {
-      setPage(pagination.pageIndex);
+      setPage(pagination.pageIndex + 1);
       setLimit(pagination.pageSize);
     }
   };
