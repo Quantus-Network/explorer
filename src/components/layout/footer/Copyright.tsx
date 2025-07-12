@@ -15,7 +15,7 @@ export const Copyright: React.FC<CopyrightProps> = ({ className }) => {
 
   return (
     <div className={className}>
-      © {year} Quantus Chain Explorer. All rights reserved.
+      © {year} Quantus Labs LLC. All rights reserved.
     </div>
   );
 };
