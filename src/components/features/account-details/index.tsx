@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 import { RESOURCES } from '@/constants/resources';
+import { validateAccountId } from '@/utils/validate-account-id';
 
 import { AccountInformation } from './account-information/AccountInformation';
 import { AccountTransactions } from './account-transactions/AccountTransactions';
@@ -18,10 +19,11 @@ interface Props {
 }
 
 export const AccountDetails: React.FC<Props> = ({ id }) => {
+  const isAccountValid = validateAccountId(id);
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;
 
-  if (!loading && !data?.account) notFound();
+  if (!loading && !data?.account && !isAccountValid) notFound();
 
   return (
     <>
@@ -29,7 +31,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
         <ContentContainer className="flex flex-col gap-4">
           <h1>Account Details</h1>
 
-          <AccountInformation query={query} />
+          <AccountInformation accountId={id} query={query} />
         </ContentContainer>
       </SectionContainer>
 

@@ -9,24 +9,26 @@ import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
 
 export interface AccountInformationProps {
+  accountId: string;
   query: QueryResult<AccountResponse>;
 }
 
 export const AccountInformation: React.FC<AccountInformationProps> = ({
+  accountId,
   query
 }) => {
   const { data, loading } = query;
   const account = data?.account;
 
-  const { checksum, loading: checksumLoading } = useChecksum(account?.id);
+  const { checksum, loading: checksumLoading } = useChecksum(accountId);
   const transactionCount = data?.transactions.totalCount;
 
   const information = [
     {
-      id: account?.id,
-      free: account?.free,
-      frozen: account?.frozen,
-      reserved: account?.reserved,
+      id: accountId,
+      free: account?.free ?? 0,
+      frozen: account?.frozen ?? 0,
+      reserved: account?.reserved ?? 0,
       transactionCount,
       checksum
     }
