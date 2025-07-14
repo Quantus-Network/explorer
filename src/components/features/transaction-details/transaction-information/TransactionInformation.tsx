@@ -33,7 +33,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={value.id}
+              text={value.height.toString()}
               href={`${RESOURCES.blocks}/${value.height}`}
               className="break-all"
             />

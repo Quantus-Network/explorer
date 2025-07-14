@@ -9,8 +9,10 @@ import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
 import { validateAccountId } from '@/utils/validate-account-id';
 
-export const useHero = () => {
+export const useHeader = () => {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   const [searchResult, setSearchResult] = useState<SearchAllResponse>();
   const [searchLoading, setSearchLoading] = useState(false);
@@ -55,10 +57,11 @@ export const useHero = () => {
   };
 
   return {
-    handleSearch,
     handleKeywordChange,
     searchResult,
     searchLoading,
-    searchError
+    searchError,
+    toggleMenu,
+    isOpen
   };
 };

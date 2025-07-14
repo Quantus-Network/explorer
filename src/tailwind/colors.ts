@@ -1,6 +1,7 @@
 export const colors = {
   background: 'hsl(var(--background))',
   foreground: 'hsl(var(--foreground))',
+  topbar: 'hsl(var(--topbar))',
   navbar: 'hsl(var(--navbar))',
   'navbar-mobile-menu': 'hsl(var(--navbar-mobile-menu))',
   'foreground-active': 'hsl(var(--foreground-active))',
