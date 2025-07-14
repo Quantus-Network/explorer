@@ -6,7 +6,10 @@ import { toast } from 'sonner';
 import api from '@/api';
 import type { SearchAllResponse } from '@/schemas/searchs';
 
-export const useHero = () => {
+export const useHeader = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   const [searchResult, setSearchResult] = useState<SearchAllResponse>();
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string>();
@@ -37,6 +40,8 @@ export const useHero = () => {
     handleKeywordChange,
     searchResult,
     searchLoading,
-    searchError
+    searchError,
+    toggleMenu,
+    isOpen
   };
 };

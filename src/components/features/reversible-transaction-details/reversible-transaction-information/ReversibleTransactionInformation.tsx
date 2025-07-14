@@ -1,7 +1,11 @@
+'use client';
+
 import * as React from 'react';
 
+import api from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { Skeleton } from '@/components/ui/skeleton';
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
 import type { ReversibleTransaction } from '@/schemas';
@@ -14,6 +18,10 @@ export interface ReversibleTransactionInformationProps {
 export const ReversibleTransactionInformation: React.FC<
   ReversibleTransactionInformationProps
 > = ({ transaction }) => {
+  const { data, loading } = api.reversibleTransactions
+    .getStatusByHash()
+    .useQuery(transaction.extrinsicHash ?? '');
+
   return (
     <DataList
       data={[transaction]}
@@ -89,7 +97,14 @@ export const ReversibleTransactionInformation: React.FC<
         {
           label: 'Status',
           key: 'status',
-          render: (value) => <TransactionStatus status={value} />
+          render: (value) =>
+            loading ? (
+              <Skeleton className="h-6" />
+            ) : (
+              <TransactionStatus
+                status={data?.reversibleTransactions[0].status ?? value}
+              />
+            )
         }
       ]}
     />

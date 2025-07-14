@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
-import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -69,8 +68,6 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
             </NavigationMenuItem>
           );
         })}
-
-        <ThemeToggle />
       </NavigationMenuList>
     </NavigationMenu>
   );

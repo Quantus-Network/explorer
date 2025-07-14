@@ -14,6 +14,10 @@ export interface ReversibleTransactionResponse {
   reversibleTransactions: [ReversibleTransaction];
 }
 
+export interface ReversibleTransactionStatusResponse {
+  reversibleTransactions: [Pick<ReversibleTransaction, 'status'>];
+}
+
 export interface ReversibleTransactionListResponse {
   reversibleTransactions: ReversibleTransaction[];
   meta: {

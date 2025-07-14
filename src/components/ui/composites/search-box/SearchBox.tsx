@@ -5,11 +5,14 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { useDebounceCallback } from 'usehooks-ts';
 
 import { INPUT_DEBOUNCE_INTERVAL } from '@/constants/debounce-interval';
+import { cn } from '@/lib/utils';
 
 import { Button } from '../../button';
 import { Input } from '../../input';
 
 export interface SearchBoxProps {
+  inputClassName?: string;
+  buttonClassName?: string;
   onKeywordChange: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
   onSearch?: (val: string, e: FormEvent<HTMLFormElement>) => void;
   placeholder?: string;
@@ -39,11 +42,16 @@ export const SearchBox = (props: SearchBoxProps) => {
 
             debounced(value, e);
           }}
-          className="pe-12"
+          className={cn('pe-12', props.inputClassName)}
           required
         />
 
-        <Button className="absolute right-3 top-1/2 size-9 -translate-y-1/2">
+        <Button
+          className={cn(
+            'absolute right-3 top-1/2 size-9 -translate-y-1/2',
+            props.buttonClassName
+          )}
+        >
           <Search className="text-primary-foreground" />
         </Button>
       </form>
