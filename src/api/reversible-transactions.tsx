@@ -13,7 +13,8 @@ import type {
   RecentReversibleTransactionsResponse,
   ReversibleTransactionListResponse,
   ReversibleTransactionResponse,
-  ReversibleTransactionsStatsResponse
+  ReversibleTransactionsStatsResponse,
+  ReversibleTransactionStatusResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { getGqlString } from '@/utils/get-gql-string';
@@ -204,6 +205,44 @@ export const reversibleTransactions = {
         config?: QueryHookOptions<ReversibleTransactionResponse>
       ) =>
         useQuery<ReversibleTransactionResponse>(QUERY, {
+          ...config,
+          variables: {
+            hash
+          }
+        })
+    };
+  },
+  getStatusByHash: () => {
+    const QUERY_NAME = 'GetReversibleTransactionStatusByHash';
+    const QUERY = gql`
+      query GetReversibleTransactionStatusByHash($hash: String!) {
+        reversibleTransactions: reversibleTransfers(
+          where: { extrinsicHash_eq: $hash }
+        ) {
+          status
+        }
+      }
+    `;
+
+    return {
+      query: (hash: string) =>
+        fetchClient.graphql<ReversibleTransactionStatusResponse>(
+          {
+            query: getGqlString(QUERY),
+            variables: {
+              hash
+            },
+            operationName: QUERY_NAME
+          },
+          {
+            retries: 0
+          }
+        ),
+      useQuery: (
+        hash: string,
+        config?: QueryHookOptions<ReversibleTransactionStatusResponse>
+      ) =>
+        useQuery<ReversibleTransactionStatusResponse>(QUERY, {
           ...config,
           variables: {
             hash
