@@ -40,8 +40,8 @@ export const BLOCK_REVERSIBLE_TRANSACTION_COLUMNS = [
     enableSorting: true
   }),
   columnHelper.accessor('node.scheduledAt', {
-    id: 'timestamp',
-    header: 'Timestamp',
+    id: 'scheduledAt',
+    header: 'Scheduled At',
     cell: (props) => formatTimestamp(props.getValue()),
     enableSorting: true
   }),

@@ -32,6 +32,8 @@ export const useAccountTransactions = (query: QueryResult<AccountResponse>) => {
     }
   };
 
+  console.log(getStatus());
+
   return {
     table,
     getStatus,

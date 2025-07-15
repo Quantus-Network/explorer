@@ -24,6 +24,8 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;
 
+  console.log(loading);
+
   if (!loading && !data?.account && !isAccountValid) notFound();
 
   return (
