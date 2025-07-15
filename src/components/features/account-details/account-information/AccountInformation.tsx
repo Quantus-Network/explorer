@@ -52,7 +52,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
         },
         {
           label: 'Check Phrase',
-          key: 'checksum'
+          key: 'checksum',
+          tooltip:
+            'A human-readable checksum from cryptocurrency address; designed to make address verification easier and prevent address poisoning attacks—where attackers craft lookalike addresses to trick users.'
         },
         {
           label: 'Free Balance',
