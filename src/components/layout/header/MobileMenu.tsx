@@ -43,7 +43,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
               return (
                 <NavigationMenuItem key={nav.label} className="!ml-0">
                   <NavigationMenuTrigger
-                    className="data-[act ive=true]:font-semibold bg-transparent p-0 text-base no-underline hover:!bg-transparent  focus:!bg-transparent"
+                    className="bg-transparent p-0 text-base font-normal no-underline hover:!bg-transparent focus:!bg-transparent data-[active=true]:font-semibold"
                     data-active={
                       !!nav.children.find(
                         (subNav) => subNav.path.split('/')[1] === rootPath

@@ -12,6 +12,7 @@ import { RESOURCES } from '@/constants/resources';
 import { validateAccountId } from '@/utils/validate-account-id';
 
 import { AccountInformation } from './account-information/AccountInformation';
+import { AccountReversibleTransactions } from './account-reversible-transactions/AccountReversibleTransactions';
 import { AccountTransactions } from './account-transactions/AccountTransactions';
 
 interface Props {
@@ -22,6 +23,8 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
   const isAccountValid = validateAccountId(id);
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;
+
+  console.log(loading);
 
   if (!loading && !data?.account && !isAccountValid) notFound();
 
@@ -44,6 +47,20 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
           <Button variant="link" className="mx-auto w-fit">
             <Link href={`${RESOURCES.transactions}?accountId=${id}`}>
               See all transactions
+            </Link>
+          </Button>
+        </ContentContainer>
+      </SectionContainer>
+
+      <SectionContainer>
+        <ContentContainer className="flex flex-col gap-4">
+          <h2>Recent Reversible Transactions</h2>
+
+          <AccountReversibleTransactions query={query} />
+
+          <Button variant="link" className="mx-auto w-fit">
+            <Link href={`${RESOURCES.reversibleTransactions}?accountId=${id}`}>
+              See all reversible transactions
             </Link>
           </Button>
         </ContentContainer>

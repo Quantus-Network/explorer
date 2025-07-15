@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import { useChecksum } from '@/hooks/useChecksum';
 import type { AccountResponse } from '@/schemas';
@@ -20,8 +21,12 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const { data, loading } = query;
   const account = data?.account;
 
-  const { checksum, loading: checksumLoading } = useChecksum(accountId);
-  const transactionCount = data?.transactions.totalCount;
+  const { checksum, loading: checksumLoading } = useChecksum(
+    loading,
+    accountId
+  );
+  const transactions = data?.transactions.totalCount;
+  const reversibleTransactions = data?.reversibleTransactions.totalCount;
 
   const information = [
     {
@@ -29,14 +34,15 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       free: account?.free ?? 0,
       frozen: account?.frozen ?? 0,
       reserved: account?.reserved ?? 0,
-      transactionCount,
+      transactions,
+      reversibleTransactions,
       checksum
     }
   ];
 
   return (
     <DataList
-      loading={loading || checksumLoading}
+      loading={loading}
       data={information}
       fields={[
         {
@@ -52,7 +58,11 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
         },
         {
           label: 'Check Phrase',
-          key: 'checksum'
+          key: 'checksum',
+          tooltip:
+            'A human-readable checksum from cryptocurrency address; designed to make address verification easier and prevent address poisoning attacks—where attackers craft lookalike addresses to trick users.',
+          render: (value) =>
+            checksumLoading ? <Skeleton className="h-6" /> : value
         },
         {
           label: 'Free Balance',
@@ -74,8 +84,16 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           tooltip: 'The amount of tokens that are locked and cannot be used. '
         },
         {
-          label: 'Transaction Count',
-          key: 'transactionCount'
+          label: 'Transactions',
+          key: 'transactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Reversible Transactions',
+          key: 'reversibleTransactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
         }
       ]}
     />

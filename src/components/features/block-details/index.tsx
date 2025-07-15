@@ -11,6 +11,7 @@ import { SectionContainer } from '@/components/ui/section-container';
 import { RESOURCES } from '@/constants/resources';
 
 import { BlockInformation } from './block-information/BlockInformation';
+import { BlockReversibleTransactions } from './block-reversible-transactions/BlockTransactions';
 import { BlockTransactions } from './block-transactions/BlockTransactions';
 
 interface Props {
@@ -42,6 +43,20 @@ export const BlockDetails: React.FC<Props> = ({ height }) => {
           <Button variant="link" className="mx-auto w-fit">
             <Link href={`${RESOURCES.transactions}?block=${height}`}>
               See all transactions
+            </Link>
+          </Button>
+        </ContentContainer>
+      </SectionContainer>
+
+      <SectionContainer>
+        <ContentContainer className="flex flex-col gap-4">
+          <h2>Recent Reversible Transactions</h2>
+
+          <BlockReversibleTransactions query={query} />
+
+          <Button variant="link" className="mx-auto w-fit">
+            <Link href={`${RESOURCES.reversibleTransactions}?block=${height}`}>
+              See all reversible transactions
             </Link>
           </Button>
         </ContentContainer>

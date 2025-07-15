@@ -1,8 +1,8 @@
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
-import { SearchPreview } from '@/components/features/landing/search-preview/SearchPreview';
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
+import { SearchPreview } from '@/components/ui/composites/search-preview/SearchPreview';
 import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
 import { ContentContainer } from '@/components/ui/content-container';
 import { cn } from '@/lib/utils';
@@ -13,16 +13,28 @@ export interface TopbarProps {
     val: string,
     e: React.ChangeEvent<HTMLInputElement>
   ) => void;
+  handleInputFocus: () => void;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
   searchError?: string;
   searchLoading: boolean;
   searchResult?: SearchAllResponse;
+  isResultVisible: boolean;
+  inputRef: React.RefObject<HTMLDivElement>;
+  resultRef: React.RefObject<HTMLDivElement>;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
   handleKeywordChange,
+  handleInputFocus,
+  handleKeyDown,
+
   searchError,
   searchLoading,
-  searchResult
+  searchResult,
+  isResultVisible,
+
+  inputRef,
+  resultRef
 }) => {
   const location = usePathname();
   const rootPath = location.split('/')[1];
@@ -38,19 +50,26 @@ export const Topbar: React.FC<TopbarProps> = ({
       <ContentContainer className="flex items-center justify-end gap-6">
         {/* Hide search box topbar when in homepage, because already has it. */}
         {!isHomepage && (
-          <div className="w-full md:max-w-xl">
+          <div className="relative w-full md:max-w-xl">
             <SearchBox
+              ref={inputRef}
+              onFocus={handleInputFocus}
+              onKeyDown={handleKeyDown}
               placeholder="Search transaction hash, account id, or block number/hash"
               onKeywordChange={handleKeywordChange}
               inputClassName="h-8"
               buttonClassName="size-7"
             />
 
-            <SearchPreview
-              searchResult={searchResult}
-              isLoading={searchLoading}
-              error={searchError}
-            />
+            {isResultVisible && (
+              <SearchPreview
+                ref={resultRef}
+                onKeyDown={handleKeyDown}
+                searchResult={searchResult}
+                isLoading={searchLoading}
+                error={searchError}
+              />
+            )}
           </div>
         )}
 

@@ -19,13 +19,15 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   const block = data?.blocks?.[0];
 
   const transactionCount = data?.transactions.totalCount;
+  const reversibleTransactionCount = data?.reversibleTransactions.totalCount;
 
   const information = [
     {
       height: block?.height,
       hash: block?.hash,
       timestamp: block?.timestamp,
-      transactions: transactionCount
+      transactions: transactionCount,
+      reversibleTransactions: reversibleTransactionCount
     }
   ];
 
@@ -54,6 +56,12 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
         {
           label: 'Transactions',
           key: 'transactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Reversible Transactions',
+          key: 'reversibleTransactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`
         }

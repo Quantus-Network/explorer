@@ -2,16 +2,18 @@ import type { QueryResult } from '@apollo/client';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import { ACCOUNT_TRANSACTION_COLUMNS } from '@/components/common/table-columns/ACCOUNT_TRANSACTION_COLUMNS';
-import type { AccountResponse, AccountTransaction } from '@/schemas';
+import { BLOCK_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/BLOCK_REVERSIBLE_TRANSACTION_COLUMNS';
+import type { BlockResponse, BlockReversibleTransaction } from '@/schemas';
 
-export const useAccountTransactions = (query: QueryResult<AccountResponse>) => {
+export const useBlockReversibleTransactions = (
+  query: QueryResult<BlockResponse>
+) => {
   const { data, error: fetchError, loading } = query;
-  const transactionColumns = useMemo(() => ACCOUNT_TRANSACTION_COLUMNS, []);
+  const blockColumns = useMemo(() => BLOCK_REVERSIBLE_TRANSACTION_COLUMNS, []);
 
-  const table = useReactTable<AccountTransaction>({
-    data: data?.transactions?.edges ?? [],
-    columns: transactionColumns,
+  const table = useReactTable<BlockReversibleTransaction>({
+    data: data?.reversibleTransactions?.edges ?? [],
+    columns: blockColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false
   });
@@ -31,8 +33,6 @@ export const useAccountTransactions = (query: QueryResult<AccountResponse>) => {
         return 'idle';
     }
   };
-
-  console.log(getStatus());
 
   return {
     table,

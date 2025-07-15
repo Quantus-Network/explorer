@@ -67,7 +67,7 @@ export const transactions = {
         orderBy: config?.variables?.orderBy ?? TRANSACTION_SORTS.timestamp.DESC,
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
-        where: config?.variables?.where
+        where: { ...config?.variables?.where, extrinsicHash_isNull: false }
       }
     });
   },
@@ -79,11 +79,13 @@ export const transactions = {
         $limit: Int
         $offset: Int
         $orderBy: [TransferOrderByInput!]
+        $where: TransferWhereInput
       ) {
         transactions: transfers(
           limit: $limit
           offset: $offset
           orderBy: $orderBy
+          where: $where
         ) {
           fee
           extrinsicHash
@@ -104,12 +106,13 @@ export const transactions = {
 
     return useQuery<
       RecentTransactionsResponse,
-      PaginatedQueryVariables<TransactionSorts>
+      PaginatedQueryVariables<TransactionSorts, TransferWhereInput>
     >(GET_RECENT_TRANSACTIONS, {
       ...config,
       variables: {
         orderBy: TRANSACTION_SORTS.timestamp.DESC,
-        limit: QUERY_RECENT_LIMIT
+        limit: QUERY_RECENT_LIMIT,
+        where: { extrinsicHash_isNull: false }
       }
     });
   },
@@ -123,7 +126,11 @@ export const transactions = {
       query GetTransactionsStats($startDate: DateTime!, $endDate: DateTime!) {
         last24Hour: transfersConnection(
           orderBy: id_ASC
-          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+          where: {
+            timestamp_gte: $startDate
+            timestamp_lte: $endDate
+            extrinsicHash_isNull: false
+          }
         ) {
           totalCount
         }
