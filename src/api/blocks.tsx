@@ -91,28 +91,24 @@ export const blocks = {
   getByHeight: () => {
     const QUERY_NAME = 'GetBlockByHeight';
     const QUERY = gql`
-      query ${QUERY_NAME}($height: Int!) {
+      query GetBlockByHeight($height: Int!, $limit: Int!) {
         blocks(where: { height_eq: $height }) {
-            id
-            hash
-            height
-            timestamp
+          id
+          hash
+          height
+          timestamp
         }
         transactions: transfersConnection(
           orderBy: timestamp_DESC
-          first: ${QUERY_DEFAULT_LIMIT}
-          where: {
-            block: {
-              height_eq: $height
-            }
-          }
+          first: $limit
+          where: { extrinsicHash_isNull: false, block: { height_eq: $height } }
         ) {
           edges {
             node {
               fee
               extrinsicHash
               block {
-                  height
+                height
               }
               amount
               timestamp
@@ -124,6 +120,32 @@ export const blocks = {
               }
             }
           }
+
+          totalCount
+        }
+        reversibleTransactions: reversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: { block: { height_eq: $height } }
+        ) {
+          edges {
+            node {
+              extrinsicHash
+              scheduledAt
+              timestamp
+              status
+              block {
+                height
+              }
+              from {
+                id
+              }
+              to {
+                id
+              }
+            }
+          }
+
           totalCount
         }
       }
@@ -135,7 +157,8 @@ export const blocks = {
           {
             query: getGqlString(QUERY),
             variables: {
-              height
+              height,
+              limit: QUERY_DEFAULT_LIMIT
             },
             operationName: QUERY_NAME
           },
@@ -147,7 +170,8 @@ export const blocks = {
         useQuery<BlockResponse>(QUERY, {
           ...config,
           variables: {
-            height
+            height,
+            limit: QUERY_DEFAULT_LIMIT
           }
         })
     };
