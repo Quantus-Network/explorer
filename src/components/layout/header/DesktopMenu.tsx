@@ -28,7 +28,7 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
             return (
               <NavigationMenuItem key={nav.label}>
                 <NavigationMenuTrigger
-                  className="bg-transparent p-0 text-base no-underline hover:!bg-transparent focus:!bg-transparent data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
+                  className="bg-transparent p-0 text-base font-normal no-underline hover:!bg-transparent focus:!bg-transparent data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
                   data-active={
                     !!nav.children.find(
                       (subNav) => subNav.path.split('/')[1] === rootPath
