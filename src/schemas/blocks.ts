@@ -1,4 +1,5 @@
 import type * as gql from '../__generated__/graphql';
+import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
 
 export interface Block
@@ -8,6 +9,11 @@ export interface BlockResponse {
   blocks: [Block];
   transactions: {
     edges: BlockTransaction[];
+    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
+    totalCount: number;
+  };
+  reversibleTransactions: {
+    edges: BlockReversibleTransaction[];
     /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
@@ -26,4 +32,8 @@ export interface RecentBlocksResponse {
 
 export interface BlockTransaction {
   node: Transaction;
+}
+
+export interface BlockReversibleTransaction {
+  node: ReversibleTransaction;
 }

@@ -48,7 +48,7 @@ export const accounts = {
   },
   getById: () => {
     const GET_ACCOUNT = gql`
-      query GetAccountById($id: String!) {
+      query GetAccountById($id: String!, $limit: Int!) {
         account: accountById(id: $id) {
           id
           free
@@ -57,15 +57,19 @@ export const accounts = {
         }
         transactions: transfersConnection(
           orderBy: timestamp_DESC
-          first: ${QUERY_DEFAULT_LIMIT}
-          where: {from: {id_eq: $id}, OR: {to: {id_eq: $id}}}
+          first: $limit
+          where: {
+            extrinsicHash_isNull: false
+            from: { id_eq: $id }
+            OR: { to: { id_eq: $id } }
+          }
         ) {
           edges {
             node {
               fee
               extrinsicHash
               block {
-                  height
+                height
               }
               amount
               timestamp
@@ -77,6 +81,32 @@ export const accounts = {
               }
             }
           }
+
+          totalCount
+        }
+        reversibleTransactions: reversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: { from: { id_eq: $id }, OR: { to: { id_eq: $id } } }
+        ) {
+          edges {
+            node {
+              extrinsicHash
+              scheduledAt
+              timestamp
+              status
+              block {
+                height
+              }
+              from {
+                id
+              }
+              to {
+                id
+              }
+            }
+          }
+
           totalCount
         }
       }
@@ -88,7 +118,8 @@ export const accounts = {
           {
             query: getGqlString(GET_ACCOUNT),
             variables: {
-              id
+              id,
+              limit: QUERY_DEFAULT_LIMIT
             },
             operationName: 'GetAccountById'
           },
@@ -100,7 +131,8 @@ export const accounts = {
         useQuery<AccountResponse>(GET_ACCOUNT, {
           ...config,
           variables: {
-            id
+            id,
+            limit: QUERY_DEFAULT_LIMIT
           }
         })
     };
