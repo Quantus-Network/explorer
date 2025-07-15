@@ -33,6 +33,17 @@ export const chainStatus = {
         ) {
           totalCount
         }
+        depositAccounts: accountsConnection(
+          orderBy: id_ASC
+          where: {
+            transfersTo_some: {
+              timestamp_gte: $startDate
+              timestamp_lte: $endDate
+            }
+          }
+        ) {
+          totalCount
+        }
       }
     `;
 
