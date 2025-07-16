@@ -12,12 +12,12 @@ export interface ParentNavigation {
 export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
   { label: 'Home', path: '/', longLabel: 'Home' },
   {
-    label: 'Events',
+    label: 'Transactions',
     children: [
       {
-        label: 'Transactions',
-        path: '/transactions',
-        longLabel: 'Transactions'
+        label: 'Immediate Transactions',
+        path: '/immediate-transactions',
+        longLabel: 'Immediate Transactions'
       },
       {
         label: 'Reversible Transactions',

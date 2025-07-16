@@ -28,7 +28,8 @@ export const ReversibleTransactionInformation: React.FC<
       fields={[
         {
           label: 'ID',
-          key: 'txId'
+          key: 'txId',
+          render: (value) => <span className="break-all">{value}</span>
         },
         {
           label: 'Extrinsic Hash',

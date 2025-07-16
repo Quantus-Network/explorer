@@ -88,11 +88,11 @@ export const blocks = {
       }
     );
   },
-  getByHeight: () => {
-    const QUERY_NAME = 'GetBlockByHeight';
+  getById: () => {
+    const QUERY_NAME = 'GetBlockById';
     const QUERY = gql`
-      query GetBlockByHeight($height: Int!, $limit: Int!) {
-        blocks(where: { height_eq: $height }) {
+      query GetBlockById($height: Int!, $hash: String!, $limit: Int!) {
+        blocks(where: { height_eq: $height, OR: { hash_eq: $hash } }) {
           id
           hash
           height
@@ -101,7 +101,13 @@ export const blocks = {
         transactions: transfersConnection(
           orderBy: timestamp_DESC
           first: $limit
-          where: { extrinsicHash_isNull: false, block: { height_eq: $height } }
+          where: {
+            extrinsicHash_isNull: false
+            AND: {
+              block: { height_eq: $height }
+              OR: { block: { hash_eq: $hash } }
+            }
+          }
         ) {
           edges {
             node {
@@ -126,7 +132,10 @@ export const blocks = {
         reversibleTransactions: reversibleTransfersConnection(
           orderBy: timestamp_DESC
           first: $limit
-          where: { block: { height_eq: $height } }
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
         ) {
           edges {
             node {
@@ -152,12 +161,15 @@ export const blocks = {
     `;
 
     return {
-      query: (height: number) =>
-        fetchClient.graphql<BlockResponse>(
+      query: (id: string) => {
+        const isHash = id.startsWith('0x');
+
+        return fetchClient.graphql<BlockResponse>(
           {
             query: getGqlString(QUERY),
             variables: {
-              height,
+              height: !isHash ? Number(id) : -1,
+              hash: isHash ? id : '',
               limit: QUERY_DEFAULT_LIMIT
             },
             operationName: QUERY_NAME
@@ -165,15 +177,20 @@ export const blocks = {
           {
             retries: 0
           }
-        ),
-      useQuery: (height: number, config?: QueryHookOptions<BlockResponse>) =>
-        useQuery<BlockResponse>(QUERY, {
+        );
+      },
+      useQuery: (id: string, config?: QueryHookOptions<BlockResponse>) => {
+        const isHash = id.startsWith('0x');
+
+        return useQuery<BlockResponse>(QUERY, {
           ...config,
           variables: {
-            height,
+            height: !isHash ? Number(id) : -1,
+            hash: isHash ? id : '',
             limit: QUERY_DEFAULT_LIMIT
           }
-        })
+        });
+      }
     };
   }
 };

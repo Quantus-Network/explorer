@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
-import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { RESOURCES } from '@/constants/resources';
 import type { BlockResponse } from '@/schemas';
 import { formatTimestamp } from '@/utils/formatter';
@@ -46,7 +45,9 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
         {
           label: 'Hash',
           key: 'hash',
-          render: (value) => <TextWithCopy text={value} />
+          render: (value) => (
+            <LinkWithCopy href={`${RESOURCES.blocks}/${value}`} text={value} />
+          )
         },
         {
           label: 'Timestamp',
@@ -54,7 +55,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           render: formatTimestamp
         },
         {
-          label: 'Transactions',
+          label: 'Immediate Transactions',
           key: 'transactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`

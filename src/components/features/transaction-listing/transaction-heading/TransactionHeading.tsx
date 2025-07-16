@@ -14,7 +14,7 @@ export const TransactionHeading: React.FC<TransactionHeadingProps> = () => {
 
   return (
     <div>
-      <h1>Transactions</h1>
+      <h1>Immediate Transactions</h1>
 
       {block && (
         <div className="flex gap-1">

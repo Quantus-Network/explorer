@@ -16,6 +16,9 @@ export const chainStatus = {
         transactions: transfersConnection(orderBy: id_ASC) {
           totalCount
         }
+        reversibleTransactions: reversibleTransfersConnection(orderBy: id_ASC) {
+          totalCount
+        }
         status: squidStatus {
           hash
           height

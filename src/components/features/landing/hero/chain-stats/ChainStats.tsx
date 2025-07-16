@@ -16,6 +16,9 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
   });
 
   const success = !loading && !error;
+  const totalTransactions =
+    (data?.transactions?.totalCount ?? 0) +
+    (data?.reversibleTransactions?.totalCount ?? 0);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -34,12 +37,16 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>
-            <h3>Total Transactions</h3>
+          <CardTitle className="flex items-center gap-2">
+            <h3>Transactions</h3>
+
+            <Info>
+              Total count of immediate transactions and reversible transactions
+            </Info>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.transactions?.totalCount}</p>}
+          {success && <p>{totalTransactions}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

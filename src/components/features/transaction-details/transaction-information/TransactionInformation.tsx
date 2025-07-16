@@ -18,7 +18,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
       data={[transaction]}
       fields={[
         {
-          label: 'Transaction Hash',
+          label: 'Extrinsic Hash',
           key: 'extrinsicHash',
           render: (value) => (
             <LinkWithCopy
