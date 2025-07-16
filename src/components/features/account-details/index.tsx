@@ -24,8 +24,6 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;
 
-  console.log(loading);
-
   if (!loading && !data?.account && !isAccountValid) notFound();
 
   return (
@@ -40,15 +38,17 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
       <SectionContainer>
         <ContentContainer className="flex flex-col gap-4">
-          <h2>Recent Transactions</h2>
+          <h2>Recent Immediate Transactions</h2>
 
           <AccountTransactions query={query} />
 
-          <Button variant="link" className="mx-auto w-fit">
-            <Link href={`${RESOURCES.transactions}?accountId=${id}`}>
-              See all transactions
-            </Link>
-          </Button>
+          {!loading && query.data?.transactions.totalCount !== 0 && (
+            <Button variant="link" className="mx-auto w-fit">
+              <Link href={`${RESOURCES.transactions}?accountId=${id}`}>
+                See all immediate transactions
+              </Link>
+            </Button>
+          )}
         </ContentContainer>
       </SectionContainer>
 
@@ -58,11 +58,15 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
           <AccountReversibleTransactions query={query} />
 
-          <Button variant="link" className="mx-auto w-fit">
-            <Link href={`${RESOURCES.reversibleTransactions}?accountId=${id}`}>
-              See all reversible transactions
-            </Link>
-          </Button>
+          {!loading && query.data?.reversibleTransactions.totalCount !== 0 && (
+            <Button variant="link" className="mx-auto w-fit">
+              <Link
+                href={`${RESOURCES.reversibleTransactions}?accountId=${id}`}
+              >
+                See all reversible transactions
+              </Link>
+            </Button>
+          )}
         </ContentContainer>
       </SectionContainer>
     </>

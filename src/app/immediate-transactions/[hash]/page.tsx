@@ -23,7 +23,7 @@ const TransactionDetails: React.FC<TransactionDetailsProps> = async ({
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Transaction Details</h1>
+        <h1>Immediate Transaction Details</h1>
 
         <TransactionInformation transaction={data.transactions[0]} />
       </ContentContainer>

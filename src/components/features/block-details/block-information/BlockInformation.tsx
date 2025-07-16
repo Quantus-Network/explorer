@@ -54,7 +54,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           render: formatTimestamp
         },
         {
-          label: 'Transactions',
+          label: 'Immediate Transactions',
           key: 'transactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`

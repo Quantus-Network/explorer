@@ -13,12 +13,14 @@ export const RecentTransactions = () => {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h2>Recent Transactions</h2>
+        <h2>Recent Immediate Transactions</h2>
 
         <TransactionsTable />
 
         <Button variant="link" className="mx-auto w-fit">
-          <Link href={RESOURCES.transactions}>See all transactions</Link>
+          <Link href={RESOURCES.transactions}>
+            See all immediate transactions
+          </Link>
         </Button>
       </ContentContainer>
     </SectionContainer>

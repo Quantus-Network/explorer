@@ -1,5 +1,5 @@
 export const RESOURCES = {
-  transactions: '/transactions',
+  transactions: '/immediate-transactions',
   reversibleTransactions: '/reversible-transactions',
   accounts: '/accounts',
   blocks: '/blocks'

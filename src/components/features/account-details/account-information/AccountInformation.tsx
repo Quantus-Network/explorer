@@ -84,7 +84,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           tooltip: 'The amount of tokens that are locked and cannot be used. '
         },
         {
-          label: 'Transactions',
+          label: 'Immediate Transactions',
           key: 'transactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`

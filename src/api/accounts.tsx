@@ -60,8 +60,7 @@ export const accounts = {
           first: $limit
           where: {
             extrinsicHash_isNull: false
-            from: { id_eq: $id }
-            OR: { to: { id_eq: $id } }
+            AND: { from: { id_eq: $id }, OR: { to: { id_eq: $id } } }
           }
         ) {
           edges {

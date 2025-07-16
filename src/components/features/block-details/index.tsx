@@ -36,15 +36,17 @@ export const BlockDetails: React.FC<Props> = ({ height }) => {
 
       <SectionContainer>
         <ContentContainer className="flex flex-col gap-4">
-          <h2>Recent Transactions</h2>
+          <h2>Recent Immediate Transactions</h2>
 
           <BlockTransactions query={query} />
 
-          <Button variant="link" className="mx-auto w-fit">
-            <Link href={`${RESOURCES.transactions}?block=${height}`}>
-              See all transactions
-            </Link>
-          </Button>
+          {!loading && query.data?.transactions.totalCount !== 0 && (
+            <Button variant="link" className="mx-auto w-fit">
+              <Link href={`${RESOURCES.transactions}?block=${height}`}>
+                See all immediate transactions
+              </Link>
+            </Button>
+          )}
         </ContentContainer>
       </SectionContainer>
 
@@ -54,11 +56,15 @@ export const BlockDetails: React.FC<Props> = ({ height }) => {
 
           <BlockReversibleTransactions query={query} />
 
-          <Button variant="link" className="mx-auto w-fit">
-            <Link href={`${RESOURCES.reversibleTransactions}?block=${height}`}>
-              See all reversible transactions
-            </Link>
-          </Button>
+          {!loading && query.data?.reversibleTransactions.totalCount !== 0 && (
+            <Button variant="link" className="mx-auto w-fit">
+              <Link
+                href={`${RESOURCES.reversibleTransactions}?block=${height}`}
+              >
+                See all reversible transactions
+              </Link>
+            </Button>
+          )}
         </ContentContainer>
       </SectionContainer>
     </>
