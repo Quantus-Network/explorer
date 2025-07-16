@@ -3,11 +3,12 @@ import * as React from 'react';
 import { BlockDetails } from '@/components/features/block-details';
 
 export interface BlockDetailsProps {
-  params: { height: string };
+  /** @description The ID of the block can be height or hash. */
+  params: { id: string };
 }
 
 const BlockDetailsPage: React.FC<BlockDetailsProps> = ({ params }) => {
-  return <BlockDetails height={Number(params.height)} />;
+  return <BlockDetails id={params.id} />;
 };
 
 export default BlockDetailsPage;
