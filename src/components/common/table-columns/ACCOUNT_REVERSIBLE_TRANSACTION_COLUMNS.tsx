@@ -14,7 +14,7 @@ export const ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS = [
     header: 'Hash',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.transactions}/${props.getValue()}`}
+        href={`${RESOURCES.reversibleTransactions}/${props.getValue()}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />
