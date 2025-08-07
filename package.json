@@ -12,7 +12,7 @@
     "storybook:serve": "http-server storybook-static --port 6006 --silent",
     "serve-storybook": "run-s storybook:*",
     "test-storybook:ci": "start-server-and-test serve-storybook http://127.0.0.1:6006 test-storybook",
-    "format": "prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
+    "format": "prettier '**/*.{json,yaml}' --write",
     "prepare": "husky",
     "gen-assets": "svgr --template svgr-template.cjs --index-template svgr-index-template.cjs --icon --title-prop --typescript --jsx-runtime automatic --replace-attr-values currentColor=currentColor,#FFEF00=currentColor --filename-case pascal -d src/assets assets",
     "gql:compile": "graphql-codegen"

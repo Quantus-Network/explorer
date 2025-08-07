@@ -8,103 +8,103 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root';
-import { Route as IndexRouteImport } from './routes/index';
-import { Route as ReversibleTransactionsIndexRouteImport } from './routes/reversible-transactions/index';
-import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index';
-import { Route as BlocksIndexRouteImport } from './routes/blocks/index';
-import { Route as AccountsIndexRouteImport } from './routes/accounts/index';
-import { Route as ReversibleTransactionsHashRouteImport } from './routes/reversible-transactions/$hash';
-import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash';
-import { Route as BlocksIdRouteImport } from './routes/blocks/$id';
-import { Route as AccountsIdRouteImport } from './routes/accounts/$id';
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReversibleTransactionsIndexRouteImport } from './routes/reversible-transactions/index'
+import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index'
+import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
+import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
+import { Route as ReversibleTransactionsHashRouteImport } from './routes/reversible-transactions/$hash'
+import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash'
+import { Route as BlocksIdRouteImport } from './routes/blocks/$id'
+import { Route as AccountsIdRouteImport } from './routes/accounts/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReversibleTransactionsIndexRoute =
   ReversibleTransactionsIndexRouteImport.update({
     id: '/reversible-transactions/',
     path: '/reversible-transactions/',
-    getParentRoute: () => rootRouteImport
-  } as any);
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ImmediateTransactionsIndexRoute =
   ImmediateTransactionsIndexRouteImport.update({
     id: '/immediate-transactions/',
     path: '/immediate-transactions/',
-    getParentRoute: () => rootRouteImport
-  } as any);
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlocksIndexRoute = BlocksIndexRouteImport.update({
   id: '/blocks/',
   path: '/blocks/',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsIndexRoute = AccountsIndexRouteImport.update({
   id: '/accounts/',
   path: '/accounts/',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReversibleTransactionsHashRoute =
   ReversibleTransactionsHashRouteImport.update({
     id: '/reversible-transactions/$hash',
     path: '/reversible-transactions/$hash',
-    getParentRoute: () => rootRouteImport
-  } as any);
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ImmediateTransactionsHashRoute =
   ImmediateTransactionsHashRouteImport.update({
     id: '/immediate-transactions/$hash',
     path: '/immediate-transactions/$hash',
-    getParentRoute: () => rootRouteImport
-  } as any);
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlocksIdRoute = BlocksIdRouteImport.update({
   id: '/blocks/$id',
   path: '/blocks/$id',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccountsIdRoute = AccountsIdRouteImport.update({
   id: '/accounts/$id',
   path: '/accounts/$id',
-  getParentRoute: () => rootRouteImport
-} as any);
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute;
-  '/accounts/$id': typeof AccountsIdRoute;
-  '/blocks/$id': typeof BlocksIdRoute;
-  '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute;
-  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute;
-  '/accounts': typeof AccountsIndexRoute;
-  '/blocks': typeof BlocksIndexRoute;
-  '/immediate-transactions': typeof ImmediateTransactionsIndexRoute;
-  '/reversible-transactions': typeof ReversibleTransactionsIndexRoute;
+  '/': typeof IndexRoute
+  '/accounts/$id': typeof AccountsIdRoute
+  '/blocks/$id': typeof BlocksIdRoute
+  '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
+  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/accounts': typeof AccountsIndexRoute
+  '/blocks': typeof BlocksIndexRoute
+  '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
+  '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute;
-  '/accounts/$id': typeof AccountsIdRoute;
-  '/blocks/$id': typeof BlocksIdRoute;
-  '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute;
-  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute;
-  '/accounts': typeof AccountsIndexRoute;
-  '/blocks': typeof BlocksIndexRoute;
-  '/immediate-transactions': typeof ImmediateTransactionsIndexRoute;
-  '/reversible-transactions': typeof ReversibleTransactionsIndexRoute;
+  '/': typeof IndexRoute
+  '/accounts/$id': typeof AccountsIdRoute
+  '/blocks/$id': typeof BlocksIdRoute
+  '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
+  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/accounts': typeof AccountsIndexRoute
+  '/blocks': typeof BlocksIndexRoute
+  '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
+  '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  '/': typeof IndexRoute;
-  '/accounts/$id': typeof AccountsIdRoute;
-  '/blocks/$id': typeof BlocksIdRoute;
-  '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute;
-  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute;
-  '/accounts/': typeof AccountsIndexRoute;
-  '/blocks/': typeof BlocksIndexRoute;
-  '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute;
-  '/reversible-transactions/': typeof ReversibleTransactionsIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/accounts/$id': typeof AccountsIdRoute
+  '/blocks/$id': typeof BlocksIdRoute
+  '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
+  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/accounts/': typeof AccountsIndexRoute
+  '/blocks/': typeof BlocksIndexRoute
+  '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute
+  '/reversible-transactions/': typeof ReversibleTransactionsIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/accounts/$id'
@@ -114,8 +114,8 @@ export interface FileRouteTypes {
     | '/accounts'
     | '/blocks'
     | '/immediate-transactions'
-    | '/reversible-transactions';
-  fileRoutesByTo: FileRoutesByTo;
+    | '/reversible-transactions'
+  fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accounts/$id'
@@ -125,7 +125,7 @@ export interface FileRouteTypes {
     | '/accounts'
     | '/blocks'
     | '/immediate-transactions'
-    | '/reversible-transactions';
+    | '/reversible-transactions'
   id:
     | '__root__'
     | '/'
@@ -136,86 +136,86 @@ export interface FileRouteTypes {
     | '/accounts/'
     | '/blocks/'
     | '/immediate-transactions/'
-    | '/reversible-transactions/';
-  fileRoutesById: FileRoutesById;
+    | '/reversible-transactions/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AccountsIdRoute: typeof AccountsIdRoute;
-  BlocksIdRoute: typeof BlocksIdRoute;
-  ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute;
-  ReversibleTransactionsHashRoute: typeof ReversibleTransactionsHashRoute;
-  AccountsIndexRoute: typeof AccountsIndexRoute;
-  BlocksIndexRoute: typeof BlocksIndexRoute;
-  ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute;
-  ReversibleTransactionsIndexRoute: typeof ReversibleTransactionsIndexRoute;
+  IndexRoute: typeof IndexRoute
+  AccountsIdRoute: typeof AccountsIdRoute
+  BlocksIdRoute: typeof BlocksIdRoute
+  ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute
+  ReversibleTransactionsHashRoute: typeof ReversibleTransactionsHashRoute
+  AccountsIndexRoute: typeof AccountsIndexRoute
+  BlocksIndexRoute: typeof BlocksIndexRoute
+  ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute
+  ReversibleTransactionsIndexRoute: typeof ReversibleTransactionsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reversible-transactions/': {
-      id: '/reversible-transactions/';
-      path: '/reversible-transactions';
-      fullPath: '/reversible-transactions';
-      preLoaderRoute: typeof ReversibleTransactionsIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/reversible-transactions/'
+      path: '/reversible-transactions'
+      fullPath: '/reversible-transactions'
+      preLoaderRoute: typeof ReversibleTransactionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/immediate-transactions/': {
-      id: '/immediate-transactions/';
-      path: '/immediate-transactions';
-      fullPath: '/immediate-transactions';
-      preLoaderRoute: typeof ImmediateTransactionsIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/immediate-transactions/'
+      path: '/immediate-transactions'
+      fullPath: '/immediate-transactions'
+      preLoaderRoute: typeof ImmediateTransactionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blocks/': {
-      id: '/blocks/';
-      path: '/blocks';
-      fullPath: '/blocks';
-      preLoaderRoute: typeof BlocksIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/blocks/'
+      path: '/blocks'
+      fullPath: '/blocks'
+      preLoaderRoute: typeof BlocksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts/': {
-      id: '/accounts/';
-      path: '/accounts';
-      fullPath: '/accounts';
-      preLoaderRoute: typeof AccountsIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/accounts/'
+      path: '/accounts'
+      fullPath: '/accounts'
+      preLoaderRoute: typeof AccountsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reversible-transactions/$hash': {
-      id: '/reversible-transactions/$hash';
-      path: '/reversible-transactions/$hash';
-      fullPath: '/reversible-transactions/$hash';
-      preLoaderRoute: typeof ReversibleTransactionsHashRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/reversible-transactions/$hash'
+      path: '/reversible-transactions/$hash'
+      fullPath: '/reversible-transactions/$hash'
+      preLoaderRoute: typeof ReversibleTransactionsHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/immediate-transactions/$hash': {
-      id: '/immediate-transactions/$hash';
-      path: '/immediate-transactions/$hash';
-      fullPath: '/immediate-transactions/$hash';
-      preLoaderRoute: typeof ImmediateTransactionsHashRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/immediate-transactions/$hash'
+      path: '/immediate-transactions/$hash'
+      fullPath: '/immediate-transactions/$hash'
+      preLoaderRoute: typeof ImmediateTransactionsHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blocks/$id': {
-      id: '/blocks/$id';
-      path: '/blocks/$id';
-      fullPath: '/blocks/$id';
-      preLoaderRoute: typeof BlocksIdRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/blocks/$id'
+      path: '/blocks/$id'
+      fullPath: '/blocks/$id'
+      preLoaderRoute: typeof BlocksIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accounts/$id': {
-      id: '/accounts/$id';
-      path: '/accounts/$id';
-      fullPath: '/accounts/$id';
-      preLoaderRoute: typeof AccountsIdRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/accounts/$id'
+      path: '/accounts/$id'
+      fullPath: '/accounts/$id'
+      preLoaderRoute: typeof AccountsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -228,8 +228,8 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,
   ImmediateTransactionsIndexRoute: ImmediateTransactionsIndexRoute,
-  ReversibleTransactionsIndexRoute: ReversibleTransactionsIndexRoute
-};
+  ReversibleTransactionsIndexRoute: ReversibleTransactionsIndexRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
