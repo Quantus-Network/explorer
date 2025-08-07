@@ -1,45 +1,92 @@
-import type { Metadata } from 'next';
-
+// src/lib/metadata.ts
 import env from './env';
 
 const siteName = env.SITE_NAME;
-const title = {
-  template: `%s | ${siteName}`,
-  default: `${siteName}` // a default is required when creating a template
-};
+const baseUrl = env.SITE_BASE_URL;
 const description = 'Site description'; // TODO: update meta description
-const images = {
-  url: `${env.SITE_BASE_URL}/images/next.svg`,
-  alt: siteName,
-  width: 226,
-  height: 100
-};
 
-const metadata: Metadata = {
-  title,
-  metadataBase: new URL(env.SITE_BASE_URL),
-  description,
-  alternates: {
-    canonical: env.SITE_BASE_URL
+export const defaultMetadata = {
+  siteName,
+  title: {
+    template: `%s | ${siteName}`,
+    default: siteName
   },
-  icons: {
-    apple: '/apple-touch-icon.png'
+  description,
+  baseUrl,
+  canonical: baseUrl,
+  images: {
+    url: `${baseUrl}/images/next.svg`,
+    alt: siteName,
+    width: 226,
+    height: 100
   },
   openGraph: {
     title: siteName,
     description,
-    url: env.SITE_BASE_URL,
+    url: baseUrl,
     siteName,
-    images,
     locale: 'en_US',
-    type: 'website'
+    type: 'website' as const
   },
   twitter: {
-    title,
-    description,
-    images,
-    card: 'summary_large_image'
+    card: 'summary_large_image' as const
+  },
+  icons: {
+    apple: '/apple-touch-icon.png'
   }
 };
 
-export default metadata;
+// Helper function to generate page metadata
+export function generatePageMetadata({
+  title,
+  description: pageDescription,
+  canonical,
+  openGraph,
+  twitter,
+  noIndex = false
+}: {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  openGraph?: {
+    title?: string;
+    description?: string;
+    image?: string;
+    url?: string;
+  };
+  twitter?: {
+    title?: string;
+    description?: string;
+    image?: string;
+  };
+  noIndex?: boolean;
+} = {}) {
+  const finalTitle = title
+    ? defaultMetadata.title.template.replace('%s', title)
+    : defaultMetadata.title.default;
+
+  const finalDescription = pageDescription || defaultMetadata.description;
+  const finalCanonical = canonical || defaultMetadata.canonical;
+
+  return {
+    title: finalTitle,
+    description: finalDescription,
+    canonical: finalCanonical,
+    noIndex,
+    openGraph: {
+      title: openGraph?.title || title || defaultMetadata.openGraph.title,
+      description: openGraph?.description || finalDescription,
+      url: openGraph?.url || finalCanonical,
+      siteName: defaultMetadata.siteName,
+      locale: defaultMetadata.openGraph.locale,
+      type: defaultMetadata.openGraph.type,
+      image: openGraph?.image || defaultMetadata.images.url
+    },
+    twitter: {
+      title: twitter?.title || title || defaultMetadata.openGraph.title,
+      description: twitter?.description || finalDescription,
+      card: defaultMetadata.twitter.card,
+      image: twitter?.image || defaultMetadata.images.url
+    }
+  };
+}

@@ -10,6 +10,7 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
+    "types": ["vite/client"],
 
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -40,22 +41,13 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"]
-    },
-
-    // Editor support
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    }
   },
   "exclude": ["./out/**/*", "./node_modules/**/*"],
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".storybook/**/*.ts",
-    ".storybook/**/*.tsx",
-    ".next/types/**/*.ts"
+    ".storybook/**/*.tsx"
   ]
 }

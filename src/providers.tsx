@@ -1,10 +1,10 @@
-'use client';
-
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { ThemeProvider } from 'next-themes';
-import { NuqsAdapter } from 'nuqs/adapters/next';
+import { NuqsAdapter } from 'nuqs/adapters/react';
 import type { PropsWithChildren } from 'react';
+import * as React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 
+import { ThemeProvider } from '@/components/common/theme-provider/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import env from '@/config/env';
 
@@ -17,13 +17,8 @@ const Providers = ({ children }: PropsWithChildren) => {
   return (
     <NuqsAdapter>
       <ApolloProvider client={client}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
+        <ThemeProvider defaultTheme="system" storageKey="qube-theme">
+          <HelmetProvider>{children}</HelmetProvider>
         </ThemeProvider>
       </ApolloProvider>
       <Toaster />

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { CopyableText } from '../../copyable-text';
@@ -20,7 +20,7 @@ export const LinkWithCopy: React.FC<LinkWithCopyProps> = ({
 }) => {
   return (
     <div className="flex items-center gap-1">
-      <Link className={className} href={href} title={textCopy}>
+      <Link className={className} to={href} title={textCopy}>
         {text}
       </Link>
 

@@ -1,4 +1,4 @@
-import { usePathname } from 'next/navigation';
+import { useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
@@ -36,7 +36,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   inputRef,
   resultRef
 }) => {
-  const location = usePathname();
+  const location = useLocation().pathname;
   const rootPath = location.split('/')[1];
   const isHomepage = rootPath === '';
 

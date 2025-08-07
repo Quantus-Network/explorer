@@ -1,7 +1,5 @@
-'use client';
-
+import { Link } from '@tanstack/react-router';
 import { Menu, X } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
@@ -29,7 +27,7 @@ export const Header = (props: HeaderProps) => {
             isOpen && 'border-b border-solid'
           )}
         >
-          <Link href="/" className="flex items-center gap-2 no-underline">
+          <Link to="/" className="flex items-center gap-2 no-underline">
             <div className="size-10">
               <img src="/logo.png" alt="Quantus Logo" className="size-full" />
             </div>

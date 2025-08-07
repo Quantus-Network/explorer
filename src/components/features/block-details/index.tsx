@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { Link, notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
 import api from '@/api';
@@ -61,7 +60,7 @@ export const BlockDetails: React.FC<Props> = ({ id }) => {
           {!loading && query.data?.reversibleTransactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
               <Link
-                href={`${RESOURCES.reversibleTransactions}?block=${data?.blocks[0]?.height}`}
+                to={`${RESOURCES.reversibleTransactions}?block=${data?.blocks[0]?.height}`}
               >
                 See all reversible transactions
               </Link>

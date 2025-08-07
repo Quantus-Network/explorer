@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 import type { HTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 
@@ -20,7 +20,7 @@ function PreviewLink({
 }) {
   return (
     <Link
-      href={href}
+      to={href}
       className="block rounded px-2 py-1 text-sm hover:bg-accent focus:bg-accent focus:outline-none"
       tabIndex={0}
       role="option"

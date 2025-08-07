@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { Link, notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
 import api from '@/api';
@@ -24,7 +23,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;
 
-  if (!loading && !data?.account && !isAccountValid) notFound();
+  if (!loading && !data?.account && !isAccountValid) throw notFound();
 
   return (
     <>
@@ -44,7 +43,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
           {!loading && query.data?.transactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
-              <Link href={`${RESOURCES.transactions}?accountId=${id}`}>
+              <Link to={`${RESOURCES.transactions}?accountId=${id}`}>
                 See all immediate transactions
               </Link>
             </Button>
@@ -60,9 +59,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
           {!loading && query.data?.reversibleTransactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
-              <Link
-                href={`${RESOURCES.reversibleTransactions}?accountId=${id}`}
-              >
+              <Link to={`${RESOURCES.reversibleTransactions}?accountId=${id}`}>
                 See all reversible transactions
               </Link>
             </Button>

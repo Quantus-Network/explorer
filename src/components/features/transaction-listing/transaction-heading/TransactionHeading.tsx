@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { Link, useSearch } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { RESOURCES } from '@/constants/resources';
@@ -9,8 +8,9 @@ import { RESOURCES } from '@/constants/resources';
 export interface TransactionHeadingProps {}
 
 export const TransactionHeading: React.FC<TransactionHeadingProps> = () => {
-  const accountId = useSearchParams().get('accountId');
-  const block = useSearchParams().get('block');
+  const { accountId, block } = useSearch({
+    from: `${RESOURCES.transactions}/$hash`
+  });
 
   return (
     <div>
