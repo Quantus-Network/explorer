@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 
 import { TransactionHeading } from '@/components/features/transaction-listing/transaction-heading/TransactionHeading';
 import { TransactionsStats } from '@/components/features/transaction-listing/transactions-stats/TransactionsStats';
@@ -6,24 +6,22 @@ import { TransactionsTable } from '@/components/features/transaction-listing/tra
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-const Transactions = () => {
+export const Route = createFileRoute('/immediate-transactions/')({
+  component: Transactions
+});
+
+function Transactions() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <Suspense>
-          <TransactionHeading />
-        </Suspense>
+        <TransactionHeading />
 
-        <Suspense>
-          <TransactionsStats />
-        </Suspense>
+        <TransactionsStats />
 
-        <Suspense>
-          <TransactionsTable />
-        </Suspense>
+        <TransactionsTable />
       </ContentContainer>
     </SectionContainer>
   );
-};
+}
 
 export default Transactions;

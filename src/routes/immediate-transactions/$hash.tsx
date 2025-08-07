@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { createFileRoute, notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
 import api from '@/api';
@@ -6,29 +6,26 @@ import { TransactionInformation } from '@/components/features/transaction-detail
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-// This enables ISR
-export const dynamicParams = true;
+export const Route = createFileRoute('/immediate-transactions/$hash')({
+  component: TransactionDetails
+});
+function TransactionDetails() {
+  const { hash } = Route.useParams();
+  const { data, loading, error } = api.transactions.getByHash().useQuery(hash);
 
-export interface TransactionDetailsProps {
-  params: { hash: string };
-}
+  if (loading) return <div>Loading....</div>;
 
-const TransactionDetails: React.FC<TransactionDetailsProps> = async ({
-  params
-}) => {
-  const { data } = await api.transactions.getByHash().query(params.hash);
-
-  if (data?.transactions.length !== 1) notFound();
+  if (!loading && (!data || data.transactions.length !== 1)) throw notFound();
 
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
         <h1>Immediate Transaction Details</h1>
 
-        <TransactionInformation transaction={data.transactions[0]} />
+        <TransactionInformation transaction={data!.transactions[0]} />
       </ContentContainer>
     </SectionContainer>
   );
-};
+}
 
 export default TransactionDetails;

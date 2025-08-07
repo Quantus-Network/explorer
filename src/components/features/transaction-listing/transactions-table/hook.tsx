@@ -1,10 +1,10 @@
+import { useSearch } from '@tanstack/react-router';
 import type {
   OnChangeFn,
   PaginationState,
   SortingState
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useSearchParams } from 'next/navigation';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
@@ -18,8 +18,9 @@ import type { Transaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useTransactionsTable = () => {
-  const accountId = useSearchParams().get('accountId');
-  const block = useSearchParams().get('block');
+  const { accountId, block } = useSearch({
+    strict: false
+  }) as any;
 
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(

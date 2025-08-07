@@ -9,8 +9,8 @@ export interface TransactionHeadingProps {}
 
 export const TransactionHeading: React.FC<TransactionHeadingProps> = () => {
   const { accountId, block } = useSearch({
-    from: `${RESOURCES.transactions}/$hash`
-  });
+    strict: false
+  }) as any;
 
   return (
     <div>

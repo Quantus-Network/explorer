@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { createFileRoute, notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
 import api from '@/api';
@@ -6,21 +6,20 @@ import { ReversibleTransactionInformation } from '@/components/features/reversib
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-// This enables ISR
-export const dynamicParams = true;
+export const Route = createFileRoute('/reversible-transactions/$hash')({
+  component: ReversibleTransactionDetails
+});
 
-export interface ReversibleTransactionDetailsProps {
-  params: { hash: string };
-}
-
-const ReversibleTransactionDetails: React.FC<
-  ReversibleTransactionDetailsProps
-> = async ({ params }) => {
-  const { data } = await api.reversibleTransactions
+function ReversibleTransactionDetails() {
+  const { hash } = Route.useParams();
+  const { data, loading, error } = api.reversibleTransactions
     .getByHash()
-    .query(params.hash);
+    .useQuery(hash);
 
-  if (data?.reversibleTransactions.length !== 1) notFound();
+  if (loading) return <div>Loading....</div>;
+
+  if (!loading && (!data || data.reversibleTransactions.length !== 1))
+    throw notFound();
 
   return (
     <SectionContainer>
@@ -28,11 +27,11 @@ const ReversibleTransactionDetails: React.FC<
         <h1>Reversible Transaction Details</h1>
 
         <ReversibleTransactionInformation
-          transaction={data.reversibleTransactions[0]}
+          transaction={data!.reversibleTransactions[0]}
         />
       </ContentContainer>
     </SectionContainer>
   );
-};
+}
 
 export default ReversibleTransactionDetails;

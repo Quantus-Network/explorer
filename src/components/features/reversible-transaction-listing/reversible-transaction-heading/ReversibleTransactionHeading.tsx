@@ -11,8 +11,8 @@ export const ReversibleTransactionHeading: React.FC<
   ReversibleTransactionHeadingProps
 > = () => {
   const { accountId, block } = useSearch({
-    from: `${RESOURCES.reversibleTransactions}/$hash`
-  });
+    strict: false
+  }) as any;
 
   return (
     <div>

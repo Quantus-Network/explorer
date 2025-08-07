@@ -1,24 +1,26 @@
+import { createFileRoute } from '@tanstack/react-router';
 import { Suspense } from 'react';
 
-import { BlocksStats } from '@/components/features/block-listing/blocks-stats/BlocksStats';
-import { BlocksTable } from '@/components/features/block-listing/blocks-table/BlocksTable';
+import { AccountsTable } from '@/components/features/account-listing/accounts-table/AccountsTable';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-const Blocks = () => {
+export const Route = createFileRoute('/accounts/')({
+  component: Accounts
+});
+
+function Accounts() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Blocks</h1>
-
-        <BlocksStats />
+        <h1>Accounts</h1>
 
         <Suspense>
-          <BlocksTable />
+          <AccountsTable />
         </Suspense>
       </ContentContainer>
     </SectionContainer>
   );
-};
+}
 
-export default Blocks;
+export default Accounts;
