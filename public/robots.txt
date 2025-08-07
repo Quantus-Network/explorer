@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /*
+Disallow: /not-found
+Disallow: /error
+Disallow: /search
+
+Sitemap: https://quantumcanary.org/sitemap.xml

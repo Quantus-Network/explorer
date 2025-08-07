@@ -21,7 +21,7 @@ import {
 
 export interface TableControlsProps {
   table: Table<any>;
-  tableRef: React.RefObject<HTMLTableElement>;
+  tableRef: React.RefObject<HTMLTableElement | null>;
 }
 
 export const TableControls: React.FC<TableControlsProps> = ({

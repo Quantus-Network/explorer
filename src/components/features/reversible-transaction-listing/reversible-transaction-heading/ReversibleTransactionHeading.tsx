@@ -1,9 +1,5 @@
-'use client';
-
 import { Link, useSearch } from '@tanstack/react-router';
 import * as React from 'react';
-
-import { RESOURCES } from '@/constants/resources';
 
 export interface ReversibleTransactionHeadingProps {}
 
@@ -21,14 +17,18 @@ export const ReversibleTransactionHeading: React.FC<
       {block && (
         <div className="flex gap-1">
           <span>In block</span>
-          <Link to={`${RESOURCES.blocks}/${block}`}>{block}</Link>
+          <Link to="/blocks/$id" params={{ id: block }}>
+            {block}
+          </Link>
         </div>
       )}
 
       {accountId && (
         <div className="flex gap-1">
           <span>By</span>
-          <Link to={`${RESOURCES.accounts}/${accountId}`}>{accountId}</Link>
+          <Link to="/accounts/$id" params={{ id: accountId }}>
+            {accountId}
+          </Link>
         </div>
       )}
     </div>

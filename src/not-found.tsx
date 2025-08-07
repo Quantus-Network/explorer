@@ -1,11 +1,9 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return (
     <div className="m-auto flex flex-col items-center justify-center">
@@ -14,7 +12,7 @@ export default function NotFound() {
       <Button
         className="mt-8"
         type="button"
-        onClick={() => router.replace('/')}
+        onClick={() => navigate({ to: '/', replace: true })}
       >
         Back to Home
       </Button>

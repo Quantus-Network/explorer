@@ -1,5 +1,3 @@
-'use client';
-
 import { Link, notFound } from '@tanstack/react-router';
 import * as React from 'react';
 

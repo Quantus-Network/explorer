@@ -19,8 +19,8 @@ export interface TopbarProps {
   searchLoading: boolean;
   searchResult?: SearchAllResponse;
   isResultVisible: boolean;
-  inputRef: React.RefObject<HTMLDivElement>;
-  resultRef: React.RefObject<HTMLDivElement>;
+  inputRef: React.RefObject<HTMLDivElement | null>;
+  resultRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
