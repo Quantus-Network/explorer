@@ -5,7 +5,6 @@ import api from '@/api';
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
-import { RESOURCES } from '@/constants/resources';
 import { validateAccountId } from '@/utils/validate-account-id';
 
 import { AccountInformation } from './account-information/AccountInformation';
@@ -41,7 +40,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
           {!loading && query.data?.transactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
-              <Link to={`${RESOURCES.transactions}?accountId=${id}`}>
+              <Link to="/immediate-transactions" search={{ accountId: id }}>
                 See all immediate transactions
               </Link>
             </Button>
@@ -57,7 +56,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
           {!loading && query.data?.reversibleTransactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
-              <Link to={`${RESOURCES.reversibleTransactions}?accountId=${id}`}>
+              <Link to="/reversible-transactions" search={{ accountId: id }}>
                 See all reversible transactions
               </Link>
             </Button>

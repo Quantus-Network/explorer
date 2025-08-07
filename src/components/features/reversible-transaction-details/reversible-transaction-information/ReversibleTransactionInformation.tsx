@@ -1,28 +1,48 @@
+import { notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
 import api from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
-import { Skeleton } from '@/components/ui/skeleton';
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
-import type { ReversibleTransaction } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface ReversibleTransactionInformationProps {
-  transaction: ReversibleTransaction;
+  hash: string;
 }
 
 export const ReversibleTransactionInformation: React.FC<
   ReversibleTransactionInformationProps
-> = ({ transaction }) => {
+> = ({ hash }) => {
   const { data, loading } = api.reversibleTransactions
-    .getStatusByHash()
-    .useQuery(transaction.extrinsicHash ?? '');
+    .getByHash()
+    .useQuery(hash);
+
+  if (!loading && (!data || data.reversibleTransactions.length !== 1))
+    throw notFound();
+
+  const tx = data?.reversibleTransactions[0];
+
+  const information = [
+    {
+      txId: tx?.txId,
+      amount: tx?.amount,
+      extrinsicHash: tx?.extrinsicHash,
+      block: tx?.block,
+      timestamp: tx?.timestamp,
+      scheduledAt: tx?.scheduledAt,
+      from: tx?.from,
+      to: tx?.to,
+      fee: tx?.fee,
+      status: tx?.status
+    }
+  ];
 
   return (
     <DataList
-      data={[transaction]}
+      loading={loading}
+      data={information}
       fields={[
         {
           label: 'ID',
@@ -96,14 +116,11 @@ export const ReversibleTransactionInformation: React.FC<
         {
           label: 'Status',
           key: 'status',
-          render: (value) =>
-            loading ? (
-              <Skeleton className="h-6" />
-            ) : (
-              <TransactionStatus
-                status={data?.reversibleTransactions[0].status ?? value}
-              />
-            )
+          render: (value) => (
+            <TransactionStatus
+              status={data?.reversibleTransactions[0].status ?? value}
+            />
+          )
         }
       ]}
     />
