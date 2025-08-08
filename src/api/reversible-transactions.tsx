@@ -145,6 +145,9 @@ export const reversibleTransactions = {
         ) {
           totalCount
         }
+        allTime: reversibleTransfersConnection(orderBy: id_ASC) {
+          totalCount
+        }
       }
     `;
 

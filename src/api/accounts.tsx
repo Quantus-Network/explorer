@@ -1,11 +1,18 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
+import { endOfToday } from 'date-fns/endOfToday';
+import { startOfToday } from 'date-fns/startOfToday';
+import { subDays } from 'date-fns/subDays';
 
 import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
 import { ACCOUNT_SORTS } from '@/constants/query-sorts';
-import type { AccountListResponse, AccountResponse } from '@/schemas';
+import type {
+  AccountListResponse,
+  AccountResponse,
+  AccountStatsResponse
+} from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { getGqlString } from '@/utils/get-gql-string';
 
@@ -135,5 +142,49 @@ export const accounts = {
           }
         })
     };
+  },
+  useGetStats: (
+    config?: Omit<QueryHookOptions<AccountStatsResponse>, 'variables'>
+  ) => {
+    const startDate = subDays(startOfToday(), 7).toISOString();
+    const endDate = endOfToday().toISOString();
+
+    const GET_ACCOUNTS_STATS = gql`
+      query GetAccountsStats($startDate: DateTime!, $endDate: DateTime!) {
+        all: accountsConnection(orderBy: id_ASC) {
+          totalCount
+        }
+        recentlyActive: accountsConnection(
+          orderBy: id_ASC
+          where: {
+            transfersFrom_some: {
+              timestamp_gte: $startDate
+              timestamp_lte: $endDate
+            }
+          }
+        ) {
+          totalCount
+        }
+        recentlyDeposited: accountsConnection(
+          orderBy: id_ASC
+          where: {
+            transfersTo_some: {
+              timestamp_gte: $startDate
+              timestamp_lte: $endDate
+            }
+          }
+        ) {
+          totalCount
+        }
+      }
+    `;
+
+    return useQuery<AccountStatsResponse>(GET_ACCOUNTS_STATS, {
+      ...config,
+      variables: {
+        startDate,
+        endDate
+      }
+    });
   }
 };

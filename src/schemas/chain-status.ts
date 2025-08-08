@@ -10,10 +10,10 @@ export interface ChainStatusResponse {
   reversibleTransactions: {
     totalCount: number;
   };
-  activeAccounts: {
+  allActiveAccounts: {
     totalCount: number;
   };
-  depositAccounts: {
+  allDepositAccounts: {
     totalCount: number;
   };
 }
