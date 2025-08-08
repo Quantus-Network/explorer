@@ -34,6 +34,20 @@ export const search = {
         ) {
           height
         }
+        minerRewards(
+          limit: $limit
+          where: { block: { hash_startsWith: $keyword } }
+        ) {
+          block {
+            height
+            hash
+          }
+          reward
+          miner {
+            id
+          }
+          timestamp
+        }
       }
     `;
 

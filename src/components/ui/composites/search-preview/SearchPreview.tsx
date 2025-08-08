@@ -99,13 +99,19 @@ interface SearchPreviewProps
 
 export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
   ({ isLoading, error, searchResult, onKeyDown }, ref) => {
-    const { accounts, transactions, blocks, reversibleTransactions } =
-      searchResult || {};
+    const {
+      accounts,
+      transactions,
+      blocks,
+      reversibleTransactions,
+      minerRewards
+    } = searchResult || {};
 
     if (
       !isLoading &&
       !transactions &&
       !blocks &&
+      !minerRewards &&
       !accounts &&
       !reversibleTransactions
     ) {
@@ -180,6 +186,21 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
                 <PreviewLink
                   href={`${RESOURCES.blocks}/${block.height}`}
                   label={`${block.height}`}
+                />
+              )}
+            />
+
+            {/* Miner Rewards */}
+            <Section
+              title="Miner Rewards"
+              loading={isLoading}
+              error={error}
+              emptyMsg="No miner rewards found."
+              items={minerRewards}
+              renderItem={(minerReward) => (
+                <PreviewLink
+                  href={`${RESOURCES.minerRewards}/${minerReward.block.hash}`}
+                  label={`${minerReward.block.hash}`}
                 />
               )}
             />

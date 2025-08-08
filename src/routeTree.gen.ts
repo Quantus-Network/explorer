@@ -11,10 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReversibleTransactionsIndexRouteImport } from './routes/reversible-transactions/index'
+import { Route as MinerRewardsIndexRouteImport } from './routes/miner-rewards/index'
 import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index'
 import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
 import { Route as ReversibleTransactionsHashRouteImport } from './routes/reversible-transactions/$hash'
+import { Route as MinerRewardsHashRouteImport } from './routes/miner-rewards/$hash'
 import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash'
 import { Route as BlocksIdRouteImport } from './routes/blocks/$id'
 import { Route as AccountsIdRouteImport } from './routes/accounts/$id'
@@ -30,6 +32,11 @@ const ReversibleTransactionsIndexRoute =
     path: '/reversible-transactions/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MinerRewardsIndexRoute = MinerRewardsIndexRouteImport.update({
+  id: '/miner-rewards/',
+  path: '/miner-rewards/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImmediateTransactionsIndexRoute =
   ImmediateTransactionsIndexRouteImport.update({
     id: '/immediate-transactions/',
@@ -52,6 +59,11 @@ const ReversibleTransactionsHashRoute =
     path: '/reversible-transactions/$hash',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MinerRewardsHashRoute = MinerRewardsHashRouteImport.update({
+  id: '/miner-rewards/$hash',
+  path: '/miner-rewards/$hash',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ImmediateTransactionsHashRoute =
   ImmediateTransactionsHashRouteImport.update({
     id: '/immediate-transactions/$hash',
@@ -74,10 +86,12 @@ export interface FileRoutesByFullPath {
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
+  '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
+  '/miner-rewards': typeof MinerRewardsIndexRoute
   '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -85,10 +99,12 @@ export interface FileRoutesByTo {
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
+  '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
+  '/miner-rewards': typeof MinerRewardsIndexRoute
   '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
 }
 export interface FileRoutesById {
@@ -97,10 +113,12 @@ export interface FileRoutesById {
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
+  '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
   '/accounts/': typeof AccountsIndexRoute
   '/blocks/': typeof BlocksIndexRoute
   '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute
+  '/miner-rewards/': typeof MinerRewardsIndexRoute
   '/reversible-transactions/': typeof ReversibleTransactionsIndexRoute
 }
 export interface FileRouteTypes {
@@ -110,10 +128,12 @@ export interface FileRouteTypes {
     | '/accounts/$id'
     | '/blocks/$id'
     | '/immediate-transactions/$hash'
+    | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
     | '/accounts'
     | '/blocks'
     | '/immediate-transactions'
+    | '/miner-rewards'
     | '/reversible-transactions'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,10 +141,12 @@ export interface FileRouteTypes {
     | '/accounts/$id'
     | '/blocks/$id'
     | '/immediate-transactions/$hash'
+    | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
     | '/accounts'
     | '/blocks'
     | '/immediate-transactions'
+    | '/miner-rewards'
     | '/reversible-transactions'
   id:
     | '__root__'
@@ -132,10 +154,12 @@ export interface FileRouteTypes {
     | '/accounts/$id'
     | '/blocks/$id'
     | '/immediate-transactions/$hash'
+    | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
     | '/accounts/'
     | '/blocks/'
     | '/immediate-transactions/'
+    | '/miner-rewards/'
     | '/reversible-transactions/'
   fileRoutesById: FileRoutesById
 }
@@ -144,10 +168,12 @@ export interface RootRouteChildren {
   AccountsIdRoute: typeof AccountsIdRoute
   BlocksIdRoute: typeof BlocksIdRoute
   ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute
+  MinerRewardsHashRoute: typeof MinerRewardsHashRoute
   ReversibleTransactionsHashRoute: typeof ReversibleTransactionsHashRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
   BlocksIndexRoute: typeof BlocksIndexRoute
   ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute
+  MinerRewardsIndexRoute: typeof MinerRewardsIndexRoute
   ReversibleTransactionsIndexRoute: typeof ReversibleTransactionsIndexRoute
 }
 
@@ -165,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: '/reversible-transactions'
       fullPath: '/reversible-transactions'
       preLoaderRoute: typeof ReversibleTransactionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/miner-rewards/': {
+      id: '/miner-rewards/'
+      path: '/miner-rewards'
+      fullPath: '/miner-rewards'
+      preLoaderRoute: typeof MinerRewardsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/immediate-transactions/': {
@@ -193,6 +226,13 @@ declare module '@tanstack/react-router' {
       path: '/reversible-transactions/$hash'
       fullPath: '/reversible-transactions/$hash'
       preLoaderRoute: typeof ReversibleTransactionsHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/miner-rewards/$hash': {
+      id: '/miner-rewards/$hash'
+      path: '/miner-rewards/$hash'
+      fullPath: '/miner-rewards/$hash'
+      preLoaderRoute: typeof MinerRewardsHashRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/immediate-transactions/$hash': {
@@ -224,10 +264,12 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsIdRoute: AccountsIdRoute,
   BlocksIdRoute: BlocksIdRoute,
   ImmediateTransactionsHashRoute: ImmediateTransactionsHashRoute,
+  MinerRewardsHashRoute: MinerRewardsHashRoute,
   ReversibleTransactionsHashRoute: ReversibleTransactionsHashRoute,
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,
   ImmediateTransactionsIndexRoute: ImmediateTransactionsIndexRoute,
+  MinerRewardsIndexRoute: MinerRewardsIndexRoute,
   ReversibleTransactionsIndexRoute: ReversibleTransactionsIndexRoute,
 }
 export const routeTree = rootRouteImport

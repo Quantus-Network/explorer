@@ -1,4 +1,5 @@
 import type * as gql from '../__generated__/graphql';
+import type { MinerReward } from './miner-reward';
 import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
 
@@ -7,7 +8,7 @@ export interface Block
 
 export interface BlockResponse {
   blocks: [Block];
-  miners: [{ miner: { id: string } }];
+  miners: [MinerReward];
   transactions: {
     edges: BlockTransaction[];
     /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
