@@ -11,6 +11,10 @@ export const BLOCK_SORTS = {
     ASC: 'height_ASC',
     DESC: 'height_DESC'
   },
+  reward: {
+    ASC: 'reward_ASC',
+    DESC: 'reward_DESC'
+  },
   timestamp: {
     ASC: 'timestamp_ASC',
     DESC: 'timestamp_DESC'

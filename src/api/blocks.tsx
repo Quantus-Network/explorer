@@ -38,6 +38,7 @@ export const blocks = {
           id
           hash
           height
+          reward
           timestamp
         }
         meta: blocksConnection(orderBy: id_ASC) {
@@ -72,6 +73,7 @@ export const blocks = {
           id
           hash
           height
+          reward
           timestamp
         }
       }
@@ -96,7 +98,18 @@ export const blocks = {
           id
           hash
           height
+          reward
           timestamp
+        }
+        miners: minerRewards(
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          miner {
+            id
+          }
         }
         transactions: transfersConnection(
           orderBy: timestamp_DESC

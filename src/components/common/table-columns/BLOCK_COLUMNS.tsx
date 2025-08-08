@@ -4,6 +4,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { Block } from '@/schemas';
+import { formatMonetaryValue } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<Block>();
 
@@ -29,6 +30,12 @@ export const BLOCK_COLUMNS = [
       />
     ),
     enableSorting: false
+  }),
+  columnHelper.accessor('reward', {
+    id: 'reward',
+    header: 'Reward',
+    cell: (props) => formatMonetaryValue(props.getValue()),
+    enableSorting: true
   }),
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
