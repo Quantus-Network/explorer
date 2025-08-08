@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { SEO } from '@/components/common/seo/SEO';
 import { Hero } from '@/components/features/landing/hero/Hero';
 import { RecentBlocks } from '@/components/features/landing/recent-blocks/RecentBlocks';
 import { RecentReversibleTransactions } from '@/components/features/landing/recent-reversible-transactions/RecentReversibleTransactions';
@@ -13,8 +12,6 @@ export const Route = createFileRoute('/')({
 function Home() {
   return (
     <>
-      <SEO />
-
       <Hero />
       <RecentTransactions />
       <RecentReversibleTransactions />

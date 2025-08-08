@@ -10,9 +10,9 @@ import Providers from '@/providers';
 export const Route = createRootRoute({
   component: () => (
     <>
-      <Providers>
-        <SEO />
+      <SEO />
 
+      <Providers>
         <Header />
 
         <main>

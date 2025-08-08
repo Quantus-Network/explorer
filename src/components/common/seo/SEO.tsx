@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Helmet } from 'react-helmet-async';
 
 import { defaultMetadata } from '../../../config/metadata';
 
@@ -47,7 +46,7 @@ export function SEO({
   const twitterImage = twitter?.image || defaultMetadata.images.url;
 
   return (
-    <Helmet>
+    <>
       {/* Basic Meta Tags */}
       <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
@@ -82,6 +81,6 @@ export function SEO({
       <meta name="twitter:title" content={twitterTitle} />
       <meta name="twitter:description" content={twitterDescription} />
       <meta name="twitter:image" content={twitterImage} />
-    </Helmet>
+    </>
   );
 }

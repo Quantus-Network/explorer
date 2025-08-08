@@ -2,7 +2,6 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import type { PropsWithChildren } from 'react';
 import * as React from 'react';
-import { HelmetProvider } from 'react-helmet-async';
 
 import { ThemeProvider } from '@/components/common/theme-provider/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
@@ -18,7 +17,7 @@ const Providers = ({ children }: PropsWithChildren) => {
     <NuqsAdapter>
       <ApolloProvider client={client}>
         <ThemeProvider defaultTheme="system" storageKey="qube-theme">
-          <HelmetProvider>{children}</HelmetProvider>
+          {children}
         </ThemeProvider>
       </ApolloProvider>
       <Toaster />
