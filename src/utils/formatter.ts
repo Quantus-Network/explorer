@@ -16,7 +16,9 @@ export const formatTimestamp = (
   const formatted = `${format(date, 'MM/dd/yyyy, hh:mm:ss', { in: utc })} UTC`;
   if (!withDistance) return formatted;
 
-  const distance = formatDistanceToNow(date, { addSuffix: true });
+  const distance = capitalizeFirstChar(
+    formatDistanceToNow(date, { addSuffix: true })
+  );
 
   return `${distance} (${formatted})`;
 };
@@ -27,7 +29,9 @@ export const formatDistanceTimestamp = (timestamp?: string | Date) => {
   const date =
     (typeof timestamp === 'string' && new Date(timestamp)) || timestamp;
 
-  const distance = formatDistanceToNow(date, { addSuffix: true });
+  const distance = capitalizeFirstChar(
+    formatDistanceToNow(date, { addSuffix: true })
+  );
 
   return distance;
 };
@@ -51,3 +55,16 @@ export const formatTxAddress = (address: string) => {
 
   return `${firstSix}....${lastFive}`;
 };
+
+/**
+ * Capitalizes the first character of a string
+ * @param sentence - The input string to capitalize
+ * @returns The string with the first character capitalized
+ */
+function capitalizeFirstChar(sentence: string): string {
+  if (!sentence || sentence.length === 0) {
+    return sentence;
+  }
+
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
