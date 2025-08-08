@@ -15,9 +15,9 @@ export const TRANSACTION_SORTS = {
     ASC: 'extrinsicHash_ASC',
     DESC: 'extrinsicHash_DESC'
   },
-  blockNumber: {
-    ASC: 'blockNumber_ASC',
-    DESC: 'blockNumber_DESC'
+  blockHeight: {
+    ASC: 'block_height_ASC',
+    DESC: 'block_height_DESC'
   },
   amount: {
     ASC: 'amount_ASC',

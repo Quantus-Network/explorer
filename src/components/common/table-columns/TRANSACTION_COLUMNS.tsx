@@ -28,7 +28,7 @@ export const TRANSACTION_COLUMNS = [
     enableSorting: false
   }),
   columnHelper.accessor('block.height', {
-    id: 'blockNumber',
+    id: 'block_height',
     header: 'Block',
     cell: (props) => (
       <LinkWithCopy

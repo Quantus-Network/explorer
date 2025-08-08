@@ -22,7 +22,7 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
     enableSorting: false
   }),
   columnHelper.accessor('block.height', {
-    id: 'blockHeight',
+    id: 'block_height',
     header: 'Block',
     cell: (props) => (
       <LinkWithCopy
