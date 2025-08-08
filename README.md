@@ -1,6 +1,6 @@
 # Quantus Block Explorer
 
-A modern, feature-rich blockchain explorer for the Quantus Network built with Next.js 14, TypeScript, and GraphQL. Explore transactions, blocks, and accounts with real-time data visualization and an intuitive user interface.
+A modern, feature-rich blockchain explorer for the Quantus Network built with React.js 19 + Tanstack Router, TypeScript, and GraphQL. Explore transactions, blocks, and accounts with real-time data visualization and an intuitive user interface.
 
 ![Quantus Explorer](./public/logo.png)
 
@@ -23,12 +23,12 @@ A modern, feature-rich blockchain explorer for the Quantus Network built with Ne
 - **Type-Safe GraphQL** - Automated code generation for GraphQL queries
 - **Modern UI Components** - Built with Radix UI primitives and Tailwind CSS
 - **Accessibility First** - WCAG compliant components and keyboard navigation
-- **SEO Optimized** - Meta tags, OpenGraph, and structured data
 
 ## 🛠️ Technology Stack
 
 ### Frontend
-- **Next.js 14** - React framework with App Router
+- **React.js 19** - The library for web user interfaces
+- **Tanstack Router** - Modern and scalable router
 - **TypeScript** - Type-safe JavaScript
 - **Tailwind CSS** - Utility-first CSS framework
 - **Radix UI** - Accessible component primitives
@@ -62,7 +62,7 @@ cd explorer
 
 ### 2. Install Dependencies
 ```bash
-yarn install
+bun install
 ```
 
 ### 3. Environment Setup
@@ -79,12 +79,12 @@ ANALYZE=false
 
 ### 4. Generate GraphQL Types
 ```bash
-yarn gql:compile
+bun gql:compile
 ```
 
 ### 5. Start Development Server
 ```bash
-yarn dev
+bun dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see the application.
@@ -122,26 +122,26 @@ quantus-block-explorer/
 
 | Command | Description |
 |---------|-------------|
-| `yarn dev` | Start development server |
-| `yarn build` | Build for production |
-| `yarn start` | Start production server |
-| `yarn lint` | Run ESLint |
-| `yarn test` | Run tests |
-| `yarn format` | Format code with Prettier |
-| `yarn storybook` | Start Storybook |
-| `yarn gql:compile` | Generate GraphQL types |
+| `bun dev` | Start development server |
+| `bun run build` | Build for production |
+| `bun start` | Start production server |
+| `bun lint` | Run ESLint |
+| `bun test` | Run tests |
+| `bun format` | Format code with Prettier |
+| `bun storybook` | Start Storybook |
+| `bun gql:compile` | Generate GraphQL types |
 
 ## 🧪 Testing
 
 ### Unit Tests
 ```bash
-yarn test
+bun test
 ```
 
 ### Storybook Tests
 ```bash
-yarn storybook
-yarn test-storybook:ci
+bun storybook
+bun test-storybook:ci
 ```
 
 ## 🎨 Component Development
@@ -149,7 +149,7 @@ yarn test-storybook:ci
 We use Storybook for component development and testing:
 
 ```bash
-yarn storybook
+bun storybook
 ```
 
 Components are organized by feature and include:
@@ -163,7 +163,7 @@ The project uses Apollo Client for GraphQL integration with automatic code gener
 
 ### Adding New Queries
 1. Create query in `src/api/`
-2. Run `yarn gql:compile` to generate types
+2. Run `bun gql:compile` to generate types
 3. Import and use in components
 
 ### Example Query Structure
@@ -186,43 +186,23 @@ export const exampleQuery = {
 
 ## 🎯 Performance Optimization
 
-- **SSR/SSG** - Server-side rendering for faster initial loads
-- **Code Splitting** - Automatic code splitting with Next.js
-- **Image Optimization** - Next.js Image component for optimized images
-- **Bundle Analysis** - Use `ANALYZE=true yarn build` to analyze bundle size
+- **CSR** - Client-side rendering for smooth and fast interactions
+- **Code Splitting** - Automatic code splitting with Vite.js
+- **Bundle Analysis** - Use `ANALYZE=true bun run build` to analyze bundle size
 
 ## 🔐 Environment Variables
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `NEXT_PUBLIC_SITE_URL` | Site base URL | Yes |
-| `NEXT_PUBLIC_GRAPHQL_URL` | GraphQL API endpoint | Yes |
+| `VITE_SITE_URL` | Site base URL | Yes |
+| `VITE_GRAPHQL_URL` | GraphQL API endpoint | Yes |
 | `ANALYZE` | Enable bundle analyzer | No |
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
-1. Connect your repository to Vercel
-2. Set environment variables
-3. Deploy automatically on push
-
-### Docker
-```dockerfile
-# Dockerfile example
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN yarn install --frozen-lockfile
-COPY . .
-RUN yarn build
-EXPOSE 3000
-CMD ["yarn", "start"]
-```
-
 ### Manual Deployment
 ```bash
-yarn build
-yarn start
+bun run build
 ```
 
 ## 🤝 Contributing
@@ -237,8 +217,8 @@ We welcome contributions! Please follow these steps:
 3. **Make your changes**
 4. **Run tests and linting**
    ```bash
-   yarn test
-   yarn lint
+   bun test
+   bun lint
    ```
 5. **Commit your changes**
    ```bash
@@ -270,20 +250,13 @@ This project maintains high code quality through:
 
 **GraphQL Types Not Generated**
 ```bash
-yarn gql:compile
+bun gql:compile
 ```
 
 **Development Server Won't Start**
 ```bash
-yarn clean
-yarn dev
-```
-
-**Build Failures**
-```bash
-rm -rf .next node_modules
-yarn install
-yarn build
+bun clean
+bun dev
 ```
 
 ### Getting Help
@@ -296,7 +269,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [Next.js](https://nextjs.org/) - The React framework
+- [React.js](https://react.dev/) - The library for web and native user interfaces
+- [Tanstack Router](https://tanstack.com/router/latest) - Modern and scalable routing for React and Solid applications
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS
 - [Radix UI](https://radix-ui.com/) - Accessible components
 - [Apollo Client](https://apollographql.com/) - GraphQL client
