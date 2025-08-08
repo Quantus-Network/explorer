@@ -50,6 +50,7 @@
         "react/jsx-props-no-spreading": "off", // _app.tsx uses spread operator and also, react-hook-form
         "react/react-in-jsx-scope": "off", // _app.tsx uses spread operator and also, react-hook-form
         "react/no-array-index-key": "off",
+        "react/prop-types": "off",
         "react-hooks/exhaustive-deps": "off", // Incorrectly report needed dependency with Next.js router
         "@typescript-eslint/comma-dangle": "off", // Avoid conflict rule between Eslint and Prettier
         "@typescript-eslint/consistent-type-imports": "error", // Ensure `import type` is used when it's necessary

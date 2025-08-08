@@ -35,5 +35,10 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
     label: 'Blocks',
     path: '/blocks',
     longLabel: 'Blocks'
+  },
+  {
+    label: 'Miner Rewards',
+    path: '/miner-rewards',
+    longLabel: 'Miner Rewards'
   }
 ] as const;

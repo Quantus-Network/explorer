@@ -134,6 +134,12 @@ export const transactions = {
         ) {
           totalCount
         }
+        allTime: transfersConnection(
+          orderBy: id_ASC
+          where: { extrinsicHash_isNull: false }
+        ) {
+          totalCount
+        }
       }
     `;
 

@@ -6,11 +6,15 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
+import type { ReversibleTransactionResponse } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface ReversibleTransactionInformationProps {
   hash: string;
 }
+
+type ReversibleTransaction =
+  ReversibleTransactionResponse['reversibleTransactions'][0];
 
 export const ReversibleTransactionInformation: React.FC<
   ReversibleTransactionInformationProps
@@ -24,7 +28,7 @@ export const ReversibleTransactionInformation: React.FC<
 
   const tx = data?.reversibleTransactions[0];
 
-  const information = [
+  const information: Partial<ReversibleTransaction>[] = [
     {
       txId: tx?.txId,
       amount: tx?.amount,
@@ -40,7 +44,7 @@ export const ReversibleTransactionInformation: React.FC<
   ];
 
   return (
-    <DataList
+    <DataList<Partial<ReversibleTransaction>>
       loading={loading}
       data={information}
       fields={[
@@ -74,12 +78,12 @@ export const ReversibleTransactionInformation: React.FC<
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: formatTimestamp
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'Scheduled At',
           key: 'scheduledAt',
-          render: formatTimestamp
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'From',

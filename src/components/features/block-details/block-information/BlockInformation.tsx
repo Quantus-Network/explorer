@@ -5,10 +5,20 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { RESOURCES } from '@/constants/resources';
 import type { BlockResponse } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
+import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface BlockInformationProps {
   query: QueryResult<BlockResponse>;
+}
+
+interface BlockDetails {
+  height: number;
+  hash: string;
+  timestamp: string;
+  reward: number;
+  miner: string;
+  transactions: number;
+  reversibleTransactions: number;
 }
 
 export const BlockInformation: React.FC<BlockInformationProps> = ({
@@ -17,21 +27,24 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   const { data, loading } = query;
   const block = data?.blocks?.[0];
 
-  const transactionCount = data?.transactions.totalCount;
-  const reversibleTransactionCount = data?.reversibleTransactions.totalCount;
+  const transactions = data?.transactions.totalCount;
+  const reversibleTransactions = data?.reversibleTransactions.totalCount;
+  const miner = data?.miners[0]?.miner.id;
 
-  const information = [
+  const information: Partial<BlockDetails>[] = [
     {
       height: block?.height,
       hash: block?.hash,
+      reward: block?.reward,
       timestamp: block?.timestamp,
-      transactions: transactionCount,
-      reversibleTransactions: reversibleTransactionCount
+      transactions,
+      miner,
+      reversibleTransactions
     }
   ];
 
   return (
-    <DataList
+    <DataList<Partial<BlockDetails>>
       loading={loading}
       data={information}
       fields={[
@@ -50,9 +63,24 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           )
         },
         {
+          label: 'Reward',
+          key: 'reward',
+          render: (value) => formatMonetaryValue(value)
+        },
+        {
+          label: 'Mined by',
+          key: 'miner',
+          render: (value) => (
+            <LinkWithCopy
+              href={`${RESOURCES.accounts}/${value}`}
+              text={value}
+            />
+          )
+        },
+        {
           label: 'Timestamp',
           key: 'timestamp',
-          render: formatTimestamp
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'Immediate Transactions',

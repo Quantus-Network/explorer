@@ -55,11 +55,11 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
           <CardTitle className="flex items-center gap-2">
             <h3>Active Accounts</h3>
 
-            <Info>Account that has an activity in the last 7 days.</Info>
+            <Info>Account that has an activity.</Info>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.activeAccounts?.totalCount}</p>}
+          {success && <p>{data?.allActiveAccounts?.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -70,11 +70,11 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
           <CardTitle className="flex items-center gap-2">
             <h3>Deposit Accounts</h3>
 
-            <Info>Account receiving transfers in the last 7 days.</Info>
+            <Info>Account receiving transfers.</Info>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.depositAccounts?.totalCount}</p>}
+          {success && <p>{data?.allDepositAccounts?.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

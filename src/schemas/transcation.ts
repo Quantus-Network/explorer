@@ -23,6 +23,9 @@ export interface RecentTransactionsResponse {
 }
 
 export interface TransactionsStatsResponse {
+  allTime: {
+    totalCount: number;
+  };
   last24Hour: {
     totalCount: number;
   };

@@ -1,10 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
 import type { ReversibleTransaction } from '@/schemas';
-import { formatTimestamp, formatTxAddress } from '@/utils/formatter';
+import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<ReversibleTransaction>();
 
@@ -22,7 +23,7 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
     enableSorting: false
   }),
   columnHelper.accessor('block.height', {
-    id: 'blockHeight',
+    id: 'block_height',
     header: 'Block',
     cell: (props) => (
       <LinkWithCopy
@@ -35,15 +36,10 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
-    cell: (props) => formatTimestamp(props.getValue()),
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('scheduledAt', {
-    id: 'scheduledAt',
-    header: 'Scheduled At',
-    cell: (props) => formatTimestamp(props.getValue()),
-    enableSorting: true
-  }),
+
   columnHelper.accessor('from.id', {
     id: 'from',
     header: 'From',
@@ -67,6 +63,12 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
       />
     ),
     enableSorting: false
+  }),
+  columnHelper.accessor('amount', {
+    id: 'amount',
+    header: 'Amount',
+    cell: (props) => formatMonetaryValue(props.getValue(), 5),
+    enableSorting: true
   }),
   columnHelper.accessor('status', {
     id: 'status',

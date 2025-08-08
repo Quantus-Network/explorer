@@ -30,6 +30,9 @@ export interface RecentReversibleTransactionsResponse {
 }
 
 export interface ReversibleTransactionsStatsResponse {
+  allTime: {
+    totalCount: number;
+  };
   last24Hour: {
     totalCount: number;
   };

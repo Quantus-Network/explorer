@@ -26,7 +26,20 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total Transactions (24H)</h3>
+            <h3>Total Transactions</h3>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {success && <p>{data?.allTime.totalCount}</p>}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <h3>Recent Transactions (24H)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>

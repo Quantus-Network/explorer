@@ -1,13 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { Transaction } from '@/schemas';
-import {
-  formatMonetaryValue,
-  formatTimestamp,
-  formatTxAddress
-} from '@/utils/formatter';
+import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<Transaction>();
 
@@ -28,7 +25,7 @@ export const TRANSACTION_COLUMNS = [
     enableSorting: false
   }),
   columnHelper.accessor('block.height', {
-    id: 'blockNumber',
+    id: 'block_height',
     header: 'Block',
     cell: (props) => (
       <LinkWithCopy
@@ -41,7 +38,7 @@ export const TRANSACTION_COLUMNS = [
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
-    cell: (props) => formatTimestamp(props.getValue()),
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
   columnHelper.accessor('from.id', {

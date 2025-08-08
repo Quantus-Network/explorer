@@ -15,7 +15,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -32,11 +32,24 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Finalized Block</h3>
+            <h3>Finalized Blocks</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
           {success && <p>{data?.status.finalizedHeight}</p>}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <h3>Mined Blocks (24H)</h3>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {success && <p>{data?.minedBlocks24Hours.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

@@ -7,13 +7,16 @@ export interface ChainStatusResponse {
   transactions: {
     totalCount: number;
   };
+  minedBlocks24Hours: {
+    totalCount: number;
+  };
   reversibleTransactions: {
     totalCount: number;
   };
-  activeAccounts: {
+  allActiveAccounts: {
     totalCount: number;
   };
-  depositAccounts: {
+  allDepositAccounts: {
     totalCount: number;
   };
 }

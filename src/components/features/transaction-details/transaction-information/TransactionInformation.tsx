@@ -5,11 +5,14 @@ import api from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { RESOURCES } from '@/constants/resources';
+import type { TransactionListResponse } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface TransactionInformationProps {
   hash: string;
 }
+
+type Transaction = TransactionListResponse['transactions'][0];
 
 export const TransactionInformation: React.FC<TransactionInformationProps> = ({
   hash
@@ -20,7 +23,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
 
   const tx = data?.transactions[0];
 
-  const information = [
+  const information: Partial<Transaction>[] = [
     {
       amount: tx?.amount,
       extrinsicHash: tx?.extrinsicHash,
@@ -33,7 +36,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
   ];
 
   return (
-    <DataList
+    <DataList<Partial<Transaction>>
       loading={loading}
       data={information}
       fields={[
@@ -42,7 +45,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
           key: 'extrinsicHash',
           render: (value) => (
             <LinkWithCopy
-              text={value}
+              text={value as string}
               href={`${RESOURCES.transactions}/${value}`}
               className="break-all"
             />
@@ -53,8 +56,8 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={value.height.toString()}
-              href={`${RESOURCES.blocks}/${value.height}`}
+              text={(value as Transaction['block']).height.toString()}
+              href={`${RESOURCES.blocks}/${(value as Transaction['block']).height}`}
               className="break-all"
             />
           )
@@ -62,15 +65,15 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: formatTimestamp
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'From',
           key: 'from',
           render: (value) => (
             <LinkWithCopy
-              text={value.id}
-              href={`${RESOURCES.accounts}/${value.id}`}
+              text={(value as Transaction['from']).id}
+              href={`${RESOURCES.accounts}/${(value as Transaction['from']).id}`}
               className="break-all"
             />
           )
@@ -80,8 +83,8 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
           key: 'to',
           render: (value) => (
             <LinkWithCopy
-              text={value.id}
-              href={`${RESOURCES.accounts}/${value.id}`}
+              text={(value as Transaction['to']).id}
+              href={`${RESOURCES.accounts}/${(value as Transaction['to']).id}`}
               className="break-all"
             />
           )

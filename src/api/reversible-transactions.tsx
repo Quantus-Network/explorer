@@ -43,7 +43,7 @@ export const reversibleTransactions = {
           where: $where
         ) {
           extrinsicHash
-          scheduledAt
+          amount
           timestamp
           status
           block {
@@ -98,7 +98,7 @@ export const reversibleTransactions = {
           orderBy: $orderBy
         ) {
           extrinsicHash
-          scheduledAt
+          amount
           timestamp
           status
           block {
@@ -143,6 +143,9 @@ export const reversibleTransactions = {
           orderBy: id_ASC
           where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
         ) {
+          totalCount
+        }
+        allTime: reversibleTransfersConnection(orderBy: id_ASC) {
           totalCount
         }
       }

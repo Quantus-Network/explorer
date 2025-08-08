@@ -33,3 +33,15 @@ export interface AccountTransaction {
 export interface AccountReversibleTransaction {
   node: ReversibleTransaction;
 }
+
+export interface AccountStatsResponse {
+  all: {
+    totalCount: number;
+  };
+  recentlyActive: {
+    totalCount: number;
+  };
+  recentlyDeposited: {
+    totalCount: number;
+  };
+}

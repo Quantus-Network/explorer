@@ -2,18 +2,25 @@ import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
-import { subDays } from 'date-fns/subDays';
 
 import type { ChainStatusResponse } from '@/schemas';
 
 export const chainStatus = {
   useGetStatus: (config?: QueryHookOptions) => {
-    const startDate = subDays(startOfToday(), 7).toISOString();
+    const beginningDate = new Date(0).toISOString();
+    const todayDate = startOfToday().toISOString();
     const endDate = endOfToday().toISOString();
 
     const GET_STATUS = gql`
-      query GetStatus($startDate: DateTime!, $endDate: DateTime!) {
-        transactions: transfersConnection(orderBy: id_ASC) {
+      query GetStatus(
+        $beginningDate: DateTime!
+        $todayDate: DateTime!
+        $endDate: DateTime!
+      ) {
+        transactions: transfersConnection(
+          orderBy: id_ASC
+          where: { extrinsicHash_isNull: false }
+        ) {
           totalCount
         }
         reversibleTransactions: reversibleTransfersConnection(orderBy: id_ASC) {
@@ -25,22 +32,28 @@ export const chainStatus = {
           finalizedHeight
           finalizedHash
         }
-        activeAccounts: accountsConnection(
+        minedBlocks24Hours: blocksConnection(
+          orderBy: id_ASC
+          where: { timestamp_gte: $todayDate, timestamp_lte: $endDate }
+        ) {
+          totalCount
+        }
+        allActiveAccounts: accountsConnection(
           orderBy: id_ASC
           where: {
             transfersFrom_some: {
-              timestamp_gte: $startDate
+              timestamp_gte: $beginningDate
               timestamp_lte: $endDate
             }
           }
         ) {
           totalCount
         }
-        depositAccounts: accountsConnection(
+        allDepositAccounts: accountsConnection(
           orderBy: id_ASC
           where: {
             transfersTo_some: {
-              timestamp_gte: $startDate
+              timestamp_gte: $beginningDate
               timestamp_lte: $endDate
             }
           }
@@ -52,7 +65,7 @@ export const chainStatus = {
 
     return useQuery<ChainStatusResponse>(GET_STATUS, {
       ...config,
-      variables: { startDate, endDate }
+      variables: { endDate, beginningDate, todayDate }
     });
   }
 };

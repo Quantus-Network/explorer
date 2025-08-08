@@ -1,4 +1,3 @@
-import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import api from '@/api';
@@ -6,18 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
-export interface ReversibleTransactionsStatsProps {}
+export interface MinerRewardsStatsProps {}
 
-export const ReversibleTransactionsStats: React.FC<
-  ReversibleTransactionsStatsProps
-> = () => {
-  const { accountId, block } = useSearch({
-    strict: false
-  }) as any;
-
-  if (accountId || block) return null;
-
-  const { loading, data, error } = api.reversibleTransactions.useGetStats({
+export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
+  const { loading, data, error } = api.minerRewards.useGetStats({
     pollInterval: DATA_POOL_INTERVAL
   });
 
@@ -28,11 +19,11 @@ export const ReversibleTransactionsStats: React.FC<
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total Transactions</h3>
+            <h3>Total Rewards</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.totalCount}</p>}
+          {success && <p>{data?.allTime?.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -41,7 +32,7 @@ export const ReversibleTransactionsStats: React.FC<
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Recent Transactions (24H)</h3>
+            <h3>Recent Rewards (24H)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>

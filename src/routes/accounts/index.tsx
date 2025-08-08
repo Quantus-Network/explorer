@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Suspense } from 'react';
 
+import { AccountsStats } from '@/components/features/account-listing/accounts-stats/AccountsStats';
 import { AccountsTable } from '@/components/features/account-listing/accounts-table/AccountsTable';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
@@ -15,9 +15,8 @@ function Accounts() {
       <ContentContainer className="flex flex-col gap-4">
         <h1>Accounts</h1>
 
-        <Suspense>
-          <AccountsTable />
-        </Suspense>
+        <AccountsStats />
+        <AccountsTable />
       </ContentContainer>
     </SectionContainer>
   );
