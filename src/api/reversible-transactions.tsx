@@ -43,7 +43,7 @@ export const reversibleTransactions = {
           where: $where
         ) {
           extrinsicHash
-          scheduledAt
+          amount
           timestamp
           status
           block {
@@ -98,7 +98,7 @@ export const reversibleTransactions = {
           orderBy: $orderBy
         ) {
           extrinsicHash
-          scheduledAt
+          amount
           timestamp
           status
           block {

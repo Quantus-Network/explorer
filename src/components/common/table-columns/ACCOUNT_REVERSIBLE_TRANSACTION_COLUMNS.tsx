@@ -5,7 +5,7 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
 import type { AccountReversibleTransaction } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<AccountReversibleTransaction>();
 
@@ -40,12 +40,6 @@ export const ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS = [
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('node.scheduledAt', {
-    id: 'scheduledAt',
-    header: 'Scheduled At',
-    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
-    enableSorting: true
-  }),
   columnHelper.accessor('node.from.id', {
     id: 'from',
     header: 'From',
@@ -69,6 +63,12 @@ export const ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS = [
       />
     ),
     enableSorting: false
+  }),
+  columnHelper.accessor('node.amount', {
+    id: 'amount',
+    header: 'Amount',
+    cell: (props) => formatMonetaryValue(props.getValue(), 5),
+    enableSorting: true
   }),
   columnHelper.accessor('node.status', {
     id: 'status',
