@@ -10,7 +10,7 @@ import { Info } from '../info/Info';
 interface Field<T> {
   label: string;
   key: keyof T;
-  render?: (value: T[keyof T], item: T) => React.ReactNode;
+  render?: (value: any, item: T) => React.ReactNode;
   tooltip?: string;
 }
 

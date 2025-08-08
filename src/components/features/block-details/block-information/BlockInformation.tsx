@@ -11,6 +11,14 @@ export interface BlockInformationProps {
   query: QueryResult<BlockResponse>;
 }
 
+interface BlockDetails {
+  height: number;
+  hash: string;
+  timestamp: string;
+  transactions: number;
+  reversibleTransactions: number;
+}
+
 export const BlockInformation: React.FC<BlockInformationProps> = ({
   query
 }) => {
@@ -20,7 +28,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   const transactionCount = data?.transactions.totalCount;
   const reversibleTransactionCount = data?.reversibleTransactions.totalCount;
 
-  const information = [
+  const information: Partial<BlockDetails>[] = [
     {
       height: block?.height,
       hash: block?.hash,
@@ -31,7 +39,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   ];
 
   return (
-    <DataList
+    <DataList<Partial<BlockDetails>>
       loading={loading}
       data={information}
       fields={[
@@ -52,7 +60,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: formatTimestamp
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'Immediate Transactions',
