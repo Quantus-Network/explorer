@@ -17,7 +17,9 @@ export const useHeader = () => {
 
   const inputRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside([resultRef, inputRef], () => setIsResultVisible(false));
+  useOnClickOutside([resultRef, inputRef] as any, () =>
+    setIsResultVisible(false)
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {

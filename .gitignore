@@ -17,8 +17,8 @@ nginx-logs
 # storybook
 storybook-static
 
-# next.js
-/.next/
+# build
+dist
 /out/
 
 # production

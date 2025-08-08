@@ -1,5 +1,5 @@
-import type { Decorator, StoryContext } from '@storybook/nextjs-vite';
-import { NuqsAdapter } from 'nuqs/adapters/next/pages';
+import type { Decorator, StoryContext } from '@storybook/react-vite';
+import { NuqsAdapter } from 'nuqs/adapters/react';
 
 export const WithProviders: Decorator = (Story, context: StoryContext) => {
   return (
