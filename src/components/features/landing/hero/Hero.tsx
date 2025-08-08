@@ -1,5 +1,3 @@
-'use client';
-
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';

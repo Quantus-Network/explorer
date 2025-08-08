@@ -21,7 +21,7 @@ import {
 
 export interface TableControlsProps {
   table: Table<any>;
-  tableRef: React.RefObject<HTMLTableElement>;
+  tableRef: React.RefObject<HTMLTableElement | null>;
 }
 
 export const TableControls: React.FC<TableControlsProps> = ({
@@ -83,7 +83,6 @@ export const TableControls: React.FC<TableControlsProps> = ({
               variant="outline"
               onClick={() => {
                 table.previousPage();
-                tableRef.current?.scrollIntoView();
               }}
               disabled={!table.getCanPreviousPage()}
             >
@@ -115,7 +114,6 @@ export const TableControls: React.FC<TableControlsProps> = ({
               variant="outline"
               onClick={() => {
                 table.nextPage();
-                tableRef.current?.scrollIntoView();
               }}
               disabled={!table.getCanNextPage()}
             >

@@ -1,6 +1,4 @@
-'use client';
-
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
@@ -18,7 +16,7 @@ export const RecentReversibleTransactions = () => {
         <ReversibleTransactionsTable />
 
         <Button variant="link" className="mx-auto w-fit">
-          <Link href={RESOURCES.reversibleTransactions}>
+          <Link to={RESOURCES.reversibleTransactions}>
             See all reversible transactions
           </Link>
         </Button>

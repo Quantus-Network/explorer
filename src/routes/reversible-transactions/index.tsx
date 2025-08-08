@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { createFileRoute } from '@tanstack/react-router';
 
 import { ReversibleTransactionHeading } from '@/components/features/reversible-transaction-listing/reversible-transaction-heading/ReversibleTransactionHeading';
 import { ReversibleTransactionsStats } from '@/components/features/reversible-transaction-listing/reversible-transactions-stats/ReversibleTransactionsStats';
@@ -6,24 +6,20 @@ import { ReversibleTransactionsTable } from '@/components/features/reversible-tr
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-const ReversibleTransactions = () => {
+export const Route = createFileRoute('/reversible-transactions/')({
+  component: ReversibleTransactions
+});
+
+function ReversibleTransactions() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <Suspense>
-          <ReversibleTransactionHeading />
-        </Suspense>
+        <ReversibleTransactionHeading />
 
-        <Suspense>
-          <ReversibleTransactionsStats />
-        </Suspense>
+        <ReversibleTransactionsStats />
 
-        <Suspense>
-          <ReversibleTransactionsTable />
-        </Suspense>
+        <ReversibleTransactionsTable />
       </ContentContainer>
     </SectionContainer>
   );
-};
-
-export default ReversibleTransactions;
+}

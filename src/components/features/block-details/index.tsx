@@ -1,14 +1,10 @@
-'use client';
-
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { Link, notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
 import api from '@/api';
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
-import { RESOURCES } from '@/constants/resources';
 
 import { BlockInformation } from './block-information/BlockInformation';
 import { BlockReversibleTransactions } from './block-reversible-transactions/BlockTransactions';
@@ -43,7 +39,8 @@ export const BlockDetails: React.FC<Props> = ({ id }) => {
           {!loading && query.data?.transactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
               <Link
-                href={`${RESOURCES.transactions}?block=${data?.blocks[0]?.height}`}
+                to="/immediate-transactions"
+                search={{ block: data?.blocks[0]?.height }}
               >
                 See all immediate transactions
               </Link>
@@ -61,7 +58,8 @@ export const BlockDetails: React.FC<Props> = ({ id }) => {
           {!loading && query.data?.reversibleTransactions.totalCount !== 0 && (
             <Button variant="link" className="mx-auto w-fit">
               <Link
-                href={`${RESOURCES.reversibleTransactions}?block=${data?.blocks[0]?.height}`}
+                to="/reversible-transactions"
+                search={{ block: data?.blocks[0]?.height }}
               >
                 See all reversible transactions
               </Link>

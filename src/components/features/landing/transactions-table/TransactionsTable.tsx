@@ -1,5 +1,3 @@
-'use client';
-
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 
 import { useTransactionsTable } from './hook';

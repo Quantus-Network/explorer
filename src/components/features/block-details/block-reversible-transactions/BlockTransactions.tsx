@@ -1,5 +1,3 @@
-'use client';
-
 import type { QueryResult } from '@apollo/client';
 import React from 'react';
 

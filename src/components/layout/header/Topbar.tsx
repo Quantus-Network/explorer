@@ -1,4 +1,4 @@
-import { usePathname } from 'next/navigation';
+import { useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
@@ -19,8 +19,8 @@ export interface TopbarProps {
   searchLoading: boolean;
   searchResult?: SearchAllResponse;
   isResultVisible: boolean;
-  inputRef: React.RefObject<HTMLDivElement>;
-  resultRef: React.RefObject<HTMLDivElement>;
+  inputRef: React.RefObject<HTMLDivElement | null>;
+  resultRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
@@ -36,7 +36,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   inputRef,
   resultRef
 }) => {
-  const location = usePathname();
+  const location = useLocation().pathname;
   const rootPath = location.split('/')[1];
   const isHomepage = rootPath === '';
 

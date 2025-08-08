@@ -17,17 +17,12 @@ nginx-logs
 # storybook
 storybook-static
 
-# next.js
-/.next/
+# build
+dist
 /out/
 
 # production
 /build
-
-# next-sitemap
-public/robots.txt
-public/sitemap.xml
-public/sitemap-*.xml
 
 # misc
 .DS_Store

@@ -1,6 +1,4 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
+import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import api from '@/api';
@@ -13,8 +11,9 @@ export interface ReversibleTransactionsStatsProps {}
 export const ReversibleTransactionsStats: React.FC<
   ReversibleTransactionsStatsProps
 > = () => {
-  const accountId = useSearchParams().get('accountId');
-  const block = useSearchParams().get('block');
+  const { accountId, block } = useSearch({
+    strict: false
+  }) as any;
 
   if (accountId || block) return null;
 

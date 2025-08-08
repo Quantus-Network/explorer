@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
@@ -26,7 +25,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   isOpen,
   toggleMenu
 }) => {
-  const location = usePathname();
+  const location = useLocation().pathname;
   const rootPath = location.split('/')[1];
 
   return (
@@ -57,7 +56,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                     {nav.children.map((subNav) => (
                       <NavigationMenuLink key={subNav.path} asChild>
                         <Link
-                          href={subNav.path}
+                          to={subNav.path}
                           className="no-underline data-[active=true]:font-semibold"
                           data-active={rootPath === subNav.path.split('/')[1]}
                           onClick={toggleMenu}
@@ -74,7 +73,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
               <NavigationMenuItem key={nav.path} className="!ml-0">
                 <NavigationMenuLink asChild>
                   <Link
-                    href={nav.path}
+                    to={nav.path}
                     className="no-underline data-[active=true]:font-semibold"
                     data-active={rootPath === nav.path.split('/')[1]}
                     onClick={toggleMenu}

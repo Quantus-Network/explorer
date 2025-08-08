@@ -1,6 +1,6 @@
-import '../src/app/globals.css';
+import '../src/globals.css';
 
-import type { Preview } from '@storybook/nextjs-vite';
+import type { Preview } from '@storybook/react-vite';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { initialize, mswLoader } from 'msw-storybook-addon';
 
@@ -45,9 +45,6 @@ const viewports = {
 
 const preview: Preview = {
   parameters: {
-    nextjs: {
-      appDirectory: true
-    },
     viewport: {
       viewports
     },

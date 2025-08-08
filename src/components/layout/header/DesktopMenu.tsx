@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
 import {
@@ -17,7 +16,7 @@ import { isInstanceOf } from '@/utils/type-guard';
 export interface DesktopMenuProps {}
 
 export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
-  const location = usePathname();
+  const location = useLocation().pathname;
   const rootPath = location.split('/')[1];
 
   return (
@@ -42,7 +41,7 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
                   {nav.children.map((subNav) => (
                     <NavigationMenuLink key={subNav.path} asChild>
                       <Link
-                        href={subNav.path}
+                        to={subNav.path}
                         className="rounded p-1 no-underline hover:bg-accent data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
                         data-active={rootPath === subNav.path.split('/')[1]}
                       >
@@ -58,7 +57,7 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
             <NavigationMenuItem key={nav.label}>
               <NavigationMenuLink asChild>
                 <Link
-                  href={nav.path}
+                  to={nav.path}
                   className="no-underline data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
                   data-active={rootPath === nav.path.split('/')[1]}
                 >

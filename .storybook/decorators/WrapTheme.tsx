@@ -1,4 +1,4 @@
-import type { Decorator, StoryContext } from '@storybook/nextjs-vite';
+import type { Decorator, StoryContext } from '@storybook/react-vite';
 import * as React from 'react';
 
 export const WrapTheme: Decorator = (Story, context: StoryContext) => {

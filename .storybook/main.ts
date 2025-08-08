@@ -1,4 +1,4 @@
-import type { StorybookConfig } from '@storybook/nextjs-vite';
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   staticDirs: ['../public'],
@@ -8,7 +8,7 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
     '@storybook/addon-a11y'
   ],
-  framework: '@storybook/nextjs-vite'
+  framework: '@storybook/react-vite'
 };
 
 export default config;

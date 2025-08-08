@@ -1,6 +1,4 @@
-'use client';
-
-import Link from 'next/link';
+import { Link } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
@@ -18,7 +16,7 @@ export const RecentBlocks = () => {
         <BlocksTable />
 
         <Button variant="link" className="mx-auto w-fit">
-          <Link href={RESOURCES.blocks}>See all blocks</Link>
+          <Link to={RESOURCES.blocks}>See all blocks</Link>
         </Button>
       </ContentContainer>
     </SectionContainer>

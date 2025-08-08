@@ -1,5 +1,3 @@
-'use client';
-
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -15,7 +13,9 @@ export const useHero = () => {
 
   const inputRef = useRef<HTMLDivElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside([resultRef, inputRef], () => setIsResultVisible(false));
+  useOnClickOutside([resultRef, inputRef] as any, () =>
+    setIsResultVisible(false)
+  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {

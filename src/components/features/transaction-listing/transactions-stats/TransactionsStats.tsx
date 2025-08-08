@@ -1,6 +1,4 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
+import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import api from '@/api';
@@ -11,8 +9,9 @@ import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 export interface TransactionsStatsProps {}
 
 export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
-  const accountId = useSearchParams().get('accountId');
-  const block = useSearchParams().get('block');
+  const { accountId, block } = useSearch({
+    strict: false
+  }) as any;
 
   if (accountId || block) return null;
 
