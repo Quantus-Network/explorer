@@ -1,16 +1,22 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
+import { startOfToday } from 'date-fns/startOfToday';
 
 import type { ChainStatusResponse } from '@/schemas';
 
 export const chainStatus = {
   useGetStatus: (config?: QueryHookOptions) => {
     const beginningDate = new Date(0).toISOString();
+    const todayDate = startOfToday().toISOString();
     const endDate = endOfToday().toISOString();
 
     const GET_STATUS = gql`
-      query GetStatus($beginningDate: DateTime!, $endDate: DateTime!) {
+      query GetStatus(
+        $beginningDate: DateTime!
+        $todayDate: DateTime!
+        $endDate: DateTime!
+      ) {
         transactions: transfersConnection(
           orderBy: id_ASC
           where: { extrinsicHash_isNull: false }
@@ -25,6 +31,12 @@ export const chainStatus = {
           height
           finalizedHeight
           finalizedHash
+        }
+        minedBlocks24Hours: blocksConnection(
+          orderBy: id_ASC
+          where: { timestamp_gte: $todayDate, timestamp_lte: $endDate }
+        ) {
+          totalCount
         }
         allActiveAccounts: accountsConnection(
           orderBy: id_ASC
@@ -53,7 +65,7 @@ export const chainStatus = {
 
     return useQuery<ChainStatusResponse>(GET_STATUS, {
       ...config,
-      variables: { endDate, beginningDate }
+      variables: { endDate, beginningDate, todayDate }
     });
   }
 };

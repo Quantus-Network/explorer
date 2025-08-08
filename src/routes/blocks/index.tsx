@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Suspense } from 'react';
 
 import { BlocksStats } from '@/components/features/block-listing/blocks-stats/BlocksStats';
 import { BlocksTable } from '@/components/features/block-listing/blocks-table/BlocksTable';
@@ -18,9 +17,7 @@ function Blocks() {
 
         <BlocksStats />
 
-        <Suspense>
-          <BlocksTable />
-        </Suspense>
+        <BlocksTable />
       </ContentContainer>
     </SectionContainer>
   );
