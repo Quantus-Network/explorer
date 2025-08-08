@@ -28,8 +28,8 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run linting
-        run: bun lint
+      - name: Run Build
+        run: bun run build
         continue-on-error: false
 
       # NO TESTS YET
@@ -38,37 +38,37 @@ jobs:
       #   continue-on-error: false
 
   # Continuous Deployment Job
-  cd:
-    name: Deploy to VPS
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  # cd:
+  #   name: Deploy to VPS
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT }}
-          script: |
-            # Navigate to project directory
-            cd ${{ secrets.PROJECT_PATH }}
+  #     - name: Deploy to VPS
+  #       uses: appleboy/ssh-action@v1.0.3
+  #       with:
+  #         host: ${{ secrets.VPS_HOST }}
+  #         username: ${{ secrets.VPS_USER }}
+  #         key: ${{ secrets.VPS_SSH_KEY }}
+  #         port: ${{ secrets.VPS_PORT }}
+  #         script: |
+  #           # Navigate to project directory
+  #           cd ${{ secrets.PROJECT_PATH }}
 
-            # Pull latest changes
-            git pull origin main
+  #           # Pull latest changes
+  #           git pull origin main
 
-            # Install dependencies
-            bun install
+  #           # Install dependencies
+  #           bun install
 
-            # Build the application
-            bun run build
+  #           # Build the application
+  #           bun run build
 
-            # Restart the application
-            pm2 restart ecosystem.config.js
+  #           # Restart the application
+  #           pm2 restart ecosystem.config.js
 
-            # Save PM2 configuration
-            pm2 save
+  #           # Save PM2 configuration
+  #           pm2 save
