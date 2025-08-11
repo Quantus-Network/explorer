@@ -52,7 +52,7 @@ export const transactions = {
             id
           }
         }
-        meta: transfersConnection(orderBy: id_ASC) {
+        meta: transfersConnection(orderBy: id_ASC, where: $where) {
           totalCount
         }
       }
@@ -67,7 +67,12 @@ export const transactions = {
         orderBy: config?.variables?.orderBy ?? TRANSACTION_SORTS.timestamp.DESC,
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
-        where: { ...config?.variables?.where, extrinsicHash_isNull: false }
+        where: {
+          AND: [
+            { extrinsicHash_isNull: false },
+            { ...config?.variables?.where }
+          ]
+        }
       }
     });
   },

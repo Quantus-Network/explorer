@@ -48,7 +48,7 @@ export const minerRewards = {
           }
           timestamp
         }
-        meta: minerRewardsConnection(orderBy: id_ASC) {
+        meta: minerRewardsConnection(orderBy: id_ASC, where: $where) {
           totalCount
         }
       }

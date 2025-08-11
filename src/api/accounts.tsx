@@ -98,9 +98,9 @@ export const accounts = {
           edges {
             node {
               extrinsicHash
-              scheduledAt
               timestamp
               status
+              amount
               block {
                 height
               }

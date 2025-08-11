@@ -88,8 +88,7 @@ export const useTransactionsTable = () => {
       offset: currentPageIndex * limit,
       ...(accountId && {
         where: {
-          from: { id_eq: accountId },
-          OR: [{ to: { id_eq: accountId } }]
+          OR: [{ to: { id_eq: accountId } }, { from: { id_eq: accountId } }]
         }
       }),
       ...(block && {

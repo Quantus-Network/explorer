@@ -56,7 +56,7 @@ export const reversibleTransactions = {
             id
           }
         }
-        meta: reversibleTransfersConnection(orderBy: id_ASC) {
+        meta: reversibleTransfersConnection(orderBy: id_ASC, where: $where) {
           totalCount
         }
       }
