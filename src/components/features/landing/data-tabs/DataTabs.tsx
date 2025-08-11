@@ -14,6 +14,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatOption } from '@/utils/formatter';
 
 import { RecentBlocks } from '../recent-blocks/RecentBlocks';
+import { RecentMinerRewards } from '../recent-miner-rewards/RecentMinerRewards';
 import { RecentReversibleTransactions } from '../recent-reversible-transactions/RecentReversibleTransactions';
 import { RecentTransactions } from '../recent-transactions/RecentTransactions';
 
@@ -22,7 +23,8 @@ export interface DataTabsProps {}
 const TAB_OPTIONS = {
   immediate: 'immediate-transactions',
   reversible: 'reversible-transactions',
-  blocks: 'blocks'
+  blocks: 'blocks',
+  miners: 'miner-rewards'
 } as const;
 const TAB_LIST = Object.values(TAB_OPTIONS);
 
@@ -65,6 +67,9 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
           </TabsContent>
           <TabsContent value={TAB_OPTIONS.blocks}>
             <RecentBlocks />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.miners}>
+            <RecentMinerRewards />
           </TabsContent>
         </Tabs>
       </ContentContainer>
