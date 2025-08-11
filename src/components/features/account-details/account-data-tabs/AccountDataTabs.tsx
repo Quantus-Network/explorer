@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { AccountResponse } from '@/schemas';
 import { formatOption } from '@/utils/formatter';
 
+import { AccountMinerRewards } from '../account-miner-rewards/AccountMinerRewards';
 import { AccountReversibleTransactions } from '../account-reversible-transactions/AccountReversibleTransactions';
 import { AccountTransactions } from '../account-transactions/AccountTransactions';
 
@@ -24,7 +25,8 @@ export interface AccountDataTabsProps {
 
 const TAB_OPTIONS = {
   immediate: 'immediate-transactions',
-  reversible: 'reversible-transactions'
+  reversible: 'reversible-transactions',
+  miners: 'miner-rewards'
 } as const;
 const TAB_LIST = Object.values(TAB_OPTIONS);
 
@@ -70,6 +72,9 @@ export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({
               accountId={accountId}
               query={query}
             />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.miners}>
+            <AccountMinerRewards accountId={accountId} query={query} />
           </TabsContent>
         </Tabs>
       </ContentContainer>

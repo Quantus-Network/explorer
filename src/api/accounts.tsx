@@ -115,6 +115,27 @@ export const accounts = {
 
           totalCount
         }
+        minerRewards: minerRewardsConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: { miner: { id_eq: $id } }
+        ) {
+          edges {
+            node {
+              block {
+                height
+                hash
+              }
+              reward
+              miner {
+                id
+              }
+              timestamp
+            }
+          }
+
+          totalCount
+        }
       }
     `;
 

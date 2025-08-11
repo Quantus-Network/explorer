@@ -1,3 +1,4 @@
+import { useSearch } from '@tanstack/react-router';
 import type {
   OnChangeFn,
   PaginationState,
@@ -17,6 +18,10 @@ import type { MinerReward } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useMinerRewardsTable = () => {
+  const { accountId } = useSearch({
+    strict: false
+  }) as any;
+
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',
@@ -80,7 +85,12 @@ export const useMinerRewardsTable = () => {
     variables: {
       orderBy: sortBy,
       limit,
-      offset: currentPageIndex * limit
+      offset: currentPageIndex * limit,
+      ...(accountId && {
+        where: {
+          miner: { id_eq: accountId }
+        }
+      })
     }
   });
 

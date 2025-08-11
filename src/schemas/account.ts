@@ -1,4 +1,5 @@
 import type * as gql from '../__generated__/graphql';
+import type { MinerReward } from './miner-reward';
 import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
 
@@ -17,6 +18,11 @@ export interface AccountResponse {
     /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
+  minerRewards: {
+    edges: AccountMinerRewards[];
+    /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
+    totalCount: number;
+  };
 }
 
 export interface AccountListResponse {
@@ -28,6 +34,10 @@ export interface AccountListResponse {
 
 export interface AccountTransaction {
   node: Transaction;
+}
+
+export interface AccountMinerRewards {
+  node: MinerReward;
 }
 
 export interface AccountReversibleTransaction {
