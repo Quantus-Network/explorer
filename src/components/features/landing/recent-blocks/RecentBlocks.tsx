@@ -2,23 +2,20 @@ import { Link } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
-import { SectionContainer } from '@/components/ui/section-container';
 import { RESOURCES } from '@/constants/resources';
 
 import { BlocksTable } from '../block-tables/BlocksTable';
 
 export const RecentBlocks = () => {
   return (
-    <SectionContainer>
-      <ContentContainer className="flex flex-col gap-4">
-        <h2>Recent Blocks</h2>
+    <ContentContainer className="flex flex-col gap-4 px-0">
+      <h2>Recent Blocks</h2>
 
-        <BlocksTable />
+      <BlocksTable />
 
-        <Button variant="link" className="mx-auto w-fit">
-          <Link to={RESOURCES.blocks}>See all blocks</Link>
-        </Button>
-      </ContentContainer>
-    </SectionContainer>
+      <Button variant="link" className="mx-auto w-fit">
+        <Link to={RESOURCES.blocks}>See all blocks</Link>
+      </Button>
+    </ContentContainer>
   );
 };

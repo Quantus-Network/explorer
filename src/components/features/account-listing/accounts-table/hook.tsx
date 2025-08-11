@@ -24,7 +24,7 @@ export const useAccountsTable = () => {
   );
   const [sortBy, setSortBy] = useQueryState(
     'sortBy',
-    parseAsStringLiteral(ACCOUNT_SORTS_LITERALS)
+    parseAsStringLiteral(ACCOUNT_SORTS_LITERALS).withDefault('lastUpdated_DESC')
   );
 
   const currentPageIndex = page - 1;

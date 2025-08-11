@@ -61,10 +61,22 @@ export const formatTxAddress = (address: string) => {
  * @param sentence - The input string to capitalize
  * @returns The string with the first character capitalized
  */
-function capitalizeFirstChar(sentence: string): string {
+export const capitalizeFirstChar = (sentence: string) => {
   if (!sentence || sentence.length === 0) {
     return sentence;
   }
 
   return sentence.charAt(0).toUpperCase() + sentence.slice(1);
-}
+};
+
+export const formatOption = (option: string) => {
+  const eachWords = option.split('-');
+  let newSentence = '';
+
+  eachWords.forEach((val) => {
+    if (newSentence.length !== 0) newSentence += ' ';
+    newSentence += capitalizeFirstChar(val);
+  });
+
+  return newSentence;
+};
