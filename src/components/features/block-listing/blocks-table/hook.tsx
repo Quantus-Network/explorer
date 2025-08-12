@@ -5,7 +5,7 @@ import type {
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import api from '@/api';
 import { BLOCK_COLUMNS } from '@/components/common/table-columns/BLOCK_COLUMNS';
@@ -84,6 +84,7 @@ export const useBlocksTable = () => {
     }
   });
   const blockColumns = useMemo(() => BLOCK_COLUMNS, []);
+  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
   const table = useReactTable<Block>({
     data: data?.blocks ?? [],
@@ -93,7 +94,7 @@ export const useBlocksTable = () => {
       sorting: sortingValue,
       pagination: paginationValue
     },
-    rowCount: data?.meta.totalCount ?? 0,
+    rowCount,
     onSortingChange: handleChangeSorting,
     onPaginationChange: handleChangePagination,
     manualSorting: true,
@@ -115,6 +116,10 @@ export const useBlocksTable = () => {
         return 'idle';
     }
   };
+
+  useEffect(() => {
+    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
+  }, [loading, data?.meta.totalCount]);
 
   return {
     table,

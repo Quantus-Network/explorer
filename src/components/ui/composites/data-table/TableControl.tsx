@@ -83,6 +83,11 @@ export const TableControls: React.FC<TableControlsProps> = ({
               variant="outline"
               onClick={() => {
                 table.previousPage();
+
+                // We put timeout because we don't want to race with the rerender
+                setTimeout(() => {
+                  tableRef.current?.scrollIntoView();
+                }, 0);
               }}
               disabled={!table.getCanPreviousPage()}
             >
@@ -114,6 +119,11 @@ export const TableControls: React.FC<TableControlsProps> = ({
               variant="outline"
               onClick={() => {
                 table.nextPage();
+
+                // We put timeout because we don't want to race with the rerender
+                setTimeout(() => {
+                  tableRef.current?.scrollIntoView();
+                }, 0);
               }}
               disabled={!table.getCanNextPage()}
             >
