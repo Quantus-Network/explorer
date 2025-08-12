@@ -1,3 +1,4 @@
+import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import api from '@/api';
@@ -8,6 +9,12 @@ import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 export interface MinerRewardsStatsProps {}
 
 export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
+  const { accountId } = useSearch({
+    strict: false
+  }) as any;
+
+  if (accountId) return null;
+
   const { loading, data, error } = api.minerRewards.useGetStats({
     pollInterval: DATA_POOL_INTERVAL
   });

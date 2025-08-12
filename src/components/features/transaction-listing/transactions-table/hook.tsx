@@ -6,7 +6,7 @@ import type {
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import api from '@/api';
 import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
@@ -88,8 +88,7 @@ export const useTransactionsTable = () => {
       offset: currentPageIndex * limit,
       ...(accountId && {
         where: {
-          from: { id_eq: accountId },
-          OR: [{ to: { id_eq: accountId } }]
+          OR: [{ to: { id_eq: accountId } }, { from: { id_eq: accountId } }]
         }
       }),
       ...(block && {
@@ -99,7 +98,9 @@ export const useTransactionsTable = () => {
       })
     }
   });
+
   const transactionColumns = useMemo(() => TRANSACTION_COLUMNS, []);
+  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
   const table = useReactTable<Transaction>({
     data: data?.transactions ?? [],
@@ -109,7 +110,7 @@ export const useTransactionsTable = () => {
       sorting: sortingValue,
       pagination: paginationValue
     },
-    rowCount: data?.meta.totalCount ?? 0,
+    rowCount,
     onSortingChange: handleChangeSorting,
     onPaginationChange: handleChangePagination,
     manualSorting: true,
@@ -131,6 +132,10 @@ export const useTransactionsTable = () => {
         return 'idle';
     }
   };
+
+  useEffect(() => {
+    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
+  }, [loading, data?.meta.totalCount]);
 
   return {
     table,

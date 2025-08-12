@@ -98,9 +98,9 @@ export const accounts = {
           edges {
             node {
               extrinsicHash
-              scheduledAt
               timestamp
               status
+              amount
               block {
                 height
               }
@@ -110,6 +110,27 @@ export const accounts = {
               to {
                 id
               }
+            }
+          }
+
+          totalCount
+        }
+        minerRewards: minerRewardsConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: { miner: { id_eq: $id } }
+        ) {
+          edges {
+            node {
+              block {
+                height
+                hash
+              }
+              reward
+              miner {
+                id
+              }
+              timestamp
             }
           }
 

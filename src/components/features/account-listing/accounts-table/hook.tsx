@@ -5,7 +5,7 @@ import type {
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import api from '@/api';
 import { ACCOUNT_COLUMNS } from '@/components/common/table-columns/ACCOUNT_COLUMNS';
@@ -24,7 +24,7 @@ export const useAccountsTable = () => {
   );
   const [sortBy, setSortBy] = useQueryState(
     'sortBy',
-    parseAsStringLiteral(ACCOUNT_SORTS_LITERALS)
+    parseAsStringLiteral(ACCOUNT_SORTS_LITERALS).withDefault('lastUpdated_DESC')
   );
 
   const currentPageIndex = page - 1;
@@ -84,6 +84,7 @@ export const useAccountsTable = () => {
     }
   });
   const accountColumns = useMemo(() => ACCOUNT_COLUMNS, []);
+  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
   const table = useReactTable<Account>({
     data: data?.accounts ?? [],
@@ -93,7 +94,7 @@ export const useAccountsTable = () => {
       sorting: sortingValue,
       pagination: paginationValue
     },
-    rowCount: data?.meta.totalCount ?? 0,
+    rowCount,
     onSortingChange: handleChangeSorting,
     onPaginationChange: handleChangePagination,
     manualSorting: true,
@@ -115,6 +116,10 @@ export const useAccountsTable = () => {
         return 'idle';
     }
   };
+
+  useEffect(() => {
+    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
+  }, [loading, data?.meta.totalCount]);
 
   return {
     table,

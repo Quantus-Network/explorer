@@ -1,3 +1,4 @@
+import { useSearch } from '@tanstack/react-router';
 import type {
   OnChangeFn,
   PaginationState,
@@ -5,7 +6,7 @@ import type {
 } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import api from '@/api';
 import { MINER_REWARD_COLUMNS } from '@/components/common/table-columns/MINER_REWARD_COLUMNS';
@@ -17,6 +18,10 @@ import type { MinerReward } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useMinerRewardsTable = () => {
+  const { accountId } = useSearch({
+    strict: false
+  }) as any;
+
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',
@@ -80,11 +85,17 @@ export const useMinerRewardsTable = () => {
     variables: {
       orderBy: sortBy,
       limit,
-      offset: currentPageIndex * limit
+      offset: currentPageIndex * limit,
+      ...(accountId && {
+        where: {
+          miner: { id_eq: accountId }
+        }
+      })
     }
   });
 
   const minerRewardColumns = useMemo(() => MINER_REWARD_COLUMNS, []);
+  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
   const table = useReactTable<MinerReward>({
     data: data?.minerRewards ?? [],
@@ -94,7 +105,7 @@ export const useMinerRewardsTable = () => {
       sorting: sortingValue,
       pagination: paginationValue
     },
-    rowCount: data?.meta.totalCount ?? 0,
+    rowCount,
     onSortingChange: handleChangeSorting,
     onPaginationChange: handleChangePagination,
     manualSorting: true,
@@ -116,6 +127,10 @@ export const useMinerRewardsTable = () => {
         return 'idle';
     }
   };
+
+  useEffect(() => {
+    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
+  }, [loading, data?.meta.totalCount]);
 
   return {
     table,

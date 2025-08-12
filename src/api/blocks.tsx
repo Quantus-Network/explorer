@@ -153,9 +153,9 @@ export const blocks = {
           edges {
             node {
               extrinsicHash
-              scheduledAt
               timestamp
               status
+              amount
               block {
                 height
               }

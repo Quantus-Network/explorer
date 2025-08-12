@@ -3,7 +3,8 @@ import env from './env';
 
 const siteName = env.SITE_NAME;
 const baseUrl = env.SITE_BASE_URL;
-const description = 'Site description'; // TODO: update meta description
+const description =
+  'Quantus Explorer: Discover, analyze, and track real-time transactions, blocks, and accounts on the Quantus blockchain network. Stay informed with our powerful explorer.';
 
 export const defaultMetadata = {
   siteName,

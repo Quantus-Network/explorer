@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import { useChecksum } from '@/hooks/useChecksum';
@@ -62,7 +63,11 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           tooltip:
             'A human-readable checksum from cryptocurrency address; designed to make address verification easier and prevent address poisoning attacks—where attackers craft lookalike addresses to trick users.',
           render: (value) =>
-            checksumLoading ? <Skeleton className="h-6" /> : value
+            checksumLoading ? (
+              <Skeleton className="h-6" />
+            ) : (
+              <TextWithCopy text={value} />
+            )
         },
         {
           label: 'Free Balance',

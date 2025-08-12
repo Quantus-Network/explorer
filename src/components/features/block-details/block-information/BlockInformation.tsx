@@ -70,12 +70,15 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
         {
           label: 'Mined by',
           key: 'miner',
-          render: (value) => (
-            <LinkWithCopy
-              href={`${RESOURCES.accounts}/${value}`}
-              text={value}
-            />
-          )
+          render: (value) =>
+            value ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${value}`}
+                text={value}
+              />
+            ) : (
+              "Miner address isn't registered."
+            )
         },
         {
           label: 'Timestamp',

@@ -4,17 +4,17 @@ import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import { RESOURCES } from '@/constants/resources';
 
-import { TransactionsTable } from '../transactions-table/TransactionsTable';
+import { MinerRewardsTable } from '../miner-rewards-table/MinerRewardsTable';
 
-export const RecentTransactions = () => {
+export const RecentMinerRewards = () => {
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>Recent Immediate Transactions</h2>
+      <h2>Recent Miner Rewards</h2>
 
-      <TransactionsTable />
+      <MinerRewardsTable />
 
       <Button variant="link" className="mx-auto w-fit">
-        <Link to={RESOURCES.transactions}>See all immediate transactions</Link>
+        <Link to={RESOURCES.minerRewards}>See all miner rewards</Link>
       </Button>
     </ContentContainer>
   );

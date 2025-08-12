@@ -5,20 +5,21 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { ContentContainer } from '@/components/ui/content-container';
-import type { BlockResponse } from '@/schemas';
+import type { AccountResponse } from '@/schemas';
 
-import { useBlockTransactions } from './hook';
+import { useAccountMinerRewards } from './hook';
 
 interface Props {
-  query: QueryResult<BlockResponse>;
+  query: QueryResult<AccountResponse>;
+  accountId: string;
 }
 
-export const BlockTransactions: React.FC<Props> = ({ query }) => {
-  const { getStatus, table, error } = useBlockTransactions(query);
+export const AccountMinerRewards: React.FC<Props> = ({ query, accountId }) => {
+  const { getStatus, table, error } = useAccountMinerRewards(query);
 
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>Recent Immediate Transactions</h2>
+      <h2>Recent Miner Rewards</h2>
 
       <DataTable
         table={table}
@@ -28,13 +29,10 @@ export const BlockTransactions: React.FC<Props> = ({ query }) => {
         }}
       />
 
-      {!query.loading && query.data?.transactions.totalCount !== 0 && (
+      {!query.loading && query.data?.minerRewards.totalCount !== 0 && (
         <Button variant="link" className="mx-auto w-fit">
-          <Link
-            to="/immediate-transactions"
-            search={{ block: query.data?.blocks[0]?.height }}
-          >
-            See all immediate transactions
+          <Link to="/miner-rewards" search={{ accountId }}>
+            See all miner rewards
           </Link>
         </Button>
       )}
