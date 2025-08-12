@@ -13,7 +13,7 @@ export const formatTimestamp = (
   const date =
     (typeof timestamp === 'string' && new Date(timestamp)) || timestamp;
 
-  const formatted = `${format(date, 'MM/dd/yyyy, hh:mm:ss', { in: utc })} UTC`;
+  const formatted = `${format(date, 'MM/dd/yyyy, HH:mm:ss', { in: utc })} UTC`;
   if (!withDistance) return formatted;
 
   const distance = capitalizeFirstChar(
