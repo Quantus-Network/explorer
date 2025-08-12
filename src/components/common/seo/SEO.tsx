@@ -1,3 +1,5 @@
+import inter from '@fontsource/inter/400?url';
+import jetBrains from '@fontsource/jetbrains-mono/400?url';
 import * as React from 'react';
 
 import { defaultMetadata } from '../../../config/metadata';
@@ -81,6 +83,22 @@ export function SEO({
       <meta name="twitter:title" content={twitterTitle} />
       <meta name="twitter:description" content={twitterDescription} />
       <meta name="twitter:image" content={twitterImage} />
+
+      {/* Font Preload */}
+      <link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href={inter}
+        crossOrigin="anonymous"
+      />
+      <link
+        rel="preload"
+        as="font"
+        type="font/woff2"
+        href={jetBrains}
+        crossOrigin="anonymous"
+      />
     </>
   );
 }
