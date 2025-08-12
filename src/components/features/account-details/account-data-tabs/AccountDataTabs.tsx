@@ -47,7 +47,9 @@ export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({
 
             <SelectContent>
               {TAB_LIST.map((val) => (
-                <SelectItem value={val}>{formatOption(val)}</SelectItem>
+                <SelectItem key={val} value={val}>
+                  {formatOption(val)}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>

@@ -41,7 +41,9 @@ export const BlockDataTabs: React.FC<BlockDataTabsProps> = ({ query }) => {
 
             <SelectContent>
               {TAB_LIST.map((val) => (
-                <SelectItem value={val}>{formatOption(val)}</SelectItem>
+                <SelectItem key={val} value={val}>
+                  {formatOption(val)}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
