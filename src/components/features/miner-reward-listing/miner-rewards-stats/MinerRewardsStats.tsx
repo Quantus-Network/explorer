@@ -39,7 +39,7 @@ export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Recent Rewards (24H)</h3>
+            <h3>Recent Rewards Count (24H)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
