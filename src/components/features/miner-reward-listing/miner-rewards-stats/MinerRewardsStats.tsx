@@ -26,7 +26,7 @@ export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total Rewards</h3>
+            <h3>Rewards Count</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
