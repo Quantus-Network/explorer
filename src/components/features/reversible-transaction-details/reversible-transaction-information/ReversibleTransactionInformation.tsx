@@ -4,6 +4,7 @@ import * as React from 'react';
 import api from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
 import type { ReversibleTransactionResponse } from '@/schemas';
@@ -57,11 +58,7 @@ export const ReversibleTransactionInformation: React.FC<
           label: 'Extrinsic Hash',
           key: 'extrinsicHash',
           render: (value) => (
-            <LinkWithCopy
-              text={value || '-'}
-              href={`${RESOURCES.reversibleTransactions}/${value}`}
-              className="break-all"
-            />
+            <TextWithCopy text={value || '-'} className="break-all" />
           )
         },
         {

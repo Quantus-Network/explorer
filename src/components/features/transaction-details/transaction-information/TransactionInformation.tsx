@@ -4,6 +4,7 @@ import * as React from 'react';
 import api from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { RESOURCES } from '@/constants/resources';
 import type { TransactionListResponse } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
@@ -44,11 +45,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
           label: 'Extrinsic Hash',
           key: 'extrinsicHash',
           render: (value) => (
-            <LinkWithCopy
-              text={value as string}
-              href={`${RESOURCES.transactions}/${value}`}
-              className="break-all"
-            />
+            <TextWithCopy text={value as string} className="break-all" />
           )
         },
         {

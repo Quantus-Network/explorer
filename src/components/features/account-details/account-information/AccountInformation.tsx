@@ -2,10 +2,8 @@ import type { QueryResult } from '@apollo/client';
 import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { Skeleton } from '@/components/ui/skeleton';
-import { RESOURCES } from '@/constants/resources';
 import { useChecksum } from '@/hooks/useChecksum';
 import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
@@ -49,13 +47,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
         {
           label: 'ID',
           key: 'id',
-          render: (value) => (
-            <LinkWithCopy
-              text={value}
-              href={`${RESOURCES.accounts}/${value}`}
-              className="break-all"
-            />
-          )
+          render: (value) => <TextWithCopy text={value} className="break-all" />
         },
         {
           label: 'Check Phrase',
