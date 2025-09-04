@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { Menu, X } from 'lucide-react';
 
+import { Logo } from '@/assets';
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import env from '@/config/env';
@@ -29,7 +30,7 @@ export const Header = (props: HeaderProps) => {
         >
           <Link to="/" className="flex items-center gap-2 no-underline">
             <div className="size-10">
-              <img src="/logo.png" alt="Quantus Logo" className="size-full" />
+              <Logo className="size-full" name="Quantus Logo" />
             </div>
 
             <span className="text-xl font-bold text-primary">
