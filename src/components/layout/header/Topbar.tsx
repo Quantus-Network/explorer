@@ -1,6 +1,7 @@
 import { useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
+import { NetworkSelect } from '@/components/ui/composites/network-select/NetworkSelect';
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
 import { SearchPreview } from '@/components/ui/composites/search-preview/SearchPreview';
 import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
@@ -73,7 +74,8 @@ export const Topbar: React.FC<TopbarProps> = ({
           </div>
         )}
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex md:gap-3">
+          <NetworkSelect />
           <ThemeToggle />
         </div>
       </ContentContainer>
