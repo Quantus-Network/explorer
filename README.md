@@ -70,7 +70,7 @@ Create a `.env.local` file in the root directory:
 
 ```env
 # Required
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_URL=http://localhost:3100
 NEXT_PUBLIC_GRAPHQL_URL=https://gql.res.fm/graphql
 
 # Optional
@@ -87,7 +87,7 @@ bun gql:compile
 bun dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to see the application.
+Visit [http://localhost:3100](http://localhost:3100) to see the application.
 
 ## 📁 Project Structure
 

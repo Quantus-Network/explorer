@@ -5,21 +5,34 @@ import * as React from 'react';
 
 import { ThemeProvider } from '@/components/common/theme-provider/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
-import env from '@/config/env';
 
-const Providers = ({ children }: PropsWithChildren) => {
+import {
+  NetworkProvider,
+  useNetwork
+} from './components/common/network-provider/network-provider';
+
+const DynamicApolloProvider = ({ children }: PropsWithChildren) => {
+  const { networkUrl } = useNetwork();
+
   const client = new ApolloClient({
-    uri: env.GRAPHQL_URL,
+    uri: networkUrl,
     cache: new InMemoryCache()
   });
 
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+};
+
+const Providers = ({ children }: PropsWithChildren) => {
   return (
     <NuqsAdapter>
-      <ApolloProvider client={client}>
-        <ThemeProvider defaultTheme="system" storageKey="qube-theme">
-          {children}
-        </ThemeProvider>
-      </ApolloProvider>
+      <NetworkProvider defaultNetwork="schrodinger" storageKey="qube-network">
+        <DynamicApolloProvider>
+          <ThemeProvider defaultTheme="system" storageKey="qube-theme">
+            {children}
+          </ThemeProvider>
+        </DynamicApolloProvider>
+      </NetworkProvider>
+
       <Toaster />
     </NuqsAdapter>
   );
