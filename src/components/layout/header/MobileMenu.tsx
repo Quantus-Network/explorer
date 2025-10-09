@@ -1,6 +1,7 @@
 import { Link, useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
+import { NetworkSelect } from '@/components/ui/composites/network-select/NetworkSelect';
 import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
 import { ContentContainer } from '@/components/ui/content-container';
 import {
@@ -31,7 +32,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   return (
     <ContentContainer
       className={cn(
-        'absolute top-16 bg-navbar-mobile-menu transition-opacity duration-300 ease-in-out opacity-100 md:hidden backdrop-blur-sm',
+        'absolute top-20 bg-navbar-mobile-menu transition-opacity duration-300 ease-in-out opacity-100 md:hidden backdrop-blur-sm',
         !isOpen && 'opacity-0 pointer-events-none'
       )}
     >
@@ -85,6 +86,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             );
           })}
 
+          <NetworkSelect />
           <ThemeToggle />
         </NavigationMenuList>
       </NavigationMenu>
