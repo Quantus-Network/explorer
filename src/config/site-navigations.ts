@@ -27,6 +27,21 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
     ]
   },
   {
+    label: 'Miners',
+    children: [
+      {
+        label: 'Miner Rewards',
+        path: '/miner-rewards',
+        longLabel: 'Miner Rewards'
+      },
+      {
+        label: 'Miner Leaderboard',
+        path: '/miner-leaderboard',
+        longLabel: 'Miner Leaderboard'
+      }
+    ]
+  },
+  {
     label: 'Accounts',
     path: '/accounts',
     longLabel: 'Accounts'
@@ -35,10 +50,5 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
     label: 'Blocks',
     path: '/blocks',
     longLabel: 'Blocks'
-  },
-  {
-    label: 'Miner Rewards',
-    path: '/miner-rewards',
-    longLabel: 'Miner Rewards'
   }
 ] as const;

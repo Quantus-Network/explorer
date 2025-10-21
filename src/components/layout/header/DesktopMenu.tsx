@@ -37,12 +37,12 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
                   {nav.label}
                 </NavigationMenuTrigger>
 
-                <NavigationMenuContent className="flex flex-col gap-2 whitespace-nowrap p-2">
+                <NavigationMenuContent className="top-10 flex flex-col gap-2 whitespace-nowrap rounded border bg-popover p-2">
                   {nav.children.map((subNav) => (
                     <NavigationMenuLink key={subNav.path} asChild>
                       <Link
                         to={subNav.path}
-                        className="rounded p-1 no-underline hover:bg-accent data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
+                        className="rounded p-1 !text-base no-underline hover:bg-accent data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
                         data-active={rootPath === subNav.path.split('/')[1]}
                       >
                         {subNav.label}
@@ -58,7 +58,7 @@ export const DesktopMenu: React.FC<DesktopMenuProps> = () => {
               <NavigationMenuLink asChild>
                 <Link
                   to={nav.path}
-                  className="no-underline data-[active=true]:font-semibold data-[active=true]:text-foreground-active"
+                  className="!text-base no-underline focus:bg-transparent data-[active=true]:bg-transparent data-[active=true]:font-semibold data-[active=true]:text-foreground-active data-[active=true]:focus:bg-transparent"
                   data-active={rootPath === nav.path.split('/')[1]}
                 >
                   {nav.label}

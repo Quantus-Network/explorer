@@ -70,8 +70,7 @@ Create a `.env.local` file in the root directory:
 
 ```env
 # Required
-NEXT_PUBLIC_SITE_URL=http://localhost:3100
-NEXT_PUBLIC_GRAPHQL_URL=https://gql.res.fm/graphql
+VITE_SITE_URL=http://localhost:3100
 
 # Optional
 ANALYZE=false

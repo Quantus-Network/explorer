@@ -1001,6 +1001,88 @@ export type MinerRewardsConnection = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type MinerStats = {
+  __typename?: 'MinerStats';
+  /** Miner address */
+  id: Scalars['String']['output'];
+  totalMinedBlocks: Scalars['Int']['output'];
+  totalRewards: Scalars['BigInt']['output'];
+};
+
+export type MinerStatsConnection = {
+  __typename?: 'MinerStatsConnection';
+  edges: Array<MinerStatsEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type MinerStatsEdge = {
+  __typename?: 'MinerStatsEdge';
+  cursor: Scalars['String']['output'];
+  node: MinerStats;
+};
+
+export enum MinerStatsOrderByInput {
+  IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdAscNullsLast = 'id_ASC_NULLS_LAST',
+  IdDesc = 'id_DESC',
+  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  TotalMinedBlocksAsc = 'totalMinedBlocks_ASC',
+  TotalMinedBlocksAscNullsFirst = 'totalMinedBlocks_ASC_NULLS_FIRST',
+  TotalMinedBlocksAscNullsLast = 'totalMinedBlocks_ASC_NULLS_LAST',
+  TotalMinedBlocksDesc = 'totalMinedBlocks_DESC',
+  TotalMinedBlocksDescNullsFirst = 'totalMinedBlocks_DESC_NULLS_FIRST',
+  TotalMinedBlocksDescNullsLast = 'totalMinedBlocks_DESC_NULLS_LAST',
+  TotalRewardsAsc = 'totalRewards_ASC',
+  TotalRewardsAscNullsFirst = 'totalRewards_ASC_NULLS_FIRST',
+  TotalRewardsAscNullsLast = 'totalRewards_ASC_NULLS_LAST',
+  TotalRewardsDesc = 'totalRewards_DESC',
+  TotalRewardsDescNullsFirst = 'totalRewards_DESC_NULLS_FIRST',
+  TotalRewardsDescNullsLast = 'totalRewards_DESC_NULLS_LAST'
+}
+
+export type MinerStatsWhereInput = {
+  AND?: InputMaybe<Array<MinerStatsWhereInput>>;
+  OR?: InputMaybe<Array<MinerStatsWhereInput>>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_eq?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_not_eq?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_startsWith?: InputMaybe<Scalars['String']['input']>;
+  totalMinedBlocks_eq?: InputMaybe<Scalars['Int']['input']>;
+  totalMinedBlocks_gt?: InputMaybe<Scalars['Int']['input']>;
+  totalMinedBlocks_gte?: InputMaybe<Scalars['Int']['input']>;
+  totalMinedBlocks_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  totalMinedBlocks_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  totalMinedBlocks_lt?: InputMaybe<Scalars['Int']['input']>;
+  totalMinedBlocks_lte?: InputMaybe<Scalars['Int']['input']>;
+  totalMinedBlocks_not_eq?: InputMaybe<Scalars['Int']['input']>;
+  totalMinedBlocks_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  totalRewards_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRewards_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRewards_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRewards_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalRewards_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  totalRewards_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRewards_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRewards_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  totalRewards_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor: Scalars['String']['output'];
@@ -1026,6 +1108,9 @@ export type Query = {
   minerRewardById?: Maybe<MinerReward>;
   minerRewards: Array<MinerReward>;
   minerRewardsConnection: MinerRewardsConnection;
+  minerStats: Array<MinerStats>;
+  minerStatsById?: Maybe<MinerStats>;
+  minerStatsConnection: MinerStatsConnection;
   reversibleTransferById?: Maybe<ReversibleTransfer>;
   reversibleTransfers: Array<ReversibleTransfer>;
   reversibleTransfersConnection: ReversibleTransfersConnection;
@@ -1125,6 +1210,24 @@ export type QueryMinerRewardsConnectionArgs = {
   where?: InputMaybe<MinerRewardWhereInput>;
 };
 
+export type QueryMinerStatsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MinerStatsOrderByInput>>;
+  where?: InputMaybe<MinerStatsWhereInput>;
+};
+
+export type QueryMinerStatsByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type QueryMinerStatsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<MinerStatsOrderByInput>;
+  where?: InputMaybe<MinerStatsWhereInput>;
+};
+
 export type QueryReversibleTransferByIdArgs = {
   id: Scalars['String']['input'];
 };
@@ -1166,6 +1269,7 @@ export type ReversibleTransfer = {
   amount: Scalars['BigInt']['output'];
   block: Block;
   event?: Maybe<Event>;
+  executedTransfer?: Maybe<Transfer>;
   extrinsicHash?: Maybe<Scalars['String']['output']>;
   fee: Scalars['BigInt']['output'];
   from: Account;
@@ -1250,6 +1354,36 @@ export enum ReversibleTransferOrderByInput {
   EventTypeDesc = 'event_type_DESC',
   EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
   EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
+  ExecutedTransferAmountAsc = 'executedTransfer_amount_ASC',
+  ExecutedTransferAmountAscNullsFirst = 'executedTransfer_amount_ASC_NULLS_FIRST',
+  ExecutedTransferAmountAscNullsLast = 'executedTransfer_amount_ASC_NULLS_LAST',
+  ExecutedTransferAmountDesc = 'executedTransfer_amount_DESC',
+  ExecutedTransferAmountDescNullsFirst = 'executedTransfer_amount_DESC_NULLS_FIRST',
+  ExecutedTransferAmountDescNullsLast = 'executedTransfer_amount_DESC_NULLS_LAST',
+  ExecutedTransferExtrinsicHashAsc = 'executedTransfer_extrinsicHash_ASC',
+  ExecutedTransferExtrinsicHashAscNullsFirst = 'executedTransfer_extrinsicHash_ASC_NULLS_FIRST',
+  ExecutedTransferExtrinsicHashAscNullsLast = 'executedTransfer_extrinsicHash_ASC_NULLS_LAST',
+  ExecutedTransferExtrinsicHashDesc = 'executedTransfer_extrinsicHash_DESC',
+  ExecutedTransferExtrinsicHashDescNullsFirst = 'executedTransfer_extrinsicHash_DESC_NULLS_FIRST',
+  ExecutedTransferExtrinsicHashDescNullsLast = 'executedTransfer_extrinsicHash_DESC_NULLS_LAST',
+  ExecutedTransferFeeAsc = 'executedTransfer_fee_ASC',
+  ExecutedTransferFeeAscNullsFirst = 'executedTransfer_fee_ASC_NULLS_FIRST',
+  ExecutedTransferFeeAscNullsLast = 'executedTransfer_fee_ASC_NULLS_LAST',
+  ExecutedTransferFeeDesc = 'executedTransfer_fee_DESC',
+  ExecutedTransferFeeDescNullsFirst = 'executedTransfer_fee_DESC_NULLS_FIRST',
+  ExecutedTransferFeeDescNullsLast = 'executedTransfer_fee_DESC_NULLS_LAST',
+  ExecutedTransferIdAsc = 'executedTransfer_id_ASC',
+  ExecutedTransferIdAscNullsFirst = 'executedTransfer_id_ASC_NULLS_FIRST',
+  ExecutedTransferIdAscNullsLast = 'executedTransfer_id_ASC_NULLS_LAST',
+  ExecutedTransferIdDesc = 'executedTransfer_id_DESC',
+  ExecutedTransferIdDescNullsFirst = 'executedTransfer_id_DESC_NULLS_FIRST',
+  ExecutedTransferIdDescNullsLast = 'executedTransfer_id_DESC_NULLS_LAST',
+  ExecutedTransferTimestampAsc = 'executedTransfer_timestamp_ASC',
+  ExecutedTransferTimestampAscNullsFirst = 'executedTransfer_timestamp_ASC_NULLS_FIRST',
+  ExecutedTransferTimestampAscNullsLast = 'executedTransfer_timestamp_ASC_NULLS_LAST',
+  ExecutedTransferTimestampDesc = 'executedTransfer_timestamp_DESC',
+  ExecutedTransferTimestampDescNullsFirst = 'executedTransfer_timestamp_DESC_NULLS_FIRST',
+  ExecutedTransferTimestampDescNullsLast = 'executedTransfer_timestamp_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsicHash_ASC',
   ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
   ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
@@ -1376,6 +1510,8 @@ export type ReversibleTransferWhereInput = {
   block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   event?: InputMaybe<EventWhereInput>;
   event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  executedTransfer?: InputMaybe<TransferWhereInput>;
+  executedTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -1491,6 +1627,7 @@ export type Transfer = {
   amount: Scalars['BigInt']['output'];
   block: Block;
   event?: Maybe<Event>;
+  executedBy?: Maybe<ReversibleTransfer>;
   extrinsicHash?: Maybe<Scalars['String']['output']>;
   fee: Scalars['BigInt']['output'];
   from: Account;
@@ -1572,6 +1709,54 @@ export enum TransferOrderByInput {
   EventTypeDesc = 'event_type_DESC',
   EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
   EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
+  ExecutedByAmountAsc = 'executedBy_amount_ASC',
+  ExecutedByAmountAscNullsFirst = 'executedBy_amount_ASC_NULLS_FIRST',
+  ExecutedByAmountAscNullsLast = 'executedBy_amount_ASC_NULLS_LAST',
+  ExecutedByAmountDesc = 'executedBy_amount_DESC',
+  ExecutedByAmountDescNullsFirst = 'executedBy_amount_DESC_NULLS_FIRST',
+  ExecutedByAmountDescNullsLast = 'executedBy_amount_DESC_NULLS_LAST',
+  ExecutedByExtrinsicHashAsc = 'executedBy_extrinsicHash_ASC',
+  ExecutedByExtrinsicHashAscNullsFirst = 'executedBy_extrinsicHash_ASC_NULLS_FIRST',
+  ExecutedByExtrinsicHashAscNullsLast = 'executedBy_extrinsicHash_ASC_NULLS_LAST',
+  ExecutedByExtrinsicHashDesc = 'executedBy_extrinsicHash_DESC',
+  ExecutedByExtrinsicHashDescNullsFirst = 'executedBy_extrinsicHash_DESC_NULLS_FIRST',
+  ExecutedByExtrinsicHashDescNullsLast = 'executedBy_extrinsicHash_DESC_NULLS_LAST',
+  ExecutedByFeeAsc = 'executedBy_fee_ASC',
+  ExecutedByFeeAscNullsFirst = 'executedBy_fee_ASC_NULLS_FIRST',
+  ExecutedByFeeAscNullsLast = 'executedBy_fee_ASC_NULLS_LAST',
+  ExecutedByFeeDesc = 'executedBy_fee_DESC',
+  ExecutedByFeeDescNullsFirst = 'executedBy_fee_DESC_NULLS_FIRST',
+  ExecutedByFeeDescNullsLast = 'executedBy_fee_DESC_NULLS_LAST',
+  ExecutedByIdAsc = 'executedBy_id_ASC',
+  ExecutedByIdAscNullsFirst = 'executedBy_id_ASC_NULLS_FIRST',
+  ExecutedByIdAscNullsLast = 'executedBy_id_ASC_NULLS_LAST',
+  ExecutedByIdDesc = 'executedBy_id_DESC',
+  ExecutedByIdDescNullsFirst = 'executedBy_id_DESC_NULLS_FIRST',
+  ExecutedByIdDescNullsLast = 'executedBy_id_DESC_NULLS_LAST',
+  ExecutedByScheduledAtAsc = 'executedBy_scheduledAt_ASC',
+  ExecutedByScheduledAtAscNullsFirst = 'executedBy_scheduledAt_ASC_NULLS_FIRST',
+  ExecutedByScheduledAtAscNullsLast = 'executedBy_scheduledAt_ASC_NULLS_LAST',
+  ExecutedByScheduledAtDesc = 'executedBy_scheduledAt_DESC',
+  ExecutedByScheduledAtDescNullsFirst = 'executedBy_scheduledAt_DESC_NULLS_FIRST',
+  ExecutedByScheduledAtDescNullsLast = 'executedBy_scheduledAt_DESC_NULLS_LAST',
+  ExecutedByStatusAsc = 'executedBy_status_ASC',
+  ExecutedByStatusAscNullsFirst = 'executedBy_status_ASC_NULLS_FIRST',
+  ExecutedByStatusAscNullsLast = 'executedBy_status_ASC_NULLS_LAST',
+  ExecutedByStatusDesc = 'executedBy_status_DESC',
+  ExecutedByStatusDescNullsFirst = 'executedBy_status_DESC_NULLS_FIRST',
+  ExecutedByStatusDescNullsLast = 'executedBy_status_DESC_NULLS_LAST',
+  ExecutedByTimestampAsc = 'executedBy_timestamp_ASC',
+  ExecutedByTimestampAscNullsFirst = 'executedBy_timestamp_ASC_NULLS_FIRST',
+  ExecutedByTimestampAscNullsLast = 'executedBy_timestamp_ASC_NULLS_LAST',
+  ExecutedByTimestampDesc = 'executedBy_timestamp_DESC',
+  ExecutedByTimestampDescNullsFirst = 'executedBy_timestamp_DESC_NULLS_FIRST',
+  ExecutedByTimestampDescNullsLast = 'executedBy_timestamp_DESC_NULLS_LAST',
+  ExecutedByTxIdAsc = 'executedBy_txId_ASC',
+  ExecutedByTxIdAscNullsFirst = 'executedBy_txId_ASC_NULLS_FIRST',
+  ExecutedByTxIdAscNullsLast = 'executedBy_txId_ASC_NULLS_LAST',
+  ExecutedByTxIdDesc = 'executedBy_txId_DESC',
+  ExecutedByTxIdDescNullsFirst = 'executedBy_txId_DESC_NULLS_FIRST',
+  ExecutedByTxIdDescNullsLast = 'executedBy_txId_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsicHash_ASC',
   ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
   ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
@@ -1674,6 +1859,8 @@ export type TransferWhereInput = {
   block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   event?: InputMaybe<EventWhereInput>;
   event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  executedBy?: InputMaybe<ReversibleTransferWhereInput>;
+  executedBy_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -1798,12 +1985,26 @@ export type GetAccountByIdQuery = {
       node: {
         __typename?: 'ReversibleTransfer';
         extrinsicHash?: string | null;
-        scheduledAt: any;
         timestamp: any;
         status: ReversibleTransferStatus;
+        amount: any;
         block: { __typename?: 'Block'; height: number };
         from: { __typename?: 'Account'; id: string };
         to: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  minerRewards: {
+    __typename?: 'MinerRewardsConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'MinerRewardEdge';
+      node: {
+        __typename?: 'MinerReward';
+        reward: any;
+        timestamp: any;
+        block: { __typename?: 'Block'; height: number; hash: string };
+        miner: { __typename?: 'Account'; id: string };
       };
     }>;
   };
@@ -1835,6 +2036,7 @@ export type GetBlocksQuery = {
     id: string;
     hash: string;
     height: number;
+    reward: any;
     timestamp: any;
   }>;
   meta: { __typename?: 'BlocksConnection'; totalCount: number };
@@ -1853,6 +2055,7 @@ export type GetRecentBlocksQuery = {
     id: string;
     hash: string;
     height: number;
+    reward: any;
     timestamp: any;
   }>;
 };
@@ -1870,7 +2073,12 @@ export type GetBlockByIdQuery = {
     id: string;
     hash: string;
     height: number;
+    reward: any;
     timestamp: any;
+  }>;
+  miners: Array<{
+    __typename?: 'MinerReward';
+    miner: { __typename?: 'Account'; id: string };
   }>;
   transactions: {
     __typename?: 'TransfersConnection';
@@ -1897,9 +2105,9 @@ export type GetBlockByIdQuery = {
       node: {
         __typename?: 'ReversibleTransfer';
         extrinsicHash?: string | null;
-        scheduledAt: any;
         timestamp: any;
         status: ReversibleTransferStatus;
+        amount: any;
         block: { __typename?: 'Block'; height: number };
         from: { __typename?: 'Account'; id: string };
         to: { __typename?: 'Account'; id: string };
@@ -1910,6 +2118,7 @@ export type GetBlockByIdQuery = {
 
 export type GetStatusQueryVariables = Exact<{
   beginningDate: Scalars['DateTime']['input'];
+  todayDate: Scalars['DateTime']['input'];
   endDate: Scalars['DateTime']['input'];
 }>;
 
@@ -1927,8 +2136,76 @@ export type GetStatusQuery = {
     finalizedHeight?: number | null;
     finalizedHash?: string | null;
   } | null;
+  minedBlocks24Hours: { __typename?: 'BlocksConnection'; totalCount: number };
   allActiveAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
   allDepositAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
+};
+
+export type GetMinerRewardsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<MinerRewardOrderByInput> | MinerRewardOrderByInput
+  >;
+  where?: InputMaybe<MinerRewardWhereInput>;
+}>;
+
+export type GetMinerRewardsQuery = {
+  __typename?: 'Query';
+  minerRewards: Array<{
+    __typename?: 'MinerReward';
+    reward: any;
+    timestamp: any;
+    block: { __typename?: 'Block'; height: number; hash: string };
+    miner: { __typename?: 'Account'; id: string };
+  }>;
+  meta: { __typename?: 'MinerRewardsConnection'; totalCount: number };
+};
+
+export type GetRecentMinerRewardsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<MinerRewardOrderByInput> | MinerRewardOrderByInput
+  >;
+  where?: InputMaybe<MinerRewardWhereInput>;
+}>;
+
+export type GetRecentMinerRewardsQuery = {
+  __typename?: 'Query';
+  minerRewards: Array<{
+    __typename?: 'MinerReward';
+    reward: any;
+    timestamp: any;
+    block: { __typename?: 'Block'; height: number; hash: string };
+    miner: { __typename?: 'Account'; id: string };
+  }>;
+};
+
+export type GetMinerRewardsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetMinerRewardsStatsQuery = {
+  __typename?: 'Query';
+  last24Hour: { __typename?: 'MinerRewardsConnection'; totalCount: number };
+  allTime: { __typename?: 'MinerRewardsConnection'; totalCount: number };
+};
+
+export type GetMinerRewardByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMinerRewardByHashQuery = {
+  __typename?: 'Query';
+  minerRewards: Array<{
+    __typename?: 'MinerReward';
+    reward: any;
+    timestamp: any;
+    block: { __typename?: 'Block'; height: number; hash: string };
+    miner: { __typename?: 'Account'; id: string };
+  }>;
 };
 
 export type GetReversibleTransactionsQueryVariables = Exact<{
@@ -2042,6 +2319,13 @@ export type SearchAllQuery = {
   }>;
   accounts: Array<{ __typename?: 'Account'; id: string }>;
   blocks: Array<{ __typename?: 'Block'; height: number }>;
+  minerRewards: Array<{
+    __typename?: 'MinerReward';
+    reward: any;
+    timestamp: any;
+    block: { __typename?: 'Block'; height: number; hash: string };
+    miner: { __typename?: 'Account'; id: string };
+  }>;
 };
 
 export type GetTransactionsQueryVariables = Exact<{
@@ -2532,15 +2816,15 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'scheduledAt' }
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'timestamp' }
                             },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'status' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
                             },
                             {
                               kind: 'Field',
@@ -2580,6 +2864,114 @@ export const GetAccountByIdDocument = {
                                   }
                                 ]
                               }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'miner' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'reward' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'miner' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
                             }
                           ]
                         }
@@ -2868,6 +3260,7 @@ export const GetBlocksDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
               ]
             }
@@ -2975,6 +3368,7 @@ export const GetRecentBlocksDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
               ]
             }
@@ -3074,7 +3468,82 @@ export const GetBlockByIdDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'miners' },
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
               ]
             }
           },
@@ -3338,15 +3807,15 @@ export const GetBlockByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'scheduledAt' }
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'timestamp' }
                             },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'status' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
                             },
                             {
                               kind: 'Field',
@@ -3415,6 +3884,20 @@ export const GetStatusDocument = {
           variable: {
             kind: 'Variable',
             name: { kind: 'Name', value: 'beginningDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'todayDate' }
           },
           type: {
             kind: 'NonNullType',
@@ -3509,6 +3992,49 @@ export const GetStatusDocument = {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'finalizedHash' }
                 }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minedBlocks24Hours' },
+            name: { kind: 'Name', value: 'blocksConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'todayDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
               ]
             }
           },
@@ -3621,6 +4147,498 @@ export const GetStatusDocument = {
     }
   ]
 } as unknown as DocumentNode<GetStatusQuery, GetStatusQueryVariables>;
+export const GetMinerRewardsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMinerRewards' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'MinerRewardOrderByInput' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'MinerRewardWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMinerRewardsQuery,
+  GetMinerRewardsQueryVariables
+>;
+export const GetRecentMinerRewardsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMinerRewards' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'MinerRewardOrderByInput' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'MinerRewardWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMinerRewardsQuery,
+  GetRecentMinerRewardsQueryVariables
+>;
+export const GetMinerRewardsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMinerRewardsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'startDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMinerRewardsStatsQuery,
+  GetMinerRewardsStatsQueryVariables
+>;
+export const GetMinerRewardByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMinerRewardByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'hash_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'hash' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMinerRewardByHashQuery,
+  GetMinerRewardByHashQueryVariables
+>;
 export const GetReversibleTransactionsDocument = {
   kind: 'Document',
   definitions: [
@@ -3767,6 +4785,14 @@ export const GetReversibleTransactionsDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'orderBy' },
                 value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
               }
             ],
             selectionSet: {
@@ -4382,6 +5408,77 @@ export const SearchAllDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'height' } }
               ]
             }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'hash_startsWith' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
+              ]
+            }
           }
         ]
       }
@@ -4534,6 +5631,14 @@ export const GetTransactionsDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'orderBy' },
                 value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
               }
             ],
             selectionSet: {

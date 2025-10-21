@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReversibleTransactionsIndexRouteImport } from './routes/reversible-transactions/index'
 import { Route as MinerRewardsIndexRouteImport } from './routes/miner-rewards/index'
+import { Route as MinerLeaderboardIndexRouteImport } from './routes/miner-leaderboard/index'
 import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index'
 import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
@@ -35,6 +36,11 @@ const ReversibleTransactionsIndexRoute =
 const MinerRewardsIndexRoute = MinerRewardsIndexRouteImport.update({
   id: '/miner-rewards/',
   path: '/miner-rewards/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinerLeaderboardIndexRoute = MinerLeaderboardIndexRouteImport.update({
+  id: '/miner-leaderboard/',
+  path: '/miner-leaderboard/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImmediateTransactionsIndexRoute =
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
+  '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
   '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
 }
@@ -104,6 +111,7 @@ export interface FileRoutesByTo {
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
+  '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
   '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
 }
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/accounts/': typeof AccountsIndexRoute
   '/blocks/': typeof BlocksIndexRoute
   '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute
+  '/miner-leaderboard/': typeof MinerLeaderboardIndexRoute
   '/miner-rewards/': typeof MinerRewardsIndexRoute
   '/reversible-transactions/': typeof ReversibleTransactionsIndexRoute
 }
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/accounts'
     | '/blocks'
     | '/immediate-transactions'
+    | '/miner-leaderboard'
     | '/miner-rewards'
     | '/reversible-transactions'
   fileRoutesByTo: FileRoutesByTo
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/accounts'
     | '/blocks'
     | '/immediate-transactions'
+    | '/miner-leaderboard'
     | '/miner-rewards'
     | '/reversible-transactions'
   id:
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/accounts/'
     | '/blocks/'
     | '/immediate-transactions/'
+    | '/miner-leaderboard/'
     | '/miner-rewards/'
     | '/reversible-transactions/'
   fileRoutesById: FileRoutesById
@@ -173,6 +185,7 @@ export interface RootRouteChildren {
   AccountsIndexRoute: typeof AccountsIndexRoute
   BlocksIndexRoute: typeof BlocksIndexRoute
   ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute
+  MinerLeaderboardIndexRoute: typeof MinerLeaderboardIndexRoute
   MinerRewardsIndexRoute: typeof MinerRewardsIndexRoute
   ReversibleTransactionsIndexRoute: typeof ReversibleTransactionsIndexRoute
 }
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       path: '/miner-rewards'
       fullPath: '/miner-rewards'
       preLoaderRoute: typeof MinerRewardsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/miner-leaderboard/': {
+      id: '/miner-leaderboard/'
+      path: '/miner-leaderboard'
+      fullPath: '/miner-leaderboard'
+      preLoaderRoute: typeof MinerLeaderboardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/immediate-transactions/': {
@@ -269,6 +289,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,
   ImmediateTransactionsIndexRoute: ImmediateTransactionsIndexRoute,
+  MinerLeaderboardIndexRoute: MinerLeaderboardIndexRoute,
   MinerRewardsIndexRoute: MinerRewardsIndexRoute,
   ReversibleTransactionsIndexRoute: ReversibleTransactionsIndexRoute,
 }
