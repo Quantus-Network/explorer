@@ -70,7 +70,12 @@ export const DataTable = ({
                     data-sortable={header.column.getCanSort()}
                     className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-foreground/70"
                   >
-                    <div className="flex items-center gap-1">
+                    <div
+                      className={cn(
+                        'flex items-center gap-1',
+                        header.column.columnDef.meta?.header?.className
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
