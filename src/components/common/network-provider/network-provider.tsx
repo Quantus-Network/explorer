@@ -3,7 +3,7 @@ import React, { createContext, useContext, useMemo, useState } from 'react';
 type NetworkName = 'resonance' | 'schrodinger';
 
 export const NETWORKS: Record<NetworkName, string> = {
-  schrodinger: 'https://quantu.se/graphql',
+  schrodinger: 'https://subsquid.quantus.com/graphql',
   resonance: 'https://gql.res.fm/graphql'
 } as const;
 
