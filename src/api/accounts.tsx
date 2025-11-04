@@ -4,7 +4,6 @@ import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 import { subDays } from 'date-fns/subDays';
 
-import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
 import { ACCOUNT_SORTS } from '@/constants/query-sorts';
@@ -14,7 +13,6 @@ import type {
   AccountStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
-import { getGqlString } from '@/utils/get-gql-string';
 
 export const accounts = {
   useGetAll: (
@@ -140,20 +138,6 @@ export const accounts = {
     `;
 
     return {
-      query: (id: string) =>
-        fetchClient.graphql<AccountResponse>(
-          {
-            query: getGqlString(GET_ACCOUNT),
-            variables: {
-              id,
-              limit: QUERY_DEFAULT_LIMIT
-            },
-            operationName: 'GetAccountById'
-          },
-          {
-            retries: 0
-          }
-        ),
       useQuery: (id: string, config?: QueryHookOptions<AccountResponse>) =>
         useQuery<AccountResponse>(GET_ACCOUNT, {
           ...config,

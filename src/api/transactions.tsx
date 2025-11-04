@@ -4,7 +4,6 @@ import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
 import type { TransferWhereInput } from '@/__generated__/graphql';
-import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
@@ -16,7 +15,6 @@ import type {
   TransactionsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
-import { getGqlString } from '@/utils/get-gql-string';
 
 export const transactions = {
   useGetAll: (
@@ -179,19 +177,6 @@ export const transactions = {
     `;
 
     return {
-      query: (hash: string) =>
-        fetchClient.graphql<TransactionResponse>(
-          {
-            query: getGqlString(QUERY),
-            variables: {
-              hash
-            },
-            operationName: QUERY_NAME
-          },
-          {
-            retries: 0
-          }
-        ),
       useQuery: (
         hash: string,
         config?: QueryHookOptions<TransactionResponse>

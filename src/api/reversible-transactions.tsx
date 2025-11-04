@@ -4,7 +4,6 @@ import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
 import type { ReversibleTransferWhereInput } from '@/__generated__/graphql';
-import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { ReversibleTransactionSorts } from '@/constants/query-sorts';
@@ -17,7 +16,6 @@ import type {
   ReversibleTransactionStatusResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
-import { getGqlString } from '@/utils/get-gql-string';
 
 export const reversibleTransactions = {
   useGetAll: (
@@ -190,19 +188,6 @@ export const reversibleTransactions = {
     `;
 
     return {
-      query: (hash: string) =>
-        fetchClient.graphql<ReversibleTransactionResponse>(
-          {
-            query: getGqlString(QUERY),
-            variables: {
-              hash
-            },
-            operationName: QUERY_NAME
-          },
-          {
-            retries: 0
-          }
-        ),
       useQuery: (
         hash: string,
         config?: QueryHookOptions<ReversibleTransactionResponse>
@@ -216,7 +201,6 @@ export const reversibleTransactions = {
     };
   },
   getStatusByHash: () => {
-    const QUERY_NAME = 'GetReversibleTransactionStatusByHash';
     const QUERY = gql`
       query GetReversibleTransactionStatusByHash($hash: String!) {
         reversibleTransactions: reversibleTransfers(
@@ -228,19 +212,6 @@ export const reversibleTransactions = {
     `;
 
     return {
-      query: (hash: string) =>
-        fetchClient.graphql<ReversibleTransactionStatusResponse>(
-          {
-            query: getGqlString(QUERY),
-            variables: {
-              hash
-            },
-            operationName: QUERY_NAME
-          },
-          {
-            retries: 0
-          }
-        ),
       useQuery: (
         hash: string,
         config?: QueryHookOptions<ReversibleTransactionStatusResponse>

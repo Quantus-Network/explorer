@@ -1,9 +1,9 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 
-import fetchClient from '@/config/fetch-client';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 import type { SearchAllResponse } from '@/schemas';
+import type DataFetcher from '@/utils/fetcher';
 import { getGqlString } from '@/utils/get-gql-string';
 
 export const search = {
@@ -52,8 +52,8 @@ export const search = {
     `;
 
     return {
-      query: (keyword: string) =>
-        fetchClient.graphql<SearchAllResponse>(
+      query: (fetcher: DataFetcher, keyword: string) =>
+        fetcher.graphql<SearchAllResponse>(
           {
             query: getGqlString(SEARCH_ALL),
             variables: {

@@ -4,7 +4,6 @@ import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
 import type { MinerRewardWhereInput } from '@/__generated__/graphql';
-import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MinerRewardSorts } from '@/constants/query-sorts';
@@ -16,7 +15,6 @@ import type {
   RecentMinerRewardsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
-import { getGqlString } from '@/utils/get-gql-string';
 
 export const minerRewards = {
   useGetAll: (
@@ -154,19 +152,6 @@ export const minerRewards = {
     `;
 
     return {
-      query: (hash: string) =>
-        fetchClient.graphql<MinerRewardResponse>(
-          {
-            query: getGqlString(QUERY),
-            variables: {
-              hash
-            },
-            operationName: QUERY_NAME
-          },
-          {
-            retries: 0
-          }
-        ),
       useQuery: (
         hash: string,
         config?: QueryHookOptions<MinerRewardResponse>

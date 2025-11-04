@@ -2,7 +2,6 @@ import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 
 import type { BlockWhereInput } from '@/__generated__/graphql';
-import fetchClient from '@/config/fetch-client';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { BlockSorts } from '@/constants/query-sorts';
@@ -13,7 +12,6 @@ import type {
   RecentBlocksResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
-import { getGqlString } from '@/utils/get-gql-string';
 
 export const blocks = {
   useGetAll: (
@@ -174,24 +172,6 @@ export const blocks = {
     `;
 
     return {
-      query: (id: string) => {
-        const isHash = id.startsWith('0x');
-
-        return fetchClient.graphql<BlockResponse>(
-          {
-            query: getGqlString(QUERY),
-            variables: {
-              height: !isHash ? Number(id) : -1,
-              hash: isHash ? id : '',
-              limit: QUERY_DEFAULT_LIMIT
-            },
-            operationName: QUERY_NAME
-          },
-          {
-            retries: 0
-          }
-        );
-      },
       useQuery: (id: string, config?: QueryHookOptions<BlockResponse>) => {
         const isHash = id.startsWith('0x');
 

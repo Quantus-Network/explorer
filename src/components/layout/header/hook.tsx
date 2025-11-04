@@ -3,9 +3,11 @@ import { toast } from 'sonner';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import api from '@/api';
+import { useFetchClient } from '@/hooks/useFetchClient';
 import type { SearchAllResponse } from '@/schemas/searchs';
 
 export const useHeader = () => {
+  const fetcher = useFetchClient();
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -43,7 +45,7 @@ export const useHeader = () => {
     try {
       setSearchLoading(true);
 
-      const { data } = await api.search.all().query(keyword);
+      const { data } = await api.search.all().query(fetcher, keyword);
 
       setSearchResult(data);
       setSearchLoading(false);

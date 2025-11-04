@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
-  schema: 'https://quantu.se/graphql',
+  schema: 'https://subsquid.quantus.com/graphql',
   documents: ['src/**/*.{ts,tsx}'],
   generates: {
     './src/__generated__/': {
