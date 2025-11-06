@@ -1,6 +1,6 @@
 import React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
@@ -8,6 +8,7 @@ import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 export interface BlocksStatsProps {}
 
 export const BlocksStats: React.FC<BlocksStatsProps> = () => {
+  const api = useApiClient();
   const { loading, data, error } = api.chainStatus.useGetStatus({
     pollInterval: DATA_POOL_INTERVAL
   });

@@ -2,10 +2,11 @@ import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useOnClickOutside } from 'usehooks-ts';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import type { SearchAllResponse } from '@/schemas/searchs';
 
 export const useHero = () => {
+  const api = useApiClient();
   const [searchResult, setSearchResult] = useState<SearchAllResponse>();
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string>();

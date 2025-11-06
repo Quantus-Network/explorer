@@ -6,7 +6,7 @@ import type { SearchAllResponse } from '@/schemas';
 import type DataFetcher from '@/utils/fetcher';
 import { getGqlString } from '@/utils/get-gql-string';
 
-export const search = {
+export const search = (fetcher: DataFetcher) => ({
   all: () => {
     const SEARCH_ALL = gql`
       query SearchAll($keyword: String, $keyword_number: Int, $limit: Int) {
@@ -52,7 +52,7 @@ export const search = {
     `;
 
     return {
-      query: (fetcher: DataFetcher, keyword: string) =>
+      query: (keyword: string) =>
         fetcher.graphql<SearchAllResponse>(
           {
             query: getGqlString(SEARCH_ALL),
@@ -85,4 +85,4 @@ export const search = {
         })
     };
   }
-};
+});

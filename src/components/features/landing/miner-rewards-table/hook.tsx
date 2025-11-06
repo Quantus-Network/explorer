@@ -1,12 +1,13 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { MINER_REWARD_COLUMNS } from '@/components/common/table-columns/MINER_REWARD_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import type { MinerReward } from '@/schemas';
 
 export const useMinerRewardsTable = () => {
+  const api = useApiClient();
   const {
     loading,
     data,

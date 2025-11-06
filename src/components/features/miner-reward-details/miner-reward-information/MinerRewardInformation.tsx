@@ -1,7 +1,7 @@
 import { notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
@@ -18,6 +18,7 @@ type MinerReward = MinerRewardResponse['minerRewards'][0];
 export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
   hash
 }) => {
+  const api = useApiClient();
   const { data, loading } = api.minerRewards.getByHash().useQuery(hash);
 
   if (!loading && (!data || data.minerRewards.length !== 1)) throw notFound();

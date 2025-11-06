@@ -1,7 +1,7 @@
 import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
@@ -11,6 +11,7 @@ export interface ReversibleTransactionsStatsProps {}
 export const ReversibleTransactionsStats: React.FC<
   ReversibleTransactionsStatsProps
 > = () => {
+  const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
   }) as any;

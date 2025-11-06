@@ -1,7 +1,7 @@
 import { notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 import { validateAccountId } from '@/utils/validate-account-id';
@@ -14,6 +14,7 @@ interface Props {
 }
 
 export const AccountDetails: React.FC<Props> = ({ id }) => {
+  const api = useApiClient();
   const isAccountValid = validateAccountId(id);
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;

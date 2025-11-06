@@ -8,7 +8,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/REVERSIBLE_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -18,6 +18,7 @@ import type { ReversibleTransaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useReversibleTransactionsTable = () => {
+  const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
   }) as any;

@@ -7,7 +7,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { BLOCK_COLUMNS } from '@/components/common/table-columns/BLOCK_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -17,6 +17,7 @@ import type { Block } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useBlocksTable = () => {
+  const api = useApiClient();
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',

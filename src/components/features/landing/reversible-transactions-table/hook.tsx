@@ -1,12 +1,13 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/REVERSIBLE_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import type { ReversibleTransaction } from '@/schemas';
 
 export const useReversibleTransactionsTable = () => {
+  const api = useApiClient();
   const {
     loading,
     data,

@@ -1,12 +1,13 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import type { Transaction } from '@/schemas';
 
 export const useTransactionsTable = () => {
+  const api = useApiClient();
   const {
     loading,
     data,

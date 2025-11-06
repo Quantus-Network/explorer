@@ -1,7 +1,7 @@
 import { notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const BlockDetails: React.FC<Props> = ({ id }) => {
+  const api = useApiClient();
   const query = api.blocks.getById().useQuery(id);
   const { loading, data } = query;
 

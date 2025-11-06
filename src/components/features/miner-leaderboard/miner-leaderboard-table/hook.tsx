@@ -3,13 +3,14 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { MINER_LEADERBOARD_COLUMNS } from '@/components/common/table-columns/MINER_LEADERBOARD_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { MinerStats } from '@/schemas';
 
 export const useMinerLeaderboardTable = () => {
+  const api = useApiClient();
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(
     'limit',

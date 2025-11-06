@@ -1,7 +1,7 @@
 import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
@@ -15,6 +15,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
 
   if (accountId || block) return null;
 
+  const api = useApiClient();
   const { loading, data, error } = api.accounts.useGetStats({
     pollInterval: DATA_POOL_INTERVAL
   });

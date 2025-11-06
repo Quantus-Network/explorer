@@ -1,7 +1,7 @@
 import { notFound } from '@tanstack/react-router';
 import * as React from 'react';
 
-import api from '@/api';
+import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
@@ -18,6 +18,7 @@ type Transaction = TransactionListResponse['transactions'][0];
 export const TransactionInformation: React.FC<TransactionInformationProps> = ({
   hash
 }) => {
+  const api = useApiClient();
   const { data, loading } = api.transactions.getByHash().useQuery(hash);
 
   if (!loading && (!data || data.transactions.length !== 1)) throw notFound();
