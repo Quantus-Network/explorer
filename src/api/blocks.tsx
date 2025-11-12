@@ -89,7 +89,6 @@ export const blocks = {
     );
   },
   getById: () => {
-    const QUERY_NAME = 'GetBlockById';
     const QUERY = gql`
       query GetBlockById($height: Int!, $hash: String!, $limit: Int!) {
         blocks(where: { height_eq: $height, OR: { hash_eq: $hash } }) {

@@ -134,7 +134,6 @@ export const minerRewards = {
     });
   },
   getByHash: () => {
-    const QUERY_NAME = 'GetMinerRewardByHash';
     const QUERY = gql`
       query GetMinerRewardByHash($hash: String!) {
         minerRewards(where: { block: { hash_eq: $hash } }) {

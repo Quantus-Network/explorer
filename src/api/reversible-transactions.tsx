@@ -161,7 +161,6 @@ export const reversibleTransactions = {
     );
   },
   getByHash: () => {
-    const QUERY_NAME = 'GetReversibleTransactionByHash';
     const QUERY = gql`
       query GetReversibleTransactionByHash($hash: String!) {
         reversibleTransactions: reversibleTransfers(
