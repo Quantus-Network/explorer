@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-type NetworkName = 'resonance' | 'schrodinger';
+type NetworkName = 'resonance' | 'dirac';
 
 export const NETWORKS: Record<NetworkName, string> = {
-  schrodinger: 'https://subsquid.quantus.com/graphql',
+  dirac: 'https://subsquid.quantus.com/graphql',
   resonance: 'https://gql.res.fm/graphql'
 } as const;
 
@@ -20,8 +20,8 @@ type NetworkProviderState = {
 };
 
 const initialState: NetworkProviderState = {
-  networkUrl: NETWORKS.schrodinger,
-  networkName: 'schrodinger',
+  networkUrl: NETWORKS.dirac,
+  networkName: 'dirac',
   setNetwork: () => null
 };
 
@@ -30,7 +30,7 @@ const NetworkProviderContext =
 
 export function NetworkProvider({
   children,
-  defaultNetwork = 'schrodinger',
+  defaultNetwork = 'dirac',
   storageKey,
   ...props
 }: NetworkProviderProps) {
