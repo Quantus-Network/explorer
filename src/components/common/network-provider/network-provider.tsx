@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-type NetworkName = 'resonance' | 'dirac';
+type NetworkName = 'resonance' | 'dirac' | 'schrodinger';
 
 export const NETWORKS: Record<NetworkName, string> = {
   dirac: 'https://subsquid.quantus.com/graphql',
+  schrodinger: 'https://quantu.se/graphql',
   resonance: 'https://gql.res.fm/graphql'
 } as const;
 
