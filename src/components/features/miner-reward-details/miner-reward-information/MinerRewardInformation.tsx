@@ -6,14 +6,12 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { RESOURCES } from '@/constants/resources';
-import type { MinerRewardResponse } from '@/schemas';
+import type { MinerReward } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface MinerRewardInformationProps {
   hash: string;
 }
-
-type MinerReward = MinerRewardResponse['minerRewards'][0];
 
 export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
   hash
@@ -21,9 +19,29 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
   const api = useApiClient();
   const { data, loading } = api.minerRewards.getByHash().useQuery(hash);
 
-  if (!loading && (!data || data.minerRewards.length !== 1)) throw notFound();
+  if (!loading && (!data || data.minerRewards.length < 1)) throw notFound();
 
-  const minerReward = data?.minerRewards[0];
+  const minerReward = data?.minerRewards.reduce(
+    (prev: MinerReward | undefined, curr: MinerReward) => {
+      if (!prev) return curr;
+
+      const newReward = BigInt(prev.reward) + BigInt(curr.reward);
+
+      const acc: MinerReward = {
+        ...prev,
+        block: {
+          ...prev.block
+        },
+        miner: {
+          ...prev.miner
+        },
+        reward: newReward.toString()
+      };
+
+      return acc;
+    },
+    undefined
+  );
 
   const information: Partial<MinerReward>[] = [
     {
@@ -34,8 +52,10 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
     }
   ];
 
+  console.log(minerReward);
+
   return (
-    <DataList<Partial<MinerReward>>
+    <DataList<Partial<MinerReward & { hash: string }>>
       loading={loading}
       data={information}
       fields={[

@@ -71,7 +71,7 @@ export function DataList<T>({
                 <dl className="grid grid-cols-1 gap-y-2">
                   {fields.map((field) => (
                     <div
-                      key={String(field.key)}
+                      key={String(field.key) + String(field.label)}
                       className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]"
                     >
                       <dt className="flex items-center gap-1 font-medium text-muted-foreground">

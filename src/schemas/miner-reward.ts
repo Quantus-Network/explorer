@@ -7,7 +7,7 @@ export interface MinerReward
 }
 
 export interface MinerRewardResponse {
-  minerRewards: [MinerReward];
+  minerRewards: MinerReward[];
 }
 
 export interface MinerRewardListResponse {
