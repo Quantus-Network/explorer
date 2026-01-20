@@ -542,11 +542,266 @@ export type BlocksConnection = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type ErrorEvent = {
+  __typename?: 'ErrorEvent';
+  block: Block;
+  errorDocs?: Maybe<Scalars['String']['output']>;
+  errorModule?: Maybe<Scalars['String']['output']>;
+  errorName?: Maybe<Scalars['String']['output']>;
+  errorType: Scalars['String']['output'];
+  event?: Maybe<Event>;
+  extrinsicHash?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  timestamp: Scalars['DateTime']['output'];
+};
+
+export type ErrorEventEdge = {
+  __typename?: 'ErrorEventEdge';
+  cursor: Scalars['String']['output'];
+  node: ErrorEvent;
+};
+
+export enum ErrorEventOrderByInput {
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
+  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
+  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
+  BlockHeightAsc = 'block_height_ASC',
+  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
+  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
+  BlockHeightDesc = 'block_height_DESC',
+  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
+  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
+  BlockIdAsc = 'block_id_ASC',
+  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
+  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
+  BlockIdDesc = 'block_id_DESC',
+  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
+  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
+  BlockRewardAsc = 'block_reward_ASC',
+  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
+  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
+  BlockRewardDesc = 'block_reward_DESC',
+  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
+  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
+  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
+  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
+  ErrorDocsAsc = 'errorDocs_ASC',
+  ErrorDocsAscNullsFirst = 'errorDocs_ASC_NULLS_FIRST',
+  ErrorDocsAscNullsLast = 'errorDocs_ASC_NULLS_LAST',
+  ErrorDocsDesc = 'errorDocs_DESC',
+  ErrorDocsDescNullsFirst = 'errorDocs_DESC_NULLS_FIRST',
+  ErrorDocsDescNullsLast = 'errorDocs_DESC_NULLS_LAST',
+  ErrorModuleAsc = 'errorModule_ASC',
+  ErrorModuleAscNullsFirst = 'errorModule_ASC_NULLS_FIRST',
+  ErrorModuleAscNullsLast = 'errorModule_ASC_NULLS_LAST',
+  ErrorModuleDesc = 'errorModule_DESC',
+  ErrorModuleDescNullsFirst = 'errorModule_DESC_NULLS_FIRST',
+  ErrorModuleDescNullsLast = 'errorModule_DESC_NULLS_LAST',
+  ErrorNameAsc = 'errorName_ASC',
+  ErrorNameAscNullsFirst = 'errorName_ASC_NULLS_FIRST',
+  ErrorNameAscNullsLast = 'errorName_ASC_NULLS_LAST',
+  ErrorNameDesc = 'errorName_DESC',
+  ErrorNameDescNullsFirst = 'errorName_DESC_NULLS_FIRST',
+  ErrorNameDescNullsLast = 'errorName_DESC_NULLS_LAST',
+  ErrorTypeAsc = 'errorType_ASC',
+  ErrorTypeAscNullsFirst = 'errorType_ASC_NULLS_FIRST',
+  ErrorTypeAscNullsLast = 'errorType_ASC_NULLS_LAST',
+  ErrorTypeDesc = 'errorType_DESC',
+  ErrorTypeDescNullsFirst = 'errorType_DESC_NULLS_FIRST',
+  ErrorTypeDescNullsLast = 'errorType_DESC_NULLS_LAST',
+  EventExtrinsicHashAsc = 'event_extrinsicHash_ASC',
+  EventExtrinsicHashAscNullsFirst = 'event_extrinsicHash_ASC_NULLS_FIRST',
+  EventExtrinsicHashAscNullsLast = 'event_extrinsicHash_ASC_NULLS_LAST',
+  EventExtrinsicHashDesc = 'event_extrinsicHash_DESC',
+  EventExtrinsicHashDescNullsFirst = 'event_extrinsicHash_DESC_NULLS_FIRST',
+  EventExtrinsicHashDescNullsLast = 'event_extrinsicHash_DESC_NULLS_LAST',
+  EventIdAsc = 'event_id_ASC',
+  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
+  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
+  EventIdDesc = 'event_id_DESC',
+  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
+  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
+  EventIsScheduledAsc = 'event_isScheduled_ASC',
+  EventIsScheduledAscNullsFirst = 'event_isScheduled_ASC_NULLS_FIRST',
+  EventIsScheduledAscNullsLast = 'event_isScheduled_ASC_NULLS_LAST',
+  EventIsScheduledDesc = 'event_isScheduled_DESC',
+  EventIsScheduledDescNullsFirst = 'event_isScheduled_DESC_NULLS_FIRST',
+  EventIsScheduledDescNullsLast = 'event_isScheduled_DESC_NULLS_LAST',
+  EventTimestampAsc = 'event_timestamp_ASC',
+  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
+  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
+  EventTimestampDesc = 'event_timestamp_DESC',
+  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
+  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
+  EventTypeAsc = 'event_type_ASC',
+  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
+  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
+  EventTypeDesc = 'event_type_DESC',
+  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
+  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
+  ExtrinsicHashAsc = 'extrinsicHash_ASC',
+  ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
+  ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
+  ExtrinsicHashDesc = 'extrinsicHash_DESC',
+  ExtrinsicHashDescNullsFirst = 'extrinsicHash_DESC_NULLS_FIRST',
+  ExtrinsicHashDescNullsLast = 'extrinsicHash_DESC_NULLS_LAST',
+  IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdAscNullsLast = 'id_ASC_NULLS_LAST',
+  IdDesc = 'id_DESC',
+  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  TimestampAsc = 'timestamp_ASC',
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
+}
+
+export type ErrorEventWhereInput = {
+  AND?: InputMaybe<Array<ErrorEventWhereInput>>;
+  OR?: InputMaybe<Array<ErrorEventWhereInput>>;
+  block?: InputMaybe<BlockWhereInput>;
+  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  errorDocs_contains?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_eq?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_gt?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_gte?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorDocs_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  errorDocs_lt?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_lte?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_not_contains?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_not_eq?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorDocs_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorDocs_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorModule_contains?: InputMaybe<Scalars['String']['input']>;
+  errorModule_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorModule_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorModule_eq?: InputMaybe<Scalars['String']['input']>;
+  errorModule_gt?: InputMaybe<Scalars['String']['input']>;
+  errorModule_gte?: InputMaybe<Scalars['String']['input']>;
+  errorModule_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorModule_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  errorModule_lt?: InputMaybe<Scalars['String']['input']>;
+  errorModule_lte?: InputMaybe<Scalars['String']['input']>;
+  errorModule_not_contains?: InputMaybe<Scalars['String']['input']>;
+  errorModule_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorModule_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorModule_not_eq?: InputMaybe<Scalars['String']['input']>;
+  errorModule_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorModule_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorModule_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorName_contains?: InputMaybe<Scalars['String']['input']>;
+  errorName_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorName_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorName_eq?: InputMaybe<Scalars['String']['input']>;
+  errorName_gt?: InputMaybe<Scalars['String']['input']>;
+  errorName_gte?: InputMaybe<Scalars['String']['input']>;
+  errorName_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorName_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  errorName_lt?: InputMaybe<Scalars['String']['input']>;
+  errorName_lte?: InputMaybe<Scalars['String']['input']>;
+  errorName_not_contains?: InputMaybe<Scalars['String']['input']>;
+  errorName_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorName_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorName_not_eq?: InputMaybe<Scalars['String']['input']>;
+  errorName_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorName_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorName_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorType_contains?: InputMaybe<Scalars['String']['input']>;
+  errorType_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorType_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorType_eq?: InputMaybe<Scalars['String']['input']>;
+  errorType_gt?: InputMaybe<Scalars['String']['input']>;
+  errorType_gte?: InputMaybe<Scalars['String']['input']>;
+  errorType_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorType_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  errorType_lt?: InputMaybe<Scalars['String']['input']>;
+  errorType_lte?: InputMaybe<Scalars['String']['input']>;
+  errorType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  errorType_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  errorType_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  errorType_not_eq?: InputMaybe<Scalars['String']['input']>;
+  errorType_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  errorType_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  errorType_startsWith?: InputMaybe<Scalars['String']['input']>;
+  event?: InputMaybe<EventWhereInput>;
+  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_eq?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_gt?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_gte?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  extrinsicHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  extrinsicHash_lt?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_lte?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_contains?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_containsInsensitive?: InputMaybe<
+    Scalars['String']['input']
+  >;
+  extrinsicHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_eq?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  extrinsicHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_eq?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_not_eq?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_startsWith?: InputMaybe<Scalars['String']['input']>;
+  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type ErrorEventsConnection = {
+  __typename?: 'ErrorEventsConnection';
+  edges: Array<ErrorEventEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
 export type Event = {
   __typename?: 'Event';
   balanceEvent?: Maybe<BalanceEvent>;
   block: Block;
+  errorEvent?: Maybe<ErrorEvent>;
   extrinsicHash?: Maybe<Scalars['String']['output']>;
+  highSecuritySet?: Maybe<HighSecuritySet>;
   id: Scalars['String']['output'];
   isScheduled: Scalars['Boolean']['output'];
   minerReward?: Maybe<MinerReward>;
@@ -611,12 +866,78 @@ export enum EventOrderByInput {
   BlockTimestampDesc = 'block_timestamp_DESC',
   BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
   BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
+  ErrorEventErrorDocsAsc = 'errorEvent_errorDocs_ASC',
+  ErrorEventErrorDocsAscNullsFirst = 'errorEvent_errorDocs_ASC_NULLS_FIRST',
+  ErrorEventErrorDocsAscNullsLast = 'errorEvent_errorDocs_ASC_NULLS_LAST',
+  ErrorEventErrorDocsDesc = 'errorEvent_errorDocs_DESC',
+  ErrorEventErrorDocsDescNullsFirst = 'errorEvent_errorDocs_DESC_NULLS_FIRST',
+  ErrorEventErrorDocsDescNullsLast = 'errorEvent_errorDocs_DESC_NULLS_LAST',
+  ErrorEventErrorModuleAsc = 'errorEvent_errorModule_ASC',
+  ErrorEventErrorModuleAscNullsFirst = 'errorEvent_errorModule_ASC_NULLS_FIRST',
+  ErrorEventErrorModuleAscNullsLast = 'errorEvent_errorModule_ASC_NULLS_LAST',
+  ErrorEventErrorModuleDesc = 'errorEvent_errorModule_DESC',
+  ErrorEventErrorModuleDescNullsFirst = 'errorEvent_errorModule_DESC_NULLS_FIRST',
+  ErrorEventErrorModuleDescNullsLast = 'errorEvent_errorModule_DESC_NULLS_LAST',
+  ErrorEventErrorNameAsc = 'errorEvent_errorName_ASC',
+  ErrorEventErrorNameAscNullsFirst = 'errorEvent_errorName_ASC_NULLS_FIRST',
+  ErrorEventErrorNameAscNullsLast = 'errorEvent_errorName_ASC_NULLS_LAST',
+  ErrorEventErrorNameDesc = 'errorEvent_errorName_DESC',
+  ErrorEventErrorNameDescNullsFirst = 'errorEvent_errorName_DESC_NULLS_FIRST',
+  ErrorEventErrorNameDescNullsLast = 'errorEvent_errorName_DESC_NULLS_LAST',
+  ErrorEventErrorTypeAsc = 'errorEvent_errorType_ASC',
+  ErrorEventErrorTypeAscNullsFirst = 'errorEvent_errorType_ASC_NULLS_FIRST',
+  ErrorEventErrorTypeAscNullsLast = 'errorEvent_errorType_ASC_NULLS_LAST',
+  ErrorEventErrorTypeDesc = 'errorEvent_errorType_DESC',
+  ErrorEventErrorTypeDescNullsFirst = 'errorEvent_errorType_DESC_NULLS_FIRST',
+  ErrorEventErrorTypeDescNullsLast = 'errorEvent_errorType_DESC_NULLS_LAST',
+  ErrorEventExtrinsicHashAsc = 'errorEvent_extrinsicHash_ASC',
+  ErrorEventExtrinsicHashAscNullsFirst = 'errorEvent_extrinsicHash_ASC_NULLS_FIRST',
+  ErrorEventExtrinsicHashAscNullsLast = 'errorEvent_extrinsicHash_ASC_NULLS_LAST',
+  ErrorEventExtrinsicHashDesc = 'errorEvent_extrinsicHash_DESC',
+  ErrorEventExtrinsicHashDescNullsFirst = 'errorEvent_extrinsicHash_DESC_NULLS_FIRST',
+  ErrorEventExtrinsicHashDescNullsLast = 'errorEvent_extrinsicHash_DESC_NULLS_LAST',
+  ErrorEventIdAsc = 'errorEvent_id_ASC',
+  ErrorEventIdAscNullsFirst = 'errorEvent_id_ASC_NULLS_FIRST',
+  ErrorEventIdAscNullsLast = 'errorEvent_id_ASC_NULLS_LAST',
+  ErrorEventIdDesc = 'errorEvent_id_DESC',
+  ErrorEventIdDescNullsFirst = 'errorEvent_id_DESC_NULLS_FIRST',
+  ErrorEventIdDescNullsLast = 'errorEvent_id_DESC_NULLS_LAST',
+  ErrorEventTimestampAsc = 'errorEvent_timestamp_ASC',
+  ErrorEventTimestampAscNullsFirst = 'errorEvent_timestamp_ASC_NULLS_FIRST',
+  ErrorEventTimestampAscNullsLast = 'errorEvent_timestamp_ASC_NULLS_LAST',
+  ErrorEventTimestampDesc = 'errorEvent_timestamp_DESC',
+  ErrorEventTimestampDescNullsFirst = 'errorEvent_timestamp_DESC_NULLS_FIRST',
+  ErrorEventTimestampDescNullsLast = 'errorEvent_timestamp_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsicHash_ASC',
   ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
   ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
   ExtrinsicHashDesc = 'extrinsicHash_DESC',
   ExtrinsicHashDescNullsFirst = 'extrinsicHash_DESC_NULLS_FIRST',
   ExtrinsicHashDescNullsLast = 'extrinsicHash_DESC_NULLS_LAST',
+  HighSecuritySetDelayAsc = 'highSecuritySet_delay_ASC',
+  HighSecuritySetDelayAscNullsFirst = 'highSecuritySet_delay_ASC_NULLS_FIRST',
+  HighSecuritySetDelayAscNullsLast = 'highSecuritySet_delay_ASC_NULLS_LAST',
+  HighSecuritySetDelayDesc = 'highSecuritySet_delay_DESC',
+  HighSecuritySetDelayDescNullsFirst = 'highSecuritySet_delay_DESC_NULLS_FIRST',
+  HighSecuritySetDelayDescNullsLast = 'highSecuritySet_delay_DESC_NULLS_LAST',
+  HighSecuritySetExtrinsicHashAsc = 'highSecuritySet_extrinsicHash_ASC',
+  HighSecuritySetExtrinsicHashAscNullsFirst = 'highSecuritySet_extrinsicHash_ASC_NULLS_FIRST',
+  HighSecuritySetExtrinsicHashAscNullsLast = 'highSecuritySet_extrinsicHash_ASC_NULLS_LAST',
+  HighSecuritySetExtrinsicHashDesc = 'highSecuritySet_extrinsicHash_DESC',
+  HighSecuritySetExtrinsicHashDescNullsFirst = 'highSecuritySet_extrinsicHash_DESC_NULLS_FIRST',
+  HighSecuritySetExtrinsicHashDescNullsLast = 'highSecuritySet_extrinsicHash_DESC_NULLS_LAST',
+  HighSecuritySetIdAsc = 'highSecuritySet_id_ASC',
+  HighSecuritySetIdAscNullsFirst = 'highSecuritySet_id_ASC_NULLS_FIRST',
+  HighSecuritySetIdAscNullsLast = 'highSecuritySet_id_ASC_NULLS_LAST',
+  HighSecuritySetIdDesc = 'highSecuritySet_id_DESC',
+  HighSecuritySetIdDescNullsFirst = 'highSecuritySet_id_DESC_NULLS_FIRST',
+  HighSecuritySetIdDescNullsLast = 'highSecuritySet_id_DESC_NULLS_LAST',
+  HighSecuritySetTimestampAsc = 'highSecuritySet_timestamp_ASC',
+  HighSecuritySetTimestampAscNullsFirst = 'highSecuritySet_timestamp_ASC_NULLS_FIRST',
+  HighSecuritySetTimestampAscNullsLast = 'highSecuritySet_timestamp_ASC_NULLS_LAST',
+  HighSecuritySetTimestampDesc = 'highSecuritySet_timestamp_DESC',
+  HighSecuritySetTimestampDescNullsFirst = 'highSecuritySet_timestamp_DESC_NULLS_FIRST',
+  HighSecuritySetTimestampDescNullsLast = 'highSecuritySet_timestamp_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdAscNullsLast = 'id_ASC_NULLS_LAST',
@@ -741,6 +1062,8 @@ export enum EventOrderByInput {
 
 export enum EventType {
   Balance = 'BALANCE',
+  Error = 'ERROR',
+  HighSecuritySet = 'HIGH_SECURITY_SET',
   MinerReward = 'MINER_REWARD',
   ReversibleTransfer = 'REVERSIBLE_TRANSFER',
   Transfer = 'TRANSFER'
@@ -753,6 +1076,8 @@ export type EventWhereInput = {
   balanceEvent_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   block?: InputMaybe<BlockWhereInput>;
   block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  errorEvent?: InputMaybe<ErrorEventWhereInput>;
+  errorEvent_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -772,6 +1097,8 @@ export type EventWhereInput = {
   extrinsicHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   extrinsicHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
   extrinsicHash_startsWith?: InputMaybe<Scalars['String']['input']>;
+  highSecuritySet?: InputMaybe<HighSecuritySetWhereInput>;
+  highSecuritySet_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   id_contains?: InputMaybe<Scalars['String']['input']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   id_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -817,6 +1144,245 @@ export type EventWhereInput = {
 export type EventsConnection = {
   __typename?: 'EventsConnection';
   edges: Array<EventEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type HighSecuritySet = {
+  __typename?: 'HighSecuritySet';
+  block: Block;
+  delay: Scalars['BigInt']['output'];
+  event?: Maybe<Event>;
+  extrinsicHash?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  interceptor: Account;
+  timestamp: Scalars['DateTime']['output'];
+  who: Account;
+};
+
+export type HighSecuritySetEdge = {
+  __typename?: 'HighSecuritySetEdge';
+  cursor: Scalars['String']['output'];
+  node: HighSecuritySet;
+};
+
+export enum HighSecuritySetOrderByInput {
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
+  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
+  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
+  BlockHeightAsc = 'block_height_ASC',
+  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
+  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
+  BlockHeightDesc = 'block_height_DESC',
+  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
+  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
+  BlockIdAsc = 'block_id_ASC',
+  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
+  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
+  BlockIdDesc = 'block_id_DESC',
+  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
+  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
+  BlockRewardAsc = 'block_reward_ASC',
+  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
+  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
+  BlockRewardDesc = 'block_reward_DESC',
+  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
+  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
+  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
+  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
+  DelayAsc = 'delay_ASC',
+  DelayAscNullsFirst = 'delay_ASC_NULLS_FIRST',
+  DelayAscNullsLast = 'delay_ASC_NULLS_LAST',
+  DelayDesc = 'delay_DESC',
+  DelayDescNullsFirst = 'delay_DESC_NULLS_FIRST',
+  DelayDescNullsLast = 'delay_DESC_NULLS_LAST',
+  EventExtrinsicHashAsc = 'event_extrinsicHash_ASC',
+  EventExtrinsicHashAscNullsFirst = 'event_extrinsicHash_ASC_NULLS_FIRST',
+  EventExtrinsicHashAscNullsLast = 'event_extrinsicHash_ASC_NULLS_LAST',
+  EventExtrinsicHashDesc = 'event_extrinsicHash_DESC',
+  EventExtrinsicHashDescNullsFirst = 'event_extrinsicHash_DESC_NULLS_FIRST',
+  EventExtrinsicHashDescNullsLast = 'event_extrinsicHash_DESC_NULLS_LAST',
+  EventIdAsc = 'event_id_ASC',
+  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
+  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
+  EventIdDesc = 'event_id_DESC',
+  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
+  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
+  EventIsScheduledAsc = 'event_isScheduled_ASC',
+  EventIsScheduledAscNullsFirst = 'event_isScheduled_ASC_NULLS_FIRST',
+  EventIsScheduledAscNullsLast = 'event_isScheduled_ASC_NULLS_LAST',
+  EventIsScheduledDesc = 'event_isScheduled_DESC',
+  EventIsScheduledDescNullsFirst = 'event_isScheduled_DESC_NULLS_FIRST',
+  EventIsScheduledDescNullsLast = 'event_isScheduled_DESC_NULLS_LAST',
+  EventTimestampAsc = 'event_timestamp_ASC',
+  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
+  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
+  EventTimestampDesc = 'event_timestamp_DESC',
+  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
+  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
+  EventTypeAsc = 'event_type_ASC',
+  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
+  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
+  EventTypeDesc = 'event_type_DESC',
+  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
+  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
+  ExtrinsicHashAsc = 'extrinsicHash_ASC',
+  ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
+  ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
+  ExtrinsicHashDesc = 'extrinsicHash_DESC',
+  ExtrinsicHashDescNullsFirst = 'extrinsicHash_DESC_NULLS_FIRST',
+  ExtrinsicHashDescNullsLast = 'extrinsicHash_DESC_NULLS_LAST',
+  IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdAscNullsLast = 'id_ASC_NULLS_LAST',
+  IdDesc = 'id_DESC',
+  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  InterceptorFreeAsc = 'interceptor_free_ASC',
+  InterceptorFreeAscNullsFirst = 'interceptor_free_ASC_NULLS_FIRST',
+  InterceptorFreeAscNullsLast = 'interceptor_free_ASC_NULLS_LAST',
+  InterceptorFreeDesc = 'interceptor_free_DESC',
+  InterceptorFreeDescNullsFirst = 'interceptor_free_DESC_NULLS_FIRST',
+  InterceptorFreeDescNullsLast = 'interceptor_free_DESC_NULLS_LAST',
+  InterceptorFrozenAsc = 'interceptor_frozen_ASC',
+  InterceptorFrozenAscNullsFirst = 'interceptor_frozen_ASC_NULLS_FIRST',
+  InterceptorFrozenAscNullsLast = 'interceptor_frozen_ASC_NULLS_LAST',
+  InterceptorFrozenDesc = 'interceptor_frozen_DESC',
+  InterceptorFrozenDescNullsFirst = 'interceptor_frozen_DESC_NULLS_FIRST',
+  InterceptorFrozenDescNullsLast = 'interceptor_frozen_DESC_NULLS_LAST',
+  InterceptorIdAsc = 'interceptor_id_ASC',
+  InterceptorIdAscNullsFirst = 'interceptor_id_ASC_NULLS_FIRST',
+  InterceptorIdAscNullsLast = 'interceptor_id_ASC_NULLS_LAST',
+  InterceptorIdDesc = 'interceptor_id_DESC',
+  InterceptorIdDescNullsFirst = 'interceptor_id_DESC_NULLS_FIRST',
+  InterceptorIdDescNullsLast = 'interceptor_id_DESC_NULLS_LAST',
+  InterceptorLastUpdatedAsc = 'interceptor_lastUpdated_ASC',
+  InterceptorLastUpdatedAscNullsFirst = 'interceptor_lastUpdated_ASC_NULLS_FIRST',
+  InterceptorLastUpdatedAscNullsLast = 'interceptor_lastUpdated_ASC_NULLS_LAST',
+  InterceptorLastUpdatedDesc = 'interceptor_lastUpdated_DESC',
+  InterceptorLastUpdatedDescNullsFirst = 'interceptor_lastUpdated_DESC_NULLS_FIRST',
+  InterceptorLastUpdatedDescNullsLast = 'interceptor_lastUpdated_DESC_NULLS_LAST',
+  InterceptorReservedAsc = 'interceptor_reserved_ASC',
+  InterceptorReservedAscNullsFirst = 'interceptor_reserved_ASC_NULLS_FIRST',
+  InterceptorReservedAscNullsLast = 'interceptor_reserved_ASC_NULLS_LAST',
+  InterceptorReservedDesc = 'interceptor_reserved_DESC',
+  InterceptorReservedDescNullsFirst = 'interceptor_reserved_DESC_NULLS_FIRST',
+  InterceptorReservedDescNullsLast = 'interceptor_reserved_DESC_NULLS_LAST',
+  TimestampAsc = 'timestamp_ASC',
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
+  WhoFreeAsc = 'who_free_ASC',
+  WhoFreeAscNullsFirst = 'who_free_ASC_NULLS_FIRST',
+  WhoFreeAscNullsLast = 'who_free_ASC_NULLS_LAST',
+  WhoFreeDesc = 'who_free_DESC',
+  WhoFreeDescNullsFirst = 'who_free_DESC_NULLS_FIRST',
+  WhoFreeDescNullsLast = 'who_free_DESC_NULLS_LAST',
+  WhoFrozenAsc = 'who_frozen_ASC',
+  WhoFrozenAscNullsFirst = 'who_frozen_ASC_NULLS_FIRST',
+  WhoFrozenAscNullsLast = 'who_frozen_ASC_NULLS_LAST',
+  WhoFrozenDesc = 'who_frozen_DESC',
+  WhoFrozenDescNullsFirst = 'who_frozen_DESC_NULLS_FIRST',
+  WhoFrozenDescNullsLast = 'who_frozen_DESC_NULLS_LAST',
+  WhoIdAsc = 'who_id_ASC',
+  WhoIdAscNullsFirst = 'who_id_ASC_NULLS_FIRST',
+  WhoIdAscNullsLast = 'who_id_ASC_NULLS_LAST',
+  WhoIdDesc = 'who_id_DESC',
+  WhoIdDescNullsFirst = 'who_id_DESC_NULLS_FIRST',
+  WhoIdDescNullsLast = 'who_id_DESC_NULLS_LAST',
+  WhoLastUpdatedAsc = 'who_lastUpdated_ASC',
+  WhoLastUpdatedAscNullsFirst = 'who_lastUpdated_ASC_NULLS_FIRST',
+  WhoLastUpdatedAscNullsLast = 'who_lastUpdated_ASC_NULLS_LAST',
+  WhoLastUpdatedDesc = 'who_lastUpdated_DESC',
+  WhoLastUpdatedDescNullsFirst = 'who_lastUpdated_DESC_NULLS_FIRST',
+  WhoLastUpdatedDescNullsLast = 'who_lastUpdated_DESC_NULLS_LAST',
+  WhoReservedAsc = 'who_reserved_ASC',
+  WhoReservedAscNullsFirst = 'who_reserved_ASC_NULLS_FIRST',
+  WhoReservedAscNullsLast = 'who_reserved_ASC_NULLS_LAST',
+  WhoReservedDesc = 'who_reserved_DESC',
+  WhoReservedDescNullsFirst = 'who_reserved_DESC_NULLS_FIRST',
+  WhoReservedDescNullsLast = 'who_reserved_DESC_NULLS_LAST'
+}
+
+export type HighSecuritySetWhereInput = {
+  AND?: InputMaybe<Array<HighSecuritySetWhereInput>>;
+  OR?: InputMaybe<Array<HighSecuritySetWhereInput>>;
+  block?: InputMaybe<BlockWhereInput>;
+  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  delay_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  delay_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  delay_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  delay_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  delay_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  delay_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  delay_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  delay_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  delay_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  event?: InputMaybe<EventWhereInput>;
+  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_eq?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_gt?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_gte?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  extrinsicHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  extrinsicHash_lt?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_lte?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_contains?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_containsInsensitive?: InputMaybe<
+    Scalars['String']['input']
+  >;
+  extrinsicHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_eq?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  extrinsicHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsicHash_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_eq?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_not_eq?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_startsWith?: InputMaybe<Scalars['String']['input']>;
+  interceptor?: InputMaybe<AccountWhereInput>;
+  interceptor_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  who?: InputMaybe<AccountWhereInput>;
+  who_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type HighSecuritySetsConnection = {
+  __typename?: 'HighSecuritySetsConnection';
+  edges: Array<HighSecuritySetEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
 };
@@ -1102,9 +1668,15 @@ export type Query = {
   blockById?: Maybe<Block>;
   blocks: Array<Block>;
   blocksConnection: BlocksConnection;
+  errorEventById?: Maybe<ErrorEvent>;
+  errorEvents: Array<ErrorEvent>;
+  errorEventsConnection: ErrorEventsConnection;
   eventById?: Maybe<Event>;
   events: Array<Event>;
   eventsConnection: EventsConnection;
+  highSecuritySetById?: Maybe<HighSecuritySet>;
+  highSecuritySets: Array<HighSecuritySet>;
+  highSecuritySetsConnection: HighSecuritySetsConnection;
   minerRewardById?: Maybe<MinerReward>;
   minerRewards: Array<MinerReward>;
   minerRewardsConnection: MinerRewardsConnection;
@@ -1174,6 +1746,24 @@ export type QueryBlocksConnectionArgs = {
   where?: InputMaybe<BlockWhereInput>;
 };
 
+export type QueryErrorEventByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type QueryErrorEventsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ErrorEventOrderByInput>>;
+  where?: InputMaybe<ErrorEventWhereInput>;
+};
+
+export type QueryErrorEventsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<ErrorEventOrderByInput>;
+  where?: InputMaybe<ErrorEventWhereInput>;
+};
+
 export type QueryEventByIdArgs = {
   id: Scalars['String']['input'];
 };
@@ -1190,6 +1780,24 @@ export type QueryEventsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy: Array<EventOrderByInput>;
   where?: InputMaybe<EventWhereInput>;
+};
+
+export type QueryHighSecuritySetByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type QueryHighSecuritySetsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<HighSecuritySetOrderByInput>>;
+  where?: InputMaybe<HighSecuritySetWhereInput>;
+};
+
+export type QueryHighSecuritySetsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<HighSecuritySetOrderByInput>;
+  where?: InputMaybe<HighSecuritySetWhereInput>;
 };
 
 export type QueryMinerRewardByIdArgs = {
@@ -1268,6 +1876,7 @@ export type ReversibleTransfer = {
   __typename?: 'ReversibleTransfer';
   amount: Scalars['BigInt']['output'];
   block: Block;
+  cancelledBy?: Maybe<Account>;
   event?: Maybe<Event>;
   executedTransfer?: Maybe<Transfer>;
   extrinsicHash?: Maybe<Scalars['String']['output']>;
@@ -1324,6 +1933,36 @@ export enum ReversibleTransferOrderByInput {
   BlockTimestampDesc = 'block_timestamp_DESC',
   BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
   BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
+  CancelledByFreeAsc = 'cancelledBy_free_ASC',
+  CancelledByFreeAscNullsFirst = 'cancelledBy_free_ASC_NULLS_FIRST',
+  CancelledByFreeAscNullsLast = 'cancelledBy_free_ASC_NULLS_LAST',
+  CancelledByFreeDesc = 'cancelledBy_free_DESC',
+  CancelledByFreeDescNullsFirst = 'cancelledBy_free_DESC_NULLS_FIRST',
+  CancelledByFreeDescNullsLast = 'cancelledBy_free_DESC_NULLS_LAST',
+  CancelledByFrozenAsc = 'cancelledBy_frozen_ASC',
+  CancelledByFrozenAscNullsFirst = 'cancelledBy_frozen_ASC_NULLS_FIRST',
+  CancelledByFrozenAscNullsLast = 'cancelledBy_frozen_ASC_NULLS_LAST',
+  CancelledByFrozenDesc = 'cancelledBy_frozen_DESC',
+  CancelledByFrozenDescNullsFirst = 'cancelledBy_frozen_DESC_NULLS_FIRST',
+  CancelledByFrozenDescNullsLast = 'cancelledBy_frozen_DESC_NULLS_LAST',
+  CancelledByIdAsc = 'cancelledBy_id_ASC',
+  CancelledByIdAscNullsFirst = 'cancelledBy_id_ASC_NULLS_FIRST',
+  CancelledByIdAscNullsLast = 'cancelledBy_id_ASC_NULLS_LAST',
+  CancelledByIdDesc = 'cancelledBy_id_DESC',
+  CancelledByIdDescNullsFirst = 'cancelledBy_id_DESC_NULLS_FIRST',
+  CancelledByIdDescNullsLast = 'cancelledBy_id_DESC_NULLS_LAST',
+  CancelledByLastUpdatedAsc = 'cancelledBy_lastUpdated_ASC',
+  CancelledByLastUpdatedAscNullsFirst = 'cancelledBy_lastUpdated_ASC_NULLS_FIRST',
+  CancelledByLastUpdatedAscNullsLast = 'cancelledBy_lastUpdated_ASC_NULLS_LAST',
+  CancelledByLastUpdatedDesc = 'cancelledBy_lastUpdated_DESC',
+  CancelledByLastUpdatedDescNullsFirst = 'cancelledBy_lastUpdated_DESC_NULLS_FIRST',
+  CancelledByLastUpdatedDescNullsLast = 'cancelledBy_lastUpdated_DESC_NULLS_LAST',
+  CancelledByReservedAsc = 'cancelledBy_reserved_ASC',
+  CancelledByReservedAscNullsFirst = 'cancelledBy_reserved_ASC_NULLS_FIRST',
+  CancelledByReservedAscNullsLast = 'cancelledBy_reserved_ASC_NULLS_LAST',
+  CancelledByReservedDesc = 'cancelledBy_reserved_DESC',
+  CancelledByReservedDescNullsFirst = 'cancelledBy_reserved_DESC_NULLS_FIRST',
+  CancelledByReservedDescNullsLast = 'cancelledBy_reserved_DESC_NULLS_LAST',
   EventExtrinsicHashAsc = 'event_extrinsicHash_ASC',
   EventExtrinsicHashAscNullsFirst = 'event_extrinsicHash_ASC_NULLS_FIRST',
   EventExtrinsicHashAscNullsLast = 'event_extrinsicHash_ASC_NULLS_LAST',
@@ -1508,6 +2147,8 @@ export type ReversibleTransferWhereInput = {
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   block?: InputMaybe<BlockWhereInput>;
   block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  cancelledBy?: InputMaybe<AccountWhereInput>;
+  cancelledBy_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   event?: InputMaybe<EventWhereInput>;
   event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   executedTransfer?: InputMaybe<TransferWhereInput>;
@@ -2139,6 +2780,22 @@ export type GetStatusQuery = {
   minedBlocks24Hours: { __typename?: 'BlocksConnection'; totalCount: number };
   allActiveAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
   allDepositAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
+};
+
+export type GetMinerLeaderboardQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GetMinerLeaderboardQuery = {
+  __typename?: 'Query';
+  leaderboardEntries: Array<{
+    __typename?: 'MinerStats';
+    id: string;
+    totalMinedBlocks: number;
+    totalRewards: any;
+  }>;
+  meta: { __typename?: 'MinerStatsConnection'; totalCount: number };
 };
 
 export type GetMinerRewardsQueryVariables = Exact<{
@@ -4147,6 +4804,99 @@ export const GetStatusDocument = {
     }
   ]
 } as unknown as DocumentNode<GetStatusQuery, GetStatusQueryVariables>;
+export const GetMinerLeaderboardDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMinerLeaderboard' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'leaderboardEntries' },
+            name: { kind: 'Name', value: 'minerStats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'totalMinedBlocks_DESC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'totalMinedBlocks' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalRewards' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'minerStatsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMinerLeaderboardQuery,
+  GetMinerLeaderboardQueryVariables
+>;
 export const GetMinerRewardsDocument = {
   kind: 'Document',
   definitions: [

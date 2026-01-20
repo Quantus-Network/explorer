@@ -80,3 +80,48 @@ export const formatOption = (option: string) => {
 
   return newSentence;
 };
+
+/**
+ * Formats milliseconds into a human-readable duration string
+ * @param milliseconds - The duration in milliseconds (can be a string or BigInt from GraphQL)
+ * @returns Human-readable duration string (e.g., "1d 2h 3m 4s", "5m 30s", "500ms")
+ */
+export const formatDuration = (
+  milliseconds: string | number | bigint
+): string => {
+  let ms: number;
+
+  // Convert to number if it's a string or BigInt
+  if (typeof milliseconds === 'string') {
+    ms = Number.parseInt(milliseconds, 10);
+  } else if (typeof milliseconds === 'bigint') {
+    ms = Number(milliseconds);
+  } else {
+    ms = milliseconds;
+  }
+
+  if (Number.isNaN(ms) || ms < 0) {
+    return '0ms';
+  }
+
+  const SECOND = 1000;
+  const MINUTE = SECOND * 60;
+  const HOUR = MINUTE * 60;
+  const DAY = HOUR * 24;
+
+  const days = Math.floor(ms / DAY);
+  const hours = Math.floor((ms % DAY) / HOUR);
+  const minutes = Math.floor((ms % HOUR) / MINUTE);
+  const seconds = Math.floor((ms % MINUTE) / SECOND);
+  const remainingMs = ms % SECOND;
+
+  const parts: string[] = [];
+
+  if (days > 0) parts.push(`${days}d`);
+  if (hours > 0) parts.push(`${hours}h`);
+  if (minutes > 0) parts.push(`${minutes}m`);
+  if (seconds > 0) parts.push(`${seconds}s`);
+  if (remainingMs > 0 && parts.length === 0) parts.push(`${remainingMs}ms`);
+
+  return parts.length > 0 ? parts.join(' ') : '0ms';
+};

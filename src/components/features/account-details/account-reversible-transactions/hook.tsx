@@ -1,6 +1,6 @@
 import type { QueryResult } from '@apollo/client';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS';
 import type { AccountResponse, AccountReversibleTransaction } from '@/schemas';
@@ -14,8 +14,13 @@ export const useAccountReversibleTransactions = (
     []
   );
 
+  const tableData = useMemo(
+    () => data?.reversibleTransactions?.edges ?? [],
+    [data?.reversibleTransactions?.edges]
+  );
+
   const table = useReactTable<AccountReversibleTransaction>({
-    data: data?.reversibleTransactions?.edges ?? [],
+    data: tableData,
     columns: transactionColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false
@@ -24,7 +29,7 @@ export const useAccountReversibleTransactions = (
   const success = !loading && !fetchError;
   const error = !loading && fetchError;
 
-  const getStatus = () => {
+  const getStatus = useCallback(() => {
     switch (true) {
       case success:
         return 'success';
@@ -35,7 +40,7 @@ export const useAccountReversibleTransactions = (
       default:
         return 'idle';
     }
-  };
+  }, [success, error, loading]);
 
   return {
     table,

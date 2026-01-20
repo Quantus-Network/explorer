@@ -134,6 +134,42 @@ export const accounts = {
 
           totalCount
         }
+        guardian: highSecuritySetsConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: { who: { id_eq: $id } }
+        ) {
+          edges {
+            node {
+              interceptor {
+                id
+                free
+                frozen
+                reserved
+              }
+            }
+          }
+
+          totalCount
+        }
+        beneficiaries: highSecuritySetsConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: { interceptor: { id_eq: $id } }
+        ) {
+          edges {
+            node {
+              who {
+                id
+                free
+                frozen
+                reserved
+              }
+            }
+          }
+
+          totalCount
+        }
       }
     `;
 

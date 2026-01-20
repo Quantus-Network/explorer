@@ -3,5 +3,6 @@ export const RESOURCES = {
   reversibleTransactions: '/reversible-transactions',
   accounts: '/accounts',
   blocks: '/blocks',
-  minerRewards: '/miner-rewards'
+  minerRewards: '/miner-rewards',
+  highSecuritySets: '/high-security-sets'
 } as const;

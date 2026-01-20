@@ -1,4 +1,5 @@
 import type { QueryResult } from '@apollo/client';
+import { Check, X } from 'lucide-react';
 import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
@@ -26,6 +27,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   );
   const transactions = data?.transactions.totalCount;
   const reversibleTransactions = data?.reversibleTransactions.totalCount;
+  const miningRewards = data?.minerRewards.totalCount;
+  const beneficiaries = data?.beneficiaries.totalCount;
+  const guardians = data?.guardian.totalCount;
 
   const information = [
     {
@@ -35,7 +39,10 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       reserved: account?.reserved ?? 0,
       transactions,
       reversibleTransactions,
-      checksum
+      miningRewards,
+      checksum,
+      isHighSecurity: guardians && guardians > 0,
+      isGuardian: beneficiaries && beneficiaries > 0
     }
   ];
 
@@ -60,6 +67,21 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             ) : (
               <TextWithCopy text={value} />
             )
+        },
+        {
+          label: 'Is High Security',
+          key: 'isHighSecurity',
+          tooltip:
+            'Whether the account is a beneficiary of a high security set',
+          render: (value) =>
+            value ? <Check className="size-4" /> : <X className="size-4" />
+        },
+        {
+          label: 'Is Guardian',
+          key: 'isGuardian',
+          tooltip: 'Whether the account is a guardian of a high security set',
+          render: (value) =>
+            value ? <Check className="size-4" /> : <X className="size-4" />
         },
         {
           label: 'Free Balance',
@@ -91,6 +113,12 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           key: 'reversibleTransactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Mining Rewards',
+          key: 'miningRewards',
+          render: (value) =>
+            value > 1 ? `${value} rewards` : `${value} reward`
         }
       ]}
     />

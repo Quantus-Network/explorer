@@ -3,6 +3,7 @@ import { useFetchClient } from '@/hooks/useFetchClient';
 import { accounts } from './accounts';
 import { blocks } from './blocks';
 import { chainStatus } from './chain-status';
+import { highSecuritySets } from './high-security-sets';
 import { minerLeaderboard } from './miner-leaderboard';
 import { minerRewards } from './miner-rewards';
 import { reversibleTransactions } from './reversible-transactions';
@@ -20,7 +21,8 @@ const useApiClient = () => {
     search: search(fetcher),
     blocks,
     minerRewards,
-    minerLeaderboard
+    minerLeaderboard,
+    highSecuritySets
   };
 
   return api;

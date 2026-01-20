@@ -104,7 +104,8 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       transactions,
       blocks,
       reversibleTransactions,
-      minerRewards
+      minerRewards,
+      highSecuritySets
     } = searchResult || {};
 
     if (
@@ -113,7 +114,8 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       !blocks &&
       !minerRewards &&
       !accounts &&
-      !reversibleTransactions
+      !reversibleTransactions &&
+      !highSecuritySets
     ) {
       return null;
     }
@@ -201,6 +203,21 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
                 <PreviewLink
                   href={`${RESOURCES.minerRewards}/${minerReward.block.hash}`}
                   label={`${minerReward.block.hash}`}
+                />
+              )}
+            />
+
+            {/* High Security Sets */}
+            <Section
+              title="High Security Sets"
+              loading={isLoading}
+              error={error}
+              emptyMsg="No high security sets found."
+              items={highSecuritySets}
+              renderItem={(highSecuritySet) => (
+                <PreviewLink
+                  href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsicHash}`}
+                  label={`${highSecuritySet.extrinsicHash}`}
                 />
               )}
             />

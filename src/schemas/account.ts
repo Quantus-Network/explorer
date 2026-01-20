@@ -23,6 +23,16 @@ export interface AccountResponse {
     /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
+  beneficiaries: {
+    edges: AccountBeneficiary[];
+    /** @description the grand total of the beneficiary high security sets regardless of the return node limit using `first` parameter */
+    totalCount: number;
+  };
+  guardian: {
+    edges: AccountGuardian[];
+    /** @description the grand total of the guardian high security sets regardless of the return node limit using `first` parameter */
+    totalCount: number;
+  };
 }
 
 export interface AccountListResponse {
@@ -42,6 +52,18 @@ export interface AccountMinerRewards {
 
 export interface AccountReversibleTransaction {
   node: ReversibleTransaction;
+}
+
+export interface AccountBeneficiary {
+  node: {
+    who: Account;
+  };
+}
+
+export interface AccountGuardian {
+  node: {
+    interceptor: Account;
+  };
 }
 
 export interface AccountStatsResponse {

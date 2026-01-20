@@ -2,21 +2,23 @@ import type { QueryResult } from '@apollo/client';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 
-import { ACCOUNT_TRANSACTION_COLUMNS } from '@/components/common/table-columns/ACCOUNT_TRANSACTION_COLUMNS';
-import type { AccountResponse, AccountTransaction } from '@/schemas';
+import { ACCOUNT_BENEFICIARIES_COLUMNS } from '@/components/common/table-columns/ACCOUNT_BENEFICIARIES_COLUMNS';
+import type { AccountBeneficiary, AccountResponse } from '@/schemas';
 
-export const useAccountTransactions = (query: QueryResult<AccountResponse>) => {
+export const useAccountBeneficiaries = (
+  query: QueryResult<AccountResponse>
+) => {
   const { data, error: fetchError, loading } = query;
-  const transactionColumns = useMemo(() => ACCOUNT_TRANSACTION_COLUMNS, []);
+  const beneficiariesColumns = useMemo(() => ACCOUNT_BENEFICIARIES_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.transactions?.edges ?? [],
-    [data?.transactions?.edges]
+    () => data?.beneficiaries?.edges ?? [],
+    [data?.beneficiaries?.edges]
   );
 
-  const table = useReactTable<AccountTransaction>({
+  const table = useReactTable<AccountBeneficiary>({
     data: tableData,
-    columns: transactionColumns,
+    columns: beneficiariesColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false
   });

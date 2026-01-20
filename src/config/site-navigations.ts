@@ -43,8 +43,18 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
   },
   {
     label: 'Accounts',
-    path: '/accounts',
-    longLabel: 'Accounts'
+    children: [
+      {
+        label: 'Accounts',
+        path: '/accounts',
+        longLabel: 'Accounts'
+      },
+      {
+        label: 'High Security Sets',
+        path: '/high-security-sets',
+        longLabel: 'High Security Sets'
+      }
+    ]
   },
   {
     label: 'Blocks',
