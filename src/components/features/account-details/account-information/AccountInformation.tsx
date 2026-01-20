@@ -27,6 +27,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   );
   const transactions = data?.transactions.totalCount;
   const reversibleTransactions = data?.reversibleTransactions.totalCount;
+  const miningRewards = data?.minerRewards.totalCount;
   const beneficiaryHighSecuritySets =
     data?.beneficiaryHighSecuritySets.totalCount;
   const guardianHighSecuritySets = data?.guardianHighSecuritySets.totalCount;
@@ -39,6 +40,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       reserved: account?.reserved ?? 0,
       transactions,
       reversibleTransactions,
+      miningRewards,
       checksum,
       isHighSecurity:
         beneficiaryHighSecuritySets && beneficiaryHighSecuritySets > 0,
@@ -113,6 +115,12 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           key: 'reversibleTransactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Mining Rewards',
+          key: 'miningRewards',
+          render: (value) =>
+            value > 1 ? `${value} rewards` : `${value} reward`
         }
       ]}
     />
