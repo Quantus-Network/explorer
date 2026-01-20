@@ -28,9 +28,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const transactions = data?.transactions.totalCount;
   const reversibleTransactions = data?.reversibleTransactions.totalCount;
   const miningRewards = data?.minerRewards.totalCount;
-  const beneficiaryHighSecuritySets =
-    data?.beneficiaryHighSecuritySets.totalCount;
-  const guardianHighSecuritySets = data?.guardianHighSecuritySets.totalCount;
+  const beneficiaries = data?.beneficiaries.totalCount;
+  const guardians = data?.guardian.totalCount;
 
   const information = [
     {
@@ -42,9 +41,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       reversibleTransactions,
       miningRewards,
       checksum,
-      isHighSecurity:
-        beneficiaryHighSecuritySets && beneficiaryHighSecuritySets > 0,
-      isGuardian: guardianHighSecuritySets && guardianHighSecuritySets > 0
+      isHighSecurity: guardians && guardians > 0,
+      isGuardian: beneficiaries && beneficiaries > 0
     }
   ];
 

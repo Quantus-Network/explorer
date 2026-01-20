@@ -134,48 +134,36 @@ export const accounts = {
 
           totalCount
         }
-        beneficiaryHighSecuritySets: highSecuritySetsConnection(
+        guardian: highSecuritySetsConnection(
           orderBy: timestamp_DESC
           first: $limit
           where: { who: { id_eq: $id } }
         ) {
           edges {
             node {
-              extrinsicHash
-              who {
-                id
-              }
               interceptor {
                 id
-              }
-              timestamp
-              delay
-              block {
-                height
+                free
+                frozen
+                reserved
               }
             }
           }
 
           totalCount
         }
-        guardianHighSecuritySets: highSecuritySetsConnection(
+        beneficiaries: highSecuritySetsConnection(
           orderBy: timestamp_DESC
           first: $limit
           where: { interceptor: { id_eq: $id } }
         ) {
           edges {
             node {
-              extrinsicHash
               who {
                 id
-              }
-              interceptor {
-                id
-              }
-              timestamp
-              delay
-              block {
-                height
+                free
+                frozen
+                reserved
               }
             }
           }

@@ -1,5 +1,4 @@
 import type * as gql from '../__generated__/graphql';
-import type { HighSecuritySet } from './high-security-set';
 import type { MinerReward } from './miner-reward';
 import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
@@ -24,13 +23,13 @@ export interface AccountResponse {
     /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
-  beneficiaryHighSecuritySets: {
-    edges: AccountHighSecuritySet[];
+  beneficiaries: {
+    edges: AccountBeneficiary[];
     /** @description the grand total of the beneficiary high security sets regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
-  guardianHighSecuritySets: {
-    edges: AccountHighSecuritySet[];
+  guardian: {
+    edges: AccountGuardian[];
     /** @description the grand total of the guardian high security sets regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
@@ -55,8 +54,16 @@ export interface AccountReversibleTransaction {
   node: ReversibleTransaction;
 }
 
-export interface AccountHighSecuritySet {
-  node: HighSecuritySet;
+export interface AccountBeneficiary {
+  node: {
+    who: Account;
+  };
+}
+
+export interface AccountGuardian {
+  node: {
+    interceptor: Account;
+  };
 }
 
 export interface AccountStatsResponse {
