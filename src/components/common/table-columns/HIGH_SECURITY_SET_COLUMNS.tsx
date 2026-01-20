@@ -67,7 +67,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
   }),
   columnHelper.accessor('delay', {
     id: 'delay',
-    header: 'Delay',
+    header: 'Reversible Time',
     cell: (props) => formatDuration(props.getValue()),
     enableSorting: true
   })

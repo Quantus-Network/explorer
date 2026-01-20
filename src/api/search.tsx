@@ -34,6 +34,12 @@ export const search = (fetcher: DataFetcher) => ({
         ) {
           height
         }
+        highSecuritySets(
+          limit: $limit
+          where: { extrinsicHash_startsWith: $keyword }
+        ) {
+          extrinsicHash
+        }
         minerRewards(
           limit: $limit
           where: { block: { hash_startsWith: $keyword } }

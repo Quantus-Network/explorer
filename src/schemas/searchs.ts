@@ -1,5 +1,6 @@
 import type { Account } from './account';
 import type { Block } from './blocks';
+import type { HighSecuritySet } from './high-security-set';
 import type { MinerReward } from './miner-reward';
 import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
@@ -9,5 +10,6 @@ export interface SearchAllResponse {
   reversibleTransactions: Pick<ReversibleTransaction, 'extrinsicHash'>[];
   accounts: Pick<Account, 'id'>[];
   blocks: Pick<Block, 'height'>[];
+  highSecuritySets: Pick<HighSecuritySet, 'extrinsicHash'>[];
   minerRewards: Pick<MinerReward, 'block'>[];
 }

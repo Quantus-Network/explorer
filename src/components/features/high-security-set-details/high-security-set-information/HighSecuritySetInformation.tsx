@@ -97,7 +97,8 @@ export const HighSecuritySetInformation: React.FC<
         },
         {
           label: 'Reversible Time',
-          tooltip: 'The time period to confirm the reversible transaction',
+          tooltip:
+            'The enforced time period to confirm the reversible transaction',
           key: 'delay',
           render: (value) => formatDuration(value as string | number | bigint)
         }
