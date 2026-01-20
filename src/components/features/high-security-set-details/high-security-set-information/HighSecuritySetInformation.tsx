@@ -68,7 +68,8 @@ export const HighSecuritySetInformation: React.FC<
           render: (value) => formatTimestamp(value, true)
         },
         {
-          label: 'Who',
+          label: 'Beneficiary',
+          tooltip: 'The account that set the high security feature',
           key: 'who',
           render: (value) => (
             <LinkWithCopy
@@ -81,7 +82,8 @@ export const HighSecuritySetInformation: React.FC<
           )
         },
         {
-          label: 'Interceptor',
+          label: 'Guardian',
+          tooltip: 'The entrustee who can intercept the reversible transaction',
           key: 'interceptor',
           render: (value) => (
             <LinkWithCopy
@@ -94,7 +96,8 @@ export const HighSecuritySetInformation: React.FC<
           )
         },
         {
-          label: 'Delay',
+          label: 'Reversible Time',
+          tooltip: 'The time period to confirm the reversible transaction',
           key: 'delay',
           render: (value) => formatDuration(value as string | number | bigint)
         }

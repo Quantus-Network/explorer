@@ -15,7 +15,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
-          href={`${RESOURCES.transactions}/${props.getValue()}`}
+          href={`${RESOURCES.highSecuritySets}/${props.getValue()}`}
           text={formatTxAddress(props.getValue() ?? '-')}
           textCopy={props.getValue() ?? ''}
         />
@@ -43,7 +43,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
   }),
   columnHelper.accessor('who.id', {
     id: 'who',
-    header: 'Who',
+    header: 'Beneficiary',
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.accounts}/${props.getValue()}`}
@@ -55,7 +55,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
   }),
   columnHelper.accessor('interceptor.id', {
     id: 'interceptor',
-    header: 'Interceptor',
+    header: 'Guardian',
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.accounts}/${props.getValue()}`}
