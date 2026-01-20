@@ -1,4 +1,5 @@
 import type { QueryResult } from '@apollo/client';
+import { Check, X } from 'lucide-react';
 import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
@@ -26,6 +27,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   );
   const transactions = data?.transactions.totalCount;
   const reversibleTransactions = data?.reversibleTransactions.totalCount;
+  const beneficiaryHighSecuritySets =
+    data?.beneficiaryHighSecuritySets.totalCount;
+  const guardianHighSecuritySets = data?.guardianHighSecuritySets.totalCount;
 
   const information = [
     {
@@ -35,7 +39,10 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       reserved: account?.reserved ?? 0,
       transactions,
       reversibleTransactions,
-      checksum
+      checksum,
+      isHighSecurity:
+        beneficiaryHighSecuritySets && beneficiaryHighSecuritySets > 0,
+      isGuardian: guardianHighSecuritySets && guardianHighSecuritySets > 0
     }
   ];
 
@@ -60,6 +67,21 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             ) : (
               <TextWithCopy text={value} />
             )
+        },
+        {
+          label: 'Is High Security',
+          key: 'isHighSecurity',
+          tooltip:
+            'Whether the account is a beneficiary of a high security set',
+          render: (value) =>
+            value ? <Check className="size-4" /> : <X className="size-4" />
+        },
+        {
+          label: 'Is Guardian',
+          key: 'isGuardian',
+          tooltip: 'Whether the account is a guardian of a high security set',
+          render: (value) =>
+            value ? <Check className="size-4" /> : <X className="size-4" />
         },
         {
           label: 'Free Balance',
