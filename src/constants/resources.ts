@@ -4,5 +4,6 @@ export const RESOURCES = {
   accounts: '/accounts',
   blocks: '/blocks',
   minerRewards: '/miner-rewards',
-  highSecuritySets: '/high-security-sets'
+  highSecuritySets: '/high-security-sets',
+  errors: '/errors'
 } as const;
