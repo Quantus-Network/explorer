@@ -60,5 +60,10 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
     label: 'Blocks',
     path: '/blocks',
     longLabel: 'Blocks'
+  },
+  {
+    label: 'Errors',
+    path: '/errors',
+    longLabel: 'Error Events'
   }
 ] as const;
