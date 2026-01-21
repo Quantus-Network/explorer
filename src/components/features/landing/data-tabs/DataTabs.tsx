@@ -14,6 +14,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatOption } from '@/utils/formatter';
 
 import { RecentBlocks } from '../recent-blocks/RecentBlocks';
+import { RecentErrorEvents } from '../recent-error-events/RecentErrorEvents';
 import { RecentHighSecuritySets } from '../recent-high-security-sets/RecentHighSecuritySets';
 import { RecentMinerRewards } from '../recent-miner-rewards/RecentMinerRewards';
 import { RecentReversibleTransactions } from '../recent-reversible-transactions/RecentReversibleTransactions';
@@ -26,7 +27,8 @@ const TAB_OPTIONS = {
   reversible: 'reversible-transactions',
   blocks: 'blocks',
   miners: 'miner-rewards',
-  highSecuritySets: 'high-security-sets'
+  highSecuritySets: 'high-security-sets',
+  errors: 'errors'
 } as const;
 const TAB_LIST = Object.values(TAB_OPTIONS);
 
@@ -38,7 +40,7 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
       <ContentContainer>
         <Tabs value={selectedTab} className="gap-5">
           <Select value={selectedTab} onValueChange={setSelectedTab}>
-            <SelectTrigger className="max-w-56 sm:hidden">
+            <SelectTrigger className="max-w-56 md:hidden">
               <SelectValue />
             </SelectTrigger>
 
@@ -51,7 +53,7 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
             </SelectContent>
           </Select>
 
-          <TabsList className="hidden sm:inline-flex">
+          <TabsList className="hidden md:inline-flex">
             {TAB_LIST.map((val) => (
               <TabsTrigger
                 key={val}
@@ -77,6 +79,9 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
           </TabsContent>
           <TabsContent value={TAB_OPTIONS.highSecuritySets}>
             <RecentHighSecuritySets />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.errors}>
+            <RecentErrorEvents />
           </TabsContent>
         </Tabs>
       </ContentContainer>
