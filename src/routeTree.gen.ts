@@ -15,12 +15,14 @@ import { Route as MinerRewardsIndexRouteImport } from './routes/miner-rewards/in
 import { Route as MinerLeaderboardIndexRouteImport } from './routes/miner-leaderboard/index'
 import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index'
 import { Route as HighSecuritySetsIndexRouteImport } from './routes/high-security-sets/index'
+import { Route as ErrorsIndexRouteImport } from './routes/errors/index'
 import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
 import { Route as ReversibleTransactionsHashRouteImport } from './routes/reversible-transactions/$hash'
 import { Route as MinerRewardsHashRouteImport } from './routes/miner-rewards/$hash'
 import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash'
 import { Route as HighSecuritySetsHashRouteImport } from './routes/high-security-sets/$hash'
+import { Route as ErrorsIdRouteImport } from './routes/errors/$id'
 import { Route as BlocksIdRouteImport } from './routes/blocks/$id'
 import { Route as AccountsIdRouteImport } from './routes/accounts/$id'
 
@@ -56,6 +58,11 @@ const HighSecuritySetsIndexRoute = HighSecuritySetsIndexRouteImport.update({
   path: '/high-security-sets/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ErrorsIndexRoute = ErrorsIndexRouteImport.update({
+  id: '/errors/',
+  path: '/errors/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlocksIndexRoute = BlocksIndexRouteImport.update({
   id: '/blocks/',
   path: '/blocks/',
@@ -88,6 +95,11 @@ const HighSecuritySetsHashRoute = HighSecuritySetsHashRouteImport.update({
   path: '/high-security-sets/$hash',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ErrorsIdRoute = ErrorsIdRouteImport.update({
+  id: '/errors/$id',
+  path: '/errors/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlocksIdRoute = BlocksIdRouteImport.update({
   id: '/blocks/$id',
   path: '/blocks/$id',
@@ -103,12 +115,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
+  '/errors/$id': typeof ErrorsIdRoute
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
+  '/errors': typeof ErrorsIndexRoute
   '/high-security-sets': typeof HighSecuritySetsIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
@@ -119,12 +133,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
+  '/errors/$id': typeof ErrorsIdRoute
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
+  '/errors': typeof ErrorsIndexRoute
   '/high-security-sets': typeof HighSecuritySetsIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
@@ -136,12 +152,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
+  '/errors/$id': typeof ErrorsIdRoute
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
   '/accounts/': typeof AccountsIndexRoute
   '/blocks/': typeof BlocksIndexRoute
+  '/errors/': typeof ErrorsIndexRoute
   '/high-security-sets/': typeof HighSecuritySetsIndexRoute
   '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard/': typeof MinerLeaderboardIndexRoute
@@ -154,12 +172,14 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts/$id'
     | '/blocks/$id'
+    | '/errors/$id'
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
     | '/accounts'
     | '/blocks'
+    | '/errors'
     | '/high-security-sets'
     | '/immediate-transactions'
     | '/miner-leaderboard'
@@ -170,12 +190,14 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts/$id'
     | '/blocks/$id'
+    | '/errors/$id'
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
     | '/accounts'
     | '/blocks'
+    | '/errors'
     | '/high-security-sets'
     | '/immediate-transactions'
     | '/miner-leaderboard'
@@ -186,12 +208,14 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts/$id'
     | '/blocks/$id'
+    | '/errors/$id'
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
     | '/accounts/'
     | '/blocks/'
+    | '/errors/'
     | '/high-security-sets/'
     | '/immediate-transactions/'
     | '/miner-leaderboard/'
@@ -203,12 +227,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountsIdRoute: typeof AccountsIdRoute
   BlocksIdRoute: typeof BlocksIdRoute
+  ErrorsIdRoute: typeof ErrorsIdRoute
   HighSecuritySetsHashRoute: typeof HighSecuritySetsHashRoute
   ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute
   MinerRewardsHashRoute: typeof MinerRewardsHashRoute
   ReversibleTransactionsHashRoute: typeof ReversibleTransactionsHashRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
   BlocksIndexRoute: typeof BlocksIndexRoute
+  ErrorsIndexRoute: typeof ErrorsIndexRoute
   HighSecuritySetsIndexRoute: typeof HighSecuritySetsIndexRoute
   ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute
   MinerLeaderboardIndexRoute: typeof MinerLeaderboardIndexRoute
@@ -260,6 +286,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HighSecuritySetsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/errors/': {
+      id: '/errors/'
+      path: '/errors'
+      fullPath: '/errors'
+      preLoaderRoute: typeof ErrorsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blocks/': {
       id: '/blocks/'
       path: '/blocks'
@@ -302,6 +335,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HighSecuritySetsHashRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/errors/$id': {
+      id: '/errors/$id'
+      path: '/errors/$id'
+      fullPath: '/errors/$id'
+      preLoaderRoute: typeof ErrorsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blocks/$id': {
       id: '/blocks/$id'
       path: '/blocks/$id'
@@ -323,12 +363,14 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountsIdRoute: AccountsIdRoute,
   BlocksIdRoute: BlocksIdRoute,
+  ErrorsIdRoute: ErrorsIdRoute,
   HighSecuritySetsHashRoute: HighSecuritySetsHashRoute,
   ImmediateTransactionsHashRoute: ImmediateTransactionsHashRoute,
   MinerRewardsHashRoute: MinerRewardsHashRoute,
   ReversibleTransactionsHashRoute: ReversibleTransactionsHashRoute,
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,
+  ErrorsIndexRoute: ErrorsIndexRoute,
   HighSecuritySetsIndexRoute: HighSecuritySetsIndexRoute,
   ImmediateTransactionsIndexRoute: ImmediateTransactionsIndexRoute,
   MinerLeaderboardIndexRoute: MinerLeaderboardIndexRoute,

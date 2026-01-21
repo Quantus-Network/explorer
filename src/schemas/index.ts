@@ -1,6 +1,7 @@
 export * from './account';
 export * from './blocks';
 export * from './chain-status';
+export * from './errors';
 export * from './high-security-set';
 export * from './miner-leaderboard';
 export * from './miner-reward';

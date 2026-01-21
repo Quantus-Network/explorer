@@ -40,7 +40,7 @@ export const Hero = (props: HeroProps) => {
             ref={inputRef}
             onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
-            placeholder="Search transaction hash, account id, block number/hash, or miner rewards hash"
+            placeholder="Search by hash, id, or height"
             onKeywordChange={handleKeywordChange}
           />
 
