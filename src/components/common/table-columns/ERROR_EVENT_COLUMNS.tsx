@@ -15,7 +15,7 @@ export const ERROR_EVENT_COLUMNS = [
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
-          href={`${RESOURCES.transactions}/${props.getValue()}`}
+          href={`${RESOURCES.errors}/${props.getValue()}`}
           text={formatTxAddress(props.getValue() ?? '-')}
           textCopy={props.getValue() ?? ''}
         />

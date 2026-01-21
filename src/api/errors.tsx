@@ -135,10 +135,10 @@ export const errors = {
       }
     });
   },
-  getById: () => {
-    const GET_ERROR_EVENT_BY_ID = gql`
-      query GetErrorEventById($id: String!) {
-        errorEvent: errorEventById(id: $id) {
+  getByHash: () => {
+    const GET_ERROR_EVENT_BY_HASH = gql`
+      query GetErrorEventByHash($hash: String!) {
+        errorEvents: errorEvents(where: { extrinsicHash_eq: $hash }) {
           errorDocs
           errorModule
           errorName
@@ -154,10 +154,10 @@ export const errors = {
     `;
 
     return {
-      useQuery: (id: string, config?: QueryHookOptions<ErrorEventResponse>) =>
-        useQuery<ErrorEventResponse>(GET_ERROR_EVENT_BY_ID, {
+      useQuery: (hash: string, config?: QueryHookOptions<ErrorEventResponse>) =>
+        useQuery<ErrorEventResponse>(GET_ERROR_EVENT_BY_HASH, {
           ...config,
-          variables: { id }
+          variables: { hash }
         })
     };
   }

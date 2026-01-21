@@ -17,15 +17,14 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
   id
 }) => {
   const api = useApiClient();
-  const { data, loading } = api.errors.getById().useQuery(id);
+  const { data, loading } = api.errors.getByHash().useQuery(id);
 
-  if (!loading && (!data || !data.errorEvent)) throw notFound();
+  if (!loading && (!data || data.errorEvents.length <= 0)) throw notFound();
 
-  const event = data?.errorEvent ?? undefined;
+  const event = data?.errorEvents[0];
 
   const information: Partial<ErrorEvent>[] = [
     {
-      id: event?.id,
       timestamp: event?.timestamp,
       block: event?.block,
       extrinsicHash: event?.extrinsicHash,
@@ -42,11 +41,18 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
       data={information}
       fields={[
         {
-          label: 'Error Event ID',
-          key: 'id',
-          render: (value) => (
-            <TextWithCopy text={value as string} className="break-all" />
-          )
+          label: 'Extrinsic Hash',
+          key: 'extrinsicHash',
+          render: (value) =>
+            value ? (
+              <LinkWithCopy
+                text={value as string}
+                href={`${RESOURCES.transactions}/${value as string}`}
+                className="break-all"
+              />
+            ) : (
+              'Is not available'
+            )
         },
         {
           label: 'Timestamp',
@@ -63,20 +69,6 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
               className="break-all"
             />
           )
-        },
-        {
-          label: 'Extrinsic Hash',
-          key: 'extrinsicHash',
-          render: (value) =>
-            value ? (
-              <LinkWithCopy
-                text={value as string}
-                href={`${RESOURCES.transactions}/${value as string}`}
-                className="break-all"
-              />
-            ) : (
-              'Is not available'
-            )
         },
         {
           label: 'Error Type',

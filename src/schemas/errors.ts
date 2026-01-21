@@ -5,7 +5,7 @@ export interface ErrorEvent extends Omit<gql.ErrorEvent, 'block' | 'event'> {
 }
 
 export interface ErrorEventResponse {
-  errorEvent?: ErrorEvent | null;
+  errorEvents: [ErrorEvent];
 }
 
 export interface ErrorEventListResponse {
