@@ -43,16 +43,9 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
         {
           label: 'Extrinsic Hash',
           key: 'extrinsicHash',
-          render: (value) =>
-            value ? (
-              <LinkWithCopy
-                text={value as string}
-                href={`${RESOURCES.transactions}/${value as string}`}
-                className="break-all"
-              />
-            ) : (
-              'Is not available'
-            )
+          render: (value) => (
+            <TextWithCopy text={value as string} className="break-all" />
+          )
         },
         {
           label: 'Timestamp',
