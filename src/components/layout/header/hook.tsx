@@ -22,6 +22,10 @@ export const useHeader = () => {
     setIsResultVisible(false)
   );
 
+  const handleClosePreview = () => {
+    setIsResultVisible(false);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {
       e.currentTarget.blur();
@@ -59,6 +63,7 @@ export const useHeader = () => {
     isResultVisible,
     resultRef,
     inputRef,
+    handleClosePreview,
     handleKeywordChange,
     handleKeyDown,
     handleInputFocus,

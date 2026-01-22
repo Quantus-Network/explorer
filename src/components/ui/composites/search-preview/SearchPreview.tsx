@@ -95,10 +95,11 @@ interface SearchPreviewProps
   searchResult?: SearchAllResponse;
   isLoading: boolean;
   error?: string;
+  handleClosePreview: () => void;
 }
 
 export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
-  ({ isLoading, error, searchResult, onKeyDown }, ref) => {
+  ({ isLoading, error, searchResult, onKeyDown, handleClosePreview }, ref) => {
     const {
       accounts,
       transactions,
@@ -132,6 +133,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.transactions}/${tx.extrinsicHash}`}
             label={`${tx.extrinsicHash}`}
+            onSelect={handleClosePreview}
           />
         )
       },
@@ -143,6 +145,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.reversibleTransactions}/${tx.extrinsicHash}`}
             label={`${tx.extrinsicHash}`}
+            onSelect={handleClosePreview}
           />
         )
       },
@@ -154,6 +157,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.accounts}/${acc.id}`}
             label={`${acc.id}`}
+            onSelect={handleClosePreview}
           />
         )
       },
@@ -165,6 +169,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.blocks}/${block.height}`}
             label={`${block.height}`}
+            onSelect={handleClosePreview}
           />
         )
       },
@@ -176,6 +181,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.minerRewards}/${minerReward.block.hash}`}
             label={`${minerReward.block.hash}`}
+            onSelect={handleClosePreview}
           />
         )
       },
@@ -187,6 +193,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsicHash}`}
             label={`${highSecuritySet.extrinsicHash}`}
+            onSelect={handleClosePreview}
           />
         )
       },
@@ -198,6 +205,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.errors}/${errorEvent.extrinsicHash}`}
             label={`${errorEvent.extrinsicHash}`}
+            onSelect={handleClosePreview}
           />
         )
       }
