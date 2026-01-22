@@ -16,6 +16,7 @@ export interface TopbarProps {
   ) => void;
   handleInputFocus: () => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  handleClosePreview: () => void;
   searchError?: string;
   searchLoading: boolean;
   searchResult?: SearchAllResponse;
@@ -28,6 +29,7 @@ export const Topbar: React.FC<TopbarProps> = ({
   handleKeywordChange,
   handleInputFocus,
   handleKeyDown,
+  handleClosePreview,
 
   searchError,
   searchLoading,
@@ -56,7 +58,7 @@ export const Topbar: React.FC<TopbarProps> = ({
               ref={inputRef}
               onFocus={handleInputFocus}
               onKeyDown={handleKeyDown}
-              placeholder="Search by hash, id, or height"
+              placeholder="Search by hash, id, block height, or error name/type"
               onKeywordChange={handleKeywordChange}
               inputClassName="h-8"
               buttonClassName="size-7"
@@ -69,6 +71,7 @@ export const Topbar: React.FC<TopbarProps> = ({
                 searchResult={searchResult}
                 isLoading={searchLoading}
                 error={searchError}
+                handleClosePreview={handleClosePreview}
               />
             )}
           </div>
