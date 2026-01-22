@@ -167,6 +167,57 @@ export const blocks = {
 
           totalCount
         }
+        highSecuritySets: highSecuritySetsConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          edges {
+            node {
+              extrinsicHash
+              timestamp
+              delay
+              block {
+                height
+              }
+              who {
+                id
+              }
+              interceptor {
+                id
+              }
+            }
+          }
+
+          totalCount
+        }
+        errorEvents: errorEventsConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          edges {
+            node {
+              errorDocs
+              errorModule
+              errorName
+              errorType
+              extrinsicHash
+              timestamp
+              block {
+                height
+              }
+            }
+          }
+
+          totalCount
+        }
       }
     `;
 

@@ -14,6 +14,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { BlockResponse } from '@/schemas';
 import { formatOption } from '@/utils/formatter';
 
+import { BlockErrorEvents } from '../block-error-events/BlockErrorEvents';
+import { BlockHighSecuritySets } from '../block-high-security-sets/BlockHighSecuritySets';
 import { BlockReversibleTransactions } from '../block-reversible-transactions/BlockReversibleTransactions';
 import { BlockTransactions } from '../block-transactions/BlockTransactions';
 
@@ -23,7 +25,9 @@ export interface BlockDataTabsProps {
 
 const TAB_OPTIONS = {
   immediate: 'immediate-transactions',
-  reversible: 'reversible-transactions'
+  reversible: 'reversible-transactions',
+  highSecuritySets: 'high-security-sets',
+  errorEvents: 'error-events'
 } as const;
 const TAB_LIST = Object.values(TAB_OPTIONS);
 
@@ -65,6 +69,12 @@ export const BlockDataTabs: React.FC<BlockDataTabsProps> = ({ query }) => {
           </TabsContent>
           <TabsContent value={TAB_OPTIONS.reversible}>
             <BlockReversibleTransactions query={query} />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.highSecuritySets}>
+            <BlockHighSecuritySets query={query} />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.errorEvents}>
+            <BlockErrorEvents query={query} />
           </TabsContent>
         </Tabs>
       </ContentContainer>
