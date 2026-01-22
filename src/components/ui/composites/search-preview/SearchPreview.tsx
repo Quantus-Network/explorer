@@ -105,7 +105,8 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       blocks,
       reversibleTransactions,
       minerRewards,
-      highSecuritySets
+      highSecuritySets,
+      errorEvents
     } = searchResult || {};
 
     if (
@@ -115,10 +116,111 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       !minerRewards &&
       !accounts &&
       !reversibleTransactions &&
-      !highSecuritySets
+      !highSecuritySets &&
+      !errorEvents
     ) {
       return null;
     }
+
+    // Define all sections with their configuration
+    const sections = [
+      {
+        title: 'Transactions',
+        emptyMsg: 'No transactions found.',
+        items: transactions,
+        renderItem: (tx: any) => (
+          <PreviewLink
+            href={`${RESOURCES.transactions}/${tx.extrinsicHash}`}
+            label={`${tx.extrinsicHash}`}
+          />
+        )
+      },
+      {
+        title: 'Reversible Transactions',
+        emptyMsg: 'No reversible transactions found.',
+        items: reversibleTransactions,
+        renderItem: (tx: any) => (
+          <PreviewLink
+            href={`${RESOURCES.reversibleTransactions}/${tx.extrinsicHash}`}
+            label={`${tx.extrinsicHash}`}
+          />
+        )
+      },
+      {
+        title: 'Accounts',
+        emptyMsg: 'No accounts found.',
+        items: accounts,
+        renderItem: (acc: any) => (
+          <PreviewLink
+            href={`${RESOURCES.accounts}/${acc.id}`}
+            label={`${acc.id}`}
+          />
+        )
+      },
+      {
+        title: 'Blocks',
+        emptyMsg: 'No blocks found.',
+        items: blocks,
+        renderItem: (block: any) => (
+          <PreviewLink
+            href={`${RESOURCES.blocks}/${block.height}`}
+            label={`${block.height}`}
+          />
+        )
+      },
+      {
+        title: 'Miner Rewards',
+        emptyMsg: 'No miner rewards found.',
+        items: minerRewards,
+        renderItem: (minerReward: any) => (
+          <PreviewLink
+            href={`${RESOURCES.minerRewards}/${minerReward.block.hash}`}
+            label={`${minerReward.block.hash}`}
+          />
+        )
+      },
+      {
+        title: 'High Security Sets',
+        emptyMsg: 'No high security sets found.',
+        items: highSecuritySets,
+        renderItem: (highSecuritySet: any) => (
+          <PreviewLink
+            href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsicHash}`}
+            label={`${highSecuritySet.extrinsicHash}`}
+          />
+        )
+      },
+      {
+        title: 'Error Events',
+        emptyMsg: 'No error events found.',
+        items: errorEvents,
+        renderItem: (errorEvent: any) => (
+          <PreviewLink
+            href={`${RESOURCES.errors}/${errorEvent.extrinsicHash}`}
+            label={`${errorEvent.extrinsicHash}`}
+          />
+        )
+      }
+    ];
+
+    // Sort sections: resources with results first, then resources with no results
+    const sortedSections = [...sections].sort((a, b) => {
+      const aHasResults = a.items && a.items.length > 0;
+      const bHasResults = b.items && b.items.length > 0;
+
+      // If both have results or both don't have results, maintain original order
+      if (aHasResults === bHasResults) {
+        return 0;
+      }
+
+      // If a has results and b doesn't, a comes first
+      if (aHasResults && !bHasResults) {
+        return -1;
+      }
+
+      // If b has results and a doesn't, b comes first
+      return 1;
+    });
 
     // Accessibility: aria attributes
     return (
@@ -132,95 +234,17 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       >
         <Card className="border-none shadow-none">
           <CardContent className="flex flex-col gap-2 p-2">
-            {/* Transactions */}
-            <Section
-              title="Transactions"
-              loading={isLoading}
-              error={error}
-              emptyMsg="No transactions found."
-              items={transactions}
-              renderItem={(tx) => (
-                <PreviewLink
-                  href={`${RESOURCES.transactions}/${tx.extrinsicHash}`}
-                  label={`${tx.extrinsicHash}`}
-                />
-              )}
-            />
-
-            {/* Reversible Transactions */}
-            <Section
-              title="Reversible Transactions"
-              loading={isLoading}
-              error={error}
-              emptyMsg="No reversible transactions found."
-              items={reversibleTransactions}
-              renderItem={(tx) => (
-                <PreviewLink
-                  href={`${RESOURCES.reversibleTransactions}/${tx.extrinsicHash}`}
-                  label={`${tx.extrinsicHash}`}
-                />
-              )}
-            />
-
-            {/* Accounts */}
-            <Section
-              title="Accounts"
-              loading={isLoading}
-              error={error}
-              emptyMsg="No accounts found."
-              items={accounts}
-              renderItem={(acc) => (
-                <PreviewLink
-                  href={`${RESOURCES.accounts}/${acc.id}`}
-                  label={`${acc.id}`}
-                />
-              )}
-            />
-
-            {/* Blocks */}
-            <Section
-              title="Blocks"
-              loading={isLoading}
-              error={error}
-              emptyMsg="No blocks found."
-              items={blocks}
-              renderItem={(block) => (
-                <PreviewLink
-                  href={`${RESOURCES.blocks}/${block.height}`}
-                  label={`${block.height}`}
-                />
-              )}
-            />
-
-            {/* Miner Rewards */}
-            <Section
-              title="Miner Rewards"
-              loading={isLoading}
-              error={error}
-              emptyMsg="No miner rewards found."
-              items={minerRewards}
-              renderItem={(minerReward) => (
-                <PreviewLink
-                  href={`${RESOURCES.minerRewards}/${minerReward.block.hash}`}
-                  label={`${minerReward.block.hash}`}
-                />
-              )}
-            />
-
-            {/* High Security Sets */}
-            <Section
-              title="High Security Sets"
-              loading={isLoading}
-              error={error}
-              emptyMsg="No high security sets found."
-              items={highSecuritySets}
-              renderItem={(highSecuritySet) => (
-                <PreviewLink
-                  href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsicHash}`}
-                  label={`${highSecuritySet.extrinsicHash}`}
-                />
-              )}
-            />
+            {sortedSections.map((section) => (
+              <Section
+                key={section.title}
+                title={section.title}
+                loading={isLoading}
+                error={error}
+                emptyMsg={section.emptyMsg}
+                items={section.items}
+                renderItem={section.renderItem}
+              />
+            ))}
           </CardContent>
         </Card>
       </div>

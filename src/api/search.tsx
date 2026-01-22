@@ -54,6 +54,15 @@ export const search = (fetcher: DataFetcher) => ({
           }
           timestamp
         }
+        errorEvents(
+          limit: $limit
+          where: {
+            errorType_containsInsensitive: $keyword
+            OR: { errorName_containsInsensitive: $keyword }
+          }
+        ) {
+          extrinsicHash
+        }
       }
     `;
 
