@@ -18,7 +18,8 @@ export const Hero = (props: HeroProps) => {
     inputRef,
     searchError,
     searchLoading,
-    searchResult
+    searchResult,
+    handleClosePreview
   } = useHero();
 
   return (
@@ -40,13 +41,14 @@ export const Hero = (props: HeroProps) => {
             ref={inputRef}
             onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
-            placeholder="Search by hash, id, or height"
+            placeholder="Search by hash, id, block height, or error name/type"
             onKeywordChange={handleKeywordChange}
           />
 
           {isResultVisible && (
             <SearchPreview
               ref={resultRef}
+              handleClosePreview={handleClosePreview}
               onKeyDown={handleKeyDown}
               searchResult={searchResult}
               isLoading={searchLoading}

@@ -7,6 +7,7 @@ import type { SearchAllResponse } from '@/schemas/searchs';
 
 export const useHero = () => {
   const api = useApiClient();
+
   const [searchResult, setSearchResult] = useState<SearchAllResponse>();
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string>();
@@ -17,6 +18,10 @@ export const useHero = () => {
   useOnClickOutside([resultRef, inputRef] as any, () =>
     setIsResultVisible(false)
   );
+
+  const handleClosePreview = () => {
+    setIsResultVisible(false);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') {
@@ -55,6 +60,7 @@ export const useHero = () => {
     isResultVisible,
     resultRef,
     inputRef,
+    handleClosePreview,
     handleKeywordChange,
     handleKeyDown,
     handleInputFocus,
