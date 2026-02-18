@@ -34,6 +34,7 @@ export const WormholeOutputInformation = ({
   const { data, loading } = api.wormhole.getById().useQuery(id);
 
   const extrinsic = data?.wormholeExtrinsicById;
+  const nullifiers = data?.wormholeNullifiers ?? [];
 
   if (!loading && !extrinsic) throw notFound();
 
@@ -204,6 +205,53 @@ export const WormholeOutputInformation = ({
             )
           )}
         </div>
+      )}
+
+      {nullifiers.length > 0 && (
+        <>
+          <h2 className="text-lg font-semibold">Nullifiers</h2>
+          <Card>
+            <CardContent className="p-4">
+              <p className="mb-3 text-sm text-muted-foreground">
+                {nullifiers.length} nullifier
+                {nullifiers.length !== 1 ? 's' : ''} consumed by this proof
+                verification. Each corresponds to a spent wormhole deposit.
+              </p>
+              <div className="space-y-2">
+                {nullifiers.map(
+                  (
+                    n: { nullifier: string; nullifierHash: string },
+                    idx: number
+                  ) => (
+                    <div key={idx} className="rounded border p-2">
+                      <dl className="grid grid-cols-1 gap-y-1">
+                        <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
+                          <dt className="text-sm font-medium text-muted-foreground">
+                            Nullifier {idx + 1}
+                          </dt>
+                          <dd>
+                            <TextWithCopy
+                              text={n.nullifier}
+                              className="break-all text-xs"
+                            />
+                          </dd>
+                        </div>
+                        <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
+                          <dt className="text-sm font-medium text-muted-foreground">
+                            Hash (blake3)
+                          </dt>
+                          <dd className="text-xs text-muted-foreground break-all">
+                            {n.nullifierHash}
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                  )
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </>
       )}
     </>
   );

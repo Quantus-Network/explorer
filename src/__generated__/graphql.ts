@@ -1801,6 +1801,26 @@ export type MinerStatsWhereInput = {
   totalRewards_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
+export type NullifierResult = {
+  __typename?: 'NullifierResult';
+  blockHeight: Scalars['Int']['output'];
+  extrinsicHash: Scalars['String']['output'];
+  nullifier: Scalars['String']['output'];
+  nullifierHash: Scalars['String']['output'];
+  timestamp: Scalars['DateTime']['output'];
+};
+
+export type NullifiersByPrefixInput = {
+  afterBlock?: InputMaybe<Scalars['Int']['input']>;
+  hashPrefixes: Array<Scalars['String']['input']>;
+};
+
+export type NullifiersByPrefixResponse = {
+  __typename?: 'NullifiersByPrefixResponse';
+  nullifiers: Array<NullifierResult>;
+  totalCount: Scalars['Int']['output'];
+};
+
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor: Scalars['String']['output'];
@@ -1838,6 +1858,7 @@ export type Query = {
   minerStats: Array<MinerStats>;
   minerStatsById?: Maybe<MinerStats>;
   minerStatsConnection: MinerStatsConnection;
+  nullifiersByPrefix: NullifiersByPrefixResponse;
   reversibleTransferById?: Maybe<ReversibleTransfer>;
   reversibleTransfers: Array<ReversibleTransfer>;
   reversibleTransfersConnection: ReversibleTransfersConnection;
@@ -1849,6 +1870,9 @@ export type Query = {
   wormholeExtrinsicById?: Maybe<WormholeExtrinsic>;
   wormholeExtrinsics: Array<WormholeExtrinsic>;
   wormholeExtrinsicsConnection: WormholeExtrinsicsConnection;
+  wormholeNullifierById?: Maybe<WormholeNullifier>;
+  wormholeNullifiers: Array<WormholeNullifier>;
+  wormholeNullifiersConnection: WormholeNullifiersConnection;
   wormholeOutputById?: Maybe<WormholeOutput>;
   wormholeOutputs: Array<WormholeOutput>;
   wormholeOutputsConnection: WormholeOutputsConnection;
@@ -2016,6 +2040,10 @@ export type QueryMinerStatsConnectionArgs = {
   where?: InputMaybe<MinerStatsWhereInput>;
 };
 
+export type QueryNullifiersByPrefixArgs = {
+  input: NullifiersByPrefixInput;
+};
+
 export type QueryReversibleTransferByIdArgs = {
   id: Scalars['String']['input'];
 };
@@ -2072,6 +2100,24 @@ export type QueryWormholeExtrinsicsConnectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy: Array<WormholeExtrinsicOrderByInput>;
   where?: InputMaybe<WormholeExtrinsicWhereInput>;
+};
+
+export type QueryWormholeNullifierByIdArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type QueryWormholeNullifiersArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WormholeNullifierOrderByInput>>;
+  where?: InputMaybe<WormholeNullifierWhereInput>;
+};
+
+export type QueryWormholeNullifiersConnectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<WormholeNullifierOrderByInput>;
+  where?: InputMaybe<WormholeNullifierWhereInput>;
 };
 
 export type QueryWormholeOutputByIdArgs = {
@@ -3203,6 +3249,228 @@ export type WormholeExtrinsicsConnection = {
   totalCount: Scalars['Int']['output'];
 };
 
+/** A nullifier consumed by a wormhole proof verification. */
+export type WormholeNullifier = {
+  __typename?: 'WormholeNullifier';
+  /** Block where the nullifier was consumed */
+  block: Block;
+  /** The wormhole extrinsic that consumed this nullifier */
+  extrinsic: WormholeExtrinsic;
+  id: Scalars['String']['output'];
+  /** The nullifier bytes as hex */
+  nullifier: Scalars['String']['output'];
+  /** Blake3 hash of the nullifier for prefix queries */
+  nullifierHash: Scalars['String']['output'];
+  timestamp: Scalars['DateTime']['output'];
+};
+
+export type WormholeNullifierEdge = {
+  __typename?: 'WormholeNullifierEdge';
+  cursor: Scalars['String']['output'];
+  node: WormholeNullifier;
+};
+
+export enum WormholeNullifierOrderByInput {
+  BlockHashAsc = 'block_hash_ASC',
+  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
+  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
+  BlockHashDesc = 'block_hash_DESC',
+  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
+  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
+  BlockHeightAsc = 'block_height_ASC',
+  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
+  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
+  BlockHeightDesc = 'block_height_DESC',
+  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
+  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
+  BlockIdAsc = 'block_id_ASC',
+  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
+  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
+  BlockIdDesc = 'block_id_DESC',
+  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
+  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
+  BlockRewardAsc = 'block_reward_ASC',
+  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
+  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
+  BlockRewardDesc = 'block_reward_DESC',
+  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
+  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
+  BlockTimestampAsc = 'block_timestamp_ASC',
+  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
+  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
+  BlockTimestampDesc = 'block_timestamp_DESC',
+  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
+  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
+  ExtrinsicExtrinsicHashAsc = 'extrinsic_extrinsicHash_ASC',
+  ExtrinsicExtrinsicHashAscNullsFirst = 'extrinsic_extrinsicHash_ASC_NULLS_FIRST',
+  ExtrinsicExtrinsicHashAscNullsLast = 'extrinsic_extrinsicHash_ASC_NULLS_LAST',
+  ExtrinsicExtrinsicHashDesc = 'extrinsic_extrinsicHash_DESC',
+  ExtrinsicExtrinsicHashDescNullsFirst = 'extrinsic_extrinsicHash_DESC_NULLS_FIRST',
+  ExtrinsicExtrinsicHashDescNullsLast = 'extrinsic_extrinsicHash_DESC_NULLS_LAST',
+  ExtrinsicIdAsc = 'extrinsic_id_ASC',
+  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
+  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
+  ExtrinsicIdDesc = 'extrinsic_id_DESC',
+  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
+  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
+  ExtrinsicOutputCountAsc = 'extrinsic_outputCount_ASC',
+  ExtrinsicOutputCountAscNullsFirst = 'extrinsic_outputCount_ASC_NULLS_FIRST',
+  ExtrinsicOutputCountAscNullsLast = 'extrinsic_outputCount_ASC_NULLS_LAST',
+  ExtrinsicOutputCountDesc = 'extrinsic_outputCount_DESC',
+  ExtrinsicOutputCountDescNullsFirst = 'extrinsic_outputCount_DESC_NULLS_FIRST',
+  ExtrinsicOutputCountDescNullsLast = 'extrinsic_outputCount_DESC_NULLS_LAST',
+  ExtrinsicPoolSnapshotAsc = 'extrinsic_poolSnapshot_ASC',
+  ExtrinsicPoolSnapshotAscNullsFirst = 'extrinsic_poolSnapshot_ASC_NULLS_FIRST',
+  ExtrinsicPoolSnapshotAscNullsLast = 'extrinsic_poolSnapshot_ASC_NULLS_LAST',
+  ExtrinsicPoolSnapshotDesc = 'extrinsic_poolSnapshot_DESC',
+  ExtrinsicPoolSnapshotDescNullsFirst = 'extrinsic_poolSnapshot_DESC_NULLS_FIRST',
+  ExtrinsicPoolSnapshotDescNullsLast = 'extrinsic_poolSnapshot_DESC_NULLS_LAST',
+  ExtrinsicPrivacyLabelAsc = 'extrinsic_privacyLabel_ASC',
+  ExtrinsicPrivacyLabelAscNullsFirst = 'extrinsic_privacyLabel_ASC_NULLS_FIRST',
+  ExtrinsicPrivacyLabelAscNullsLast = 'extrinsic_privacyLabel_ASC_NULLS_LAST',
+  ExtrinsicPrivacyLabelDesc = 'extrinsic_privacyLabel_DESC',
+  ExtrinsicPrivacyLabelDescNullsFirst = 'extrinsic_privacyLabel_DESC_NULLS_FIRST',
+  ExtrinsicPrivacyLabelDescNullsLast = 'extrinsic_privacyLabel_DESC_NULLS_LAST',
+  ExtrinsicPrivacyScore01PctAsc = 'extrinsic_privacyScore01Pct_ASC',
+  ExtrinsicPrivacyScore01PctAscNullsFirst = 'extrinsic_privacyScore01Pct_ASC_NULLS_FIRST',
+  ExtrinsicPrivacyScore01PctAscNullsLast = 'extrinsic_privacyScore01Pct_ASC_NULLS_LAST',
+  ExtrinsicPrivacyScore01PctDesc = 'extrinsic_privacyScore01Pct_DESC',
+  ExtrinsicPrivacyScore01PctDescNullsFirst = 'extrinsic_privacyScore01Pct_DESC_NULLS_FIRST',
+  ExtrinsicPrivacyScore01PctDescNullsLast = 'extrinsic_privacyScore01Pct_DESC_NULLS_LAST',
+  ExtrinsicPrivacyScore1PctAsc = 'extrinsic_privacyScore1Pct_ASC',
+  ExtrinsicPrivacyScore1PctAscNullsFirst = 'extrinsic_privacyScore1Pct_ASC_NULLS_FIRST',
+  ExtrinsicPrivacyScore1PctAscNullsLast = 'extrinsic_privacyScore1Pct_ASC_NULLS_LAST',
+  ExtrinsicPrivacyScore1PctDesc = 'extrinsic_privacyScore1Pct_DESC',
+  ExtrinsicPrivacyScore1PctDescNullsFirst = 'extrinsic_privacyScore1Pct_DESC_NULLS_FIRST',
+  ExtrinsicPrivacyScore1PctDescNullsLast = 'extrinsic_privacyScore1Pct_DESC_NULLS_LAST',
+  ExtrinsicPrivacyScore5PctAsc = 'extrinsic_privacyScore5Pct_ASC',
+  ExtrinsicPrivacyScore5PctAscNullsFirst = 'extrinsic_privacyScore5Pct_ASC_NULLS_FIRST',
+  ExtrinsicPrivacyScore5PctAscNullsLast = 'extrinsic_privacyScore5Pct_ASC_NULLS_LAST',
+  ExtrinsicPrivacyScore5PctDesc = 'extrinsic_privacyScore5Pct_DESC',
+  ExtrinsicPrivacyScore5PctDescNullsFirst = 'extrinsic_privacyScore5Pct_DESC_NULLS_FIRST',
+  ExtrinsicPrivacyScore5PctDescNullsLast = 'extrinsic_privacyScore5Pct_DESC_NULLS_LAST',
+  ExtrinsicPrivacyScoreAsc = 'extrinsic_privacyScore_ASC',
+  ExtrinsicPrivacyScoreAscNullsFirst = 'extrinsic_privacyScore_ASC_NULLS_FIRST',
+  ExtrinsicPrivacyScoreAscNullsLast = 'extrinsic_privacyScore_ASC_NULLS_LAST',
+  ExtrinsicPrivacyScoreDesc = 'extrinsic_privacyScore_DESC',
+  ExtrinsicPrivacyScoreDescNullsFirst = 'extrinsic_privacyScore_DESC_NULLS_FIRST',
+  ExtrinsicPrivacyScoreDescNullsLast = 'extrinsic_privacyScore_DESC_NULLS_LAST',
+  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
+  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
+  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
+  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
+  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
+  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
+  ExtrinsicTotalAmountAsc = 'extrinsic_totalAmount_ASC',
+  ExtrinsicTotalAmountAscNullsFirst = 'extrinsic_totalAmount_ASC_NULLS_FIRST',
+  ExtrinsicTotalAmountAscNullsLast = 'extrinsic_totalAmount_ASC_NULLS_LAST',
+  ExtrinsicTotalAmountDesc = 'extrinsic_totalAmount_DESC',
+  ExtrinsicTotalAmountDescNullsFirst = 'extrinsic_totalAmount_DESC_NULLS_FIRST',
+  ExtrinsicTotalAmountDescNullsLast = 'extrinsic_totalAmount_DESC_NULLS_LAST',
+  IdAsc = 'id_ASC',
+  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
+  IdAscNullsLast = 'id_ASC_NULLS_LAST',
+  IdDesc = 'id_DESC',
+  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
+  IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  NullifierHashAsc = 'nullifierHash_ASC',
+  NullifierHashAscNullsFirst = 'nullifierHash_ASC_NULLS_FIRST',
+  NullifierHashAscNullsLast = 'nullifierHash_ASC_NULLS_LAST',
+  NullifierHashDesc = 'nullifierHash_DESC',
+  NullifierHashDescNullsFirst = 'nullifierHash_DESC_NULLS_FIRST',
+  NullifierHashDescNullsLast = 'nullifierHash_DESC_NULLS_LAST',
+  NullifierAsc = 'nullifier_ASC',
+  NullifierAscNullsFirst = 'nullifier_ASC_NULLS_FIRST',
+  NullifierAscNullsLast = 'nullifier_ASC_NULLS_LAST',
+  NullifierDesc = 'nullifier_DESC',
+  NullifierDescNullsFirst = 'nullifier_DESC_NULLS_FIRST',
+  NullifierDescNullsLast = 'nullifier_DESC_NULLS_LAST',
+  TimestampAsc = 'timestamp_ASC',
+  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
+  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
+  TimestampDesc = 'timestamp_DESC',
+  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
+  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
+}
+
+export type WormholeNullifierWhereInput = {
+  AND?: InputMaybe<Array<WormholeNullifierWhereInput>>;
+  OR?: InputMaybe<Array<WormholeNullifierWhereInput>>;
+  block?: InputMaybe<BlockWhereInput>;
+  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  extrinsic?: InputMaybe<WormholeExtrinsicWhereInput>;
+  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_contains?: InputMaybe<Scalars['String']['input']>;
+  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_eq?: InputMaybe<Scalars['String']['input']>;
+  id_gt?: InputMaybe<Scalars['String']['input']>;
+  id_gte?: InputMaybe<Scalars['String']['input']>;
+  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  id_lt?: InputMaybe<Scalars['String']['input']>;
+  id_lte?: InputMaybe<Scalars['String']['input']>;
+  id_not_contains?: InputMaybe<Scalars['String']['input']>;
+  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  id_not_eq?: InputMaybe<Scalars['String']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  id_startsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_contains?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_endsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_eq?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_gt?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_gte?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  nullifierHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  nullifierHash_lt?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_lte?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_not_contains?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_not_containsInsensitive?: InputMaybe<
+    Scalars['String']['input']
+  >;
+  nullifierHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_not_eq?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  nullifierHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifierHash_startsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifier_contains?: InputMaybe<Scalars['String']['input']>;
+  nullifier_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  nullifier_endsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifier_eq?: InputMaybe<Scalars['String']['input']>;
+  nullifier_gt?: InputMaybe<Scalars['String']['input']>;
+  nullifier_gte?: InputMaybe<Scalars['String']['input']>;
+  nullifier_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  nullifier_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  nullifier_lt?: InputMaybe<Scalars['String']['input']>;
+  nullifier_lte?: InputMaybe<Scalars['String']['input']>;
+  nullifier_not_contains?: InputMaybe<Scalars['String']['input']>;
+  nullifier_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
+  nullifier_not_endsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifier_not_eq?: InputMaybe<Scalars['String']['input']>;
+  nullifier_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  nullifier_not_startsWith?: InputMaybe<Scalars['String']['input']>;
+  nullifier_startsWith?: InputMaybe<Scalars['String']['input']>;
+  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
+  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type WormholeNullifiersConnection = {
+  __typename?: 'WormholeNullifiersConnection';
+  edges: Array<WormholeNullifierEdge>;
+  pageInfo: PageInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
 /** An individual exit output within a wormhole proof verification. */
 export type WormholeOutput = {
   __typename?: 'WormholeOutput';
@@ -4147,6 +4415,11 @@ export type GetWormholeExtrinsicByIdQuery = {
       exitAccount: { __typename?: 'Account'; id: string };
     }>;
   } | null;
+  wormholeNullifiers: Array<{
+    __typename?: 'WormholeNullifier';
+    nullifier: string;
+    nullifierHash: string;
+  }>;
 };
 
 export type GetDepositPoolStatsQueryVariables = Exact<{ [key: string]: never }>;
@@ -9689,6 +9962,48 @@ export const GetWormholeExtrinsicByIdDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'amount' } }
                     ]
                   }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'wormholeNullifiers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'nullifier' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'nullifierHash' }
                 }
               ]
             }

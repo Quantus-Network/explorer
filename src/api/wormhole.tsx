@@ -59,6 +59,10 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
         amount
       }
     }
+    wormholeNullifiers(where: { extrinsic: { id_eq: $id } }) {
+      nullifier
+      nullifierHash
+    }
   }
 `;
 
