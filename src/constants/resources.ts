@@ -5,5 +5,6 @@ export const RESOURCES = {
   blocks: '/blocks',
   minerRewards: '/miner-rewards',
   highSecuritySets: '/high-security-sets',
-  errors: '/errors'
+  errors: '/errors',
+  wormhole: '/wormhole'
 } as const;

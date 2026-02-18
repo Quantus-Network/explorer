@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-type NetworkName = 'dirac';
+type NetworkName = 'dirac' | 'local';
 
 export const NETWORKS: Record<NetworkName, string> = {
-  dirac: 'https://subsquid.quantus.com/graphql'
+  dirac: 'https://subsquid.quantus.com/graphql',
+  local: 'http://localhost:4350/graphql'
 } as const;
 
 type NetworkProviderProps = {

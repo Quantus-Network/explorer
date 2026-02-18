@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WormholeIndexRouteImport } from './routes/wormhole/index'
 import { Route as ReversibleTransactionsIndexRouteImport } from './routes/reversible-transactions/index'
 import { Route as MinerRewardsIndexRouteImport } from './routes/miner-rewards/index'
 import { Route as MinerLeaderboardIndexRouteImport } from './routes/miner-leaderboard/index'
@@ -18,6 +19,7 @@ import { Route as HighSecuritySetsIndexRouteImport } from './routes/high-securit
 import { Route as ErrorsIndexRouteImport } from './routes/errors/index'
 import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
+import { Route as WormholeIdRouteImport } from './routes/wormhole/$id'
 import { Route as ReversibleTransactionsHashRouteImport } from './routes/reversible-transactions/$hash'
 import { Route as MinerRewardsHashRouteImport } from './routes/miner-rewards/$hash'
 import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash'
@@ -29,6 +31,11 @@ import { Route as AccountsIdRouteImport } from './routes/accounts/$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WormholeIndexRoute = WormholeIndexRouteImport.update({
+  id: '/wormhole/',
+  path: '/wormhole/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReversibleTransactionsIndexRoute =
@@ -71,6 +78,11 @@ const BlocksIndexRoute = BlocksIndexRouteImport.update({
 const AccountsIndexRoute = AccountsIndexRouteImport.update({
   id: '/accounts/',
   path: '/accounts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WormholeIdRoute = WormholeIdRouteImport.update({
+  id: '/wormhole/$id',
+  path: '/wormhole/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReversibleTransactionsHashRoute =
@@ -120,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/wormhole/$id': typeof WormholeIdRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
   '/errors': typeof ErrorsIndexRoute
@@ -128,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
   '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
+  '/wormhole': typeof WormholeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -138,6 +152,7 @@ export interface FileRoutesByTo {
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/wormhole/$id': typeof WormholeIdRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
   '/errors': typeof ErrorsIndexRoute
@@ -146,6 +161,7 @@ export interface FileRoutesByTo {
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
   '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
+  '/wormhole': typeof WormholeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -157,6 +173,7 @@ export interface FileRoutesById {
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
   '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/wormhole/$id': typeof WormholeIdRoute
   '/accounts/': typeof AccountsIndexRoute
   '/blocks/': typeof BlocksIndexRoute
   '/errors/': typeof ErrorsIndexRoute
@@ -165,6 +182,7 @@ export interface FileRoutesById {
   '/miner-leaderboard/': typeof MinerLeaderboardIndexRoute
   '/miner-rewards/': typeof MinerRewardsIndexRoute
   '/reversible-transactions/': typeof ReversibleTransactionsIndexRoute
+  '/wormhole/': typeof WormholeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -177,6 +195,7 @@ export interface FileRouteTypes {
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
+    | '/wormhole/$id'
     | '/accounts'
     | '/blocks'
     | '/errors'
@@ -185,6 +204,7 @@ export interface FileRouteTypes {
     | '/miner-leaderboard'
     | '/miner-rewards'
     | '/reversible-transactions'
+    | '/wormhole'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,6 +215,7 @@ export interface FileRouteTypes {
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
+    | '/wormhole/$id'
     | '/accounts'
     | '/blocks'
     | '/errors'
@@ -203,6 +224,7 @@ export interface FileRouteTypes {
     | '/miner-leaderboard'
     | '/miner-rewards'
     | '/reversible-transactions'
+    | '/wormhole'
   id:
     | '__root__'
     | '/'
@@ -213,6 +235,7 @@ export interface FileRouteTypes {
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
     | '/reversible-transactions/$hash'
+    | '/wormhole/$id'
     | '/accounts/'
     | '/blocks/'
     | '/errors/'
@@ -221,6 +244,7 @@ export interface FileRouteTypes {
     | '/miner-leaderboard/'
     | '/miner-rewards/'
     | '/reversible-transactions/'
+    | '/wormhole/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -232,6 +256,7 @@ export interface RootRouteChildren {
   ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute
   MinerRewardsHashRoute: typeof MinerRewardsHashRoute
   ReversibleTransactionsHashRoute: typeof ReversibleTransactionsHashRoute
+  WormholeIdRoute: typeof WormholeIdRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
   BlocksIndexRoute: typeof BlocksIndexRoute
   ErrorsIndexRoute: typeof ErrorsIndexRoute
@@ -240,6 +265,7 @@ export interface RootRouteChildren {
   MinerLeaderboardIndexRoute: typeof MinerLeaderboardIndexRoute
   MinerRewardsIndexRoute: typeof MinerRewardsIndexRoute
   ReversibleTransactionsIndexRoute: typeof ReversibleTransactionsIndexRoute
+  WormholeIndexRoute: typeof WormholeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -249,6 +275,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wormhole/': {
+      id: '/wormhole/'
+      path: '/wormhole'
+      fullPath: '/wormhole'
+      preLoaderRoute: typeof WormholeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reversible-transactions/': {
@@ -305,6 +338,13 @@ declare module '@tanstack/react-router' {
       path: '/accounts'
       fullPath: '/accounts'
       preLoaderRoute: typeof AccountsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wormhole/$id': {
+      id: '/wormhole/$id'
+      path: '/wormhole/$id'
+      fullPath: '/wormhole/$id'
+      preLoaderRoute: typeof WormholeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reversible-transactions/$hash': {
@@ -368,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   ImmediateTransactionsHashRoute: ImmediateTransactionsHashRoute,
   MinerRewardsHashRoute: MinerRewardsHashRoute,
   ReversibleTransactionsHashRoute: ReversibleTransactionsHashRoute,
+  WormholeIdRoute: WormholeIdRoute,
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,
   ErrorsIndexRoute: ErrorsIndexRoute,
@@ -376,6 +417,7 @@ const rootRouteChildren: RootRouteChildren = {
   MinerLeaderboardIndexRoute: MinerLeaderboardIndexRoute,
   MinerRewardsIndexRoute: MinerRewardsIndexRoute,
   ReversibleTransactionsIndexRoute: ReversibleTransactionsIndexRoute,
+  WormholeIndexRoute: WormholeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
