@@ -34,6 +34,8 @@ export const Primary: Omit<Story, 'args'> = {
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
+            fromHash: '0x2131313',
+            toHash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString()
           },
           {
@@ -43,6 +45,8 @@ export const Primary: Omit<Story, 'args'> = {
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
+            fromHash: '0x2131313',
+            toHash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString()
           },
           {
@@ -52,6 +56,8 @@ export const Primary: Omit<Story, 'args'> = {
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
+            fromHash: '0x2131313',
+            toHash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString()
           },
           {
@@ -61,6 +67,8 @@ export const Primary: Omit<Story, 'args'> = {
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
+            fromHash: '0x2131313',
+            toHash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString()
           }
         ],

@@ -10,6 +10,7 @@ import { minerRewards } from './miner-rewards';
 import { reversibleTransactions } from './reversible-transactions';
 import { search } from './search';
 import { transactions } from './transactions';
+import { wormhole } from './wormhole';
 
 const useApiClient = () => {
   const fetcher = useFetchClient();
@@ -24,7 +25,8 @@ const useApiClient = () => {
     blocks,
     minerRewards,
     minerLeaderboard,
-    highSecuritySets
+    highSecuritySets,
+    wormhole
   };
 
   return api;
