@@ -5,17 +5,9 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 import { PrivacyScoreBadge } from '@/components/features/wormhole/PrivacyScoreBadge';
+import type { WormholeExtrinsic } from '@/schemas/wormhole';
 
-export interface WormholeExtrinsicRow {
-  id: string;
-  extrinsicHash: string | null;
-  totalAmount: string;
-  outputCount: number;
-  timestamp: string;
-  privacyScore: number;
-  privacyLabel: string;
-  block: { height: number };
-}
+export type WormholeExtrinsicRow = WormholeExtrinsic;
 
 const columnHelper = createColumnHelper<WormholeExtrinsicRow>();
 

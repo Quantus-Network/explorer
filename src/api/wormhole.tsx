@@ -1,5 +1,10 @@
 import { gql, useQuery } from '@apollo/client';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
+import type {
+  WormholeExtrinsicListResponse,
+  WormholeExtrinsicResponse,
+  DepositPoolStatsResponse
+} from '@/schemas/wormhole';
 
 const GET_WORMHOLE_EXTRINSICS = gql`
   query GetWormholeExtrinsics(
@@ -88,7 +93,7 @@ export const wormhole = {
       where
     } = variables as Record<string, unknown>;
 
-    return useQuery(GET_WORMHOLE_EXTRINSICS, {
+    return useQuery<WormholeExtrinsicListResponse>(GET_WORMHOLE_EXTRINSICS, {
       pollInterval,
       variables: { orderBy: [orderBy], limit, offset, where }
     });
@@ -98,17 +103,22 @@ export const wormhole = {
     return {
       useQuery: (id: string, config?: { pollInterval?: number }) => {
         const { pollInterval = 0 } = config ?? {};
-        return useQuery(GET_WORMHOLE_EXTRINSIC_BY_ID, {
-          variables: { id },
-          pollInterval,
-          skip: !id
-        });
+        return useQuery<WormholeExtrinsicResponse>(
+          GET_WORMHOLE_EXTRINSIC_BY_ID,
+          {
+            variables: { id },
+            pollInterval,
+            skip: !id
+          }
+        );
       }
     };
   },
 
   useGetDepositPoolStats: (config?: { pollInterval?: number }) => {
     const { pollInterval = DATA_POOL_INTERVAL } = config ?? {};
-    return useQuery(GET_DEPOSIT_POOL_STATS, { pollInterval });
+    return useQuery<DepositPoolStatsResponse>(GET_DEPOSIT_POOL_STATS, {
+      pollInterval
+    });
   }
 };

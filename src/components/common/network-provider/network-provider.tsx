@@ -1,11 +1,21 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-type NetworkName = 'dirac' | 'local';
+const ENABLE_LOCAL_NETWORK =
+  import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true';
 
-export const NETWORKS: Record<NetworkName, string> = {
-  dirac: 'https://subsquid.quantus.com/graphql',
+const BASE_NETWORKS = {
+  dirac: 'https://subsquid.quantus.com/graphql'
+} as const;
+
+const LOCAL_NETWORK = {
   local: 'http://localhost:4350/graphql'
 } as const;
+
+export const NETWORKS: Record<string, string> = ENABLE_LOCAL_NETWORK
+  ? { ...BASE_NETWORKS, ...LOCAL_NETWORK }
+  : BASE_NETWORKS;
+
+type NetworkName = keyof typeof NETWORKS;
 
 type NetworkProviderProps = {
   children: React.ReactNode;
@@ -20,7 +30,7 @@ type NetworkProviderState = {
 };
 
 const initialState: NetworkProviderState = {
-  networkUrl: NETWORKS.dirac,
+  networkUrl: BASE_NETWORKS.dirac,
   networkName: 'dirac',
   setNetwork: () => null
 };
@@ -37,7 +47,9 @@ export function NetworkProvider({
   const [networkName, setNetwork] = useState<NetworkName>(
     () => (localStorage.getItem(storageKey) as NetworkName) || defaultNetwork
   );
-  const [networkUrl, setNetworkUrl] = useState(() => NETWORKS[networkName]);
+  const [networkUrl, setNetworkUrl] = useState(
+    () => NETWORKS[networkName] ?? BASE_NETWORKS.dirac
+  );
 
   const value = useMemo(() => {
     const initialValue = {
@@ -46,7 +58,7 @@ export function NetworkProvider({
       setNetwork: (newNetworkName: NetworkName) => {
         localStorage.setItem(storageKey, newNetworkName);
         setNetwork(newNetworkName);
-        setNetworkUrl(NETWORKS[newNetworkName]);
+        setNetworkUrl(NETWORKS[newNetworkName] ?? BASE_NETWORKS.dirac);
       }
     };
 
