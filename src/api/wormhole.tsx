@@ -20,7 +20,11 @@ const GET_WORMHOLE_EXTRINSICS = gql`
       where: $where
     ) {
       id
-      extrinsicHash
+      extrinsic {
+        id
+        pallet
+        call
+      }
       totalAmount
       outputCount
       timestamp
@@ -40,7 +44,11 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
   query GetWormholeExtrinsicById($id: String!) {
     wormholeExtrinsicById(id: $id) {
       id
-      extrinsicHash
+      extrinsic {
+        id
+        pallet
+        call
+      }
       totalAmount
       outputCount
       timestamp
@@ -64,7 +72,7 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
         amount
       }
     }
-    wormholeNullifiers(where: { extrinsic: { id_eq: $id } }) {
+    wormholeNullifiers(where: { wormholeExtrinsic: { id_eq: $id } }) {
       nullifier
       nullifierHash
     }

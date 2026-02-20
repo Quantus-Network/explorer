@@ -7,11 +7,11 @@ import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
 
 export interface SearchAllResponse {
-  transactions: Pick<Transaction, 'extrinsicHash'>[];
-  reversibleTransactions: Pick<ReversibleTransaction, 'extrinsicHash'>[];
+  transactions: Pick<Transaction, 'extrinsic'>[];
+  reversibleTransactions: Pick<ReversibleTransaction, 'extrinsic'>[];
   accounts: Pick<Account, 'id'>[];
   blocks: Pick<Block, 'height'>[];
-  highSecuritySets: Pick<HighSecuritySet, 'extrinsicHash'>[];
+  highSecuritySets: Pick<HighSecuritySet, 'extrinsic'>[];
   minerRewards: Pick<MinerReward, 'block'>[];
-  errorEvents: Pick<ErrorEvent, 'extrinsicHash'>[];
+  errorEvents: Pick<ErrorEvent, 'extrinsic'>[];
 }

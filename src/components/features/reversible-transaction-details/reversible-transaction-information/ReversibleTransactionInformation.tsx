@@ -34,7 +34,7 @@ export const ReversibleTransactionInformation: React.FC<
     {
       txId: tx?.txId,
       amount: tx?.amount,
-      extrinsicHash: tx?.extrinsicHash,
+      extrinsic: tx?.extrinsic,
       block: tx?.block,
       timestamp: tx?.timestamp,
       scheduledAt: tx?.scheduledAt,
@@ -56,10 +56,13 @@ export const ReversibleTransactionInformation: React.FC<
           render: (value) => <span className="break-all">{value}</span>
         },
         {
-          label: 'Extrinsic Hash',
-          key: 'extrinsicHash',
+          label: 'Extrinsic',
+          key: 'extrinsic',
           render: (value) => (
-            <TextWithCopy text={value || '-'} className="break-all" />
+            <TextWithCopy
+              text={(value as ReversibleTransaction['extrinsic'])?.id ?? '-'}
+              className="break-all"
+            />
           )
         },
         {

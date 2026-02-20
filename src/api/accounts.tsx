@@ -5,6 +5,7 @@ import { startOfToday } from 'date-fns/startOfToday';
 import { subDays } from 'date-fns/subDays';
 
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
+import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
 import { ACCOUNT_SORTS } from '@/constants/query-sorts';
 import type {
@@ -64,14 +65,18 @@ export const accounts = {
           orderBy: timestamp_DESC
           first: $limit
           where: {
-            extrinsicHash_isNull: false
+            extrinsic_isNull: false
             AND: { from: { id_eq: $id }, OR: { to: { id_eq: $id } } }
           }
         ) {
           edges {
             node {
               fee
-              extrinsicHash
+              extrinsic {
+                id
+                pallet
+                call
+              }
               block {
                 height
               }
@@ -95,7 +100,11 @@ export const accounts = {
         ) {
           edges {
             node {
-              extrinsicHash
+              extrinsic {
+                id
+                pallet
+                call
+              }
               timestamp
               status
               amount
@@ -141,6 +150,10 @@ export const accounts = {
         ) {
           edges {
             node {
+              timestamp
+              block {
+                height
+              }
               interceptor {
                 id
                 free
@@ -159,6 +172,10 @@ export const accounts = {
         ) {
           edges {
             node {
+              timestamp
+              block {
+                height
+              }
               who {
                 id
                 free
@@ -170,6 +187,38 @@ export const accounts = {
 
           totalCount
         }
+        wormholeOutputs: wormholeOutputs(
+          orderBy: wormholeExtrinsic_timestamp_DESC
+          limit: $limit
+          where: { exitAccount: { id_eq: $id } }
+        ) {
+          id
+          amount
+          exitAccount {
+            id
+          }
+          wormholeExtrinsic {
+            id
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            totalAmount
+            outputCount
+            timestamp
+            block {
+              height
+            }
+            outputs {
+              id
+              exitAccount {
+                id
+              }
+              amount
+            }
+          }
+        }
       }
     `;
 
@@ -179,7 +228,7 @@ export const accounts = {
           ...config,
           variables: {
             id,
-            limit: QUERY_DEFAULT_LIMIT
+            limit: QUERY_UNIFIED_LIMIT
           }
         })
     };

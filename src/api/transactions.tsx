@@ -9,9 +9,9 @@ import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
 import { TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
+  ExtrinsicDetailResponse,
   RecentTransactionsResponse,
   TransactionListResponse,
-  TransactionResponse,
   TransactionsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
@@ -37,7 +37,11 @@ export const transactions = {
           where: $where
         ) {
           fee
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           block {
             height
           }
@@ -66,10 +70,7 @@ export const transactions = {
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: {
-          AND: [
-            { extrinsicHash_isNull: false },
-            { ...config?.variables?.where }
-          ]
+          AND: [{ extrinsic_isNull: false }, { ...config?.variables?.where }]
         }
       }
     });
@@ -91,7 +92,11 @@ export const transactions = {
           where: $where
         ) {
           fee
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           block {
             height
           }
@@ -115,7 +120,7 @@ export const transactions = {
       variables: {
         orderBy: TRANSACTION_SORTS.timestamp.DESC,
         limit: QUERY_RECENT_LIMIT,
-        where: { extrinsicHash_isNull: false }
+        where: { extrinsic_isNull: false }
       }
     });
   },
@@ -132,14 +137,20 @@ export const transactions = {
           where: {
             timestamp_gte: $startDate
             timestamp_lte: $endDate
-            extrinsicHash_isNull: false
+            extrinsic_isNull: false
           }
         ) {
           totalCount
         }
         allTime: transfersConnection(
           orderBy: id_ASC
-          where: { extrinsicHash_isNull: false }
+          where: { extrinsic_isNull: false }
+        ) {
+          totalCount
+        }
+        allTime: transfersConnection(
+          orderBy: id_ASC
+          where: { extrinsic_isNull: false }
         ) {
           totalCount
         }
@@ -156,13 +167,27 @@ export const transactions = {
   },
   getByHash: () => {
     const QUERY = gql`
-      query GetTransactionByHash($hash: String!) {
-        transactions: transfers(where: { extrinsicHash_eq: $hash }) {
+      query GetExtrinsicByHash($hash: String!) {
+        extrinsics(where: { id_eq: $hash }) {
+          id
+          pallet
+          call
+          success
           fee
-          extrinsicHash
+          timestamp
+          indexInBlock
+          signer {
+            id
+          }
           block {
             height
           }
+        }
+        transfers(
+          where: { extrinsic: { id_eq: $hash } }
+          orderBy: timestamp_ASC
+        ) {
+          id
           amount
           timestamp
           from {
@@ -178,9 +203,9 @@ export const transactions = {
     return {
       useQuery: (
         hash: string,
-        config?: QueryHookOptions<TransactionResponse>
+        config?: QueryHookOptions<ExtrinsicDetailResponse>
       ) =>
-        useQuery<TransactionResponse>(QUERY, {
+        useQuery<ExtrinsicDetailResponse>(QUERY, {
           ...config,
           variables: {
             hash

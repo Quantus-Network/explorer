@@ -29,7 +29,11 @@ export const Primary: Omit<Story, 'args'> = {
         data: [
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
@@ -40,7 +44,11 @@ export const Primary: Omit<Story, 'args'> = {
           },
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
@@ -51,7 +59,11 @@ export const Primary: Omit<Story, 'args'> = {
           },
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
@@ -62,7 +74,11 @@ export const Primary: Omit<Story, 'args'> = {
           },
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },

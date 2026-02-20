@@ -10,7 +10,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<AccountReversibleTransaction>();
 
 export const ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('node.extrinsicHash', {
+  columnHelper.accessor('node.extrinsic.id', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) => (

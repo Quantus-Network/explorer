@@ -9,7 +9,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<BlockTransaction>();
 
 export const BLOCK_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('node.extrinsicHash', {
+  columnHelper.accessor('node.extrinsic.id', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) => (

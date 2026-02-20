@@ -4,6 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import type { BlockWhereInput } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
+import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type { BlockSorts } from '@/constants/query-sorts';
 import { BLOCK_SORTS } from '@/constants/query-sorts';
 import type {
@@ -38,6 +39,9 @@ export const blocks = {
           height
           reward
           timestamp
+          extrinsics {
+            id
+          }
         }
         meta: blocksConnection(orderBy: id_ASC) {
           totalCount
@@ -73,6 +77,9 @@ export const blocks = {
           height
           reward
           timestamp
+          extrinsics {
+            id
+          }
         }
       }
     `;
@@ -97,22 +104,40 @@ export const blocks = {
           height
           reward
           timestamp
+          extrinsics(orderBy: indexInBlock_ASC) {
+            id
+            pallet
+            call
+            success
+            fee
+            timestamp
+            indexInBlock
+            signer {
+              id
+            }
+          }
         }
-        miners: minerRewards(
+        minerRewards(
           where: {
             block: { height_eq: $height }
             OR: { block: { hash_eq: $hash } }
           }
         ) {
+          reward
+          timestamp
           miner {
             id
+          }
+          block {
+            height
+            hash
           }
         }
         transactions: transfersConnection(
           orderBy: timestamp_DESC
           first: $limit
           where: {
-            extrinsicHash_isNull: false
+            extrinsic_isNull: false
             AND: {
               block: { height_eq: $height }
               OR: { block: { hash_eq: $hash } }
@@ -122,7 +147,11 @@ export const blocks = {
           edges {
             node {
               fee
-              extrinsicHash
+              extrinsic {
+                id
+                pallet
+                call
+              }
               block {
                 height
               }
@@ -149,7 +178,11 @@ export const blocks = {
         ) {
           edges {
             node {
-              extrinsicHash
+              extrinsic {
+                id
+                pallet
+                call
+              }
               timestamp
               status
               amount
@@ -177,7 +210,11 @@ export const blocks = {
         ) {
           edges {
             node {
-              extrinsicHash
+              extrinsic {
+                id
+                pallet
+                call
+              }
               timestamp
               delay
               block {
@@ -208,7 +245,11 @@ export const blocks = {
               errorModule
               errorName
               errorType
-              extrinsicHash
+              extrinsic {
+                id
+                pallet
+                call
+              }
               timestamp
               block {
                 height
@@ -217,6 +258,34 @@ export const blocks = {
           }
 
           totalCount
+        }
+        wormholeExtrinsics(
+          orderBy: timestamp_DESC
+          limit: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          id
+          extrinsic {
+            id
+            pallet
+            call
+          }
+          totalAmount
+          outputCount
+          timestamp
+          block {
+            height
+          }
+          outputs {
+            id
+            exitAccount {
+              id
+            }
+            amount
+          }
         }
       }
     `;
@@ -230,7 +299,7 @@ export const blocks = {
           variables: {
             height: !isHash ? Number(id) : -1,
             hash: isHash ? id : '',
-            limit: QUERY_DEFAULT_LIMIT
+            limit: QUERY_UNIFIED_LIMIT
           }
         });
       }

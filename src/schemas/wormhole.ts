@@ -5,13 +5,13 @@ export interface WormholeExtrinsic
   extends Pick<
     gql.WormholeExtrinsic,
     | 'id'
-    | 'extrinsicHash'
     | 'totalAmount'
     | 'outputCount'
     | 'timestamp'
     | 'privacyScore'
     | 'privacyLabel'
   > {
+  extrinsic: Pick<gql.Extrinsic, 'id' | 'pallet' | 'call'> | null;
   block: Pick<gql.Block, 'height'>;
 }
 
@@ -20,7 +20,6 @@ export interface WormholeExtrinsicDetail
   extends Pick<
     gql.WormholeExtrinsic,
     | 'id'
-    | 'extrinsicHash'
     | 'totalAmount'
     | 'outputCount'
     | 'timestamp'
@@ -31,6 +30,7 @@ export interface WormholeExtrinsicDetail
     | 'privacyLabel'
     | 'poolSnapshot'
   > {
+  extrinsic: Pick<gql.Extrinsic, 'id' | 'pallet' | 'call'> | null;
   block: Pick<gql.Block, 'id' | 'height' | 'hash' | 'timestamp'>;
   outputs: WormholeOutput[];
 }

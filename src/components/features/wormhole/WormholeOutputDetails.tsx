@@ -7,14 +7,14 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { Card, CardContent } from '@/components/ui/card';
 import { RESOURCES } from '@/constants/resources';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
-import { PrivacyScoreBadge } from './PrivacyScoreBadge';
+// import { PrivacyScoreBadge } from './PrivacyScoreBadge';
 
 interface WormholeOutputDetailsProps {
   id: string;
 }
 
 interface ExtrinsicInfo {
-  extrinsicHash: string | null;
+  extrinsic: { id: string } | null;
   totalAmount: string;
   outputCount: number;
   block: { height: number; hash: string };
@@ -40,7 +40,7 @@ export const WormholeOutputInformation = ({
 
   const extrinsicInfo: Partial<ExtrinsicInfo>[] = [
     {
-      extrinsicHash: extrinsic?.extrinsicHash,
+      extrinsic: extrinsic?.extrinsic,
       totalAmount: extrinsic?.totalAmount,
       outputCount: extrinsic?.outputCount,
       block: extrinsic?.block,
@@ -63,10 +63,13 @@ export const WormholeOutputInformation = ({
         fields={[
           {
             label: 'Extrinsic Hash',
-            key: 'extrinsicHash',
+            key: 'extrinsic',
             render: (value) =>
-              value ? (
-                <TextWithCopy text={String(value)} className="break-all" />
+              value && (value as ExtrinsicInfo['extrinsic'])?.id ? (
+                <TextWithCopy
+                  text={(value as ExtrinsicInfo['extrinsic'])!.id}
+                  className="break-all"
+                />
               ) : (
                 <span className="text-muted-foreground">-</span>
               )
@@ -99,6 +102,7 @@ export const WormholeOutputInformation = ({
         ]}
       />
 
+      {/* Privacy Analysis section temporarily disabled
       <h2 className="text-lg font-semibold">Privacy Analysis</h2>
       <DataList<Partial<ExtrinsicInfo>>
         loading={loading}
@@ -156,6 +160,7 @@ export const WormholeOutputInformation = ({
           }
         ]}
       />
+      */}
 
       <h2 className="text-lg font-semibold">Exit Outputs</h2>
       {loading ? (

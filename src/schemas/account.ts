@@ -2,9 +2,29 @@ import type * as gql from '../__generated__/graphql';
 import type { MinerReward } from './miner-reward';
 import type { ReversibleTransaction } from './reversible-transaction';
 import type { Transaction } from './transcation';
+import type { WormholeOutput } from './wormhole';
 
 export interface Account
   extends Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'> {}
+
+export interface AccountWormholeOutput {
+  id: string;
+  amount: string;
+  exitAccount: { id: string };
+  wormholeExtrinsic: {
+    id: string;
+    extrinsic: {
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    totalAmount: string;
+    outputCount: number;
+    timestamp: string;
+    block: { height: number };
+    outputs: WormholeOutput[];
+  };
+}
 
 export interface AccountResponse {
   account: Account;
@@ -33,6 +53,7 @@ export interface AccountResponse {
     /** @description the grand total of the guardian high security sets regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
+  wormholeOutputs: AccountWormholeOutput[];
 }
 
 export interface AccountListResponse {
