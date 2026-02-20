@@ -40,7 +40,11 @@ export const reversibleTransactions = {
           orderBy: $orderBy
           where: $where
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           amount
           timestamp
           status
@@ -95,7 +99,11 @@ export const reversibleTransactions = {
           offset: $offset
           orderBy: $orderBy
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           amount
           timestamp
           status
@@ -164,11 +172,15 @@ export const reversibleTransactions = {
     const QUERY = gql`
       query GetReversibleTransactionByHash($hash: String!) {
         reversibleTransactions: reversibleTransfers(
-          where: { extrinsicHash_eq: $hash }
+          where: { extrinsic: { id_eq: $hash } }
         ) {
           fee
           amount
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           txId
           scheduledAt
           timestamp
@@ -203,7 +215,7 @@ export const reversibleTransactions = {
     const QUERY = gql`
       query GetReversibleTransactionStatusByHash($hash: String!) {
         reversibleTransactions: reversibleTransfers(
-          where: { extrinsicHash_eq: $hash }
+          where: { extrinsic: { id_eq: $hash } }
         ) {
           status
         }

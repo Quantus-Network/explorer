@@ -37,7 +37,11 @@ export const highSecuritySets = {
           where: $where
         ) {
           id
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           who {
             id
           }
@@ -87,7 +91,11 @@ export const highSecuritySets = {
           where: $where
         ) {
           id
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           who {
             id
           }
@@ -152,9 +160,13 @@ export const highSecuritySets = {
   getByHash: () => {
     const QUERY = gql`
       query GetHighSecuritySetByHash($hash: String!) {
-        highSecuritySets(where: { extrinsicHash_eq: $hash }) {
+        highSecuritySets(where: { extrinsic: { id_eq: $hash } }) {
           id
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           who {
             id
           }

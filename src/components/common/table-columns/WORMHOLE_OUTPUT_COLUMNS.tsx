@@ -4,7 +4,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
-import { PrivacyScoreBadge } from '@/components/features/wormhole/PrivacyScoreBadge';
+// import { PrivacyScoreBadge } from '@/components/features/wormhole/PrivacyScoreBadge';
 import type { WormholeExtrinsic } from '@/schemas/wormhole';
 
 export type WormholeExtrinsicRow = WormholeExtrinsic;
@@ -12,7 +12,7 @@ export type WormholeExtrinsicRow = WormholeExtrinsic;
 const columnHelper = createColumnHelper<WormholeExtrinsicRow>();
 
 export const WORMHOLE_EXTRINSIC_COLUMNS = [
-  columnHelper.accessor('extrinsicHash', {
+  columnHelper.accessor('extrinsic.id', {
     id: 'extrinsic_hash',
     header: 'Extrinsic',
     cell: (props) => {
@@ -39,17 +39,18 @@ export const WORMHOLE_EXTRINSIC_COLUMNS = [
     cell: (props) => props.getValue(),
     enableSorting: false
   }),
-  columnHelper.accessor('privacyScore', {
-    id: 'privacy_score',
-    header: 'Privacy',
-    cell: (props) => (
-      <PrivacyScoreBadge
-        score={props.getValue()}
-        label={props.row.original.privacyLabel}
-      />
-    ),
-    enableSorting: true
-  }),
+  // Privacy score column temporarily disabled
+  // columnHelper.accessor('privacyScore', {
+  //   id: 'privacy_score',
+  //   header: 'Privacy',
+  //   cell: (props) => (
+  //     <PrivacyScoreBadge
+  //       score={props.getValue()}
+  //       label={props.row.original.privacyLabel}
+  //     />
+  //   ),
+  //   enableSorting: true
+  // }),
   columnHelper.accessor('block.height', {
     id: 'block_height',
     header: 'Block',

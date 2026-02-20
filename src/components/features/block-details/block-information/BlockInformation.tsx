@@ -18,8 +18,7 @@ interface BlockDetails {
   timestamp: string;
   reward: number;
   miner: string;
-  transactions: number;
-  reversibleTransactions: number;
+  extrinsicsCount: number;
 }
 
 export const BlockInformation: React.FC<BlockInformationProps> = ({
@@ -28,9 +27,8 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   const { data, loading } = query;
   const block = data?.blocks?.[0];
 
-  const transactions = data?.transactions.totalCount;
-  const reversibleTransactions = data?.reversibleTransactions.totalCount;
-  const miner = data?.miners[0]?.miner.id;
+  const extrinsicsCount = block?.extrinsics?.length ?? 0;
+  const miner = data?.minerRewards?.[0]?.miner.id;
 
   const information: Partial<BlockDetails>[] = [
     {
@@ -38,9 +36,8 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
       hash: block?.hash,
       reward: block?.reward,
       timestamp: block?.timestamp,
-      transactions,
-      miner,
-      reversibleTransactions
+      extrinsicsCount,
+      miner
     }
   ];
 
@@ -83,16 +80,10 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           render: (value) => formatTimestamp(value, true)
         },
         {
-          label: 'Immediate Transactions',
-          key: 'transactions',
+          label: 'Extrinsics',
+          key: 'extrinsicsCount',
           render: (value) =>
-            value > 1 ? `${value} transactions` : `${value} transaction`
-        },
-        {
-          label: 'Reversible Transactions',
-          key: 'reversibleTransactions',
-          render: (value) =>
-            value > 1 ? `${value} transactions` : `${value} transaction`
+            value === 1 ? `${value} extrinsic` : `${value} extrinsics`
         }
       ]}
     />

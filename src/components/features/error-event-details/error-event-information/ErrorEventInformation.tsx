@@ -27,7 +27,7 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
     {
       timestamp: event?.timestamp,
       block: event?.block,
-      extrinsicHash: event?.extrinsicHash,
+      extrinsic: event?.extrinsic,
       errorType: event?.errorType,
       errorModule: event?.errorModule,
       errorName: event?.errorName,
@@ -41,10 +41,13 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
       data={information}
       fields={[
         {
-          label: 'Extrinsic Hash',
-          key: 'extrinsicHash',
+          label: 'Extrinsic',
+          key: 'extrinsic',
           render: (value) => (
-            <TextWithCopy text={value as string} className="break-all" />
+            <TextWithCopy
+              text={(value as ErrorEvent['extrinsic'])?.id ?? '-'}
+              className="break-all"
+            />
           )
         },
         {
