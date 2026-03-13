@@ -21,21 +21,15 @@ export const BLOCK_SCHEDULED_REVERSIBLE_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.extrinsicHash', {
-    id: 'tx-hash',
-    header: 'Hash',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.scheduledReversibleTransactions}/${props.row.original.node.txId}`}
-        text={formatTxAddress(props.getValue() ?? '-')}
-        textCopy={props.getValue() ?? ''}
-      />
-    ),
-    enableSorting: false
-  }),
   columnHelper.accessor('node.timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
+    enableSorting: true
+  }),
+  columnHelper.accessor('node.scheduledAt', {
+    id: 'scheduledAt',
+    header: 'Scheduled At',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),

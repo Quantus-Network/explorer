@@ -21,18 +21,6 @@ export const BLOCK_EXECUTED_REVERSIBLE_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.scheduledTransfer.extrinsicHash', {
-    id: 'tx-hash',
-    header: 'Hash',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.executedReversibleTransactions}/${props.row.original.node.txId}`}
-        text={formatTxAddress(props.getValue() ?? '-')}
-        textCopy={props.getValue() ?? ''}
-      />
-    ),
-    enableSorting: false
-  }),
   columnHelper.accessor('node.timestamp', {
     id: 'timestamp',
     header: 'Timestamp',

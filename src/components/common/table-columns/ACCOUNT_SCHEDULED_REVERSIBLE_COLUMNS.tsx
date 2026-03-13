@@ -40,6 +40,12 @@ export const ACCOUNT_SCHEDULED_REVERSIBLE_COLUMNS = [
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
+  columnHelper.accessor('node.scheduledAt', {
+    id: 'scheduledAt',
+    header: 'Scheduled At',
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
+    enableSorting: true
+  }),
   columnHelper.accessor('node.from.id', {
     id: 'from',
     header: 'From',
@@ -67,12 +73,6 @@ export const ACCOUNT_SCHEDULED_REVERSIBLE_COLUMNS = [
   columnHelper.accessor('node.amount', {
     id: 'amount',
     header: 'Amount',
-    cell: (props) => formatMonetaryValue(props.getValue(), 5),
-    enableSorting: true
-  }),
-  columnHelper.accessor('node.fee', {
-    id: 'fee',
-    header: 'Fee',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   })

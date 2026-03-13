@@ -21,18 +21,6 @@ export const CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('scheduledTransfer.extrinsicHash', {
-    id: 'tx-hash',
-    header: 'Hash',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.cancelledReversibleTransactions}/${props.row.original.txId}`}
-        text={formatTxAddress(props.getValue() ?? '-')}
-        textCopy={props.getValue() ?? ''}
-      />
-    ),
-    enableSorting: false
-  }),
   columnHelper.accessor('block.height', {
     id: 'block_height',
     header: 'Block',
