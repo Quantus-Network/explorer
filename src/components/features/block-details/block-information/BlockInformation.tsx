@@ -19,7 +19,9 @@ interface BlockDetails {
   reward: number;
   miner: string;
   transactions: number;
-  reversibleTransactions: number;
+  scheduledReversibleTransactions: number;
+  executedReversibleTransactions: number;
+  cancelledReversibleTransactions: number;
 }
 
 export const BlockInformation: React.FC<BlockInformationProps> = ({
@@ -29,7 +31,12 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   const block = data?.blocks?.[0];
 
   const transactions = data?.transactions.totalCount;
-  const reversibleTransactions = data?.reversibleTransactions.totalCount;
+  const scheduledReversibleTransactions =
+    data?.scheduledReversibleTransactions.totalCount;
+  const executedReversibleTransactions =
+    data?.executedReversibleTransactions.totalCount;
+  const cancelledReversibleTransactions =
+    data?.cancelledReversibleTransactions.totalCount;
   const miner = data?.miners[0]?.miner.id;
 
   const information: Partial<BlockDetails>[] = [
@@ -40,7 +47,9 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
       timestamp: block?.timestamp,
       transactions,
       miner,
-      reversibleTransactions
+      scheduledReversibleTransactions,
+      executedReversibleTransactions,
+      cancelledReversibleTransactions
     }
   ];
 
@@ -89,8 +98,20 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
             value > 1 ? `${value} transactions` : `${value} transaction`
         },
         {
-          label: 'Reversible Transactions',
-          key: 'reversibleTransactions',
+          label: 'Scheduled Reversible Transactions',
+          key: 'scheduledReversibleTransactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Executed Reversible Transactions',
+          key: 'executedReversibleTransactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Cancelled Reversible Transactions',
+          key: 'cancelledReversibleTransactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`
         }

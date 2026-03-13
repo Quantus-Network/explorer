@@ -5,24 +5,26 @@ import type { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { ContentContainer } from '@/components/ui/content-container';
+import { RESOURCES } from '@/constants/resources';
 import type { AccountResponse } from '@/schemas';
 
-import { useAccountReversibleTransactions } from './hook';
+import { useAccountCancelledReversibleTransactions } from './hook';
 
 interface Props {
   query: QueryResult<AccountResponse>;
   accountId: string;
 }
 
-export const AccountReversibleTransactions: FC<Props> = ({
+export const AccountCancelledReversibleTransactions: FC<Props> = ({
   query,
   accountId
 }) => {
-  const { getStatus, table, error } = useAccountReversibleTransactions(query);
+  const { getStatus, table, error } =
+    useAccountCancelledReversibleTransactions(query);
 
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>Recent Reversible Transactions</h2>
+      <h2>Recent Cancelled Reversible Transactions</h2>
 
       <DataTable
         table={table}
@@ -33,10 +35,13 @@ export const AccountReversibleTransactions: FC<Props> = ({
       />
 
       {!query.loading &&
-        query.data?.reversibleTransactions.totalCount !== 0 && (
+        query.data?.cancelledReversibleTransactions.totalCount !== 0 && (
           <Button variant="link" className="mx-auto w-fit">
-            <Link to="/reversible-transactions" search={{ accountId }}>
-              See all reversible transactions
+            <Link
+              to={RESOURCES.cancelledReversibleTransactions}
+              search={{ accountId }}
+            >
+              See all cancelled reversible transactions
             </Link>
           </Button>
         )}

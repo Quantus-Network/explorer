@@ -2,7 +2,6 @@ import { Link } from '@tanstack/react-router';
 import type { HTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 
-import { ReversibleTransferStatus } from '@/__generated__/graphql';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
@@ -36,22 +35,6 @@ function PreviewLink({
     </Link>
   );
 }
-
-const getReversibleTransactionHref = (
-  status: ReversibleTransferStatus,
-  txId: string
-) => {
-  switch (status) {
-    case ReversibleTransferStatus.Scheduled:
-      return `${RESOURCES.scheduledReversibleTransactions}/${txId}`;
-    case ReversibleTransferStatus.Executed:
-      return `${RESOURCES.executedReversibleTransactions}/${txId}`;
-    case ReversibleTransferStatus.Cancelled:
-      return `${RESOURCES.cancelledReversibleTransactions}/${txId}`;
-    default:
-      return '#';
-  }
-};
 
 interface SectionProps<T> {
   title: string;
@@ -121,7 +104,9 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       accounts,
       transactions,
       blocks,
-      reversibleTransactions,
+      scheduledReversibleTransactions,
+      executedReversibleTransactions,
+      cancelledReversibleTransactions,
       minerRewards,
       highSecuritySets,
       errorEvents
@@ -133,7 +118,9 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       !blocks &&
       !minerRewards &&
       !accounts &&
-      !reversibleTransactions &&
+      !scheduledReversibleTransactions &&
+      !executedReversibleTransactions &&
+      !cancelledReversibleTransactions &&
       !highSecuritySets &&
       !errorEvents
     ) {
@@ -155,13 +142,37 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         )
       },
       {
-        title: 'Reversible Transactions',
-        emptyMsg: 'No reversible transactions found.',
-        items: reversibleTransactions,
+        title: 'Scheduled Reversible Transactions',
+        emptyMsg: 'No scheduled reversible transactions found.',
+        items: scheduledReversibleTransactions,
         renderItem: (tx: any) => (
           <PreviewLink
-            href={getReversibleTransactionHref(tx.status, tx.txId)}
+            href={`${RESOURCES.scheduledReversibleTransactions}/${tx.txId}`}
             label={`${tx.extrinsicHash}`}
+            onSelect={handleClosePreview}
+          />
+        )
+      },
+      {
+        title: 'Executed Reversible Transactions',
+        emptyMsg: 'No executed reversible transactions found.',
+        items: executedReversibleTransactions,
+        renderItem: (tx: any) => (
+          <PreviewLink
+            href={`${RESOURCES.executedReversibleTransactions}/${tx.txId}`}
+            label={`${tx.txId}`}
+            onSelect={handleClosePreview}
+          />
+        )
+      },
+      {
+        title: 'Cancelled Reversible Transactions',
+        emptyMsg: 'No cancelled reversible transactions found.',
+        items: cancelledReversibleTransactions,
+        renderItem: (tx: any) => (
+          <PreviewLink
+            href={`${RESOURCES.cancelledReversibleTransactions}/${tx.txId}`}
+            label={`${tx.txId}`}
             onSelect={handleClosePreview}
           />
         )

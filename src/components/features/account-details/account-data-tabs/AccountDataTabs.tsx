@@ -15,9 +15,11 @@ import type { AccountResponse } from '@/schemas';
 import { formatOption } from '@/utils/formatter';
 
 import { AccountBeneficiaries } from '../account-beneficiaries/AccountBeneficiaries';
+import { AccountCancelledReversibleTransactions } from '../account-cancelled-reversible-transactions/AccountCancelledReversibleTransactions';
+import { AccountExecutedReversibleTransactions } from '../account-executed-reversible-transactions/AccountExecutedReversibleTransactions';
 import { AccountGuardian } from '../account-guardian/AccountGuardian';
 import { AccountMinerRewards } from '../account-miner-rewards/AccountMinerRewards';
-import { AccountReversibleTransactions } from '../account-reversible-transactions/AccountReversibleTransactions';
+import { AccountScheduledReversibleTransactions } from '../account-scheduled-reversible-transactions/AccountScheduledReversibleTransactions';
 import { AccountTransactions } from '../account-transactions/AccountTransactions';
 
 export interface AccountDataTabsProps {
@@ -27,7 +29,9 @@ export interface AccountDataTabsProps {
 
 const TAB_OPTIONS = {
   immediate: 'immediate-transactions',
-  reversible: 'reversible-transactions',
+  scheduledReversible: 'scheduled-reversible-transactions',
+  executedReversible: 'executed-reversible-transactions',
+  cancelledReversible: 'cancelled-reversible-transactions',
   miners: 'miner-rewards',
   guardian: 'guardian',
   beneficiaries: 'beneficiaries'
@@ -73,8 +77,20 @@ export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({
           <TabsContent value={TAB_OPTIONS.immediate}>
             <AccountTransactions accountId={accountId} query={query} />
           </TabsContent>
-          <TabsContent value={TAB_OPTIONS.reversible}>
-            <AccountReversibleTransactions
+          <TabsContent value={TAB_OPTIONS.scheduledReversible}>
+            <AccountScheduledReversibleTransactions
+              accountId={accountId}
+              query={query}
+            />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.executedReversible}>
+            <AccountExecutedReversibleTransactions
+              accountId={accountId}
+              query={query}
+            />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.cancelledReversible}>
+            <AccountCancelledReversibleTransactions
               accountId={accountId}
               query={query}
             />

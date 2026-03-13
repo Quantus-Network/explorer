@@ -23,7 +23,19 @@ export const chainStatus = {
         ) {
           totalCount
         }
-        reversibleTransactions: reversibleTransfersConnection(orderBy: id_ASC) {
+        scheduledReversibleTransactions: scheduledReversibleTransfersConnection(
+          orderBy: id_ASC
+        ) {
+          totalCount
+        }
+        executedReversibleTransactions: executedReversibleTransfersConnection(
+          orderBy: id_ASC
+        ) {
+          totalCount
+        }
+        cancelledReversibleTransactions: cancelledReversibleTransfersConnection(
+          orderBy: id_ASC
+        ) {
           totalCount
         }
         status: squidStatus {

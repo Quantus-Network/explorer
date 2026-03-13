@@ -5,20 +5,24 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { ContentContainer } from '@/components/ui/content-container';
+import { RESOURCES } from '@/constants/resources';
 import type { BlockResponse } from '@/schemas';
 
-import { useBlockReversibleTransactions } from './hook';
+import { useBlockCancelledReversibleTransactions } from './hook';
 
 interface Props {
   query: QueryResult<BlockResponse>;
 }
 
-export const BlockReversibleTransactions: React.FC<Props> = ({ query }) => {
-  const { getStatus, table, error } = useBlockReversibleTransactions(query);
+export const BlockCancelledReversibleTransactions: React.FC<Props> = ({
+  query
+}) => {
+  const { getStatus, table, error } =
+    useBlockCancelledReversibleTransactions(query);
 
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>Recent Reversible Transactions</h2>
+      <h2>Recent Cancelled Reversible Transactions</h2>
 
       <DataTable
         table={table}
@@ -29,13 +33,13 @@ export const BlockReversibleTransactions: React.FC<Props> = ({ query }) => {
       />
 
       {!query.loading &&
-        query.data?.reversibleTransactions.totalCount !== 0 && (
+        query.data?.cancelledReversibleTransactions.totalCount !== 0 && (
           <Button variant="link" className="mx-auto w-fit">
             <Link
-              to="/reversible-transactions"
+              to={RESOURCES.cancelledReversibleTransactions}
               search={{ block: query.data?.blocks[0]?.height }}
             >
-              See all reversible transactions
+              See all cancelled reversible transactions
             </Link>
           </Button>
         )}

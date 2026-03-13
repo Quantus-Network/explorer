@@ -2,26 +2,26 @@ import type { QueryResult } from '@apollo/client';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 
-import { ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS';
-import type { AccountResponse, AccountReversibleTransaction } from '@/schemas';
+import { CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS';
+import type {
+  AccountResponse,
+  CancelledReversibleTransaction
+} from '@/schemas';
 
-export const useAccountReversibleTransactions = (
+export const useAccountCancelledReversibleTransactions = (
   query: QueryResult<AccountResponse>
 ) => {
   const { data, error: fetchError, loading } = query;
-  const transactionColumns = useMemo(
-    () => ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS,
-    []
-  );
+  const columns = useMemo(() => CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.reversibleTransactions?.edges ?? [],
-    [data?.reversibleTransactions?.edges]
+    () => data?.cancelledReversibleTransactions?.edges.map((e) => e.node) ?? [],
+    [data?.cancelledReversibleTransactions?.edges]
   );
 
-  const table = useReactTable<AccountReversibleTransaction>({
+  const table = useReactTable<CancelledReversibleTransaction>({
     data: tableData,
-    columns: transactionColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false
   });

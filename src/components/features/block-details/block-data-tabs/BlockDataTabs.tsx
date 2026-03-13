@@ -14,9 +14,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { BlockResponse } from '@/schemas';
 import { formatOption } from '@/utils/formatter';
 
+import { BlockCancelledReversibleTransactions } from '../block-cancelled-reversible-transactions/BlockCancelledReversibleTransactions';
 import { BlockErrorEvents } from '../block-error-events/BlockErrorEvents';
+import { BlockExecutedReversibleTransactions } from '../block-executed-reversible-transactions/BlockExecutedReversibleTransactions';
 import { BlockHighSecuritySets } from '../block-high-security-sets/BlockHighSecuritySets';
-import { BlockReversibleTransactions } from '../block-reversible-transactions/BlockReversibleTransactions';
+import { BlockScheduledReversibleTransactions } from '../block-scheduled-reversible-transactions/BlockScheduledReversibleTransactions';
 import { BlockTransactions } from '../block-transactions/BlockTransactions';
 
 export interface BlockDataTabsProps {
@@ -25,7 +27,9 @@ export interface BlockDataTabsProps {
 
 const TAB_OPTIONS = {
   immediate: 'immediate-transactions',
-  reversible: 'reversible-transactions',
+  scheduledReversible: 'scheduled-reversible-transactions',
+  executedReversible: 'executed-reversible-transactions',
+  cancelledReversible: 'cancelled-reversible-transactions',
   highSecuritySets: 'high-security-sets',
   errorEvents: 'error-events'
 } as const;
@@ -67,8 +71,14 @@ export const BlockDataTabs: React.FC<BlockDataTabsProps> = ({ query }) => {
           <TabsContent value={TAB_OPTIONS.immediate}>
             <BlockTransactions query={query} />
           </TabsContent>
-          <TabsContent value={TAB_OPTIONS.reversible}>
-            <BlockReversibleTransactions query={query} />
+          <TabsContent value={TAB_OPTIONS.scheduledReversible}>
+            <BlockScheduledReversibleTransactions query={query} />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.executedReversible}>
+            <BlockExecutedReversibleTransactions query={query} />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.cancelledReversible}>
+            <BlockCancelledReversibleTransactions query={query} />
           </TabsContent>
           <TabsContent value={TAB_OPTIONS.highSecuritySets}>
             <BlockHighSecuritySets query={query} />
