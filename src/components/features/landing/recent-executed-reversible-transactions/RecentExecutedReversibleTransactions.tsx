@@ -4,18 +4,18 @@ import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import { RESOURCES } from '@/constants/resources';
 
-import { ReversibleTransactionsTable } from '../reversible-transactions-table/ReversibleTransactionsTable';
+import { ExecutedReversibleTransactionsTable } from '../executed-reversible-transactions-table/ExecutedReversibleTransactionsTable';
 
-export const RecentReversibleTransactions = () => {
+export const RecentExecutedReversibleTransactions = () => {
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>Recent Reversible Transactions</h2>
+      <h2>Recent Executed Reversible Transactions</h2>
 
-      <ReversibleTransactionsTable />
+      <ExecutedReversibleTransactionsTable />
 
       <Button variant="link" className="mx-auto w-fit">
-        <Link to={RESOURCES.reversibleTransactions}>
-          See all reversible transactions
+        <Link to={RESOURCES.executedReversibleTransactions}>
+          See all executed reversible transactions
         </Link>
       </Button>
     </ContentContainer>

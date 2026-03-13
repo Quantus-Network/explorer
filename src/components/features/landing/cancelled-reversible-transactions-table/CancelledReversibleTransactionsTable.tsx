@@ -1,9 +1,9 @@
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 
-import { useReversibleTransactionsTable } from './hook';
+import { useCancelledReversibleTransactionsTable } from './hook';
 
-export const ReversibleTransactionsTable = () => {
-  const { getStatus, table, error } = useReversibleTransactionsTable();
+export const CancelledReversibleTransactionsTable = () => {
+  const { getStatus, table, error } = useCancelledReversibleTransactionsTable();
 
   return (
     <DataTable

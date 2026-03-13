@@ -2,20 +2,19 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
-import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
-import type { ReversibleTransaction } from '@/schemas';
+import type { ScheduledReversibleTransaction } from '@/schemas';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
-const columnHelper = createColumnHelper<ReversibleTransaction>();
+const columnHelper = createColumnHelper<ScheduledReversibleTransaction>();
 
-export const REVERSIBLE_TRANSACTION_COLUMNS = [
+export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
   columnHelper.accessor('extrinsicHash', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.reversibleTransactions}/${props.getValue()}`}
+        href={`${RESOURCES.scheduledReversibleTransactions}/${props.row.original.txId}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />
@@ -39,7 +38,12 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-
+  columnHelper.accessor('scheduledAt', {
+    id: 'scheduledAt',
+    header: 'Scheduled At',
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
+    enableSorting: true
+  }),
   columnHelper.accessor('from.id', {
     id: 'from',
     header: 'From',
@@ -68,12 +72,6 @@ export const REVERSIBLE_TRANSACTION_COLUMNS = [
     id: 'amount',
     header: 'Amount',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
-    enableSorting: true
-  }),
-  columnHelper.accessor('status', {
-    id: 'status',
-    header: 'Status',
-    cell: (props) => <TransactionStatus status={props.getValue()} />,
     enableSorting: true
   })
 ];
