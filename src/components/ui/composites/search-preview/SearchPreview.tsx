@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import type { HTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 
+import { ReversibleTransferStatus } from '@/__generated__/graphql';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
@@ -35,6 +36,22 @@ function PreviewLink({
     </Link>
   );
 }
+
+const getReversibleTransactionHref = (
+  status: ReversibleTransferStatus,
+  txId: string
+) => {
+  switch (status) {
+    case ReversibleTransferStatus.Scheduled:
+      return `${RESOURCES.scheduledReversibleTransactions}/${txId}`;
+    case ReversibleTransferStatus.Executed:
+      return `${RESOURCES.executedReversibleTransactions}/${txId}`;
+    case ReversibleTransferStatus.Cancelled:
+      return `${RESOURCES.cancelledReversibleTransactions}/${txId}`;
+    default:
+      return '#';
+  }
+};
 
 interface SectionProps<T> {
   title: string;
@@ -143,7 +160,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: reversibleTransactions,
         renderItem: (tx: any) => (
           <PreviewLink
-            href={`${RESOURCES.reversibleTransactions}/${tx.extrinsicHash}`}
+            href={getReversibleTransactionHref(tx.status, tx.txId)}
             label={`${tx.extrinsicHash}`}
             onSelect={handleClosePreview}
           />

@@ -21,6 +21,8 @@ export const search = (fetcher: DataFetcher) => ({
           where: { extrinsicHash_startsWith: $keyword }
         ) {
           extrinsicHash
+          status
+          txId
         }
         accounts(limit: $limit, where: { id_startsWith: $keyword }) {
           id

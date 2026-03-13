@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { ReversibleTransferStatus } from '@/__generated__/graphql';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { TransactionStatus } from '@/components/ui/transaction-status';
@@ -9,13 +10,32 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<AccountReversibleTransaction>();
 
+const getReversibleTransactionHref = (
+  status: ReversibleTransferStatus,
+  txId: string
+) => {
+  switch (status) {
+    case ReversibleTransferStatus.Scheduled:
+      return `${RESOURCES.scheduledReversibleTransactions}/${txId}`;
+    case ReversibleTransferStatus.Executed:
+      return `${RESOURCES.executedReversibleTransactions}/${txId}`;
+    case ReversibleTransferStatus.Cancelled:
+      return `${RESOURCES.cancelledReversibleTransactions}/${txId}`;
+    default:
+      return '#';
+  }
+};
+
 export const ACCOUNT_REVERSIBLE_TRANSACTION_COLUMNS = [
   columnHelper.accessor('node.extrinsicHash', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.reversibleTransactions}/${props.getValue()}`}
+        href={getReversibleTransactionHref(
+          props.row.original.node.status,
+          props.row.original.node.txId
+        )}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />

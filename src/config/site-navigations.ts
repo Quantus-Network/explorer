@@ -20,9 +20,19 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
         longLabel: 'Immediate Transactions'
       },
       {
-        label: 'Reversible Transactions',
-        path: '/reversible-transactions',
-        longLabel: 'Reversible Transactions'
+        label: 'Scheduled Reversible',
+        path: '/scheduled-reversible-transactions',
+        longLabel: 'Scheduled Reversible Transactions'
+      },
+      {
+        label: 'Executed Reversible',
+        path: '/executed-reversible-transactions',
+        longLabel: 'Executed Reversible Transactions'
+      },
+      {
+        label: 'Cancelled Reversible',
+        path: '/cancelled-reversible-transactions',
+        longLabel: 'Cancelled Reversible Transactions'
       }
     ]
   },

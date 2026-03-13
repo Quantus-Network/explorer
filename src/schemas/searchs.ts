@@ -8,7 +8,10 @@ import type { Transaction } from './transcation';
 
 export interface SearchAllResponse {
   transactions: Pick<Transaction, 'extrinsicHash'>[];
-  reversibleTransactions: Pick<ReversibleTransaction, 'extrinsicHash'>[];
+  reversibleTransactions: Pick<
+    ReversibleTransaction,
+    'extrinsicHash' | 'status' | 'txId'
+  >[];
   accounts: Pick<Account, 'id'>[];
   blocks: Pick<Block, 'height'>[];
   highSecuritySets: Pick<HighSecuritySet, 'extrinsicHash'>[];
