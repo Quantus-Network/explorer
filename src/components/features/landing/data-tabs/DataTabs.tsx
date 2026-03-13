@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs } from '@/components/ui/tabs';
 import { formatOption } from '@/utils/formatter';
 
 import { RecentBlocks } from '../recent-blocks/RecentBlocks';
@@ -44,7 +44,7 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
       <ContentContainer>
         <Tabs value={selectedTab} className="gap-5">
           <Select value={selectedTab} onValueChange={setSelectedTab}>
-            <SelectTrigger className="max-w-56 md:hidden">
+            <SelectTrigger className="max-w-56 ">
               <SelectValue />
             </SelectTrigger>
 
@@ -56,18 +56,6 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
               ))}
             </SelectContent>
           </Select>
-
-          <TabsList className="hidden md:inline-flex">
-            {TAB_LIST.map((val) => (
-              <TabsTrigger
-                key={val}
-                onFocus={() => setSelectedTab(val)}
-                value={val}
-              >
-                {formatOption(val)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
 
           <TabsContent value={TAB_OPTIONS.immediate}>
             <RecentTransactions />

@@ -2,23 +2,26 @@ import type { QueryResult } from '@apollo/client';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useCallback, useMemo } from 'react';
 
-import { EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS';
-import type { AccountResponse, ExecutedReversibleTransaction } from '@/schemas';
+import { ACCOUNT_EXECUTED_REVERSIBLE_COLUMNS } from '@/components/common/table-columns/ACCOUNT_EXECUTED_REVERSIBLE_COLUMNS';
+import type {
+  AccountExecutedReversibleTransaction,
+  AccountResponse
+} from '@/schemas';
 
 export const useAccountExecutedReversibleTransactions = (
   query: QueryResult<AccountResponse>
 ) => {
   const { data, error: fetchError, loading } = query;
-  const columns = useMemo(() => EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS, []);
+  const columns = useMemo(() => ACCOUNT_EXECUTED_REVERSIBLE_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.executedReversibleTransactions?.edges.map((e) => e.node) ?? [],
+    () => data?.executedReversibleTransactions?.edges ?? [],
     [data?.executedReversibleTransactions?.edges]
   );
 
-  const table = useReactTable<ExecutedReversibleTransaction>({
+  const table = useReactTable<AccountExecutedReversibleTransaction>({
     data: tableData,
-    columns,
+    columns: columns as any,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false
   });

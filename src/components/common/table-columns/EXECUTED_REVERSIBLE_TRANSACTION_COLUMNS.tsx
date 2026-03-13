@@ -9,6 +9,18 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<ExecutedReversibleTransaction>();
 
 export const EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS = [
+  columnHelper.accessor('txId', {
+    id: 'tx-id',
+    header: 'Tx ID',
+    cell: (props) => (
+      <LinkWithCopy
+        href={`${RESOURCES.executedReversibleTransactions}/${props.getValue()}`}
+        text={formatTxAddress(props.getValue() ?? '-')}
+        textCopy={props.getValue() ?? ''}
+      />
+    ),
+    enableSorting: false
+  }),
   columnHelper.accessor('scheduledTransfer.extrinsicHash', {
     id: 'tx-hash',
     header: 'Hash',

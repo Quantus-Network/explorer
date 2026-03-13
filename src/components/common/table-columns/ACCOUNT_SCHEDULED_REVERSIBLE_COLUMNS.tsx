@@ -3,60 +3,44 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import type { ScheduledReversibleTransaction } from '@/schemas';
+import type { AccountScheduledReversibleTransaction } from '@/schemas';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
-const columnHelper = createColumnHelper<ScheduledReversibleTransaction>();
+const columnHelper =
+  createColumnHelper<AccountScheduledReversibleTransaction>();
 
-export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('txId', {
+export const ACCOUNT_SCHEDULED_REVERSIBLE_COLUMNS = [
+  columnHelper.accessor('node.txId', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.scheduledReversibleTransactions}/${props.getValue()}`}
+        href={`${RESOURCES.scheduledReversibleTransactions}/${props.row.original.node.txId}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('extrinsicHash', {
-    id: 'tx-hash',
-    header: 'Hash',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.scheduledReversibleTransactions}/${props.row.original.txId}`}
-        text={formatTxAddress(props.getValue() ?? '-')}
-        textCopy={props.getValue() ?? ''}
-      />
-    ),
-    enableSorting: false
-  }),
-  columnHelper.accessor('block.height', {
-    id: 'block_height',
+  columnHelper.accessor('node.block.height', {
+    id: 'blockNumber',
     header: 'Block',
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={props.getValue().toString()}
+        textCopy={props.getValue().toString()}
       />
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('timestamp', {
+  columnHelper.accessor('node.timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('scheduledAt', {
-    id: 'scheduledAt',
-    header: 'Scheduled At',
-    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
-    enableSorting: true
-  }),
-  columnHelper.accessor('from.id', {
+  columnHelper.accessor('node.from.id', {
     id: 'from',
     header: 'From',
     cell: (props) => (
@@ -68,7 +52,7 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('to.id', {
+  columnHelper.accessor('node.to.id', {
     id: 'to',
     header: 'To',
     cell: (props) => (
@@ -80,9 +64,15 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('amount', {
+  columnHelper.accessor('node.amount', {
     id: 'amount',
     header: 'Amount',
+    cell: (props) => formatMonetaryValue(props.getValue(), 5),
+    enableSorting: true
+  }),
+  columnHelper.accessor('node.fee', {
+    id: 'fee',
+    header: 'Fee',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   })

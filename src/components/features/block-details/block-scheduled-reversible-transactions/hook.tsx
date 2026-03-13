@@ -2,27 +2,25 @@ import type { QueryResult } from '@apollo/client';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
-import { SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS';
-import type { BlockResponse, ScheduledReversibleTransaction } from '@/schemas';
+import { BLOCK_SCHEDULED_REVERSIBLE_COLUMNS } from '@/components/common/table-columns/BLOCK_SCHEDULED_REVERSIBLE_COLUMNS';
+import type {
+  BlockResponse,
+  BlockScheduledReversibleTransaction
+} from '@/schemas';
 
 export const useBlockScheduledReversibleTransactions = (
   query: QueryResult<BlockResponse>
 ) => {
   const { data, error: fetchError, loading } = query;
-  const columns = useMemo(() => {
-    return SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS.map((col) => ({
-      ...col,
-      accessorKey: col.id === 'tx-hash' ? 'extrinsicHash' : col.id
-    }));
-  }, []);
+  const columns = useMemo(() => BLOCK_SCHEDULED_REVERSIBLE_COLUMNS, []);
 
   // Map BlockScheduledReversibleTransaction[] to ScheduledReversibleTransaction[]
   const tableData = useMemo(
-    () => data?.scheduledReversibleTransactions?.edges.map((e) => e.node) ?? [],
+    () => data?.scheduledReversibleTransactions?.edges ?? [],
     [data?.scheduledReversibleTransactions?.edges]
   );
 
-  const table = useReactTable<ScheduledReversibleTransaction>({
+  const table = useReactTable<BlockScheduledReversibleTransaction>({
     data: tableData,
     columns: columns as any,
     getCoreRowModel: getCoreRowModel(),

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import type { AccountResponse } from '@/schemas';
 import { formatOption } from '@/utils/formatter';
 
@@ -49,7 +49,7 @@ export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({
       <ContentContainer>
         <Tabs value={selectedTab} className="gap-5">
           <Select value={selectedTab} onValueChange={setSelectedTab}>
-            <SelectTrigger className="max-w-56 sm:hidden">
+            <SelectTrigger className="max-w-56">
               <SelectValue />
             </SelectTrigger>
 
@@ -61,18 +61,6 @@ export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({
               ))}
             </SelectContent>
           </Select>
-
-          <TabsList className="hidden sm:inline-flex">
-            {TAB_LIST.map((val) => (
-              <TabsTrigger
-                key={val}
-                onFocus={() => setSelectedTab(val)}
-                value={val}
-              >
-                {formatOption(val)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
 
           <TabsContent value={TAB_OPTIONS.immediate}>
             <AccountTransactions accountId={accountId} query={query} />
