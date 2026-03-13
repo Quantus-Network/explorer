@@ -9,15 +9,15 @@ import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
 import useApiClient from '@/api';
-import { REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/REVERSIBLE_TRANSACTION_COLUMNS';
+import { CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/table-columns/CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { ReversibleTransactionSorts } from '@/constants/query-sorts';
-import { REVERSIBLE_TRANSACTION_SORTS_LITERALS } from '@/constants/query-sorts';
-import type { ReversibleTransaction } from '@/schemas';
+import type { CancelledReversibleTransactionSorts } from '@/constants/query-sorts';
+import { CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS } from '@/constants/query-sorts';
+import type { CancelledReversibleTransaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
-export const useReversibleTransactionsTable = () => {
+export const useCancelledReversibleTransactionsTable = () => {
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
@@ -30,7 +30,7 @@ export const useReversibleTransactionsTable = () => {
   );
   const [sortBy, setSortBy] = useQueryState(
     'sortBy',
-    parseAsStringLiteral(REVERSIBLE_TRANSACTION_SORTS_LITERALS)
+    parseAsStringLiteral(CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)
   );
 
   const currentPageIndex = page - 1;
@@ -49,7 +49,8 @@ export const useReversibleTransactionsTable = () => {
         const key = newValue[0].id;
         const order = newValue[0].desc ? 'DESC' : 'ASC';
 
-        const newSortBy = `${key}_${order}` as ReversibleTransactionSorts;
+        const newSortBy =
+          `${key}_${order}` as CancelledReversibleTransactionSorts;
 
         setSortBy(newSortBy);
       } else {
@@ -59,7 +60,8 @@ export const useReversibleTransactionsTable = () => {
       const key = sorting[0].id;
       const order = sorting[0].desc ? 'DESC' : 'ASC';
 
-      const newSortBy = `${key}_${order}` as ReversibleTransactionSorts;
+      const newSortBy =
+        `${key}_${order}` as CancelledReversibleTransactionSorts;
 
       setSortBy(newSortBy);
     }
@@ -81,7 +83,7 @@ export const useReversibleTransactionsTable = () => {
     loading,
     data,
     error: fetchError
-  } = api.reversibleTransactions.useGetAll({
+  } = api.cancelledReversibleTransactions.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
       orderBy: sortBy,
@@ -89,7 +91,11 @@ export const useReversibleTransactionsTable = () => {
       offset: currentPageIndex * limit,
       ...(accountId && {
         where: {
-          OR: [{ from: { id_eq: accountId } }, { to: { id_eq: accountId } }]
+          OR: [
+            { scheduledTransfer: { from: { id_eq: accountId } } },
+            { scheduledTransfer: { to: { id_eq: accountId } } },
+            { cancelledBy: { id_eq: accountId } }
+          ]
         }
       }),
       ...(block && {
@@ -100,15 +106,12 @@ export const useReversibleTransactionsTable = () => {
     }
   });
 
-  const reversibleTransactionColumns = useMemo(
-    () => REVERSIBLE_TRANSACTION_COLUMNS,
-    []
-  );
+  const columns = useMemo(() => CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS, []);
   const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
-  const table = useReactTable<ReversibleTransaction>({
-    data: data?.reversibleTransactions ?? [],
-    columns: reversibleTransactionColumns,
+  const table = useReactTable<CancelledReversibleTransaction>({
+    data: data?.cancelledReversibleTransactions ?? [],
+    columns,
     getCoreRowModel: getCoreRowModel(),
     state: {
       sorting: sortingValue,

@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
-export interface ReversibleTransactionsStatsProps {}
+export interface ScheduledReversibleTransactionsStatsProps {}
 
-export const ReversibleTransactionsStats: React.FC<
-  ReversibleTransactionsStatsProps
+export const ScheduledReversibleTransactionsStats: React.FC<
+  ScheduledReversibleTransactionsStatsProps
 > = () => {
   const api = useApiClient();
   const { accountId, block } = useSearch({
@@ -18,9 +18,10 @@ export const ReversibleTransactionsStats: React.FC<
 
   if (accountId || block) return null;
 
-  const { loading, data, error } = api.reversibleTransactions.useGetStats({
-    pollInterval: DATA_POOL_INTERVAL
-  });
+  const { loading, data, error } =
+    api.scheduledReversibleTransactions.useGetStats({
+      pollInterval: DATA_POOL_INTERVAL
+    });
 
   const success = !loading && !error;
 
@@ -29,7 +30,7 @@ export const ReversibleTransactionsStats: React.FC<
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total Transactions</h3>
+            <h3>Total Scheduled Transactions</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -42,7 +43,7 @@ export const ReversibleTransactionsStats: React.FC<
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Recent Transactions (24H)</h3>
+            <h3>Recent Scheduled Transactions (24H)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>

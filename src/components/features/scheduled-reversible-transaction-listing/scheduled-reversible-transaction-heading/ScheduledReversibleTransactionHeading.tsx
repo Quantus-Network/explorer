@@ -1,10 +1,10 @@
 import { Link, useSearch } from '@tanstack/react-router';
 import * as React from 'react';
 
-export interface ReversibleTransactionHeadingProps {}
+export interface ScheduledReversibleTransactionHeadingProps {}
 
-export const ReversibleTransactionHeading: React.FC<
-  ReversibleTransactionHeadingProps
+export const ScheduledReversibleTransactionHeading: React.FC<
+  ScheduledReversibleTransactionHeadingProps
 > = () => {
   const { accountId, block } = useSearch({
     strict: false
@@ -12,7 +12,7 @@ export const ReversibleTransactionHeading: React.FC<
 
   return (
     <div>
-      <h1>Reversible Transactions</h1>
+      <h1>Scheduled Reversible Transactions</h1>
 
       {block && (
         <div className="flex gap-1">

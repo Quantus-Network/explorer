@@ -5,32 +5,31 @@ import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
-import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
-import type { ReversibleTransactionResponse } from '@/schemas';
+import type { ScheduledReversibleTransactionResponse } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
-export interface ReversibleTransactionInformationProps {
-  hash: string;
+export interface ScheduledReversibleTransactionInformationProps {
+  txId: string;
 }
 
-type ReversibleTransaction =
-  ReversibleTransactionResponse['reversibleTransactions'][0];
+type ScheduledReversibleTransaction =
+  ScheduledReversibleTransactionResponse['scheduledReversibleTransactions'][0];
 
-export const ReversibleTransactionInformation: React.FC<
-  ReversibleTransactionInformationProps
-> = ({ hash }) => {
+export const ScheduledReversibleTransactionInformation: React.FC<
+  ScheduledReversibleTransactionInformationProps
+> = ({ txId }) => {
   const api = useApiClient();
-  const { data, loading } = api.reversibleTransactions
-    .getByHash()
-    .useQuery(hash);
+  const { data, loading } = api.scheduledReversibleTransactions
+    .getByTxId()
+    .useQuery(txId);
 
-  if (!loading && (!data || data.reversibleTransactions.length !== 1))
+  if (!loading && (!data || data.scheduledReversibleTransactions.length !== 1))
     throw notFound();
 
-  const tx = data?.reversibleTransactions[0];
+  const tx = data?.scheduledReversibleTransactions[0];
 
-  const information: Partial<ReversibleTransaction>[] = [
+  const information: Partial<ScheduledReversibleTransaction>[] = [
     {
       txId: tx?.txId,
       amount: tx?.amount,
@@ -40,13 +39,12 @@ export const ReversibleTransactionInformation: React.FC<
       scheduledAt: tx?.scheduledAt,
       from: tx?.from,
       to: tx?.to,
-      fee: tx?.fee,
-      status: tx?.status
+      fee: tx?.fee
     }
   ];
 
   return (
-    <DataList<Partial<ReversibleTransaction>>
+    <DataList<Partial<ScheduledReversibleTransaction>>
       loading={loading}
       data={information}
       fields={[
@@ -114,15 +112,6 @@ export const ReversibleTransactionInformation: React.FC<
           label: 'Fee',
           key: 'fee',
           render: (value) => formatMonetaryValue(value)
-        },
-        {
-          label: 'Status',
-          key: 'status',
-          render: (value) => (
-            <TransactionStatus
-              status={data?.reversibleTransactions[0].status ?? value}
-            />
-          )
         }
       ]}
     />
