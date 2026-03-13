@@ -39,8 +39,6 @@ export type Account = {
   frozen: Scalars['BigInt']['output'];
   /** Account address */
   id: Scalars['String']['output'];
-  /** Whether this account has only received transfers (never sent). Used for deposit pool tracking. */
-  isDepositOnly: Scalars['Boolean']['output'];
   lastUpdated: Scalars['Int']['output'];
   reserved: Scalars['BigInt']['output'];
   transfersFrom: Array<Transfer>;
@@ -86,12 +84,6 @@ export enum AccountOrderByInput {
   IdDesc = 'id_DESC',
   IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
   IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  IsDepositOnlyAsc = 'isDepositOnly_ASC',
-  IsDepositOnlyAscNullsFirst = 'isDepositOnly_ASC_NULLS_FIRST',
-  IsDepositOnlyAscNullsLast = 'isDepositOnly_ASC_NULLS_LAST',
-  IsDepositOnlyDesc = 'isDepositOnly_DESC',
-  IsDepositOnlyDescNullsFirst = 'isDepositOnly_DESC_NULLS_FIRST',
-  IsDepositOnlyDescNullsLast = 'isDepositOnly_DESC_NULLS_LAST',
   LastUpdatedAsc = 'lastUpdated_ASC',
   LastUpdatedAscNullsFirst = 'lastUpdated_ASC_NULLS_FIRST',
   LastUpdatedAscNullsLast = 'lastUpdated_ASC_NULLS_LAST',
@@ -144,9 +136,6 @@ export type AccountWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
   id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  isDepositOnly_eq?: InputMaybe<Scalars['Boolean']['input']>;
-  isDepositOnly_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  isDepositOnly_not_eq?: InputMaybe<Scalars['Boolean']['input']>;
   lastUpdated_eq?: InputMaybe<Scalars['Int']['input']>;
   lastUpdated_gt?: InputMaybe<Scalars['Int']['input']>;
   lastUpdated_gte?: InputMaybe<Scalars['Int']['input']>;
@@ -216,12 +205,6 @@ export enum BalanceEventOrderByInput {
   AccountIdDesc = 'account_id_DESC',
   AccountIdDescNullsFirst = 'account_id_DESC_NULLS_FIRST',
   AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
-  AccountIsDepositOnlyAsc = 'account_isDepositOnly_ASC',
-  AccountIsDepositOnlyAscNullsFirst = 'account_isDepositOnly_ASC_NULLS_FIRST',
-  AccountIsDepositOnlyAscNullsLast = 'account_isDepositOnly_ASC_NULLS_LAST',
-  AccountIsDepositOnlyDesc = 'account_isDepositOnly_DESC',
-  AccountIsDepositOnlyDescNullsFirst = 'account_isDepositOnly_DESC_NULLS_FIRST',
-  AccountIsDepositOnlyDescNullsLast = 'account_isDepositOnly_DESC_NULLS_LAST',
   AccountLastUpdatedAsc = 'account_lastUpdated_ASC',
   AccountLastUpdatedAscNullsFirst = 'account_lastUpdated_ASC_NULLS_FIRST',
   AccountLastUpdatedAscNullsLast = 'account_lastUpdated_ASC_NULLS_LAST',
@@ -288,12 +271,6 @@ export enum BalanceEventOrderByInput {
   FromIdDesc = 'from_id_DESC',
   FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
   FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsDepositOnlyAsc = 'from_isDepositOnly_ASC',
-  FromIsDepositOnlyAscNullsFirst = 'from_isDepositOnly_ASC_NULLS_FIRST',
-  FromIsDepositOnlyAscNullsLast = 'from_isDepositOnly_ASC_NULLS_LAST',
-  FromIsDepositOnlyDesc = 'from_isDepositOnly_DESC',
-  FromIsDepositOnlyDescNullsFirst = 'from_isDepositOnly_DESC_NULLS_FIRST',
-  FromIsDepositOnlyDescNullsLast = 'from_isDepositOnly_DESC_NULLS_LAST',
   FromLastUpdatedAsc = 'from_lastUpdated_ASC',
   FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
   FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
@@ -330,12 +307,6 @@ export enum BalanceEventOrderByInput {
   ToIdDesc = 'to_id_DESC',
   ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
   ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsDepositOnlyAsc = 'to_isDepositOnly_ASC',
-  ToIsDepositOnlyAscNullsFirst = 'to_isDepositOnly_ASC_NULLS_FIRST',
-  ToIsDepositOnlyAscNullsLast = 'to_isDepositOnly_ASC_NULLS_LAST',
-  ToIsDepositOnlyDesc = 'to_isDepositOnly_DESC',
-  ToIsDepositOnlyDescNullsFirst = 'to_isDepositOnly_DESC_NULLS_FIRST',
-  ToIsDepositOnlyDescNullsLast = 'to_isDepositOnly_DESC_NULLS_LAST',
   ToLastUpdatedAsc = 'to_lastUpdated_ASC',
   ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
   ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
@@ -569,99 +540,6 @@ export type BlocksConnection = {
   edges: Array<BlockEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-/** Bucketed deposit pool statistics for privacy score computation. Each bucket covers a bounded range of deposit amounts with overlapping ranges growing by factor 4. */
-export type DepositPoolStats = {
-  __typename?: 'DepositPoolStats';
-  /** Bucket definitions and stats as JSON. Each bucket has: lo, hi (planck), count, sumAmounts, sumAmountsSquared */
-  buckets: Scalars['String']['output'];
-  /** Singleton entity (id='global') */
-  id: Scalars['String']['output'];
-  /** Block number of last update */
-  lastUpdatedBlock: Scalars['Int']['output'];
-};
-
-export type DepositPoolStatsConnection = {
-  __typename?: 'DepositPoolStatsConnection';
-  edges: Array<DepositPoolStatsEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type DepositPoolStatsEdge = {
-  __typename?: 'DepositPoolStatsEdge';
-  cursor: Scalars['String']['output'];
-  node: DepositPoolStats;
-};
-
-export enum DepositPoolStatsOrderByInput {
-  BucketsAsc = 'buckets_ASC',
-  BucketsAscNullsFirst = 'buckets_ASC_NULLS_FIRST',
-  BucketsAscNullsLast = 'buckets_ASC_NULLS_LAST',
-  BucketsDesc = 'buckets_DESC',
-  BucketsDescNullsFirst = 'buckets_DESC_NULLS_FIRST',
-  BucketsDescNullsLast = 'buckets_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  LastUpdatedBlockAsc = 'lastUpdatedBlock_ASC',
-  LastUpdatedBlockAscNullsFirst = 'lastUpdatedBlock_ASC_NULLS_FIRST',
-  LastUpdatedBlockAscNullsLast = 'lastUpdatedBlock_ASC_NULLS_LAST',
-  LastUpdatedBlockDesc = 'lastUpdatedBlock_DESC',
-  LastUpdatedBlockDescNullsFirst = 'lastUpdatedBlock_DESC_NULLS_FIRST',
-  LastUpdatedBlockDescNullsLast = 'lastUpdatedBlock_DESC_NULLS_LAST'
-}
-
-export type DepositPoolStatsWhereInput = {
-  AND?: InputMaybe<Array<DepositPoolStatsWhereInput>>;
-  OR?: InputMaybe<Array<DepositPoolStatsWhereInput>>;
-  buckets_contains?: InputMaybe<Scalars['String']['input']>;
-  buckets_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  buckets_endsWith?: InputMaybe<Scalars['String']['input']>;
-  buckets_eq?: InputMaybe<Scalars['String']['input']>;
-  buckets_gt?: InputMaybe<Scalars['String']['input']>;
-  buckets_gte?: InputMaybe<Scalars['String']['input']>;
-  buckets_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  buckets_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  buckets_lt?: InputMaybe<Scalars['String']['input']>;
-  buckets_lte?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_contains?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_eq?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  buckets_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  buckets_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  lastUpdatedBlock_eq?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_gt?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_gte?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lastUpdatedBlock_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  lastUpdatedBlock_lt?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_lte?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 export type ErrorEvent = {
@@ -1162,12 +1040,6 @@ export enum EventOrderByInput {
   TransferFeeDesc = 'transfer_fee_DESC',
   TransferFeeDescNullsFirst = 'transfer_fee_DESC_NULLS_FIRST',
   TransferFeeDescNullsLast = 'transfer_fee_DESC_NULLS_LAST',
-  TransferFromHashAsc = 'transfer_fromHash_ASC',
-  TransferFromHashAscNullsFirst = 'transfer_fromHash_ASC_NULLS_FIRST',
-  TransferFromHashAscNullsLast = 'transfer_fromHash_ASC_NULLS_LAST',
-  TransferFromHashDesc = 'transfer_fromHash_DESC',
-  TransferFromHashDescNullsFirst = 'transfer_fromHash_DESC_NULLS_FIRST',
-  TransferFromHashDescNullsLast = 'transfer_fromHash_DESC_NULLS_LAST',
   TransferIdAsc = 'transfer_id_ASC',
   TransferIdAscNullsFirst = 'transfer_id_ASC_NULLS_FIRST',
   TransferIdAscNullsLast = 'transfer_id_ASC_NULLS_LAST',
@@ -1180,12 +1052,6 @@ export enum EventOrderByInput {
   TransferTimestampDesc = 'transfer_timestamp_DESC',
   TransferTimestampDescNullsFirst = 'transfer_timestamp_DESC_NULLS_FIRST',
   TransferTimestampDescNullsLast = 'transfer_timestamp_DESC_NULLS_LAST',
-  TransferToHashAsc = 'transfer_toHash_ASC',
-  TransferToHashAscNullsFirst = 'transfer_toHash_ASC_NULLS_FIRST',
-  TransferToHashAscNullsLast = 'transfer_toHash_ASC_NULLS_LAST',
-  TransferToHashDesc = 'transfer_toHash_DESC',
-  TransferToHashDescNullsFirst = 'transfer_toHash_DESC_NULLS_FIRST',
-  TransferToHashDescNullsLast = 'transfer_toHash_DESC_NULLS_LAST',
   TypeAsc = 'type_ASC',
   TypeAscNullsFirst = 'type_ASC_NULLS_FIRST',
   TypeAscNullsLast = 'type_ASC_NULLS_LAST',
@@ -1397,12 +1263,6 @@ export enum HighSecuritySetOrderByInput {
   InterceptorIdDesc = 'interceptor_id_DESC',
   InterceptorIdDescNullsFirst = 'interceptor_id_DESC_NULLS_FIRST',
   InterceptorIdDescNullsLast = 'interceptor_id_DESC_NULLS_LAST',
-  InterceptorIsDepositOnlyAsc = 'interceptor_isDepositOnly_ASC',
-  InterceptorIsDepositOnlyAscNullsFirst = 'interceptor_isDepositOnly_ASC_NULLS_FIRST',
-  InterceptorIsDepositOnlyAscNullsLast = 'interceptor_isDepositOnly_ASC_NULLS_LAST',
-  InterceptorIsDepositOnlyDesc = 'interceptor_isDepositOnly_DESC',
-  InterceptorIsDepositOnlyDescNullsFirst = 'interceptor_isDepositOnly_DESC_NULLS_FIRST',
-  InterceptorIsDepositOnlyDescNullsLast = 'interceptor_isDepositOnly_DESC_NULLS_LAST',
   InterceptorLastUpdatedAsc = 'interceptor_lastUpdated_ASC',
   InterceptorLastUpdatedAscNullsFirst = 'interceptor_lastUpdated_ASC_NULLS_FIRST',
   InterceptorLastUpdatedAscNullsLast = 'interceptor_lastUpdated_ASC_NULLS_LAST',
@@ -1439,12 +1299,6 @@ export enum HighSecuritySetOrderByInput {
   WhoIdDesc = 'who_id_DESC',
   WhoIdDescNullsFirst = 'who_id_DESC_NULLS_FIRST',
   WhoIdDescNullsLast = 'who_id_DESC_NULLS_LAST',
-  WhoIsDepositOnlyAsc = 'who_isDepositOnly_ASC',
-  WhoIsDepositOnlyAscNullsFirst = 'who_isDepositOnly_ASC_NULLS_FIRST',
-  WhoIsDepositOnlyAscNullsLast = 'who_isDepositOnly_ASC_NULLS_LAST',
-  WhoIsDepositOnlyDesc = 'who_isDepositOnly_DESC',
-  WhoIsDepositOnlyDescNullsFirst = 'who_isDepositOnly_DESC_NULLS_FIRST',
-  WhoIsDepositOnlyDescNullsLast = 'who_isDepositOnly_DESC_NULLS_LAST',
   WhoLastUpdatedAsc = 'who_lastUpdated_ASC',
   WhoLastUpdatedAscNullsFirst = 'who_lastUpdated_ASC_NULLS_FIRST',
   WhoLastUpdatedAscNullsLast = 'who_lastUpdated_ASC_NULLS_LAST',
@@ -1634,12 +1488,6 @@ export enum MinerRewardOrderByInput {
   MinerIdDesc = 'miner_id_DESC',
   MinerIdDescNullsFirst = 'miner_id_DESC_NULLS_FIRST',
   MinerIdDescNullsLast = 'miner_id_DESC_NULLS_LAST',
-  MinerIsDepositOnlyAsc = 'miner_isDepositOnly_ASC',
-  MinerIsDepositOnlyAscNullsFirst = 'miner_isDepositOnly_ASC_NULLS_FIRST',
-  MinerIsDepositOnlyAscNullsLast = 'miner_isDepositOnly_ASC_NULLS_LAST',
-  MinerIsDepositOnlyDesc = 'miner_isDepositOnly_DESC',
-  MinerIsDepositOnlyDescNullsFirst = 'miner_isDepositOnly_DESC_NULLS_FIRST',
-  MinerIsDepositOnlyDescNullsLast = 'miner_isDepositOnly_DESC_NULLS_LAST',
   MinerLastUpdatedAsc = 'miner_lastUpdated_ASC',
   MinerLastUpdatedAscNullsFirst = 'miner_lastUpdated_ASC_NULLS_FIRST',
   MinerLastUpdatedAscNullsLast = 'miner_lastUpdated_ASC_NULLS_LAST',
@@ -1801,26 +1649,6 @@ export type MinerStatsWhereInput = {
   totalRewards_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
-export type NullifierResult = {
-  __typename?: 'NullifierResult';
-  blockHeight: Scalars['Int']['output'];
-  extrinsicHash: Scalars['String']['output'];
-  nullifier: Scalars['String']['output'];
-  nullifierHash: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type NullifiersByPrefixInput = {
-  afterBlock?: InputMaybe<Scalars['Int']['input']>;
-  hashPrefixes: Array<Scalars['String']['input']>;
-};
-
-export type NullifiersByPrefixResponse = {
-  __typename?: 'NullifiersByPrefixResponse';
-  nullifiers: Array<NullifierResult>;
-  totalCount: Scalars['Int']['output'];
-};
-
 export type PageInfo = {
   __typename?: 'PageInfo';
   endCursor: Scalars['String']['output'];
@@ -1840,9 +1668,6 @@ export type Query = {
   blockById?: Maybe<Block>;
   blocks: Array<Block>;
   blocksConnection: BlocksConnection;
-  depositPoolStats: Array<DepositPoolStats>;
-  depositPoolStatsById?: Maybe<DepositPoolStats>;
-  depositPoolStatsConnection: DepositPoolStatsConnection;
   errorEventById?: Maybe<ErrorEvent>;
   errorEvents: Array<ErrorEvent>;
   errorEventsConnection: ErrorEventsConnection;
@@ -1858,24 +1683,13 @@ export type Query = {
   minerStats: Array<MinerStats>;
   minerStatsById?: Maybe<MinerStats>;
   minerStatsConnection: MinerStatsConnection;
-  nullifiersByPrefix: NullifiersByPrefixResponse;
   reversibleTransferById?: Maybe<ReversibleTransfer>;
   reversibleTransfers: Array<ReversibleTransfer>;
   reversibleTransfersConnection: ReversibleTransfersConnection;
   squidStatus?: Maybe<SquidStatus>;
   transferById?: Maybe<Transfer>;
   transfers: Array<Transfer>;
-  transfersByHashPrefix: TransfersByPrefixResult;
   transfersConnection: TransfersConnection;
-  wormholeExtrinsicById?: Maybe<WormholeExtrinsic>;
-  wormholeExtrinsics: Array<WormholeExtrinsic>;
-  wormholeExtrinsicsConnection: WormholeExtrinsicsConnection;
-  wormholeNullifierById?: Maybe<WormholeNullifier>;
-  wormholeNullifiers: Array<WormholeNullifier>;
-  wormholeNullifiersConnection: WormholeNullifiersConnection;
-  wormholeOutputById?: Maybe<WormholeOutput>;
-  wormholeOutputs: Array<WormholeOutput>;
-  wormholeOutputsConnection: WormholeOutputsConnection;
 };
 
 export type QueryAccountByIdArgs = {
@@ -1930,24 +1744,6 @@ export type QueryBlocksConnectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy: Array<BlockOrderByInput>;
   where?: InputMaybe<BlockWhereInput>;
-};
-
-export type QueryDepositPoolStatsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<DepositPoolStatsOrderByInput>>;
-  where?: InputMaybe<DepositPoolStatsWhereInput>;
-};
-
-export type QueryDepositPoolStatsByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryDepositPoolStatsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<DepositPoolStatsOrderByInput>;
-  where?: InputMaybe<DepositPoolStatsWhereInput>;
 };
 
 export type QueryErrorEventByIdArgs = {
@@ -2040,10 +1836,6 @@ export type QueryMinerStatsConnectionArgs = {
   where?: InputMaybe<MinerStatsWhereInput>;
 };
 
-export type QueryNullifiersByPrefixArgs = {
-  input: NullifiersByPrefixInput;
-};
-
 export type QueryReversibleTransferByIdArgs = {
   id: Scalars['String']['input'];
 };
@@ -2073,69 +1865,11 @@ export type QueryTransfersArgs = {
   where?: InputMaybe<TransferWhereInput>;
 };
 
-export type QueryTransfersByHashPrefixArgs = {
-  input: TransfersByPrefixInput;
-};
-
 export type QueryTransfersConnectionArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   orderBy: Array<TransferOrderByInput>;
   where?: InputMaybe<TransferWhereInput>;
-};
-
-export type QueryWormholeExtrinsicByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryWormholeExtrinsicsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeExtrinsicOrderByInput>>;
-  where?: InputMaybe<WormholeExtrinsicWhereInput>;
-};
-
-export type QueryWormholeExtrinsicsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeExtrinsicOrderByInput>;
-  where?: InputMaybe<WormholeExtrinsicWhereInput>;
-};
-
-export type QueryWormholeNullifierByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryWormholeNullifiersArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeNullifierOrderByInput>>;
-  where?: InputMaybe<WormholeNullifierWhereInput>;
-};
-
-export type QueryWormholeNullifiersConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeNullifierOrderByInput>;
-  where?: InputMaybe<WormholeNullifierWhereInput>;
-};
-
-export type QueryWormholeOutputByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryWormholeOutputsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeOutputOrderByInput>>;
-  where?: InputMaybe<WormholeOutputWhereInput>;
-};
-
-export type QueryWormholeOutputsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeOutputOrderByInput>;
-  where?: InputMaybe<WormholeOutputWhereInput>;
 };
 
 export type ReversibleTransfer = {
@@ -2217,12 +1951,6 @@ export enum ReversibleTransferOrderByInput {
   CancelledByIdDesc = 'cancelledBy_id_DESC',
   CancelledByIdDescNullsFirst = 'cancelledBy_id_DESC_NULLS_FIRST',
   CancelledByIdDescNullsLast = 'cancelledBy_id_DESC_NULLS_LAST',
-  CancelledByIsDepositOnlyAsc = 'cancelledBy_isDepositOnly_ASC',
-  CancelledByIsDepositOnlyAscNullsFirst = 'cancelledBy_isDepositOnly_ASC_NULLS_FIRST',
-  CancelledByIsDepositOnlyAscNullsLast = 'cancelledBy_isDepositOnly_ASC_NULLS_LAST',
-  CancelledByIsDepositOnlyDesc = 'cancelledBy_isDepositOnly_DESC',
-  CancelledByIsDepositOnlyDescNullsFirst = 'cancelledBy_isDepositOnly_DESC_NULLS_FIRST',
-  CancelledByIsDepositOnlyDescNullsLast = 'cancelledBy_isDepositOnly_DESC_NULLS_LAST',
   CancelledByLastUpdatedAsc = 'cancelledBy_lastUpdated_ASC',
   CancelledByLastUpdatedAscNullsFirst = 'cancelledBy_lastUpdated_ASC_NULLS_FIRST',
   CancelledByLastUpdatedAscNullsLast = 'cancelledBy_lastUpdated_ASC_NULLS_LAST',
@@ -2283,12 +2011,6 @@ export enum ReversibleTransferOrderByInput {
   ExecutedTransferFeeDesc = 'executedTransfer_fee_DESC',
   ExecutedTransferFeeDescNullsFirst = 'executedTransfer_fee_DESC_NULLS_FIRST',
   ExecutedTransferFeeDescNullsLast = 'executedTransfer_fee_DESC_NULLS_LAST',
-  ExecutedTransferFromHashAsc = 'executedTransfer_fromHash_ASC',
-  ExecutedTransferFromHashAscNullsFirst = 'executedTransfer_fromHash_ASC_NULLS_FIRST',
-  ExecutedTransferFromHashAscNullsLast = 'executedTransfer_fromHash_ASC_NULLS_LAST',
-  ExecutedTransferFromHashDesc = 'executedTransfer_fromHash_DESC',
-  ExecutedTransferFromHashDescNullsFirst = 'executedTransfer_fromHash_DESC_NULLS_FIRST',
-  ExecutedTransferFromHashDescNullsLast = 'executedTransfer_fromHash_DESC_NULLS_LAST',
   ExecutedTransferIdAsc = 'executedTransfer_id_ASC',
   ExecutedTransferIdAscNullsFirst = 'executedTransfer_id_ASC_NULLS_FIRST',
   ExecutedTransferIdAscNullsLast = 'executedTransfer_id_ASC_NULLS_LAST',
@@ -2301,12 +2023,6 @@ export enum ReversibleTransferOrderByInput {
   ExecutedTransferTimestampDesc = 'executedTransfer_timestamp_DESC',
   ExecutedTransferTimestampDescNullsFirst = 'executedTransfer_timestamp_DESC_NULLS_FIRST',
   ExecutedTransferTimestampDescNullsLast = 'executedTransfer_timestamp_DESC_NULLS_LAST',
-  ExecutedTransferToHashAsc = 'executedTransfer_toHash_ASC',
-  ExecutedTransferToHashAscNullsFirst = 'executedTransfer_toHash_ASC_NULLS_FIRST',
-  ExecutedTransferToHashAscNullsLast = 'executedTransfer_toHash_ASC_NULLS_LAST',
-  ExecutedTransferToHashDesc = 'executedTransfer_toHash_DESC',
-  ExecutedTransferToHashDescNullsFirst = 'executedTransfer_toHash_DESC_NULLS_FIRST',
-  ExecutedTransferToHashDescNullsLast = 'executedTransfer_toHash_DESC_NULLS_LAST',
   ExtrinsicHashAsc = 'extrinsicHash_ASC',
   ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
   ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
@@ -2337,12 +2053,6 @@ export enum ReversibleTransferOrderByInput {
   FromIdDesc = 'from_id_DESC',
   FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
   FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsDepositOnlyAsc = 'from_isDepositOnly_ASC',
-  FromIsDepositOnlyAscNullsFirst = 'from_isDepositOnly_ASC_NULLS_FIRST',
-  FromIsDepositOnlyAscNullsLast = 'from_isDepositOnly_ASC_NULLS_LAST',
-  FromIsDepositOnlyDesc = 'from_isDepositOnly_DESC',
-  FromIsDepositOnlyDescNullsFirst = 'from_isDepositOnly_DESC_NULLS_FIRST',
-  FromIsDepositOnlyDescNullsLast = 'from_isDepositOnly_DESC_NULLS_LAST',
   FromLastUpdatedAsc = 'from_lastUpdated_ASC',
   FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
   FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
@@ -2397,12 +2107,6 @@ export enum ReversibleTransferOrderByInput {
   ToIdDesc = 'to_id_DESC',
   ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
   ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsDepositOnlyAsc = 'to_isDepositOnly_ASC',
-  ToIsDepositOnlyAscNullsFirst = 'to_isDepositOnly_ASC_NULLS_FIRST',
-  ToIsDepositOnlyAscNullsLast = 'to_isDepositOnly_ASC_NULLS_LAST',
-  ToIsDepositOnlyDesc = 'to_isDepositOnly_DESC',
-  ToIsDepositOnlyDescNullsFirst = 'to_isDepositOnly_DESC_NULLS_FIRST',
-  ToIsDepositOnlyDescNullsLast = 'to_isDepositOnly_DESC_NULLS_LAST',
   ToLastUpdatedAsc = 'to_lastUpdated_ASC',
   ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
   ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
@@ -2568,13 +2272,9 @@ export type Transfer = {
   extrinsicHash?: Maybe<Scalars['String']['output']>;
   fee: Scalars['BigInt']['output'];
   from: Account;
-  /** Blake3 hash of raw 'from' address bytes (hex string) for privacy-preserving prefix queries */
-  fromHash: Scalars['String']['output'];
   id: Scalars['String']['output'];
   timestamp: Scalars['DateTime']['output'];
   to: Account;
-  /** Blake3 hash of raw 'to' address bytes (hex string) for privacy-preserving prefix queries */
-  toHash: Scalars['String']['output'];
 };
 
 export type TransferEdge = {
@@ -2710,12 +2410,6 @@ export enum TransferOrderByInput {
   FeeDesc = 'fee_DESC',
   FeeDescNullsFirst = 'fee_DESC_NULLS_FIRST',
   FeeDescNullsLast = 'fee_DESC_NULLS_LAST',
-  FromHashAsc = 'fromHash_ASC',
-  FromHashAscNullsFirst = 'fromHash_ASC_NULLS_FIRST',
-  FromHashAscNullsLast = 'fromHash_ASC_NULLS_LAST',
-  FromHashDesc = 'fromHash_DESC',
-  FromHashDescNullsFirst = 'fromHash_DESC_NULLS_FIRST',
-  FromHashDescNullsLast = 'fromHash_DESC_NULLS_LAST',
   FromFreeAsc = 'from_free_ASC',
   FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
   FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
@@ -2734,12 +2428,6 @@ export enum TransferOrderByInput {
   FromIdDesc = 'from_id_DESC',
   FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
   FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsDepositOnlyAsc = 'from_isDepositOnly_ASC',
-  FromIsDepositOnlyAscNullsFirst = 'from_isDepositOnly_ASC_NULLS_FIRST',
-  FromIsDepositOnlyAscNullsLast = 'from_isDepositOnly_ASC_NULLS_LAST',
-  FromIsDepositOnlyDesc = 'from_isDepositOnly_DESC',
-  FromIsDepositOnlyDescNullsFirst = 'from_isDepositOnly_DESC_NULLS_FIRST',
-  FromIsDepositOnlyDescNullsLast = 'from_isDepositOnly_DESC_NULLS_LAST',
   FromLastUpdatedAsc = 'from_lastUpdated_ASC',
   FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
   FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
@@ -2764,12 +2452,6 @@ export enum TransferOrderByInput {
   TimestampDesc = 'timestamp_DESC',
   TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
   TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  ToHashAsc = 'toHash_ASC',
-  ToHashAscNullsFirst = 'toHash_ASC_NULLS_FIRST',
-  ToHashAscNullsLast = 'toHash_ASC_NULLS_LAST',
-  ToHashDesc = 'toHash_DESC',
-  ToHashDescNullsFirst = 'toHash_DESC_NULLS_FIRST',
-  ToHashDescNullsLast = 'toHash_DESC_NULLS_LAST',
   ToFreeAsc = 'to_free_ASC',
   ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
   ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
@@ -2788,12 +2470,6 @@ export enum TransferOrderByInput {
   ToIdDesc = 'to_id_DESC',
   ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
   ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsDepositOnlyAsc = 'to_isDepositOnly_ASC',
-  ToIsDepositOnlyAscNullsFirst = 'to_isDepositOnly_ASC_NULLS_FIRST',
-  ToIsDepositOnlyAscNullsLast = 'to_isDepositOnly_ASC_NULLS_LAST',
-  ToIsDepositOnlyDesc = 'to_isDepositOnly_DESC',
-  ToIsDepositOnlyDescNullsFirst = 'to_isDepositOnly_DESC_NULLS_FIRST',
-  ToIsDepositOnlyDescNullsLast = 'to_isDepositOnly_DESC_NULLS_LAST',
   ToLastUpdatedAsc = 'to_lastUpdated_ASC',
   ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
   ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
@@ -2855,23 +2531,6 @@ export type TransferWhereInput = {
   fee_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
   fee_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   from?: InputMaybe<AccountWhereInput>;
-  fromHash_contains?: InputMaybe<Scalars['String']['input']>;
-  fromHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  fromHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  fromHash_eq?: InputMaybe<Scalars['String']['input']>;
-  fromHash_gt?: InputMaybe<Scalars['String']['input']>;
-  fromHash_gte?: InputMaybe<Scalars['String']['input']>;
-  fromHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  fromHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fromHash_lt?: InputMaybe<Scalars['String']['input']>;
-  fromHash_lte?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  fromHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  fromHash_startsWith?: InputMaybe<Scalars['String']['input']>;
   from_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   id_contains?: InputMaybe<Scalars['String']['input']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
@@ -2900,747 +2559,12 @@ export type TransferWhereInput = {
   timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
   timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
   to?: InputMaybe<AccountWhereInput>;
-  toHash_contains?: InputMaybe<Scalars['String']['input']>;
-  toHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  toHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  toHash_eq?: InputMaybe<Scalars['String']['input']>;
-  toHash_gt?: InputMaybe<Scalars['String']['input']>;
-  toHash_gte?: InputMaybe<Scalars['String']['input']>;
-  toHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  toHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  toHash_lt?: InputMaybe<Scalars['String']['input']>;
-  toHash_lte?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  toHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  toHash_startsWith?: InputMaybe<Scalars['String']['input']>;
   to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type TransferWithHash = {
-  __typename?: 'TransferWithHash';
-  amount: Scalars['BigInt']['output'];
-  blockHeight: Scalars['Int']['output'];
-  blockId: Scalars['String']['output'];
-  extrinsicHash?: Maybe<Scalars['String']['output']>;
-  fee: Scalars['BigInt']['output'];
-  fromHash: Scalars['String']['output'];
-  fromId: Scalars['String']['output'];
-  id: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  toHash: Scalars['String']['output'];
-  toId: Scalars['String']['output'];
-};
-
-export type TransfersByPrefixInput = {
-  afterBlock?: InputMaybe<Scalars['Int']['input']>;
-  beforeBlock?: InputMaybe<Scalars['Int']['input']>;
-  fromHashPrefixes?: InputMaybe<Array<Scalars['String']['input']>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  maxAmount?: InputMaybe<Scalars['BigInt']['input']>;
-  minAmount?: InputMaybe<Scalars['BigInt']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  toHashPrefixes?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-export type TransfersByPrefixResult = {
-  __typename?: 'TransfersByPrefixResult';
-  totalCount: Scalars['Int']['output'];
-  transfers: Array<TransferWithHash>;
 };
 
 export type TransfersConnection = {
   __typename?: 'TransfersConnection';
   edges: Array<TransferEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A single wormhole proof verification extrinsic, containing one or more exit outputs. */
-export type WormholeExtrinsic = {
-  __typename?: 'WormholeExtrinsic';
-  block: Block;
-  extrinsicHash?: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
-  /** Number of non-zero exit outputs */
-  outputCount: Scalars['Int']['output'];
-  /** Individual exit outputs in this extrinsic */
-  outputs: Array<WormholeOutput>;
-  /** Pool snapshot at time of proof verification (JSON bucket data) */
-  poolSnapshot: Scalars['String']['output'];
-  /** Human-readable privacy label */
-  privacyLabel: Scalars['String']['output'];
-  /** Privacy score at 0.01 DEV precision, in bits */
-  privacyScore: Scalars['Float']['output'];
-  /** Privacy score with 0.1% sacrifice, in bits */
-  privacyScore01Pct: Scalars['Float']['output'];
-  /** Privacy score with 1% sacrifice, in bits */
-  privacyScore1Pct: Scalars['Float']['output'];
-  /** Privacy score with 5% sacrifice, in bits */
-  privacyScore5Pct: Scalars['Float']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  /** Total amount across all outputs in this extrinsic */
-  totalAmount: Scalars['BigInt']['output'];
-};
-
-/** A single wormhole proof verification extrinsic, containing one or more exit outputs. */
-export type WormholeExtrinsicOutputsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeOutputOrderByInput>>;
-  where?: InputMaybe<WormholeOutputWhereInput>;
-};
-
-export type WormholeExtrinsicEdge = {
-  __typename?: 'WormholeExtrinsicEdge';
-  cursor: Scalars['String']['output'];
-  node: WormholeExtrinsic;
-};
-
-export enum WormholeExtrinsicOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  ExtrinsicHashAsc = 'extrinsicHash_ASC',
-  ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
-  ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
-  ExtrinsicHashDesc = 'extrinsicHash_DESC',
-  ExtrinsicHashDescNullsFirst = 'extrinsicHash_DESC_NULLS_FIRST',
-  ExtrinsicHashDescNullsLast = 'extrinsicHash_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  OutputCountAsc = 'outputCount_ASC',
-  OutputCountAscNullsFirst = 'outputCount_ASC_NULLS_FIRST',
-  OutputCountAscNullsLast = 'outputCount_ASC_NULLS_LAST',
-  OutputCountDesc = 'outputCount_DESC',
-  OutputCountDescNullsFirst = 'outputCount_DESC_NULLS_FIRST',
-  OutputCountDescNullsLast = 'outputCount_DESC_NULLS_LAST',
-  PoolSnapshotAsc = 'poolSnapshot_ASC',
-  PoolSnapshotAscNullsFirst = 'poolSnapshot_ASC_NULLS_FIRST',
-  PoolSnapshotAscNullsLast = 'poolSnapshot_ASC_NULLS_LAST',
-  PoolSnapshotDesc = 'poolSnapshot_DESC',
-  PoolSnapshotDescNullsFirst = 'poolSnapshot_DESC_NULLS_FIRST',
-  PoolSnapshotDescNullsLast = 'poolSnapshot_DESC_NULLS_LAST',
-  PrivacyLabelAsc = 'privacyLabel_ASC',
-  PrivacyLabelAscNullsFirst = 'privacyLabel_ASC_NULLS_FIRST',
-  PrivacyLabelAscNullsLast = 'privacyLabel_ASC_NULLS_LAST',
-  PrivacyLabelDesc = 'privacyLabel_DESC',
-  PrivacyLabelDescNullsFirst = 'privacyLabel_DESC_NULLS_FIRST',
-  PrivacyLabelDescNullsLast = 'privacyLabel_DESC_NULLS_LAST',
-  PrivacyScore01PctAsc = 'privacyScore01Pct_ASC',
-  PrivacyScore01PctAscNullsFirst = 'privacyScore01Pct_ASC_NULLS_FIRST',
-  PrivacyScore01PctAscNullsLast = 'privacyScore01Pct_ASC_NULLS_LAST',
-  PrivacyScore01PctDesc = 'privacyScore01Pct_DESC',
-  PrivacyScore01PctDescNullsFirst = 'privacyScore01Pct_DESC_NULLS_FIRST',
-  PrivacyScore01PctDescNullsLast = 'privacyScore01Pct_DESC_NULLS_LAST',
-  PrivacyScore1PctAsc = 'privacyScore1Pct_ASC',
-  PrivacyScore1PctAscNullsFirst = 'privacyScore1Pct_ASC_NULLS_FIRST',
-  PrivacyScore1PctAscNullsLast = 'privacyScore1Pct_ASC_NULLS_LAST',
-  PrivacyScore1PctDesc = 'privacyScore1Pct_DESC',
-  PrivacyScore1PctDescNullsFirst = 'privacyScore1Pct_DESC_NULLS_FIRST',
-  PrivacyScore1PctDescNullsLast = 'privacyScore1Pct_DESC_NULLS_LAST',
-  PrivacyScore5PctAsc = 'privacyScore5Pct_ASC',
-  PrivacyScore5PctAscNullsFirst = 'privacyScore5Pct_ASC_NULLS_FIRST',
-  PrivacyScore5PctAscNullsLast = 'privacyScore5Pct_ASC_NULLS_LAST',
-  PrivacyScore5PctDesc = 'privacyScore5Pct_DESC',
-  PrivacyScore5PctDescNullsFirst = 'privacyScore5Pct_DESC_NULLS_FIRST',
-  PrivacyScore5PctDescNullsLast = 'privacyScore5Pct_DESC_NULLS_LAST',
-  PrivacyScoreAsc = 'privacyScore_ASC',
-  PrivacyScoreAscNullsFirst = 'privacyScore_ASC_NULLS_FIRST',
-  PrivacyScoreAscNullsLast = 'privacyScore_ASC_NULLS_LAST',
-  PrivacyScoreDesc = 'privacyScore_DESC',
-  PrivacyScoreDescNullsFirst = 'privacyScore_DESC_NULLS_FIRST',
-  PrivacyScoreDescNullsLast = 'privacyScore_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TotalAmountAsc = 'totalAmount_ASC',
-  TotalAmountAscNullsFirst = 'totalAmount_ASC_NULLS_FIRST',
-  TotalAmountAscNullsLast = 'totalAmount_ASC_NULLS_LAST',
-  TotalAmountDesc = 'totalAmount_DESC',
-  TotalAmountDescNullsFirst = 'totalAmount_DESC_NULLS_FIRST',
-  TotalAmountDescNullsLast = 'totalAmount_DESC_NULLS_LAST'
-}
-
-export type WormholeExtrinsicWhereInput = {
-  AND?: InputMaybe<Array<WormholeExtrinsicWhereInput>>;
-  OR?: InputMaybe<Array<WormholeExtrinsicWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_eq?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_gt?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_gte?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  extrinsicHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsicHash_lt?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_lte?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_containsInsensitive?: InputMaybe<
-    Scalars['String']['input']
-  >;
-  extrinsicHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  extrinsicHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  outputCount_eq?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_gt?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_gte?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  outputCount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  outputCount_lt?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_lte?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  outputs_every?: InputMaybe<WormholeOutputWhereInput>;
-  outputs_none?: InputMaybe<WormholeOutputWhereInput>;
-  outputs_some?: InputMaybe<WormholeOutputWhereInput>;
-  poolSnapshot_contains?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_endsWith?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_eq?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_gt?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_gte?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  poolSnapshot_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  poolSnapshot_lt?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_lte?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_contains?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_eq?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  poolSnapshot_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_contains?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_endsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_eq?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_gt?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_gte?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  privacyLabel_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyLabel_lt?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_lte?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_contains?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_eq?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  privacyLabel_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyScore01Pct_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore01Pct_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore01Pct_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore1Pct_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore1Pct_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore1Pct_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore5Pct_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore5Pct_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore5Pct_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  totalAmount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  totalAmount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  totalAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-};
-
-export type WormholeExtrinsicsConnection = {
-  __typename?: 'WormholeExtrinsicsConnection';
-  edges: Array<WormholeExtrinsicEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A nullifier consumed by a wormhole proof verification. */
-export type WormholeNullifier = {
-  __typename?: 'WormholeNullifier';
-  /** Block where the nullifier was consumed */
-  block: Block;
-  /** The wormhole extrinsic that consumed this nullifier */
-  extrinsic: WormholeExtrinsic;
-  id: Scalars['String']['output'];
-  /** The nullifier bytes as hex */
-  nullifier: Scalars['String']['output'];
-  /** Blake3 hash of the nullifier for prefix queries */
-  nullifierHash: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type WormholeNullifierEdge = {
-  __typename?: 'WormholeNullifierEdge';
-  cursor: Scalars['String']['output'];
-  node: WormholeNullifier;
-};
-
-export enum WormholeNullifierOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  ExtrinsicExtrinsicHashAsc = 'extrinsic_extrinsicHash_ASC',
-  ExtrinsicExtrinsicHashAscNullsFirst = 'extrinsic_extrinsicHash_ASC_NULLS_FIRST',
-  ExtrinsicExtrinsicHashAscNullsLast = 'extrinsic_extrinsicHash_ASC_NULLS_LAST',
-  ExtrinsicExtrinsicHashDesc = 'extrinsic_extrinsicHash_DESC',
-  ExtrinsicExtrinsicHashDescNullsFirst = 'extrinsic_extrinsicHash_DESC_NULLS_FIRST',
-  ExtrinsicExtrinsicHashDescNullsLast = 'extrinsic_extrinsicHash_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicOutputCountAsc = 'extrinsic_outputCount_ASC',
-  ExtrinsicOutputCountAscNullsFirst = 'extrinsic_outputCount_ASC_NULLS_FIRST',
-  ExtrinsicOutputCountAscNullsLast = 'extrinsic_outputCount_ASC_NULLS_LAST',
-  ExtrinsicOutputCountDesc = 'extrinsic_outputCount_DESC',
-  ExtrinsicOutputCountDescNullsFirst = 'extrinsic_outputCount_DESC_NULLS_FIRST',
-  ExtrinsicOutputCountDescNullsLast = 'extrinsic_outputCount_DESC_NULLS_LAST',
-  ExtrinsicPoolSnapshotAsc = 'extrinsic_poolSnapshot_ASC',
-  ExtrinsicPoolSnapshotAscNullsFirst = 'extrinsic_poolSnapshot_ASC_NULLS_FIRST',
-  ExtrinsicPoolSnapshotAscNullsLast = 'extrinsic_poolSnapshot_ASC_NULLS_LAST',
-  ExtrinsicPoolSnapshotDesc = 'extrinsic_poolSnapshot_DESC',
-  ExtrinsicPoolSnapshotDescNullsFirst = 'extrinsic_poolSnapshot_DESC_NULLS_FIRST',
-  ExtrinsicPoolSnapshotDescNullsLast = 'extrinsic_poolSnapshot_DESC_NULLS_LAST',
-  ExtrinsicPrivacyLabelAsc = 'extrinsic_privacyLabel_ASC',
-  ExtrinsicPrivacyLabelAscNullsFirst = 'extrinsic_privacyLabel_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyLabelAscNullsLast = 'extrinsic_privacyLabel_ASC_NULLS_LAST',
-  ExtrinsicPrivacyLabelDesc = 'extrinsic_privacyLabel_DESC',
-  ExtrinsicPrivacyLabelDescNullsFirst = 'extrinsic_privacyLabel_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyLabelDescNullsLast = 'extrinsic_privacyLabel_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScore01PctAsc = 'extrinsic_privacyScore01Pct_ASC',
-  ExtrinsicPrivacyScore01PctAscNullsFirst = 'extrinsic_privacyScore01Pct_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScore01PctAscNullsLast = 'extrinsic_privacyScore01Pct_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScore01PctDesc = 'extrinsic_privacyScore01Pct_DESC',
-  ExtrinsicPrivacyScore01PctDescNullsFirst = 'extrinsic_privacyScore01Pct_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScore01PctDescNullsLast = 'extrinsic_privacyScore01Pct_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScore1PctAsc = 'extrinsic_privacyScore1Pct_ASC',
-  ExtrinsicPrivacyScore1PctAscNullsFirst = 'extrinsic_privacyScore1Pct_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScore1PctAscNullsLast = 'extrinsic_privacyScore1Pct_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScore1PctDesc = 'extrinsic_privacyScore1Pct_DESC',
-  ExtrinsicPrivacyScore1PctDescNullsFirst = 'extrinsic_privacyScore1Pct_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScore1PctDescNullsLast = 'extrinsic_privacyScore1Pct_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScore5PctAsc = 'extrinsic_privacyScore5Pct_ASC',
-  ExtrinsicPrivacyScore5PctAscNullsFirst = 'extrinsic_privacyScore5Pct_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScore5PctAscNullsLast = 'extrinsic_privacyScore5Pct_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScore5PctDesc = 'extrinsic_privacyScore5Pct_DESC',
-  ExtrinsicPrivacyScore5PctDescNullsFirst = 'extrinsic_privacyScore5Pct_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScore5PctDescNullsLast = 'extrinsic_privacyScore5Pct_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScoreAsc = 'extrinsic_privacyScore_ASC',
-  ExtrinsicPrivacyScoreAscNullsFirst = 'extrinsic_privacyScore_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScoreAscNullsLast = 'extrinsic_privacyScore_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScoreDesc = 'extrinsic_privacyScore_DESC',
-  ExtrinsicPrivacyScoreDescNullsFirst = 'extrinsic_privacyScore_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScoreDescNullsLast = 'extrinsic_privacyScore_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  ExtrinsicTotalAmountAsc = 'extrinsic_totalAmount_ASC',
-  ExtrinsicTotalAmountAscNullsFirst = 'extrinsic_totalAmount_ASC_NULLS_FIRST',
-  ExtrinsicTotalAmountAscNullsLast = 'extrinsic_totalAmount_ASC_NULLS_LAST',
-  ExtrinsicTotalAmountDesc = 'extrinsic_totalAmount_DESC',
-  ExtrinsicTotalAmountDescNullsFirst = 'extrinsic_totalAmount_DESC_NULLS_FIRST',
-  ExtrinsicTotalAmountDescNullsLast = 'extrinsic_totalAmount_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  NullifierHashAsc = 'nullifierHash_ASC',
-  NullifierHashAscNullsFirst = 'nullifierHash_ASC_NULLS_FIRST',
-  NullifierHashAscNullsLast = 'nullifierHash_ASC_NULLS_LAST',
-  NullifierHashDesc = 'nullifierHash_DESC',
-  NullifierHashDescNullsFirst = 'nullifierHash_DESC_NULLS_FIRST',
-  NullifierHashDescNullsLast = 'nullifierHash_DESC_NULLS_LAST',
-  NullifierAsc = 'nullifier_ASC',
-  NullifierAscNullsFirst = 'nullifier_ASC_NULLS_FIRST',
-  NullifierAscNullsLast = 'nullifier_ASC_NULLS_LAST',
-  NullifierDesc = 'nullifier_DESC',
-  NullifierDescNullsFirst = 'nullifier_DESC_NULLS_FIRST',
-  NullifierDescNullsLast = 'nullifier_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
-}
-
-export type WormholeNullifierWhereInput = {
-  AND?: InputMaybe<Array<WormholeNullifierWhereInput>>;
-  OR?: InputMaybe<Array<WormholeNullifierWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<WormholeExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_gt?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_gte?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifierHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  nullifierHash_lt?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_lte?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_containsInsensitive?: InputMaybe<
-    Scalars['String']['input']
-  >;
-  nullifierHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifierHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifier_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  nullifier_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifier_gt?: InputMaybe<Scalars['String']['input']>;
-  nullifier_gte?: InputMaybe<Scalars['String']['input']>;
-  nullifier_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifier_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  nullifier_lt?: InputMaybe<Scalars['String']['input']>;
-  nullifier_lte?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifier_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_startsWith?: InputMaybe<Scalars['String']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-};
-
-export type WormholeNullifiersConnection = {
-  __typename?: 'WormholeNullifiersConnection';
-  edges: Array<WormholeNullifierEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-/** An individual exit output within a wormhole proof verification. */
-export type WormholeOutput = {
-  __typename?: 'WormholeOutput';
-  amount: Scalars['BigInt']['output'];
-  exitAccount: Account;
-  extrinsic: WormholeExtrinsic;
-  id: Scalars['String']['output'];
-};
-
-export type WormholeOutputEdge = {
-  __typename?: 'WormholeOutputEdge';
-  cursor: Scalars['String']['output'];
-  node: WormholeOutput;
-};
-
-export enum WormholeOutputOrderByInput {
-  AmountAsc = 'amount_ASC',
-  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
-  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
-  AmountDesc = 'amount_DESC',
-  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
-  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
-  ExitAccountFreeAsc = 'exitAccount_free_ASC',
-  ExitAccountFreeAscNullsFirst = 'exitAccount_free_ASC_NULLS_FIRST',
-  ExitAccountFreeAscNullsLast = 'exitAccount_free_ASC_NULLS_LAST',
-  ExitAccountFreeDesc = 'exitAccount_free_DESC',
-  ExitAccountFreeDescNullsFirst = 'exitAccount_free_DESC_NULLS_FIRST',
-  ExitAccountFreeDescNullsLast = 'exitAccount_free_DESC_NULLS_LAST',
-  ExitAccountFrozenAsc = 'exitAccount_frozen_ASC',
-  ExitAccountFrozenAscNullsFirst = 'exitAccount_frozen_ASC_NULLS_FIRST',
-  ExitAccountFrozenAscNullsLast = 'exitAccount_frozen_ASC_NULLS_LAST',
-  ExitAccountFrozenDesc = 'exitAccount_frozen_DESC',
-  ExitAccountFrozenDescNullsFirst = 'exitAccount_frozen_DESC_NULLS_FIRST',
-  ExitAccountFrozenDescNullsLast = 'exitAccount_frozen_DESC_NULLS_LAST',
-  ExitAccountIdAsc = 'exitAccount_id_ASC',
-  ExitAccountIdAscNullsFirst = 'exitAccount_id_ASC_NULLS_FIRST',
-  ExitAccountIdAscNullsLast = 'exitAccount_id_ASC_NULLS_LAST',
-  ExitAccountIdDesc = 'exitAccount_id_DESC',
-  ExitAccountIdDescNullsFirst = 'exitAccount_id_DESC_NULLS_FIRST',
-  ExitAccountIdDescNullsLast = 'exitAccount_id_DESC_NULLS_LAST',
-  ExitAccountIsDepositOnlyAsc = 'exitAccount_isDepositOnly_ASC',
-  ExitAccountIsDepositOnlyAscNullsFirst = 'exitAccount_isDepositOnly_ASC_NULLS_FIRST',
-  ExitAccountIsDepositOnlyAscNullsLast = 'exitAccount_isDepositOnly_ASC_NULLS_LAST',
-  ExitAccountIsDepositOnlyDesc = 'exitAccount_isDepositOnly_DESC',
-  ExitAccountIsDepositOnlyDescNullsFirst = 'exitAccount_isDepositOnly_DESC_NULLS_FIRST',
-  ExitAccountIsDepositOnlyDescNullsLast = 'exitAccount_isDepositOnly_DESC_NULLS_LAST',
-  ExitAccountLastUpdatedAsc = 'exitAccount_lastUpdated_ASC',
-  ExitAccountLastUpdatedAscNullsFirst = 'exitAccount_lastUpdated_ASC_NULLS_FIRST',
-  ExitAccountLastUpdatedAscNullsLast = 'exitAccount_lastUpdated_ASC_NULLS_LAST',
-  ExitAccountLastUpdatedDesc = 'exitAccount_lastUpdated_DESC',
-  ExitAccountLastUpdatedDescNullsFirst = 'exitAccount_lastUpdated_DESC_NULLS_FIRST',
-  ExitAccountLastUpdatedDescNullsLast = 'exitAccount_lastUpdated_DESC_NULLS_LAST',
-  ExitAccountReservedAsc = 'exitAccount_reserved_ASC',
-  ExitAccountReservedAscNullsFirst = 'exitAccount_reserved_ASC_NULLS_FIRST',
-  ExitAccountReservedAscNullsLast = 'exitAccount_reserved_ASC_NULLS_LAST',
-  ExitAccountReservedDesc = 'exitAccount_reserved_DESC',
-  ExitAccountReservedDescNullsFirst = 'exitAccount_reserved_DESC_NULLS_FIRST',
-  ExitAccountReservedDescNullsLast = 'exitAccount_reserved_DESC_NULLS_LAST',
-  ExtrinsicExtrinsicHashAsc = 'extrinsic_extrinsicHash_ASC',
-  ExtrinsicExtrinsicHashAscNullsFirst = 'extrinsic_extrinsicHash_ASC_NULLS_FIRST',
-  ExtrinsicExtrinsicHashAscNullsLast = 'extrinsic_extrinsicHash_ASC_NULLS_LAST',
-  ExtrinsicExtrinsicHashDesc = 'extrinsic_extrinsicHash_DESC',
-  ExtrinsicExtrinsicHashDescNullsFirst = 'extrinsic_extrinsicHash_DESC_NULLS_FIRST',
-  ExtrinsicExtrinsicHashDescNullsLast = 'extrinsic_extrinsicHash_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicOutputCountAsc = 'extrinsic_outputCount_ASC',
-  ExtrinsicOutputCountAscNullsFirst = 'extrinsic_outputCount_ASC_NULLS_FIRST',
-  ExtrinsicOutputCountAscNullsLast = 'extrinsic_outputCount_ASC_NULLS_LAST',
-  ExtrinsicOutputCountDesc = 'extrinsic_outputCount_DESC',
-  ExtrinsicOutputCountDescNullsFirst = 'extrinsic_outputCount_DESC_NULLS_FIRST',
-  ExtrinsicOutputCountDescNullsLast = 'extrinsic_outputCount_DESC_NULLS_LAST',
-  ExtrinsicPoolSnapshotAsc = 'extrinsic_poolSnapshot_ASC',
-  ExtrinsicPoolSnapshotAscNullsFirst = 'extrinsic_poolSnapshot_ASC_NULLS_FIRST',
-  ExtrinsicPoolSnapshotAscNullsLast = 'extrinsic_poolSnapshot_ASC_NULLS_LAST',
-  ExtrinsicPoolSnapshotDesc = 'extrinsic_poolSnapshot_DESC',
-  ExtrinsicPoolSnapshotDescNullsFirst = 'extrinsic_poolSnapshot_DESC_NULLS_FIRST',
-  ExtrinsicPoolSnapshotDescNullsLast = 'extrinsic_poolSnapshot_DESC_NULLS_LAST',
-  ExtrinsicPrivacyLabelAsc = 'extrinsic_privacyLabel_ASC',
-  ExtrinsicPrivacyLabelAscNullsFirst = 'extrinsic_privacyLabel_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyLabelAscNullsLast = 'extrinsic_privacyLabel_ASC_NULLS_LAST',
-  ExtrinsicPrivacyLabelDesc = 'extrinsic_privacyLabel_DESC',
-  ExtrinsicPrivacyLabelDescNullsFirst = 'extrinsic_privacyLabel_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyLabelDescNullsLast = 'extrinsic_privacyLabel_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScore01PctAsc = 'extrinsic_privacyScore01Pct_ASC',
-  ExtrinsicPrivacyScore01PctAscNullsFirst = 'extrinsic_privacyScore01Pct_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScore01PctAscNullsLast = 'extrinsic_privacyScore01Pct_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScore01PctDesc = 'extrinsic_privacyScore01Pct_DESC',
-  ExtrinsicPrivacyScore01PctDescNullsFirst = 'extrinsic_privacyScore01Pct_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScore01PctDescNullsLast = 'extrinsic_privacyScore01Pct_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScore1PctAsc = 'extrinsic_privacyScore1Pct_ASC',
-  ExtrinsicPrivacyScore1PctAscNullsFirst = 'extrinsic_privacyScore1Pct_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScore1PctAscNullsLast = 'extrinsic_privacyScore1Pct_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScore1PctDesc = 'extrinsic_privacyScore1Pct_DESC',
-  ExtrinsicPrivacyScore1PctDescNullsFirst = 'extrinsic_privacyScore1Pct_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScore1PctDescNullsLast = 'extrinsic_privacyScore1Pct_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScore5PctAsc = 'extrinsic_privacyScore5Pct_ASC',
-  ExtrinsicPrivacyScore5PctAscNullsFirst = 'extrinsic_privacyScore5Pct_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScore5PctAscNullsLast = 'extrinsic_privacyScore5Pct_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScore5PctDesc = 'extrinsic_privacyScore5Pct_DESC',
-  ExtrinsicPrivacyScore5PctDescNullsFirst = 'extrinsic_privacyScore5Pct_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScore5PctDescNullsLast = 'extrinsic_privacyScore5Pct_DESC_NULLS_LAST',
-  ExtrinsicPrivacyScoreAsc = 'extrinsic_privacyScore_ASC',
-  ExtrinsicPrivacyScoreAscNullsFirst = 'extrinsic_privacyScore_ASC_NULLS_FIRST',
-  ExtrinsicPrivacyScoreAscNullsLast = 'extrinsic_privacyScore_ASC_NULLS_LAST',
-  ExtrinsicPrivacyScoreDesc = 'extrinsic_privacyScore_DESC',
-  ExtrinsicPrivacyScoreDescNullsFirst = 'extrinsic_privacyScore_DESC_NULLS_FIRST',
-  ExtrinsicPrivacyScoreDescNullsLast = 'extrinsic_privacyScore_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  ExtrinsicTotalAmountAsc = 'extrinsic_totalAmount_ASC',
-  ExtrinsicTotalAmountAscNullsFirst = 'extrinsic_totalAmount_ASC_NULLS_FIRST',
-  ExtrinsicTotalAmountAscNullsLast = 'extrinsic_totalAmount_ASC_NULLS_LAST',
-  ExtrinsicTotalAmountDesc = 'extrinsic_totalAmount_DESC',
-  ExtrinsicTotalAmountDescNullsFirst = 'extrinsic_totalAmount_DESC_NULLS_FIRST',
-  ExtrinsicTotalAmountDescNullsLast = 'extrinsic_totalAmount_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST'
-}
-
-export type WormholeOutputWhereInput = {
-  AND?: InputMaybe<Array<WormholeOutputWhereInput>>;
-  OR?: InputMaybe<Array<WormholeOutputWhereInput>>;
-  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  exitAccount?: InputMaybe<AccountWhereInput>;
-  exitAccount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<WormholeExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type WormholeOutputsConnection = {
-  __typename?: 'WormholeOutputsConnection';
-  edges: Array<WormholeOutputEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
 };
@@ -4357,80 +3281,6 @@ export type GetTransactionByHashQuery = {
     from: { __typename?: 'Account'; id: string };
     to: { __typename?: 'Account'; id: string };
   }>;
-};
-
-export type GetWormholeExtrinsicsQueryVariables = Exact<{
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeExtrinsicOrderByInput> | WormholeExtrinsicOrderByInput;
-  where?: InputMaybe<WormholeExtrinsicWhereInput>;
-}>;
-
-export type GetWormholeExtrinsicsQuery = {
-  __typename?: 'Query';
-  wormholeExtrinsics: Array<{
-    __typename?: 'WormholeExtrinsic';
-    id: string;
-    extrinsicHash?: string | null;
-    totalAmount: any;
-    outputCount: number;
-    timestamp: any;
-    privacyScore: number;
-    privacyLabel: string;
-    block: { __typename?: 'Block'; height: number };
-  }>;
-  meta: { __typename?: 'WormholeExtrinsicsConnection'; totalCount: number };
-};
-
-export type GetWormholeExtrinsicByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
-}>;
-
-export type GetWormholeExtrinsicByIdQuery = {
-  __typename?: 'Query';
-  wormholeExtrinsicById?: {
-    __typename?: 'WormholeExtrinsic';
-    id: string;
-    extrinsicHash?: string | null;
-    totalAmount: any;
-    outputCount: number;
-    timestamp: any;
-    privacyScore: number;
-    privacyScore01Pct: number;
-    privacyScore1Pct: number;
-    privacyScore5Pct: number;
-    privacyLabel: string;
-    poolSnapshot: string;
-    block: {
-      __typename?: 'Block';
-      id: string;
-      height: number;
-      hash: string;
-      timestamp: any;
-    };
-    outputs: Array<{
-      __typename?: 'WormholeOutput';
-      id: string;
-      amount: any;
-      exitAccount: { __typename?: 'Account'; id: string };
-    }>;
-  } | null;
-  wormholeNullifiers: Array<{
-    __typename?: 'WormholeNullifier';
-    nullifier: string;
-    nullifierHash: string;
-  }>;
-};
-
-export type GetDepositPoolStatsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetDepositPoolStatsQuery = {
-  __typename?: 'Query';
-  depositPoolStatsById?: {
-    __typename?: 'DepositPoolStats';
-    lastUpdatedBlock: number;
-    buckets: string;
-  } | null;
 };
 
 export const GetAccountsDocument = {
@@ -9700,358 +8550,4 @@ export const GetTransactionByHashDocument = {
 } as unknown as DocumentNode<
   GetTransactionByHashQuery,
   GetTransactionByHashQueryVariables
->;
-export const GetWormholeExtrinsicsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetWormholeExtrinsics' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'limit' }
-          },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'offset' }
-          },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'orderBy' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: {
-                kind: 'NonNullType',
-                type: {
-                  kind: 'NamedType',
-                  name: { kind: 'Name', value: 'WormholeExtrinsicOrderByInput' }
-                }
-              }
-            }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'where' }
-          },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'WormholeExtrinsicWhereInput' }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeExtrinsics' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'offset' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'offset' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'orderBy' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'where' }
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'extrinsicHash' }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyLabel' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'block' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'wormholeExtrinsicsConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  GetWormholeExtrinsicsQuery,
-  GetWormholeExtrinsicsQueryVariables
->;
-export const GetWormholeExtrinsicByIdDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetWormholeExtrinsicById' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeExtrinsicById' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'extrinsicHash' }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore01Pct' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore1Pct' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore5Pct' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyLabel' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'poolSnapshot' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'block' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'height' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'outputs' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'exitAccount' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'amount' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeNullifiers' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'nullifier' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'nullifierHash' }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  GetWormholeExtrinsicByIdQuery,
-  GetWormholeExtrinsicByIdQueryVariables
->;
-export const GetDepositPoolStatsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetDepositPoolStats' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'depositPoolStatsById' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'StringValue', value: 'global', block: false }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'lastUpdatedBlock' }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'buckets' } }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<
-  GetDepositPoolStatsQuery,
-  GetDepositPoolStatsQueryVariables
 >;
