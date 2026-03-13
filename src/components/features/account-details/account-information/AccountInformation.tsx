@@ -26,7 +26,12 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
     accountId
   );
   const transactions = data?.transactions.totalCount;
-  const reversibleTransactions = data?.reversibleTransactions.totalCount;
+  const scheduledReversibleTransactions =
+    data?.scheduledReversibleTransactions.totalCount;
+  const executedReversibleTransactions =
+    data?.executedReversibleTransactions.totalCount;
+  const cancelledReversibleTransactions =
+    data?.cancelledReversibleTransactions.totalCount;
   const miningRewards = data?.minerRewards.totalCount;
   const beneficiaries = data?.beneficiaries.totalCount;
   const guardians = data?.guardian.totalCount;
@@ -38,7 +43,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       frozen: account?.frozen ?? 0,
       reserved: account?.reserved ?? 0,
       transactions,
-      reversibleTransactions,
+      scheduledReversibleTransactions,
+      executedReversibleTransactions,
+      cancelledReversibleTransactions,
       miningRewards,
       checksum,
       isHighSecurity: guardians && guardians > 0,
@@ -109,8 +116,20 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             value > 1 ? `${value} transactions` : `${value} transaction`
         },
         {
-          label: 'Reversible Transactions',
-          key: 'reversibleTransactions',
+          label: 'Scheduled Reversible Transactions',
+          key: 'scheduledReversibleTransactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Executed Reversible Transactions',
+          key: 'executedReversibleTransactions',
+          render: (value) =>
+            value > 1 ? `${value} transactions` : `${value} transaction`
+        },
+        {
+          label: 'Cancelled Reversible Transactions',
+          key: 'cancelledReversibleTransactions',
           render: (value) =>
             value > 1 ? `${value} transactions` : `${value} transaction`
         },

@@ -4,7 +4,7 @@ const ENABLE_LOCAL_NETWORK =
   import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true';
 
 const BASE_NETWORKS = {
-  dirac: 'https://subsquid.quantus.com/graphql'
+  dirac: 'https://subsquid.quantus.com/green/graphql'
 } as const;
 
 const LOCAL_NETWORK = {

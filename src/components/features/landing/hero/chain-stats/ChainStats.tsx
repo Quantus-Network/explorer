@@ -17,7 +17,9 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
   const success = !loading && !error;
   const totalTransactions =
     (data?.transactions?.totalCount ?? 0) +
-    (data?.reversibleTransactions?.totalCount ?? 0);
+    (data?.scheduledReversibleTransactions?.totalCount ?? 0) +
+    (data?.executedReversibleTransactions?.totalCount ?? 0) +
+    (data?.cancelledReversibleTransactions?.totalCount ?? 0);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

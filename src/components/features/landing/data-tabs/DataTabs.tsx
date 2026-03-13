@@ -10,21 +10,25 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs } from '@/components/ui/tabs';
 import { formatOption } from '@/utils/formatter';
 
 import { RecentBlocks } from '../recent-blocks/RecentBlocks';
+import { RecentCancelledReversibleTransactions } from '../recent-cancelled-reversible-transactions/RecentCancelledReversibleTransactions';
 import { RecentErrorEvents } from '../recent-error-events/RecentErrorEvents';
+import { RecentExecutedReversibleTransactions } from '../recent-executed-reversible-transactions/RecentExecutedReversibleTransactions';
 import { RecentHighSecuritySets } from '../recent-high-security-sets/RecentHighSecuritySets';
 import { RecentMinerRewards } from '../recent-miner-rewards/RecentMinerRewards';
-import { RecentReversibleTransactions } from '../recent-reversible-transactions/RecentReversibleTransactions';
+import { RecentScheduledReversibleTransactions } from '../recent-scheduled-reversible-transactions/RecentScheduledReversibleTransactions';
 import { RecentTransactions } from '../recent-transactions/RecentTransactions';
 
 export interface DataTabsProps {}
 
 const TAB_OPTIONS = {
   immediate: 'immediate-transactions',
-  reversible: 'reversible-transactions',
+  scheduledReversible: 'scheduled-reversible-transactions',
+  executedReversible: 'executed-reversible-transactions',
+  cancelledReversible: 'cancelled-reversible-transactions',
   blocks: 'blocks',
   miners: 'miner-rewards',
   highSecuritySets: 'high-security-sets',
@@ -40,7 +44,7 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
       <ContentContainer>
         <Tabs value={selectedTab} className="gap-5">
           <Select value={selectedTab} onValueChange={setSelectedTab}>
-            <SelectTrigger className="max-w-56 md:hidden">
+            <SelectTrigger className="max-w-56 ">
               <SelectValue />
             </SelectTrigger>
 
@@ -53,23 +57,17 @@ export const DataTabs: React.FC<DataTabsProps> = () => {
             </SelectContent>
           </Select>
 
-          <TabsList className="hidden md:inline-flex">
-            {TAB_LIST.map((val) => (
-              <TabsTrigger
-                key={val}
-                onFocus={() => setSelectedTab(val)}
-                value={val}
-              >
-                {formatOption(val)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
           <TabsContent value={TAB_OPTIONS.immediate}>
             <RecentTransactions />
           </TabsContent>
-          <TabsContent value={TAB_OPTIONS.reversible}>
-            <RecentReversibleTransactions />
+          <TabsContent value={TAB_OPTIONS.scheduledReversible}>
+            <RecentScheduledReversibleTransactions />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.executedReversible}>
+            <RecentExecutedReversibleTransactions />
+          </TabsContent>
+          <TabsContent value={TAB_OPTIONS.cancelledReversible}>
+            <RecentCancelledReversibleTransactions />
           </TabsContent>
           <TabsContent value={TAB_OPTIONS.blocks}>
             <RecentBlocks />
