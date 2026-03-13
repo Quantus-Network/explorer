@@ -1,3 +1,5 @@
+import type { Account } from './account';
+import type { Block } from './blocks';
 import type { CancelledReversibleTransaction } from './cancelled-reversible-transaction';
 import type { ErrorEvent } from './errors';
 import type { ExecutedReversibleTransaction } from './executed-reversible-transaction';
