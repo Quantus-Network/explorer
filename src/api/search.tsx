@@ -18,7 +18,7 @@ export const search = (fetcher: DataFetcher) => ({
         }
         scheduledReversibleTransactions: scheduledReversibleTransfers(
           limit: $limit
-          where: { extrinsicHash_startsWith: $keyword }
+          where: { txId_startsWith: $keyword }
         ) {
           extrinsicHash
           txId

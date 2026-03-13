@@ -200,16 +200,11 @@ export const cancelledReversibleTransactions = {
           cancelledBy {
             id
           }
+          extrinsicHash
           scheduledTransfer {
-            extrinsicHash
             amount
-            timestamp
             scheduledAt
-            txId
             fee
-            block {
-              height
-            }
             from {
               id
             }

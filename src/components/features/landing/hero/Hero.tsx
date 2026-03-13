@@ -41,7 +41,7 @@ export const Hero = (props: HeroProps) => {
             ref={inputRef}
             onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
-            placeholder="Search by hash, id, block height, or error name/type"
+            placeholder="Search by hash, id, tx id, block height, or error name/type"
             onKeywordChange={handleKeywordChange}
           />
 

@@ -192,15 +192,9 @@ export const executedReversibleTransactions = {
             height
           }
           scheduledTransfer {
-            extrinsicHash
             amount
-            timestamp
             scheduledAt
-            txId
             fee
-            block {
-              height
-            }
             from {
               id
             }

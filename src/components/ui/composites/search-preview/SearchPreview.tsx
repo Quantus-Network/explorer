@@ -148,7 +148,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         renderItem: (tx: any) => (
           <PreviewLink
             href={`${RESOURCES.scheduledReversibleTransactions}/${tx.txId}`}
-            label={`${tx.extrinsicHash}`}
+            label={`${tx.txId}`}
             onSelect={handleClosePreview}
           />
         )

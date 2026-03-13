@@ -51,7 +51,9 @@ export const ScheduledReversibleTransactionInformation: React.FC<
         {
           label: 'ID',
           key: 'txId',
-          render: (value) => <span className="break-all">{value}</span>
+          render: (value) => (
+            <TextWithCopy text={value || '-'} className="break-all" />
+          )
         },
         {
           label: 'Extrinsic Hash',
