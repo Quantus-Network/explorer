@@ -1,5 +1,7 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
+import { endOfToday } from 'date-fns/endOfToday';
+import { startOfToday } from 'date-fns/startOfToday';
 
 import type { ExecutedReversibleTransferWhereInput } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -8,6 +10,8 @@ import type { ExecutedReversibleTransactionSorts } from '@/constants/query-sorts
 import { EXECUTED_REVERSIBLE_TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
   ExecutedReversibleTransactionListResponse,
+  ExecutedReversibleTransactionResponse,
+  ExecutedReversibleTransactionsStatsResponse,
   RecentExecutedReversibleTransactionsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
@@ -138,5 +142,87 @@ export const executedReversibleTransactions = {
         limit: QUERY_RECENT_LIMIT
       }
     });
+  },
+  useGetStats: (
+    config?: Omit<
+      QueryHookOptions<ExecutedReversibleTransactionsStatsResponse>,
+      'variables'
+    >
+  ) => {
+    const startDate = startOfToday().toISOString();
+    const endDate = endOfToday().toISOString();
+
+    const GET_EXECUTED_REVERSIBLE_TRANSACTIONS_STATS = gql`
+      query GetExecutedReversibleTransactionsStats(
+        $startDate: DateTime!
+        $endDate: DateTime!
+      ) {
+        last24Hour: executedReversibleTransfersConnection(
+          orderBy: id_ASC
+          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+        ) {
+          totalCount
+        }
+        allTime: executedReversibleTransfersConnection(orderBy: id_ASC) {
+          totalCount
+        }
+      }
+    `;
+
+    return useQuery<ExecutedReversibleTransactionsStatsResponse>(
+      GET_EXECUTED_REVERSIBLE_TRANSACTIONS_STATS,
+      {
+        ...config,
+        variables: {
+          startDate,
+          endDate
+        }
+      }
+    );
+  },
+  getByTxId: () => {
+    const QUERY = gql`
+      query GetExecutedReversibleTransactionByTxId($txId: String!) {
+        executedReversibleTransactions: executedReversibleTransfers(
+          where: { txId_eq: $txId }
+        ) {
+          timestamp
+          txId
+          block {
+            height
+          }
+          scheduledTransfer {
+            extrinsicHash
+            amount
+            timestamp
+            scheduledAt
+            txId
+            fee
+            block {
+              height
+            }
+            from {
+              id
+            }
+            to {
+              id
+            }
+          }
+        }
+      }
+    `;
+
+    return {
+      useQuery: (
+        txId: string,
+        config?: QueryHookOptions<ExecutedReversibleTransactionResponse>
+      ) =>
+        useQuery<ExecutedReversibleTransactionResponse>(QUERY, {
+          ...config,
+          variables: {
+            txId
+          }
+        })
+    };
   }
 };

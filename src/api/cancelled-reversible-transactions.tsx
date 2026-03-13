@@ -1,5 +1,7 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
+import { endOfToday } from 'date-fns/endOfToday';
+import { startOfToday } from 'date-fns/startOfToday';
 
 import type { CancelledReversibleTransferWhereInput } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -8,6 +10,8 @@ import type { CancelledReversibleTransactionSorts } from '@/constants/query-sort
 import { CANCELLED_REVERSIBLE_TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
   CancelledReversibleTransactionListResponse,
+  CancelledReversibleTransactionResponse,
+  CancelledReversibleTransactionsStatsResponse,
   RecentCancelledReversibleTransactionsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
@@ -144,5 +148,90 @@ export const cancelledReversibleTransactions = {
         limit: QUERY_RECENT_LIMIT
       }
     });
+  },
+  useGetStats: (
+    config?: Omit<
+      QueryHookOptions<CancelledReversibleTransactionsStatsResponse>,
+      'variables'
+    >
+  ) => {
+    const startDate = startOfToday().toISOString();
+    const endDate = endOfToday().toISOString();
+
+    const GET_CANCELLED_REVERSIBLE_TRANSACTIONS_STATS = gql`
+      query GetCancelledReversibleTransactionsStats(
+        $startDate: DateTime!
+        $endDate: DateTime!
+      ) {
+        last24Hour: cancelledReversibleTransfersConnection(
+          orderBy: id_ASC
+          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+        ) {
+          totalCount
+        }
+        allTime: cancelledReversibleTransfersConnection(orderBy: id_ASC) {
+          totalCount
+        }
+      }
+    `;
+
+    return useQuery<CancelledReversibleTransactionsStatsResponse>(
+      GET_CANCELLED_REVERSIBLE_TRANSACTIONS_STATS,
+      {
+        ...config,
+        variables: {
+          startDate,
+          endDate
+        }
+      }
+    );
+  },
+  getByTxId: () => {
+    const QUERY = gql`
+      query GetCancelledReversibleTransactionByTxId($txId: String!) {
+        cancelledReversibleTransactions: cancelledReversibleTransfers(
+          where: { txId_eq: $txId }
+        ) {
+          timestamp
+          txId
+          block {
+            height
+          }
+          cancelledBy {
+            id
+          }
+          scheduledTransfer {
+            extrinsicHash
+            amount
+            timestamp
+            scheduledAt
+            txId
+            fee
+            block {
+              height
+            }
+            from {
+              id
+            }
+            to {
+              id
+            }
+          }
+        }
+      }
+    `;
+
+    return {
+      useQuery: (
+        txId: string,
+        config?: QueryHookOptions<CancelledReversibleTransactionResponse>
+      ) =>
+        useQuery<CancelledReversibleTransactionResponse>(QUERY, {
+          ...config,
+          variables: {
+            txId
+          }
+        })
+    };
   }
 };
