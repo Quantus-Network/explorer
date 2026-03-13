@@ -9,7 +9,6 @@ import { executedReversibleTransactions } from './executed-reversible-transactio
 import { highSecuritySets } from './high-security-sets';
 import { minerLeaderboard } from './miner-leaderboard';
 import { minerRewards } from './miner-rewards';
-import { reversibleTransactions } from './reversible-transactions';
 import { scheduledReversibleTransactions } from './scheduled-reversible-transactions';
 import { search } from './search';
 import { transactions } from './transactions';
@@ -23,7 +22,6 @@ const useApiClient = () => {
     chainStatus,
     errors,
     transactions,
-    reversibleTransactions,
     scheduledReversibleTransactions,
     executedReversibleTransactions,
     cancelledReversibleTransactions,
