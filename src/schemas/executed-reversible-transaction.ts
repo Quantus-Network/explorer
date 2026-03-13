@@ -10,6 +10,10 @@ export interface ExecutedReversibleTransaction
   scheduledTransfer: ScheduledReversibleTransaction;
 }
 
+export interface ExecutedReversibleTransactionResponse {
+  executedReversibleTransactions: [ExecutedReversibleTransaction];
+}
+
 export interface ExecutedReversibleTransactionListResponse {
   executedReversibleTransactions: ExecutedReversibleTransaction[];
   meta: {
@@ -19,4 +23,13 @@ export interface ExecutedReversibleTransactionListResponse {
 
 export interface RecentExecutedReversibleTransactionsResponse {
   executedReversibleTransactions: ExecutedReversibleTransaction[];
+}
+
+export interface ExecutedReversibleTransactionsStatsResponse {
+  allTime: {
+    totalCount: number;
+  };
+  last24Hour: {
+    totalCount: number;
+  };
 }

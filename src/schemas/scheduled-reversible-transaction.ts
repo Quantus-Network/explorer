@@ -10,6 +10,10 @@ export interface ScheduledReversibleTransaction
   to: Pick<gql.Account, 'id'>;
 }
 
+export interface ScheduledReversibleTransactionResponse {
+  scheduledReversibleTransactions: [ScheduledReversibleTransaction];
+}
+
 export interface ScheduledReversibleTransactionListResponse {
   scheduledReversibleTransactions: ScheduledReversibleTransaction[];
   meta: {
@@ -19,4 +23,13 @@ export interface ScheduledReversibleTransactionListResponse {
 
 export interface RecentScheduledReversibleTransactionsResponse {
   scheduledReversibleTransactions: ScheduledReversibleTransaction[];
+}
+
+export interface ScheduledReversibleTransactionsStatsResponse {
+  allTime: {
+    totalCount: number;
+  };
+  last24Hour: {
+    totalCount: number;
+  };
 }
