@@ -1,12 +1,14 @@
 export * from './account';
 export * from './blocks';
+export * from './cancelled-reversible-transaction';
 export * from './chain-status';
 export * from './errors';
+export * from './executed-reversible-transaction';
 export * from './high-security-set';
 export * from './miner-leaderboard';
 export * from './miner-reward';
-export * from './reversible-transaction';
+export * from './scheduled-reversible-transaction';
 export * from './searchs';
 export * from './transcation';
 export * from './unified-transaction';
-export * from './wormhole';
+// export * from './wormhole';

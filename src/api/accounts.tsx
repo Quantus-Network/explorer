@@ -5,9 +5,9 @@ import { startOfToday } from 'date-fns/startOfToday';
 import { subDays } from 'date-fns/subDays';
 
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
 import { ACCOUNT_SORTS } from '@/constants/query-sorts';
+import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type {
   AccountListResponse,
   AccountResponse,
@@ -93,7 +93,7 @@ export const accounts = {
 
           totalCount
         }
-        reversibleTransactions: reversibleTransfersConnection(
+        scheduledReversibleTransactions: scheduledReversibleTransfersConnection(
           orderBy: timestamp_DESC
           first: $limit
           where: { from: { id_eq: $id }, OR: { to: { id_eq: $id } } }
@@ -108,6 +108,10 @@ export const accounts = {
               timestamp
               status
               amount
+              timestamp
+              scheduledAt
+              txId
+              fee
               block {
                 height
               }
@@ -119,7 +123,94 @@ export const accounts = {
               }
             }
           }
-
+          totalCount
+        }
+        executedReversibleTransactions: executedReversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            scheduledTransfer: {
+              from: { id_eq: $id }
+              OR: { to: { id_eq: $id } }
+            }
+          }
+        ) {
+          edges {
+            node {
+              timestamp
+              txId
+              block {
+                height
+              }
+              scheduledTransfer {
+                extrinsic {
+                  id
+                  pallet
+                  call
+                }
+                amount
+                timestamp
+                scheduledAt
+                txId
+                fee
+                block {
+                  height
+                }
+                from {
+                  id
+                }
+                to {
+                  id
+                }
+              }
+            }
+          }
+          totalCount
+        }
+        cancelledReversibleTransactions: cancelledReversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            scheduledTransfer: {
+              from: { id_eq: $id }
+              OR: { to: { id_eq: $id } }
+            }
+            OR: { cancelledBy: { id_eq: $id } }
+          }
+        ) {
+          edges {
+            node {
+              timestamp
+              txId
+              block {
+                height
+              }
+              cancelledBy {
+                id
+              }
+              scheduledTransfer {
+                extrinsic {
+                  id
+                  pallet
+                  call
+                }
+                amount
+                timestamp
+                scheduledAt
+                txId
+                fee
+                block {
+                  height
+                }
+                from {
+                  id
+                }
+                to {
+                  id
+                }
+              }
+            }
+          }
           totalCount
         }
         minerRewards: minerRewardsConnection(

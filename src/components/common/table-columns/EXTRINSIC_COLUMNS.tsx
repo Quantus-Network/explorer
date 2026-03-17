@@ -3,9 +3,9 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
+import { cn } from '@/lib/utils';
 import type { BlockExtrinsic } from '@/schemas/blocks';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
-import { cn } from '@/lib/utils';
 
 const columnHelper = createColumnHelper<BlockExtrinsic>();
 
@@ -25,7 +25,7 @@ export const createExtrinsicColumns = () => {
       header: 'Extrinsic',
       cell: (props) => {
         const hash = props.getValue();
-        const pallet = props.row.original.pallet;
+        const { pallet, call } = props.row.original;
 
         // Determine the appropriate resource based on pallet
         let href = '';
@@ -33,8 +33,21 @@ export const createExtrinsicColumns = () => {
           href = `${RESOURCES.wormhole}/${hash}`;
         } else if (pallet === 'Balances') {
           href = `${RESOURCES.transactions}/${hash}`;
-        } else if (pallet === 'ReversibleTransfers') {
-          href = `${RESOURCES.reversibleTransactions}/${hash}`;
+        } else if (
+          pallet === 'ReversibleTransfers' &&
+          call === 'schedule_transfer'
+        ) {
+          href = `${RESOURCES.scheduledReversibleTransactions}/${hash}`;
+        } else if (
+          pallet === 'ReversibleTransfers' &&
+          call === 'execute_transfer'
+        ) {
+          href = `${RESOURCES.executedReversibleTransactions}/${hash}`;
+        } else if (
+          pallet === 'ReversibleTransfers' &&
+          call === 'cancel_transfer'
+        ) {
+          href = `${RESOURCES.cancelledReversibleTransactions}/${hash}`;
         } else {
           // Default to transactions for now
           href = `${RESOURCES.transactions}/${hash}`;
@@ -73,7 +86,7 @@ export const createExtrinsicColumns = () => {
         const signer = props.getValue();
         if (!signer) {
           return (
-            <span className="text-muted-foreground text-xs">unsigned</span>
+            <span className="text-xs text-muted-foreground">unsigned</span>
           );
         }
         return (

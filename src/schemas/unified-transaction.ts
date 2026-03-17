@@ -1,10 +1,11 @@
-import type * as gql from '../__generated__/graphql';
 import type { WormholeOutput } from './wormhole';
 
 // All possible transaction types across account and block views
 export type UnifiedTransactionType =
   | 'immediate'
-  | 'reversible'
+  | 'scheduled-reversible'
+  | 'executed-reversible'
+  | 'cancelled-reversible'
   | 'miner-reward'
   | 'high-security'
   | 'wormhole'
@@ -30,7 +31,6 @@ export interface UnifiedTransaction {
   to?: { id: string };
   amount?: string | number;
   fee?: number;
-  status?: gql.ReversibleTransferStatus;
 
   // Miner reward fields
   reward?: string;

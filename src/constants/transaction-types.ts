@@ -8,9 +8,17 @@ export const TRANSACTION_TYPE_CONFIG: Record<
     label: 'Immediate',
     className: 'bg-blue-100 text-blue-800'
   },
-  reversible: {
-    label: 'Reversible',
+  'scheduled-reversible': {
+    label: 'Scheduled Reversible',
     className: 'bg-purple-100 text-purple-800'
+  },
+  'executed-reversible': {
+    label: 'Executed Reversible',
+    className: 'bg-green-100 text-green-800'
+  },
+  'cancelled-reversible': {
+    label: 'Cancelled Reversible',
+    className: 'bg-gray-100 text-gray-800'
   },
   'miner-reward': {
     label: 'Miner Reward',

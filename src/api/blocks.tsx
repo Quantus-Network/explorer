@@ -4,9 +4,9 @@ import { gql, useQuery } from '@apollo/client';
 import type { BlockWhereInput } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
-import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type { BlockSorts } from '@/constants/query-sorts';
 import { BLOCK_SORTS } from '@/constants/query-sorts';
+import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type {
   BlockListResponse,
   BlockResponse,
@@ -168,7 +168,7 @@ export const blocks = {
 
           totalCount
         }
-        reversibleTransactions: reversibleTransfersConnection(
+        scheduledReversibleTransactions: scheduledReversibleTransfersConnection(
           orderBy: timestamp_DESC
           first: $limit
           where: {
@@ -186,6 +186,10 @@ export const blocks = {
               timestamp
               status
               amount
+              timestamp
+              scheduledAt
+              txId
+              fee
               block {
                 height
               }
@@ -197,7 +201,81 @@ export const blocks = {
               }
             }
           }
-
+          totalCount
+        }
+        executedReversibleTransactions: executedReversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          edges {
+            node {
+              timestamp
+              txId
+              block {
+                height
+              }
+              scheduledTransfer {
+                extrinsicHash
+                amount
+                timestamp
+                scheduledAt
+                txId
+                fee
+                block {
+                  height
+                }
+                from {
+                  id
+                }
+                to {
+                  id
+                }
+              }
+            }
+          }
+          totalCount
+        }
+        cancelledReversibleTransactions: cancelledReversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          edges {
+            node {
+              timestamp
+              txId
+              block {
+                height
+              }
+              cancelledBy {
+                id
+              }
+              scheduledTransfer {
+                extrinsicHash
+                amount
+                timestamp
+                scheduledAt
+                txId
+                fee
+                block {
+                  height
+                }
+                from {
+                  id
+                }
+                to {
+                  id
+                }
+              }
+            }
+          }
           totalCount
         }
         highSecuritySets: highSecuritySetsConnection(

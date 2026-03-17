@@ -2,16 +2,15 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
-import { TransactionStatus } from '@/components/ui/transaction-status';
 import { RESOURCES } from '@/constants/resources';
 import { TRANSACTION_TYPE_CONFIG } from '@/constants/transaction-types';
+import { cn } from '@/lib/utils';
 import type { UnifiedTransaction } from '@/schemas/unified-transaction';
 import {
   formatDuration,
   formatMonetaryValue,
   formatTxAddress
 } from '@/utils/formatter';
-import { cn } from '@/lib/utils';
 
 const columnHelper = createColumnHelper<UnifiedTransaction>();
 
@@ -60,14 +59,20 @@ export const createUnifiedTransactionColumns = (
         // Determine link target and display text based on type
         let href = '';
         let displayText = '-';
-        let extrinsicId = extrinsic?.id;
+        const extrinsicId = extrinsic?.id;
 
         if (row.type === 'immediate' && extrinsicId) {
           href = `${RESOURCES.transactions}/${extrinsicId}`;
           displayText = formatTxAddress(extrinsicId);
-        } else if (row.type === 'reversible' && extrinsicId) {
-          href = `${RESOURCES.reversibleTransactions}/${extrinsicId}`;
-          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'scheduled-reversible' && row.id) {
+          href = `${RESOURCES.scheduledReversibleTransactions}/${row.id}`;
+          displayText = formatTxAddress(row.id);
+        } else if (row.type === 'executed-reversible' && row.id) {
+          href = `${RESOURCES.executedReversibleTransactions}/${row.id}`;
+          displayText = formatTxAddress(row.id);
+        } else if (row.type === 'cancelled-reversible' && row.id) {
+          href = `${RESOURCES.cancelledReversibleTransactions}/${row.id}`;
+          displayText = formatTxAddress(row.id);
         } else if (row.type === 'miner-reward' && row.block) {
           href = `${RESOURCES.blocks}/${row.block.height}`;
           displayText = `Block #${row.block.height}`;
@@ -124,7 +129,14 @@ export const createUnifiedTransactionColumns = (
         const row = props.row.original;
 
         // For transfers (immediate/reversible)
-        if (row.type === 'immediate' || row.type === 'reversible') {
+        if (
+          [
+            'immediate',
+            'scheduled-reversible',
+            'executed-reversible',
+            'cancelled-reversible'
+          ].includes(row.type)
+        ) {
           return (
             <div className="flex flex-col gap-1 text-xs">
               {row.from && (
@@ -249,7 +261,12 @@ export const createUnifiedTransactionColumns = (
 
         // For transfers
         if (
-          (row.type === 'immediate' || row.type === 'reversible') &&
+          [
+            'immediate',
+            'scheduled-reversible',
+            'executed-reversible',
+            'cancelled-reversible'
+          ].includes(row.type) &&
           row.amount !== undefined
         ) {
           return formatMonetaryValue(Number(row.amount), 5);
@@ -276,18 +293,6 @@ export const createUnifiedTransactionColumns = (
 
         return <span className="text-muted-foreground">-</span>;
       }
-    }),
-
-    // Status column
-    columnHelper.accessor('status', {
-      id: 'status',
-      header: 'Status',
-      cell: (props) => {
-        const status = props.getValue();
-        if (!status) return <span className="text-muted-foreground">-</span>;
-        return <TransactionStatus status={status} />;
-      },
-      enableSorting: false
     })
   ];
 

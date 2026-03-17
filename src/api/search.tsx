@@ -20,15 +20,28 @@ export const search = (fetcher: DataFetcher) => ({
             call
           }
         }
-        reversibleTransactions: reversibleTransfers(
+        scheduledReversibleTransactions: scheduledReversibleTransfers(
           limit: $limit
-          where: { extrinsic: { id_startsWith: $keyword } }
+          where: { txId_startsWith: $keyword }
         ) {
           extrinsic {
             id
             pallet
             call
           }
+          txId
+        }
+        executedReversibleTransactions: executedReversibleTransfers(
+          limit: $limit
+          where: { txId_startsWith: $keyword }
+        ) {
+          txId
+        }
+        cancelledReversibleTransactions: cancelledReversibleTransfers(
+          limit: $limit
+          where: { txId_startsWith: $keyword }
+        ) {
+          txId
         }
         accounts(limit: $limit, where: { id_startsWith: $keyword }) {
           id

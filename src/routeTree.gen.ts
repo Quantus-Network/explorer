@@ -11,20 +11,24 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WormholeIndexRouteImport } from './routes/wormhole/index'
-import { Route as ReversibleTransactionsIndexRouteImport } from './routes/reversible-transactions/index'
+import { Route as ScheduledReversibleTransactionsIndexRouteImport } from './routes/scheduled-reversible-transactions/index'
 import { Route as MinerRewardsIndexRouteImport } from './routes/miner-rewards/index'
 import { Route as MinerLeaderboardIndexRouteImport } from './routes/miner-leaderboard/index'
 import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index'
 import { Route as HighSecuritySetsIndexRouteImport } from './routes/high-security-sets/index'
+import { Route as ExecutedReversibleTransactionsIndexRouteImport } from './routes/executed-reversible-transactions/index'
 import { Route as ErrorsIndexRouteImport } from './routes/errors/index'
+import { Route as CancelledReversibleTransactionsIndexRouteImport } from './routes/cancelled-reversible-transactions/index'
 import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
 import { Route as WormholeIdRouteImport } from './routes/wormhole/$id'
-import { Route as ReversibleTransactionsHashRouteImport } from './routes/reversible-transactions/$hash'
+import { Route as ScheduledReversibleTransactionsTxIdRouteImport } from './routes/scheduled-reversible-transactions/$txId'
 import { Route as MinerRewardsHashRouteImport } from './routes/miner-rewards/$hash'
 import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash'
 import { Route as HighSecuritySetsHashRouteImport } from './routes/high-security-sets/$hash'
+import { Route as ExecutedReversibleTransactionsTxIdRouteImport } from './routes/executed-reversible-transactions/$txId'
 import { Route as ErrorsIdRouteImport } from './routes/errors/$id'
+import { Route as CancelledReversibleTransactionsTxIdRouteImport } from './routes/cancelled-reversible-transactions/$txId'
 import { Route as BlocksIdRouteImport } from './routes/blocks/$id'
 import { Route as AccountsIdRouteImport } from './routes/accounts/$id'
 
@@ -38,10 +42,10 @@ const WormholeIndexRoute = WormholeIndexRouteImport.update({
   path: '/wormhole/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReversibleTransactionsIndexRoute =
-  ReversibleTransactionsIndexRouteImport.update({
-    id: '/reversible-transactions/',
-    path: '/reversible-transactions/',
+const ScheduledReversibleTransactionsIndexRoute =
+  ScheduledReversibleTransactionsIndexRouteImport.update({
+    id: '/scheduled-reversible-transactions/',
+    path: '/scheduled-reversible-transactions/',
     getParentRoute: () => rootRouteImport,
   } as any)
 const MinerRewardsIndexRoute = MinerRewardsIndexRouteImport.update({
@@ -65,11 +69,23 @@ const HighSecuritySetsIndexRoute = HighSecuritySetsIndexRouteImport.update({
   path: '/high-security-sets/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExecutedReversibleTransactionsIndexRoute =
+  ExecutedReversibleTransactionsIndexRouteImport.update({
+    id: '/executed-reversible-transactions/',
+    path: '/executed-reversible-transactions/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ErrorsIndexRoute = ErrorsIndexRouteImport.update({
   id: '/errors/',
   path: '/errors/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CancelledReversibleTransactionsIndexRoute =
+  CancelledReversibleTransactionsIndexRouteImport.update({
+    id: '/cancelled-reversible-transactions/',
+    path: '/cancelled-reversible-transactions/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlocksIndexRoute = BlocksIndexRouteImport.update({
   id: '/blocks/',
   path: '/blocks/',
@@ -85,10 +101,10 @@ const WormholeIdRoute = WormholeIdRouteImport.update({
   path: '/wormhole/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReversibleTransactionsHashRoute =
-  ReversibleTransactionsHashRouteImport.update({
-    id: '/reversible-transactions/$hash',
-    path: '/reversible-transactions/$hash',
+const ScheduledReversibleTransactionsTxIdRoute =
+  ScheduledReversibleTransactionsTxIdRouteImport.update({
+    id: '/scheduled-reversible-transactions/$txId',
+    path: '/scheduled-reversible-transactions/$txId',
     getParentRoute: () => rootRouteImport,
   } as any)
 const MinerRewardsHashRoute = MinerRewardsHashRouteImport.update({
@@ -107,11 +123,23 @@ const HighSecuritySetsHashRoute = HighSecuritySetsHashRouteImport.update({
   path: '/high-security-sets/$hash',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExecutedReversibleTransactionsTxIdRoute =
+  ExecutedReversibleTransactionsTxIdRouteImport.update({
+    id: '/executed-reversible-transactions/$txId',
+    path: '/executed-reversible-transactions/$txId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ErrorsIdRoute = ErrorsIdRouteImport.update({
   id: '/errors/$id',
   path: '/errors/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CancelledReversibleTransactionsTxIdRoute =
+  CancelledReversibleTransactionsTxIdRouteImport.update({
+    id: '/cancelled-reversible-transactions/$txId',
+    path: '/cancelled-reversible-transactions/$txId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const BlocksIdRoute = BlocksIdRouteImport.update({
   id: '/blocks/$id',
   path: '/blocks/$id',
@@ -127,40 +155,48 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
+  '/cancelled-reversible-transactions/$txId': typeof CancelledReversibleTransactionsTxIdRoute
   '/errors/$id': typeof ErrorsIdRoute
+  '/executed-reversible-transactions/$txId': typeof ExecutedReversibleTransactionsTxIdRoute
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
-  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
+  '/cancelled-reversible-transactions': typeof CancelledReversibleTransactionsIndexRoute
   '/errors': typeof ErrorsIndexRoute
+  '/executed-reversible-transactions': typeof ExecutedReversibleTransactionsIndexRoute
   '/high-security-sets': typeof HighSecuritySetsIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
-  '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
+  '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
+  '/cancelled-reversible-transactions/$txId': typeof CancelledReversibleTransactionsTxIdRoute
   '/errors/$id': typeof ErrorsIdRoute
+  '/executed-reversible-transactions/$txId': typeof ExecutedReversibleTransactionsTxIdRoute
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
-  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
+  '/cancelled-reversible-transactions': typeof CancelledReversibleTransactionsIndexRoute
   '/errors': typeof ErrorsIndexRoute
+  '/executed-reversible-transactions': typeof ExecutedReversibleTransactionsIndexRoute
   '/high-security-sets': typeof HighSecuritySetsIndexRoute
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
-  '/reversible-transactions': typeof ReversibleTransactionsIndexRoute
+  '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
 }
 export interface FileRoutesById {
@@ -168,20 +204,24 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accounts/$id': typeof AccountsIdRoute
   '/blocks/$id': typeof BlocksIdRoute
+  '/cancelled-reversible-transactions/$txId': typeof CancelledReversibleTransactionsTxIdRoute
   '/errors/$id': typeof ErrorsIdRoute
+  '/executed-reversible-transactions/$txId': typeof ExecutedReversibleTransactionsTxIdRoute
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
-  '/reversible-transactions/$hash': typeof ReversibleTransactionsHashRoute
+  '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
   '/accounts/': typeof AccountsIndexRoute
   '/blocks/': typeof BlocksIndexRoute
+  '/cancelled-reversible-transactions/': typeof CancelledReversibleTransactionsIndexRoute
   '/errors/': typeof ErrorsIndexRoute
+  '/executed-reversible-transactions/': typeof ExecutedReversibleTransactionsIndexRoute
   '/high-security-sets/': typeof HighSecuritySetsIndexRoute
   '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard/': typeof MinerLeaderboardIndexRoute
   '/miner-rewards/': typeof MinerRewardsIndexRoute
-  '/reversible-transactions/': typeof ReversibleTransactionsIndexRoute
+  '/scheduled-reversible-transactions/': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole/': typeof WormholeIndexRoute
 }
 export interface FileRouteTypes {
@@ -190,60 +230,72 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts/$id'
     | '/blocks/$id'
+    | '/cancelled-reversible-transactions/$txId'
     | '/errors/$id'
+    | '/executed-reversible-transactions/$txId'
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
-    | '/reversible-transactions/$hash'
+    | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
     | '/accounts'
     | '/blocks'
+    | '/cancelled-reversible-transactions'
     | '/errors'
+    | '/executed-reversible-transactions'
     | '/high-security-sets'
     | '/immediate-transactions'
     | '/miner-leaderboard'
     | '/miner-rewards'
-    | '/reversible-transactions'
+    | '/scheduled-reversible-transactions'
     | '/wormhole'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accounts/$id'
     | '/blocks/$id'
+    | '/cancelled-reversible-transactions/$txId'
     | '/errors/$id'
+    | '/executed-reversible-transactions/$txId'
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
-    | '/reversible-transactions/$hash'
+    | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
     | '/accounts'
     | '/blocks'
+    | '/cancelled-reversible-transactions'
     | '/errors'
+    | '/executed-reversible-transactions'
     | '/high-security-sets'
     | '/immediate-transactions'
     | '/miner-leaderboard'
     | '/miner-rewards'
-    | '/reversible-transactions'
+    | '/scheduled-reversible-transactions'
     | '/wormhole'
   id:
     | '__root__'
     | '/'
     | '/accounts/$id'
     | '/blocks/$id'
+    | '/cancelled-reversible-transactions/$txId'
     | '/errors/$id'
+    | '/executed-reversible-transactions/$txId'
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
-    | '/reversible-transactions/$hash'
+    | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
     | '/accounts/'
     | '/blocks/'
+    | '/cancelled-reversible-transactions/'
     | '/errors/'
+    | '/executed-reversible-transactions/'
     | '/high-security-sets/'
     | '/immediate-transactions/'
     | '/miner-leaderboard/'
     | '/miner-rewards/'
-    | '/reversible-transactions/'
+    | '/scheduled-reversible-transactions/'
     | '/wormhole/'
   fileRoutesById: FileRoutesById
 }
@@ -251,20 +303,24 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountsIdRoute: typeof AccountsIdRoute
   BlocksIdRoute: typeof BlocksIdRoute
+  CancelledReversibleTransactionsTxIdRoute: typeof CancelledReversibleTransactionsTxIdRoute
   ErrorsIdRoute: typeof ErrorsIdRoute
+  ExecutedReversibleTransactionsTxIdRoute: typeof ExecutedReversibleTransactionsTxIdRoute
   HighSecuritySetsHashRoute: typeof HighSecuritySetsHashRoute
   ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute
   MinerRewardsHashRoute: typeof MinerRewardsHashRoute
-  ReversibleTransactionsHashRoute: typeof ReversibleTransactionsHashRoute
+  ScheduledReversibleTransactionsTxIdRoute: typeof ScheduledReversibleTransactionsTxIdRoute
   WormholeIdRoute: typeof WormholeIdRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
   BlocksIndexRoute: typeof BlocksIndexRoute
+  CancelledReversibleTransactionsIndexRoute: typeof CancelledReversibleTransactionsIndexRoute
   ErrorsIndexRoute: typeof ErrorsIndexRoute
+  ExecutedReversibleTransactionsIndexRoute: typeof ExecutedReversibleTransactionsIndexRoute
   HighSecuritySetsIndexRoute: typeof HighSecuritySetsIndexRoute
   ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute
   MinerLeaderboardIndexRoute: typeof MinerLeaderboardIndexRoute
   MinerRewardsIndexRoute: typeof MinerRewardsIndexRoute
-  ReversibleTransactionsIndexRoute: typeof ReversibleTransactionsIndexRoute
+  ScheduledReversibleTransactionsIndexRoute: typeof ScheduledReversibleTransactionsIndexRoute
   WormholeIndexRoute: typeof WormholeIndexRoute
 }
 
@@ -284,11 +340,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WormholeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reversible-transactions/': {
-      id: '/reversible-transactions/'
-      path: '/reversible-transactions'
-      fullPath: '/reversible-transactions'
-      preLoaderRoute: typeof ReversibleTransactionsIndexRouteImport
+    '/scheduled-reversible-transactions/': {
+      id: '/scheduled-reversible-transactions/'
+      path: '/scheduled-reversible-transactions'
+      fullPath: '/scheduled-reversible-transactions'
+      preLoaderRoute: typeof ScheduledReversibleTransactionsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/miner-rewards/': {
@@ -319,11 +375,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HighSecuritySetsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/executed-reversible-transactions/': {
+      id: '/executed-reversible-transactions/'
+      path: '/executed-reversible-transactions'
+      fullPath: '/executed-reversible-transactions'
+      preLoaderRoute: typeof ExecutedReversibleTransactionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/errors/': {
       id: '/errors/'
       path: '/errors'
       fullPath: '/errors'
       preLoaderRoute: typeof ErrorsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cancelled-reversible-transactions/': {
+      id: '/cancelled-reversible-transactions/'
+      path: '/cancelled-reversible-transactions'
+      fullPath: '/cancelled-reversible-transactions'
+      preLoaderRoute: typeof CancelledReversibleTransactionsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blocks/': {
@@ -347,11 +417,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WormholeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reversible-transactions/$hash': {
-      id: '/reversible-transactions/$hash'
-      path: '/reversible-transactions/$hash'
-      fullPath: '/reversible-transactions/$hash'
-      preLoaderRoute: typeof ReversibleTransactionsHashRouteImport
+    '/scheduled-reversible-transactions/$txId': {
+      id: '/scheduled-reversible-transactions/$txId'
+      path: '/scheduled-reversible-transactions/$txId'
+      fullPath: '/scheduled-reversible-transactions/$txId'
+      preLoaderRoute: typeof ScheduledReversibleTransactionsTxIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/miner-rewards/$hash': {
@@ -375,11 +445,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HighSecuritySetsHashRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/executed-reversible-transactions/$txId': {
+      id: '/executed-reversible-transactions/$txId'
+      path: '/executed-reversible-transactions/$txId'
+      fullPath: '/executed-reversible-transactions/$txId'
+      preLoaderRoute: typeof ExecutedReversibleTransactionsTxIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/errors/$id': {
       id: '/errors/$id'
       path: '/errors/$id'
       fullPath: '/errors/$id'
       preLoaderRoute: typeof ErrorsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cancelled-reversible-transactions/$txId': {
+      id: '/cancelled-reversible-transactions/$txId'
+      path: '/cancelled-reversible-transactions/$txId'
+      fullPath: '/cancelled-reversible-transactions/$txId'
+      preLoaderRoute: typeof CancelledReversibleTransactionsTxIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blocks/$id': {
@@ -403,20 +487,30 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountsIdRoute: AccountsIdRoute,
   BlocksIdRoute: BlocksIdRoute,
+  CancelledReversibleTransactionsTxIdRoute:
+    CancelledReversibleTransactionsTxIdRoute,
   ErrorsIdRoute: ErrorsIdRoute,
+  ExecutedReversibleTransactionsTxIdRoute:
+    ExecutedReversibleTransactionsTxIdRoute,
   HighSecuritySetsHashRoute: HighSecuritySetsHashRoute,
   ImmediateTransactionsHashRoute: ImmediateTransactionsHashRoute,
   MinerRewardsHashRoute: MinerRewardsHashRoute,
-  ReversibleTransactionsHashRoute: ReversibleTransactionsHashRoute,
+  ScheduledReversibleTransactionsTxIdRoute:
+    ScheduledReversibleTransactionsTxIdRoute,
   WormholeIdRoute: WormholeIdRoute,
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,
+  CancelledReversibleTransactionsIndexRoute:
+    CancelledReversibleTransactionsIndexRoute,
   ErrorsIndexRoute: ErrorsIndexRoute,
+  ExecutedReversibleTransactionsIndexRoute:
+    ExecutedReversibleTransactionsIndexRoute,
   HighSecuritySetsIndexRoute: HighSecuritySetsIndexRoute,
   ImmediateTransactionsIndexRoute: ImmediateTransactionsIndexRoute,
   MinerLeaderboardIndexRoute: MinerLeaderboardIndexRoute,
   MinerRewardsIndexRoute: MinerRewardsIndexRoute,
-  ReversibleTransactionsIndexRoute: ReversibleTransactionsIndexRoute,
+  ScheduledReversibleTransactionsIndexRoute:
+    ScheduledReversibleTransactionsIndexRoute,
   WormholeIndexRoute: WormholeIndexRoute,
 }
 export const routeTree = rootRouteImport

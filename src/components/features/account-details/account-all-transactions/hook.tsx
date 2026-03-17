@@ -42,7 +42,7 @@ export const useAccountAllTransactions = (
     });
 
     // Add reversible transactions
-    data.reversibleTransactions?.edges?.forEach((edge, idx) => {
+    data.scheduledReversibleTransactions?.edges?.forEach((edge, idx) => {
       unified.push(transformReversibleTransaction(edge.node, idx));
     });
 
@@ -89,7 +89,7 @@ export const useAccountAllTransactions = (
 
     // Add wormhole outputs
     data.wormholeOutputs?.forEach((output, idx) => {
-      const wormholeExtrinsic = output.wormholeExtrinsic;
+      const { wormholeExtrinsic } = output;
       if (wormholeExtrinsic) {
         unified.push(
           transformWormholeOutput(

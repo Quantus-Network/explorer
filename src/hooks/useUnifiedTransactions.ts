@@ -1,10 +1,9 @@
 import type {
+  ExtrinsicInfo,
   UnifiedTransaction,
-  UnifiedTransactionType,
-  ExtrinsicInfo
+  UnifiedTransactionType
 } from '@/schemas/unified-transaction';
 import type { WormholeOutput } from '@/schemas/wormhole';
-import type * as gql from '@/__generated__/graphql';
 
 // Common transformer input types
 interface TransferInput {
@@ -15,7 +14,6 @@ interface TransferInput {
   from: { id: string };
   to: { id: string };
   block: { height: number };
-  status?: gql.ReversibleTransferStatus;
 }
 
 interface MinerRewardInput {
@@ -81,8 +79,7 @@ export const transformReversibleTransaction = (
   extrinsic: tx.extrinsic,
   from: tx.from,
   to: tx.to,
-  amount: tx.amount,
-  status: tx.status
+  amount: tx.amount
 });
 
 export const transformMinerReward = (

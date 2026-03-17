@@ -1,9 +1,10 @@
 import { gql, useQuery } from '@apollo/client';
+
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import type {
+  DepositPoolStatsResponse,
   WormholeExtrinsicListResponse,
-  WormholeExtrinsicResponse,
-  DepositPoolStatsResponse
+  WormholeExtrinsicResponse
 } from '@/schemas/wormhole';
 
 const GET_WORMHOLE_EXTRINSICS = gql`
@@ -72,7 +73,7 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
         amount
       }
     }
-    wormholeNullifiers(where: { wormholeExtrinsic: { id_eq: $id } }) {
+    wormholeNullifiers(where: { extrinsic: { id_eq: $id } }) {
       nullifier
       nullifierHash
     }
