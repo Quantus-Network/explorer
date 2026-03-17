@@ -31,6 +31,12 @@ export const BLOCK_COLUMNS = [
     ),
     enableSorting: false
   }),
+  columnHelper.accessor((row) => row.extrinsics.length, {
+    id: 'extrinsicsCount',
+    header: 'Extrinsics',
+    cell: (props) => props.getValue(),
+    enableSorting: false
+  }),
   columnHelper.accessor('reward', {
     id: 'reward',
     header: 'Reward',

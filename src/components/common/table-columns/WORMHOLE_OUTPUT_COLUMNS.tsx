@@ -1,5 +1,6 @@
 // import { createColumnHelper } from '@tanstack/react-table';
 
+// import { PrivacyScoreBadge } from '@/components/features/wormhole/PrivacyScoreBadge';
 // import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 // import { TimestampDisplay } from '@/components/ui/timestamp-display';
 // import { RESOURCES } from '@/constants/resources';
@@ -11,8 +12,20 @@
 
 // const columnHelper = createColumnHelper<WormholeExtrinsicRow>();
 
+// Privacy score column temporarily disabled
+// columnHelper.accessor('privacyScore', {
+//   id: 'privacy_score',
+//   header: 'Privacy',
+//   cell: (props) => (
+//     <PrivacyScoreBadge
+//       score={props.getValue()}
+//       label={props.row.original.privacyLabel}
+//     />
+//   ),
+//   enableSorting: true
+// }),
 // export const WORMHOLE_EXTRINSIC_COLUMNS = [
-//   columnHelper.accessor('extrinsicHash', {
+//   columnHelper.accessor('extrinsic.id', {
 //     id: 'extrinsic_hash',
 //     header: 'Extrinsic',
 //     cell: (props) => {

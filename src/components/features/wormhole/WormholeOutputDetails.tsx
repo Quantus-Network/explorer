@@ -15,7 +15,7 @@
 // }
 
 // interface ExtrinsicInfo {
-//   extrinsicHash: string | null;
+//   extrinsic: { id: string } | null;
 //   totalAmount: string;
 //   outputCount: number;
 //   block: { height: number; hash: string };
@@ -41,7 +41,7 @@
 
 //   const extrinsicInfo: Partial<ExtrinsicInfo>[] = [
 //     {
-//       extrinsicHash: extrinsic?.extrinsicHash,
+//       extrinsic: extrinsic?.extrinsic,
 //       totalAmount: extrinsic?.totalAmount,
 //       outputCount: extrinsic?.outputCount,
 //       block: extrinsic?.block,
@@ -63,11 +63,14 @@
 //         data={extrinsicInfo}
 //         fields={[
 //           {
-//             label: 'Extrinsic Hash',
-//             key: 'extrinsicHash',
-//             render: (value) =>
-//               value ? (
-//                 <TextWithCopy text={String(value)} className="break-all" />
+//           label: 'Extrinsic Hash',
+//           key: 'extrinsic',
+//           render: (value) =>
+//             value && (value as ExtrinsicInfo['extrinsic'])?.id ? (
+//               <TextWithCopy
+//                 text={(value as ExtrinsicInfo['extrinsic'])!.id}
+//                 className="break-all"
+//               />
 //               ) : (
 //                 <span className="text-muted-foreground">-</span>
 //               )

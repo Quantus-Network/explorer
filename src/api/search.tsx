@@ -12,15 +12,23 @@ export const search = (fetcher: DataFetcher) => ({
       query SearchAll($keyword: String, $keyword_number: Int, $limit: Int) {
         transactions: transfers(
           limit: $limit
-          where: { extrinsicHash_startsWith: $keyword }
+          where: { extrinsic: { id_startsWith: $keyword } }
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
         }
         scheduledReversibleTransactions: scheduledReversibleTransfers(
           limit: $limit
           where: { txId_startsWith: $keyword }
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           txId
         }
         executedReversibleTransactions: executedReversibleTransfers(
@@ -49,9 +57,13 @@ export const search = (fetcher: DataFetcher) => ({
         }
         highSecuritySets(
           limit: $limit
-          where: { extrinsicHash_startsWith: $keyword }
+          where: { extrinsic: { id_startsWith: $keyword } }
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
         }
         minerRewards(
           limit: $limit
@@ -74,7 +86,11 @@ export const search = (fetcher: DataFetcher) => ({
             OR: { errorName_containsInsensitive: $keyword }
           }
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
         }
       }
     `;

@@ -1,3 +1,5 @@
+import type { Account } from './account';
+import type { Block } from './blocks';
 import type { CancelledReversibleTransaction } from './cancelled-reversible-transaction';
 import type { ErrorEvent } from './errors';
 import type { ExecutedReversibleTransaction } from './executed-reversible-transaction';
@@ -7,10 +9,10 @@ import type { ScheduledReversibleTransaction } from './scheduled-reversible-tran
 import type { Transaction } from './transcation';
 
 export interface SearchAllResponse {
-  transactions: Pick<Transaction, 'extrinsicHash'>[];
+  transactions: Pick<Transaction, 'extrinsic'>[];
   scheduledReversibleTransactions: Pick<
     ScheduledReversibleTransaction,
-    'extrinsicHash' | 'txId'
+    'extrinsic' | 'txId'
   >[];
   executedReversibleTransactions: Pick<ExecutedReversibleTransaction, 'txId'>[];
   cancelledReversibleTransactions: Pick<
@@ -19,7 +21,7 @@ export interface SearchAllResponse {
   >[];
   accounts: Pick<Account, 'id'>[];
   blocks: Pick<Block, 'height'>[];
-  highSecuritySets: Pick<HighSecuritySet, 'extrinsicHash'>[];
+  highSecuritySets: Pick<HighSecuritySet, 'extrinsic'>[];
   minerRewards: Pick<MinerReward, 'block'>[];
-  errorEvents: Pick<ErrorEvent, 'extrinsicHash'>[];
+  errorEvents: Pick<ErrorEvent, 'extrinsic'>[];
 }

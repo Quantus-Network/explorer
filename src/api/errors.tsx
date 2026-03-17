@@ -40,7 +40,11 @@ export const errors = {
           errorModule
           errorName
           errorType
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           id
           timestamp
           block {
@@ -86,7 +90,11 @@ export const errors = {
           errorModule
           errorName
           errorType
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           id
           timestamp
           block {
@@ -138,12 +146,16 @@ export const errors = {
   getByHash: () => {
     const GET_ERROR_EVENT_BY_HASH = gql`
       query GetErrorEventByHash($hash: String!) {
-        errorEvents: errorEvents(where: { extrinsicHash_eq: $hash }) {
+        errorEvents: errorEvents(where: { extrinsic: { id_eq: $hash } }) {
           errorDocs
           errorModule
           errorName
           errorType
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           id
           timestamp
           block {

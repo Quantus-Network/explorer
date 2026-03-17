@@ -28,7 +28,7 @@ export const HighSecuritySetInformation: React.FC<
 
   const information: Partial<HighSecuritySet>[] = [
     {
-      extrinsicHash: highSecuritySet?.extrinsicHash,
+      extrinsic: highSecuritySet?.extrinsic,
       block: highSecuritySet?.block,
       timestamp: highSecuritySet?.timestamp,
       who: highSecuritySet?.who,
@@ -43,10 +43,13 @@ export const HighSecuritySetInformation: React.FC<
       data={information}
       fields={[
         {
-          label: 'Extrinsic Hash',
-          key: 'extrinsicHash',
+          label: 'Extrinsic',
+          key: 'extrinsic',
           render: (value) => (
-            <TextWithCopy text={value as string} className="break-all" />
+            <TextWithCopy
+              text={(value as HighSecuritySet['extrinsic'])?.id ?? '-'}
+              className="break-all"
+            />
           )
         },
         {

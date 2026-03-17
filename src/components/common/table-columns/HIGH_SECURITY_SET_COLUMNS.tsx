@@ -9,7 +9,7 @@ import { formatDuration, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<HighSecuritySet>();
 
 export const HIGH_SECURITY_SET_COLUMNS = [
-  columnHelper.accessor('extrinsicHash', {
+  columnHelper.accessor('extrinsic.id', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) =>
