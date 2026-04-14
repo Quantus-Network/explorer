@@ -45,3 +45,56 @@ export const REVERSIBLE_TRANSACTION_SORTS_KEY = Object.keys(
 export type ReversibleTransactionSorts =
   | (typeof REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
   | null;
+
+export const SCHEDULED_REVERSIBLE_TRANSACTION_SORTS = {
+  timestamp: {
+    ASC: 'timestamp_ASC',
+    DESC: 'timestamp_DESC'
+  },
+  scheduledAt: {
+    ASC: 'scheduledAt_ASC',
+    DESC: 'scheduledAt_DESC'
+  },
+  amount: {
+    ASC: 'amount_ASC',
+    DESC: 'amount_DESC'
+  }
+} as const;
+
+export const SCHEDULED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
+  SCHEDULED_REVERSIBLE_TRANSACTION_SORTS
+).flatMap((sort) => Object.values(sort));
+
+export type ScheduledReversibleTransactionSorts =
+  | (typeof SCHEDULED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
+  | null;
+
+export const EXECUTED_REVERSIBLE_TRANSACTION_SORTS = {
+  timestamp: {
+    ASC: 'timestamp_ASC',
+    DESC: 'timestamp_DESC'
+  }
+} as const;
+
+export const EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
+  EXECUTED_REVERSIBLE_TRANSACTION_SORTS
+).flatMap((sort) => Object.values(sort));
+
+export type ExecutedReversibleTransactionSorts =
+  | (typeof EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
+  | null;
+
+export const CANCELLED_REVERSIBLE_TRANSACTION_SORTS = {
+  timestamp: {
+    ASC: 'timestamp_ASC',
+    DESC: 'timestamp_DESC'
+  }
+} as const;
+
+export const CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
+  CANCELLED_REVERSIBLE_TRANSACTION_SORTS
+).flatMap((sort) => Object.values(sort));
+
+export type CancelledReversibleTransactionSorts =
+  | (typeof CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
+  | null;

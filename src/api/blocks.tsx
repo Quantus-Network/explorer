@@ -139,7 +139,7 @@ export const blocks = {
 
           totalCount
         }
-        reversibleTransactions: reversibleTransfersConnection(
+        scheduledReversibleTransactions: scheduledReversibleTransfersConnection(
           orderBy: timestamp_DESC
           first: $limit
           where: {
@@ -150,9 +150,11 @@ export const blocks = {
           edges {
             node {
               extrinsicHash
-              timestamp
-              status
               amount
+              timestamp
+              scheduledAt
+              txId
+              fee
               block {
                 height
               }
@@ -164,7 +166,81 @@ export const blocks = {
               }
             }
           }
-
+          totalCount
+        }
+        executedReversibleTransactions: executedReversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          edges {
+            node {
+              timestamp
+              txId
+              block {
+                height
+              }
+              scheduledTransfer {
+                extrinsicHash
+                amount
+                timestamp
+                scheduledAt
+                txId
+                fee
+                block {
+                  height
+                }
+                from {
+                  id
+                }
+                to {
+                  id
+                }
+              }
+            }
+          }
+          totalCount
+        }
+        cancelledReversibleTransactions: cancelledReversibleTransfersConnection(
+          orderBy: timestamp_DESC
+          first: $limit
+          where: {
+            block: { height_eq: $height }
+            OR: { block: { hash_eq: $hash } }
+          }
+        ) {
+          edges {
+            node {
+              timestamp
+              txId
+              block {
+                height
+              }
+              cancelledBy {
+                id
+              }
+              scheduledTransfer {
+                extrinsicHash
+                amount
+                timestamp
+                scheduledAt
+                txId
+                fee
+                block {
+                  height
+                }
+                from {
+                  id
+                }
+                to {
+                  id
+                }
+              }
+            }
+          }
           totalCount
         }
         highSecuritySets: highSecuritySetsConnection(

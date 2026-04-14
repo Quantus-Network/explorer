@@ -1,8 +1,10 @@
 import type * as gql from '../__generated__/graphql';
+import type { CancelledReversibleTransaction } from './cancelled-reversible-transaction';
 import type { ErrorEvent } from './errors';
+import type { ExecutedReversibleTransaction } from './executed-reversible-transaction';
 import type { HighSecuritySet } from './high-security-set';
 import type { MinerReward } from './miner-reward';
-import type { ReversibleTransaction } from './reversible-transaction';
+import type { ScheduledReversibleTransaction } from './scheduled-reversible-transaction';
 import type { Transaction } from './transcation';
 
 export interface Block
@@ -16,8 +18,18 @@ export interface BlockResponse {
     /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
-  reversibleTransactions: {
-    edges: BlockReversibleTransaction[];
+  scheduledReversibleTransactions: {
+    edges: BlockScheduledReversibleTransaction[];
+    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
+    totalCount: number;
+  };
+  executedReversibleTransactions: {
+    edges: BlockExecutedReversibleTransaction[];
+    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
+    totalCount: number;
+  };
+  cancelledReversibleTransactions: {
+    edges: BlockCancelledReversibleTransaction[];
     /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
     totalCount: number;
   };
@@ -48,8 +60,16 @@ export interface BlockTransaction {
   node: Transaction;
 }
 
-export interface BlockReversibleTransaction {
-  node: ReversibleTransaction;
+export interface BlockScheduledReversibleTransaction {
+  node: ScheduledReversibleTransaction;
+}
+
+export interface BlockExecutedReversibleTransaction {
+  node: ExecutedReversibleTransaction;
+}
+
+export interface BlockCancelledReversibleTransaction {
+  node: CancelledReversibleTransaction;
 }
 
 export interface BlockHighSecuritySet {
