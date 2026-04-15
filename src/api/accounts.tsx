@@ -106,7 +106,6 @@ export const accounts = {
                 call
               }
               timestamp
-              status
               amount
               timestamp
               scheduledAt

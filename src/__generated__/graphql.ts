@@ -173,12 +173,6 @@ export enum AccountEventOrderByInput {
   BalanceEventTypeDesc = 'balanceEvent_type_DESC',
   BalanceEventTypeDescNullsFirst = 'balanceEvent_type_DESC_NULLS_FIRST',
   BalanceEventTypeDescNullsLast = 'balanceEvent_type_DESC_NULLS_LAST',
-  CancelledReversibleTransferExtrinsicHashAsc = 'cancelledReversibleTransfer_extrinsicHash_ASC',
-  CancelledReversibleTransferExtrinsicHashAscNullsFirst = 'cancelledReversibleTransfer_extrinsicHash_ASC_NULLS_FIRST',
-  CancelledReversibleTransferExtrinsicHashAscNullsLast = 'cancelledReversibleTransfer_extrinsicHash_ASC_NULLS_LAST',
-  CancelledReversibleTransferExtrinsicHashDesc = 'cancelledReversibleTransfer_extrinsicHash_DESC',
-  CancelledReversibleTransferExtrinsicHashDescNullsFirst = 'cancelledReversibleTransfer_extrinsicHash_DESC_NULLS_FIRST',
-  CancelledReversibleTransferExtrinsicHashDescNullsLast = 'cancelledReversibleTransfer_extrinsicHash_DESC_NULLS_LAST',
   CancelledReversibleTransferIdAsc = 'cancelledReversibleTransfer_id_ASC',
   CancelledReversibleTransferIdAscNullsFirst = 'cancelledReversibleTransfer_id_ASC_NULLS_FIRST',
   CancelledReversibleTransferIdAscNullsLast = 'cancelledReversibleTransfer_id_ASC_NULLS_LAST',
@@ -323,6 +317,12 @@ export enum AccountEventOrderByInput {
   TransferIdDesc = 'transfer_id_DESC',
   TransferIdDescNullsFirst = 'transfer_id_DESC_NULLS_FIRST',
   TransferIdDescNullsLast = 'transfer_id_DESC_NULLS_LAST',
+  TransferLeafIndexAsc = 'transfer_leafIndex_ASC',
+  TransferLeafIndexAscNullsFirst = 'transfer_leafIndex_ASC_NULLS_FIRST',
+  TransferLeafIndexAscNullsLast = 'transfer_leafIndex_ASC_NULLS_LAST',
+  TransferLeafIndexDesc = 'transfer_leafIndex_DESC',
+  TransferLeafIndexDescNullsFirst = 'transfer_leafIndex_DESC_NULLS_FIRST',
+  TransferLeafIndexDescNullsLast = 'transfer_leafIndex_DESC_NULLS_LAST',
   TransferTimestampAsc = 'transfer_timestamp_ASC',
   TransferTimestampAscNullsFirst = 'transfer_timestamp_ASC_NULLS_FIRST',
   TransferTimestampAscNullsLast = 'transfer_timestamp_ASC_NULLS_LAST',
@@ -964,7 +964,7 @@ export type CancelledReversibleTransfer = {
   block: Block;
   cancelledBy: Account;
   event?: Maybe<Event>;
-  extrinsicHash?: Maybe<Scalars['String']['output']>;
+  extrinsic?: Maybe<Extrinsic>;
   id: Scalars['String']['output'];
   scheduledTransfer: ScheduledReversibleTransfer;
   timestamp: Scalars['DateTime']['output'];
@@ -1068,12 +1068,54 @@ export enum CancelledReversibleTransferOrderByInput {
   EventTypeDesc = 'event_type_DESC',
   EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
   EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExtrinsicHashAsc = 'extrinsicHash_ASC',
-  ExtrinsicHashAscNullsFirst = 'extrinsicHash_ASC_NULLS_FIRST',
-  ExtrinsicHashAscNullsLast = 'extrinsicHash_ASC_NULLS_LAST',
-  ExtrinsicHashDesc = 'extrinsicHash_DESC',
-  ExtrinsicHashDescNullsFirst = 'extrinsicHash_DESC_NULLS_FIRST',
-  ExtrinsicHashDescNullsLast = 'extrinsicHash_DESC_NULLS_LAST',
+  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
+  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
+  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
+  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
+  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
+  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
+  ExtrinsicCallAsc = 'extrinsic_call_ASC',
+  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
+  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
+  ExtrinsicCallDesc = 'extrinsic_call_DESC',
+  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
+  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
+  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
+  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
+  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
+  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
+  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
+  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
+  ExtrinsicIdAsc = 'extrinsic_id_ASC',
+  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
+  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
+  ExtrinsicIdDesc = 'extrinsic_id_DESC',
+  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
+  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
+  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
+  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
+  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
+  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
+  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
+  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
+  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
+  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
+  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
+  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
+  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
+  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
+  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
+  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
+  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
+  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
+  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
+  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
+  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
+  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
+  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
+  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
+  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
+  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdAscNullsLast = 'id_ASC_NULLS_LAST',
@@ -1139,25 +1181,8 @@ export type CancelledReversibleTransferWhereInput = {
   cancelledBy_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   event?: InputMaybe<EventWhereInput>;
   event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsicHash_contains?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_eq?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_gt?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_gte?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  extrinsicHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsicHash_lt?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_lte?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_containsInsensitive?: InputMaybe<
-    Scalars['String']['input']
-  >;
-  extrinsicHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  extrinsicHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  extrinsicHash_startsWith?: InputMaybe<Scalars['String']['input']>;
+  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
+  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
   id_contains?: InputMaybe<Scalars['String']['input']>;
   id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
   id_endsWith?: InputMaybe<Scalars['String']['input']>;
@@ -1651,12 +1676,6 @@ export enum EventOrderByInput {
   BlockTimestampDesc = 'block_timestamp_DESC',
   BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
   BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  CancelledReversibleTransferExtrinsicHashAsc = 'cancelledReversibleTransfer_extrinsicHash_ASC',
-  CancelledReversibleTransferExtrinsicHashAscNullsFirst = 'cancelledReversibleTransfer_extrinsicHash_ASC_NULLS_FIRST',
-  CancelledReversibleTransferExtrinsicHashAscNullsLast = 'cancelledReversibleTransfer_extrinsicHash_ASC_NULLS_LAST',
-  CancelledReversibleTransferExtrinsicHashDesc = 'cancelledReversibleTransfer_extrinsicHash_DESC',
-  CancelledReversibleTransferExtrinsicHashDescNullsFirst = 'cancelledReversibleTransfer_extrinsicHash_DESC_NULLS_FIRST',
-  CancelledReversibleTransferExtrinsicHashDescNullsLast = 'cancelledReversibleTransfer_extrinsicHash_DESC_NULLS_LAST',
   CancelledReversibleTransferIdAsc = 'cancelledReversibleTransfer_id_ASC',
   CancelledReversibleTransferIdAscNullsFirst = 'cancelledReversibleTransfer_id_ASC_NULLS_FIRST',
   CancelledReversibleTransferIdAscNullsLast = 'cancelledReversibleTransfer_id_ASC_NULLS_LAST',
@@ -1885,6 +1904,12 @@ export enum EventOrderByInput {
   TransferIdDesc = 'transfer_id_DESC',
   TransferIdDescNullsFirst = 'transfer_id_DESC_NULLS_FIRST',
   TransferIdDescNullsLast = 'transfer_id_DESC_NULLS_LAST',
+  TransferLeafIndexAsc = 'transfer_leafIndex_ASC',
+  TransferLeafIndexAscNullsFirst = 'transfer_leafIndex_ASC_NULLS_FIRST',
+  TransferLeafIndexAscNullsLast = 'transfer_leafIndex_ASC_NULLS_LAST',
+  TransferLeafIndexDesc = 'transfer_leafIndex_DESC',
+  TransferLeafIndexDescNullsFirst = 'transfer_leafIndex_DESC_NULLS_FIRST',
+  TransferLeafIndexDescNullsLast = 'transfer_leafIndex_DESC_NULLS_LAST',
   TransferTimestampAsc = 'transfer_timestamp_ASC',
   TransferTimestampAscNullsFirst = 'transfer_timestamp_ASC_NULLS_FIRST',
   TransferTimestampAscNullsLast = 'transfer_timestamp_ASC_NULLS_LAST',
@@ -2069,6 +2094,12 @@ export enum ExecutedReversibleTransferOrderByInput {
   ExecutedTransferIdDesc = 'executedTransfer_id_DESC',
   ExecutedTransferIdDescNullsFirst = 'executedTransfer_id_DESC_NULLS_FIRST',
   ExecutedTransferIdDescNullsLast = 'executedTransfer_id_DESC_NULLS_LAST',
+  ExecutedTransferLeafIndexAsc = 'executedTransfer_leafIndex_ASC',
+  ExecutedTransferLeafIndexAscNullsFirst = 'executedTransfer_leafIndex_ASC_NULLS_FIRST',
+  ExecutedTransferLeafIndexAscNullsLast = 'executedTransfer_leafIndex_ASC_NULLS_LAST',
+  ExecutedTransferLeafIndexDesc = 'executedTransfer_leafIndex_DESC',
+  ExecutedTransferLeafIndexDescNullsFirst = 'executedTransfer_leafIndex_DESC_NULLS_FIRST',
+  ExecutedTransferLeafIndexDescNullsLast = 'executedTransfer_leafIndex_DESC_NULLS_LAST',
   ExecutedTransferTimestampAsc = 'executedTransfer_timestamp_ASC',
   ExecutedTransferTimestampAscNullsFirst = 'executedTransfer_timestamp_ASC_NULLS_FIRST',
   ExecutedTransferTimestampAscNullsLast = 'executedTransfer_timestamp_ASC_NULLS_LAST',
@@ -3797,6 +3828,8 @@ export type Transfer = {
   /** Blake3 hash of raw 'from' address bytes (hex string) for privacy-preserving prefix queries */
   fromHash: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  /** Index in the ZK trie for Merkle proof generation */
+  leafIndex: Scalars['BigInt']['output'];
   timestamp: Scalars['DateTime']['output'];
   to: Account;
   /** Blake3 hash of raw 'to' address bytes (hex string) for privacy-preserving prefix queries */
@@ -3990,6 +4023,12 @@ export enum TransferOrderByInput {
   IdDesc = 'id_DESC',
   IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
   IdDescNullsLast = 'id_DESC_NULLS_LAST',
+  LeafIndexAsc = 'leafIndex_ASC',
+  LeafIndexAscNullsFirst = 'leafIndex_ASC_NULLS_FIRST',
+  LeafIndexAscNullsLast = 'leafIndex_ASC_NULLS_LAST',
+  LeafIndexDesc = 'leafIndex_DESC',
+  LeafIndexDescNullsFirst = 'leafIndex_DESC_NULLS_FIRST',
+  LeafIndexDescNullsLast = 'leafIndex_DESC_NULLS_LAST',
   TimestampAsc = 'timestamp_ASC',
   TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
   TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
@@ -4111,6 +4150,15 @@ export type TransferWhereInput = {
   id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
   id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
   id_startsWith?: InputMaybe<Scalars['String']['input']>;
+  leafIndex_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  leafIndex_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  leafIndex_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  leafIndex_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  leafIndex_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  leafIndex_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  leafIndex_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  leafIndex_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  leafIndex_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
   timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
   timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
@@ -4886,6 +4934,641 @@ export type WormholeOutputsConnection = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type GetAccountsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AccountOrderByInput> | AccountOrderByInput>;
+}>;
+
+export type GetAccountsQuery = {
+  __typename?: 'Query';
+  accounts: Array<{
+    __typename?: 'Account';
+    id: string;
+    free: any;
+    frozen: any;
+    reserved: any;
+  }>;
+  meta: { __typename?: 'AccountsConnection'; totalCount: number };
+};
+
+export type GetAccountByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+export type GetAccountByIdQuery = {
+  __typename?: 'Query';
+  account?: {
+    __typename?: 'Account';
+    id: string;
+    free: any;
+    frozen: any;
+    reserved: any;
+  } | null;
+  transactions: {
+    __typename?: 'TransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'TransferEdge';
+      node: {
+        __typename?: 'Transfer';
+        fee: any;
+        amount: any;
+        timestamp: any;
+        extrinsic?: {
+          __typename?: 'Extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block: { __typename?: 'Block'; height: number };
+        from: { __typename?: 'Account'; id: string };
+        to: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  scheduledReversibleTransactions: {
+    __typename?: 'ScheduledReversibleTransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'ScheduledReversibleTransferEdge';
+      node: {
+        __typename?: 'ScheduledReversibleTransfer';
+        timestamp: any;
+        amount: any;
+        scheduledAt: any;
+        txId: string;
+        fee: any;
+        extrinsic?: {
+          __typename?: 'Extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block: { __typename?: 'Block'; height: number };
+        from: { __typename?: 'Account'; id: string };
+        to: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  executedReversibleTransactions: {
+    __typename?: 'ExecutedReversibleTransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'ExecutedReversibleTransferEdge';
+      node: {
+        __typename?: 'ExecutedReversibleTransfer';
+        timestamp: any;
+        txId: string;
+        block: { __typename?: 'Block'; height: number };
+        scheduledTransfer: {
+          __typename?: 'ScheduledReversibleTransfer';
+          amount: any;
+          timestamp: any;
+          scheduledAt: any;
+          txId: string;
+          fee: any;
+          extrinsic?: {
+            __typename?: 'Extrinsic';
+            id: string;
+            pallet: string;
+            call: string;
+          } | null;
+          block: { __typename?: 'Block'; height: number };
+          from: { __typename?: 'Account'; id: string };
+          to: { __typename?: 'Account'; id: string };
+        };
+      };
+    }>;
+  };
+  cancelledReversibleTransactions: {
+    __typename?: 'CancelledReversibleTransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'CancelledReversibleTransferEdge';
+      node: {
+        __typename?: 'CancelledReversibleTransfer';
+        timestamp: any;
+        txId: string;
+        block: { __typename?: 'Block'; height: number };
+        cancelledBy: { __typename?: 'Account'; id: string };
+        scheduledTransfer: {
+          __typename?: 'ScheduledReversibleTransfer';
+          amount: any;
+          timestamp: any;
+          scheduledAt: any;
+          txId: string;
+          fee: any;
+          extrinsic?: {
+            __typename?: 'Extrinsic';
+            id: string;
+            pallet: string;
+            call: string;
+          } | null;
+          block: { __typename?: 'Block'; height: number };
+          from: { __typename?: 'Account'; id: string };
+          to: { __typename?: 'Account'; id: string };
+        };
+      };
+    }>;
+  };
+  minerRewards: {
+    __typename?: 'MinerRewardsConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'MinerRewardEdge';
+      node: {
+        __typename?: 'MinerReward';
+        reward: any;
+        timestamp: any;
+        block: { __typename?: 'Block'; height: number; hash: string };
+        miner: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  guardian: {
+    __typename?: 'HighSecuritySetsConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'HighSecuritySetEdge';
+      node: {
+        __typename?: 'HighSecuritySet';
+        timestamp: any;
+        block: { __typename?: 'Block'; height: number };
+        interceptor: {
+          __typename?: 'Account';
+          id: string;
+          free: any;
+          frozen: any;
+          reserved: any;
+        };
+      };
+    }>;
+  };
+  beneficiaries: {
+    __typename?: 'HighSecuritySetsConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'HighSecuritySetEdge';
+      node: {
+        __typename?: 'HighSecuritySet';
+        timestamp: any;
+        block: { __typename?: 'Block'; height: number };
+        who: {
+          __typename?: 'Account';
+          id: string;
+          free: any;
+          frozen: any;
+          reserved: any;
+        };
+      };
+    }>;
+  };
+  wormholeOutputs: Array<{
+    __typename?: 'WormholeOutput';
+    id: string;
+    amount: any;
+    exitAccount: { __typename?: 'Account'; id: string };
+    wormholeExtrinsic: {
+      __typename?: 'WormholeExtrinsic';
+      id: string;
+      totalAmount: any;
+      outputCount: number;
+      timestamp: any;
+      extrinsic?: {
+        __typename?: 'Extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block: { __typename?: 'Block'; height: number };
+      outputs: Array<{
+        __typename?: 'WormholeOutput';
+        id: string;
+        amount: any;
+        exitAccount: { __typename?: 'Account'; id: string };
+      }>;
+    };
+  }>;
+};
+
+export type GetAccountsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetAccountsStatsQuery = {
+  __typename?: 'Query';
+  all: { __typename?: 'AccountsConnection'; totalCount: number };
+  recentlyActive: { __typename?: 'AccountsConnection'; totalCount: number };
+  recentlyDeposited: { __typename?: 'AccountsConnection'; totalCount: number };
+};
+
+export type GetBlocksQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<BlockOrderByInput> | BlockOrderByInput;
+  where?: InputMaybe<BlockWhereInput>;
+}>;
+
+export type GetBlocksQuery = {
+  __typename?: 'Query';
+  blocks: Array<{
+    __typename?: 'Block';
+    id: string;
+    hash: string;
+    height: number;
+    reward: any;
+    timestamp: any;
+    extrinsics: Array<{ __typename?: 'Extrinsic'; id: string }>;
+  }>;
+  meta: { __typename?: 'BlocksConnection'; totalCount: number };
+};
+
+export type GetRecentBlocksQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<BlockOrderByInput> | BlockOrderByInput>;
+}>;
+
+export type GetRecentBlocksQuery = {
+  __typename?: 'Query';
+  blocks: Array<{
+    __typename?: 'Block';
+    id: string;
+    hash: string;
+    height: number;
+    reward: any;
+    timestamp: any;
+    extrinsics: Array<{ __typename?: 'Extrinsic'; id: string }>;
+  }>;
+};
+
+export type GetBlockByIdQueryVariables = Exact<{
+  height: Scalars['Int']['input'];
+  hash: Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+export type GetBlockByIdQuery = {
+  __typename?: 'Query';
+  blocks: Array<{
+    __typename?: 'Block';
+    id: string;
+    hash: string;
+    height: number;
+    reward: any;
+    timestamp: any;
+    extrinsics: Array<{
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+      success: boolean;
+      fee: any;
+      timestamp: any;
+      indexInBlock: number;
+      signer?: { __typename?: 'Account'; id: string } | null;
+    }>;
+  }>;
+  minerRewards: Array<{
+    __typename?: 'MinerReward';
+    reward: any;
+    timestamp: any;
+    miner: { __typename?: 'Account'; id: string };
+    block: { __typename?: 'Block'; height: number; hash: string };
+  }>;
+  transactions: {
+    __typename?: 'TransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'TransferEdge';
+      node: {
+        __typename?: 'Transfer';
+        fee: any;
+        amount: any;
+        timestamp: any;
+        extrinsic?: {
+          __typename?: 'Extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block: { __typename?: 'Block'; height: number };
+        from: { __typename?: 'Account'; id: string };
+        to: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  scheduledReversibleTransactions: {
+    __typename?: 'ScheduledReversibleTransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'ScheduledReversibleTransferEdge';
+      node: {
+        __typename?: 'ScheduledReversibleTransfer';
+        timestamp: any;
+        amount: any;
+        scheduledAt: any;
+        txId: string;
+        fee: any;
+        extrinsic?: {
+          __typename?: 'Extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block: { __typename?: 'Block'; height: number };
+        from: { __typename?: 'Account'; id: string };
+        to: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  executedReversibleTransactions: {
+    __typename?: 'ExecutedReversibleTransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'ExecutedReversibleTransferEdge';
+      node: {
+        __typename?: 'ExecutedReversibleTransfer';
+        timestamp: any;
+        txId: string;
+        block: { __typename?: 'Block'; height: number };
+        scheduledTransfer: {
+          __typename?: 'ScheduledReversibleTransfer';
+          amount: any;
+          timestamp: any;
+          scheduledAt: any;
+          txId: string;
+          fee: any;
+          extrinsic?: {
+            __typename?: 'Extrinsic';
+            id: string;
+            pallet: string;
+            call: string;
+          } | null;
+          block: { __typename?: 'Block'; height: number };
+          from: { __typename?: 'Account'; id: string };
+          to: { __typename?: 'Account'; id: string };
+        };
+      };
+    }>;
+  };
+  cancelledReversibleTransactions: {
+    __typename?: 'CancelledReversibleTransfersConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'CancelledReversibleTransferEdge';
+      node: {
+        __typename?: 'CancelledReversibleTransfer';
+        timestamp: any;
+        txId: string;
+        block: { __typename?: 'Block'; height: number };
+        cancelledBy: { __typename?: 'Account'; id: string };
+        scheduledTransfer: {
+          __typename?: 'ScheduledReversibleTransfer';
+          amount: any;
+          timestamp: any;
+          scheduledAt: any;
+          txId: string;
+          fee: any;
+          extrinsic?: {
+            __typename?: 'Extrinsic';
+            id: string;
+            pallet: string;
+            call: string;
+          } | null;
+          block: { __typename?: 'Block'; height: number };
+          from: { __typename?: 'Account'; id: string };
+          to: { __typename?: 'Account'; id: string };
+        };
+      };
+    }>;
+  };
+  highSecuritySets: {
+    __typename?: 'HighSecuritySetsConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'HighSecuritySetEdge';
+      node: {
+        __typename?: 'HighSecuritySet';
+        timestamp: any;
+        delay: any;
+        extrinsic?: {
+          __typename?: 'Extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block: { __typename?: 'Block'; height: number };
+        who: { __typename?: 'Account'; id: string };
+        interceptor: { __typename?: 'Account'; id: string };
+      };
+    }>;
+  };
+  errorEvents: {
+    __typename?: 'ErrorEventsConnection';
+    totalCount: number;
+    edges: Array<{
+      __typename?: 'ErrorEventEdge';
+      node: {
+        __typename?: 'ErrorEvent';
+        errorDocs?: string | null;
+        errorModule?: string | null;
+        errorName?: string | null;
+        errorType: string;
+        timestamp: any;
+        extrinsic?: {
+          __typename?: 'Extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block: { __typename?: 'Block'; height: number };
+      };
+    }>;
+  };
+  wormholeExtrinsics: Array<{
+    __typename?: 'WormholeExtrinsic';
+    id: string;
+    totalAmount: any;
+    outputCount: number;
+    timestamp: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+    outputs: Array<{
+      __typename?: 'WormholeOutput';
+      id: string;
+      amount: any;
+      exitAccount: { __typename?: 'Account'; id: string };
+    }>;
+  }>;
+};
+
+export type GetCancelledReversibleTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<CancelledReversibleTransferOrderByInput>
+    | CancelledReversibleTransferOrderByInput
+  >;
+  where?: InputMaybe<CancelledReversibleTransferWhereInput>;
+}>;
+
+export type GetCancelledReversibleTransactionsQuery = {
+  __typename?: 'Query';
+  cancelledReversibleTransactions: Array<{
+    __typename?: 'CancelledReversibleTransfer';
+    timestamp: any;
+    txId: string;
+    block: { __typename?: 'Block'; height: number };
+    cancelledBy: { __typename?: 'Account'; id: string };
+    scheduledTransfer: {
+      __typename?: 'ScheduledReversibleTransfer';
+      amount: any;
+      timestamp: any;
+      scheduledAt: any;
+      txId: string;
+      fee: any;
+      extrinsic?: {
+        __typename?: 'Extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block: { __typename?: 'Block'; height: number };
+      from: { __typename?: 'Account'; id: string };
+      to: { __typename?: 'Account'; id: string };
+    };
+  }>;
+  meta: {
+    __typename?: 'CancelledReversibleTransfersConnection';
+    totalCount: number;
+  };
+};
+
+export type GetRecentCancelledReversibleTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<CancelledReversibleTransferOrderByInput>
+    | CancelledReversibleTransferOrderByInput
+  >;
+}>;
+
+export type GetRecentCancelledReversibleTransactionsQuery = {
+  __typename?: 'Query';
+  cancelledReversibleTransactions: Array<{
+    __typename?: 'CancelledReversibleTransfer';
+    timestamp: any;
+    txId: string;
+    block: { __typename?: 'Block'; height: number };
+    cancelledBy: { __typename?: 'Account'; id: string };
+    scheduledTransfer: {
+      __typename?: 'ScheduledReversibleTransfer';
+      amount: any;
+      timestamp: any;
+      scheduledAt: any;
+      txId: string;
+      fee: any;
+      extrinsic?: {
+        __typename?: 'Extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block: { __typename?: 'Block'; height: number };
+      from: { __typename?: 'Account'; id: string };
+      to: { __typename?: 'Account'; id: string };
+    };
+  }>;
+};
+
+export type GetCancelledReversibleTransactionsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetCancelledReversibleTransactionsStatsQuery = {
+  __typename?: 'Query';
+  last24Hour: {
+    __typename?: 'CancelledReversibleTransfersConnection';
+    totalCount: number;
+  };
+  allTime: {
+    __typename?: 'CancelledReversibleTransfersConnection';
+    totalCount: number;
+  };
+};
+
+export type GetCancelledReversibleTransactionByTxIdQueryVariables = Exact<{
+  txId: Scalars['String']['input'];
+}>;
+
+export type GetCancelledReversibleTransactionByTxIdQuery = {
+  __typename?: 'Query';
+  cancelledReversibleTransactions: Array<{
+    __typename?: 'CancelledReversibleTransfer';
+    timestamp: any;
+    txId: string;
+    block: { __typename?: 'Block'; height: number };
+    cancelledBy: { __typename?: 'Account'; id: string };
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    scheduledTransfer: {
+      __typename?: 'ScheduledReversibleTransfer';
+      amount: any;
+      scheduledAt: any;
+      fee: any;
+      from: { __typename?: 'Account'; id: string };
+      to: { __typename?: 'Account'; id: string };
+    };
+  }>;
+};
+
+export type GetStatusQueryVariables = Exact<{
+  beginningDate: Scalars['DateTime']['input'];
+  todayDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetStatusQuery = {
+  __typename?: 'Query';
+  transactions: { __typename?: 'TransfersConnection'; totalCount: number };
+  scheduledReversibleTransactions: {
+    __typename?: 'ScheduledReversibleTransfersConnection';
+    totalCount: number;
+  };
+  executedReversibleTransactions: {
+    __typename?: 'ExecutedReversibleTransfersConnection';
+    totalCount: number;
+  };
+  cancelledReversibleTransactions: {
+    __typename?: 'CancelledReversibleTransfersConnection';
+    totalCount: number;
+  };
+  status?: {
+    __typename?: 'SquidStatus';
+    hash?: string | null;
+    height?: number | null;
+    finalizedHeight?: number | null;
+    finalizedHash?: string | null;
+  } | null;
+  minedBlocks24Hours: { __typename?: 'BlocksConnection'; totalCount: number };
+  allActiveAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
+  allDepositAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
+};
+
 export type GetErrorEventsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -4976,6 +5659,213 @@ export type GetErrorEventByHashQuery = {
   }>;
 };
 
+export type GetExecutedReversibleTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<ExecutedReversibleTransferOrderByInput>
+    | ExecutedReversibleTransferOrderByInput
+  >;
+  where?: InputMaybe<ExecutedReversibleTransferWhereInput>;
+}>;
+
+export type GetExecutedReversibleTransactionsQuery = {
+  __typename?: 'Query';
+  executedReversibleTransactions: Array<{
+    __typename?: 'ExecutedReversibleTransfer';
+    timestamp: any;
+    txId: string;
+    block: { __typename?: 'Block'; height: number };
+    scheduledTransfer: {
+      __typename?: 'ScheduledReversibleTransfer';
+      amount: any;
+      timestamp: any;
+      scheduledAt: any;
+      txId: string;
+      fee: any;
+      extrinsic?: {
+        __typename?: 'Extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block: { __typename?: 'Block'; height: number };
+      from: { __typename?: 'Account'; id: string };
+      to: { __typename?: 'Account'; id: string };
+    };
+  }>;
+  meta: {
+    __typename?: 'ExecutedReversibleTransfersConnection';
+    totalCount: number;
+  };
+};
+
+export type GetRecentExecutedReversibleTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<ExecutedReversibleTransferOrderByInput>
+    | ExecutedReversibleTransferOrderByInput
+  >;
+}>;
+
+export type GetRecentExecutedReversibleTransactionsQuery = {
+  __typename?: 'Query';
+  executedReversibleTransactions: Array<{
+    __typename?: 'ExecutedReversibleTransfer';
+    timestamp: any;
+    txId: string;
+    block: { __typename?: 'Block'; height: number };
+    scheduledTransfer: {
+      __typename?: 'ScheduledReversibleTransfer';
+      amount: any;
+      timestamp: any;
+      scheduledAt: any;
+      txId: string;
+      fee: any;
+      extrinsic?: {
+        __typename?: 'Extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block: { __typename?: 'Block'; height: number };
+      from: { __typename?: 'Account'; id: string };
+      to: { __typename?: 'Account'; id: string };
+    };
+  }>;
+};
+
+export type GetExecutedReversibleTransactionsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetExecutedReversibleTransactionsStatsQuery = {
+  __typename?: 'Query';
+  last24Hour: {
+    __typename?: 'ExecutedReversibleTransfersConnection';
+    totalCount: number;
+  };
+  allTime: {
+    __typename?: 'ExecutedReversibleTransfersConnection';
+    totalCount: number;
+  };
+};
+
+export type GetExecutedReversibleTransactionByTxIdQueryVariables = Exact<{
+  txId: Scalars['String']['input'];
+}>;
+
+export type GetExecutedReversibleTransactionByTxIdQuery = {
+  __typename?: 'Query';
+  executedReversibleTransactions: Array<{
+    __typename?: 'ExecutedReversibleTransfer';
+    timestamp: any;
+    txId: string;
+    block: { __typename?: 'Block'; height: number };
+    scheduledTransfer: {
+      __typename?: 'ScheduledReversibleTransfer';
+      amount: any;
+      scheduledAt: any;
+      fee: any;
+      from: { __typename?: 'Account'; id: string };
+      to: { __typename?: 'Account'; id: string };
+    };
+  }>;
+};
+
+export type GetHighSecuritySetsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<HighSecuritySetOrderByInput> | HighSecuritySetOrderByInput
+  >;
+  where?: InputMaybe<HighSecuritySetWhereInput>;
+}>;
+
+export type GetHighSecuritySetsQuery = {
+  __typename?: 'Query';
+  highSecuritySets: Array<{
+    __typename?: 'HighSecuritySet';
+    id: string;
+    timestamp: any;
+    delay: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    who: { __typename?: 'Account'; id: string };
+    interceptor: { __typename?: 'Account'; id: string };
+    block: { __typename?: 'Block'; height: number };
+  }>;
+  meta: { __typename?: 'HighSecuritySetsConnection'; totalCount: number };
+};
+
+export type GetRecentHighSecuritySetsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<HighSecuritySetOrderByInput> | HighSecuritySetOrderByInput
+  >;
+  where?: InputMaybe<HighSecuritySetWhereInput>;
+}>;
+
+export type GetRecentHighSecuritySetsQuery = {
+  __typename?: 'Query';
+  highSecuritySets: Array<{
+    __typename?: 'HighSecuritySet';
+    id: string;
+    timestamp: any;
+    delay: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    who: { __typename?: 'Account'; id: string };
+    interceptor: { __typename?: 'Account'; id: string };
+    block: { __typename?: 'Block'; height: number };
+  }>;
+};
+
+export type GetHighSecuritySetsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetHighSecuritySetsStatsQuery = {
+  __typename?: 'Query';
+  last24Hour: { __typename?: 'HighSecuritySetsConnection'; totalCount: number };
+  allTime: { __typename?: 'HighSecuritySetsConnection'; totalCount: number };
+};
+
+export type GetHighSecuritySetByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetHighSecuritySetByHashQuery = {
+  __typename?: 'Query';
+  highSecuritySets: Array<{
+    __typename?: 'HighSecuritySet';
+    id: string;
+    timestamp: any;
+    delay: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    who: { __typename?: 'Account'; id: string };
+    interceptor: { __typename?: 'Account'; id: string };
+    block: { __typename?: 'Block'; height: number };
+  }>;
+};
+
 export type GetMinerLeaderboardQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -5059,6 +5949,4785 @@ export type GetMinerRewardByHashQuery = {
   }>;
 };
 
+export type GetScheduledReversibleTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<ScheduledReversibleTransferOrderByInput>
+    | ScheduledReversibleTransferOrderByInput
+  >;
+  where?: InputMaybe<ScheduledReversibleTransferWhereInput>;
+}>;
+
+export type GetScheduledReversibleTransactionsQuery = {
+  __typename?: 'Query';
+  scheduledReversibleTransactions: Array<{
+    __typename?: 'ScheduledReversibleTransfer';
+    amount: any;
+    timestamp: any;
+    scheduledAt: any;
+    txId: string;
+    fee: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
+  meta: {
+    __typename?: 'ScheduledReversibleTransfersConnection';
+    totalCount: number;
+  };
+};
+
+export type GetRecentScheduledReversibleTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<ScheduledReversibleTransferOrderByInput>
+    | ScheduledReversibleTransferOrderByInput
+  >;
+}>;
+
+export type GetRecentScheduledReversibleTransactionsQuery = {
+  __typename?: 'Query';
+  scheduledReversibleTransactions: Array<{
+    __typename?: 'ScheduledReversibleTransfer';
+    amount: any;
+    timestamp: any;
+    scheduledAt: any;
+    txId: string;
+    fee: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
+};
+
+export type GetScheduledReversibleTransactionsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetScheduledReversibleTransactionsStatsQuery = {
+  __typename?: 'Query';
+  last24Hour: {
+    __typename?: 'ScheduledReversibleTransfersConnection';
+    totalCount: number;
+  };
+  allTime: {
+    __typename?: 'ScheduledReversibleTransfersConnection';
+    totalCount: number;
+  };
+};
+
+export type GetScheduledReversibleTransactionByTxIdQueryVariables = Exact<{
+  txId: Scalars['String']['input'];
+}>;
+
+export type GetScheduledReversibleTransactionByTxIdQuery = {
+  __typename?: 'Query';
+  scheduledReversibleTransactions: Array<{
+    __typename?: 'ScheduledReversibleTransfer';
+    amount: any;
+    timestamp: any;
+    scheduledAt: any;
+    txId: string;
+    fee: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
+};
+
+export type SearchAllQueryVariables = Exact<{
+  keyword?: InputMaybe<Scalars['String']['input']>;
+  keyword_number?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type SearchAllQuery = {
+  __typename?: 'Query';
+  transactions: Array<{
+    __typename?: 'Transfer';
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+  }>;
+  scheduledReversibleTransactions: Array<{
+    __typename?: 'ScheduledReversibleTransfer';
+    txId: string;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+  }>;
+  executedReversibleTransactions: Array<{
+    __typename?: 'ExecutedReversibleTransfer';
+    txId: string;
+  }>;
+  cancelledReversibleTransactions: Array<{
+    __typename?: 'CancelledReversibleTransfer';
+    txId: string;
+  }>;
+  accounts: Array<{ __typename?: 'Account'; id: string }>;
+  blocks: Array<{ __typename?: 'Block'; height: number }>;
+  highSecuritySets: Array<{
+    __typename?: 'HighSecuritySet';
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+  }>;
+  minerRewards: Array<{
+    __typename?: 'MinerReward';
+    reward: any;
+    timestamp: any;
+    block: { __typename?: 'Block'; height: number; hash: string };
+    miner: { __typename?: 'Account'; id: string };
+  }>;
+  errorEvents: Array<{
+    __typename?: 'ErrorEvent';
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+  }>;
+};
+
+export type GetTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<TransferOrderByInput> | TransferOrderByInput>;
+  where?: InputMaybe<TransferWhereInput>;
+}>;
+
+export type GetTransactionsQuery = {
+  __typename?: 'Query';
+  transactions: Array<{
+    __typename?: 'Transfer';
+    fee: any;
+    amount: any;
+    timestamp: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
+  meta: { __typename?: 'TransfersConnection'; totalCount: number };
+};
+
+export type GetRecentTransactionsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<TransferOrderByInput> | TransferOrderByInput>;
+  where?: InputMaybe<TransferWhereInput>;
+}>;
+
+export type GetRecentTransactionsQuery = {
+  __typename?: 'Query';
+  transactions: Array<{
+    __typename?: 'Transfer';
+    fee: any;
+    amount: any;
+    timestamp: any;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
+};
+
+export type GetTransactionsStatsQueryVariables = Exact<{
+  startDate: Scalars['DateTime']['input'];
+  endDate: Scalars['DateTime']['input'];
+}>;
+
+export type GetTransactionsStatsQuery = {
+  __typename?: 'Query';
+  last24Hour: { __typename?: 'TransfersConnection'; totalCount: number };
+  allTime: { __typename?: 'TransfersConnection'; totalCount: number };
+};
+
+export type GetExtrinsicByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetExtrinsicByHashQuery = {
+  __typename?: 'Query';
+  extrinsics: Array<{
+    __typename?: 'Extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+    success: boolean;
+    fee: any;
+    timestamp: any;
+    indexInBlock: number;
+    signer?: { __typename?: 'Account'; id: string } | null;
+    block: { __typename?: 'Block'; height: number };
+  }>;
+  transfers: Array<{
+    __typename?: 'Transfer';
+    id: string;
+    amount: any;
+    timestamp: any;
+    from: { __typename?: 'Account'; id: string };
+    to: { __typename?: 'Account'; id: string };
+  }>;
+};
+
+export type GetWormholeExtrinsicsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy: Array<WormholeExtrinsicOrderByInput> | WormholeExtrinsicOrderByInput;
+  where?: InputMaybe<WormholeExtrinsicWhereInput>;
+}>;
+
+export type GetWormholeExtrinsicsQuery = {
+  __typename?: 'Query';
+  wormholeExtrinsics: Array<{
+    __typename?: 'WormholeExtrinsic';
+    id: string;
+    totalAmount: any;
+    outputCount: number;
+    timestamp: any;
+    privacyScore: number;
+    privacyLabel: string;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: { __typename?: 'Block'; height: number };
+  }>;
+  meta: { __typename?: 'WormholeExtrinsicsConnection'; totalCount: number };
+};
+
+export type GetWormholeExtrinsicByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type GetWormholeExtrinsicByIdQuery = {
+  __typename?: 'Query';
+  wormholeExtrinsicById?: {
+    __typename?: 'WormholeExtrinsic';
+    id: string;
+    totalAmount: any;
+    outputCount: number;
+    timestamp: any;
+    privacyScore: number;
+    privacyScore01Pct: number;
+    privacyScore1Pct: number;
+    privacyScore5Pct: number;
+    privacyLabel: string;
+    poolSnapshot: string;
+    extrinsic?: {
+      __typename?: 'Extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+    block: {
+      __typename?: 'Block';
+      id: string;
+      height: number;
+      hash: string;
+      timestamp: any;
+    };
+    outputs: Array<{
+      __typename?: 'WormholeOutput';
+      id: string;
+      amount: any;
+      exitAccount: { __typename?: 'Account'; id: string };
+    }>;
+  } | null;
+  wormholeNullifiers: Array<{
+    __typename?: 'WormholeNullifier';
+    nullifier: string;
+    nullifierHash: string;
+  }>;
+};
+
+export type GetDepositPoolStatsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetDepositPoolStatsQuery = {
+  __typename?: 'Query';
+  depositPoolStatsById?: {
+    __typename?: 'DepositPoolStats';
+    lastUpdatedBlock: number;
+    buckets: string;
+  } | null;
+};
+
+export const GetAccountsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAccounts' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'AccountOrderByInput' }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'accounts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'free' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'frozen' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reserved' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'accountsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetAccountsQuery, GetAccountsQueryVariables>;
+export const GetAccountByIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAccountById' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'account' },
+            name: { kind: 'Name', value: 'accountById' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'free' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'frozen' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reserved' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic_isNull' },
+                      value: { kind: 'BooleanValue', value: false }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'AND' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'from' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'OR' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'to' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'id_eq' },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'fee' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'extrinsic' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'pallet' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'call' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'from' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'to' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'scheduledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'to' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'extrinsic' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'pallet' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'call' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'scheduledAt' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'txId' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'fee' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'from' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'to' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'executedReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'scheduledTransfer' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'from' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'OR' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'to' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'id_eq' },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'txId' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: {
+                                kind: 'Name',
+                                value: 'scheduledTransfer'
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'extrinsic' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'pallet'
+                                          }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'call' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'amount' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'timestamp' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'scheduledAt' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'txId' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'fee' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'block' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'height'
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'from' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'to' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'cancelledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'scheduledTransfer' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'from' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'OR' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'to' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: { kind: 'Name', value: 'id_eq' },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'cancelledBy' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'txId' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'cancelledBy' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: {
+                                kind: 'Name',
+                                value: 'scheduledTransfer'
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'extrinsic' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'pallet'
+                                          }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'call' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'amount' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'timestamp' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'scheduledAt' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'txId' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'fee' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'block' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'height'
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'from' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'to' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'miner' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'reward' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'miner' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'guardian' },
+            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'who' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'interceptor' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'free' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'frozen' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'reserved' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'beneficiaries' },
+            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'interceptor' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'who' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'free' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'frozen' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'reserved' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'wormholeOutputs' },
+            name: { kind: 'Name', value: 'wormholeOutputs' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'EnumValue',
+                  value: 'wormholeExtrinsic_timestamp_DESC'
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'exitAccount' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'exitAccount' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'wormholeExtrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'totalAmount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'outputCount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'outputs' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'exitAccount' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetAccountByIdQuery, GetAccountByIdQueryVariables>;
+export const GetAccountsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetAccountsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'all' },
+            name: { kind: 'Name', value: 'accountsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'recentlyActive' },
+            name: { kind: 'Name', value: 'accountsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'transfersFrom_some' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'recentlyDeposited' },
+            name: { kind: 'Name', value: 'accountsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'transfersTo_some' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetAccountsStatsQuery,
+  GetAccountsStatsQueryVariables
+>;
+export const GetBlocksDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetBlocks' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: { kind: 'Name', value: 'BlockOrderByInput' }
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'BlockWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'blocks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsics' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'blocksConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetBlocksQuery, GetBlocksQueryVariables>;
+export const GetRecentBlocksDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentBlocks' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'BlockOrderByInput' }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'blocks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsics' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentBlocksQuery,
+  GetRecentBlocksQueryVariables
+>;
+export const GetBlockByIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetBlockById' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'height' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'blocks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'height_eq' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'height' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'hash_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'hash' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsics' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'orderBy' },
+                      value: { kind: 'EnumValue', value: 'indexInBlock_ASC' }
+                    }
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'success' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'indexInBlock' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'signer' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic_isNull' },
+                      value: { kind: 'BooleanValue', value: false }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'AND' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'height_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'OR' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'block' },
+                                  value: {
+                                    kind: 'ObjectValue',
+                                    fields: [
+                                      {
+                                        kind: 'ObjectField',
+                                        name: {
+                                          kind: 'Name',
+                                          value: 'hash_eq'
+                                        },
+                                        value: {
+                                          kind: 'Variable',
+                                          name: { kind: 'Name', value: 'hash' }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'fee' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'extrinsic' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'pallet' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'call' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'from' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'to' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'scheduledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'extrinsic' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'pallet' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'call' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'scheduledAt' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'txId' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'fee' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'from' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'to' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'executedReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'txId' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: {
+                                kind: 'Name',
+                                value: 'scheduledTransfer'
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'extrinsic' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'pallet'
+                                          }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'call' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'amount' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'timestamp' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'scheduledAt' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'txId' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'fee' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'block' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'height'
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'from' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'to' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'cancelledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'txId' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'cancelledBy' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: {
+                                kind: 'Name',
+                                value: 'scheduledTransfer'
+                              },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'extrinsic' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'pallet'
+                                          }
+                                        },
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'call' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'amount' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'timestamp' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'scheduledAt' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'txId' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'fee' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'block' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: {
+                                            kind: 'Name',
+                                            value: 'height'
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'from' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'to' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'id' }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'highSecuritySets' },
+            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'extrinsic' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'pallet' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'call' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'delay' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'who' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'interceptor' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'errorEvents' },
+            name: { kind: 'Name', value: 'errorEventsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'edges' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'errorDocs' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'errorModule' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'errorName' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'errorType' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'extrinsic' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'pallet' }
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'call' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'block' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'height' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'wormholeExtrinsics' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'block' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'hash_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'outputs' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'exitAccount' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'amount' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetBlockByIdQuery, GetBlockByIdQueryVariables>;
+export const GetCancelledReversibleTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetCancelledReversibleTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'CancelledReversibleTransferOrderByInput'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'CancelledReversibleTransferWhereInput'
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'cancelledBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledAt' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'cancelledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetCancelledReversibleTransactionsQuery,
+  GetCancelledReversibleTransactionsQueryVariables
+>;
+export const GetRecentCancelledReversibleTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentCancelledReversibleTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'CancelledReversibleTransferOrderByInput'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'cancelledBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledAt' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentCancelledReversibleTransactionsQuery,
+  GetRecentCancelledReversibleTransactionsQueryVariables
+>;
+export const GetCancelledReversibleTransactionsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetCancelledReversibleTransactionsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'cancelledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'startDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: {
+              kind: 'Name',
+              value: 'cancelledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetCancelledReversibleTransactionsStatsQuery,
+  GetCancelledReversibleTransactionsStatsQueryVariables
+>;
+export const GetCancelledReversibleTransactionByTxIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetCancelledReversibleTransactionByTxId' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'txId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'txId_eq' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'txId' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'cancelledBy' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledAt' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetCancelledReversibleTransactionByTxIdQuery,
+  GetCancelledReversibleTransactionByTxIdQueryVariables
+>;
+export const GetStatusDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetStatus' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'beginningDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'todayDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic_isNull' },
+                      value: { kind: 'BooleanValue', value: false }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'scheduledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'executedReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: {
+              kind: 'Name',
+              value: 'cancelledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'status' },
+            name: { kind: 'Name', value: 'squidStatus' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'finalizedHeight' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'finalizedHash' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minedBlocks24Hours' },
+            name: { kind: 'Name', value: 'blocksConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'todayDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allActiveAccounts' },
+            name: { kind: 'Name', value: 'accountsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'transfersFrom_some' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'beginningDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allDepositAccounts' },
+            name: { kind: 'Name', value: 'accountsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'transfersTo_some' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'beginningDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetStatusQuery, GetStatusQueryVariables>;
 export const GetErrorEventsDocument = {
   kind: 'Document',
   definitions: [
@@ -5563,6 +11232,1217 @@ export const GetErrorEventByHashDocument = {
 } as unknown as DocumentNode<
   GetErrorEventByHashQuery,
   GetErrorEventByHashQueryVariables
+>;
+export const GetExecutedReversibleTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetExecutedReversibleTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'ExecutedReversibleTransferOrderByInput'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'ExecutedReversibleTransferWhereInput'
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledAt' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'executedReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetExecutedReversibleTransactionsQuery,
+  GetExecutedReversibleTransactionsQueryVariables
+>;
+export const GetRecentExecutedReversibleTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentExecutedReversibleTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'ExecutedReversibleTransferOrderByInput'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledAt' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentExecutedReversibleTransactionsQuery,
+  GetRecentExecutedReversibleTransactionsQueryVariables
+>;
+export const GetExecutedReversibleTransactionsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetExecutedReversibleTransactionsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'executedReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'startDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: {
+              kind: 'Name',
+              value: 'executedReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetExecutedReversibleTransactionsStatsQuery,
+  GetExecutedReversibleTransactionsStatsQueryVariables
+>;
+export const GetExecutedReversibleTransactionByTxIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetExecutedReversibleTransactionByTxId' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'txId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'txId_eq' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'txId' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledAt' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetExecutedReversibleTransactionByTxIdQuery,
+  GetExecutedReversibleTransactionByTxIdQueryVariables
+>;
+export const GetHighSecuritySetsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetHighSecuritySets' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'HighSecuritySetOrderByInput' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'HighSecuritySetWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'highSecuritySets' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'who' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'interceptor' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delay' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetHighSecuritySetsQuery,
+  GetHighSecuritySetsQueryVariables
+>;
+export const GetRecentHighSecuritySetsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentHighSecuritySets' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'HighSecuritySetOrderByInput' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'HighSecuritySetWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'highSecuritySets' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'who' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'interceptor' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delay' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentHighSecuritySetsQuery,
+  GetRecentHighSecuritySetsQueryVariables
+>;
+export const GetHighSecuritySetsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetHighSecuritySetsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'startDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetHighSecuritySetsStatsQuery,
+  GetHighSecuritySetsStatsQueryVariables
+>;
+export const GetHighSecuritySetByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetHighSecuritySetByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'highSecuritySets' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'hash' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'who' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'interceptor' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'delay' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetHighSecuritySetByHashQuery,
+  GetHighSecuritySetByHashQueryVariables
 >;
 export const GetMinerLeaderboardDocument = {
   kind: 'Document',
@@ -6148,4 +13028,2122 @@ export const GetMinerRewardByHashDocument = {
 } as unknown as DocumentNode<
   GetMinerRewardByHashQuery,
   GetMinerRewardByHashQueryVariables
+>;
+export const GetScheduledReversibleTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetScheduledReversibleTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'ScheduledReversibleTransferOrderByInput'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'ScheduledReversibleTransferWhereInput'
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'scheduledAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'scheduledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetScheduledReversibleTransactionsQuery,
+  GetScheduledReversibleTransactionsQueryVariables
+>;
+export const GetRecentScheduledReversibleTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentScheduledReversibleTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'ScheduledReversibleTransferOrderByInput'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'scheduledAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentScheduledReversibleTransactionsQuery,
+  GetRecentScheduledReversibleTransactionsQueryVariables
+>;
+export const GetScheduledReversibleTransactionsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetScheduledReversibleTransactionsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'scheduledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'startDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: {
+              kind: 'Name',
+              value: 'scheduledReversibleTransfersConnection'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetScheduledReversibleTransactionsStatsQuery,
+  GetScheduledReversibleTransactionsStatsQueryVariables
+>;
+export const GetScheduledReversibleTransactionByTxIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetScheduledReversibleTransactionByTxId' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'txId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'txId_eq' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'txId' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'scheduledAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetScheduledReversibleTransactionByTxIdQuery,
+  GetScheduledReversibleTransactionByTxIdQueryVariables
+>;
+export const SearchAllDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'SearchAll' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'keyword' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'keyword_number' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_startsWith' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
+            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'txId_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
+            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'txId_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
+            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'txId_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'txId' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'accounts' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'blocks' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'hash_startsWith' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'height_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword_number' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'highSecuritySets' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_startsWith' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'minerRewards' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'hash_startsWith' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'errorEvents' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: {
+                        kind: 'Name',
+                        value: 'errorType_containsInsensitive'
+                      },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'keyword' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'OR' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: {
+                              kind: 'Name',
+                              value: 'errorName_containsInsensitive'
+                            },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<SearchAllQuery, SearchAllQueryVariables>;
+export const GetTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'TransferOrderByInput' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'TransferWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetTransactionsQuery,
+  GetTransactionsQueryVariables
+>;
+export const GetRecentTransactionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentTransactions' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'TransferOrderByInput' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'TransferWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'transactions' },
+            name: { kind: 'Name', value: 'transfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentTransactionsQuery,
+  GetRecentTransactionsQueryVariables
+>;
+export const GetTransactionsStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetTransactionsStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DateTime' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'startDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'endDate' }
+                      }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic_isNull' },
+                      value: { kind: 'BooleanValue', value: false }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic_isNull' },
+                      value: { kind: 'BooleanValue', value: false }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'transfersConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic_isNull' },
+                      value: { kind: 'BooleanValue', value: false }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetTransactionsStatsQuery,
+  GetTransactionsStatsQueryVariables
+>;
+export const GetExtrinsicByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetExtrinsicByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsics' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id_eq' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'hash' }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'indexInBlock' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'signer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transfers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'hash' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'timestamp_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'to' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetExtrinsicByHashQuery,
+  GetExtrinsicByHashQueryVariables
+>;
+export const GetWormholeExtrinsicsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetWormholeExtrinsics' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: { kind: 'Name', value: 'WormholeExtrinsicOrderByInput' }
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'WormholeExtrinsicWhereInput' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'wormholeExtrinsics' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyScore' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyLabel' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'wormholeExtrinsicsConnection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'orderBy' },
+                value: { kind: 'EnumValue', value: 'id_ASC' }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetWormholeExtrinsicsQuery,
+  GetWormholeExtrinsicsQueryVariables
+>;
+export const GetWormholeExtrinsicByIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetWormholeExtrinsicById' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'wormholeExtrinsicById' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyScore' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyScore01Pct' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyScore1Pct' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyScore5Pct' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacyLabel' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'poolSnapshot' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'outputs' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'exitAccount' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'amount' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'wormholeNullifiers' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'wormholeExtrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'extrinsic' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: 'id_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'nullifier' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'nullifierHash' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetWormholeExtrinsicByIdQuery,
+  GetWormholeExtrinsicByIdQueryVariables
+>;
+export const GetDepositPoolStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetDepositPoolStats' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'depositPoolStatsById' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'lastUpdatedBlock' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'buckets' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetDepositPoolStatsQuery,
+  GetDepositPoolStatsQueryVariables
 >;

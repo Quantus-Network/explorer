@@ -11,4 +11,4 @@ export * from './scheduled-reversible-transaction';
 export * from './searchs';
 export * from './transcation';
 export * from './unified-transaction';
-// export * from './wormhole';
+export * from './wormhole';

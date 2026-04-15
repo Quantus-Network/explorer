@@ -1,11 +1,17 @@
 import { gql, useQuery } from '@apollo/client';
 
+import type { WormholeExtrinsicWhereInput } from '@/__generated__/graphql';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
+import {
+  WORMHOLE_EXTRINSIC_SORTS,
+  type WormholeExtrinsicSorts
+} from '@/constants/query-sorts';
 import type {
   DepositPoolStatsResponse,
   WormholeExtrinsicListResponse,
   WormholeExtrinsicResponse
 } from '@/schemas/wormhole';
+import type { PaginatedQueryVariables } from '@/types/query';
 
 const GET_WORMHOLE_EXTRINSICS = gql`
   query GetWormholeExtrinsics(
@@ -73,7 +79,9 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
         amount
       }
     }
-    wormholeNullifiers(where: { extrinsic: { id_eq: $id } }) {
+    wormholeNullifiers(
+      where: { wormholeExtrinsic: { extrinsic: { id_eq: $id } } }
+    ) {
       nullifier
       nullifierHash
     }
@@ -92,15 +100,21 @@ const GET_DEPOSIT_POOL_STATS = gql`
 export const wormhole = {
   useGetAll: (config?: {
     pollInterval?: number;
-    variables?: Record<string, unknown>;
+    variables?: PaginatedQueryVariables<
+      WormholeExtrinsicSorts,
+      WormholeExtrinsicWhereInput
+    >;
   }) => {
     const { pollInterval = DATA_POOL_INTERVAL, variables = {} } = config ?? {};
     const {
-      orderBy = 'timestamp_DESC',
+      orderBy = WORMHOLE_EXTRINSIC_SORTS.timestamp.DESC,
       limit = 25,
       offset = 0,
       where
-    } = variables as Record<string, unknown>;
+    } = variables as PaginatedQueryVariables<
+      WormholeExtrinsicSorts,
+      WormholeExtrinsicWhereInput
+    >;
 
     return useQuery<WormholeExtrinsicListResponse>(GET_WORMHOLE_EXTRINSICS, {
       pollInterval,

@@ -184,7 +184,6 @@ export const blocks = {
                 call
               }
               timestamp
-              status
               amount
               timestamp
               scheduledAt
@@ -219,7 +218,11 @@ export const blocks = {
                 height
               }
               scheduledTransfer {
-                extrinsicHash
+                extrinsic {
+                  id
+                  pallet
+                  call
+                }
                 amount
                 timestamp
                 scheduledAt
@@ -258,7 +261,11 @@ export const blocks = {
                 id
               }
               scheduledTransfer {
-                extrinsicHash
+                extrinsic {
+                  id
+                  pallet
+                  call
+                }
                 amount
                 timestamp
                 scheduledAt
