@@ -15,9 +15,9 @@ export const REVERSIBLE_TRANSACTION_SORTS = {
     ASC: 'status_ASC',
     DESC: 'status_DESC'
   },
-  extrinsicHash: {
-    ASC: 'extrinsicHash_ASC',
-    DESC: 'extrinsicHash_DESC'
+  extrinsic: {
+    ASC: 'extrinsic_id_ASC',
+    DESC: 'extrinsic_id_DESC'
   },
   tx: {
     ASC: 'tx_ASC',

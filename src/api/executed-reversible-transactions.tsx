@@ -45,7 +45,11 @@ export const executedReversibleTransactions = {
             height
           }
           scheduledTransfer {
-            extrinsicHash
+            extrinsic {
+              id
+              pallet
+              call
+            }
             amount
             timestamp
             scheduledAt
@@ -112,7 +116,11 @@ export const executedReversibleTransactions = {
             height
           }
           scheduledTransfer {
-            extrinsicHash
+            extrinsic {
+              id
+              pallet
+              call
+            }
             amount
             timestamp
             scheduledAt

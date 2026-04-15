@@ -10,4 +10,5 @@ export * from './miner-reward';
 export * from './scheduled-reversible-transaction';
 export * from './searchs';
 export * from './transcation';
-// export * from './wormhole';
+export * from './unified-transaction';
+export * from './wormhole';

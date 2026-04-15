@@ -48,7 +48,11 @@ export const cancelledReversibleTransactions = {
             id
           }
           scheduledTransfer {
-            extrinsicHash
+            extrinsic {
+              id
+              pallet
+              call
+            }
             amount
             timestamp
             scheduledAt
@@ -118,7 +122,11 @@ export const cancelledReversibleTransactions = {
             id
           }
           scheduledTransfer {
-            extrinsicHash
+            extrinsic {
+              id
+              pallet
+              call
+            }
             amount
             timestamp
             scheduledAt
@@ -200,7 +208,11 @@ export const cancelledReversibleTransactions = {
           cancelledBy {
             id
           }
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           scheduledTransfer {
             amount
             scheduledAt

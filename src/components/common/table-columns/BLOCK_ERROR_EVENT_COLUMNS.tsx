@@ -9,7 +9,7 @@ import { formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<BlockErrorEvent>();
 
 export const BLOCK_ERROR_EVENT_COLUMNS = [
-  columnHelper.accessor('node.extrinsicHash', {
+  columnHelper.accessor('node.extrinsic.id', {
     id: 'extrinsicHash',
     header: 'Extrinsic Hash',
     cell: (props) =>
