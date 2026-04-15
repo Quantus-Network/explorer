@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Menu, X } from 'lucide-react';
 
-import { Logo } from '@/assets';
 import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import env from '@/config/env';
@@ -30,7 +29,14 @@ export const Header = (props: HeaderProps) => {
         >
           <Link to="/" className="flex items-center gap-2 no-underline">
             <div className="size-10">
-              <Logo className="size-full" name="Quantus Logo" />
+              <img
+                src="/images/logomark.webp"
+                alt="Quantus Logo"
+                className="size-full"
+                fetchPriority="high"
+                loading="eager"
+                decoding="sync"
+              />
             </div>
 
             <span className="text-xl font-bold text-primary">

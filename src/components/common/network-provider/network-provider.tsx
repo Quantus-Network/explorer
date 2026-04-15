@@ -5,6 +5,7 @@ const ENABLE_LOCAL_NETWORK =
 
 const BASE_NETWORKS = {
   dirac: 'https://subsquid.quantus.com/green/graphql'
+  // planck: 'https://subsquid.quantus.com/blue/graphql'
 } as const;
 
 const LOCAL_NETWORK = {
