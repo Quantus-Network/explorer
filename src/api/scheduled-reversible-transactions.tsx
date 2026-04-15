@@ -39,7 +39,11 @@ export const scheduledReversibleTransactions = {
           orderBy: $orderBy
           where: $where
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           amount
           timestamp
           scheduledAt
@@ -99,7 +103,11 @@ export const scheduledReversibleTransactions = {
           offset: $offset
           orderBy: $orderBy
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           amount
           timestamp
           scheduledAt
@@ -172,7 +180,11 @@ export const scheduledReversibleTransactions = {
         scheduledReversibleTransactions: scheduledReversibleTransfers(
           where: { txId_eq: $txId }
         ) {
-          extrinsicHash
+          extrinsic {
+            id
+            pallet
+            call
+          }
           amount
           timestamp
           scheduledAt

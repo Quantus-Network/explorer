@@ -135,8 +135,8 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: transactions,
         renderItem: (tx: any) => (
           <PreviewLink
-            href={`${RESOURCES.transactions}/${tx.extrinsicHash}`}
-            label={`${tx.extrinsicHash}`}
+            href={`${RESOURCES.transactions}/${tx.extrinsic?.id}`}
+            label={`${tx.extrinsic?.id}`}
             onSelect={handleClosePreview}
           />
         )
@@ -219,8 +219,8 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: highSecuritySets,
         renderItem: (highSecuritySet: any) => (
           <PreviewLink
-            href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsicHash}`}
-            label={`${highSecuritySet.extrinsicHash}`}
+            href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsic?.id}`}
+            label={`${highSecuritySet.extrinsic?.id}`}
             onSelect={handleClosePreview}
           />
         )
@@ -231,8 +231,8 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: errorEvents,
         renderItem: (errorEvent: any) => (
           <PreviewLink
-            href={`${RESOURCES.errors}/${errorEvent.extrinsicHash}`}
-            label={`${errorEvent.extrinsicHash}`}
+            href={`${RESOURCES.errors}/${errorEvent.extrinsic?.id}`}
+            label={`${errorEvent.extrinsic?.id}`}
             onSelect={handleClosePreview}
           />
         )

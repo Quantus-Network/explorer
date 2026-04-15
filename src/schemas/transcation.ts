@@ -30,3 +30,29 @@ export interface TransactionsStatsResponse {
     totalCount: number;
   };
 }
+
+// Extrinsic detail response (for /transactions/{hash} page)
+export interface ExtrinsicDetail {
+  id: string;
+  pallet: string;
+  call: string;
+  success: boolean;
+  fee: string;
+  timestamp: string;
+  indexInBlock: number;
+  signer: { id: string } | null;
+  block: { height: number };
+}
+
+export interface ExtrinsicTransfer {
+  id: string;
+  amount: string;
+  timestamp: string;
+  from: { id: string };
+  to: { id: string };
+}
+
+export interface ExtrinsicDetailResponse {
+  extrinsics: ExtrinsicDetail[];
+  transfers: ExtrinsicTransfer[];
+}

@@ -11,9 +11,9 @@ export const HIGH_SECURITY_SET_SORTS = {
     ASC: 'delay_ASC',
     DESC: 'delay_DESC'
   },
-  extrinsicHash: {
-    ASC: 'extrinsicHash_ASC',
-    DESC: 'extrinsicHash_DESC'
+  extrinsic: {
+    ASC: 'extrinsic_id_ASC',
+    DESC: 'extrinsic_id_DESC'
   },
   blockHeight: {
     ASC: 'block_height_ASC',

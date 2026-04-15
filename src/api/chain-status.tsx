@@ -19,7 +19,7 @@ export const chainStatus = {
       ) {
         transactions: transfersConnection(
           orderBy: id_ASC
-          where: { extrinsicHash_isNull: false }
+          where: { extrinsic_isNull: false }
         ) {
           totalCount
         }

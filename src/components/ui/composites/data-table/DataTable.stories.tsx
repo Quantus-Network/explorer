@@ -29,47 +29,67 @@ export const Primary: Omit<Story, 'args'> = {
         data: [
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           },
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           },
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           },
           {
             block: { height: 293293 },
-            extrinsicHash: '0xjdwjaidwjaidj',
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
             fee: '120000000',
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           }
         ],
         columns: transactionColumns,

@@ -80,6 +80,6 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
         longLabel: 'Error Events'
       }
     ]
-  }
-  // { label: 'Wormhole', path: '/wormhole', longLabel: 'Wormhole Privacy' }
+  },
+  { label: 'Wormhole', path: '/wormhole', longLabel: 'Wormhole Privacy' }
 ] as const;
