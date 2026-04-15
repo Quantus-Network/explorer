@@ -40,7 +40,8 @@ export const Primary: Omit<Story, 'args'> = {
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           },
           {
             block: { height: 293293 },
@@ -55,7 +56,8 @@ export const Primary: Omit<Story, 'args'> = {
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           },
           {
             block: { height: 293293 },
@@ -70,7 +72,8 @@ export const Primary: Omit<Story, 'args'> = {
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           },
           {
             block: { height: 293293 },
@@ -85,7 +88,8 @@ export const Primary: Omit<Story, 'args'> = {
             to: { id: '0xdjwaidjiajdi' },
             fromHash: '0x2131313',
             toHash: '0xdjwaidjiajdi',
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            leafIndex: 0
           }
         ],
         columns: transactionColumns,

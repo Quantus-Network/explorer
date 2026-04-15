@@ -11,9 +11,9 @@ export const TRANSACTION_SORTS = {
     ASC: 'fee_ASC',
     DESC: 'fee_DESC'
   },
-  extrinsicHash: {
-    ASC: 'extrinsicHash_ASC',
-    DESC: 'extrinsicHash_DESC'
+  extrinsic: {
+    ASC: 'extrinsic_id_ASC',
+    DESC: 'extrinsic_id_DESC'
   },
   blockHeight: {
     ASC: 'block_height_ASC',

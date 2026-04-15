@@ -14,7 +14,7 @@ function WormholePage() {
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
         <div>
-          <h1 className="text-2xl font-bold">Wormhole</h1>
+          <h1>Wormhole</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Privacy-preserving transfers via zero-knowledge proofs. Each output
             is scored based on how many deposit combinations could have produced
@@ -22,7 +22,6 @@ function WormholePage() {
           </p>
         </div>
         <DepositPoolStatsCard />
-        <h2 className="text-lg font-semibold">Recent Outputs</h2>
         <WormholeOutputsTable />
       </ContentContainer>
     </SectionContainer>

@@ -35,7 +35,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
       block: tx?.block,
       timestamp: tx?.timestamp,
       cancelledBy: tx?.cancelledBy,
-      extrinsicHash: tx?.extrinsicHash,
+      extrinsic: tx?.extrinsic,
       scheduledTransfer: tx?.scheduledTransfer
     }
   ];
@@ -54,9 +54,9 @@ export const CancelledReversibleTransactionInformation: React.FC<
         },
         {
           label: 'Extrinsic Hash',
-          key: 'extrinsicHash',
+          key: 'extrinsic',
           render: (value) => (
-            <TextWithCopy text={value || '-'} className="break-all" />
+            <TextWithCopy text={value.id || '-'} className="break-all" />
           )
         },
         {

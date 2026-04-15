@@ -19,9 +19,9 @@ export const ERROR_EVENT_SORTS = {
     ASC: 'errorName_ASC',
     DESC: 'errorName_DESC'
   },
-  extrinsicHash: {
-    ASC: 'extrinsicHash_ASC',
-    DESC: 'extrinsicHash_DESC'
+  extrinsic: {
+    ASC: 'extrinsic_id_ASC',
+    DESC: 'extrinsic_id_DESC'
   },
   blockHeight: {
     ASC: 'block_height_ASC',

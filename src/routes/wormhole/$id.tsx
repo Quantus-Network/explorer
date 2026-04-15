@@ -14,7 +14,7 @@ function WormholeOutputDetailsPage() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">Wormhole Output</h1>
+        <h1>Wormhole Output</h1>
         <WormholeOutputInformation id={id} />
       </ContentContainer>
     </SectionContainer>

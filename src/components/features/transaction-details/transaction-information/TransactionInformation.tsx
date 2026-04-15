@@ -1,19 +1,17 @@
 import { notFound } from '@tanstack/react-router';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import * as React from 'react';
 
 import useApiClient from '@/api';
+import { EXTRINSIC_TRANSACTION_COLUMNS } from '@/components/common/table-columns/EXTRINSIC_TRANSACTION_COLUMNS';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
-import { ContentContainer } from '@/components/ui/content-container';
 import { RESOURCES } from '@/constants/resources';
-import type { ExtrinsicDetail, ExtrinsicTransfer } from '@/schemas';
-import {
-  formatMonetaryValue,
-  formatTimestamp,
-  formatTxAddress
-} from '@/utils/formatter';
 import { cn } from '@/lib/utils';
+import type { ExtrinsicDetail, ExtrinsicTransfer } from '@/schemas';
+import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface TransactionInformationProps {
   hash: string;
@@ -27,8 +25,20 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
 
   if (!loading && (!data || data.extrinsics.length === 0)) throw notFound();
 
+  const extrinsicTransactionColumns = React.useMemo(
+    () => EXTRINSIC_TRANSACTION_COLUMNS,
+    []
+  );
+
   const extrinsic = data?.extrinsics[0];
   const transfers = data?.transfers ?? [];
+  const table = useReactTable<ExtrinsicTransfer>({
+    data: transfers,
+    columns: extrinsicTransactionColumns,
+    getCoreRowModel: getCoreRowModel(),
+    manualSorting: true,
+    manualPagination: true
+  });
 
   const extrinsicInfo: Partial<ExtrinsicDetail>[] = [
     {
@@ -124,43 +134,13 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
 
       {/* Transfers Table */}
       {transfers.length > 0 && (
-        <ContentContainer className="flex flex-col gap-4">
-          <h2>Transfers ({transfers.length})</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-3 font-medium">From</th>
-                  <th className="text-left py-2 px-3 font-medium">To</th>
-                  <th className="text-right py-2 px-3 font-medium">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transfers.map((transfer: ExtrinsicTransfer) => (
-                  <tr key={transfer.id} className="border-b">
-                    <td className="py-2 px-3">
-                      <LinkWithCopy
-                        href={`${RESOURCES.accounts}/${transfer.from.id}`}
-                        text={formatTxAddress(transfer.from.id)}
-                        textCopy={transfer.from.id}
-                      />
-                    </td>
-                    <td className="py-2 px-3">
-                      <LinkWithCopy
-                        href={`${RESOURCES.accounts}/${transfer.to.id}`}
-                        text={formatTxAddress(transfer.to.id)}
-                        textCopy={transfer.to.id}
-                      />
-                    </td>
-                    <td className="py-2 px-3 text-right">
-                      {formatMonetaryValue(Number(transfer.amount), 5)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </ContentContainer>
+        <DataTable
+          table={table}
+          fetch={{
+            status: 'success',
+            errorFallback: null
+          }}
+        />
       )}
     </div>
   );
