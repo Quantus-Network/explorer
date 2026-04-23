@@ -31,6 +31,7 @@ import { Route as ErrorsIdRouteImport } from './routes/errors/$id'
 import { Route as CancelledReversibleTransactionsTxIdRouteImport } from './routes/cancelled-reversible-transactions/$txId'
 import { Route as BlocksIdRouteImport } from './routes/blocks/$id'
 import { Route as AccountsIdRouteImport } from './routes/accounts/$id'
+import { Route as DevGraphqlBenchmarkIndexRouteImport } from './routes/dev/graphql-benchmark/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -150,6 +151,12 @@ const AccountsIdRoute = AccountsIdRouteImport.update({
   path: '/accounts/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevGraphqlBenchmarkIndexRoute =
+  DevGraphqlBenchmarkIndexRouteImport.update({
+    id: '/dev/graphql-benchmark/',
+    path: '/dev/graphql-benchmark/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/miner-rewards': typeof MinerRewardsIndexRoute
   '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
+  '/dev/graphql-benchmark': typeof DevGraphqlBenchmarkIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -198,6 +206,7 @@ export interface FileRoutesByTo {
   '/miner-rewards': typeof MinerRewardsIndexRoute
   '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
+  '/dev/graphql-benchmark': typeof DevGraphqlBenchmarkIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -223,6 +232,7 @@ export interface FileRoutesById {
   '/miner-rewards/': typeof MinerRewardsIndexRoute
   '/scheduled-reversible-transactions/': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole/': typeof WormholeIndexRoute
+  '/dev/graphql-benchmark/': typeof DevGraphqlBenchmarkIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/miner-rewards'
     | '/scheduled-reversible-transactions'
     | '/wormhole'
+    | '/dev/graphql-benchmark'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/miner-rewards'
     | '/scheduled-reversible-transactions'
     | '/wormhole'
+    | '/dev/graphql-benchmark'
   id:
     | '__root__'
     | '/'
@@ -297,6 +309,7 @@ export interface FileRouteTypes {
     | '/miner-rewards/'
     | '/scheduled-reversible-transactions/'
     | '/wormhole/'
+    | '/dev/graphql-benchmark/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -322,6 +335,7 @@ export interface RootRouteChildren {
   MinerRewardsIndexRoute: typeof MinerRewardsIndexRoute
   ScheduledReversibleTransactionsIndexRoute: typeof ScheduledReversibleTransactionsIndexRoute
   WormholeIndexRoute: typeof WormholeIndexRoute
+  DevGraphqlBenchmarkIndexRoute: typeof DevGraphqlBenchmarkIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -480,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dev/graphql-benchmark/': {
+      id: '/dev/graphql-benchmark/'
+      path: '/dev/graphql-benchmark'
+      fullPath: '/dev/graphql-benchmark'
+      preLoaderRoute: typeof DevGraphqlBenchmarkIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -512,6 +533,7 @@ const rootRouteChildren: RootRouteChildren = {
   ScheduledReversibleTransactionsIndexRoute:
     ScheduledReversibleTransactionsIndexRoute,
   WormholeIndexRoute: WormholeIndexRoute,
+  DevGraphqlBenchmarkIndexRoute: DevGraphqlBenchmarkIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
