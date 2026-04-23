@@ -31,7 +31,7 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
         </ContentContainer>
       </SectionContainer>
 
-      <AccountDataTabs accountId={id} query={query} />
+      <AccountDataTabs query={query} />
     </>
   );
 };

@@ -8,18 +8,14 @@ import type { AccountResponse } from '@/schemas';
 import { AccountAllTransactions } from '../account-all-transactions/AccountAllTransactions';
 
 export interface AccountDataTabsProps {
-  accountId: string;
   query: QueryResult<AccountResponse>;
 }
 
-export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({
-  query,
-  accountId
-}) => {
+export const AccountDataTabs: React.FC<AccountDataTabsProps> = ({ query }) => {
   return (
     <SectionContainer>
       <ContentContainer>
-        <AccountAllTransactions accountId={accountId} query={query} />
+        <AccountAllTransactions query={query} />
       </ContentContainer>
     </SectionContainer>
   );

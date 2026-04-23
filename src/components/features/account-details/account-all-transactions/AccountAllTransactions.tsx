@@ -9,7 +9,6 @@ import { useAccountAllTransactions } from './hook';
 
 interface Props {
   query: QueryResult<AccountResponse>;
-  accountId: string;
 }
 
 export const AccountAllTransactions: React.FC<Props> = ({ query }) => {
