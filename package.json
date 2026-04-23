@@ -15,7 +15,8 @@
     "format": "prettier . --write",
     "prepare": "husky",
     "gen-assets": "svgr --template svgr-template.cjs --index-template svgr-index-template.cjs --icon --title-prop --typescript --jsx-runtime automatic --replace-attr-values currentColor=currentColor,#FFEF00=currentColor --filename-case pascal -d src/assets assets",
-    "gql:compile": "graphql-codegen"
+    "gql:compile": "graphql-codegen",
+    "bench:graphql": "bun scripts/graphql-bench.ts"
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": "npm run format"
