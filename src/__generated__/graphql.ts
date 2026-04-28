@@ -334,7 +334,13 @@ export enum AccountEventOrderByInput {
   TransferToHashAscNullsLast = 'transfer_toHash_ASC_NULLS_LAST',
   TransferToHashDesc = 'transfer_toHash_DESC',
   TransferToHashDescNullsFirst = 'transfer_toHash_DESC_NULLS_FIRST',
-  TransferToHashDescNullsLast = 'transfer_toHash_DESC_NULLS_LAST'
+  TransferToHashDescNullsLast = 'transfer_toHash_DESC_NULLS_LAST',
+  TransferTransferCountAsc = 'transfer_transferCount_ASC',
+  TransferTransferCountAscNullsFirst = 'transfer_transferCount_ASC_NULLS_FIRST',
+  TransferTransferCountAscNullsLast = 'transfer_transferCount_ASC_NULLS_LAST',
+  TransferTransferCountDesc = 'transfer_transferCount_DESC',
+  TransferTransferCountDescNullsFirst = 'transfer_transferCount_DESC_NULLS_FIRST',
+  TransferTransferCountDescNullsLast = 'transfer_transferCount_DESC_NULLS_LAST'
 }
 
 export type AccountEventWhereInput = {
@@ -1922,6 +1928,12 @@ export enum EventOrderByInput {
   TransferToHashDesc = 'transfer_toHash_DESC',
   TransferToHashDescNullsFirst = 'transfer_toHash_DESC_NULLS_FIRST',
   TransferToHashDescNullsLast = 'transfer_toHash_DESC_NULLS_LAST',
+  TransferTransferCountAsc = 'transfer_transferCount_ASC',
+  TransferTransferCountAscNullsFirst = 'transfer_transferCount_ASC_NULLS_FIRST',
+  TransferTransferCountAscNullsLast = 'transfer_transferCount_ASC_NULLS_LAST',
+  TransferTransferCountDesc = 'transfer_transferCount_DESC',
+  TransferTransferCountDescNullsFirst = 'transfer_transferCount_DESC_NULLS_FIRST',
+  TransferTransferCountDescNullsLast = 'transfer_transferCount_DESC_NULLS_LAST',
   TypeAsc = 'type_ASC',
   TypeAscNullsFirst = 'type_ASC_NULLS_FIRST',
   TypeAscNullsLast = 'type_ASC_NULLS_LAST',
@@ -2112,6 +2124,12 @@ export enum ExecutedReversibleTransferOrderByInput {
   ExecutedTransferToHashDesc = 'executedTransfer_toHash_DESC',
   ExecutedTransferToHashDescNullsFirst = 'executedTransfer_toHash_DESC_NULLS_FIRST',
   ExecutedTransferToHashDescNullsLast = 'executedTransfer_toHash_DESC_NULLS_LAST',
+  ExecutedTransferTransferCountAsc = 'executedTransfer_transferCount_ASC',
+  ExecutedTransferTransferCountAscNullsFirst = 'executedTransfer_transferCount_ASC_NULLS_FIRST',
+  ExecutedTransferTransferCountAscNullsLast = 'executedTransfer_transferCount_ASC_NULLS_LAST',
+  ExecutedTransferTransferCountDesc = 'executedTransfer_transferCount_DESC',
+  ExecutedTransferTransferCountDescNullsFirst = 'executedTransfer_transferCount_DESC_NULLS_FIRST',
+  ExecutedTransferTransferCountDescNullsLast = 'executedTransfer_transferCount_DESC_NULLS_LAST',
   IdAsc = 'id_ASC',
   IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
   IdAscNullsLast = 'id_ASC_NULLS_LAST',
@@ -3834,6 +3852,7 @@ export type Transfer = {
   to: Account;
   /** Blake3 hash of raw 'to' address bytes (hex string) for privacy-preserving prefix queries */
   toHash: Scalars['String']['output'];
+  transferCount: Scalars['BigInt']['output'];
 };
 
 export type TransferEdge = {
@@ -4082,7 +4101,13 @@ export enum TransferOrderByInput {
   ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
   ToReservedDesc = 'to_reserved_DESC',
   ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
-  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST'
+  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST',
+  TransferCountAsc = 'transferCount_ASC',
+  TransferCountAscNullsFirst = 'transferCount_ASC_NULLS_FIRST',
+  TransferCountAscNullsLast = 'transferCount_ASC_NULLS_LAST',
+  TransferCountDesc = 'transferCount_DESC',
+  TransferCountDescNullsFirst = 'transferCount_DESC_NULLS_FIRST',
+  TransferCountDescNullsLast = 'transferCount_DESC_NULLS_LAST'
 }
 
 export type TransferWhereInput = {
@@ -4187,6 +4212,15 @@ export type TransferWhereInput = {
   toHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
   toHash_startsWith?: InputMaybe<Scalars['String']['input']>;
   to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  transferCount_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  transferCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  transferCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  transferCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  transferCount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  transferCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  transferCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  transferCount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
+  transferCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
 };
 
 export type TransferWithHash = {
@@ -4199,9 +4233,11 @@ export type TransferWithHash = {
   fromHash: Scalars['String']['output'];
   fromId: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  leafIndex: Scalars['BigInt']['output'];
   timestamp: Scalars['DateTime']['output'];
   toHash: Scalars['String']['output'];
   toId: Scalars['String']['output'];
+  transferCount: Scalars['BigInt']['output'];
 };
 
 export type TransfersByPrefixInput = {
@@ -5536,27 +5572,10 @@ export type GetCancelledReversibleTransactionByTxIdQuery = {
   }>;
 };
 
-export type GetStatusQueryVariables = Exact<{
-  beginningDate: Scalars['DateTime']['input'];
-  todayDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
-}>;
+export type GetStatusQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetStatusQuery = {
   __typename?: 'Query';
-  transactions: { __typename?: 'TransfersConnection'; totalCount: number };
-  scheduledReversibleTransactions: {
-    __typename?: 'ScheduledReversibleTransfersConnection';
-    totalCount: number;
-  };
-  executedReversibleTransactions: {
-    __typename?: 'ExecutedReversibleTransfersConnection';
-    totalCount: number;
-  };
-  cancelledReversibleTransactions: {
-    __typename?: 'CancelledReversibleTransfersConnection';
-    totalCount: number;
-  };
   status?: {
     __typename?: 'SquidStatus';
     hash?: string | null;
@@ -5564,9 +5583,6 @@ export type GetStatusQuery = {
     finalizedHeight?: number | null;
     finalizedHash?: string | null;
   } | null;
-  minedBlocks24Hours: { __typename?: 'BlocksConnection'; totalCount: number };
-  allActiveAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
-  allDepositAccounts: { __typename?: 'AccountsConnection'; totalCount: number };
 };
 
 export type GetErrorEventsQueryVariables = Exact<{
@@ -10414,148 +10430,9 @@ export const GetStatusDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'GetStatus' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'beginningDate' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
-            }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'todayDate' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
-            }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'endDate' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
-            }
-          }
-        }
-      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'transactions' },
-            name: { kind: 'Name', value: 'transfersConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic_isNull' },
-                      value: { kind: 'BooleanValue', value: false }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'scheduledReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'executedReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'cancelledReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'status' },
@@ -10573,153 +10450,6 @@ export const GetStatusDocument = {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'finalizedHash' }
                 }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'minedBlocks24Hours' },
-            name: { kind: 'Name', value: 'blocksConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'todayDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'allActiveAccounts' },
-            name: { kind: 'Name', value: 'accountsConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'transfersFrom_some' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_gte' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'beginningDate' }
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_lte' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'endDate' }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'allDepositAccounts' },
-            name: { kind: 'Name', value: 'accountsConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'transfersTo_some' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_gte' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'beginningDate' }
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_lte' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'endDate' }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
               ]
             }
           }

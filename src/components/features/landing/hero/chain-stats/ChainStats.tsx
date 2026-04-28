@@ -15,14 +15,9 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
   });
 
   const success = !loading && !error;
-  const totalTransactions =
-    (data?.transactions?.totalCount ?? 0) +
-    (data?.scheduledReversibleTransactions?.totalCount ?? 0) +
-    (data?.executedReversibleTransactions?.totalCount ?? 0) +
-    (data?.cancelledReversibleTransactions?.totalCount ?? 0);
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -39,45 +34,13 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <h3>Transactions</h3>
+            <h3>Finalized Block</h3>
 
-            <Info>
-              Total count of immediate transactions and reversible transactions
-            </Info>
+            <Info>The last block that has been finalized.</Info>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{totalTransactions}</p>}
-          {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <h3>Active Accounts</h3>
-
-            <Info>Account that has an activity.</Info>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {success && <p>{data?.allActiveAccounts?.totalCount}</p>}
-          {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <h3>Deposit Accounts</h3>
-
-            <Info>Account receiving transfers.</Info>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {success && <p>{data?.allDepositAccounts?.totalCount}</p>}
+          {success && <p>#{data?.status?.finalizedHeight}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

@@ -42,19 +42,6 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
           {error && <p>Error: {error.message}</p>}
         </CardContent>
       </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            <h3>Mined Blocks (24H)</h3>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {success && <p>{data?.minedBlocks24Hours.totalCount}</p>}
-          {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
-        </CardContent>
-      </Card>
     </div>
   );
 };

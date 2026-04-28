@@ -62,13 +62,6 @@ import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results
 
 import type { GraphqlBenchmarkRegistryEntry } from './types';
 
-function statusDates() {
-  const beginningDate = new Date(0).toISOString();
-  const todayDate = startOfToday().toISOString();
-  const endDate = endOfToday().toISOString();
-  return { beginningDate, todayDate, endDate };
-}
-
 function accountStatsDates() {
   return {
     startDate: subDays(startOfToday(), 7).toISOString(),
@@ -163,7 +156,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
   {
     name: 'GetStatus',
     document: GetStatusDocument,
-    getVariables: () => statusDates()
+    getVariables: () => ({})
   },
   {
     name: 'GetErrorEvents',
