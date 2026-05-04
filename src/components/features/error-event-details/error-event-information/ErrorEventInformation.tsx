@@ -28,69 +28,75 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
       timestamp: event?.timestamp,
       block: event?.block,
       extrinsic: event?.extrinsic,
-      errorType: event?.errorType,
-      errorModule: event?.errorModule,
-      errorName: event?.errorName,
-      errorDocs: event?.errorDocs
+      error_type: event?.error_type,
+      error_module: event?.error_module,
+      error_name: event?.error_name,
+      error_docs: event?.error_docs
     }
   ];
 
   return (
-    <DataList<Partial<ErrorEvent>>
-      loading={loading}
-      data={information}
-      fields={[
-        {
-          label: 'Extrinsic',
-          key: 'extrinsic',
-          render: (value) => (
-            <TextWithCopy
-              text={(value as ErrorEvent['extrinsic'])?.id ?? '-'}
-              className="break-all"
-            />
-          )
-        },
-        {
-          label: 'Timestamp',
-          key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
-        },
-        {
-          label: 'Block',
-          key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={(value as ErrorEvent['block']).height.toString()}
-              href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
-              className="break-all"
-            />
-          )
-        },
-        {
-          label: 'Error Type',
-          key: 'errorType'
-        },
-        {
-          label: 'Error Module',
-          key: 'errorModule',
-          render: (value) => (value ? (value as string) : '-')
-        },
-        {
-          label: 'Error Name',
-          key: 'errorName',
-          render: (value) => (value ? (value as string) : '-')
-        },
-        {
-          label: 'Error Docs',
-          key: 'errorDocs',
-          render: (value) =>
-            value ? (
-              <TextWithCopy text={value as string} className="break-all" />
-            ) : (
-              '-'
+    <>
+      <h2 className="text-lg font-semibold">Event Information</h2>
+      <DataList<Partial<ErrorEvent>>
+        loading={loading}
+        data={information}
+        fields={[
+          {
+            label: 'Extrinsic Hash',
+            key: 'extrinsic',
+            render: (value) =>
+              (value as ErrorEvent['extrinsic'])?.id ? (
+                <TextWithCopy
+                  text={(value as ErrorEvent['extrinsic'])?.id ?? '-'}
+                  className="break-all"
+                />
+              ) : (
+                '-'
+              )
+          },
+          {
+            label: 'Timestamp',
+            key: 'timestamp',
+            render: (value) => formatTimestamp(value, true)
+          },
+          {
+            label: 'Block',
+            key: 'block',
+            render: (value) => (
+              <LinkWithCopy
+                text={(value as ErrorEvent['block']).height.toString()}
+                href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
+                className="break-all"
+              />
             )
-        }
-      ]}
-    />
+          },
+          {
+            label: 'Error Type',
+            key: 'error_type'
+          },
+          {
+            label: 'Error Module',
+            key: 'error_module',
+            render: (value) => (value ? (value as string) : '-')
+          },
+          {
+            label: 'Error Name',
+            key: 'error_name',
+            render: (value) => (value ? (value as string) : '-')
+          },
+          {
+            label: 'Error Docs',
+            key: 'error_docs',
+            render: (value) =>
+              value ? (
+                <TextWithCopy text={value as string} className="break-all" />
+              ) : (
+                '-'
+              )
+          }
+        ]}
+      />
+    </>
   );
 };

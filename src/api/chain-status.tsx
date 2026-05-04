@@ -7,11 +7,14 @@ export const chainStatus = {
   useGetStatus: (config?: QueryHookOptions) => {
     const GET_STATUS = gql`
       query GetStatus {
-        status: squidStatus {
-          hash
-          height
-          finalizedHeight
-          finalizedHash
+        status: chain_stats_by_pk(id: "global") {
+          block_height
+          total_accounts
+          total_deposit_accounts
+          total_executed_transfers
+          total_immediate_transfers
+          total_scheduled_transfers
+          total_cancelled_transfers
         }
       }
     `;

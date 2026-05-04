@@ -42,16 +42,16 @@ export const WormholeOutputInformation = ({
   const extrinsicInfo: Partial<ExtrinsicInfo>[] = [
     {
       extrinsic: extrinsic?.extrinsic,
-      totalAmount: extrinsic?.totalAmount,
-      outputCount: extrinsic?.outputCount,
+      totalAmount: extrinsic?.total_amount,
+      outputCount: extrinsic?.output_count,
       block: extrinsic?.block,
       timestamp: extrinsic?.timestamp,
-      privacyScore: extrinsic?.privacyScore,
-      privacyLabel: extrinsic?.privacyLabel,
-      privacyScore01Pct: extrinsic?.privacyScore01Pct,
-      privacyScore1Pct: extrinsic?.privacyScore1Pct,
-      privacyScore5Pct: extrinsic?.privacyScore5Pct,
-      poolSnapshot: extrinsic?.poolSnapshot
+      privacyScore: extrinsic?.privacy_score,
+      privacyLabel: extrinsic?.privacy_label,
+      privacyScore01Pct: extrinsic?.privacy_score01_pct,
+      privacyScore1Pct: extrinsic?.privacy_score1_pct,
+      privacyScore5Pct: extrinsic?.privacy_score5_pct,
+      poolSnapshot: extrinsic?.pool_snapshot
     }
   ];
 
@@ -187,7 +187,7 @@ export const WormholeOutputInformation = ({
                   <dl className="grid grid-cols-1 gap-y-2">
                     <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
                       <dt className="font-medium text-muted-foreground">
-                        Output {idx + 1} of {extrinsic.outputCount}
+                        Output {idx + 1} of {extrinsic.output_count}
                       </dt>
                       <dd>{formatMonetaryValue(Number(output.amount))}</dd>
                     </div>
@@ -224,7 +224,7 @@ export const WormholeOutputInformation = ({
               <div className="space-y-2">
                 {nullifiers.map(
                   (
-                    n: { nullifier: string; nullifierHash: string },
+                    n: { nullifier: string; nullifier_hash: string },
                     idx: number
                   ) => (
                     <div key={idx} className="rounded border p-2">
@@ -245,7 +245,7 @@ export const WormholeOutputInformation = ({
                             Hash (blake3)
                           </dt>
                           <dd className="break-all text-xs text-muted-foreground">
-                            {n.nullifierHash}
+                            {n.nullifier_hash}
                           </dd>
                         </div>
                       </dl>

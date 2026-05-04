@@ -15,7 +15,12 @@ function ErrorEventDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Error Event Details</h1>
+        <div>
+          <h1>Error Event</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Detailed information about a specific error event.
+          </p>
+        </div>
 
         <ErrorEventInformation id={id} />
       </ContentContainer>

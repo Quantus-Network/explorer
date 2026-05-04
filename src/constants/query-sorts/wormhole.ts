@@ -1,39 +1,25 @@
-export const WORMHOLE_EXTRINSIC_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  privacyScore: {
-    ASC: 'privacyScore_ASC',
-    DESC: 'privacyScore_DESC'
-  },
-  totalAmount: {
-    ASC: 'totalAmount_ASC',
-    DESC: 'totalAmount_DESC'
-  },
-  outputCount: {
-    ASC: 'outputCount_ASC',
-    DESC: 'outputCount_DESC'
-  },
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  privacyLabel: {
-    ASC: 'privacyLabel_ASC',
-    DESC: 'privacyLabel_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const WORMHOLE_EXTRINSIC_SORTS_LITERALS = Object.values(
-  WORMHOLE_EXTRINSIC_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface WormholeExtrinsicSorts {
+  id?: SortDirection;
+  privacy_score?: SortDirection;
+  total_amount?: SortDirection;
+  output_count?: SortDirection;
+  timestamp?: SortDirection;
+  privacy_label?: SortDirection;
+}
 
-export const WORMHOLE_EXTRINSIC_SORTS_KEY = Object.keys(
-  WORMHOLE_EXTRINSIC_SORTS
-);
-
-// Adding null, because we can sort by null to indicate no sorting
-export type WormholeExtrinsicSorts =
-  | (typeof WORMHOLE_EXTRINSIC_SORTS_LITERALS)[number]
-  | null;
+export const WORMHOLE_EXTRINSIC_SORTS_LITERALS = [
+  'id:desc',
+  'privacy_score:desc',
+  'total_amount:desc',
+  'output_count:desc',
+  'timestamp:desc',
+  'privacy_label:desc',
+  'id:asc',
+  'privacy_score:asc',
+  'total_amount:asc',
+  'output_count:asc',
+  'timestamp:asc',
+  'privacy_label:asc'
+];

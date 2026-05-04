@@ -46,17 +46,6 @@ import {
 } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
-import { BLOCK_SORTS } from '@/constants/query-sorts';
-import { ACCOUNT_SORTS } from '@/constants/query-sorts/accounts';
-import { ERROR_EVENT_SORTS } from '@/constants/query-sorts/errors';
-import { HIGH_SECURITY_SET_SORTS } from '@/constants/query-sorts/high-security-sets';
-import {
-  CANCELLED_REVERSIBLE_TRANSACTION_SORTS,
-  EXECUTED_REVERSIBLE_TRANSACTION_SORTS,
-  SCHEDULED_REVERSIBLE_TRANSACTION_SORTS
-} from '@/constants/query-sorts/reversible-transactions';
-import { TRANSACTION_SORTS } from '@/constants/query-sorts/transactions';
-import { WORMHOLE_EXTRINSIC_SORTS } from '@/constants/query-sorts/wormhole';
 import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 
@@ -80,7 +69,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetAccounts',
     document: GetAccountsDocument,
     getVariables: () => ({
-      orderBy: ACCOUNT_SORTS.id.DESC,
+      orderBy: { id: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -100,7 +89,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetBlocks',
     document: GetBlocksDocument,
     getVariables: () => ({
-      orderBy: BLOCK_SORTS.timestamp.DESC,
+      orderBy: [{ timestamp: 'desc' }],
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -109,7 +98,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentBlocks',
     document: GetRecentBlocksDocument,
     getVariables: () => ({
-      orderBy: BLOCK_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT
     })
   },
@@ -120,8 +109,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
       ctx.blockHeight != null && ctx.blockHash != null
         ? {
             height: ctx.blockHeight,
-            hash: ctx.blockHash,
-            limit: QUERY_UNIFIED_LIMIT
+            hash: ctx.blockHash
           }
         : null
   },
@@ -129,7 +117,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetCancelledReversibleTransactions',
     document: GetCancelledReversibleTransactionsDocument,
     getVariables: () => ({
-      orderBy: CANCELLED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -138,7 +126,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentCancelledReversibleTransactions',
     document: GetRecentCancelledReversibleTransactionsDocument,
     getVariables: () => ({
-      orderBy: CANCELLED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT
     })
   },
@@ -151,7 +139,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetCancelledReversibleTransactionByTxId',
     document: GetCancelledReversibleTransactionByTxIdDocument,
     getVariables: (ctx) =>
-      ctx.cancelledTxId ? { txId: ctx.cancelledTxId } : null
+      ctx.cancelledTxId ? { tx_id: ctx.cancelledTxId } : null
   },
   {
     name: 'GetStatus',
@@ -162,7 +150,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetErrorEvents',
     document: GetErrorEventsDocument,
     getVariables: () => ({
-      orderBy: ERROR_EVENT_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -171,7 +159,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentErrorEvents',
     document: GetRecentErrorEventsDocument,
     getVariables: () => ({
-      orderBy: ERROR_EVENT_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT
     })
   },
@@ -192,7 +180,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetExecutedReversibleTransactions',
     document: GetExecutedReversibleTransactionsDocument,
     getVariables: () => ({
-      orderBy: EXECUTED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -201,7 +189,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentExecutedReversibleTransactions',
     document: GetRecentExecutedReversibleTransactionsDocument,
     getVariables: () => ({
-      orderBy: EXECUTED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT
     })
   },
@@ -214,13 +202,13 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetExecutedReversibleTransactionByTxId',
     document: GetExecutedReversibleTransactionByTxIdDocument,
     getVariables: (ctx) =>
-      ctx.executedTxId ? { txId: ctx.executedTxId } : null
+      ctx.executedTxId ? { tx_id: ctx.executedTxId } : null
   },
   {
     name: 'GetHighSecuritySets',
     document: GetHighSecuritySetsDocument,
     getVariables: () => ({
-      orderBy: HIGH_SECURITY_SET_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -229,7 +217,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentHighSecuritySets',
     document: GetRecentHighSecuritySetsDocument,
     getVariables: () => ({
-      orderBy: HIGH_SECURITY_SET_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT,
       where: {}
     })
@@ -259,7 +247,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetMinerRewards',
     document: GetMinerRewardsDocument,
     getVariables: () => ({
-      orderBy: TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -268,7 +256,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentMinerRewards',
     document: GetRecentMinerRewardsDocument,
     getVariables: () => ({
-      orderBy: TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT
     })
   },
@@ -287,7 +275,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetScheduledReversibleTransactions',
     document: GetScheduledReversibleTransactionsDocument,
     getVariables: () => ({
-      orderBy: SCHEDULED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
@@ -296,7 +284,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetRecentScheduledReversibleTransactions',
     document: GetRecentScheduledReversibleTransactionsDocument,
     getVariables: () => ({
-      orderBy: SCHEDULED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT
     })
   },
@@ -309,7 +297,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetScheduledReversibleTransactionByTxId',
     document: GetScheduledReversibleTransactionByTxIdDocument,
     getVariables: (ctx) =>
-      ctx.scheduledTxId ? { txId: ctx.scheduledTxId } : null
+      ctx.scheduledTxId ? { tx_id: ctx.scheduledTxId } : null
   },
   {
     name: 'SearchAll',
@@ -324,19 +312,19 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetTransactions',
     document: GetTransactionsDocument,
     getVariables: () => ({
-      orderBy: TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0,
-      where: { extrinsic_isNull: false }
+      where: { extrinsic_id: { _is_null: false } }
     })
   },
   {
     name: 'GetRecentTransactions',
     document: GetRecentTransactionsDocument,
     getVariables: () => ({
-      orderBy: TRANSACTION_SORTS.timestamp.DESC,
+      orderBy: { timestamp: 'desc' },
       limit: QUERY_RECENT_LIMIT,
-      where: { extrinsic_isNull: false }
+      where: { extrinsic_id: { _is_null: false } }
     })
   },
   {
@@ -354,7 +342,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     name: 'GetWormholeExtrinsics',
     document: GetWormholeExtrinsicsDocument,
     getVariables: () => ({
-      orderBy: [WORMHOLE_EXTRINSIC_SORTS.timestamp.DESC],
+      orderBy: [{ timestamp: 'desc' }],
       limit: 25,
       offset: 0
     })

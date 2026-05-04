@@ -1,11 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 
-import type { WormholeExtrinsicWhereInput } from '@/__generated__/graphql';
+import type { Wormhole_Extrinsic_Bool_Exp } from '@/__generated__/graphql';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
-import {
-  WORMHOLE_EXTRINSIC_SORTS,
-  type WormholeExtrinsicSorts
-} from '@/constants/query-sorts';
+import { type WormholeExtrinsicSorts } from '@/constants/query-sorts';
 import type {
   DepositPoolStatsResponse,
   WormholeExtrinsicListResponse,
@@ -17,13 +14,13 @@ const GET_WORMHOLE_EXTRINSICS = gql`
   query GetWormholeExtrinsics(
     $limit: Int
     $offset: Int
-    $orderBy: [WormholeExtrinsicOrderByInput!]!
-    $where: WormholeExtrinsicWhereInput
+    $orderBy: [wormhole_extrinsic_order_by!]!
+    $where: wormhole_extrinsic_bool_exp
   ) {
-    wormholeExtrinsics(
+    wormholeExtrinsics: wormhole_extrinsic(
       limit: $limit
       offset: $offset
-      orderBy: $orderBy
+      order_by: $orderBy
       where: $where
     ) {
       id
@@ -32,39 +29,41 @@ const GET_WORMHOLE_EXTRINSICS = gql`
         pallet
         call
       }
-      totalAmount
-      outputCount
+      total_amount
+      output_count
       timestamp
-      privacyScore
-      privacyLabel
+      privacy_score
+      privacy_label
       block {
         height
       }
     }
-    meta: wormholeExtrinsicsConnection(orderBy: id_ASC) {
-      totalCount
+    meta: wormhole_extrinsic_aggregate(where: $where) {
+      aggregate {
+        totalCount: count
+      }
     }
   }
 `;
 
 const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
   query GetWormholeExtrinsicById($id: String!) {
-    wormholeExtrinsicById(id: $id) {
+    wormholeExtrinsicById: wormhole_extrinsic_by_pk(id: $id) {
       id
       extrinsic {
         id
         pallet
         call
       }
-      totalAmount
-      outputCount
+      total_amount
+      output_count
       timestamp
-      privacyScore
-      privacyScore01Pct
-      privacyScore1Pct
-      privacyScore5Pct
-      privacyLabel
-      poolSnapshot
+      privacy_score
+      privacy_score01_pct
+      privacy_score1_pct
+      privacy_score5_pct
+      privacy_label
+      pool_snapshot
       block {
         id
         height
@@ -79,19 +78,19 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
         amount
       }
     }
-    wormholeNullifiers(
-      where: { wormholeExtrinsic: { extrinsic: { id_eq: $id } } }
+    wormholeNullifiers: wormhole_nullifier(
+      where: { wormholeExtrinsic: { id: { _eq: $id } } }
     ) {
       nullifier
-      nullifierHash
+      nullifier_hash
     }
   }
 `;
 
 const GET_DEPOSIT_POOL_STATS = gql`
   query GetDepositPoolStats {
-    depositPoolStatsById(id: "global") {
-      lastUpdatedBlock
+    depositPoolStatsById: deposit_pool_stats_by_pk(id: "global") {
+      last_updated_block
       buckets
     }
   }
@@ -102,18 +101,18 @@ export const wormhole = {
     pollInterval?: number;
     variables?: PaginatedQueryVariables<
       WormholeExtrinsicSorts,
-      WormholeExtrinsicWhereInput
+      Wormhole_Extrinsic_Bool_Exp
     >;
   }) => {
     const { pollInterval = DATA_POOL_INTERVAL, variables = {} } = config ?? {};
     const {
-      orderBy = WORMHOLE_EXTRINSIC_SORTS.timestamp.DESC,
+      orderBy = { timestamp: 'desc' },
       limit = 25,
       offset = 0,
       where
     } = variables as PaginatedQueryVariables<
       WormholeExtrinsicSorts,
-      WormholeExtrinsicWhereInput
+      Wormhole_Extrinsic_Bool_Exp
     >;
 
     return useQuery<WormholeExtrinsicListResponse>(GET_WORMHOLE_EXTRINSICS, {

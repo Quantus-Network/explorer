@@ -1,23 +1,16 @@
-export const ACCOUNT_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  balance: {
-    ASC: 'balance_ASC',
-    DESC: 'balance_DESC'
-  },
-  lastUpdated: {
-    ASC: 'lastUpdated_ASC',
-    DESC: 'lastUpdated_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const ACCOUNT_SORTS_LITERALS = Object.values(ACCOUNT_SORTS).flatMap(
-  (sort) => Object.values(sort)
-);
+export interface AccountSorts {
+  id?: SortDirection;
+  free?: SortDirection;
+  lastUpdated?: SortDirection;
+}
 
-export const ACCOUNT_SORTS_KEY = Object.keys(ACCOUNT_SORTS);
-
-// Adding null, because we can sort by null to indicate no sorting
-export type AccountSorts = (typeof ACCOUNT_SORTS_LITERALS)[number] | null;
+export const ACCOUNT_SORTS_LITERALS = [
+  'id:desc',
+  'free:desc',
+  'last_updated:desc',
+  'id:asc',
+  'free:asc',
+  'last_updated:asc'
+];

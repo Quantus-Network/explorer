@@ -55,37 +55,6 @@ export interface BlockWormholeExtrinsic {
 export interface BlockResponse {
   blocks: [Block];
   minerRewards: BlockMinerReward[];
-  transactions: {
-    edges: BlockTransaction[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  scheduledReversibleTransactions: {
-    edges: BlockScheduledReversibleTransaction[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  executedReversibleTransactions: {
-    edges: BlockExecutedReversibleTransaction[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  cancelledReversibleTransactions: {
-    edges: BlockCancelledReversibleTransaction[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  highSecuritySets: {
-    edges: BlockHighSecuritySet[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  errorEvents: {
-    edges: BlockErrorEvent[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  wormholeExtrinsics: BlockWormholeExtrinsic[];
 }
 
 export interface BlockListResponse {
@@ -121,4 +90,16 @@ export interface BlockHighSecuritySet {
 
 export interface BlockErrorEvent {
   node: ErrorEvent;
+}
+
+export interface BlockStatsResponse {
+  chain: {
+    block_height: number;
+    finalized_block_height: number;
+  };
+  minedIn24Hours: {
+    aggregate: {
+      totalCount: number;
+    };
+  };
 }

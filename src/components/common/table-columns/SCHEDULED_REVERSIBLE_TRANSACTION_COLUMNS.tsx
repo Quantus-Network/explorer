@@ -9,7 +9,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<ScheduledReversibleTransaction>();
 
 export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('txId', {
+  columnHelper.accessor('tx_id', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (
@@ -38,8 +38,8 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('scheduledAt', {
-    id: 'scheduledAt',
+  columnHelper.accessor('scheduled_at', {
+    id: 'scheduled_at',
     header: 'Scheduled At',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true

@@ -1,33 +1,22 @@
-export const MINER_REWARD_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  blockHeight: {
-    ASC: 'block_height_ASC',
-    DESC: 'block_height_DESC'
-  },
-  reward: {
-    ASC: 'reward_ASC',
-    DESC: 'reward_DESC'
-  },
-  miner: {
-    id_ASC: 'miner_id_ASC',
-    id_DESC: 'miner_id_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const MINER_REWARD_SORTS_LITERALS = Object.values(
-  MINER_REWARD_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface MinerRewardSorts {
+  id?: SortDirection;
+  timestamp?: SortDirection;
+  block_height?: SortDirection;
+  reward?: SortDirection;
+  miner_id?: SortDirection;
+}
 
-export const MINER_REWARD_SORTS_KEY = Object.keys(MINER_REWARD_SORTS);
-
-// Adding null, because we can sort by null to indicate no sorting
-export type MinerRewardSorts =
-  | (typeof MINER_REWARD_SORTS_LITERALS)[number]
-  | null;
+export const MINER_REWARD_SORTS_LITERALS = [
+  'id:desc',
+  'timestamp:desc',
+  'block_height:desc',
+  'reward:desc',
+  'miner_id:desc',
+  'id:asc',
+  'timestamp:asc',
+  'block_height:asc',
+  'reward:asc',
+  'miner_id:asc'
+];

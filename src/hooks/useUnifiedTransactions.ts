@@ -1,4 +1,9 @@
 import type {
+  CancelledReversibleTransaction,
+  ExecutedReversibleTransaction,
+  ScheduledReversibleTransaction
+} from '@/schemas';
+import type {
   ExtrinsicInfo,
   UnifiedTransaction,
   UnifiedTransactionType
@@ -68,18 +73,47 @@ export const transformImmediateTransaction = (
   fee: tx.fee
 });
 
-export const transformReversibleTransaction = (
-  tx: TransferInput,
-  idx: number
+export const transformScheduledTransaction = (
+  tx: ScheduledReversibleTransaction
 ): UnifiedTransaction => ({
-  id: `reversible-${tx.extrinsic?.id ?? idx}`,
-  type: 'reversible' as UnifiedTransactionType,
+  id: `scheduled-${tx.tx_id}`,
+  type: 'scheduled-reversible' as UnifiedTransactionType,
   timestamp: tx.timestamp,
   block: tx.block,
   extrinsic: tx.extrinsic,
   from: tx.from,
   to: tx.to,
   amount: tx.amount
+});
+
+export const transformExecutedTransaction = (
+  tx: ExecutedReversibleTransaction
+): UnifiedTransaction => ({
+  id: `executed-${tx.tx_id}`,
+  type: 'executed-reversible' as UnifiedTransactionType,
+  timestamp: tx.timestamp,
+  block: tx.block,
+  extrinsic: {
+    id: 'N/A (unsigned)',
+    pallet: 'ReversibleTransfers',
+    call: 'transaction_executed'
+  },
+  from: tx.scheduledTransfer.from,
+  to: tx.scheduledTransfer.to,
+  amount: tx.scheduledTransfer.amount
+});
+
+export const transformCancelledTransaction = (
+  tx: CancelledReversibleTransaction
+): UnifiedTransaction => ({
+  id: `cancelled-${tx.tx_id}`,
+  type: 'cancelled-reversible' as UnifiedTransactionType,
+  timestamp: tx.timestamp,
+  block: tx.block,
+  extrinsic: tx.extrinsic,
+  from: tx.scheduledTransfer.from,
+  to: tx.scheduledTransfer.to,
+  amount: tx.scheduledTransfer.amount
 });
 
 export const transformMinerReward = (

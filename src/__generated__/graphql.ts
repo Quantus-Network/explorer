@@ -27,4965 +27,5264 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  /** Big number integer */
-  BigInt: { input: any; output: any };
-  /** A date-time string in simplified extended ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ) */
-  DateTime: { input: any; output: any };
+  numeric: { input: any; output: any };
+  timestamptz: { input: any; output: any };
 };
 
+/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+export type Boolean_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Boolean']['input']>;
+  _gt?: InputMaybe<Scalars['Boolean']['input']>;
+  _gte?: InputMaybe<Scalars['Boolean']['input']>;
+  _in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Boolean']['input']>;
+  _lte?: InputMaybe<Scalars['Boolean']['input']>;
+  _neq?: InputMaybe<Scalars['Boolean']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Boolean']['input']>>;
+};
+
+/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
+export type Int_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['Int']['input']>;
+  _gt?: InputMaybe<Scalars['Int']['input']>;
+  _gte?: InputMaybe<Scalars['Int']['input']>;
+  _in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Int']['input']>;
+  _lte?: InputMaybe<Scalars['Int']['input']>;
+  _neq?: InputMaybe<Scalars['Int']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+export type String_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['String']['input']>;
+  _gt?: InputMaybe<Scalars['String']['input']>;
+  _gte?: InputMaybe<Scalars['String']['input']>;
+  /** does the column match the given case-insensitive pattern */
+  _ilike?: InputMaybe<Scalars['String']['input']>;
+  _in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** does the column match the given POSIX regular expression, case insensitive */
+  _iregex?: InputMaybe<Scalars['String']['input']>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  /** does the column match the given pattern */
+  _like?: InputMaybe<Scalars['String']['input']>;
+  _lt?: InputMaybe<Scalars['String']['input']>;
+  _lte?: InputMaybe<Scalars['String']['input']>;
+  _neq?: InputMaybe<Scalars['String']['input']>;
+  /** does the column NOT match the given case-insensitive pattern */
+  _nilike?: InputMaybe<Scalars['String']['input']>;
+  _nin?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** does the column NOT match the given POSIX regular expression, case insensitive */
+  _niregex?: InputMaybe<Scalars['String']['input']>;
+  /** does the column NOT match the given pattern */
+  _nlike?: InputMaybe<Scalars['String']['input']>;
+  /** does the column NOT match the given POSIX regular expression, case sensitive */
+  _nregex?: InputMaybe<Scalars['String']['input']>;
+  /** does the column NOT match the given SQL regular expression */
+  _nsimilar?: InputMaybe<Scalars['String']['input']>;
+  /** does the column match the given POSIX regular expression, case sensitive */
+  _regex?: InputMaybe<Scalars['String']['input']>;
+  /** does the column match the given SQL regular expression */
+  _similar?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** columns and relationships of "account" */
 export type Account = {
-  __typename?: 'Account';
-  accountEvents: Array<AccountEvent>;
-  /** Extrinsics signed by this account */
+  __typename?: 'account';
+  /** An array relationship */
+  accountEvents: Array<Account_Event>;
+  /** An aggregate relationship */
+  accountEvents_aggregate: Account_Event_Aggregate;
+  /** An array relationship */
   extrinsics: Array<Extrinsic>;
-  free: Scalars['BigInt']['output'];
-  frozen: Scalars['BigInt']['output'];
-  /** Account address */
+  /** An aggregate relationship */
+  extrinsics_aggregate: Extrinsic_Aggregate;
+  free: Scalars['numeric']['output'];
+  frozen: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
-  /** Whether this account has only received transfers (never sent). Used for deposit pool tracking. */
-  isDepositOnly: Scalars['Boolean']['output'];
-  lastUpdated: Scalars['Int']['output'];
-  /** Individual privacy deposit amounts (JSON array of planck strings). Cleared when account sends. */
-  privacyDeposits: Scalars['String']['output'];
-  reserved: Scalars['BigInt']['output'];
+  is_deposit_only: Scalars['Boolean']['output'];
+  last_updated: Scalars['Int']['output'];
+  privacy_deposits: Scalars['String']['output'];
+  reserved: Scalars['numeric']['output'];
+  /** An array relationship */
   transfersFrom: Array<Transfer>;
+  /** An aggregate relationship */
+  transfersFrom_aggregate: Transfer_Aggregate;
+  /** An array relationship */
   transfersTo: Array<Transfer>;
+  /** An aggregate relationship */
+  transfersTo_aggregate: Transfer_Aggregate;
 };
 
+/** columns and relationships of "account" */
 export type AccountAccountEventsArgs = {
+  distinct_on?: InputMaybe<Array<Account_Event_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AccountEventOrderByInput>>;
-  where?: InputMaybe<AccountEventWhereInput>;
+  order_by?: InputMaybe<Array<Account_Event_Order_By>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
 };
 
+/** columns and relationships of "account" */
+export type AccountAccountEvents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Event_Order_By>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
+};
+
+/** columns and relationships of "account" */
 export type AccountExtrinsicsArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ExtrinsicOrderByInput>>;
-  where?: InputMaybe<ExtrinsicWhereInput>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
 };
 
+/** columns and relationships of "account" */
+export type AccountExtrinsics_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+/** columns and relationships of "account" */
 export type AccountTransfersFromArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<TransferOrderByInput>>;
-  where?: InputMaybe<TransferWhereInput>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
 };
 
+/** columns and relationships of "account" */
+export type AccountTransfersFrom_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+/** columns and relationships of "account" */
 export type AccountTransfersToArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<TransferOrderByInput>>;
-  where?: InputMaybe<TransferWhereInput>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
 };
 
-export type AccountEdge = {
-  __typename?: 'AccountEdge';
-  cursor: Scalars['String']['output'];
-  node: Account;
+/** columns and relationships of "account" */
+export type AccountTransfersTo_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
 };
 
-export type AccountEvent = {
-  __typename?: 'AccountEvent';
-  account: Account;
-  balanceEvent?: Maybe<BalanceEvent>;
-  cancelledReversibleTransfer?: Maybe<CancelledReversibleTransfer>;
-  executedReversibleTransfer?: Maybe<ExecutedReversibleTransfer>;
-  highSecuritySet?: Maybe<HighSecuritySet>;
+/** aggregated selection of "account" */
+export type Account_Aggregate = {
+  __typename?: 'account_aggregate';
+  aggregate?: Maybe<Account_Aggregate_Fields>;
+  nodes: Array<Account>;
+};
+
+/** aggregate fields of "account" */
+export type Account_Aggregate_Fields = {
+  __typename?: 'account_aggregate_fields';
+  avg?: Maybe<Account_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Account_Max_Fields>;
+  min?: Maybe<Account_Min_Fields>;
+  stddev?: Maybe<Account_Stddev_Fields>;
+  stddev_pop?: Maybe<Account_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Account_Stddev_Samp_Fields>;
+  sum?: Maybe<Account_Sum_Fields>;
+  var_pop?: Maybe<Account_Var_Pop_Fields>;
+  var_samp?: Maybe<Account_Var_Samp_Fields>;
+  variance?: Maybe<Account_Variance_Fields>;
+};
+
+/** aggregate fields of "account" */
+export type Account_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Account_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Account_Avg_Fields = {
+  __typename?: 'account_avg_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "account". All fields are combined with a logical 'AND'. */
+export type Account_Bool_Exp = {
+  _and?: InputMaybe<Array<Account_Bool_Exp>>;
+  _not?: InputMaybe<Account_Bool_Exp>;
+  _or?: InputMaybe<Array<Account_Bool_Exp>>;
+  accountEvents?: InputMaybe<Account_Event_Bool_Exp>;
+  accountEvents_aggregate?: InputMaybe<Account_Event_Aggregate_Bool_Exp>;
+  extrinsics?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsics_aggregate?: InputMaybe<Extrinsic_Aggregate_Bool_Exp>;
+  free?: InputMaybe<Numeric_Comparison_Exp>;
+  frozen?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  is_deposit_only?: InputMaybe<Boolean_Comparison_Exp>;
+  last_updated?: InputMaybe<Int_Comparison_Exp>;
+  privacy_deposits?: InputMaybe<String_Comparison_Exp>;
+  reserved?: InputMaybe<Numeric_Comparison_Exp>;
+  transfersFrom?: InputMaybe<Transfer_Bool_Exp>;
+  transfersFrom_aggregate?: InputMaybe<Transfer_Aggregate_Bool_Exp>;
+  transfersTo?: InputMaybe<Transfer_Bool_Exp>;
+  transfersTo_aggregate?: InputMaybe<Transfer_Aggregate_Bool_Exp>;
+};
+
+/** columns and relationships of "account_event" */
+export type Account_Event = {
+  __typename?: 'account_event';
+  /** An object relationship */
+  account?: Maybe<Account>;
+  account_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  cancelledReversibleTransfer?: Maybe<Cancelled_Reversible_Transfer>;
+  cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  executedReversibleTransfer?: Maybe<Executed_Reversible_Transfer>;
+  executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  highSecuritySet?: Maybe<High_Security_Set>;
+  high_security_set_id?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  minerReward?: Maybe<MinerReward>;
-  scheduledReversibleTransfer?: Maybe<ScheduledReversibleTransfer>;
-  timestamp: Scalars['DateTime']['output'];
+  /** An object relationship */
+  minerReward?: Maybe<Miner_Reward>;
+  miner_reward_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  scheduledReversibleTransfer?: Maybe<Scheduled_Reversible_Transfer>;
+  scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+  /** An object relationship */
   transfer?: Maybe<Transfer>;
+  transfer_id?: Maybe<Scalars['String']['output']>;
 };
 
-export type AccountEventEdge = {
-  __typename?: 'AccountEventEdge';
-  cursor: Scalars['String']['output'];
-  node: AccountEvent;
+/** aggregated selection of "account_event" */
+export type Account_Event_Aggregate = {
+  __typename?: 'account_event_aggregate';
+  aggregate?: Maybe<Account_Event_Aggregate_Fields>;
+  nodes: Array<Account_Event>;
 };
 
-export enum AccountEventOrderByInput {
-  AccountFreeAsc = 'account_free_ASC',
-  AccountFreeAscNullsFirst = 'account_free_ASC_NULLS_FIRST',
-  AccountFreeAscNullsLast = 'account_free_ASC_NULLS_LAST',
-  AccountFreeDesc = 'account_free_DESC',
-  AccountFreeDescNullsFirst = 'account_free_DESC_NULLS_FIRST',
-  AccountFreeDescNullsLast = 'account_free_DESC_NULLS_LAST',
-  AccountFrozenAsc = 'account_frozen_ASC',
-  AccountFrozenAscNullsFirst = 'account_frozen_ASC_NULLS_FIRST',
-  AccountFrozenAscNullsLast = 'account_frozen_ASC_NULLS_LAST',
-  AccountFrozenDesc = 'account_frozen_DESC',
-  AccountFrozenDescNullsFirst = 'account_frozen_DESC_NULLS_FIRST',
-  AccountFrozenDescNullsLast = 'account_frozen_DESC_NULLS_LAST',
-  AccountIdAsc = 'account_id_ASC',
-  AccountIdAscNullsFirst = 'account_id_ASC_NULLS_FIRST',
-  AccountIdAscNullsLast = 'account_id_ASC_NULLS_LAST',
-  AccountIdDesc = 'account_id_DESC',
-  AccountIdDescNullsFirst = 'account_id_DESC_NULLS_FIRST',
-  AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
-  AccountIsDepositOnlyAsc = 'account_isDepositOnly_ASC',
-  AccountIsDepositOnlyAscNullsFirst = 'account_isDepositOnly_ASC_NULLS_FIRST',
-  AccountIsDepositOnlyAscNullsLast = 'account_isDepositOnly_ASC_NULLS_LAST',
-  AccountIsDepositOnlyDesc = 'account_isDepositOnly_DESC',
-  AccountIsDepositOnlyDescNullsFirst = 'account_isDepositOnly_DESC_NULLS_FIRST',
-  AccountIsDepositOnlyDescNullsLast = 'account_isDepositOnly_DESC_NULLS_LAST',
-  AccountLastUpdatedAsc = 'account_lastUpdated_ASC',
-  AccountLastUpdatedAscNullsFirst = 'account_lastUpdated_ASC_NULLS_FIRST',
-  AccountLastUpdatedAscNullsLast = 'account_lastUpdated_ASC_NULLS_LAST',
-  AccountLastUpdatedDesc = 'account_lastUpdated_DESC',
-  AccountLastUpdatedDescNullsFirst = 'account_lastUpdated_DESC_NULLS_FIRST',
-  AccountLastUpdatedDescNullsLast = 'account_lastUpdated_DESC_NULLS_LAST',
-  AccountPrivacyDepositsAsc = 'account_privacyDeposits_ASC',
-  AccountPrivacyDepositsAscNullsFirst = 'account_privacyDeposits_ASC_NULLS_FIRST',
-  AccountPrivacyDepositsAscNullsLast = 'account_privacyDeposits_ASC_NULLS_LAST',
-  AccountPrivacyDepositsDesc = 'account_privacyDeposits_DESC',
-  AccountPrivacyDepositsDescNullsFirst = 'account_privacyDeposits_DESC_NULLS_FIRST',
-  AccountPrivacyDepositsDescNullsLast = 'account_privacyDeposits_DESC_NULLS_LAST',
-  AccountReservedAsc = 'account_reserved_ASC',
-  AccountReservedAscNullsFirst = 'account_reserved_ASC_NULLS_FIRST',
-  AccountReservedAscNullsLast = 'account_reserved_ASC_NULLS_LAST',
-  AccountReservedDesc = 'account_reserved_DESC',
-  AccountReservedDescNullsFirst = 'account_reserved_DESC_NULLS_FIRST',
-  AccountReservedDescNullsLast = 'account_reserved_DESC_NULLS_LAST',
-  BalanceEventAmountAsc = 'balanceEvent_amount_ASC',
-  BalanceEventAmountAscNullsFirst = 'balanceEvent_amount_ASC_NULLS_FIRST',
-  BalanceEventAmountAscNullsLast = 'balanceEvent_amount_ASC_NULLS_LAST',
-  BalanceEventAmountDesc = 'balanceEvent_amount_DESC',
-  BalanceEventAmountDescNullsFirst = 'balanceEvent_amount_DESC_NULLS_FIRST',
-  BalanceEventAmountDescNullsLast = 'balanceEvent_amount_DESC_NULLS_LAST',
-  BalanceEventIdAsc = 'balanceEvent_id_ASC',
-  BalanceEventIdAscNullsFirst = 'balanceEvent_id_ASC_NULLS_FIRST',
-  BalanceEventIdAscNullsLast = 'balanceEvent_id_ASC_NULLS_LAST',
-  BalanceEventIdDesc = 'balanceEvent_id_DESC',
-  BalanceEventIdDescNullsFirst = 'balanceEvent_id_DESC_NULLS_FIRST',
-  BalanceEventIdDescNullsLast = 'balanceEvent_id_DESC_NULLS_LAST',
-  BalanceEventTimestampAsc = 'balanceEvent_timestamp_ASC',
-  BalanceEventTimestampAscNullsFirst = 'balanceEvent_timestamp_ASC_NULLS_FIRST',
-  BalanceEventTimestampAscNullsLast = 'balanceEvent_timestamp_ASC_NULLS_LAST',
-  BalanceEventTimestampDesc = 'balanceEvent_timestamp_DESC',
-  BalanceEventTimestampDescNullsFirst = 'balanceEvent_timestamp_DESC_NULLS_FIRST',
-  BalanceEventTimestampDescNullsLast = 'balanceEvent_timestamp_DESC_NULLS_LAST',
-  BalanceEventTypeAsc = 'balanceEvent_type_ASC',
-  BalanceEventTypeAscNullsFirst = 'balanceEvent_type_ASC_NULLS_FIRST',
-  BalanceEventTypeAscNullsLast = 'balanceEvent_type_ASC_NULLS_LAST',
-  BalanceEventTypeDesc = 'balanceEvent_type_DESC',
-  BalanceEventTypeDescNullsFirst = 'balanceEvent_type_DESC_NULLS_FIRST',
-  BalanceEventTypeDescNullsLast = 'balanceEvent_type_DESC_NULLS_LAST',
-  CancelledReversibleTransferIdAsc = 'cancelledReversibleTransfer_id_ASC',
-  CancelledReversibleTransferIdAscNullsFirst = 'cancelledReversibleTransfer_id_ASC_NULLS_FIRST',
-  CancelledReversibleTransferIdAscNullsLast = 'cancelledReversibleTransfer_id_ASC_NULLS_LAST',
-  CancelledReversibleTransferIdDesc = 'cancelledReversibleTransfer_id_DESC',
-  CancelledReversibleTransferIdDescNullsFirst = 'cancelledReversibleTransfer_id_DESC_NULLS_FIRST',
-  CancelledReversibleTransferIdDescNullsLast = 'cancelledReversibleTransfer_id_DESC_NULLS_LAST',
-  CancelledReversibleTransferTimestampAsc = 'cancelledReversibleTransfer_timestamp_ASC',
-  CancelledReversibleTransferTimestampAscNullsFirst = 'cancelledReversibleTransfer_timestamp_ASC_NULLS_FIRST',
-  CancelledReversibleTransferTimestampAscNullsLast = 'cancelledReversibleTransfer_timestamp_ASC_NULLS_LAST',
-  CancelledReversibleTransferTimestampDesc = 'cancelledReversibleTransfer_timestamp_DESC',
-  CancelledReversibleTransferTimestampDescNullsFirst = 'cancelledReversibleTransfer_timestamp_DESC_NULLS_FIRST',
-  CancelledReversibleTransferTimestampDescNullsLast = 'cancelledReversibleTransfer_timestamp_DESC_NULLS_LAST',
-  CancelledReversibleTransferTxIdAsc = 'cancelledReversibleTransfer_txId_ASC',
-  CancelledReversibleTransferTxIdAscNullsFirst = 'cancelledReversibleTransfer_txId_ASC_NULLS_FIRST',
-  CancelledReversibleTransferTxIdAscNullsLast = 'cancelledReversibleTransfer_txId_ASC_NULLS_LAST',
-  CancelledReversibleTransferTxIdDesc = 'cancelledReversibleTransfer_txId_DESC',
-  CancelledReversibleTransferTxIdDescNullsFirst = 'cancelledReversibleTransfer_txId_DESC_NULLS_FIRST',
-  CancelledReversibleTransferTxIdDescNullsLast = 'cancelledReversibleTransfer_txId_DESC_NULLS_LAST',
-  ExecutedReversibleTransferIdAsc = 'executedReversibleTransfer_id_ASC',
-  ExecutedReversibleTransferIdAscNullsFirst = 'executedReversibleTransfer_id_ASC_NULLS_FIRST',
-  ExecutedReversibleTransferIdAscNullsLast = 'executedReversibleTransfer_id_ASC_NULLS_LAST',
-  ExecutedReversibleTransferIdDesc = 'executedReversibleTransfer_id_DESC',
-  ExecutedReversibleTransferIdDescNullsFirst = 'executedReversibleTransfer_id_DESC_NULLS_FIRST',
-  ExecutedReversibleTransferIdDescNullsLast = 'executedReversibleTransfer_id_DESC_NULLS_LAST',
-  ExecutedReversibleTransferTimestampAsc = 'executedReversibleTransfer_timestamp_ASC',
-  ExecutedReversibleTransferTimestampAscNullsFirst = 'executedReversibleTransfer_timestamp_ASC_NULLS_FIRST',
-  ExecutedReversibleTransferTimestampAscNullsLast = 'executedReversibleTransfer_timestamp_ASC_NULLS_LAST',
-  ExecutedReversibleTransferTimestampDesc = 'executedReversibleTransfer_timestamp_DESC',
-  ExecutedReversibleTransferTimestampDescNullsFirst = 'executedReversibleTransfer_timestamp_DESC_NULLS_FIRST',
-  ExecutedReversibleTransferTimestampDescNullsLast = 'executedReversibleTransfer_timestamp_DESC_NULLS_LAST',
-  ExecutedReversibleTransferTxIdAsc = 'executedReversibleTransfer_txId_ASC',
-  ExecutedReversibleTransferTxIdAscNullsFirst = 'executedReversibleTransfer_txId_ASC_NULLS_FIRST',
-  ExecutedReversibleTransferTxIdAscNullsLast = 'executedReversibleTransfer_txId_ASC_NULLS_LAST',
-  ExecutedReversibleTransferTxIdDesc = 'executedReversibleTransfer_txId_DESC',
-  ExecutedReversibleTransferTxIdDescNullsFirst = 'executedReversibleTransfer_txId_DESC_NULLS_FIRST',
-  ExecutedReversibleTransferTxIdDescNullsLast = 'executedReversibleTransfer_txId_DESC_NULLS_LAST',
-  HighSecuritySetDelayAsc = 'highSecuritySet_delay_ASC',
-  HighSecuritySetDelayAscNullsFirst = 'highSecuritySet_delay_ASC_NULLS_FIRST',
-  HighSecuritySetDelayAscNullsLast = 'highSecuritySet_delay_ASC_NULLS_LAST',
-  HighSecuritySetDelayDesc = 'highSecuritySet_delay_DESC',
-  HighSecuritySetDelayDescNullsFirst = 'highSecuritySet_delay_DESC_NULLS_FIRST',
-  HighSecuritySetDelayDescNullsLast = 'highSecuritySet_delay_DESC_NULLS_LAST',
-  HighSecuritySetIdAsc = 'highSecuritySet_id_ASC',
-  HighSecuritySetIdAscNullsFirst = 'highSecuritySet_id_ASC_NULLS_FIRST',
-  HighSecuritySetIdAscNullsLast = 'highSecuritySet_id_ASC_NULLS_LAST',
-  HighSecuritySetIdDesc = 'highSecuritySet_id_DESC',
-  HighSecuritySetIdDescNullsFirst = 'highSecuritySet_id_DESC_NULLS_FIRST',
-  HighSecuritySetIdDescNullsLast = 'highSecuritySet_id_DESC_NULLS_LAST',
-  HighSecuritySetTimestampAsc = 'highSecuritySet_timestamp_ASC',
-  HighSecuritySetTimestampAscNullsFirst = 'highSecuritySet_timestamp_ASC_NULLS_FIRST',
-  HighSecuritySetTimestampAscNullsLast = 'highSecuritySet_timestamp_ASC_NULLS_LAST',
-  HighSecuritySetTimestampDesc = 'highSecuritySet_timestamp_DESC',
-  HighSecuritySetTimestampDescNullsFirst = 'highSecuritySet_timestamp_DESC_NULLS_FIRST',
-  HighSecuritySetTimestampDescNullsLast = 'highSecuritySet_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  MinerRewardIdAsc = 'minerReward_id_ASC',
-  MinerRewardIdAscNullsFirst = 'minerReward_id_ASC_NULLS_FIRST',
-  MinerRewardIdAscNullsLast = 'minerReward_id_ASC_NULLS_LAST',
-  MinerRewardIdDesc = 'minerReward_id_DESC',
-  MinerRewardIdDescNullsFirst = 'minerReward_id_DESC_NULLS_FIRST',
-  MinerRewardIdDescNullsLast = 'minerReward_id_DESC_NULLS_LAST',
-  MinerRewardRewardAsc = 'minerReward_reward_ASC',
-  MinerRewardRewardAscNullsFirst = 'minerReward_reward_ASC_NULLS_FIRST',
-  MinerRewardRewardAscNullsLast = 'minerReward_reward_ASC_NULLS_LAST',
-  MinerRewardRewardDesc = 'minerReward_reward_DESC',
-  MinerRewardRewardDescNullsFirst = 'minerReward_reward_DESC_NULLS_FIRST',
-  MinerRewardRewardDescNullsLast = 'minerReward_reward_DESC_NULLS_LAST',
-  MinerRewardTimestampAsc = 'minerReward_timestamp_ASC',
-  MinerRewardTimestampAscNullsFirst = 'minerReward_timestamp_ASC_NULLS_FIRST',
-  MinerRewardTimestampAscNullsLast = 'minerReward_timestamp_ASC_NULLS_LAST',
-  MinerRewardTimestampDesc = 'minerReward_timestamp_DESC',
-  MinerRewardTimestampDescNullsFirst = 'minerReward_timestamp_DESC_NULLS_FIRST',
-  MinerRewardTimestampDescNullsLast = 'minerReward_timestamp_DESC_NULLS_LAST',
-  ScheduledReversibleTransferAmountAsc = 'scheduledReversibleTransfer_amount_ASC',
-  ScheduledReversibleTransferAmountAscNullsFirst = 'scheduledReversibleTransfer_amount_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferAmountAscNullsLast = 'scheduledReversibleTransfer_amount_ASC_NULLS_LAST',
-  ScheduledReversibleTransferAmountDesc = 'scheduledReversibleTransfer_amount_DESC',
-  ScheduledReversibleTransferAmountDescNullsFirst = 'scheduledReversibleTransfer_amount_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferAmountDescNullsLast = 'scheduledReversibleTransfer_amount_DESC_NULLS_LAST',
-  ScheduledReversibleTransferFeeAsc = 'scheduledReversibleTransfer_fee_ASC',
-  ScheduledReversibleTransferFeeAscNullsFirst = 'scheduledReversibleTransfer_fee_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferFeeAscNullsLast = 'scheduledReversibleTransfer_fee_ASC_NULLS_LAST',
-  ScheduledReversibleTransferFeeDesc = 'scheduledReversibleTransfer_fee_DESC',
-  ScheduledReversibleTransferFeeDescNullsFirst = 'scheduledReversibleTransfer_fee_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferFeeDescNullsLast = 'scheduledReversibleTransfer_fee_DESC_NULLS_LAST',
-  ScheduledReversibleTransferIdAsc = 'scheduledReversibleTransfer_id_ASC',
-  ScheduledReversibleTransferIdAscNullsFirst = 'scheduledReversibleTransfer_id_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferIdAscNullsLast = 'scheduledReversibleTransfer_id_ASC_NULLS_LAST',
-  ScheduledReversibleTransferIdDesc = 'scheduledReversibleTransfer_id_DESC',
-  ScheduledReversibleTransferIdDescNullsFirst = 'scheduledReversibleTransfer_id_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferIdDescNullsLast = 'scheduledReversibleTransfer_id_DESC_NULLS_LAST',
-  ScheduledReversibleTransferScheduledAtAsc = 'scheduledReversibleTransfer_scheduledAt_ASC',
-  ScheduledReversibleTransferScheduledAtAscNullsFirst = 'scheduledReversibleTransfer_scheduledAt_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferScheduledAtAscNullsLast = 'scheduledReversibleTransfer_scheduledAt_ASC_NULLS_LAST',
-  ScheduledReversibleTransferScheduledAtDesc = 'scheduledReversibleTransfer_scheduledAt_DESC',
-  ScheduledReversibleTransferScheduledAtDescNullsFirst = 'scheduledReversibleTransfer_scheduledAt_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferScheduledAtDescNullsLast = 'scheduledReversibleTransfer_scheduledAt_DESC_NULLS_LAST',
-  ScheduledReversibleTransferTimestampAsc = 'scheduledReversibleTransfer_timestamp_ASC',
-  ScheduledReversibleTransferTimestampAscNullsFirst = 'scheduledReversibleTransfer_timestamp_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferTimestampAscNullsLast = 'scheduledReversibleTransfer_timestamp_ASC_NULLS_LAST',
-  ScheduledReversibleTransferTimestampDesc = 'scheduledReversibleTransfer_timestamp_DESC',
-  ScheduledReversibleTransferTimestampDescNullsFirst = 'scheduledReversibleTransfer_timestamp_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferTimestampDescNullsLast = 'scheduledReversibleTransfer_timestamp_DESC_NULLS_LAST',
-  ScheduledReversibleTransferTxIdAsc = 'scheduledReversibleTransfer_txId_ASC',
-  ScheduledReversibleTransferTxIdAscNullsFirst = 'scheduledReversibleTransfer_txId_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferTxIdAscNullsLast = 'scheduledReversibleTransfer_txId_ASC_NULLS_LAST',
-  ScheduledReversibleTransferTxIdDesc = 'scheduledReversibleTransfer_txId_DESC',
-  ScheduledReversibleTransferTxIdDescNullsFirst = 'scheduledReversibleTransfer_txId_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferTxIdDescNullsLast = 'scheduledReversibleTransfer_txId_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TransferAmountAsc = 'transfer_amount_ASC',
-  TransferAmountAscNullsFirst = 'transfer_amount_ASC_NULLS_FIRST',
-  TransferAmountAscNullsLast = 'transfer_amount_ASC_NULLS_LAST',
-  TransferAmountDesc = 'transfer_amount_DESC',
-  TransferAmountDescNullsFirst = 'transfer_amount_DESC_NULLS_FIRST',
-  TransferAmountDescNullsLast = 'transfer_amount_DESC_NULLS_LAST',
-  TransferFeeAsc = 'transfer_fee_ASC',
-  TransferFeeAscNullsFirst = 'transfer_fee_ASC_NULLS_FIRST',
-  TransferFeeAscNullsLast = 'transfer_fee_ASC_NULLS_LAST',
-  TransferFeeDesc = 'transfer_fee_DESC',
-  TransferFeeDescNullsFirst = 'transfer_fee_DESC_NULLS_FIRST',
-  TransferFeeDescNullsLast = 'transfer_fee_DESC_NULLS_LAST',
-  TransferFromHashAsc = 'transfer_fromHash_ASC',
-  TransferFromHashAscNullsFirst = 'transfer_fromHash_ASC_NULLS_FIRST',
-  TransferFromHashAscNullsLast = 'transfer_fromHash_ASC_NULLS_LAST',
-  TransferFromHashDesc = 'transfer_fromHash_DESC',
-  TransferFromHashDescNullsFirst = 'transfer_fromHash_DESC_NULLS_FIRST',
-  TransferFromHashDescNullsLast = 'transfer_fromHash_DESC_NULLS_LAST',
-  TransferIdAsc = 'transfer_id_ASC',
-  TransferIdAscNullsFirst = 'transfer_id_ASC_NULLS_FIRST',
-  TransferIdAscNullsLast = 'transfer_id_ASC_NULLS_LAST',
-  TransferIdDesc = 'transfer_id_DESC',
-  TransferIdDescNullsFirst = 'transfer_id_DESC_NULLS_FIRST',
-  TransferIdDescNullsLast = 'transfer_id_DESC_NULLS_LAST',
-  TransferLeafIndexAsc = 'transfer_leafIndex_ASC',
-  TransferLeafIndexAscNullsFirst = 'transfer_leafIndex_ASC_NULLS_FIRST',
-  TransferLeafIndexAscNullsLast = 'transfer_leafIndex_ASC_NULLS_LAST',
-  TransferLeafIndexDesc = 'transfer_leafIndex_DESC',
-  TransferLeafIndexDescNullsFirst = 'transfer_leafIndex_DESC_NULLS_FIRST',
-  TransferLeafIndexDescNullsLast = 'transfer_leafIndex_DESC_NULLS_LAST',
-  TransferTimestampAsc = 'transfer_timestamp_ASC',
-  TransferTimestampAscNullsFirst = 'transfer_timestamp_ASC_NULLS_FIRST',
-  TransferTimestampAscNullsLast = 'transfer_timestamp_ASC_NULLS_LAST',
-  TransferTimestampDesc = 'transfer_timestamp_DESC',
-  TransferTimestampDescNullsFirst = 'transfer_timestamp_DESC_NULLS_FIRST',
-  TransferTimestampDescNullsLast = 'transfer_timestamp_DESC_NULLS_LAST',
-  TransferToHashAsc = 'transfer_toHash_ASC',
-  TransferToHashAscNullsFirst = 'transfer_toHash_ASC_NULLS_FIRST',
-  TransferToHashAscNullsLast = 'transfer_toHash_ASC_NULLS_LAST',
-  TransferToHashDesc = 'transfer_toHash_DESC',
-  TransferToHashDescNullsFirst = 'transfer_toHash_DESC_NULLS_FIRST',
-  TransferToHashDescNullsLast = 'transfer_toHash_DESC_NULLS_LAST',
-  TransferTransferCountAsc = 'transfer_transferCount_ASC',
-  TransferTransferCountAscNullsFirst = 'transfer_transferCount_ASC_NULLS_FIRST',
-  TransferTransferCountAscNullsLast = 'transfer_transferCount_ASC_NULLS_LAST',
-  TransferTransferCountDesc = 'transfer_transferCount_DESC',
-  TransferTransferCountDescNullsFirst = 'transfer_transferCount_DESC_NULLS_FIRST',
-  TransferTransferCountDescNullsLast = 'transfer_transferCount_DESC_NULLS_LAST'
+export type Account_Event_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Account_Event_Aggregate_Bool_Exp_Count>;
+};
+
+export type Account_Event_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Account_Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Account_Event_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "account_event" */
+export type Account_Event_Aggregate_Fields = {
+  __typename?: 'account_event_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Account_Event_Max_Fields>;
+  min?: Maybe<Account_Event_Min_Fields>;
+};
+
+/** aggregate fields of "account_event" */
+export type Account_Event_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Account_Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "account_event" */
+export type Account_Event_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Account_Event_Max_Order_By>;
+  min?: InputMaybe<Account_Event_Min_Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "account_event". All fields are combined with a logical 'AND'. */
+export type Account_Event_Bool_Exp = {
+  _and?: InputMaybe<Array<Account_Event_Bool_Exp>>;
+  _not?: InputMaybe<Account_Event_Bool_Exp>;
+  _or?: InputMaybe<Array<Account_Event_Bool_Exp>>;
+  account?: InputMaybe<Account_Bool_Exp>;
+  account_id?: InputMaybe<String_Comparison_Exp>;
+  cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+  cancelled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+  executed_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  highSecuritySet?: InputMaybe<High_Security_Set_Bool_Exp>;
+  high_security_set_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  minerReward?: InputMaybe<Miner_Reward_Bool_Exp>;
+  miner_reward_id?: InputMaybe<String_Comparison_Exp>;
+  scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+  scheduled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  transfer?: InputMaybe<Transfer_Bool_Exp>;
+  transfer_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Account_Event_Max_Fields = {
+  __typename?: 'account_event_max_fields';
+  account_id?: Maybe<Scalars['String']['output']>;
+  cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  high_security_set_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  miner_reward_id?: Maybe<Scalars['String']['output']>;
+  scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  transfer_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "account_event" */
+export type Account_Event_Max_Order_By = {
+  account_id?: InputMaybe<Order_By>;
+  cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  executed_reversible_transfer_id?: InputMaybe<Order_By>;
+  high_security_set_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  miner_reward_id?: InputMaybe<Order_By>;
+  scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transfer_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Account_Event_Min_Fields = {
+  __typename?: 'account_event_min_fields';
+  account_id?: Maybe<Scalars['String']['output']>;
+  cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  high_security_set_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  miner_reward_id?: Maybe<Scalars['String']['output']>;
+  scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  transfer_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "account_event" */
+export type Account_Event_Min_Order_By = {
+  account_id?: InputMaybe<Order_By>;
+  cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  executed_reversible_transfer_id?: InputMaybe<Order_By>;
+  high_security_set_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  miner_reward_id?: InputMaybe<Order_By>;
+  scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transfer_id?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "account_event". */
+export type Account_Event_Order_By = {
+  account?: InputMaybe<Account_Order_By>;
+  account_id?: InputMaybe<Order_By>;
+  cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Order_By>;
+  cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Order_By>;
+  executed_reversible_transfer_id?: InputMaybe<Order_By>;
+  highSecuritySet?: InputMaybe<High_Security_Set_Order_By>;
+  high_security_set_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  minerReward?: InputMaybe<Miner_Reward_Order_By>;
+  miner_reward_id?: InputMaybe<Order_By>;
+  scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Order_By>;
+  scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transfer?: InputMaybe<Transfer_Order_By>;
+  transfer_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "account_event" */
+export enum Account_Event_Select_Column {
+  /** column name */
+  AccountId = 'account_id',
+  /** column name */
+  CancelledReversibleTransferId = 'cancelled_reversible_transfer_id',
+  /** column name */
+  ExecutedReversibleTransferId = 'executed_reversible_transfer_id',
+  /** column name */
+  HighSecuritySetId = 'high_security_set_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MinerRewardId = 'miner_reward_id',
+  /** column name */
+  ScheduledReversibleTransferId = 'scheduled_reversible_transfer_id',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  TransferId = 'transfer_id'
 }
 
-export type AccountEventWhereInput = {
-  AND?: InputMaybe<Array<AccountEventWhereInput>>;
-  OR?: InputMaybe<Array<AccountEventWhereInput>>;
-  account?: InputMaybe<AccountWhereInput>;
-  account_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  balanceEvent?: InputMaybe<BalanceEventWhereInput>;
-  balanceEvent_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  cancelledReversibleTransfer?: InputMaybe<CancelledReversibleTransferWhereInput>;
-  cancelledReversibleTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  executedReversibleTransfer?: InputMaybe<ExecutedReversibleTransferWhereInput>;
-  executedReversibleTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  highSecuritySet?: InputMaybe<HighSecuritySetWhereInput>;
-  highSecuritySet_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  minerReward?: InputMaybe<MinerRewardWhereInput>;
-  minerReward_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  scheduledReversibleTransfer?: InputMaybe<ScheduledReversibleTransferWhereInput>;
-  scheduledReversibleTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  transfer?: InputMaybe<TransferWhereInput>;
-  transfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+/** Streaming cursor of the table "account_event" */
+export type Account_Event_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Account_Event_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
 };
 
-export type AccountEventsConnection = {
-  __typename?: 'AccountEventsConnection';
-  edges: Array<AccountEventEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
+/** Initial value of the column from where the streaming should start */
+export type Account_Event_Stream_Cursor_Value_Input = {
+  account_id?: InputMaybe<Scalars['String']['input']>;
+  cancelled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  executed_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  high_security_set_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  miner_reward_id?: InputMaybe<Scalars['String']['input']>;
+  scheduled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  transfer_id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum AccountOrderByInput {
-  FreeAsc = 'free_ASC',
-  FreeAscNullsFirst = 'free_ASC_NULLS_FIRST',
-  FreeAscNullsLast = 'free_ASC_NULLS_LAST',
-  FreeDesc = 'free_DESC',
-  FreeDescNullsFirst = 'free_DESC_NULLS_FIRST',
-  FreeDescNullsLast = 'free_DESC_NULLS_LAST',
-  FrozenAsc = 'frozen_ASC',
-  FrozenAscNullsFirst = 'frozen_ASC_NULLS_FIRST',
-  FrozenAscNullsLast = 'frozen_ASC_NULLS_LAST',
-  FrozenDesc = 'frozen_DESC',
-  FrozenDescNullsFirst = 'frozen_DESC_NULLS_FIRST',
-  FrozenDescNullsLast = 'frozen_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  IsDepositOnlyAsc = 'isDepositOnly_ASC',
-  IsDepositOnlyAscNullsFirst = 'isDepositOnly_ASC_NULLS_FIRST',
-  IsDepositOnlyAscNullsLast = 'isDepositOnly_ASC_NULLS_LAST',
-  IsDepositOnlyDesc = 'isDepositOnly_DESC',
-  IsDepositOnlyDescNullsFirst = 'isDepositOnly_DESC_NULLS_FIRST',
-  IsDepositOnlyDescNullsLast = 'isDepositOnly_DESC_NULLS_LAST',
-  LastUpdatedAsc = 'lastUpdated_ASC',
-  LastUpdatedAscNullsFirst = 'lastUpdated_ASC_NULLS_FIRST',
-  LastUpdatedAscNullsLast = 'lastUpdated_ASC_NULLS_LAST',
-  LastUpdatedDesc = 'lastUpdated_DESC',
-  LastUpdatedDescNullsFirst = 'lastUpdated_DESC_NULLS_FIRST',
-  LastUpdatedDescNullsLast = 'lastUpdated_DESC_NULLS_LAST',
-  PrivacyDepositsAsc = 'privacyDeposits_ASC',
-  PrivacyDepositsAscNullsFirst = 'privacyDeposits_ASC_NULLS_FIRST',
-  PrivacyDepositsAscNullsLast = 'privacyDeposits_ASC_NULLS_LAST',
-  PrivacyDepositsDesc = 'privacyDeposits_DESC',
-  PrivacyDepositsDescNullsFirst = 'privacyDeposits_DESC_NULLS_FIRST',
-  PrivacyDepositsDescNullsLast = 'privacyDeposits_DESC_NULLS_LAST',
-  ReservedAsc = 'reserved_ASC',
-  ReservedAscNullsFirst = 'reserved_ASC_NULLS_FIRST',
-  ReservedAscNullsLast = 'reserved_ASC_NULLS_LAST',
-  ReservedDesc = 'reserved_DESC',
-  ReservedDescNullsFirst = 'reserved_DESC_NULLS_FIRST',
-  ReservedDescNullsLast = 'reserved_DESC_NULLS_LAST'
+/** aggregate max on columns */
+export type Account_Max_Fields = {
+  __typename?: 'account_max_fields';
+  free?: Maybe<Scalars['numeric']['output']>;
+  frozen?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  last_updated?: Maybe<Scalars['Int']['output']>;
+  privacy_deposits?: Maybe<Scalars['String']['output']>;
+  reserved?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate min on columns */
+export type Account_Min_Fields = {
+  __typename?: 'account_min_fields';
+  free?: Maybe<Scalars['numeric']['output']>;
+  frozen?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  last_updated?: Maybe<Scalars['Int']['output']>;
+  privacy_deposits?: Maybe<Scalars['String']['output']>;
+  reserved?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** Ordering options when selecting data from "account". */
+export type Account_Order_By = {
+  accountEvents_aggregate?: InputMaybe<Account_Event_Aggregate_Order_By>;
+  extrinsics_aggregate?: InputMaybe<Extrinsic_Aggregate_Order_By>;
+  free?: InputMaybe<Order_By>;
+  frozen?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_deposit_only?: InputMaybe<Order_By>;
+  last_updated?: InputMaybe<Order_By>;
+  privacy_deposits?: InputMaybe<Order_By>;
+  reserved?: InputMaybe<Order_By>;
+  transfersFrom_aggregate?: InputMaybe<Transfer_Aggregate_Order_By>;
+  transfersTo_aggregate?: InputMaybe<Transfer_Aggregate_Order_By>;
+};
+
+/** select columns of table "account" */
+export enum Account_Select_Column {
+  /** column name */
+  Free = 'free',
+  /** column name */
+  Frozen = 'frozen',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsDepositOnly = 'is_deposit_only',
+  /** column name */
+  LastUpdated = 'last_updated',
+  /** column name */
+  PrivacyDeposits = 'privacy_deposits',
+  /** column name */
+  Reserved = 'reserved'
 }
 
-export type AccountWhereInput = {
-  AND?: InputMaybe<Array<AccountWhereInput>>;
-  OR?: InputMaybe<Array<AccountWhereInput>>;
-  accountEvents_every?: InputMaybe<AccountEventWhereInput>;
-  accountEvents_none?: InputMaybe<AccountEventWhereInput>;
-  accountEvents_some?: InputMaybe<AccountEventWhereInput>;
-  extrinsics_every?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsics_none?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsics_some?: InputMaybe<ExtrinsicWhereInput>;
-  free_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  free_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  free_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  free_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  free_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  free_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  free_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  free_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  free_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  frozen_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  frozen_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  frozen_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  frozen_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  frozen_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  frozen_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  frozen_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  frozen_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  frozen_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  isDepositOnly_eq?: InputMaybe<Scalars['Boolean']['input']>;
-  isDepositOnly_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  isDepositOnly_not_eq?: InputMaybe<Scalars['Boolean']['input']>;
-  lastUpdated_eq?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdated_gt?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdated_gte?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdated_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lastUpdated_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  lastUpdated_lt?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdated_lte?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdated_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdated_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  privacyDeposits_contains?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_endsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_eq?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_gt?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_gte?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  privacyDeposits_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyDeposits_lt?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_lte?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_not_contains?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_not_containsInsensitive?: InputMaybe<
-    Scalars['String']['input']
-  >;
-  privacyDeposits_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_not_eq?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  privacyDeposits_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyDeposits_startsWith?: InputMaybe<Scalars['String']['input']>;
-  reserved_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  reserved_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  reserved_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  reserved_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  reserved_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  reserved_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  reserved_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  reserved_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  reserved_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  transfersFrom_every?: InputMaybe<TransferWhereInput>;
-  transfersFrom_none?: InputMaybe<TransferWhereInput>;
-  transfersFrom_some?: InputMaybe<TransferWhereInput>;
-  transfersTo_every?: InputMaybe<TransferWhereInput>;
-  transfersTo_none?: InputMaybe<TransferWhereInput>;
-  transfersTo_some?: InputMaybe<TransferWhereInput>;
-};
-
-export type AccountsConnection = {
-  __typename?: 'AccountsConnection';
-  edges: Array<AccountEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type BalanceEvent = {
-  __typename?: 'BalanceEvent';
-  account: Account;
-  amount: Scalars['BigInt']['output'];
-  event?: Maybe<Event>;
-  from?: Maybe<Account>;
+/** columns and relationships of "account_stats" */
+export type Account_Stats = {
+  __typename?: 'account_stats';
   id: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  to?: Maybe<Account>;
-  type: BalanceEventType;
+  total_cancelled_transfers: Scalars['Int']['output'];
+  total_executed_transfers: Scalars['Int']['output'];
+  total_immediate_transfers: Scalars['Int']['output'];
+  total_mined_blocks: Scalars['Int']['output'];
+  total_rewards: Scalars['numeric']['output'];
+  total_scheduled_transfers: Scalars['Int']['output'];
 };
 
-export type BalanceEventEdge = {
-  __typename?: 'BalanceEventEdge';
-  cursor: Scalars['String']['output'];
-  node: BalanceEvent;
+/** aggregated selection of "account_stats" */
+export type Account_Stats_Aggregate = {
+  __typename?: 'account_stats_aggregate';
+  aggregate?: Maybe<Account_Stats_Aggregate_Fields>;
+  nodes: Array<Account_Stats>;
 };
 
-export enum BalanceEventOrderByInput {
-  AccountFreeAsc = 'account_free_ASC',
-  AccountFreeAscNullsFirst = 'account_free_ASC_NULLS_FIRST',
-  AccountFreeAscNullsLast = 'account_free_ASC_NULLS_LAST',
-  AccountFreeDesc = 'account_free_DESC',
-  AccountFreeDescNullsFirst = 'account_free_DESC_NULLS_FIRST',
-  AccountFreeDescNullsLast = 'account_free_DESC_NULLS_LAST',
-  AccountFrozenAsc = 'account_frozen_ASC',
-  AccountFrozenAscNullsFirst = 'account_frozen_ASC_NULLS_FIRST',
-  AccountFrozenAscNullsLast = 'account_frozen_ASC_NULLS_LAST',
-  AccountFrozenDesc = 'account_frozen_DESC',
-  AccountFrozenDescNullsFirst = 'account_frozen_DESC_NULLS_FIRST',
-  AccountFrozenDescNullsLast = 'account_frozen_DESC_NULLS_LAST',
-  AccountIdAsc = 'account_id_ASC',
-  AccountIdAscNullsFirst = 'account_id_ASC_NULLS_FIRST',
-  AccountIdAscNullsLast = 'account_id_ASC_NULLS_LAST',
-  AccountIdDesc = 'account_id_DESC',
-  AccountIdDescNullsFirst = 'account_id_DESC_NULLS_FIRST',
-  AccountIdDescNullsLast = 'account_id_DESC_NULLS_LAST',
-  AccountIsDepositOnlyAsc = 'account_isDepositOnly_ASC',
-  AccountIsDepositOnlyAscNullsFirst = 'account_isDepositOnly_ASC_NULLS_FIRST',
-  AccountIsDepositOnlyAscNullsLast = 'account_isDepositOnly_ASC_NULLS_LAST',
-  AccountIsDepositOnlyDesc = 'account_isDepositOnly_DESC',
-  AccountIsDepositOnlyDescNullsFirst = 'account_isDepositOnly_DESC_NULLS_FIRST',
-  AccountIsDepositOnlyDescNullsLast = 'account_isDepositOnly_DESC_NULLS_LAST',
-  AccountLastUpdatedAsc = 'account_lastUpdated_ASC',
-  AccountLastUpdatedAscNullsFirst = 'account_lastUpdated_ASC_NULLS_FIRST',
-  AccountLastUpdatedAscNullsLast = 'account_lastUpdated_ASC_NULLS_LAST',
-  AccountLastUpdatedDesc = 'account_lastUpdated_DESC',
-  AccountLastUpdatedDescNullsFirst = 'account_lastUpdated_DESC_NULLS_FIRST',
-  AccountLastUpdatedDescNullsLast = 'account_lastUpdated_DESC_NULLS_LAST',
-  AccountPrivacyDepositsAsc = 'account_privacyDeposits_ASC',
-  AccountPrivacyDepositsAscNullsFirst = 'account_privacyDeposits_ASC_NULLS_FIRST',
-  AccountPrivacyDepositsAscNullsLast = 'account_privacyDeposits_ASC_NULLS_LAST',
-  AccountPrivacyDepositsDesc = 'account_privacyDeposits_DESC',
-  AccountPrivacyDepositsDescNullsFirst = 'account_privacyDeposits_DESC_NULLS_FIRST',
-  AccountPrivacyDepositsDescNullsLast = 'account_privacyDeposits_DESC_NULLS_LAST',
-  AccountReservedAsc = 'account_reserved_ASC',
-  AccountReservedAscNullsFirst = 'account_reserved_ASC_NULLS_FIRST',
-  AccountReservedAscNullsLast = 'account_reserved_ASC_NULLS_LAST',
-  AccountReservedDesc = 'account_reserved_DESC',
-  AccountReservedDescNullsFirst = 'account_reserved_DESC_NULLS_FIRST',
-  AccountReservedDescNullsLast = 'account_reserved_DESC_NULLS_LAST',
-  AmountAsc = 'amount_ASC',
-  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
-  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
-  AmountDesc = 'amount_DESC',
-  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
-  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  FromFreeAsc = 'from_free_ASC',
-  FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
-  FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
-  FromFreeDesc = 'from_free_DESC',
-  FromFreeDescNullsFirst = 'from_free_DESC_NULLS_FIRST',
-  FromFreeDescNullsLast = 'from_free_DESC_NULLS_LAST',
-  FromFrozenAsc = 'from_frozen_ASC',
-  FromFrozenAscNullsFirst = 'from_frozen_ASC_NULLS_FIRST',
-  FromFrozenAscNullsLast = 'from_frozen_ASC_NULLS_LAST',
-  FromFrozenDesc = 'from_frozen_DESC',
-  FromFrozenDescNullsFirst = 'from_frozen_DESC_NULLS_FIRST',
-  FromFrozenDescNullsLast = 'from_frozen_DESC_NULLS_LAST',
-  FromIdAsc = 'from_id_ASC',
-  FromIdAscNullsFirst = 'from_id_ASC_NULLS_FIRST',
-  FromIdAscNullsLast = 'from_id_ASC_NULLS_LAST',
-  FromIdDesc = 'from_id_DESC',
-  FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
-  FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsDepositOnlyAsc = 'from_isDepositOnly_ASC',
-  FromIsDepositOnlyAscNullsFirst = 'from_isDepositOnly_ASC_NULLS_FIRST',
-  FromIsDepositOnlyAscNullsLast = 'from_isDepositOnly_ASC_NULLS_LAST',
-  FromIsDepositOnlyDesc = 'from_isDepositOnly_DESC',
-  FromIsDepositOnlyDescNullsFirst = 'from_isDepositOnly_DESC_NULLS_FIRST',
-  FromIsDepositOnlyDescNullsLast = 'from_isDepositOnly_DESC_NULLS_LAST',
-  FromLastUpdatedAsc = 'from_lastUpdated_ASC',
-  FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
-  FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
-  FromLastUpdatedDesc = 'from_lastUpdated_DESC',
-  FromLastUpdatedDescNullsFirst = 'from_lastUpdated_DESC_NULLS_FIRST',
-  FromLastUpdatedDescNullsLast = 'from_lastUpdated_DESC_NULLS_LAST',
-  FromPrivacyDepositsAsc = 'from_privacyDeposits_ASC',
-  FromPrivacyDepositsAscNullsFirst = 'from_privacyDeposits_ASC_NULLS_FIRST',
-  FromPrivacyDepositsAscNullsLast = 'from_privacyDeposits_ASC_NULLS_LAST',
-  FromPrivacyDepositsDesc = 'from_privacyDeposits_DESC',
-  FromPrivacyDepositsDescNullsFirst = 'from_privacyDeposits_DESC_NULLS_FIRST',
-  FromPrivacyDepositsDescNullsLast = 'from_privacyDeposits_DESC_NULLS_LAST',
-  FromReservedAsc = 'from_reserved_ASC',
-  FromReservedAscNullsFirst = 'from_reserved_ASC_NULLS_FIRST',
-  FromReservedAscNullsLast = 'from_reserved_ASC_NULLS_LAST',
-  FromReservedDesc = 'from_reserved_DESC',
-  FromReservedDescNullsFirst = 'from_reserved_DESC_NULLS_FIRST',
-  FromReservedDescNullsLast = 'from_reserved_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  ToFreeAsc = 'to_free_ASC',
-  ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
-  ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
-  ToFreeDesc = 'to_free_DESC',
-  ToFreeDescNullsFirst = 'to_free_DESC_NULLS_FIRST',
-  ToFreeDescNullsLast = 'to_free_DESC_NULLS_LAST',
-  ToFrozenAsc = 'to_frozen_ASC',
-  ToFrozenAscNullsFirst = 'to_frozen_ASC_NULLS_FIRST',
-  ToFrozenAscNullsLast = 'to_frozen_ASC_NULLS_LAST',
-  ToFrozenDesc = 'to_frozen_DESC',
-  ToFrozenDescNullsFirst = 'to_frozen_DESC_NULLS_FIRST',
-  ToFrozenDescNullsLast = 'to_frozen_DESC_NULLS_LAST',
-  ToIdAsc = 'to_id_ASC',
-  ToIdAscNullsFirst = 'to_id_ASC_NULLS_FIRST',
-  ToIdAscNullsLast = 'to_id_ASC_NULLS_LAST',
-  ToIdDesc = 'to_id_DESC',
-  ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
-  ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsDepositOnlyAsc = 'to_isDepositOnly_ASC',
-  ToIsDepositOnlyAscNullsFirst = 'to_isDepositOnly_ASC_NULLS_FIRST',
-  ToIsDepositOnlyAscNullsLast = 'to_isDepositOnly_ASC_NULLS_LAST',
-  ToIsDepositOnlyDesc = 'to_isDepositOnly_DESC',
-  ToIsDepositOnlyDescNullsFirst = 'to_isDepositOnly_DESC_NULLS_FIRST',
-  ToIsDepositOnlyDescNullsLast = 'to_isDepositOnly_DESC_NULLS_LAST',
-  ToLastUpdatedAsc = 'to_lastUpdated_ASC',
-  ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
-  ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
-  ToLastUpdatedDesc = 'to_lastUpdated_DESC',
-  ToLastUpdatedDescNullsFirst = 'to_lastUpdated_DESC_NULLS_FIRST',
-  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST',
-  ToPrivacyDepositsAsc = 'to_privacyDeposits_ASC',
-  ToPrivacyDepositsAscNullsFirst = 'to_privacyDeposits_ASC_NULLS_FIRST',
-  ToPrivacyDepositsAscNullsLast = 'to_privacyDeposits_ASC_NULLS_LAST',
-  ToPrivacyDepositsDesc = 'to_privacyDeposits_DESC',
-  ToPrivacyDepositsDescNullsFirst = 'to_privacyDeposits_DESC_NULLS_FIRST',
-  ToPrivacyDepositsDescNullsLast = 'to_privacyDeposits_DESC_NULLS_LAST',
-  ToReservedAsc = 'to_reserved_ASC',
-  ToReservedAscNullsFirst = 'to_reserved_ASC_NULLS_FIRST',
-  ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
-  ToReservedDesc = 'to_reserved_DESC',
-  ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
-  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST',
-  TypeAsc = 'type_ASC',
-  TypeAscNullsFirst = 'type_ASC_NULLS_FIRST',
-  TypeAscNullsLast = 'type_ASC_NULLS_LAST',
-  TypeDesc = 'type_DESC',
-  TypeDescNullsFirst = 'type_DESC_NULLS_FIRST',
-  TypeDescNullsLast = 'type_DESC_NULLS_LAST'
+/** aggregate fields of "account_stats" */
+export type Account_Stats_Aggregate_Fields = {
+  __typename?: 'account_stats_aggregate_fields';
+  avg?: Maybe<Account_Stats_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Account_Stats_Max_Fields>;
+  min?: Maybe<Account_Stats_Min_Fields>;
+  stddev?: Maybe<Account_Stats_Stddev_Fields>;
+  stddev_pop?: Maybe<Account_Stats_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Account_Stats_Stddev_Samp_Fields>;
+  sum?: Maybe<Account_Stats_Sum_Fields>;
+  var_pop?: Maybe<Account_Stats_Var_Pop_Fields>;
+  var_samp?: Maybe<Account_Stats_Var_Samp_Fields>;
+  variance?: Maybe<Account_Stats_Variance_Fields>;
+};
+
+/** aggregate fields of "account_stats" */
+export type Account_Stats_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Account_Stats_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Account_Stats_Avg_Fields = {
+  __typename?: 'account_stats_avg_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "account_stats". All fields are combined with a logical 'AND'. */
+export type Account_Stats_Bool_Exp = {
+  _and?: InputMaybe<Array<Account_Stats_Bool_Exp>>;
+  _not?: InputMaybe<Account_Stats_Bool_Exp>;
+  _or?: InputMaybe<Array<Account_Stats_Bool_Exp>>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  total_cancelled_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_executed_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_immediate_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_mined_blocks?: InputMaybe<Int_Comparison_Exp>;
+  total_rewards?: InputMaybe<Numeric_Comparison_Exp>;
+  total_scheduled_transfers?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Account_Stats_Max_Fields = {
+  __typename?: 'account_stats_max_fields';
+  id?: Maybe<Scalars['String']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Int']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Int']['output']>;
+  total_rewards?: Maybe<Scalars['numeric']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate min on columns */
+export type Account_Stats_Min_Fields = {
+  __typename?: 'account_stats_min_fields';
+  id?: Maybe<Scalars['String']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Int']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Int']['output']>;
+  total_rewards?: Maybe<Scalars['numeric']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Ordering options when selecting data from "account_stats". */
+export type Account_Stats_Order_By = {
+  id?: InputMaybe<Order_By>;
+  total_cancelled_transfers?: InputMaybe<Order_By>;
+  total_executed_transfers?: InputMaybe<Order_By>;
+  total_immediate_transfers?: InputMaybe<Order_By>;
+  total_mined_blocks?: InputMaybe<Order_By>;
+  total_rewards?: InputMaybe<Order_By>;
+  total_scheduled_transfers?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "account_stats" */
+export enum Account_Stats_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TotalCancelledTransfers = 'total_cancelled_transfers',
+  /** column name */
+  TotalExecutedTransfers = 'total_executed_transfers',
+  /** column name */
+  TotalImmediateTransfers = 'total_immediate_transfers',
+  /** column name */
+  TotalMinedBlocks = 'total_mined_blocks',
+  /** column name */
+  TotalRewards = 'total_rewards',
+  /** column name */
+  TotalScheduledTransfers = 'total_scheduled_transfers'
 }
 
-export enum BalanceEventType {
-  BalanceSet = 'BalanceSet',
-  Burned = 'Burned',
-  Deposit = 'Deposit',
-  DustLost = 'DustLost',
-  Endowed = 'Endowed',
-  Frozen = 'Frozen',
-  Locked = 'Locked',
-  Minted = 'Minted',
-  ReserveRepatriated = 'ReserveRepatriated',
-  Reserved = 'Reserved',
-  Restored = 'Restored',
-  Slashed = 'Slashed',
-  Suspended = 'Suspended',
-  Thawed = 'Thawed',
-  Unlocked = 'Unlocked',
-  Unreserved = 'Unreserved',
-  Upgraded = 'Upgraded',
-  Withdraw = 'Withdraw'
-}
-
-export type BalanceEventWhereInput = {
-  AND?: InputMaybe<Array<BalanceEventWhereInput>>;
-  OR?: InputMaybe<Array<BalanceEventWhereInput>>;
-  account?: InputMaybe<AccountWhereInput>;
-  account_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  from?: InputMaybe<AccountWhereInput>;
-  from_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  to?: InputMaybe<AccountWhereInput>;
-  to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  type_eq?: InputMaybe<BalanceEventType>;
-  type_in?: InputMaybe<Array<BalanceEventType>>;
-  type_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  type_not_eq?: InputMaybe<BalanceEventType>;
-  type_not_in?: InputMaybe<Array<BalanceEventType>>;
+/** aggregate stddev on columns */
+export type Account_Stats_Stddev_Fields = {
+  __typename?: 'account_stats_stddev_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
-export type BalanceEventsConnection = {
-  __typename?: 'BalanceEventsConnection';
-  edges: Array<BalanceEventEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
+/** aggregate stddev_pop on columns */
+export type Account_Stats_Stddev_Pop_Fields = {
+  __typename?: 'account_stats_stddev_pop_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
+/** aggregate stddev_samp on columns */
+export type Account_Stats_Stddev_Samp_Fields = {
+  __typename?: 'account_stats_stddev_samp_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "account_stats" */
+export type Account_Stats_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Account_Stats_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Account_Stats_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['String']['input']>;
+  total_cancelled_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_executed_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_immediate_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_mined_blocks?: InputMaybe<Scalars['Int']['input']>;
+  total_rewards?: InputMaybe<Scalars['numeric']['input']>;
+  total_scheduled_transfers?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Account_Stats_Sum_Fields = {
+  __typename?: 'account_stats_sum_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Int']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Int']['output']>;
+  total_rewards?: Maybe<Scalars['numeric']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Account_Stats_Var_Pop_Fields = {
+  __typename?: 'account_stats_var_pop_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Account_Stats_Var_Samp_Fields = {
+  __typename?: 'account_stats_var_samp_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Account_Stats_Variance_Fields = {
+  __typename?: 'account_stats_variance_fields';
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_mined_blocks?: Maybe<Scalars['Float']['output']>;
+  total_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev on columns */
+export type Account_Stddev_Fields = {
+  __typename?: 'account_stddev_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Account_Stddev_Pop_Fields = {
+  __typename?: 'account_stddev_pop_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Account_Stddev_Samp_Fields = {
+  __typename?: 'account_stddev_samp_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "account" */
+export type Account_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Account_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Account_Stream_Cursor_Value_Input = {
+  free?: InputMaybe<Scalars['numeric']['input']>;
+  frozen?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  is_deposit_only?: InputMaybe<Scalars['Boolean']['input']>;
+  last_updated?: InputMaybe<Scalars['Int']['input']>;
+  privacy_deposits?: InputMaybe<Scalars['String']['input']>;
+  reserved?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Account_Sum_Fields = {
+  __typename?: 'account_sum_fields';
+  free?: Maybe<Scalars['numeric']['output']>;
+  frozen?: Maybe<Scalars['numeric']['output']>;
+  last_updated?: Maybe<Scalars['Int']['output']>;
+  reserved?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Account_Var_Pop_Fields = {
+  __typename?: 'account_var_pop_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Account_Var_Samp_Fields = {
+  __typename?: 'account_var_samp_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Account_Variance_Fields = {
+  __typename?: 'account_variance_fields';
+  free?: Maybe<Scalars['Float']['output']>;
+  frozen?: Maybe<Scalars['Float']['output']>;
+  last_updated?: Maybe<Scalars['Float']['output']>;
+  reserved?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "block" */
 export type Block = {
-  __typename?: 'Block';
+  __typename?: 'block';
+  /** An array relationship */
   events: Array<Event>;
+  /** An aggregate relationship */
+  events_aggregate: Event_Aggregate;
+  /** An array relationship */
   extrinsics: Array<Extrinsic>;
+  /** An aggregate relationship */
+  extrinsics_aggregate: Extrinsic_Aggregate;
   hash: Scalars['String']['output'];
   height: Scalars['Int']['output'];
   id: Scalars['String']['output'];
-  reward: Scalars['BigInt']['output'];
-  timestamp: Scalars['DateTime']['output'];
+  reward: Scalars['numeric']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+  /** An array relationship */
   transactions: Array<Transfer>;
+  /** An aggregate relationship */
+  transactions_aggregate: Transfer_Aggregate;
 };
 
+/** columns and relationships of "block" */
 export type BlockEventsArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<EventOrderByInput>>;
-  where?: InputMaybe<EventWhereInput>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
 };
 
+/** columns and relationships of "block" */
+export type BlockEvents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+/** columns and relationships of "block" */
 export type BlockExtrinsicsArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ExtrinsicOrderByInput>>;
-  where?: InputMaybe<ExtrinsicWhereInput>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
 };
 
+/** columns and relationships of "block" */
+export type BlockExtrinsics_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+/** columns and relationships of "block" */
 export type BlockTransactionsArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<TransferOrderByInput>>;
-  where?: InputMaybe<TransferWhereInput>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
 };
 
-export type BlockEdge = {
-  __typename?: 'BlockEdge';
-  cursor: Scalars['String']['output'];
-  node: Block;
-};
-
-export enum BlockOrderByInput {
-  HashAsc = 'hash_ASC',
-  HashAscNullsFirst = 'hash_ASC_NULLS_FIRST',
-  HashAscNullsLast = 'hash_ASC_NULLS_LAST',
-  HashDesc = 'hash_DESC',
-  HashDescNullsFirst = 'hash_DESC_NULLS_FIRST',
-  HashDescNullsLast = 'hash_DESC_NULLS_LAST',
-  HeightAsc = 'height_ASC',
-  HeightAscNullsFirst = 'height_ASC_NULLS_FIRST',
-  HeightAscNullsLast = 'height_ASC_NULLS_LAST',
-  HeightDesc = 'height_DESC',
-  HeightDescNullsFirst = 'height_DESC_NULLS_FIRST',
-  HeightDescNullsLast = 'height_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  RewardAsc = 'reward_ASC',
-  RewardAscNullsFirst = 'reward_ASC_NULLS_FIRST',
-  RewardAscNullsLast = 'reward_ASC_NULLS_LAST',
-  RewardDesc = 'reward_DESC',
-  RewardDescNullsFirst = 'reward_DESC_NULLS_FIRST',
-  RewardDescNullsLast = 'reward_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
-}
-
-export type BlockWhereInput = {
-  AND?: InputMaybe<Array<BlockWhereInput>>;
-  OR?: InputMaybe<Array<BlockWhereInput>>;
-  events_every?: InputMaybe<EventWhereInput>;
-  events_none?: InputMaybe<EventWhereInput>;
-  events_some?: InputMaybe<EventWhereInput>;
-  extrinsics_every?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsics_none?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsics_some?: InputMaybe<ExtrinsicWhereInput>;
-  hash_contains?: InputMaybe<Scalars['String']['input']>;
-  hash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  hash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  hash_eq?: InputMaybe<Scalars['String']['input']>;
-  hash_gt?: InputMaybe<Scalars['String']['input']>;
-  hash_gte?: InputMaybe<Scalars['String']['input']>;
-  hash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  hash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  hash_lt?: InputMaybe<Scalars['String']['input']>;
-  hash_lte?: InputMaybe<Scalars['String']['input']>;
-  hash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  hash_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  hash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  hash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  hash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  hash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  hash_startsWith?: InputMaybe<Scalars['String']['input']>;
-  height_eq?: InputMaybe<Scalars['Int']['input']>;
-  height_gt?: InputMaybe<Scalars['Int']['input']>;
-  height_gte?: InputMaybe<Scalars['Int']['input']>;
-  height_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  height_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  height_lt?: InputMaybe<Scalars['Int']['input']>;
-  height_lte?: InputMaybe<Scalars['Int']['input']>;
-  height_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  height_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  reward_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  reward_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  reward_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  transactions_every?: InputMaybe<TransferWhereInput>;
-  transactions_none?: InputMaybe<TransferWhereInput>;
-  transactions_some?: InputMaybe<TransferWhereInput>;
-};
-
-export type BlocksConnection = {
-  __typename?: 'BlocksConnection';
-  edges: Array<BlockEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type CancelledReversibleTransfer = {
-  __typename?: 'CancelledReversibleTransfer';
-  block: Block;
-  cancelledBy: Account;
-  event?: Maybe<Event>;
-  extrinsic?: Maybe<Extrinsic>;
-  id: Scalars['String']['output'];
-  scheduledTransfer: ScheduledReversibleTransfer;
-  timestamp: Scalars['DateTime']['output'];
-  txId: Scalars['String']['output'];
-};
-
-export type CancelledReversibleTransferEdge = {
-  __typename?: 'CancelledReversibleTransferEdge';
-  cursor: Scalars['String']['output'];
-  node: CancelledReversibleTransfer;
-};
-
-export enum CancelledReversibleTransferOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  CancelledByFreeAsc = 'cancelledBy_free_ASC',
-  CancelledByFreeAscNullsFirst = 'cancelledBy_free_ASC_NULLS_FIRST',
-  CancelledByFreeAscNullsLast = 'cancelledBy_free_ASC_NULLS_LAST',
-  CancelledByFreeDesc = 'cancelledBy_free_DESC',
-  CancelledByFreeDescNullsFirst = 'cancelledBy_free_DESC_NULLS_FIRST',
-  CancelledByFreeDescNullsLast = 'cancelledBy_free_DESC_NULLS_LAST',
-  CancelledByFrozenAsc = 'cancelledBy_frozen_ASC',
-  CancelledByFrozenAscNullsFirst = 'cancelledBy_frozen_ASC_NULLS_FIRST',
-  CancelledByFrozenAscNullsLast = 'cancelledBy_frozen_ASC_NULLS_LAST',
-  CancelledByFrozenDesc = 'cancelledBy_frozen_DESC',
-  CancelledByFrozenDescNullsFirst = 'cancelledBy_frozen_DESC_NULLS_FIRST',
-  CancelledByFrozenDescNullsLast = 'cancelledBy_frozen_DESC_NULLS_LAST',
-  CancelledByIdAsc = 'cancelledBy_id_ASC',
-  CancelledByIdAscNullsFirst = 'cancelledBy_id_ASC_NULLS_FIRST',
-  CancelledByIdAscNullsLast = 'cancelledBy_id_ASC_NULLS_LAST',
-  CancelledByIdDesc = 'cancelledBy_id_DESC',
-  CancelledByIdDescNullsFirst = 'cancelledBy_id_DESC_NULLS_FIRST',
-  CancelledByIdDescNullsLast = 'cancelledBy_id_DESC_NULLS_LAST',
-  CancelledByIsDepositOnlyAsc = 'cancelledBy_isDepositOnly_ASC',
-  CancelledByIsDepositOnlyAscNullsFirst = 'cancelledBy_isDepositOnly_ASC_NULLS_FIRST',
-  CancelledByIsDepositOnlyAscNullsLast = 'cancelledBy_isDepositOnly_ASC_NULLS_LAST',
-  CancelledByIsDepositOnlyDesc = 'cancelledBy_isDepositOnly_DESC',
-  CancelledByIsDepositOnlyDescNullsFirst = 'cancelledBy_isDepositOnly_DESC_NULLS_FIRST',
-  CancelledByIsDepositOnlyDescNullsLast = 'cancelledBy_isDepositOnly_DESC_NULLS_LAST',
-  CancelledByLastUpdatedAsc = 'cancelledBy_lastUpdated_ASC',
-  CancelledByLastUpdatedAscNullsFirst = 'cancelledBy_lastUpdated_ASC_NULLS_FIRST',
-  CancelledByLastUpdatedAscNullsLast = 'cancelledBy_lastUpdated_ASC_NULLS_LAST',
-  CancelledByLastUpdatedDesc = 'cancelledBy_lastUpdated_DESC',
-  CancelledByLastUpdatedDescNullsFirst = 'cancelledBy_lastUpdated_DESC_NULLS_FIRST',
-  CancelledByLastUpdatedDescNullsLast = 'cancelledBy_lastUpdated_DESC_NULLS_LAST',
-  CancelledByPrivacyDepositsAsc = 'cancelledBy_privacyDeposits_ASC',
-  CancelledByPrivacyDepositsAscNullsFirst = 'cancelledBy_privacyDeposits_ASC_NULLS_FIRST',
-  CancelledByPrivacyDepositsAscNullsLast = 'cancelledBy_privacyDeposits_ASC_NULLS_LAST',
-  CancelledByPrivacyDepositsDesc = 'cancelledBy_privacyDeposits_DESC',
-  CancelledByPrivacyDepositsDescNullsFirst = 'cancelledBy_privacyDeposits_DESC_NULLS_FIRST',
-  CancelledByPrivacyDepositsDescNullsLast = 'cancelledBy_privacyDeposits_DESC_NULLS_LAST',
-  CancelledByReservedAsc = 'cancelledBy_reserved_ASC',
-  CancelledByReservedAscNullsFirst = 'cancelledBy_reserved_ASC_NULLS_FIRST',
-  CancelledByReservedAscNullsLast = 'cancelledBy_reserved_ASC_NULLS_LAST',
-  CancelledByReservedDesc = 'cancelledBy_reserved_DESC',
-  CancelledByReservedDescNullsFirst = 'cancelledBy_reserved_DESC_NULLS_FIRST',
-  CancelledByReservedDescNullsLast = 'cancelledBy_reserved_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  ScheduledTransferAmountAsc = 'scheduledTransfer_amount_ASC',
-  ScheduledTransferAmountAscNullsFirst = 'scheduledTransfer_amount_ASC_NULLS_FIRST',
-  ScheduledTransferAmountAscNullsLast = 'scheduledTransfer_amount_ASC_NULLS_LAST',
-  ScheduledTransferAmountDesc = 'scheduledTransfer_amount_DESC',
-  ScheduledTransferAmountDescNullsFirst = 'scheduledTransfer_amount_DESC_NULLS_FIRST',
-  ScheduledTransferAmountDescNullsLast = 'scheduledTransfer_amount_DESC_NULLS_LAST',
-  ScheduledTransferFeeAsc = 'scheduledTransfer_fee_ASC',
-  ScheduledTransferFeeAscNullsFirst = 'scheduledTransfer_fee_ASC_NULLS_FIRST',
-  ScheduledTransferFeeAscNullsLast = 'scheduledTransfer_fee_ASC_NULLS_LAST',
-  ScheduledTransferFeeDesc = 'scheduledTransfer_fee_DESC',
-  ScheduledTransferFeeDescNullsFirst = 'scheduledTransfer_fee_DESC_NULLS_FIRST',
-  ScheduledTransferFeeDescNullsLast = 'scheduledTransfer_fee_DESC_NULLS_LAST',
-  ScheduledTransferIdAsc = 'scheduledTransfer_id_ASC',
-  ScheduledTransferIdAscNullsFirst = 'scheduledTransfer_id_ASC_NULLS_FIRST',
-  ScheduledTransferIdAscNullsLast = 'scheduledTransfer_id_ASC_NULLS_LAST',
-  ScheduledTransferIdDesc = 'scheduledTransfer_id_DESC',
-  ScheduledTransferIdDescNullsFirst = 'scheduledTransfer_id_DESC_NULLS_FIRST',
-  ScheduledTransferIdDescNullsLast = 'scheduledTransfer_id_DESC_NULLS_LAST',
-  ScheduledTransferScheduledAtAsc = 'scheduledTransfer_scheduledAt_ASC',
-  ScheduledTransferScheduledAtAscNullsFirst = 'scheduledTransfer_scheduledAt_ASC_NULLS_FIRST',
-  ScheduledTransferScheduledAtAscNullsLast = 'scheduledTransfer_scheduledAt_ASC_NULLS_LAST',
-  ScheduledTransferScheduledAtDesc = 'scheduledTransfer_scheduledAt_DESC',
-  ScheduledTransferScheduledAtDescNullsFirst = 'scheduledTransfer_scheduledAt_DESC_NULLS_FIRST',
-  ScheduledTransferScheduledAtDescNullsLast = 'scheduledTransfer_scheduledAt_DESC_NULLS_LAST',
-  ScheduledTransferTimestampAsc = 'scheduledTransfer_timestamp_ASC',
-  ScheduledTransferTimestampAscNullsFirst = 'scheduledTransfer_timestamp_ASC_NULLS_FIRST',
-  ScheduledTransferTimestampAscNullsLast = 'scheduledTransfer_timestamp_ASC_NULLS_LAST',
-  ScheduledTransferTimestampDesc = 'scheduledTransfer_timestamp_DESC',
-  ScheduledTransferTimestampDescNullsFirst = 'scheduledTransfer_timestamp_DESC_NULLS_FIRST',
-  ScheduledTransferTimestampDescNullsLast = 'scheduledTransfer_timestamp_DESC_NULLS_LAST',
-  ScheduledTransferTxIdAsc = 'scheduledTransfer_txId_ASC',
-  ScheduledTransferTxIdAscNullsFirst = 'scheduledTransfer_txId_ASC_NULLS_FIRST',
-  ScheduledTransferTxIdAscNullsLast = 'scheduledTransfer_txId_ASC_NULLS_LAST',
-  ScheduledTransferTxIdDesc = 'scheduledTransfer_txId_DESC',
-  ScheduledTransferTxIdDescNullsFirst = 'scheduledTransfer_txId_DESC_NULLS_FIRST',
-  ScheduledTransferTxIdDescNullsLast = 'scheduledTransfer_txId_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TxIdAsc = 'txId_ASC',
-  TxIdAscNullsFirst = 'txId_ASC_NULLS_FIRST',
-  TxIdAscNullsLast = 'txId_ASC_NULLS_LAST',
-  TxIdDesc = 'txId_DESC',
-  TxIdDescNullsFirst = 'txId_DESC_NULLS_FIRST',
-  TxIdDescNullsLast = 'txId_DESC_NULLS_LAST'
-}
-
-export type CancelledReversibleTransferWhereInput = {
-  AND?: InputMaybe<Array<CancelledReversibleTransferWhereInput>>;
-  OR?: InputMaybe<Array<CancelledReversibleTransferWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  cancelledBy?: InputMaybe<AccountWhereInput>;
-  cancelledBy_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  scheduledTransfer?: InputMaybe<ScheduledReversibleTransferWhereInput>;
-  scheduledTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  txId_contains?: InputMaybe<Scalars['String']['input']>;
-  txId_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  txId_endsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_eq?: InputMaybe<Scalars['String']['input']>;
-  txId_gt?: InputMaybe<Scalars['String']['input']>;
-  txId_gte?: InputMaybe<Scalars['String']['input']>;
-  txId_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  txId_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  txId_lt?: InputMaybe<Scalars['String']['input']>;
-  txId_lte?: InputMaybe<Scalars['String']['input']>;
-  txId_not_contains?: InputMaybe<Scalars['String']['input']>;
-  txId_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  txId_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_not_eq?: InputMaybe<Scalars['String']['input']>;
-  txId_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  txId_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_startsWith?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type CancelledReversibleTransfersConnection = {
-  __typename?: 'CancelledReversibleTransfersConnection';
-  edges: Array<CancelledReversibleTransferEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-/** Bucketed deposit pool statistics for privacy score computation. Each bucket covers a bounded range of deposit amounts with overlapping ranges growing by factor 4. */
-export type DepositPoolStats = {
-  __typename?: 'DepositPoolStats';
-  /** Bucket definitions and stats as JSON. Each bucket has: lo, hi (planck), count, sumAmounts, sumAmountsSquared */
-  buckets: Scalars['String']['output'];
-  /** Singleton entity (id='global') */
-  id: Scalars['String']['output'];
-  /** Block number of last update */
-  lastUpdatedBlock: Scalars['Int']['output'];
-};
-
-export type DepositPoolStatsConnection = {
-  __typename?: 'DepositPoolStatsConnection';
-  edges: Array<DepositPoolStatsEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type DepositPoolStatsEdge = {
-  __typename?: 'DepositPoolStatsEdge';
-  cursor: Scalars['String']['output'];
-  node: DepositPoolStats;
-};
-
-export enum DepositPoolStatsOrderByInput {
-  BucketsAsc = 'buckets_ASC',
-  BucketsAscNullsFirst = 'buckets_ASC_NULLS_FIRST',
-  BucketsAscNullsLast = 'buckets_ASC_NULLS_LAST',
-  BucketsDesc = 'buckets_DESC',
-  BucketsDescNullsFirst = 'buckets_DESC_NULLS_FIRST',
-  BucketsDescNullsLast = 'buckets_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  LastUpdatedBlockAsc = 'lastUpdatedBlock_ASC',
-  LastUpdatedBlockAscNullsFirst = 'lastUpdatedBlock_ASC_NULLS_FIRST',
-  LastUpdatedBlockAscNullsLast = 'lastUpdatedBlock_ASC_NULLS_LAST',
-  LastUpdatedBlockDesc = 'lastUpdatedBlock_DESC',
-  LastUpdatedBlockDescNullsFirst = 'lastUpdatedBlock_DESC_NULLS_FIRST',
-  LastUpdatedBlockDescNullsLast = 'lastUpdatedBlock_DESC_NULLS_LAST'
-}
-
-export type DepositPoolStatsWhereInput = {
-  AND?: InputMaybe<Array<DepositPoolStatsWhereInput>>;
-  OR?: InputMaybe<Array<DepositPoolStatsWhereInput>>;
-  buckets_contains?: InputMaybe<Scalars['String']['input']>;
-  buckets_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  buckets_endsWith?: InputMaybe<Scalars['String']['input']>;
-  buckets_eq?: InputMaybe<Scalars['String']['input']>;
-  buckets_gt?: InputMaybe<Scalars['String']['input']>;
-  buckets_gte?: InputMaybe<Scalars['String']['input']>;
-  buckets_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  buckets_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  buckets_lt?: InputMaybe<Scalars['String']['input']>;
-  buckets_lte?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_contains?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_eq?: InputMaybe<Scalars['String']['input']>;
-  buckets_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  buckets_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  buckets_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  lastUpdatedBlock_eq?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_gt?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_gte?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  lastUpdatedBlock_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  lastUpdatedBlock_lt?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_lte?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  lastUpdatedBlock_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-};
-
-export type ErrorEvent = {
-  __typename?: 'ErrorEvent';
-  block: Block;
-  errorDocs?: Maybe<Scalars['String']['output']>;
-  errorModule?: Maybe<Scalars['String']['output']>;
-  errorName?: Maybe<Scalars['String']['output']>;
-  errorType: Scalars['String']['output'];
-  event?: Maybe<Event>;
-  /** Link to the extrinsic that failed */
-  extrinsic?: Maybe<Extrinsic>;
-  id: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type ErrorEventEdge = {
-  __typename?: 'ErrorEventEdge';
-  cursor: Scalars['String']['output'];
-  node: ErrorEvent;
-};
-
-export enum ErrorEventOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  ErrorDocsAsc = 'errorDocs_ASC',
-  ErrorDocsAscNullsFirst = 'errorDocs_ASC_NULLS_FIRST',
-  ErrorDocsAscNullsLast = 'errorDocs_ASC_NULLS_LAST',
-  ErrorDocsDesc = 'errorDocs_DESC',
-  ErrorDocsDescNullsFirst = 'errorDocs_DESC_NULLS_FIRST',
-  ErrorDocsDescNullsLast = 'errorDocs_DESC_NULLS_LAST',
-  ErrorModuleAsc = 'errorModule_ASC',
-  ErrorModuleAscNullsFirst = 'errorModule_ASC_NULLS_FIRST',
-  ErrorModuleAscNullsLast = 'errorModule_ASC_NULLS_LAST',
-  ErrorModuleDesc = 'errorModule_DESC',
-  ErrorModuleDescNullsFirst = 'errorModule_DESC_NULLS_FIRST',
-  ErrorModuleDescNullsLast = 'errorModule_DESC_NULLS_LAST',
-  ErrorNameAsc = 'errorName_ASC',
-  ErrorNameAscNullsFirst = 'errorName_ASC_NULLS_FIRST',
-  ErrorNameAscNullsLast = 'errorName_ASC_NULLS_LAST',
-  ErrorNameDesc = 'errorName_DESC',
-  ErrorNameDescNullsFirst = 'errorName_DESC_NULLS_FIRST',
-  ErrorNameDescNullsLast = 'errorName_DESC_NULLS_LAST',
-  ErrorTypeAsc = 'errorType_ASC',
-  ErrorTypeAscNullsFirst = 'errorType_ASC_NULLS_FIRST',
-  ErrorTypeAscNullsLast = 'errorType_ASC_NULLS_LAST',
-  ErrorTypeDesc = 'errorType_DESC',
-  ErrorTypeDescNullsFirst = 'errorType_DESC_NULLS_FIRST',
-  ErrorTypeDescNullsLast = 'errorType_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
-}
-
-export type ErrorEventWhereInput = {
-  AND?: InputMaybe<Array<ErrorEventWhereInput>>;
-  OR?: InputMaybe<Array<ErrorEventWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  errorDocs_contains?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_eq?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_gt?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_gte?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorDocs_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  errorDocs_lt?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_lte?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_not_contains?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_not_eq?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorDocs_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorDocs_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorModule_contains?: InputMaybe<Scalars['String']['input']>;
-  errorModule_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorModule_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorModule_eq?: InputMaybe<Scalars['String']['input']>;
-  errorModule_gt?: InputMaybe<Scalars['String']['input']>;
-  errorModule_gte?: InputMaybe<Scalars['String']['input']>;
-  errorModule_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorModule_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  errorModule_lt?: InputMaybe<Scalars['String']['input']>;
-  errorModule_lte?: InputMaybe<Scalars['String']['input']>;
-  errorModule_not_contains?: InputMaybe<Scalars['String']['input']>;
-  errorModule_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorModule_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorModule_not_eq?: InputMaybe<Scalars['String']['input']>;
-  errorModule_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorModule_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorModule_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorName_contains?: InputMaybe<Scalars['String']['input']>;
-  errorName_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorName_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorName_eq?: InputMaybe<Scalars['String']['input']>;
-  errorName_gt?: InputMaybe<Scalars['String']['input']>;
-  errorName_gte?: InputMaybe<Scalars['String']['input']>;
-  errorName_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorName_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  errorName_lt?: InputMaybe<Scalars['String']['input']>;
-  errorName_lte?: InputMaybe<Scalars['String']['input']>;
-  errorName_not_contains?: InputMaybe<Scalars['String']['input']>;
-  errorName_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorName_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorName_not_eq?: InputMaybe<Scalars['String']['input']>;
-  errorName_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorName_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorName_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorType_contains?: InputMaybe<Scalars['String']['input']>;
-  errorType_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorType_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorType_eq?: InputMaybe<Scalars['String']['input']>;
-  errorType_gt?: InputMaybe<Scalars['String']['input']>;
-  errorType_gte?: InputMaybe<Scalars['String']['input']>;
-  errorType_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorType_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  errorType_lt?: InputMaybe<Scalars['String']['input']>;
-  errorType_lte?: InputMaybe<Scalars['String']['input']>;
-  errorType_not_contains?: InputMaybe<Scalars['String']['input']>;
-  errorType_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  errorType_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  errorType_not_eq?: InputMaybe<Scalars['String']['input']>;
-  errorType_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  errorType_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  errorType_startsWith?: InputMaybe<Scalars['String']['input']>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-};
-
-export type ErrorEventsConnection = {
-  __typename?: 'ErrorEventsConnection';
-  edges: Array<ErrorEventEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type Event = {
-  __typename?: 'Event';
-  balanceEvent?: Maybe<BalanceEvent>;
-  block: Block;
-  cancelledReversibleTransfer?: Maybe<CancelledReversibleTransfer>;
-  errorEvent?: Maybe<ErrorEvent>;
-  executedReversibleTransfer?: Maybe<ExecutedReversibleTransfer>;
-  /** Link to the extrinsic that emitted this event (null for inherent events like miner rewards) */
-  extrinsic?: Maybe<Extrinsic>;
-  highSecuritySet?: Maybe<HighSecuritySet>;
-  id: Scalars['String']['output'];
-  minerReward?: Maybe<MinerReward>;
-  scheduledReversibleTransfer?: Maybe<ScheduledReversibleTransfer>;
-  timestamp: Scalars['DateTime']['output'];
-  transfer?: Maybe<Transfer>;
-  type: EventType;
-};
-
-export type EventEdge = {
-  __typename?: 'EventEdge';
-  cursor: Scalars['String']['output'];
-  node: Event;
-};
-
-export enum EventOrderByInput {
-  BalanceEventAmountAsc = 'balanceEvent_amount_ASC',
-  BalanceEventAmountAscNullsFirst = 'balanceEvent_amount_ASC_NULLS_FIRST',
-  BalanceEventAmountAscNullsLast = 'balanceEvent_amount_ASC_NULLS_LAST',
-  BalanceEventAmountDesc = 'balanceEvent_amount_DESC',
-  BalanceEventAmountDescNullsFirst = 'balanceEvent_amount_DESC_NULLS_FIRST',
-  BalanceEventAmountDescNullsLast = 'balanceEvent_amount_DESC_NULLS_LAST',
-  BalanceEventIdAsc = 'balanceEvent_id_ASC',
-  BalanceEventIdAscNullsFirst = 'balanceEvent_id_ASC_NULLS_FIRST',
-  BalanceEventIdAscNullsLast = 'balanceEvent_id_ASC_NULLS_LAST',
-  BalanceEventIdDesc = 'balanceEvent_id_DESC',
-  BalanceEventIdDescNullsFirst = 'balanceEvent_id_DESC_NULLS_FIRST',
-  BalanceEventIdDescNullsLast = 'balanceEvent_id_DESC_NULLS_LAST',
-  BalanceEventTimestampAsc = 'balanceEvent_timestamp_ASC',
-  BalanceEventTimestampAscNullsFirst = 'balanceEvent_timestamp_ASC_NULLS_FIRST',
-  BalanceEventTimestampAscNullsLast = 'balanceEvent_timestamp_ASC_NULLS_LAST',
-  BalanceEventTimestampDesc = 'balanceEvent_timestamp_DESC',
-  BalanceEventTimestampDescNullsFirst = 'balanceEvent_timestamp_DESC_NULLS_FIRST',
-  BalanceEventTimestampDescNullsLast = 'balanceEvent_timestamp_DESC_NULLS_LAST',
-  BalanceEventTypeAsc = 'balanceEvent_type_ASC',
-  BalanceEventTypeAscNullsFirst = 'balanceEvent_type_ASC_NULLS_FIRST',
-  BalanceEventTypeAscNullsLast = 'balanceEvent_type_ASC_NULLS_LAST',
-  BalanceEventTypeDesc = 'balanceEvent_type_DESC',
-  BalanceEventTypeDescNullsFirst = 'balanceEvent_type_DESC_NULLS_FIRST',
-  BalanceEventTypeDescNullsLast = 'balanceEvent_type_DESC_NULLS_LAST',
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  CancelledReversibleTransferIdAsc = 'cancelledReversibleTransfer_id_ASC',
-  CancelledReversibleTransferIdAscNullsFirst = 'cancelledReversibleTransfer_id_ASC_NULLS_FIRST',
-  CancelledReversibleTransferIdAscNullsLast = 'cancelledReversibleTransfer_id_ASC_NULLS_LAST',
-  CancelledReversibleTransferIdDesc = 'cancelledReversibleTransfer_id_DESC',
-  CancelledReversibleTransferIdDescNullsFirst = 'cancelledReversibleTransfer_id_DESC_NULLS_FIRST',
-  CancelledReversibleTransferIdDescNullsLast = 'cancelledReversibleTransfer_id_DESC_NULLS_LAST',
-  CancelledReversibleTransferTimestampAsc = 'cancelledReversibleTransfer_timestamp_ASC',
-  CancelledReversibleTransferTimestampAscNullsFirst = 'cancelledReversibleTransfer_timestamp_ASC_NULLS_FIRST',
-  CancelledReversibleTransferTimestampAscNullsLast = 'cancelledReversibleTransfer_timestamp_ASC_NULLS_LAST',
-  CancelledReversibleTransferTimestampDesc = 'cancelledReversibleTransfer_timestamp_DESC',
-  CancelledReversibleTransferTimestampDescNullsFirst = 'cancelledReversibleTransfer_timestamp_DESC_NULLS_FIRST',
-  CancelledReversibleTransferTimestampDescNullsLast = 'cancelledReversibleTransfer_timestamp_DESC_NULLS_LAST',
-  CancelledReversibleTransferTxIdAsc = 'cancelledReversibleTransfer_txId_ASC',
-  CancelledReversibleTransferTxIdAscNullsFirst = 'cancelledReversibleTransfer_txId_ASC_NULLS_FIRST',
-  CancelledReversibleTransferTxIdAscNullsLast = 'cancelledReversibleTransfer_txId_ASC_NULLS_LAST',
-  CancelledReversibleTransferTxIdDesc = 'cancelledReversibleTransfer_txId_DESC',
-  CancelledReversibleTransferTxIdDescNullsFirst = 'cancelledReversibleTransfer_txId_DESC_NULLS_FIRST',
-  CancelledReversibleTransferTxIdDescNullsLast = 'cancelledReversibleTransfer_txId_DESC_NULLS_LAST',
-  ErrorEventErrorDocsAsc = 'errorEvent_errorDocs_ASC',
-  ErrorEventErrorDocsAscNullsFirst = 'errorEvent_errorDocs_ASC_NULLS_FIRST',
-  ErrorEventErrorDocsAscNullsLast = 'errorEvent_errorDocs_ASC_NULLS_LAST',
-  ErrorEventErrorDocsDesc = 'errorEvent_errorDocs_DESC',
-  ErrorEventErrorDocsDescNullsFirst = 'errorEvent_errorDocs_DESC_NULLS_FIRST',
-  ErrorEventErrorDocsDescNullsLast = 'errorEvent_errorDocs_DESC_NULLS_LAST',
-  ErrorEventErrorModuleAsc = 'errorEvent_errorModule_ASC',
-  ErrorEventErrorModuleAscNullsFirst = 'errorEvent_errorModule_ASC_NULLS_FIRST',
-  ErrorEventErrorModuleAscNullsLast = 'errorEvent_errorModule_ASC_NULLS_LAST',
-  ErrorEventErrorModuleDesc = 'errorEvent_errorModule_DESC',
-  ErrorEventErrorModuleDescNullsFirst = 'errorEvent_errorModule_DESC_NULLS_FIRST',
-  ErrorEventErrorModuleDescNullsLast = 'errorEvent_errorModule_DESC_NULLS_LAST',
-  ErrorEventErrorNameAsc = 'errorEvent_errorName_ASC',
-  ErrorEventErrorNameAscNullsFirst = 'errorEvent_errorName_ASC_NULLS_FIRST',
-  ErrorEventErrorNameAscNullsLast = 'errorEvent_errorName_ASC_NULLS_LAST',
-  ErrorEventErrorNameDesc = 'errorEvent_errorName_DESC',
-  ErrorEventErrorNameDescNullsFirst = 'errorEvent_errorName_DESC_NULLS_FIRST',
-  ErrorEventErrorNameDescNullsLast = 'errorEvent_errorName_DESC_NULLS_LAST',
-  ErrorEventErrorTypeAsc = 'errorEvent_errorType_ASC',
-  ErrorEventErrorTypeAscNullsFirst = 'errorEvent_errorType_ASC_NULLS_FIRST',
-  ErrorEventErrorTypeAscNullsLast = 'errorEvent_errorType_ASC_NULLS_LAST',
-  ErrorEventErrorTypeDesc = 'errorEvent_errorType_DESC',
-  ErrorEventErrorTypeDescNullsFirst = 'errorEvent_errorType_DESC_NULLS_FIRST',
-  ErrorEventErrorTypeDescNullsLast = 'errorEvent_errorType_DESC_NULLS_LAST',
-  ErrorEventIdAsc = 'errorEvent_id_ASC',
-  ErrorEventIdAscNullsFirst = 'errorEvent_id_ASC_NULLS_FIRST',
-  ErrorEventIdAscNullsLast = 'errorEvent_id_ASC_NULLS_LAST',
-  ErrorEventIdDesc = 'errorEvent_id_DESC',
-  ErrorEventIdDescNullsFirst = 'errorEvent_id_DESC_NULLS_FIRST',
-  ErrorEventIdDescNullsLast = 'errorEvent_id_DESC_NULLS_LAST',
-  ErrorEventTimestampAsc = 'errorEvent_timestamp_ASC',
-  ErrorEventTimestampAscNullsFirst = 'errorEvent_timestamp_ASC_NULLS_FIRST',
-  ErrorEventTimestampAscNullsLast = 'errorEvent_timestamp_ASC_NULLS_LAST',
-  ErrorEventTimestampDesc = 'errorEvent_timestamp_DESC',
-  ErrorEventTimestampDescNullsFirst = 'errorEvent_timestamp_DESC_NULLS_FIRST',
-  ErrorEventTimestampDescNullsLast = 'errorEvent_timestamp_DESC_NULLS_LAST',
-  ExecutedReversibleTransferIdAsc = 'executedReversibleTransfer_id_ASC',
-  ExecutedReversibleTransferIdAscNullsFirst = 'executedReversibleTransfer_id_ASC_NULLS_FIRST',
-  ExecutedReversibleTransferIdAscNullsLast = 'executedReversibleTransfer_id_ASC_NULLS_LAST',
-  ExecutedReversibleTransferIdDesc = 'executedReversibleTransfer_id_DESC',
-  ExecutedReversibleTransferIdDescNullsFirst = 'executedReversibleTransfer_id_DESC_NULLS_FIRST',
-  ExecutedReversibleTransferIdDescNullsLast = 'executedReversibleTransfer_id_DESC_NULLS_LAST',
-  ExecutedReversibleTransferTimestampAsc = 'executedReversibleTransfer_timestamp_ASC',
-  ExecutedReversibleTransferTimestampAscNullsFirst = 'executedReversibleTransfer_timestamp_ASC_NULLS_FIRST',
-  ExecutedReversibleTransferTimestampAscNullsLast = 'executedReversibleTransfer_timestamp_ASC_NULLS_LAST',
-  ExecutedReversibleTransferTimestampDesc = 'executedReversibleTransfer_timestamp_DESC',
-  ExecutedReversibleTransferTimestampDescNullsFirst = 'executedReversibleTransfer_timestamp_DESC_NULLS_FIRST',
-  ExecutedReversibleTransferTimestampDescNullsLast = 'executedReversibleTransfer_timestamp_DESC_NULLS_LAST',
-  ExecutedReversibleTransferTxIdAsc = 'executedReversibleTransfer_txId_ASC',
-  ExecutedReversibleTransferTxIdAscNullsFirst = 'executedReversibleTransfer_txId_ASC_NULLS_FIRST',
-  ExecutedReversibleTransferTxIdAscNullsLast = 'executedReversibleTransfer_txId_ASC_NULLS_LAST',
-  ExecutedReversibleTransferTxIdDesc = 'executedReversibleTransfer_txId_DESC',
-  ExecutedReversibleTransferTxIdDescNullsFirst = 'executedReversibleTransfer_txId_DESC_NULLS_FIRST',
-  ExecutedReversibleTransferTxIdDescNullsLast = 'executedReversibleTransfer_txId_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  HighSecuritySetDelayAsc = 'highSecuritySet_delay_ASC',
-  HighSecuritySetDelayAscNullsFirst = 'highSecuritySet_delay_ASC_NULLS_FIRST',
-  HighSecuritySetDelayAscNullsLast = 'highSecuritySet_delay_ASC_NULLS_LAST',
-  HighSecuritySetDelayDesc = 'highSecuritySet_delay_DESC',
-  HighSecuritySetDelayDescNullsFirst = 'highSecuritySet_delay_DESC_NULLS_FIRST',
-  HighSecuritySetDelayDescNullsLast = 'highSecuritySet_delay_DESC_NULLS_LAST',
-  HighSecuritySetIdAsc = 'highSecuritySet_id_ASC',
-  HighSecuritySetIdAscNullsFirst = 'highSecuritySet_id_ASC_NULLS_FIRST',
-  HighSecuritySetIdAscNullsLast = 'highSecuritySet_id_ASC_NULLS_LAST',
-  HighSecuritySetIdDesc = 'highSecuritySet_id_DESC',
-  HighSecuritySetIdDescNullsFirst = 'highSecuritySet_id_DESC_NULLS_FIRST',
-  HighSecuritySetIdDescNullsLast = 'highSecuritySet_id_DESC_NULLS_LAST',
-  HighSecuritySetTimestampAsc = 'highSecuritySet_timestamp_ASC',
-  HighSecuritySetTimestampAscNullsFirst = 'highSecuritySet_timestamp_ASC_NULLS_FIRST',
-  HighSecuritySetTimestampAscNullsLast = 'highSecuritySet_timestamp_ASC_NULLS_LAST',
-  HighSecuritySetTimestampDesc = 'highSecuritySet_timestamp_DESC',
-  HighSecuritySetTimestampDescNullsFirst = 'highSecuritySet_timestamp_DESC_NULLS_FIRST',
-  HighSecuritySetTimestampDescNullsLast = 'highSecuritySet_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  MinerRewardIdAsc = 'minerReward_id_ASC',
-  MinerRewardIdAscNullsFirst = 'minerReward_id_ASC_NULLS_FIRST',
-  MinerRewardIdAscNullsLast = 'minerReward_id_ASC_NULLS_LAST',
-  MinerRewardIdDesc = 'minerReward_id_DESC',
-  MinerRewardIdDescNullsFirst = 'minerReward_id_DESC_NULLS_FIRST',
-  MinerRewardIdDescNullsLast = 'minerReward_id_DESC_NULLS_LAST',
-  MinerRewardRewardAsc = 'minerReward_reward_ASC',
-  MinerRewardRewardAscNullsFirst = 'minerReward_reward_ASC_NULLS_FIRST',
-  MinerRewardRewardAscNullsLast = 'minerReward_reward_ASC_NULLS_LAST',
-  MinerRewardRewardDesc = 'minerReward_reward_DESC',
-  MinerRewardRewardDescNullsFirst = 'minerReward_reward_DESC_NULLS_FIRST',
-  MinerRewardRewardDescNullsLast = 'minerReward_reward_DESC_NULLS_LAST',
-  MinerRewardTimestampAsc = 'minerReward_timestamp_ASC',
-  MinerRewardTimestampAscNullsFirst = 'minerReward_timestamp_ASC_NULLS_FIRST',
-  MinerRewardTimestampAscNullsLast = 'minerReward_timestamp_ASC_NULLS_LAST',
-  MinerRewardTimestampDesc = 'minerReward_timestamp_DESC',
-  MinerRewardTimestampDescNullsFirst = 'minerReward_timestamp_DESC_NULLS_FIRST',
-  MinerRewardTimestampDescNullsLast = 'minerReward_timestamp_DESC_NULLS_LAST',
-  ScheduledReversibleTransferAmountAsc = 'scheduledReversibleTransfer_amount_ASC',
-  ScheduledReversibleTransferAmountAscNullsFirst = 'scheduledReversibleTransfer_amount_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferAmountAscNullsLast = 'scheduledReversibleTransfer_amount_ASC_NULLS_LAST',
-  ScheduledReversibleTransferAmountDesc = 'scheduledReversibleTransfer_amount_DESC',
-  ScheduledReversibleTransferAmountDescNullsFirst = 'scheduledReversibleTransfer_amount_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferAmountDescNullsLast = 'scheduledReversibleTransfer_amount_DESC_NULLS_LAST',
-  ScheduledReversibleTransferFeeAsc = 'scheduledReversibleTransfer_fee_ASC',
-  ScheduledReversibleTransferFeeAscNullsFirst = 'scheduledReversibleTransfer_fee_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferFeeAscNullsLast = 'scheduledReversibleTransfer_fee_ASC_NULLS_LAST',
-  ScheduledReversibleTransferFeeDesc = 'scheduledReversibleTransfer_fee_DESC',
-  ScheduledReversibleTransferFeeDescNullsFirst = 'scheduledReversibleTransfer_fee_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferFeeDescNullsLast = 'scheduledReversibleTransfer_fee_DESC_NULLS_LAST',
-  ScheduledReversibleTransferIdAsc = 'scheduledReversibleTransfer_id_ASC',
-  ScheduledReversibleTransferIdAscNullsFirst = 'scheduledReversibleTransfer_id_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferIdAscNullsLast = 'scheduledReversibleTransfer_id_ASC_NULLS_LAST',
-  ScheduledReversibleTransferIdDesc = 'scheduledReversibleTransfer_id_DESC',
-  ScheduledReversibleTransferIdDescNullsFirst = 'scheduledReversibleTransfer_id_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferIdDescNullsLast = 'scheduledReversibleTransfer_id_DESC_NULLS_LAST',
-  ScheduledReversibleTransferScheduledAtAsc = 'scheduledReversibleTransfer_scheduledAt_ASC',
-  ScheduledReversibleTransferScheduledAtAscNullsFirst = 'scheduledReversibleTransfer_scheduledAt_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferScheduledAtAscNullsLast = 'scheduledReversibleTransfer_scheduledAt_ASC_NULLS_LAST',
-  ScheduledReversibleTransferScheduledAtDesc = 'scheduledReversibleTransfer_scheduledAt_DESC',
-  ScheduledReversibleTransferScheduledAtDescNullsFirst = 'scheduledReversibleTransfer_scheduledAt_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferScheduledAtDescNullsLast = 'scheduledReversibleTransfer_scheduledAt_DESC_NULLS_LAST',
-  ScheduledReversibleTransferTimestampAsc = 'scheduledReversibleTransfer_timestamp_ASC',
-  ScheduledReversibleTransferTimestampAscNullsFirst = 'scheduledReversibleTransfer_timestamp_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferTimestampAscNullsLast = 'scheduledReversibleTransfer_timestamp_ASC_NULLS_LAST',
-  ScheduledReversibleTransferTimestampDesc = 'scheduledReversibleTransfer_timestamp_DESC',
-  ScheduledReversibleTransferTimestampDescNullsFirst = 'scheduledReversibleTransfer_timestamp_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferTimestampDescNullsLast = 'scheduledReversibleTransfer_timestamp_DESC_NULLS_LAST',
-  ScheduledReversibleTransferTxIdAsc = 'scheduledReversibleTransfer_txId_ASC',
-  ScheduledReversibleTransferTxIdAscNullsFirst = 'scheduledReversibleTransfer_txId_ASC_NULLS_FIRST',
-  ScheduledReversibleTransferTxIdAscNullsLast = 'scheduledReversibleTransfer_txId_ASC_NULLS_LAST',
-  ScheduledReversibleTransferTxIdDesc = 'scheduledReversibleTransfer_txId_DESC',
-  ScheduledReversibleTransferTxIdDescNullsFirst = 'scheduledReversibleTransfer_txId_DESC_NULLS_FIRST',
-  ScheduledReversibleTransferTxIdDescNullsLast = 'scheduledReversibleTransfer_txId_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TransferAmountAsc = 'transfer_amount_ASC',
-  TransferAmountAscNullsFirst = 'transfer_amount_ASC_NULLS_FIRST',
-  TransferAmountAscNullsLast = 'transfer_amount_ASC_NULLS_LAST',
-  TransferAmountDesc = 'transfer_amount_DESC',
-  TransferAmountDescNullsFirst = 'transfer_amount_DESC_NULLS_FIRST',
-  TransferAmountDescNullsLast = 'transfer_amount_DESC_NULLS_LAST',
-  TransferFeeAsc = 'transfer_fee_ASC',
-  TransferFeeAscNullsFirst = 'transfer_fee_ASC_NULLS_FIRST',
-  TransferFeeAscNullsLast = 'transfer_fee_ASC_NULLS_LAST',
-  TransferFeeDesc = 'transfer_fee_DESC',
-  TransferFeeDescNullsFirst = 'transfer_fee_DESC_NULLS_FIRST',
-  TransferFeeDescNullsLast = 'transfer_fee_DESC_NULLS_LAST',
-  TransferFromHashAsc = 'transfer_fromHash_ASC',
-  TransferFromHashAscNullsFirst = 'transfer_fromHash_ASC_NULLS_FIRST',
-  TransferFromHashAscNullsLast = 'transfer_fromHash_ASC_NULLS_LAST',
-  TransferFromHashDesc = 'transfer_fromHash_DESC',
-  TransferFromHashDescNullsFirst = 'transfer_fromHash_DESC_NULLS_FIRST',
-  TransferFromHashDescNullsLast = 'transfer_fromHash_DESC_NULLS_LAST',
-  TransferIdAsc = 'transfer_id_ASC',
-  TransferIdAscNullsFirst = 'transfer_id_ASC_NULLS_FIRST',
-  TransferIdAscNullsLast = 'transfer_id_ASC_NULLS_LAST',
-  TransferIdDesc = 'transfer_id_DESC',
-  TransferIdDescNullsFirst = 'transfer_id_DESC_NULLS_FIRST',
-  TransferIdDescNullsLast = 'transfer_id_DESC_NULLS_LAST',
-  TransferLeafIndexAsc = 'transfer_leafIndex_ASC',
-  TransferLeafIndexAscNullsFirst = 'transfer_leafIndex_ASC_NULLS_FIRST',
-  TransferLeafIndexAscNullsLast = 'transfer_leafIndex_ASC_NULLS_LAST',
-  TransferLeafIndexDesc = 'transfer_leafIndex_DESC',
-  TransferLeafIndexDescNullsFirst = 'transfer_leafIndex_DESC_NULLS_FIRST',
-  TransferLeafIndexDescNullsLast = 'transfer_leafIndex_DESC_NULLS_LAST',
-  TransferTimestampAsc = 'transfer_timestamp_ASC',
-  TransferTimestampAscNullsFirst = 'transfer_timestamp_ASC_NULLS_FIRST',
-  TransferTimestampAscNullsLast = 'transfer_timestamp_ASC_NULLS_LAST',
-  TransferTimestampDesc = 'transfer_timestamp_DESC',
-  TransferTimestampDescNullsFirst = 'transfer_timestamp_DESC_NULLS_FIRST',
-  TransferTimestampDescNullsLast = 'transfer_timestamp_DESC_NULLS_LAST',
-  TransferToHashAsc = 'transfer_toHash_ASC',
-  TransferToHashAscNullsFirst = 'transfer_toHash_ASC_NULLS_FIRST',
-  TransferToHashAscNullsLast = 'transfer_toHash_ASC_NULLS_LAST',
-  TransferToHashDesc = 'transfer_toHash_DESC',
-  TransferToHashDescNullsFirst = 'transfer_toHash_DESC_NULLS_FIRST',
-  TransferToHashDescNullsLast = 'transfer_toHash_DESC_NULLS_LAST',
-  TransferTransferCountAsc = 'transfer_transferCount_ASC',
-  TransferTransferCountAscNullsFirst = 'transfer_transferCount_ASC_NULLS_FIRST',
-  TransferTransferCountAscNullsLast = 'transfer_transferCount_ASC_NULLS_LAST',
-  TransferTransferCountDesc = 'transfer_transferCount_DESC',
-  TransferTransferCountDescNullsFirst = 'transfer_transferCount_DESC_NULLS_FIRST',
-  TransferTransferCountDescNullsLast = 'transfer_transferCount_DESC_NULLS_LAST',
-  TypeAsc = 'type_ASC',
-  TypeAscNullsFirst = 'type_ASC_NULLS_FIRST',
-  TypeAscNullsLast = 'type_ASC_NULLS_LAST',
-  TypeDesc = 'type_DESC',
-  TypeDescNullsFirst = 'type_DESC_NULLS_FIRST',
-  TypeDescNullsLast = 'type_DESC_NULLS_LAST'
-}
-
-export enum EventType {
-  Balance = 'BALANCE',
-  CancelledReversibleTransfer = 'CANCELLED_REVERSIBLE_TRANSFER',
-  Error = 'ERROR',
-  ExecutedReversibleTransfer = 'EXECUTED_REVERSIBLE_TRANSFER',
-  HighSecuritySet = 'HIGH_SECURITY_SET',
-  MinerReward = 'MINER_REWARD',
-  ScheduledReversibleTransfer = 'SCHEDULED_REVERSIBLE_TRANSFER',
-  Transfer = 'TRANSFER'
-}
-
-export type EventWhereInput = {
-  AND?: InputMaybe<Array<EventWhereInput>>;
-  OR?: InputMaybe<Array<EventWhereInput>>;
-  balanceEvent?: InputMaybe<BalanceEventWhereInput>;
-  balanceEvent_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  cancelledReversibleTransfer?: InputMaybe<CancelledReversibleTransferWhereInput>;
-  cancelledReversibleTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  errorEvent?: InputMaybe<ErrorEventWhereInput>;
-  errorEvent_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  executedReversibleTransfer?: InputMaybe<ExecutedReversibleTransferWhereInput>;
-  executedReversibleTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  highSecuritySet?: InputMaybe<HighSecuritySetWhereInput>;
-  highSecuritySet_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  minerReward?: InputMaybe<MinerRewardWhereInput>;
-  minerReward_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  scheduledReversibleTransfer?: InputMaybe<ScheduledReversibleTransferWhereInput>;
-  scheduledReversibleTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  transfer?: InputMaybe<TransferWhereInput>;
-  transfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  type_eq?: InputMaybe<EventType>;
-  type_in?: InputMaybe<Array<EventType>>;
-  type_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  type_not_eq?: InputMaybe<EventType>;
-  type_not_in?: InputMaybe<Array<EventType>>;
-};
-
-export type EventsConnection = {
-  __typename?: 'EventsConnection';
-  edges: Array<EventEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type ExecutedReversibleTransfer = {
-  __typename?: 'ExecutedReversibleTransfer';
-  block: Block;
-  event?: Maybe<Event>;
-  executedTransfer?: Maybe<Transfer>;
-  id: Scalars['String']['output'];
-  scheduledTransfer: ScheduledReversibleTransfer;
-  timestamp: Scalars['DateTime']['output'];
-  txId: Scalars['String']['output'];
-};
-
-export type ExecutedReversibleTransferEdge = {
-  __typename?: 'ExecutedReversibleTransferEdge';
-  cursor: Scalars['String']['output'];
-  node: ExecutedReversibleTransfer;
-};
-
-export enum ExecutedReversibleTransferOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExecutedTransferAmountAsc = 'executedTransfer_amount_ASC',
-  ExecutedTransferAmountAscNullsFirst = 'executedTransfer_amount_ASC_NULLS_FIRST',
-  ExecutedTransferAmountAscNullsLast = 'executedTransfer_amount_ASC_NULLS_LAST',
-  ExecutedTransferAmountDesc = 'executedTransfer_amount_DESC',
-  ExecutedTransferAmountDescNullsFirst = 'executedTransfer_amount_DESC_NULLS_FIRST',
-  ExecutedTransferAmountDescNullsLast = 'executedTransfer_amount_DESC_NULLS_LAST',
-  ExecutedTransferFeeAsc = 'executedTransfer_fee_ASC',
-  ExecutedTransferFeeAscNullsFirst = 'executedTransfer_fee_ASC_NULLS_FIRST',
-  ExecutedTransferFeeAscNullsLast = 'executedTransfer_fee_ASC_NULLS_LAST',
-  ExecutedTransferFeeDesc = 'executedTransfer_fee_DESC',
-  ExecutedTransferFeeDescNullsFirst = 'executedTransfer_fee_DESC_NULLS_FIRST',
-  ExecutedTransferFeeDescNullsLast = 'executedTransfer_fee_DESC_NULLS_LAST',
-  ExecutedTransferFromHashAsc = 'executedTransfer_fromHash_ASC',
-  ExecutedTransferFromHashAscNullsFirst = 'executedTransfer_fromHash_ASC_NULLS_FIRST',
-  ExecutedTransferFromHashAscNullsLast = 'executedTransfer_fromHash_ASC_NULLS_LAST',
-  ExecutedTransferFromHashDesc = 'executedTransfer_fromHash_DESC',
-  ExecutedTransferFromHashDescNullsFirst = 'executedTransfer_fromHash_DESC_NULLS_FIRST',
-  ExecutedTransferFromHashDescNullsLast = 'executedTransfer_fromHash_DESC_NULLS_LAST',
-  ExecutedTransferIdAsc = 'executedTransfer_id_ASC',
-  ExecutedTransferIdAscNullsFirst = 'executedTransfer_id_ASC_NULLS_FIRST',
-  ExecutedTransferIdAscNullsLast = 'executedTransfer_id_ASC_NULLS_LAST',
-  ExecutedTransferIdDesc = 'executedTransfer_id_DESC',
-  ExecutedTransferIdDescNullsFirst = 'executedTransfer_id_DESC_NULLS_FIRST',
-  ExecutedTransferIdDescNullsLast = 'executedTransfer_id_DESC_NULLS_LAST',
-  ExecutedTransferLeafIndexAsc = 'executedTransfer_leafIndex_ASC',
-  ExecutedTransferLeafIndexAscNullsFirst = 'executedTransfer_leafIndex_ASC_NULLS_FIRST',
-  ExecutedTransferLeafIndexAscNullsLast = 'executedTransfer_leafIndex_ASC_NULLS_LAST',
-  ExecutedTransferLeafIndexDesc = 'executedTransfer_leafIndex_DESC',
-  ExecutedTransferLeafIndexDescNullsFirst = 'executedTransfer_leafIndex_DESC_NULLS_FIRST',
-  ExecutedTransferLeafIndexDescNullsLast = 'executedTransfer_leafIndex_DESC_NULLS_LAST',
-  ExecutedTransferTimestampAsc = 'executedTransfer_timestamp_ASC',
-  ExecutedTransferTimestampAscNullsFirst = 'executedTransfer_timestamp_ASC_NULLS_FIRST',
-  ExecutedTransferTimestampAscNullsLast = 'executedTransfer_timestamp_ASC_NULLS_LAST',
-  ExecutedTransferTimestampDesc = 'executedTransfer_timestamp_DESC',
-  ExecutedTransferTimestampDescNullsFirst = 'executedTransfer_timestamp_DESC_NULLS_FIRST',
-  ExecutedTransferTimestampDescNullsLast = 'executedTransfer_timestamp_DESC_NULLS_LAST',
-  ExecutedTransferToHashAsc = 'executedTransfer_toHash_ASC',
-  ExecutedTransferToHashAscNullsFirst = 'executedTransfer_toHash_ASC_NULLS_FIRST',
-  ExecutedTransferToHashAscNullsLast = 'executedTransfer_toHash_ASC_NULLS_LAST',
-  ExecutedTransferToHashDesc = 'executedTransfer_toHash_DESC',
-  ExecutedTransferToHashDescNullsFirst = 'executedTransfer_toHash_DESC_NULLS_FIRST',
-  ExecutedTransferToHashDescNullsLast = 'executedTransfer_toHash_DESC_NULLS_LAST',
-  ExecutedTransferTransferCountAsc = 'executedTransfer_transferCount_ASC',
-  ExecutedTransferTransferCountAscNullsFirst = 'executedTransfer_transferCount_ASC_NULLS_FIRST',
-  ExecutedTransferTransferCountAscNullsLast = 'executedTransfer_transferCount_ASC_NULLS_LAST',
-  ExecutedTransferTransferCountDesc = 'executedTransfer_transferCount_DESC',
-  ExecutedTransferTransferCountDescNullsFirst = 'executedTransfer_transferCount_DESC_NULLS_FIRST',
-  ExecutedTransferTransferCountDescNullsLast = 'executedTransfer_transferCount_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  ScheduledTransferAmountAsc = 'scheduledTransfer_amount_ASC',
-  ScheduledTransferAmountAscNullsFirst = 'scheduledTransfer_amount_ASC_NULLS_FIRST',
-  ScheduledTransferAmountAscNullsLast = 'scheduledTransfer_amount_ASC_NULLS_LAST',
-  ScheduledTransferAmountDesc = 'scheduledTransfer_amount_DESC',
-  ScheduledTransferAmountDescNullsFirst = 'scheduledTransfer_amount_DESC_NULLS_FIRST',
-  ScheduledTransferAmountDescNullsLast = 'scheduledTransfer_amount_DESC_NULLS_LAST',
-  ScheduledTransferFeeAsc = 'scheduledTransfer_fee_ASC',
-  ScheduledTransferFeeAscNullsFirst = 'scheduledTransfer_fee_ASC_NULLS_FIRST',
-  ScheduledTransferFeeAscNullsLast = 'scheduledTransfer_fee_ASC_NULLS_LAST',
-  ScheduledTransferFeeDesc = 'scheduledTransfer_fee_DESC',
-  ScheduledTransferFeeDescNullsFirst = 'scheduledTransfer_fee_DESC_NULLS_FIRST',
-  ScheduledTransferFeeDescNullsLast = 'scheduledTransfer_fee_DESC_NULLS_LAST',
-  ScheduledTransferIdAsc = 'scheduledTransfer_id_ASC',
-  ScheduledTransferIdAscNullsFirst = 'scheduledTransfer_id_ASC_NULLS_FIRST',
-  ScheduledTransferIdAscNullsLast = 'scheduledTransfer_id_ASC_NULLS_LAST',
-  ScheduledTransferIdDesc = 'scheduledTransfer_id_DESC',
-  ScheduledTransferIdDescNullsFirst = 'scheduledTransfer_id_DESC_NULLS_FIRST',
-  ScheduledTransferIdDescNullsLast = 'scheduledTransfer_id_DESC_NULLS_LAST',
-  ScheduledTransferScheduledAtAsc = 'scheduledTransfer_scheduledAt_ASC',
-  ScheduledTransferScheduledAtAscNullsFirst = 'scheduledTransfer_scheduledAt_ASC_NULLS_FIRST',
-  ScheduledTransferScheduledAtAscNullsLast = 'scheduledTransfer_scheduledAt_ASC_NULLS_LAST',
-  ScheduledTransferScheduledAtDesc = 'scheduledTransfer_scheduledAt_DESC',
-  ScheduledTransferScheduledAtDescNullsFirst = 'scheduledTransfer_scheduledAt_DESC_NULLS_FIRST',
-  ScheduledTransferScheduledAtDescNullsLast = 'scheduledTransfer_scheduledAt_DESC_NULLS_LAST',
-  ScheduledTransferTimestampAsc = 'scheduledTransfer_timestamp_ASC',
-  ScheduledTransferTimestampAscNullsFirst = 'scheduledTransfer_timestamp_ASC_NULLS_FIRST',
-  ScheduledTransferTimestampAscNullsLast = 'scheduledTransfer_timestamp_ASC_NULLS_LAST',
-  ScheduledTransferTimestampDesc = 'scheduledTransfer_timestamp_DESC',
-  ScheduledTransferTimestampDescNullsFirst = 'scheduledTransfer_timestamp_DESC_NULLS_FIRST',
-  ScheduledTransferTimestampDescNullsLast = 'scheduledTransfer_timestamp_DESC_NULLS_LAST',
-  ScheduledTransferTxIdAsc = 'scheduledTransfer_txId_ASC',
-  ScheduledTransferTxIdAscNullsFirst = 'scheduledTransfer_txId_ASC_NULLS_FIRST',
-  ScheduledTransferTxIdAscNullsLast = 'scheduledTransfer_txId_ASC_NULLS_LAST',
-  ScheduledTransferTxIdDesc = 'scheduledTransfer_txId_DESC',
-  ScheduledTransferTxIdDescNullsFirst = 'scheduledTransfer_txId_DESC_NULLS_FIRST',
-  ScheduledTransferTxIdDescNullsLast = 'scheduledTransfer_txId_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TxIdAsc = 'txId_ASC',
-  TxIdAscNullsFirst = 'txId_ASC_NULLS_FIRST',
-  TxIdAscNullsLast = 'txId_ASC_NULLS_LAST',
-  TxIdDesc = 'txId_DESC',
-  TxIdDescNullsFirst = 'txId_DESC_NULLS_FIRST',
-  TxIdDescNullsLast = 'txId_DESC_NULLS_LAST'
-}
-
-export type ExecutedReversibleTransferWhereInput = {
-  AND?: InputMaybe<Array<ExecutedReversibleTransferWhereInput>>;
-  OR?: InputMaybe<Array<ExecutedReversibleTransferWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  executedTransfer?: InputMaybe<TransferWhereInput>;
-  executedTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  scheduledTransfer?: InputMaybe<ScheduledReversibleTransferWhereInput>;
-  scheduledTransfer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  txId_contains?: InputMaybe<Scalars['String']['input']>;
-  txId_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  txId_endsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_eq?: InputMaybe<Scalars['String']['input']>;
-  txId_gt?: InputMaybe<Scalars['String']['input']>;
-  txId_gte?: InputMaybe<Scalars['String']['input']>;
-  txId_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  txId_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  txId_lt?: InputMaybe<Scalars['String']['input']>;
-  txId_lte?: InputMaybe<Scalars['String']['input']>;
-  txId_not_contains?: InputMaybe<Scalars['String']['input']>;
-  txId_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  txId_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_not_eq?: InputMaybe<Scalars['String']['input']>;
-  txId_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  txId_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_startsWith?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ExecutedReversibleTransfersConnection = {
-  __typename?: 'ExecutedReversibleTransfersConnection';
-  edges: Array<ExecutedReversibleTransferEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-/** An extrinsic (transaction) submitted to the chain */
-export type Extrinsic = {
-  __typename?: 'Extrinsic';
-  /** Decoded call arguments as JSON */
-  args: Scalars['String']['output'];
-  block: Block;
-  /** Call name (e.g., 'transfer', 'transfer_keep_alive') */
-  call: Scalars['String']['output'];
-  /** Events emitted by this extrinsic */
-  events: Array<Event>;
-  /** Transaction fee paid */
-  fee: Scalars['BigInt']['output'];
-  /** Extrinsic hash */
-  id: Scalars['String']['output'];
-  /** Index of the extrinsic within the block */
-  indexInBlock: Scalars['Int']['output'];
-  /** Pallet name (e.g., 'Balances', 'ReversibleTransfers') */
-  pallet: Scalars['String']['output'];
-  /** Account that signed and submitted the extrinsic (null for unsigned extrinsics like wormhole proofs) */
-  signer?: Maybe<Account>;
-  /** Whether the extrinsic succeeded */
-  success: Scalars['Boolean']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-/** An extrinsic (transaction) submitted to the chain */
-export type ExtrinsicEventsArgs = {
+/** columns and relationships of "block" */
+export type BlockTransactions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<EventOrderByInput>>;
-  where?: InputMaybe<EventWhereInput>;
-};
-
-export type ExtrinsicEdge = {
-  __typename?: 'ExtrinsicEdge';
-  cursor: Scalars['String']['output'];
-  node: Extrinsic;
-};
-
-export enum ExtrinsicOrderByInput {
-  ArgsAsc = 'args_ASC',
-  ArgsAscNullsFirst = 'args_ASC_NULLS_FIRST',
-  ArgsAscNullsLast = 'args_ASC_NULLS_LAST',
-  ArgsDesc = 'args_DESC',
-  ArgsDescNullsFirst = 'args_DESC_NULLS_FIRST',
-  ArgsDescNullsLast = 'args_DESC_NULLS_LAST',
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  CallAsc = 'call_ASC',
-  CallAscNullsFirst = 'call_ASC_NULLS_FIRST',
-  CallAscNullsLast = 'call_ASC_NULLS_LAST',
-  CallDesc = 'call_DESC',
-  CallDescNullsFirst = 'call_DESC_NULLS_FIRST',
-  CallDescNullsLast = 'call_DESC_NULLS_LAST',
-  FeeAsc = 'fee_ASC',
-  FeeAscNullsFirst = 'fee_ASC_NULLS_FIRST',
-  FeeAscNullsLast = 'fee_ASC_NULLS_LAST',
-  FeeDesc = 'fee_DESC',
-  FeeDescNullsFirst = 'fee_DESC_NULLS_FIRST',
-  FeeDescNullsLast = 'fee_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  IndexInBlockAsc = 'indexInBlock_ASC',
-  IndexInBlockAscNullsFirst = 'indexInBlock_ASC_NULLS_FIRST',
-  IndexInBlockAscNullsLast = 'indexInBlock_ASC_NULLS_LAST',
-  IndexInBlockDesc = 'indexInBlock_DESC',
-  IndexInBlockDescNullsFirst = 'indexInBlock_DESC_NULLS_FIRST',
-  IndexInBlockDescNullsLast = 'indexInBlock_DESC_NULLS_LAST',
-  PalletAsc = 'pallet_ASC',
-  PalletAscNullsFirst = 'pallet_ASC_NULLS_FIRST',
-  PalletAscNullsLast = 'pallet_ASC_NULLS_LAST',
-  PalletDesc = 'pallet_DESC',
-  PalletDescNullsFirst = 'pallet_DESC_NULLS_FIRST',
-  PalletDescNullsLast = 'pallet_DESC_NULLS_LAST',
-  SignerFreeAsc = 'signer_free_ASC',
-  SignerFreeAscNullsFirst = 'signer_free_ASC_NULLS_FIRST',
-  SignerFreeAscNullsLast = 'signer_free_ASC_NULLS_LAST',
-  SignerFreeDesc = 'signer_free_DESC',
-  SignerFreeDescNullsFirst = 'signer_free_DESC_NULLS_FIRST',
-  SignerFreeDescNullsLast = 'signer_free_DESC_NULLS_LAST',
-  SignerFrozenAsc = 'signer_frozen_ASC',
-  SignerFrozenAscNullsFirst = 'signer_frozen_ASC_NULLS_FIRST',
-  SignerFrozenAscNullsLast = 'signer_frozen_ASC_NULLS_LAST',
-  SignerFrozenDesc = 'signer_frozen_DESC',
-  SignerFrozenDescNullsFirst = 'signer_frozen_DESC_NULLS_FIRST',
-  SignerFrozenDescNullsLast = 'signer_frozen_DESC_NULLS_LAST',
-  SignerIdAsc = 'signer_id_ASC',
-  SignerIdAscNullsFirst = 'signer_id_ASC_NULLS_FIRST',
-  SignerIdAscNullsLast = 'signer_id_ASC_NULLS_LAST',
-  SignerIdDesc = 'signer_id_DESC',
-  SignerIdDescNullsFirst = 'signer_id_DESC_NULLS_FIRST',
-  SignerIdDescNullsLast = 'signer_id_DESC_NULLS_LAST',
-  SignerIsDepositOnlyAsc = 'signer_isDepositOnly_ASC',
-  SignerIsDepositOnlyAscNullsFirst = 'signer_isDepositOnly_ASC_NULLS_FIRST',
-  SignerIsDepositOnlyAscNullsLast = 'signer_isDepositOnly_ASC_NULLS_LAST',
-  SignerIsDepositOnlyDesc = 'signer_isDepositOnly_DESC',
-  SignerIsDepositOnlyDescNullsFirst = 'signer_isDepositOnly_DESC_NULLS_FIRST',
-  SignerIsDepositOnlyDescNullsLast = 'signer_isDepositOnly_DESC_NULLS_LAST',
-  SignerLastUpdatedAsc = 'signer_lastUpdated_ASC',
-  SignerLastUpdatedAscNullsFirst = 'signer_lastUpdated_ASC_NULLS_FIRST',
-  SignerLastUpdatedAscNullsLast = 'signer_lastUpdated_ASC_NULLS_LAST',
-  SignerLastUpdatedDesc = 'signer_lastUpdated_DESC',
-  SignerLastUpdatedDescNullsFirst = 'signer_lastUpdated_DESC_NULLS_FIRST',
-  SignerLastUpdatedDescNullsLast = 'signer_lastUpdated_DESC_NULLS_LAST',
-  SignerPrivacyDepositsAsc = 'signer_privacyDeposits_ASC',
-  SignerPrivacyDepositsAscNullsFirst = 'signer_privacyDeposits_ASC_NULLS_FIRST',
-  SignerPrivacyDepositsAscNullsLast = 'signer_privacyDeposits_ASC_NULLS_LAST',
-  SignerPrivacyDepositsDesc = 'signer_privacyDeposits_DESC',
-  SignerPrivacyDepositsDescNullsFirst = 'signer_privacyDeposits_DESC_NULLS_FIRST',
-  SignerPrivacyDepositsDescNullsLast = 'signer_privacyDeposits_DESC_NULLS_LAST',
-  SignerReservedAsc = 'signer_reserved_ASC',
-  SignerReservedAscNullsFirst = 'signer_reserved_ASC_NULLS_FIRST',
-  SignerReservedAscNullsLast = 'signer_reserved_ASC_NULLS_LAST',
-  SignerReservedDesc = 'signer_reserved_DESC',
-  SignerReservedDescNullsFirst = 'signer_reserved_DESC_NULLS_FIRST',
-  SignerReservedDescNullsLast = 'signer_reserved_DESC_NULLS_LAST',
-  SuccessAsc = 'success_ASC',
-  SuccessAscNullsFirst = 'success_ASC_NULLS_FIRST',
-  SuccessAscNullsLast = 'success_ASC_NULLS_LAST',
-  SuccessDesc = 'success_DESC',
-  SuccessDescNullsFirst = 'success_DESC_NULLS_FIRST',
-  SuccessDescNullsLast = 'success_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
-}
-
-export type ExtrinsicWhereInput = {
-  AND?: InputMaybe<Array<ExtrinsicWhereInput>>;
-  OR?: InputMaybe<Array<ExtrinsicWhereInput>>;
-  args_contains?: InputMaybe<Scalars['String']['input']>;
-  args_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  args_endsWith?: InputMaybe<Scalars['String']['input']>;
-  args_eq?: InputMaybe<Scalars['String']['input']>;
-  args_gt?: InputMaybe<Scalars['String']['input']>;
-  args_gte?: InputMaybe<Scalars['String']['input']>;
-  args_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  args_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  args_lt?: InputMaybe<Scalars['String']['input']>;
-  args_lte?: InputMaybe<Scalars['String']['input']>;
-  args_not_contains?: InputMaybe<Scalars['String']['input']>;
-  args_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  args_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  args_not_eq?: InputMaybe<Scalars['String']['input']>;
-  args_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  args_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  args_startsWith?: InputMaybe<Scalars['String']['input']>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  call_contains?: InputMaybe<Scalars['String']['input']>;
-  call_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  call_endsWith?: InputMaybe<Scalars['String']['input']>;
-  call_eq?: InputMaybe<Scalars['String']['input']>;
-  call_gt?: InputMaybe<Scalars['String']['input']>;
-  call_gte?: InputMaybe<Scalars['String']['input']>;
-  call_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  call_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  call_lt?: InputMaybe<Scalars['String']['input']>;
-  call_lte?: InputMaybe<Scalars['String']['input']>;
-  call_not_contains?: InputMaybe<Scalars['String']['input']>;
-  call_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  call_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  call_not_eq?: InputMaybe<Scalars['String']['input']>;
-  call_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  call_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  call_startsWith?: InputMaybe<Scalars['String']['input']>;
-  events_every?: InputMaybe<EventWhereInput>;
-  events_none?: InputMaybe<EventWhereInput>;
-  events_some?: InputMaybe<EventWhereInput>;
-  fee_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  fee_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fee_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  indexInBlock_eq?: InputMaybe<Scalars['Int']['input']>;
-  indexInBlock_gt?: InputMaybe<Scalars['Int']['input']>;
-  indexInBlock_gte?: InputMaybe<Scalars['Int']['input']>;
-  indexInBlock_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  indexInBlock_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  indexInBlock_lt?: InputMaybe<Scalars['Int']['input']>;
-  indexInBlock_lte?: InputMaybe<Scalars['Int']['input']>;
-  indexInBlock_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  indexInBlock_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  pallet_contains?: InputMaybe<Scalars['String']['input']>;
-  pallet_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  pallet_endsWith?: InputMaybe<Scalars['String']['input']>;
-  pallet_eq?: InputMaybe<Scalars['String']['input']>;
-  pallet_gt?: InputMaybe<Scalars['String']['input']>;
-  pallet_gte?: InputMaybe<Scalars['String']['input']>;
-  pallet_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  pallet_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  pallet_lt?: InputMaybe<Scalars['String']['input']>;
-  pallet_lte?: InputMaybe<Scalars['String']['input']>;
-  pallet_not_contains?: InputMaybe<Scalars['String']['input']>;
-  pallet_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  pallet_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  pallet_not_eq?: InputMaybe<Scalars['String']['input']>;
-  pallet_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  pallet_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  pallet_startsWith?: InputMaybe<Scalars['String']['input']>;
-  signer?: InputMaybe<AccountWhereInput>;
-  signer_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  success_eq?: InputMaybe<Scalars['Boolean']['input']>;
-  success_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  success_not_eq?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-};
-
-export type ExtrinsicsConnection = {
-  __typename?: 'ExtrinsicsConnection';
-  edges: Array<ExtrinsicEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type HighSecuritySet = {
-  __typename?: 'HighSecuritySet';
-  block: Block;
-  delay: Scalars['BigInt']['output'];
-  event?: Maybe<Event>;
-  /** Link to the extrinsic that set high security */
-  extrinsic?: Maybe<Extrinsic>;
-  id: Scalars['String']['output'];
-  interceptor: Account;
-  timestamp: Scalars['DateTime']['output'];
-  who: Account;
-};
-
-export type HighSecuritySetEdge = {
-  __typename?: 'HighSecuritySetEdge';
-  cursor: Scalars['String']['output'];
-  node: HighSecuritySet;
-};
-
-export enum HighSecuritySetOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  DelayAsc = 'delay_ASC',
-  DelayAscNullsFirst = 'delay_ASC_NULLS_FIRST',
-  DelayAscNullsLast = 'delay_ASC_NULLS_LAST',
-  DelayDesc = 'delay_DESC',
-  DelayDescNullsFirst = 'delay_DESC_NULLS_FIRST',
-  DelayDescNullsLast = 'delay_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  InterceptorFreeAsc = 'interceptor_free_ASC',
-  InterceptorFreeAscNullsFirst = 'interceptor_free_ASC_NULLS_FIRST',
-  InterceptorFreeAscNullsLast = 'interceptor_free_ASC_NULLS_LAST',
-  InterceptorFreeDesc = 'interceptor_free_DESC',
-  InterceptorFreeDescNullsFirst = 'interceptor_free_DESC_NULLS_FIRST',
-  InterceptorFreeDescNullsLast = 'interceptor_free_DESC_NULLS_LAST',
-  InterceptorFrozenAsc = 'interceptor_frozen_ASC',
-  InterceptorFrozenAscNullsFirst = 'interceptor_frozen_ASC_NULLS_FIRST',
-  InterceptorFrozenAscNullsLast = 'interceptor_frozen_ASC_NULLS_LAST',
-  InterceptorFrozenDesc = 'interceptor_frozen_DESC',
-  InterceptorFrozenDescNullsFirst = 'interceptor_frozen_DESC_NULLS_FIRST',
-  InterceptorFrozenDescNullsLast = 'interceptor_frozen_DESC_NULLS_LAST',
-  InterceptorIdAsc = 'interceptor_id_ASC',
-  InterceptorIdAscNullsFirst = 'interceptor_id_ASC_NULLS_FIRST',
-  InterceptorIdAscNullsLast = 'interceptor_id_ASC_NULLS_LAST',
-  InterceptorIdDesc = 'interceptor_id_DESC',
-  InterceptorIdDescNullsFirst = 'interceptor_id_DESC_NULLS_FIRST',
-  InterceptorIdDescNullsLast = 'interceptor_id_DESC_NULLS_LAST',
-  InterceptorIsDepositOnlyAsc = 'interceptor_isDepositOnly_ASC',
-  InterceptorIsDepositOnlyAscNullsFirst = 'interceptor_isDepositOnly_ASC_NULLS_FIRST',
-  InterceptorIsDepositOnlyAscNullsLast = 'interceptor_isDepositOnly_ASC_NULLS_LAST',
-  InterceptorIsDepositOnlyDesc = 'interceptor_isDepositOnly_DESC',
-  InterceptorIsDepositOnlyDescNullsFirst = 'interceptor_isDepositOnly_DESC_NULLS_FIRST',
-  InterceptorIsDepositOnlyDescNullsLast = 'interceptor_isDepositOnly_DESC_NULLS_LAST',
-  InterceptorLastUpdatedAsc = 'interceptor_lastUpdated_ASC',
-  InterceptorLastUpdatedAscNullsFirst = 'interceptor_lastUpdated_ASC_NULLS_FIRST',
-  InterceptorLastUpdatedAscNullsLast = 'interceptor_lastUpdated_ASC_NULLS_LAST',
-  InterceptorLastUpdatedDesc = 'interceptor_lastUpdated_DESC',
-  InterceptorLastUpdatedDescNullsFirst = 'interceptor_lastUpdated_DESC_NULLS_FIRST',
-  InterceptorLastUpdatedDescNullsLast = 'interceptor_lastUpdated_DESC_NULLS_LAST',
-  InterceptorPrivacyDepositsAsc = 'interceptor_privacyDeposits_ASC',
-  InterceptorPrivacyDepositsAscNullsFirst = 'interceptor_privacyDeposits_ASC_NULLS_FIRST',
-  InterceptorPrivacyDepositsAscNullsLast = 'interceptor_privacyDeposits_ASC_NULLS_LAST',
-  InterceptorPrivacyDepositsDesc = 'interceptor_privacyDeposits_DESC',
-  InterceptorPrivacyDepositsDescNullsFirst = 'interceptor_privacyDeposits_DESC_NULLS_FIRST',
-  InterceptorPrivacyDepositsDescNullsLast = 'interceptor_privacyDeposits_DESC_NULLS_LAST',
-  InterceptorReservedAsc = 'interceptor_reserved_ASC',
-  InterceptorReservedAscNullsFirst = 'interceptor_reserved_ASC_NULLS_FIRST',
-  InterceptorReservedAscNullsLast = 'interceptor_reserved_ASC_NULLS_LAST',
-  InterceptorReservedDesc = 'interceptor_reserved_DESC',
-  InterceptorReservedDescNullsFirst = 'interceptor_reserved_DESC_NULLS_FIRST',
-  InterceptorReservedDescNullsLast = 'interceptor_reserved_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  WhoFreeAsc = 'who_free_ASC',
-  WhoFreeAscNullsFirst = 'who_free_ASC_NULLS_FIRST',
-  WhoFreeAscNullsLast = 'who_free_ASC_NULLS_LAST',
-  WhoFreeDesc = 'who_free_DESC',
-  WhoFreeDescNullsFirst = 'who_free_DESC_NULLS_FIRST',
-  WhoFreeDescNullsLast = 'who_free_DESC_NULLS_LAST',
-  WhoFrozenAsc = 'who_frozen_ASC',
-  WhoFrozenAscNullsFirst = 'who_frozen_ASC_NULLS_FIRST',
-  WhoFrozenAscNullsLast = 'who_frozen_ASC_NULLS_LAST',
-  WhoFrozenDesc = 'who_frozen_DESC',
-  WhoFrozenDescNullsFirst = 'who_frozen_DESC_NULLS_FIRST',
-  WhoFrozenDescNullsLast = 'who_frozen_DESC_NULLS_LAST',
-  WhoIdAsc = 'who_id_ASC',
-  WhoIdAscNullsFirst = 'who_id_ASC_NULLS_FIRST',
-  WhoIdAscNullsLast = 'who_id_ASC_NULLS_LAST',
-  WhoIdDesc = 'who_id_DESC',
-  WhoIdDescNullsFirst = 'who_id_DESC_NULLS_FIRST',
-  WhoIdDescNullsLast = 'who_id_DESC_NULLS_LAST',
-  WhoIsDepositOnlyAsc = 'who_isDepositOnly_ASC',
-  WhoIsDepositOnlyAscNullsFirst = 'who_isDepositOnly_ASC_NULLS_FIRST',
-  WhoIsDepositOnlyAscNullsLast = 'who_isDepositOnly_ASC_NULLS_LAST',
-  WhoIsDepositOnlyDesc = 'who_isDepositOnly_DESC',
-  WhoIsDepositOnlyDescNullsFirst = 'who_isDepositOnly_DESC_NULLS_FIRST',
-  WhoIsDepositOnlyDescNullsLast = 'who_isDepositOnly_DESC_NULLS_LAST',
-  WhoLastUpdatedAsc = 'who_lastUpdated_ASC',
-  WhoLastUpdatedAscNullsFirst = 'who_lastUpdated_ASC_NULLS_FIRST',
-  WhoLastUpdatedAscNullsLast = 'who_lastUpdated_ASC_NULLS_LAST',
-  WhoLastUpdatedDesc = 'who_lastUpdated_DESC',
-  WhoLastUpdatedDescNullsFirst = 'who_lastUpdated_DESC_NULLS_FIRST',
-  WhoLastUpdatedDescNullsLast = 'who_lastUpdated_DESC_NULLS_LAST',
-  WhoPrivacyDepositsAsc = 'who_privacyDeposits_ASC',
-  WhoPrivacyDepositsAscNullsFirst = 'who_privacyDeposits_ASC_NULLS_FIRST',
-  WhoPrivacyDepositsAscNullsLast = 'who_privacyDeposits_ASC_NULLS_LAST',
-  WhoPrivacyDepositsDesc = 'who_privacyDeposits_DESC',
-  WhoPrivacyDepositsDescNullsFirst = 'who_privacyDeposits_DESC_NULLS_FIRST',
-  WhoPrivacyDepositsDescNullsLast = 'who_privacyDeposits_DESC_NULLS_LAST',
-  WhoReservedAsc = 'who_reserved_ASC',
-  WhoReservedAscNullsFirst = 'who_reserved_ASC_NULLS_FIRST',
-  WhoReservedAscNullsLast = 'who_reserved_ASC_NULLS_LAST',
-  WhoReservedDesc = 'who_reserved_DESC',
-  WhoReservedDescNullsFirst = 'who_reserved_DESC_NULLS_FIRST',
-  WhoReservedDescNullsLast = 'who_reserved_DESC_NULLS_LAST'
-}
-
-export type HighSecuritySetWhereInput = {
-  AND?: InputMaybe<Array<HighSecuritySetWhereInput>>;
-  OR?: InputMaybe<Array<HighSecuritySetWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  delay_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  delay_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  delay_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  delay_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  delay_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  delay_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  delay_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  delay_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  delay_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  interceptor?: InputMaybe<AccountWhereInput>;
-  interceptor_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  who?: InputMaybe<AccountWhereInput>;
-  who_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type HighSecuritySetsConnection = {
-  __typename?: 'HighSecuritySetsConnection';
-  edges: Array<HighSecuritySetEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type MinerReward = {
-  __typename?: 'MinerReward';
-  block: Block;
-  event?: Maybe<Event>;
-  id: Scalars['String']['output'];
-  miner: Account;
-  reward: Scalars['BigInt']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type MinerRewardEdge = {
-  __typename?: 'MinerRewardEdge';
-  cursor: Scalars['String']['output'];
-  node: MinerReward;
-};
-
-export enum MinerRewardOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  MinerFreeAsc = 'miner_free_ASC',
-  MinerFreeAscNullsFirst = 'miner_free_ASC_NULLS_FIRST',
-  MinerFreeAscNullsLast = 'miner_free_ASC_NULLS_LAST',
-  MinerFreeDesc = 'miner_free_DESC',
-  MinerFreeDescNullsFirst = 'miner_free_DESC_NULLS_FIRST',
-  MinerFreeDescNullsLast = 'miner_free_DESC_NULLS_LAST',
-  MinerFrozenAsc = 'miner_frozen_ASC',
-  MinerFrozenAscNullsFirst = 'miner_frozen_ASC_NULLS_FIRST',
-  MinerFrozenAscNullsLast = 'miner_frozen_ASC_NULLS_LAST',
-  MinerFrozenDesc = 'miner_frozen_DESC',
-  MinerFrozenDescNullsFirst = 'miner_frozen_DESC_NULLS_FIRST',
-  MinerFrozenDescNullsLast = 'miner_frozen_DESC_NULLS_LAST',
-  MinerIdAsc = 'miner_id_ASC',
-  MinerIdAscNullsFirst = 'miner_id_ASC_NULLS_FIRST',
-  MinerIdAscNullsLast = 'miner_id_ASC_NULLS_LAST',
-  MinerIdDesc = 'miner_id_DESC',
-  MinerIdDescNullsFirst = 'miner_id_DESC_NULLS_FIRST',
-  MinerIdDescNullsLast = 'miner_id_DESC_NULLS_LAST',
-  MinerIsDepositOnlyAsc = 'miner_isDepositOnly_ASC',
-  MinerIsDepositOnlyAscNullsFirst = 'miner_isDepositOnly_ASC_NULLS_FIRST',
-  MinerIsDepositOnlyAscNullsLast = 'miner_isDepositOnly_ASC_NULLS_LAST',
-  MinerIsDepositOnlyDesc = 'miner_isDepositOnly_DESC',
-  MinerIsDepositOnlyDescNullsFirst = 'miner_isDepositOnly_DESC_NULLS_FIRST',
-  MinerIsDepositOnlyDescNullsLast = 'miner_isDepositOnly_DESC_NULLS_LAST',
-  MinerLastUpdatedAsc = 'miner_lastUpdated_ASC',
-  MinerLastUpdatedAscNullsFirst = 'miner_lastUpdated_ASC_NULLS_FIRST',
-  MinerLastUpdatedAscNullsLast = 'miner_lastUpdated_ASC_NULLS_LAST',
-  MinerLastUpdatedDesc = 'miner_lastUpdated_DESC',
-  MinerLastUpdatedDescNullsFirst = 'miner_lastUpdated_DESC_NULLS_FIRST',
-  MinerLastUpdatedDescNullsLast = 'miner_lastUpdated_DESC_NULLS_LAST',
-  MinerPrivacyDepositsAsc = 'miner_privacyDeposits_ASC',
-  MinerPrivacyDepositsAscNullsFirst = 'miner_privacyDeposits_ASC_NULLS_FIRST',
-  MinerPrivacyDepositsAscNullsLast = 'miner_privacyDeposits_ASC_NULLS_LAST',
-  MinerPrivacyDepositsDesc = 'miner_privacyDeposits_DESC',
-  MinerPrivacyDepositsDescNullsFirst = 'miner_privacyDeposits_DESC_NULLS_FIRST',
-  MinerPrivacyDepositsDescNullsLast = 'miner_privacyDeposits_DESC_NULLS_LAST',
-  MinerReservedAsc = 'miner_reserved_ASC',
-  MinerReservedAscNullsFirst = 'miner_reserved_ASC_NULLS_FIRST',
-  MinerReservedAscNullsLast = 'miner_reserved_ASC_NULLS_LAST',
-  MinerReservedDesc = 'miner_reserved_DESC',
-  MinerReservedDescNullsFirst = 'miner_reserved_DESC_NULLS_FIRST',
-  MinerReservedDescNullsLast = 'miner_reserved_DESC_NULLS_LAST',
-  RewardAsc = 'reward_ASC',
-  RewardAscNullsFirst = 'reward_ASC_NULLS_FIRST',
-  RewardAscNullsLast = 'reward_ASC_NULLS_LAST',
-  RewardDesc = 'reward_DESC',
-  RewardDescNullsFirst = 'reward_DESC_NULLS_FIRST',
-  RewardDescNullsLast = 'reward_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST'
-}
-
-export type MinerRewardWhereInput = {
-  AND?: InputMaybe<Array<MinerRewardWhereInput>>;
-  OR?: InputMaybe<Array<MinerRewardWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  miner?: InputMaybe<AccountWhereInput>;
-  miner_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  reward_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  reward_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  reward_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  reward_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-};
-
-export type MinerRewardsConnection = {
-  __typename?: 'MinerRewardsConnection';
-  edges: Array<MinerRewardEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type MinerStats = {
-  __typename?: 'MinerStats';
-  /** Miner address */
-  id: Scalars['String']['output'];
-  totalMinedBlocks: Scalars['Int']['output'];
-  totalRewards: Scalars['BigInt']['output'];
-};
-
-export type MinerStatsConnection = {
-  __typename?: 'MinerStatsConnection';
-  edges: Array<MinerStatsEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type MinerStatsEdge = {
-  __typename?: 'MinerStatsEdge';
-  cursor: Scalars['String']['output'];
-  node: MinerStats;
-};
-
-export enum MinerStatsOrderByInput {
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  TotalMinedBlocksAsc = 'totalMinedBlocks_ASC',
-  TotalMinedBlocksAscNullsFirst = 'totalMinedBlocks_ASC_NULLS_FIRST',
-  TotalMinedBlocksAscNullsLast = 'totalMinedBlocks_ASC_NULLS_LAST',
-  TotalMinedBlocksDesc = 'totalMinedBlocks_DESC',
-  TotalMinedBlocksDescNullsFirst = 'totalMinedBlocks_DESC_NULLS_FIRST',
-  TotalMinedBlocksDescNullsLast = 'totalMinedBlocks_DESC_NULLS_LAST',
-  TotalRewardsAsc = 'totalRewards_ASC',
-  TotalRewardsAscNullsFirst = 'totalRewards_ASC_NULLS_FIRST',
-  TotalRewardsAscNullsLast = 'totalRewards_ASC_NULLS_LAST',
-  TotalRewardsDesc = 'totalRewards_DESC',
-  TotalRewardsDescNullsFirst = 'totalRewards_DESC_NULLS_FIRST',
-  TotalRewardsDescNullsLast = 'totalRewards_DESC_NULLS_LAST'
-}
-
-export type MinerStatsWhereInput = {
-  AND?: InputMaybe<Array<MinerStatsWhereInput>>;
-  OR?: InputMaybe<Array<MinerStatsWhereInput>>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  totalMinedBlocks_eq?: InputMaybe<Scalars['Int']['input']>;
-  totalMinedBlocks_gt?: InputMaybe<Scalars['Int']['input']>;
-  totalMinedBlocks_gte?: InputMaybe<Scalars['Int']['input']>;
-  totalMinedBlocks_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  totalMinedBlocks_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  totalMinedBlocks_lt?: InputMaybe<Scalars['Int']['input']>;
-  totalMinedBlocks_lte?: InputMaybe<Scalars['Int']['input']>;
-  totalMinedBlocks_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  totalMinedBlocks_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  totalRewards_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  totalRewards_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  totalRewards_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  totalRewards_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  totalRewards_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  totalRewards_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  totalRewards_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  totalRewards_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  totalRewards_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-};
-
-export type NullifierResult = {
-  __typename?: 'NullifierResult';
-  blockHeight: Scalars['Int']['output'];
-  extrinsicHash: Scalars['String']['output'];
-  nullifier: Scalars['String']['output'];
-  nullifierHash: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-};
-
-export type NullifiersByPrefixInput = {
-  afterBlock?: InputMaybe<Scalars['Int']['input']>;
-  hashPrefixes: Array<Scalars['String']['input']>;
-};
-
-export type NullifiersByPrefixResponse = {
-  __typename?: 'NullifiersByPrefixResponse';
-  nullifiers: Array<NullifierResult>;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type PageInfo = {
-  __typename?: 'PageInfo';
-  endCursor: Scalars['String']['output'];
-  hasNextPage: Scalars['Boolean']['output'];
-  hasPreviousPage: Scalars['Boolean']['output'];
-  startCursor: Scalars['String']['output'];
-};
-
-export type Query = {
-  __typename?: 'Query';
-  accountById?: Maybe<Account>;
-  accountEventById?: Maybe<AccountEvent>;
-  accountEvents: Array<AccountEvent>;
-  accountEventsConnection: AccountEventsConnection;
-  accounts: Array<Account>;
-  accountsConnection: AccountsConnection;
-  balanceEventById?: Maybe<BalanceEvent>;
-  balanceEvents: Array<BalanceEvent>;
-  balanceEventsConnection: BalanceEventsConnection;
-  blockById?: Maybe<Block>;
-  blocks: Array<Block>;
-  blocksConnection: BlocksConnection;
-  cancelledReversibleTransferById?: Maybe<CancelledReversibleTransfer>;
-  cancelledReversibleTransfers: Array<CancelledReversibleTransfer>;
-  cancelledReversibleTransfersConnection: CancelledReversibleTransfersConnection;
-  depositPoolStats: Array<DepositPoolStats>;
-  depositPoolStatsById?: Maybe<DepositPoolStats>;
-  depositPoolStatsConnection: DepositPoolStatsConnection;
-  errorEventById?: Maybe<ErrorEvent>;
-  errorEvents: Array<ErrorEvent>;
-  errorEventsConnection: ErrorEventsConnection;
-  eventById?: Maybe<Event>;
-  events: Array<Event>;
-  eventsConnection: EventsConnection;
-  executedReversibleTransferById?: Maybe<ExecutedReversibleTransfer>;
-  executedReversibleTransfers: Array<ExecutedReversibleTransfer>;
-  executedReversibleTransfersConnection: ExecutedReversibleTransfersConnection;
-  extrinsicById?: Maybe<Extrinsic>;
-  extrinsics: Array<Extrinsic>;
-  extrinsicsConnection: ExtrinsicsConnection;
-  highSecuritySetById?: Maybe<HighSecuritySet>;
-  highSecuritySets: Array<HighSecuritySet>;
-  highSecuritySetsConnection: HighSecuritySetsConnection;
-  minerRewardById?: Maybe<MinerReward>;
-  minerRewards: Array<MinerReward>;
-  minerRewardsConnection: MinerRewardsConnection;
-  minerStats: Array<MinerStats>;
-  minerStatsById?: Maybe<MinerStats>;
-  minerStatsConnection: MinerStatsConnection;
-  nullifiersByPrefix: NullifiersByPrefixResponse;
-  scheduledReversibleTransferById?: Maybe<ScheduledReversibleTransfer>;
-  scheduledReversibleTransfers: Array<ScheduledReversibleTransfer>;
-  scheduledReversibleTransfersConnection: ScheduledReversibleTransfersConnection;
-  squidStatus?: Maybe<SquidStatus>;
-  transferById?: Maybe<Transfer>;
-  transfers: Array<Transfer>;
-  transfersByHashPrefix: TransfersByPrefixResult;
-  transfersConnection: TransfersConnection;
-  wormholeExtrinsicById?: Maybe<WormholeExtrinsic>;
-  wormholeExtrinsics: Array<WormholeExtrinsic>;
-  wormholeExtrinsicsConnection: WormholeExtrinsicsConnection;
-  wormholeNullifierById?: Maybe<WormholeNullifier>;
-  wormholeNullifiers: Array<WormholeNullifier>;
-  wormholeNullifiersConnection: WormholeNullifiersConnection;
-  wormholeOutputById?: Maybe<WormholeOutput>;
-  wormholeOutputs: Array<WormholeOutput>;
-  wormholeOutputsConnection: WormholeOutputsConnection;
-};
-
-export type QueryAccountByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryAccountEventByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryAccountEventsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AccountEventOrderByInput>>;
-  where?: InputMaybe<AccountEventWhereInput>;
-};
-
-export type QueryAccountEventsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<AccountEventOrderByInput>;
-  where?: InputMaybe<AccountEventWhereInput>;
-};
-
-export type QueryAccountsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AccountOrderByInput>>;
-  where?: InputMaybe<AccountWhereInput>;
-};
-
-export type QueryAccountsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<AccountOrderByInput>;
-  where?: InputMaybe<AccountWhereInput>;
-};
-
-export type QueryBalanceEventByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryBalanceEventsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<BalanceEventOrderByInput>>;
-  where?: InputMaybe<BalanceEventWhereInput>;
-};
-
-export type QueryBalanceEventsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<BalanceEventOrderByInput>;
-  where?: InputMaybe<BalanceEventWhereInput>;
-};
-
-export type QueryBlockByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryBlocksArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<BlockOrderByInput>>;
-  where?: InputMaybe<BlockWhereInput>;
-};
-
-export type QueryBlocksConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<BlockOrderByInput>;
-  where?: InputMaybe<BlockWhereInput>;
-};
-
-export type QueryCancelledReversibleTransferByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryCancelledReversibleTransfersArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CancelledReversibleTransferOrderByInput>>;
-  where?: InputMaybe<CancelledReversibleTransferWhereInput>;
-};
-
-export type QueryCancelledReversibleTransfersConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<CancelledReversibleTransferOrderByInput>;
-  where?: InputMaybe<CancelledReversibleTransferWhereInput>;
-};
-
-export type QueryDepositPoolStatsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<DepositPoolStatsOrderByInput>>;
-  where?: InputMaybe<DepositPoolStatsWhereInput>;
-};
-
-export type QueryDepositPoolStatsByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryDepositPoolStatsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<DepositPoolStatsOrderByInput>;
-  where?: InputMaybe<DepositPoolStatsWhereInput>;
-};
-
-export type QueryErrorEventByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryErrorEventsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ErrorEventOrderByInput>>;
-  where?: InputMaybe<ErrorEventWhereInput>;
-};
-
-export type QueryErrorEventsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<ErrorEventOrderByInput>;
-  where?: InputMaybe<ErrorEventWhereInput>;
-};
-
-export type QueryEventByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryEventsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<EventOrderByInput>>;
-  where?: InputMaybe<EventWhereInput>;
-};
-
-export type QueryEventsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<EventOrderByInput>;
-  where?: InputMaybe<EventWhereInput>;
-};
-
-export type QueryExecutedReversibleTransferByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryExecutedReversibleTransfersArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ExecutedReversibleTransferOrderByInput>>;
-  where?: InputMaybe<ExecutedReversibleTransferWhereInput>;
-};
-
-export type QueryExecutedReversibleTransfersConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<ExecutedReversibleTransferOrderByInput>;
-  where?: InputMaybe<ExecutedReversibleTransferWhereInput>;
-};
-
-export type QueryExtrinsicByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryExtrinsicsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ExtrinsicOrderByInput>>;
-  where?: InputMaybe<ExtrinsicWhereInput>;
-};
-
-export type QueryExtrinsicsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<ExtrinsicOrderByInput>;
-  where?: InputMaybe<ExtrinsicWhereInput>;
-};
-
-export type QueryHighSecuritySetByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryHighSecuritySetsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<HighSecuritySetOrderByInput>>;
-  where?: InputMaybe<HighSecuritySetWhereInput>;
-};
-
-export type QueryHighSecuritySetsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<HighSecuritySetOrderByInput>;
-  where?: InputMaybe<HighSecuritySetWhereInput>;
-};
-
-export type QueryMinerRewardByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryMinerRewardsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<MinerRewardOrderByInput>>;
-  where?: InputMaybe<MinerRewardWhereInput>;
-};
-
-export type QueryMinerRewardsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<MinerRewardOrderByInput>;
-  where?: InputMaybe<MinerRewardWhereInput>;
-};
-
-export type QueryMinerStatsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<MinerStatsOrderByInput>>;
-  where?: InputMaybe<MinerStatsWhereInput>;
-};
-
-export type QueryMinerStatsByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryMinerStatsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<MinerStatsOrderByInput>;
-  where?: InputMaybe<MinerStatsWhereInput>;
-};
-
-export type QueryNullifiersByPrefixArgs = {
-  input: NullifiersByPrefixInput;
-};
-
-export type QueryScheduledReversibleTransferByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryScheduledReversibleTransfersArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ScheduledReversibleTransferOrderByInput>>;
-  where?: InputMaybe<ScheduledReversibleTransferWhereInput>;
-};
-
-export type QueryScheduledReversibleTransfersConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<ScheduledReversibleTransferOrderByInput>;
-  where?: InputMaybe<ScheduledReversibleTransferWhereInput>;
-};
-
-export type QueryTransferByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryTransfersArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<TransferOrderByInput>>;
-  where?: InputMaybe<TransferWhereInput>;
-};
-
-export type QueryTransfersByHashPrefixArgs = {
-  input: TransfersByPrefixInput;
-};
-
-export type QueryTransfersConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<TransferOrderByInput>;
-  where?: InputMaybe<TransferWhereInput>;
-};
-
-export type QueryWormholeExtrinsicByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryWormholeExtrinsicsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeExtrinsicOrderByInput>>;
-  where?: InputMaybe<WormholeExtrinsicWhereInput>;
-};
-
-export type QueryWormholeExtrinsicsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeExtrinsicOrderByInput>;
-  where?: InputMaybe<WormholeExtrinsicWhereInput>;
-};
-
-export type QueryWormholeNullifierByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryWormholeNullifiersArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeNullifierOrderByInput>>;
-  where?: InputMaybe<WormholeNullifierWhereInput>;
-};
-
-export type QueryWormholeNullifiersConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeNullifierOrderByInput>;
-  where?: InputMaybe<WormholeNullifierWhereInput>;
-};
-
-export type QueryWormholeOutputByIdArgs = {
-  id: Scalars['String']['input'];
-};
-
-export type QueryWormholeOutputsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeOutputOrderByInput>>;
-  where?: InputMaybe<WormholeOutputWhereInput>;
-};
-
-export type QueryWormholeOutputsConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeOutputOrderByInput>;
-  where?: InputMaybe<WormholeOutputWhereInput>;
-};
-
-export type ScheduledReversibleTransfer = {
-  __typename?: 'ScheduledReversibleTransfer';
-  amount: Scalars['BigInt']['output'];
-  block: Block;
-  event?: Maybe<Event>;
-  /** Link to the extrinsic that scheduled this transfer */
-  extrinsic?: Maybe<Extrinsic>;
-  fee: Scalars['BigInt']['output'];
-  from: Account;
-  id: Scalars['String']['output'];
-  scheduledAt: Scalars['DateTime']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  to: Account;
-  txId: Scalars['String']['output'];
-};
-
-export type ScheduledReversibleTransferEdge = {
-  __typename?: 'ScheduledReversibleTransferEdge';
-  cursor: Scalars['String']['output'];
-  node: ScheduledReversibleTransfer;
-};
-
-export enum ScheduledReversibleTransferOrderByInput {
-  AmountAsc = 'amount_ASC',
-  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
-  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
-  AmountDesc = 'amount_DESC',
-  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
-  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  FeeAsc = 'fee_ASC',
-  FeeAscNullsFirst = 'fee_ASC_NULLS_FIRST',
-  FeeAscNullsLast = 'fee_ASC_NULLS_LAST',
-  FeeDesc = 'fee_DESC',
-  FeeDescNullsFirst = 'fee_DESC_NULLS_FIRST',
-  FeeDescNullsLast = 'fee_DESC_NULLS_LAST',
-  FromFreeAsc = 'from_free_ASC',
-  FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
-  FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
-  FromFreeDesc = 'from_free_DESC',
-  FromFreeDescNullsFirst = 'from_free_DESC_NULLS_FIRST',
-  FromFreeDescNullsLast = 'from_free_DESC_NULLS_LAST',
-  FromFrozenAsc = 'from_frozen_ASC',
-  FromFrozenAscNullsFirst = 'from_frozen_ASC_NULLS_FIRST',
-  FromFrozenAscNullsLast = 'from_frozen_ASC_NULLS_LAST',
-  FromFrozenDesc = 'from_frozen_DESC',
-  FromFrozenDescNullsFirst = 'from_frozen_DESC_NULLS_FIRST',
-  FromFrozenDescNullsLast = 'from_frozen_DESC_NULLS_LAST',
-  FromIdAsc = 'from_id_ASC',
-  FromIdAscNullsFirst = 'from_id_ASC_NULLS_FIRST',
-  FromIdAscNullsLast = 'from_id_ASC_NULLS_LAST',
-  FromIdDesc = 'from_id_DESC',
-  FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
-  FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsDepositOnlyAsc = 'from_isDepositOnly_ASC',
-  FromIsDepositOnlyAscNullsFirst = 'from_isDepositOnly_ASC_NULLS_FIRST',
-  FromIsDepositOnlyAscNullsLast = 'from_isDepositOnly_ASC_NULLS_LAST',
-  FromIsDepositOnlyDesc = 'from_isDepositOnly_DESC',
-  FromIsDepositOnlyDescNullsFirst = 'from_isDepositOnly_DESC_NULLS_FIRST',
-  FromIsDepositOnlyDescNullsLast = 'from_isDepositOnly_DESC_NULLS_LAST',
-  FromLastUpdatedAsc = 'from_lastUpdated_ASC',
-  FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
-  FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
-  FromLastUpdatedDesc = 'from_lastUpdated_DESC',
-  FromLastUpdatedDescNullsFirst = 'from_lastUpdated_DESC_NULLS_FIRST',
-  FromLastUpdatedDescNullsLast = 'from_lastUpdated_DESC_NULLS_LAST',
-  FromPrivacyDepositsAsc = 'from_privacyDeposits_ASC',
-  FromPrivacyDepositsAscNullsFirst = 'from_privacyDeposits_ASC_NULLS_FIRST',
-  FromPrivacyDepositsAscNullsLast = 'from_privacyDeposits_ASC_NULLS_LAST',
-  FromPrivacyDepositsDesc = 'from_privacyDeposits_DESC',
-  FromPrivacyDepositsDescNullsFirst = 'from_privacyDeposits_DESC_NULLS_FIRST',
-  FromPrivacyDepositsDescNullsLast = 'from_privacyDeposits_DESC_NULLS_LAST',
-  FromReservedAsc = 'from_reserved_ASC',
-  FromReservedAscNullsFirst = 'from_reserved_ASC_NULLS_FIRST',
-  FromReservedAscNullsLast = 'from_reserved_ASC_NULLS_LAST',
-  FromReservedDesc = 'from_reserved_DESC',
-  FromReservedDescNullsFirst = 'from_reserved_DESC_NULLS_FIRST',
-  FromReservedDescNullsLast = 'from_reserved_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  ScheduledAtAsc = 'scheduledAt_ASC',
-  ScheduledAtAscNullsFirst = 'scheduledAt_ASC_NULLS_FIRST',
-  ScheduledAtAscNullsLast = 'scheduledAt_ASC_NULLS_LAST',
-  ScheduledAtDesc = 'scheduledAt_DESC',
-  ScheduledAtDescNullsFirst = 'scheduledAt_DESC_NULLS_FIRST',
-  ScheduledAtDescNullsLast = 'scheduledAt_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  ToFreeAsc = 'to_free_ASC',
-  ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
-  ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
-  ToFreeDesc = 'to_free_DESC',
-  ToFreeDescNullsFirst = 'to_free_DESC_NULLS_FIRST',
-  ToFreeDescNullsLast = 'to_free_DESC_NULLS_LAST',
-  ToFrozenAsc = 'to_frozen_ASC',
-  ToFrozenAscNullsFirst = 'to_frozen_ASC_NULLS_FIRST',
-  ToFrozenAscNullsLast = 'to_frozen_ASC_NULLS_LAST',
-  ToFrozenDesc = 'to_frozen_DESC',
-  ToFrozenDescNullsFirst = 'to_frozen_DESC_NULLS_FIRST',
-  ToFrozenDescNullsLast = 'to_frozen_DESC_NULLS_LAST',
-  ToIdAsc = 'to_id_ASC',
-  ToIdAscNullsFirst = 'to_id_ASC_NULLS_FIRST',
-  ToIdAscNullsLast = 'to_id_ASC_NULLS_LAST',
-  ToIdDesc = 'to_id_DESC',
-  ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
-  ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsDepositOnlyAsc = 'to_isDepositOnly_ASC',
-  ToIsDepositOnlyAscNullsFirst = 'to_isDepositOnly_ASC_NULLS_FIRST',
-  ToIsDepositOnlyAscNullsLast = 'to_isDepositOnly_ASC_NULLS_LAST',
-  ToIsDepositOnlyDesc = 'to_isDepositOnly_DESC',
-  ToIsDepositOnlyDescNullsFirst = 'to_isDepositOnly_DESC_NULLS_FIRST',
-  ToIsDepositOnlyDescNullsLast = 'to_isDepositOnly_DESC_NULLS_LAST',
-  ToLastUpdatedAsc = 'to_lastUpdated_ASC',
-  ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
-  ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
-  ToLastUpdatedDesc = 'to_lastUpdated_DESC',
-  ToLastUpdatedDescNullsFirst = 'to_lastUpdated_DESC_NULLS_FIRST',
-  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST',
-  ToPrivacyDepositsAsc = 'to_privacyDeposits_ASC',
-  ToPrivacyDepositsAscNullsFirst = 'to_privacyDeposits_ASC_NULLS_FIRST',
-  ToPrivacyDepositsAscNullsLast = 'to_privacyDeposits_ASC_NULLS_LAST',
-  ToPrivacyDepositsDesc = 'to_privacyDeposits_DESC',
-  ToPrivacyDepositsDescNullsFirst = 'to_privacyDeposits_DESC_NULLS_FIRST',
-  ToPrivacyDepositsDescNullsLast = 'to_privacyDeposits_DESC_NULLS_LAST',
-  ToReservedAsc = 'to_reserved_ASC',
-  ToReservedAscNullsFirst = 'to_reserved_ASC_NULLS_FIRST',
-  ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
-  ToReservedDesc = 'to_reserved_DESC',
-  ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
-  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST',
-  TxIdAsc = 'txId_ASC',
-  TxIdAscNullsFirst = 'txId_ASC_NULLS_FIRST',
-  TxIdAscNullsLast = 'txId_ASC_NULLS_LAST',
-  TxIdDesc = 'txId_DESC',
-  TxIdDescNullsFirst = 'txId_DESC_NULLS_FIRST',
-  TxIdDescNullsLast = 'txId_DESC_NULLS_LAST'
-}
-
-export type ScheduledReversibleTransferWhereInput = {
-  AND?: InputMaybe<Array<ScheduledReversibleTransferWhereInput>>;
-  OR?: InputMaybe<Array<ScheduledReversibleTransferWhereInput>>;
-  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fee_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  fee_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fee_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  from?: InputMaybe<AccountWhereInput>;
-  from_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  scheduledAt_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  scheduledAt_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  scheduledAt_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  scheduledAt_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  scheduledAt_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  scheduledAt_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  scheduledAt_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  scheduledAt_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  scheduledAt_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  to?: InputMaybe<AccountWhereInput>;
-  to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  txId_contains?: InputMaybe<Scalars['String']['input']>;
-  txId_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  txId_endsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_eq?: InputMaybe<Scalars['String']['input']>;
-  txId_gt?: InputMaybe<Scalars['String']['input']>;
-  txId_gte?: InputMaybe<Scalars['String']['input']>;
-  txId_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  txId_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  txId_lt?: InputMaybe<Scalars['String']['input']>;
-  txId_lte?: InputMaybe<Scalars['String']['input']>;
-  txId_not_contains?: InputMaybe<Scalars['String']['input']>;
-  txId_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  txId_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_not_eq?: InputMaybe<Scalars['String']['input']>;
-  txId_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  txId_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  txId_startsWith?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ScheduledReversibleTransfersConnection = {
-  __typename?: 'ScheduledReversibleTransfersConnection';
-  edges: Array<ScheduledReversibleTransferEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type SquidStatus = {
-  __typename?: 'SquidStatus';
-  /** The hash of the last processed finalized block */
-  finalizedHash?: Maybe<Scalars['String']['output']>;
-  /** The height of the last processed finalized block */
-  finalizedHeight?: Maybe<Scalars['Int']['output']>;
-  /** The hash of the last processed block */
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+/** aggregated selection of "block" */
+export type Block_Aggregate = {
+  __typename?: 'block_aggregate';
+  aggregate?: Maybe<Block_Aggregate_Fields>;
+  nodes: Array<Block>;
+};
+
+/** aggregate fields of "block" */
+export type Block_Aggregate_Fields = {
+  __typename?: 'block_aggregate_fields';
+  avg?: Maybe<Block_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Block_Max_Fields>;
+  min?: Maybe<Block_Min_Fields>;
+  stddev?: Maybe<Block_Stddev_Fields>;
+  stddev_pop?: Maybe<Block_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Block_Stddev_Samp_Fields>;
+  sum?: Maybe<Block_Sum_Fields>;
+  var_pop?: Maybe<Block_Var_Pop_Fields>;
+  var_samp?: Maybe<Block_Var_Samp_Fields>;
+  variance?: Maybe<Block_Variance_Fields>;
+};
+
+/** aggregate fields of "block" */
+export type Block_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Block_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Block_Avg_Fields = {
+  __typename?: 'block_avg_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "block". All fields are combined with a logical 'AND'. */
+export type Block_Bool_Exp = {
+  _and?: InputMaybe<Array<Block_Bool_Exp>>;
+  _not?: InputMaybe<Block_Bool_Exp>;
+  _or?: InputMaybe<Array<Block_Bool_Exp>>;
+  events?: InputMaybe<Event_Bool_Exp>;
+  events_aggregate?: InputMaybe<Event_Aggregate_Bool_Exp>;
+  extrinsics?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsics_aggregate?: InputMaybe<Extrinsic_Aggregate_Bool_Exp>;
+  hash?: InputMaybe<String_Comparison_Exp>;
+  height?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  reward?: InputMaybe<Numeric_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  transactions?: InputMaybe<Transfer_Bool_Exp>;
+  transactions_aggregate?: InputMaybe<Transfer_Aggregate_Bool_Exp>;
+};
+
+/** aggregate max on columns */
+export type Block_Max_Fields = {
+  __typename?: 'block_max_fields';
   hash?: Maybe<Scalars['String']['output']>;
-  /** The height of the last processed block */
   height?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  reward?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
 };
 
-export type Transfer = {
-  __typename?: 'Transfer';
-  amount: Scalars['BigInt']['output'];
-  block: Block;
+/** aggregate min on columns */
+export type Block_Min_Fields = {
+  __typename?: 'block_min_fields';
+  hash?: Maybe<Scalars['String']['output']>;
+  height?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  reward?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "block". */
+export type Block_Order_By = {
+  events_aggregate?: InputMaybe<Event_Aggregate_Order_By>;
+  extrinsics_aggregate?: InputMaybe<Extrinsic_Aggregate_Order_By>;
+  hash?: InputMaybe<Order_By>;
+  height?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transactions_aggregate?: InputMaybe<Transfer_Aggregate_Order_By>;
+};
+
+/** select columns of table "block" */
+export enum Block_Select_Column {
+  /** column name */
+  Hash = 'hash',
+  /** column name */
+  Height = 'height',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Reward = 'reward',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Block_Stddev_Fields = {
+  __typename?: 'block_stddev_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Block_Stddev_Pop_Fields = {
+  __typename?: 'block_stddev_pop_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Block_Stddev_Samp_Fields = {
+  __typename?: 'block_stddev_samp_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "block" */
+export type Block_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Block_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Block_Stream_Cursor_Value_Input = {
+  hash?: InputMaybe<Scalars['String']['input']>;
+  height?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  reward?: InputMaybe<Scalars['numeric']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Block_Sum_Fields = {
+  __typename?: 'block_sum_fields';
+  height?: Maybe<Scalars['Int']['output']>;
+  reward?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Block_Var_Pop_Fields = {
+  __typename?: 'block_var_pop_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Block_Var_Samp_Fields = {
+  __typename?: 'block_var_samp_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Block_Variance_Fields = {
+  __typename?: 'block_variance_fields';
+  height?: Maybe<Scalars['Float']['output']>;
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "cancelled_reversible_transfer" */
+export type Cancelled_Reversible_Transfer = {
+  __typename?: 'cancelled_reversible_transfer';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  cancelledBy?: Maybe<Account>;
+  cancelled_by_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
   event?: Maybe<Event>;
-  executedBy?: Maybe<ExecutedReversibleTransfer>;
-  /** Link to the extrinsic that caused this transfer (null for transfers from reversible execution) */
+  /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
-  fee: Scalars['BigInt']['output'];
-  from: Account;
-  /** Blake3 hash of raw 'from' address bytes (hex string) for privacy-preserving prefix queries */
-  fromHash: Scalars['String']['output'];
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  /** Index in the ZK trie for Merkle proof generation */
-  leafIndex: Scalars['BigInt']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  to: Account;
-  /** Blake3 hash of raw 'to' address bytes (hex string) for privacy-preserving prefix queries */
-  toHash: Scalars['String']['output'];
-  transferCount: Scalars['BigInt']['output'];
+  /** An object relationship */
+  scheduledTransfer?: Maybe<Scheduled_Reversible_Transfer>;
+  scheduled_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+  tx_id: Scalars['String']['output'];
 };
 
-export type TransferEdge = {
-  __typename?: 'TransferEdge';
-  cursor: Scalars['String']['output'];
-  node: Transfer;
+/** aggregated selection of "cancelled_reversible_transfer" */
+export type Cancelled_Reversible_Transfer_Aggregate = {
+  __typename?: 'cancelled_reversible_transfer_aggregate';
+  aggregate?: Maybe<Cancelled_Reversible_Transfer_Aggregate_Fields>;
+  nodes: Array<Cancelled_Reversible_Transfer>;
 };
 
-export enum TransferOrderByInput {
-  AmountAsc = 'amount_ASC',
-  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
-  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
-  AmountDesc = 'amount_DESC',
-  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
-  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  EventIdAsc = 'event_id_ASC',
-  EventIdAscNullsFirst = 'event_id_ASC_NULLS_FIRST',
-  EventIdAscNullsLast = 'event_id_ASC_NULLS_LAST',
-  EventIdDesc = 'event_id_DESC',
-  EventIdDescNullsFirst = 'event_id_DESC_NULLS_FIRST',
-  EventIdDescNullsLast = 'event_id_DESC_NULLS_LAST',
-  EventTimestampAsc = 'event_timestamp_ASC',
-  EventTimestampAscNullsFirst = 'event_timestamp_ASC_NULLS_FIRST',
-  EventTimestampAscNullsLast = 'event_timestamp_ASC_NULLS_LAST',
-  EventTimestampDesc = 'event_timestamp_DESC',
-  EventTimestampDescNullsFirst = 'event_timestamp_DESC_NULLS_FIRST',
-  EventTimestampDescNullsLast = 'event_timestamp_DESC_NULLS_LAST',
-  EventTypeAsc = 'event_type_ASC',
-  EventTypeAscNullsFirst = 'event_type_ASC_NULLS_FIRST',
-  EventTypeAscNullsLast = 'event_type_ASC_NULLS_LAST',
-  EventTypeDesc = 'event_type_DESC',
-  EventTypeDescNullsFirst = 'event_type_DESC_NULLS_FIRST',
-  EventTypeDescNullsLast = 'event_type_DESC_NULLS_LAST',
-  ExecutedByIdAsc = 'executedBy_id_ASC',
-  ExecutedByIdAscNullsFirst = 'executedBy_id_ASC_NULLS_FIRST',
-  ExecutedByIdAscNullsLast = 'executedBy_id_ASC_NULLS_LAST',
-  ExecutedByIdDesc = 'executedBy_id_DESC',
-  ExecutedByIdDescNullsFirst = 'executedBy_id_DESC_NULLS_FIRST',
-  ExecutedByIdDescNullsLast = 'executedBy_id_DESC_NULLS_LAST',
-  ExecutedByTimestampAsc = 'executedBy_timestamp_ASC',
-  ExecutedByTimestampAscNullsFirst = 'executedBy_timestamp_ASC_NULLS_FIRST',
-  ExecutedByTimestampAscNullsLast = 'executedBy_timestamp_ASC_NULLS_LAST',
-  ExecutedByTimestampDesc = 'executedBy_timestamp_DESC',
-  ExecutedByTimestampDescNullsFirst = 'executedBy_timestamp_DESC_NULLS_FIRST',
-  ExecutedByTimestampDescNullsLast = 'executedBy_timestamp_DESC_NULLS_LAST',
-  ExecutedByTxIdAsc = 'executedBy_txId_ASC',
-  ExecutedByTxIdAscNullsFirst = 'executedBy_txId_ASC_NULLS_FIRST',
-  ExecutedByTxIdAscNullsLast = 'executedBy_txId_ASC_NULLS_LAST',
-  ExecutedByTxIdDesc = 'executedBy_txId_DESC',
-  ExecutedByTxIdDescNullsFirst = 'executedBy_txId_DESC_NULLS_FIRST',
-  ExecutedByTxIdDescNullsLast = 'executedBy_txId_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  FeeAsc = 'fee_ASC',
-  FeeAscNullsFirst = 'fee_ASC_NULLS_FIRST',
-  FeeAscNullsLast = 'fee_ASC_NULLS_LAST',
-  FeeDesc = 'fee_DESC',
-  FeeDescNullsFirst = 'fee_DESC_NULLS_FIRST',
-  FeeDescNullsLast = 'fee_DESC_NULLS_LAST',
-  FromHashAsc = 'fromHash_ASC',
-  FromHashAscNullsFirst = 'fromHash_ASC_NULLS_FIRST',
-  FromHashAscNullsLast = 'fromHash_ASC_NULLS_LAST',
-  FromHashDesc = 'fromHash_DESC',
-  FromHashDescNullsFirst = 'fromHash_DESC_NULLS_FIRST',
-  FromHashDescNullsLast = 'fromHash_DESC_NULLS_LAST',
-  FromFreeAsc = 'from_free_ASC',
-  FromFreeAscNullsFirst = 'from_free_ASC_NULLS_FIRST',
-  FromFreeAscNullsLast = 'from_free_ASC_NULLS_LAST',
-  FromFreeDesc = 'from_free_DESC',
-  FromFreeDescNullsFirst = 'from_free_DESC_NULLS_FIRST',
-  FromFreeDescNullsLast = 'from_free_DESC_NULLS_LAST',
-  FromFrozenAsc = 'from_frozen_ASC',
-  FromFrozenAscNullsFirst = 'from_frozen_ASC_NULLS_FIRST',
-  FromFrozenAscNullsLast = 'from_frozen_ASC_NULLS_LAST',
-  FromFrozenDesc = 'from_frozen_DESC',
-  FromFrozenDescNullsFirst = 'from_frozen_DESC_NULLS_FIRST',
-  FromFrozenDescNullsLast = 'from_frozen_DESC_NULLS_LAST',
-  FromIdAsc = 'from_id_ASC',
-  FromIdAscNullsFirst = 'from_id_ASC_NULLS_FIRST',
-  FromIdAscNullsLast = 'from_id_ASC_NULLS_LAST',
-  FromIdDesc = 'from_id_DESC',
-  FromIdDescNullsFirst = 'from_id_DESC_NULLS_FIRST',
-  FromIdDescNullsLast = 'from_id_DESC_NULLS_LAST',
-  FromIsDepositOnlyAsc = 'from_isDepositOnly_ASC',
-  FromIsDepositOnlyAscNullsFirst = 'from_isDepositOnly_ASC_NULLS_FIRST',
-  FromIsDepositOnlyAscNullsLast = 'from_isDepositOnly_ASC_NULLS_LAST',
-  FromIsDepositOnlyDesc = 'from_isDepositOnly_DESC',
-  FromIsDepositOnlyDescNullsFirst = 'from_isDepositOnly_DESC_NULLS_FIRST',
-  FromIsDepositOnlyDescNullsLast = 'from_isDepositOnly_DESC_NULLS_LAST',
-  FromLastUpdatedAsc = 'from_lastUpdated_ASC',
-  FromLastUpdatedAscNullsFirst = 'from_lastUpdated_ASC_NULLS_FIRST',
-  FromLastUpdatedAscNullsLast = 'from_lastUpdated_ASC_NULLS_LAST',
-  FromLastUpdatedDesc = 'from_lastUpdated_DESC',
-  FromLastUpdatedDescNullsFirst = 'from_lastUpdated_DESC_NULLS_FIRST',
-  FromLastUpdatedDescNullsLast = 'from_lastUpdated_DESC_NULLS_LAST',
-  FromPrivacyDepositsAsc = 'from_privacyDeposits_ASC',
-  FromPrivacyDepositsAscNullsFirst = 'from_privacyDeposits_ASC_NULLS_FIRST',
-  FromPrivacyDepositsAscNullsLast = 'from_privacyDeposits_ASC_NULLS_LAST',
-  FromPrivacyDepositsDesc = 'from_privacyDeposits_DESC',
-  FromPrivacyDepositsDescNullsFirst = 'from_privacyDeposits_DESC_NULLS_FIRST',
-  FromPrivacyDepositsDescNullsLast = 'from_privacyDeposits_DESC_NULLS_LAST',
-  FromReservedAsc = 'from_reserved_ASC',
-  FromReservedAscNullsFirst = 'from_reserved_ASC_NULLS_FIRST',
-  FromReservedAscNullsLast = 'from_reserved_ASC_NULLS_LAST',
-  FromReservedDesc = 'from_reserved_DESC',
-  FromReservedDescNullsFirst = 'from_reserved_DESC_NULLS_FIRST',
-  FromReservedDescNullsLast = 'from_reserved_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  LeafIndexAsc = 'leafIndex_ASC',
-  LeafIndexAscNullsFirst = 'leafIndex_ASC_NULLS_FIRST',
-  LeafIndexAscNullsLast = 'leafIndex_ASC_NULLS_LAST',
-  LeafIndexDesc = 'leafIndex_DESC',
-  LeafIndexDescNullsFirst = 'leafIndex_DESC_NULLS_FIRST',
-  LeafIndexDescNullsLast = 'leafIndex_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  ToHashAsc = 'toHash_ASC',
-  ToHashAscNullsFirst = 'toHash_ASC_NULLS_FIRST',
-  ToHashAscNullsLast = 'toHash_ASC_NULLS_LAST',
-  ToHashDesc = 'toHash_DESC',
-  ToHashDescNullsFirst = 'toHash_DESC_NULLS_FIRST',
-  ToHashDescNullsLast = 'toHash_DESC_NULLS_LAST',
-  ToFreeAsc = 'to_free_ASC',
-  ToFreeAscNullsFirst = 'to_free_ASC_NULLS_FIRST',
-  ToFreeAscNullsLast = 'to_free_ASC_NULLS_LAST',
-  ToFreeDesc = 'to_free_DESC',
-  ToFreeDescNullsFirst = 'to_free_DESC_NULLS_FIRST',
-  ToFreeDescNullsLast = 'to_free_DESC_NULLS_LAST',
-  ToFrozenAsc = 'to_frozen_ASC',
-  ToFrozenAscNullsFirst = 'to_frozen_ASC_NULLS_FIRST',
-  ToFrozenAscNullsLast = 'to_frozen_ASC_NULLS_LAST',
-  ToFrozenDesc = 'to_frozen_DESC',
-  ToFrozenDescNullsFirst = 'to_frozen_DESC_NULLS_FIRST',
-  ToFrozenDescNullsLast = 'to_frozen_DESC_NULLS_LAST',
-  ToIdAsc = 'to_id_ASC',
-  ToIdAscNullsFirst = 'to_id_ASC_NULLS_FIRST',
-  ToIdAscNullsLast = 'to_id_ASC_NULLS_LAST',
-  ToIdDesc = 'to_id_DESC',
-  ToIdDescNullsFirst = 'to_id_DESC_NULLS_FIRST',
-  ToIdDescNullsLast = 'to_id_DESC_NULLS_LAST',
-  ToIsDepositOnlyAsc = 'to_isDepositOnly_ASC',
-  ToIsDepositOnlyAscNullsFirst = 'to_isDepositOnly_ASC_NULLS_FIRST',
-  ToIsDepositOnlyAscNullsLast = 'to_isDepositOnly_ASC_NULLS_LAST',
-  ToIsDepositOnlyDesc = 'to_isDepositOnly_DESC',
-  ToIsDepositOnlyDescNullsFirst = 'to_isDepositOnly_DESC_NULLS_FIRST',
-  ToIsDepositOnlyDescNullsLast = 'to_isDepositOnly_DESC_NULLS_LAST',
-  ToLastUpdatedAsc = 'to_lastUpdated_ASC',
-  ToLastUpdatedAscNullsFirst = 'to_lastUpdated_ASC_NULLS_FIRST',
-  ToLastUpdatedAscNullsLast = 'to_lastUpdated_ASC_NULLS_LAST',
-  ToLastUpdatedDesc = 'to_lastUpdated_DESC',
-  ToLastUpdatedDescNullsFirst = 'to_lastUpdated_DESC_NULLS_FIRST',
-  ToLastUpdatedDescNullsLast = 'to_lastUpdated_DESC_NULLS_LAST',
-  ToPrivacyDepositsAsc = 'to_privacyDeposits_ASC',
-  ToPrivacyDepositsAscNullsFirst = 'to_privacyDeposits_ASC_NULLS_FIRST',
-  ToPrivacyDepositsAscNullsLast = 'to_privacyDeposits_ASC_NULLS_LAST',
-  ToPrivacyDepositsDesc = 'to_privacyDeposits_DESC',
-  ToPrivacyDepositsDescNullsFirst = 'to_privacyDeposits_DESC_NULLS_FIRST',
-  ToPrivacyDepositsDescNullsLast = 'to_privacyDeposits_DESC_NULLS_LAST',
-  ToReservedAsc = 'to_reserved_ASC',
-  ToReservedAscNullsFirst = 'to_reserved_ASC_NULLS_FIRST',
-  ToReservedAscNullsLast = 'to_reserved_ASC_NULLS_LAST',
-  ToReservedDesc = 'to_reserved_DESC',
-  ToReservedDescNullsFirst = 'to_reserved_DESC_NULLS_FIRST',
-  ToReservedDescNullsLast = 'to_reserved_DESC_NULLS_LAST',
-  TransferCountAsc = 'transferCount_ASC',
-  TransferCountAscNullsFirst = 'transferCount_ASC_NULLS_FIRST',
-  TransferCountAscNullsLast = 'transferCount_ASC_NULLS_LAST',
-  TransferCountDesc = 'transferCount_DESC',
-  TransferCountDescNullsFirst = 'transferCount_DESC_NULLS_FIRST',
-  TransferCountDescNullsLast = 'transferCount_DESC_NULLS_LAST'
+/** aggregate fields of "cancelled_reversible_transfer" */
+export type Cancelled_Reversible_Transfer_Aggregate_Fields = {
+  __typename?: 'cancelled_reversible_transfer_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Cancelled_Reversible_Transfer_Max_Fields>;
+  min?: Maybe<Cancelled_Reversible_Transfer_Min_Fields>;
+};
+
+/** aggregate fields of "cancelled_reversible_transfer" */
+export type Cancelled_Reversible_Transfer_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "cancelled_reversible_transfer". All fields are combined with a logical 'AND'. */
+export type Cancelled_Reversible_Transfer_Bool_Exp = {
+  _and?: InputMaybe<Array<Cancelled_Reversible_Transfer_Bool_Exp>>;
+  _not?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+  _or?: InputMaybe<Array<Cancelled_Reversible_Transfer_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  cancelledBy?: InputMaybe<Account_Bool_Exp>;
+  cancelled_by_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  scheduledTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+  scheduled_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  tx_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Cancelled_Reversible_Transfer_Max_Fields = {
+  __typename?: 'cancelled_reversible_transfer_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_by_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  scheduled_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Cancelled_Reversible_Transfer_Min_Fields = {
+  __typename?: 'cancelled_reversible_transfer_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_by_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  scheduled_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** Ordering options when selecting data from "cancelled_reversible_transfer". */
+export type Cancelled_Reversible_Transfer_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  cancelledBy?: InputMaybe<Account_Order_By>;
+  cancelled_by_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  scheduledTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Order_By>;
+  scheduled_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  tx_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "cancelled_reversible_transfer" */
+export enum Cancelled_Reversible_Transfer_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  CancelledById = 'cancelled_by_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ScheduledTransferId = 'scheduled_transfer_id',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  TxId = 'tx_id'
 }
 
-export type TransferWhereInput = {
-  AND?: InputMaybe<Array<TransferWhereInput>>;
-  OR?: InputMaybe<Array<TransferWhereInput>>;
-  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  event?: InputMaybe<EventWhereInput>;
-  event_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  executedBy?: InputMaybe<ExecutedReversibleTransferWhereInput>;
-  executedBy_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fee_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  fee_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fee_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  fee_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  from?: InputMaybe<AccountWhereInput>;
-  fromHash_contains?: InputMaybe<Scalars['String']['input']>;
-  fromHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  fromHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  fromHash_eq?: InputMaybe<Scalars['String']['input']>;
-  fromHash_gt?: InputMaybe<Scalars['String']['input']>;
-  fromHash_gte?: InputMaybe<Scalars['String']['input']>;
-  fromHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  fromHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  fromHash_lt?: InputMaybe<Scalars['String']['input']>;
-  fromHash_lte?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  fromHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  fromHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  fromHash_startsWith?: InputMaybe<Scalars['String']['input']>;
-  from_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  leafIndex_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  leafIndex_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  leafIndex_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  leafIndex_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  leafIndex_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  leafIndex_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  leafIndex_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  leafIndex_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  leafIndex_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  to?: InputMaybe<AccountWhereInput>;
-  toHash_contains?: InputMaybe<Scalars['String']['input']>;
-  toHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  toHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  toHash_eq?: InputMaybe<Scalars['String']['input']>;
-  toHash_gt?: InputMaybe<Scalars['String']['input']>;
-  toHash_gte?: InputMaybe<Scalars['String']['input']>;
-  toHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  toHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  toHash_lt?: InputMaybe<Scalars['String']['input']>;
-  toHash_lte?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  toHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  toHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  toHash_startsWith?: InputMaybe<Scalars['String']['input']>;
-  to_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  transferCount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  transferCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  transferCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  transferCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  transferCount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  transferCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  transferCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  transferCount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  transferCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+/** Streaming cursor of the table "cancelled_reversible_transfer" */
+export type Cancelled_Reversible_Transfer_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Cancelled_Reversible_Transfer_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
 };
 
-export type TransferWithHash = {
-  __typename?: 'TransferWithHash';
-  amount: Scalars['BigInt']['output'];
-  blockHeight: Scalars['Int']['output'];
-  blockId: Scalars['String']['output'];
-  extrinsicHash?: Maybe<Scalars['String']['output']>;
-  fee: Scalars['BigInt']['output'];
-  fromHash: Scalars['String']['output'];
-  fromId: Scalars['String']['output'];
+/** Initial value of the column from where the streaming should start */
+export type Cancelled_Reversible_Transfer_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  cancelled_by_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  scheduled_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  tx_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** columns and relationships of "chain_stats" */
+export type Chain_Stats = {
+  __typename?: 'chain_stats';
+  block_height: Scalars['Int']['output'];
+  finalized_block_height: Scalars['Int']['output'];
   id: Scalars['String']['output'];
-  leafIndex: Scalars['BigInt']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  toHash: Scalars['String']['output'];
-  toId: Scalars['String']['output'];
-  transferCount: Scalars['BigInt']['output'];
+  total_accounts: Scalars['Int']['output'];
+  total_cancelled_transfers: Scalars['Int']['output'];
+  total_deposit_accounts: Scalars['Int']['output'];
+  total_error_events: Scalars['Int']['output'];
+  total_executed_transfers: Scalars['Int']['output'];
+  total_high_security_sets: Scalars['Int']['output'];
+  total_immediate_transfers: Scalars['Int']['output'];
+  total_miner_rewards: Scalars['Int']['output'];
+  total_scheduled_transfers: Scalars['Int']['output'];
 };
 
-export type TransfersByPrefixInput = {
-  afterBlock?: InputMaybe<Scalars['Int']['input']>;
-  beforeBlock?: InputMaybe<Scalars['Int']['input']>;
-  fromHashPrefixes?: InputMaybe<Array<Scalars['String']['input']>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  maxAmount?: InputMaybe<Scalars['BigInt']['input']>;
-  minAmount?: InputMaybe<Scalars['BigInt']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  toHashPrefixes?: InputMaybe<Array<Scalars['String']['input']>>;
+/** aggregated selection of "chain_stats" */
+export type Chain_Stats_Aggregate = {
+  __typename?: 'chain_stats_aggregate';
+  aggregate?: Maybe<Chain_Stats_Aggregate_Fields>;
+  nodes: Array<Chain_Stats>;
 };
 
-export type TransfersByPrefixResult = {
-  __typename?: 'TransfersByPrefixResult';
-  totalCount: Scalars['Int']['output'];
-  transfers: Array<TransferWithHash>;
+/** aggregate fields of "chain_stats" */
+export type Chain_Stats_Aggregate_Fields = {
+  __typename?: 'chain_stats_aggregate_fields';
+  avg?: Maybe<Chain_Stats_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Chain_Stats_Max_Fields>;
+  min?: Maybe<Chain_Stats_Min_Fields>;
+  stddev?: Maybe<Chain_Stats_Stddev_Fields>;
+  stddev_pop?: Maybe<Chain_Stats_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Chain_Stats_Stddev_Samp_Fields>;
+  sum?: Maybe<Chain_Stats_Sum_Fields>;
+  var_pop?: Maybe<Chain_Stats_Var_Pop_Fields>;
+  var_samp?: Maybe<Chain_Stats_Var_Samp_Fields>;
+  variance?: Maybe<Chain_Stats_Variance_Fields>;
 };
 
-export type TransfersConnection = {
-  __typename?: 'TransfersConnection';
-  edges: Array<TransferEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
+/** aggregate fields of "chain_stats" */
+export type Chain_Stats_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Chain_Stats_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** A single wormhole proof verification extrinsic, containing one or more exit outputs. */
-export type WormholeExtrinsic = {
-  __typename?: 'WormholeExtrinsic';
-  block: Block;
-  /** Link to the generic Extrinsic entity */
-  extrinsic?: Maybe<Extrinsic>;
-  id: Scalars['String']['output'];
-  /** Number of non-zero exit outputs */
-  outputCount: Scalars['Int']['output'];
-  /** Individual exit outputs in this extrinsic */
-  outputs: Array<WormholeOutput>;
-  /** Pool snapshot at time of proof verification (JSON bucket data) */
-  poolSnapshot: Scalars['String']['output'];
-  /** Human-readable privacy label */
-  privacyLabel: Scalars['String']['output'];
-  /** Privacy score at 0.01 DEV precision, in bits */
-  privacyScore: Scalars['Float']['output'];
-  /** Privacy score with 0.1% sacrifice, in bits */
-  privacyScore01Pct: Scalars['Float']['output'];
-  /** Privacy score with 1% sacrifice, in bits */
-  privacyScore1Pct: Scalars['Float']['output'];
-  /** Privacy score with 5% sacrifice, in bits */
-  privacyScore5Pct: Scalars['Float']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  /** Total amount across all outputs in this extrinsic */
-  totalAmount: Scalars['BigInt']['output'];
+/** aggregate avg on columns */
+export type Chain_Stats_Avg_Fields = {
+  __typename?: 'chain_stats_avg_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
-/** A single wormhole proof verification extrinsic, containing one or more exit outputs. */
-export type WormholeExtrinsicOutputsArgs = {
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<WormholeOutputOrderByInput>>;
-  where?: InputMaybe<WormholeOutputWhereInput>;
+/** Boolean expression to filter rows from the table "chain_stats". All fields are combined with a logical 'AND'. */
+export type Chain_Stats_Bool_Exp = {
+  _and?: InputMaybe<Array<Chain_Stats_Bool_Exp>>;
+  _not?: InputMaybe<Chain_Stats_Bool_Exp>;
+  _or?: InputMaybe<Array<Chain_Stats_Bool_Exp>>;
+  block_height?: InputMaybe<Int_Comparison_Exp>;
+  finalized_block_height?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  total_accounts?: InputMaybe<Int_Comparison_Exp>;
+  total_cancelled_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_deposit_accounts?: InputMaybe<Int_Comparison_Exp>;
+  total_error_events?: InputMaybe<Int_Comparison_Exp>;
+  total_executed_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_high_security_sets?: InputMaybe<Int_Comparison_Exp>;
+  total_immediate_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_miner_rewards?: InputMaybe<Int_Comparison_Exp>;
+  total_scheduled_transfers?: InputMaybe<Int_Comparison_Exp>;
 };
 
-export type WormholeExtrinsicEdge = {
-  __typename?: 'WormholeExtrinsicEdge';
-  cursor: Scalars['String']['output'];
-  node: WormholeExtrinsic;
+/** aggregate max on columns */
+export type Chain_Stats_Max_Fields = {
+  __typename?: 'chain_stats_max_fields';
+  block_height?: Maybe<Scalars['Int']['output']>;
+  finalized_block_height?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  total_accounts?: Maybe<Scalars['Int']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Int']['output']>;
+  total_error_events?: Maybe<Scalars['Int']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Int']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Int']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Int']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
 };
 
-export enum WormholeExtrinsicOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  ExtrinsicArgsAsc = 'extrinsic_args_ASC',
-  ExtrinsicArgsAscNullsFirst = 'extrinsic_args_ASC_NULLS_FIRST',
-  ExtrinsicArgsAscNullsLast = 'extrinsic_args_ASC_NULLS_LAST',
-  ExtrinsicArgsDesc = 'extrinsic_args_DESC',
-  ExtrinsicArgsDescNullsFirst = 'extrinsic_args_DESC_NULLS_FIRST',
-  ExtrinsicArgsDescNullsLast = 'extrinsic_args_DESC_NULLS_LAST',
-  ExtrinsicCallAsc = 'extrinsic_call_ASC',
-  ExtrinsicCallAscNullsFirst = 'extrinsic_call_ASC_NULLS_FIRST',
-  ExtrinsicCallAscNullsLast = 'extrinsic_call_ASC_NULLS_LAST',
-  ExtrinsicCallDesc = 'extrinsic_call_DESC',
-  ExtrinsicCallDescNullsFirst = 'extrinsic_call_DESC_NULLS_FIRST',
-  ExtrinsicCallDescNullsLast = 'extrinsic_call_DESC_NULLS_LAST',
-  ExtrinsicFeeAsc = 'extrinsic_fee_ASC',
-  ExtrinsicFeeAscNullsFirst = 'extrinsic_fee_ASC_NULLS_FIRST',
-  ExtrinsicFeeAscNullsLast = 'extrinsic_fee_ASC_NULLS_LAST',
-  ExtrinsicFeeDesc = 'extrinsic_fee_DESC',
-  ExtrinsicFeeDescNullsFirst = 'extrinsic_fee_DESC_NULLS_FIRST',
-  ExtrinsicFeeDescNullsLast = 'extrinsic_fee_DESC_NULLS_LAST',
-  ExtrinsicIdAsc = 'extrinsic_id_ASC',
-  ExtrinsicIdAscNullsFirst = 'extrinsic_id_ASC_NULLS_FIRST',
-  ExtrinsicIdAscNullsLast = 'extrinsic_id_ASC_NULLS_LAST',
-  ExtrinsicIdDesc = 'extrinsic_id_DESC',
-  ExtrinsicIdDescNullsFirst = 'extrinsic_id_DESC_NULLS_FIRST',
-  ExtrinsicIdDescNullsLast = 'extrinsic_id_DESC_NULLS_LAST',
-  ExtrinsicIndexInBlockAsc = 'extrinsic_indexInBlock_ASC',
-  ExtrinsicIndexInBlockAscNullsFirst = 'extrinsic_indexInBlock_ASC_NULLS_FIRST',
-  ExtrinsicIndexInBlockAscNullsLast = 'extrinsic_indexInBlock_ASC_NULLS_LAST',
-  ExtrinsicIndexInBlockDesc = 'extrinsic_indexInBlock_DESC',
-  ExtrinsicIndexInBlockDescNullsFirst = 'extrinsic_indexInBlock_DESC_NULLS_FIRST',
-  ExtrinsicIndexInBlockDescNullsLast = 'extrinsic_indexInBlock_DESC_NULLS_LAST',
-  ExtrinsicPalletAsc = 'extrinsic_pallet_ASC',
-  ExtrinsicPalletAscNullsFirst = 'extrinsic_pallet_ASC_NULLS_FIRST',
-  ExtrinsicPalletAscNullsLast = 'extrinsic_pallet_ASC_NULLS_LAST',
-  ExtrinsicPalletDesc = 'extrinsic_pallet_DESC',
-  ExtrinsicPalletDescNullsFirst = 'extrinsic_pallet_DESC_NULLS_FIRST',
-  ExtrinsicPalletDescNullsLast = 'extrinsic_pallet_DESC_NULLS_LAST',
-  ExtrinsicSuccessAsc = 'extrinsic_success_ASC',
-  ExtrinsicSuccessAscNullsFirst = 'extrinsic_success_ASC_NULLS_FIRST',
-  ExtrinsicSuccessAscNullsLast = 'extrinsic_success_ASC_NULLS_LAST',
-  ExtrinsicSuccessDesc = 'extrinsic_success_DESC',
-  ExtrinsicSuccessDescNullsFirst = 'extrinsic_success_DESC_NULLS_FIRST',
-  ExtrinsicSuccessDescNullsLast = 'extrinsic_success_DESC_NULLS_LAST',
-  ExtrinsicTimestampAsc = 'extrinsic_timestamp_ASC',
-  ExtrinsicTimestampAscNullsFirst = 'extrinsic_timestamp_ASC_NULLS_FIRST',
-  ExtrinsicTimestampAscNullsLast = 'extrinsic_timestamp_ASC_NULLS_LAST',
-  ExtrinsicTimestampDesc = 'extrinsic_timestamp_DESC',
-  ExtrinsicTimestampDescNullsFirst = 'extrinsic_timestamp_DESC_NULLS_FIRST',
-  ExtrinsicTimestampDescNullsLast = 'extrinsic_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  OutputCountAsc = 'outputCount_ASC',
-  OutputCountAscNullsFirst = 'outputCount_ASC_NULLS_FIRST',
-  OutputCountAscNullsLast = 'outputCount_ASC_NULLS_LAST',
-  OutputCountDesc = 'outputCount_DESC',
-  OutputCountDescNullsFirst = 'outputCount_DESC_NULLS_FIRST',
-  OutputCountDescNullsLast = 'outputCount_DESC_NULLS_LAST',
-  PoolSnapshotAsc = 'poolSnapshot_ASC',
-  PoolSnapshotAscNullsFirst = 'poolSnapshot_ASC_NULLS_FIRST',
-  PoolSnapshotAscNullsLast = 'poolSnapshot_ASC_NULLS_LAST',
-  PoolSnapshotDesc = 'poolSnapshot_DESC',
-  PoolSnapshotDescNullsFirst = 'poolSnapshot_DESC_NULLS_FIRST',
-  PoolSnapshotDescNullsLast = 'poolSnapshot_DESC_NULLS_LAST',
-  PrivacyLabelAsc = 'privacyLabel_ASC',
-  PrivacyLabelAscNullsFirst = 'privacyLabel_ASC_NULLS_FIRST',
-  PrivacyLabelAscNullsLast = 'privacyLabel_ASC_NULLS_LAST',
-  PrivacyLabelDesc = 'privacyLabel_DESC',
-  PrivacyLabelDescNullsFirst = 'privacyLabel_DESC_NULLS_FIRST',
-  PrivacyLabelDescNullsLast = 'privacyLabel_DESC_NULLS_LAST',
-  PrivacyScore01PctAsc = 'privacyScore01Pct_ASC',
-  PrivacyScore01PctAscNullsFirst = 'privacyScore01Pct_ASC_NULLS_FIRST',
-  PrivacyScore01PctAscNullsLast = 'privacyScore01Pct_ASC_NULLS_LAST',
-  PrivacyScore01PctDesc = 'privacyScore01Pct_DESC',
-  PrivacyScore01PctDescNullsFirst = 'privacyScore01Pct_DESC_NULLS_FIRST',
-  PrivacyScore01PctDescNullsLast = 'privacyScore01Pct_DESC_NULLS_LAST',
-  PrivacyScore1PctAsc = 'privacyScore1Pct_ASC',
-  PrivacyScore1PctAscNullsFirst = 'privacyScore1Pct_ASC_NULLS_FIRST',
-  PrivacyScore1PctAscNullsLast = 'privacyScore1Pct_ASC_NULLS_LAST',
-  PrivacyScore1PctDesc = 'privacyScore1Pct_DESC',
-  PrivacyScore1PctDescNullsFirst = 'privacyScore1Pct_DESC_NULLS_FIRST',
-  PrivacyScore1PctDescNullsLast = 'privacyScore1Pct_DESC_NULLS_LAST',
-  PrivacyScore5PctAsc = 'privacyScore5Pct_ASC',
-  PrivacyScore5PctAscNullsFirst = 'privacyScore5Pct_ASC_NULLS_FIRST',
-  PrivacyScore5PctAscNullsLast = 'privacyScore5Pct_ASC_NULLS_LAST',
-  PrivacyScore5PctDesc = 'privacyScore5Pct_DESC',
-  PrivacyScore5PctDescNullsFirst = 'privacyScore5Pct_DESC_NULLS_FIRST',
-  PrivacyScore5PctDescNullsLast = 'privacyScore5Pct_DESC_NULLS_LAST',
-  PrivacyScoreAsc = 'privacyScore_ASC',
-  PrivacyScoreAscNullsFirst = 'privacyScore_ASC_NULLS_FIRST',
-  PrivacyScoreAscNullsLast = 'privacyScore_ASC_NULLS_LAST',
-  PrivacyScoreDesc = 'privacyScore_DESC',
-  PrivacyScoreDescNullsFirst = 'privacyScore_DESC_NULLS_FIRST',
-  PrivacyScoreDescNullsLast = 'privacyScore_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  TotalAmountAsc = 'totalAmount_ASC',
-  TotalAmountAscNullsFirst = 'totalAmount_ASC_NULLS_FIRST',
-  TotalAmountAscNullsLast = 'totalAmount_ASC_NULLS_LAST',
-  TotalAmountDesc = 'totalAmount_DESC',
-  TotalAmountDescNullsFirst = 'totalAmount_DESC_NULLS_FIRST',
-  TotalAmountDescNullsLast = 'totalAmount_DESC_NULLS_LAST'
+/** aggregate min on columns */
+export type Chain_Stats_Min_Fields = {
+  __typename?: 'chain_stats_min_fields';
+  block_height?: Maybe<Scalars['Int']['output']>;
+  finalized_block_height?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  total_accounts?: Maybe<Scalars['Int']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Int']['output']>;
+  total_error_events?: Maybe<Scalars['Int']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Int']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Int']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Int']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Ordering options when selecting data from "chain_stats". */
+export type Chain_Stats_Order_By = {
+  block_height?: InputMaybe<Order_By>;
+  finalized_block_height?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  total_accounts?: InputMaybe<Order_By>;
+  total_cancelled_transfers?: InputMaybe<Order_By>;
+  total_deposit_accounts?: InputMaybe<Order_By>;
+  total_error_events?: InputMaybe<Order_By>;
+  total_executed_transfers?: InputMaybe<Order_By>;
+  total_high_security_sets?: InputMaybe<Order_By>;
+  total_immediate_transfers?: InputMaybe<Order_By>;
+  total_miner_rewards?: InputMaybe<Order_By>;
+  total_scheduled_transfers?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "chain_stats" */
+export enum Chain_Stats_Select_Column {
+  /** column name */
+  BlockHeight = 'block_height',
+  /** column name */
+  FinalizedBlockHeight = 'finalized_block_height',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TotalAccounts = 'total_accounts',
+  /** column name */
+  TotalCancelledTransfers = 'total_cancelled_transfers',
+  /** column name */
+  TotalDepositAccounts = 'total_deposit_accounts',
+  /** column name */
+  TotalErrorEvents = 'total_error_events',
+  /** column name */
+  TotalExecutedTransfers = 'total_executed_transfers',
+  /** column name */
+  TotalHighSecuritySets = 'total_high_security_sets',
+  /** column name */
+  TotalImmediateTransfers = 'total_immediate_transfers',
+  /** column name */
+  TotalMinerRewards = 'total_miner_rewards',
+  /** column name */
+  TotalScheduledTransfers = 'total_scheduled_transfers'
 }
 
-export type WormholeExtrinsicWhereInput = {
-  AND?: InputMaybe<Array<WormholeExtrinsicWhereInput>>;
-  OR?: InputMaybe<Array<WormholeExtrinsicWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  extrinsic?: InputMaybe<ExtrinsicWhereInput>;
-  extrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  outputCount_eq?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_gt?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_gte?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  outputCount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  outputCount_lt?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_lte?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_not_eq?: InputMaybe<Scalars['Int']['input']>;
-  outputCount_not_in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  outputs_every?: InputMaybe<WormholeOutputWhereInput>;
-  outputs_none?: InputMaybe<WormholeOutputWhereInput>;
-  outputs_some?: InputMaybe<WormholeOutputWhereInput>;
-  poolSnapshot_contains?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_endsWith?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_eq?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_gt?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_gte?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  poolSnapshot_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  poolSnapshot_lt?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_lte?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_contains?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_eq?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  poolSnapshot_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  poolSnapshot_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_contains?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_endsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_eq?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_gt?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_gte?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  privacyLabel_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyLabel_lt?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_lte?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_contains?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_eq?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  privacyLabel_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyLabel_startsWith?: InputMaybe<Scalars['String']['input']>;
-  privacyScore01Pct_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore01Pct_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore01Pct_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore01Pct_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore1Pct_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore1Pct_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore1Pct_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore1Pct_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore5Pct_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore5Pct_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore5Pct_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore5Pct_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_gt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_gte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  privacyScore_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  privacyScore_lt?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_lte?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_not_eq?: InputMaybe<Scalars['Float']['input']>;
-  privacyScore_not_in?: InputMaybe<Array<Scalars['Float']['input']>>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  totalAmount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  totalAmount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  totalAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  totalAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+/** aggregate stddev on columns */
+export type Chain_Stats_Stddev_Fields = {
+  __typename?: 'chain_stats_stddev_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
-export type WormholeExtrinsicsConnection = {
-  __typename?: 'WormholeExtrinsicsConnection';
-  edges: Array<WormholeExtrinsicEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
+/** aggregate stddev_pop on columns */
+export type Chain_Stats_Stddev_Pop_Fields = {
+  __typename?: 'chain_stats_stddev_pop_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
-/** A nullifier consumed by a wormhole proof verification. */
-export type WormholeNullifier = {
-  __typename?: 'WormholeNullifier';
-  /** Block where the nullifier was consumed */
-  block: Block;
+/** aggregate stddev_samp on columns */
+export type Chain_Stats_Stddev_Samp_Fields = {
+  __typename?: 'chain_stats_stddev_samp_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "chain_stats" */
+export type Chain_Stats_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Chain_Stats_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Chain_Stats_Stream_Cursor_Value_Input = {
+  block_height?: InputMaybe<Scalars['Int']['input']>;
+  finalized_block_height?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  total_accounts?: InputMaybe<Scalars['Int']['input']>;
+  total_cancelled_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_deposit_accounts?: InputMaybe<Scalars['Int']['input']>;
+  total_error_events?: InputMaybe<Scalars['Int']['input']>;
+  total_executed_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_high_security_sets?: InputMaybe<Scalars['Int']['input']>;
+  total_immediate_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_miner_rewards?: InputMaybe<Scalars['Int']['input']>;
+  total_scheduled_transfers?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Chain_Stats_Sum_Fields = {
+  __typename?: 'chain_stats_sum_fields';
+  block_height?: Maybe<Scalars['Int']['output']>;
+  finalized_block_height?: Maybe<Scalars['Int']['output']>;
+  total_accounts?: Maybe<Scalars['Int']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Int']['output']>;
+  total_error_events?: Maybe<Scalars['Int']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Int']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Int']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Int']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Chain_Stats_Var_Pop_Fields = {
+  __typename?: 'chain_stats_var_pop_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Chain_Stats_Var_Samp_Fields = {
+  __typename?: 'chain_stats_var_samp_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Chain_Stats_Variance_Fields = {
+  __typename?: 'chain_stats_variance_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  total_accounts?: Maybe<Scalars['Float']['output']>;
+  total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
+  total_error_events?: Maybe<Scalars['Float']['output']>;
+  total_executed_transfers?: Maybe<Scalars['Float']['output']>;
+  total_high_security_sets?: Maybe<Scalars['Float']['output']>;
+  total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
+  total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+};
+
+/** ordering argument of a cursor */
+export enum Cursor_Ordering {
+  /** ascending ordering of the cursor */
+  Asc = 'ASC',
+  /** descending ordering of the cursor */
+  Desc = 'DESC'
+}
+
+/** columns and relationships of "deposit_pool_stats" */
+export type Deposit_Pool_Stats = {
+  __typename?: 'deposit_pool_stats';
+  buckets: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  /** The nullifier bytes as hex */
+  last_updated_block: Scalars['Int']['output'];
+};
+
+/** aggregated selection of "deposit_pool_stats" */
+export type Deposit_Pool_Stats_Aggregate = {
+  __typename?: 'deposit_pool_stats_aggregate';
+  aggregate?: Maybe<Deposit_Pool_Stats_Aggregate_Fields>;
+  nodes: Array<Deposit_Pool_Stats>;
+};
+
+/** aggregate fields of "deposit_pool_stats" */
+export type Deposit_Pool_Stats_Aggregate_Fields = {
+  __typename?: 'deposit_pool_stats_aggregate_fields';
+  avg?: Maybe<Deposit_Pool_Stats_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Deposit_Pool_Stats_Max_Fields>;
+  min?: Maybe<Deposit_Pool_Stats_Min_Fields>;
+  stddev?: Maybe<Deposit_Pool_Stats_Stddev_Fields>;
+  stddev_pop?: Maybe<Deposit_Pool_Stats_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Deposit_Pool_Stats_Stddev_Samp_Fields>;
+  sum?: Maybe<Deposit_Pool_Stats_Sum_Fields>;
+  var_pop?: Maybe<Deposit_Pool_Stats_Var_Pop_Fields>;
+  var_samp?: Maybe<Deposit_Pool_Stats_Var_Samp_Fields>;
+  variance?: Maybe<Deposit_Pool_Stats_Variance_Fields>;
+};
+
+/** aggregate fields of "deposit_pool_stats" */
+export type Deposit_Pool_Stats_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Deposit_Pool_Stats_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Deposit_Pool_Stats_Avg_Fields = {
+  __typename?: 'deposit_pool_stats_avg_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "deposit_pool_stats". All fields are combined with a logical 'AND'. */
+export type Deposit_Pool_Stats_Bool_Exp = {
+  _and?: InputMaybe<Array<Deposit_Pool_Stats_Bool_Exp>>;
+  _not?: InputMaybe<Deposit_Pool_Stats_Bool_Exp>;
+  _or?: InputMaybe<Array<Deposit_Pool_Stats_Bool_Exp>>;
+  buckets?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  last_updated_block?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Deposit_Pool_Stats_Max_Fields = {
+  __typename?: 'deposit_pool_stats_max_fields';
+  buckets?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  last_updated_block?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate min on columns */
+export type Deposit_Pool_Stats_Min_Fields = {
+  __typename?: 'deposit_pool_stats_min_fields';
+  buckets?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  last_updated_block?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Ordering options when selecting data from "deposit_pool_stats". */
+export type Deposit_Pool_Stats_Order_By = {
+  buckets?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  last_updated_block?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "deposit_pool_stats" */
+export enum Deposit_Pool_Stats_Select_Column {
+  /** column name */
+  Buckets = 'buckets',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastUpdatedBlock = 'last_updated_block'
+}
+
+/** aggregate stddev on columns */
+export type Deposit_Pool_Stats_Stddev_Fields = {
+  __typename?: 'deposit_pool_stats_stddev_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Deposit_Pool_Stats_Stddev_Pop_Fields = {
+  __typename?: 'deposit_pool_stats_stddev_pop_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Deposit_Pool_Stats_Stddev_Samp_Fields = {
+  __typename?: 'deposit_pool_stats_stddev_samp_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "deposit_pool_stats" */
+export type Deposit_Pool_Stats_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Deposit_Pool_Stats_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Deposit_Pool_Stats_Stream_Cursor_Value_Input = {
+  buckets?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last_updated_block?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Deposit_Pool_Stats_Sum_Fields = {
+  __typename?: 'deposit_pool_stats_sum_fields';
+  last_updated_block?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Deposit_Pool_Stats_Var_Pop_Fields = {
+  __typename?: 'deposit_pool_stats_var_pop_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Deposit_Pool_Stats_Var_Samp_Fields = {
+  __typename?: 'deposit_pool_stats_var_samp_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Deposit_Pool_Stats_Variance_Fields = {
+  __typename?: 'deposit_pool_stats_variance_fields';
+  last_updated_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "error_event" */
+export type Error_Event = {
+  __typename?: 'error_event';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  error_docs?: Maybe<Scalars['String']['output']>;
+  error_module?: Maybe<Scalars['String']['output']>;
+  error_name?: Maybe<Scalars['String']['output']>;
+  error_type: Scalars['String']['output'];
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "error_event" */
+export type Error_Event_Aggregate = {
+  __typename?: 'error_event_aggregate';
+  aggregate?: Maybe<Error_Event_Aggregate_Fields>;
+  nodes: Array<Error_Event>;
+};
+
+/** aggregate fields of "error_event" */
+export type Error_Event_Aggregate_Fields = {
+  __typename?: 'error_event_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Error_Event_Max_Fields>;
+  min?: Maybe<Error_Event_Min_Fields>;
+};
+
+/** aggregate fields of "error_event" */
+export type Error_Event_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Error_Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "error_event". All fields are combined with a logical 'AND'. */
+export type Error_Event_Bool_Exp = {
+  _and?: InputMaybe<Array<Error_Event_Bool_Exp>>;
+  _not?: InputMaybe<Error_Event_Bool_Exp>;
+  _or?: InputMaybe<Array<Error_Event_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  error_docs?: InputMaybe<String_Comparison_Exp>;
+  error_module?: InputMaybe<String_Comparison_Exp>;
+  error_name?: InputMaybe<String_Comparison_Exp>;
+  error_type?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Error_Event_Max_Fields = {
+  __typename?: 'error_event_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  error_docs?: Maybe<Scalars['String']['output']>;
+  error_module?: Maybe<Scalars['String']['output']>;
+  error_name?: Maybe<Scalars['String']['output']>;
+  error_type?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Error_Event_Min_Fields = {
+  __typename?: 'error_event_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  error_docs?: Maybe<Scalars['String']['output']>;
+  error_module?: Maybe<Scalars['String']['output']>;
+  error_name?: Maybe<Scalars['String']['output']>;
+  error_type?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "error_event". */
+export type Error_Event_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  error_docs?: InputMaybe<Order_By>;
+  error_module?: InputMaybe<Order_By>;
+  error_name?: InputMaybe<Order_By>;
+  error_type?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "error_event" */
+export enum Error_Event_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ErrorDocs = 'error_docs',
+  /** column name */
+  ErrorModule = 'error_module',
+  /** column name */
+  ErrorName = 'error_name',
+  /** column name */
+  ErrorType = 'error_type',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** Streaming cursor of the table "error_event" */
+export type Error_Event_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Error_Event_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Error_Event_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  error_docs?: InputMaybe<Scalars['String']['input']>;
+  error_module?: InputMaybe<Scalars['String']['input']>;
+  error_name?: InputMaybe<Scalars['String']['input']>;
+  error_type?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** columns and relationships of "event" */
+export type Event = {
+  __typename?: 'event';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  cancelledReversibleTransfer?: Maybe<Cancelled_Reversible_Transfer>;
+  cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  errorEvent?: Maybe<Error_Event>;
+  error_event_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  executedReversibleTransfer?: Maybe<Executed_Reversible_Transfer>;
+  executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  highSecuritySet?: Maybe<High_Security_Set>;
+  high_security_set_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  minerReward?: Maybe<Miner_Reward>;
+  miner_reward_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  scheduledReversibleTransfer?: Maybe<Scheduled_Reversible_Transfer>;
+  scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  transfer?: Maybe<Transfer>;
+  transfer_id?: Maybe<Scalars['String']['output']>;
+  type: Scalars['String']['output'];
+};
+
+/** aggregated selection of "event" */
+export type Event_Aggregate = {
+  __typename?: 'event_aggregate';
+  aggregate?: Maybe<Event_Aggregate_Fields>;
+  nodes: Array<Event>;
+};
+
+export type Event_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Event_Aggregate_Bool_Exp_Count>;
+};
+
+export type Event_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Event_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "event" */
+export type Event_Aggregate_Fields = {
+  __typename?: 'event_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Event_Max_Fields>;
+  min?: Maybe<Event_Min_Fields>;
+};
+
+/** aggregate fields of "event" */
+export type Event_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Event_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "event" */
+export type Event_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Event_Max_Order_By>;
+  min?: InputMaybe<Event_Min_Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "event". All fields are combined with a logical 'AND'. */
+export type Event_Bool_Exp = {
+  _and?: InputMaybe<Array<Event_Bool_Exp>>;
+  _not?: InputMaybe<Event_Bool_Exp>;
+  _or?: InputMaybe<Array<Event_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+  cancelled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  errorEvent?: InputMaybe<Error_Event_Bool_Exp>;
+  error_event_id?: InputMaybe<String_Comparison_Exp>;
+  executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+  executed_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  highSecuritySet?: InputMaybe<High_Security_Set_Bool_Exp>;
+  high_security_set_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  minerReward?: InputMaybe<Miner_Reward_Bool_Exp>;
+  miner_reward_id?: InputMaybe<String_Comparison_Exp>;
+  scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+  scheduled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  transfer?: InputMaybe<Transfer_Bool_Exp>;
+  transfer_id?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Event_Max_Fields = {
+  __typename?: 'event_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  error_event_id?: Maybe<Scalars['String']['output']>;
+  executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  high_security_set_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  miner_reward_id?: Maybe<Scalars['String']['output']>;
+  scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  transfer_id?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "event" */
+export type Event_Max_Order_By = {
+  block_id?: InputMaybe<Order_By>;
+  cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  error_event_id?: InputMaybe<Order_By>;
+  executed_reversible_transfer_id?: InputMaybe<Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  high_security_set_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  miner_reward_id?: InputMaybe<Order_By>;
+  scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transfer_id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Event_Min_Fields = {
+  __typename?: 'event_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  error_event_id?: Maybe<Scalars['String']['output']>;
+  executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  high_security_set_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  miner_reward_id?: Maybe<Scalars['String']['output']>;
+  scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  transfer_id?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "event" */
+export type Event_Min_Order_By = {
+  block_id?: InputMaybe<Order_By>;
+  cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  error_event_id?: InputMaybe<Order_By>;
+  executed_reversible_transfer_id?: InputMaybe<Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  high_security_set_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  miner_reward_id?: InputMaybe<Order_By>;
+  scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transfer_id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "event". */
+export type Event_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Order_By>;
+  cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  errorEvent?: InputMaybe<Error_Event_Order_By>;
+  error_event_id?: InputMaybe<Order_By>;
+  executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Order_By>;
+  executed_reversible_transfer_id?: InputMaybe<Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  highSecuritySet?: InputMaybe<High_Security_Set_Order_By>;
+  high_security_set_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  minerReward?: InputMaybe<Miner_Reward_Order_By>;
+  miner_reward_id?: InputMaybe<Order_By>;
+  scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Order_By>;
+  scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  transfer?: InputMaybe<Transfer_Order_By>;
+  transfer_id?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "event" */
+export enum Event_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  CancelledReversibleTransferId = 'cancelled_reversible_transfer_id',
+  /** column name */
+  ErrorEventId = 'error_event_id',
+  /** column name */
+  ExecutedReversibleTransferId = 'executed_reversible_transfer_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  HighSecuritySetId = 'high_security_set_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MinerRewardId = 'miner_reward_id',
+  /** column name */
+  ScheduledReversibleTransferId = 'scheduled_reversible_transfer_id',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  TransferId = 'transfer_id',
+  /** column name */
+  Type = 'type'
+}
+
+/** Streaming cursor of the table "event" */
+export type Event_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Event_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Event_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  cancelled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  error_event_id?: InputMaybe<Scalars['String']['input']>;
+  executed_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  high_security_set_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  miner_reward_id?: InputMaybe<Scalars['String']['input']>;
+  scheduled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  transfer_id?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** columns and relationships of "executed_reversible_transfer" */
+export type Executed_Reversible_Transfer = {
+  __typename?: 'executed_reversible_transfer';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  executedTransfer?: Maybe<Transfer>;
+  executed_transfer_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  scheduledTransfer?: Maybe<Scheduled_Reversible_Transfer>;
+  scheduled_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+  tx_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "executed_reversible_transfer" */
+export type Executed_Reversible_Transfer_Aggregate = {
+  __typename?: 'executed_reversible_transfer_aggregate';
+  aggregate?: Maybe<Executed_Reversible_Transfer_Aggregate_Fields>;
+  nodes: Array<Executed_Reversible_Transfer>;
+};
+
+/** aggregate fields of "executed_reversible_transfer" */
+export type Executed_Reversible_Transfer_Aggregate_Fields = {
+  __typename?: 'executed_reversible_transfer_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Executed_Reversible_Transfer_Max_Fields>;
+  min?: Maybe<Executed_Reversible_Transfer_Min_Fields>;
+};
+
+/** aggregate fields of "executed_reversible_transfer" */
+export type Executed_Reversible_Transfer_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "executed_reversible_transfer". All fields are combined with a logical 'AND'. */
+export type Executed_Reversible_Transfer_Bool_Exp = {
+  _and?: InputMaybe<Array<Executed_Reversible_Transfer_Bool_Exp>>;
+  _not?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+  _or?: InputMaybe<Array<Executed_Reversible_Transfer_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  executedTransfer?: InputMaybe<Transfer_Bool_Exp>;
+  executed_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  scheduledTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+  scheduled_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  tx_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Executed_Reversible_Transfer_Max_Fields = {
+  __typename?: 'executed_reversible_transfer_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  executed_transfer_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  scheduled_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Executed_Reversible_Transfer_Min_Fields = {
+  __typename?: 'executed_reversible_transfer_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  executed_transfer_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  scheduled_transfer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** Ordering options when selecting data from "executed_reversible_transfer". */
+export type Executed_Reversible_Transfer_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  executedTransfer?: InputMaybe<Transfer_Order_By>;
+  executed_transfer_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  scheduledTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Order_By>;
+  scheduled_transfer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  tx_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "executed_reversible_transfer" */
+export enum Executed_Reversible_Transfer_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExecutedTransferId = 'executed_transfer_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ScheduledTransferId = 'scheduled_transfer_id',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  TxId = 'tx_id'
+}
+
+/** Streaming cursor of the table "executed_reversible_transfer" */
+export type Executed_Reversible_Transfer_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Executed_Reversible_Transfer_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Executed_Reversible_Transfer_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  executed_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  scheduled_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  tx_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** columns and relationships of "extrinsic" */
+export type Extrinsic = {
+  __typename?: 'extrinsic';
+  args: Scalars['String']['output'];
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  call: Scalars['String']['output'];
+  /** An array relationship */
+  events: Array<Event>;
+  /** An aggregate relationship */
+  events_aggregate: Event_Aggregate;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  index_in_block: Scalars['Int']['output'];
+  pallet: Scalars['String']['output'];
+  /** An object relationship */
+  signer?: Maybe<Account>;
+  signer_id?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** columns and relationships of "extrinsic" */
+export type ExtrinsicEventsArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+/** columns and relationships of "extrinsic" */
+export type ExtrinsicEvents_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+/** aggregated selection of "extrinsic" */
+export type Extrinsic_Aggregate = {
+  __typename?: 'extrinsic_aggregate';
+  aggregate?: Maybe<Extrinsic_Aggregate_Fields>;
+  nodes: Array<Extrinsic>;
+};
+
+export type Extrinsic_Aggregate_Bool_Exp = {
+  bool_and?: InputMaybe<Extrinsic_Aggregate_Bool_Exp_Bool_And>;
+  bool_or?: InputMaybe<Extrinsic_Aggregate_Bool_Exp_Bool_Or>;
+  count?: InputMaybe<Extrinsic_Aggregate_Bool_Exp_Count>;
+};
+
+export type Extrinsic_Aggregate_Bool_Exp_Bool_And = {
+  arguments: Extrinsic_Select_Column_Extrinsic_Aggregate_Bool_Exp_Bool_And_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Extrinsic_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Extrinsic_Aggregate_Bool_Exp_Bool_Or = {
+  arguments: Extrinsic_Select_Column_Extrinsic_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Extrinsic_Bool_Exp>;
+  predicate: Boolean_Comparison_Exp;
+};
+
+export type Extrinsic_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Extrinsic_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "extrinsic" */
+export type Extrinsic_Aggregate_Fields = {
+  __typename?: 'extrinsic_aggregate_fields';
+  avg?: Maybe<Extrinsic_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Extrinsic_Max_Fields>;
+  min?: Maybe<Extrinsic_Min_Fields>;
+  stddev?: Maybe<Extrinsic_Stddev_Fields>;
+  stddev_pop?: Maybe<Extrinsic_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Extrinsic_Stddev_Samp_Fields>;
+  sum?: Maybe<Extrinsic_Sum_Fields>;
+  var_pop?: Maybe<Extrinsic_Var_Pop_Fields>;
+  var_samp?: Maybe<Extrinsic_Var_Samp_Fields>;
+  variance?: Maybe<Extrinsic_Variance_Fields>;
+};
+
+/** aggregate fields of "extrinsic" */
+export type Extrinsic_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "extrinsic" */
+export type Extrinsic_Aggregate_Order_By = {
+  avg?: InputMaybe<Extrinsic_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Extrinsic_Max_Order_By>;
+  min?: InputMaybe<Extrinsic_Min_Order_By>;
+  stddev?: InputMaybe<Extrinsic_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Extrinsic_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Extrinsic_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Extrinsic_Sum_Order_By>;
+  var_pop?: InputMaybe<Extrinsic_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Extrinsic_Var_Samp_Order_By>;
+  variance?: InputMaybe<Extrinsic_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Extrinsic_Avg_Fields = {
+  __typename?: 'extrinsic_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "extrinsic" */
+export type Extrinsic_Avg_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "extrinsic". All fields are combined with a logical 'AND'. */
+export type Extrinsic_Bool_Exp = {
+  _and?: InputMaybe<Array<Extrinsic_Bool_Exp>>;
+  _not?: InputMaybe<Extrinsic_Bool_Exp>;
+  _or?: InputMaybe<Array<Extrinsic_Bool_Exp>>;
+  args?: InputMaybe<String_Comparison_Exp>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  call?: InputMaybe<String_Comparison_Exp>;
+  events?: InputMaybe<Event_Bool_Exp>;
+  events_aggregate?: InputMaybe<Event_Aggregate_Bool_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  index_in_block?: InputMaybe<Int_Comparison_Exp>;
+  pallet?: InputMaybe<String_Comparison_Exp>;
+  signer?: InputMaybe<Account_Bool_Exp>;
+  signer_id?: InputMaybe<String_Comparison_Exp>;
+  success?: InputMaybe<Boolean_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Extrinsic_Max_Fields = {
+  __typename?: 'extrinsic_max_fields';
+  args?: Maybe<Scalars['String']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  call?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  index_in_block?: Maybe<Scalars['Int']['output']>;
+  pallet?: Maybe<Scalars['String']['output']>;
+  signer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by max() on columns of table "extrinsic" */
+export type Extrinsic_Max_Order_By = {
+  args?: InputMaybe<Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  call?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+  pallet?: InputMaybe<Order_By>;
+  signer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Extrinsic_Min_Fields = {
+  __typename?: 'extrinsic_min_fields';
+  args?: Maybe<Scalars['String']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  call?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  index_in_block?: Maybe<Scalars['Int']['output']>;
+  pallet?: Maybe<Scalars['String']['output']>;
+  signer_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "extrinsic" */
+export type Extrinsic_Min_Order_By = {
+  args?: InputMaybe<Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  call?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+  pallet?: InputMaybe<Order_By>;
+  signer_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "extrinsic". */
+export type Extrinsic_Order_By = {
+  args?: InputMaybe<Order_By>;
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  call?: InputMaybe<Order_By>;
+  events_aggregate?: InputMaybe<Event_Aggregate_Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+  pallet?: InputMaybe<Order_By>;
+  signer?: InputMaybe<Account_Order_By>;
+  signer_id?: InputMaybe<Order_By>;
+  success?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "extrinsic" */
+export enum Extrinsic_Select_Column {
+  /** column name */
+  Args = 'args',
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  Call = 'call',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IndexInBlock = 'index_in_block',
+  /** column name */
+  Pallet = 'pallet',
+  /** column name */
+  SignerId = 'signer_id',
+  /** column name */
+  Success = 'success',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** select "extrinsic_aggregate_bool_exp_bool_and_arguments_columns" columns of table "extrinsic" */
+export enum Extrinsic_Select_Column_Extrinsic_Aggregate_Bool_Exp_Bool_And_Arguments_Columns {
+  /** column name */
+  Success = 'success'
+}
+
+/** select "extrinsic_aggregate_bool_exp_bool_or_arguments_columns" columns of table "extrinsic" */
+export enum Extrinsic_Select_Column_Extrinsic_Aggregate_Bool_Exp_Bool_Or_Arguments_Columns {
+  /** column name */
+  Success = 'success'
+}
+
+/** aggregate stddev on columns */
+export type Extrinsic_Stddev_Fields = {
+  __typename?: 'extrinsic_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "extrinsic" */
+export type Extrinsic_Stddev_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Extrinsic_Stddev_Pop_Fields = {
+  __typename?: 'extrinsic_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "extrinsic" */
+export type Extrinsic_Stddev_Pop_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Extrinsic_Stddev_Samp_Fields = {
+  __typename?: 'extrinsic_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "extrinsic" */
+export type Extrinsic_Stddev_Samp_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "extrinsic" */
+export type Extrinsic_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Extrinsic_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Extrinsic_Stream_Cursor_Value_Input = {
+  args?: InputMaybe<Scalars['String']['input']>;
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  call?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  index_in_block?: InputMaybe<Scalars['Int']['input']>;
+  pallet?: InputMaybe<Scalars['String']['input']>;
+  signer_id?: InputMaybe<Scalars['String']['input']>;
+  success?: InputMaybe<Scalars['Boolean']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Extrinsic_Sum_Fields = {
+  __typename?: 'extrinsic_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+  index_in_block?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "extrinsic" */
+export type Extrinsic_Sum_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Extrinsic_Var_Pop_Fields = {
+  __typename?: 'extrinsic_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "extrinsic" */
+export type Extrinsic_Var_Pop_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Extrinsic_Var_Samp_Fields = {
+  __typename?: 'extrinsic_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "extrinsic" */
+export type Extrinsic_Var_Samp_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Extrinsic_Variance_Fields = {
+  __typename?: 'extrinsic_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  index_in_block?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "extrinsic" */
+export type Extrinsic_Variance_Order_By = {
+  fee?: InputMaybe<Order_By>;
+  index_in_block?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "high_security_set" */
+export type High_Security_Set = {
+  __typename?: 'high_security_set';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  delay: Scalars['numeric']['output'];
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  interceptor?: Maybe<Account>;
+  interceptor_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  who?: Maybe<Account>;
+  who_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregated selection of "high_security_set" */
+export type High_Security_Set_Aggregate = {
+  __typename?: 'high_security_set_aggregate';
+  aggregate?: Maybe<High_Security_Set_Aggregate_Fields>;
+  nodes: Array<High_Security_Set>;
+};
+
+/** aggregate fields of "high_security_set" */
+export type High_Security_Set_Aggregate_Fields = {
+  __typename?: 'high_security_set_aggregate_fields';
+  avg?: Maybe<High_Security_Set_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<High_Security_Set_Max_Fields>;
+  min?: Maybe<High_Security_Set_Min_Fields>;
+  stddev?: Maybe<High_Security_Set_Stddev_Fields>;
+  stddev_pop?: Maybe<High_Security_Set_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<High_Security_Set_Stddev_Samp_Fields>;
+  sum?: Maybe<High_Security_Set_Sum_Fields>;
+  var_pop?: Maybe<High_Security_Set_Var_Pop_Fields>;
+  var_samp?: Maybe<High_Security_Set_Var_Samp_Fields>;
+  variance?: Maybe<High_Security_Set_Variance_Fields>;
+};
+
+/** aggregate fields of "high_security_set" */
+export type High_Security_Set_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<High_Security_Set_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type High_Security_Set_Avg_Fields = {
+  __typename?: 'high_security_set_avg_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "high_security_set". All fields are combined with a logical 'AND'. */
+export type High_Security_Set_Bool_Exp = {
+  _and?: InputMaybe<Array<High_Security_Set_Bool_Exp>>;
+  _not?: InputMaybe<High_Security_Set_Bool_Exp>;
+  _or?: InputMaybe<Array<High_Security_Set_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  delay?: InputMaybe<Numeric_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  interceptor?: InputMaybe<Account_Bool_Exp>;
+  interceptor_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  who?: InputMaybe<Account_Bool_Exp>;
+  who_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type High_Security_Set_Max_Fields = {
+  __typename?: 'high_security_set_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  delay?: Maybe<Scalars['numeric']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  interceptor_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  who_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type High_Security_Set_Min_Fields = {
+  __typename?: 'high_security_set_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  delay?: Maybe<Scalars['numeric']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  interceptor_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  who_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** Ordering options when selecting data from "high_security_set". */
+export type High_Security_Set_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  delay?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  interceptor?: InputMaybe<Account_Order_By>;
+  interceptor_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  who?: InputMaybe<Account_Order_By>;
+  who_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "high_security_set" */
+export enum High_Security_Set_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  Delay = 'delay',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  InterceptorId = 'interceptor_id',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  WhoId = 'who_id'
+}
+
+/** aggregate stddev on columns */
+export type High_Security_Set_Stddev_Fields = {
+  __typename?: 'high_security_set_stddev_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type High_Security_Set_Stddev_Pop_Fields = {
+  __typename?: 'high_security_set_stddev_pop_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type High_Security_Set_Stddev_Samp_Fields = {
+  __typename?: 'high_security_set_stddev_samp_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "high_security_set" */
+export type High_Security_Set_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: High_Security_Set_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type High_Security_Set_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  delay?: InputMaybe<Scalars['numeric']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  interceptor_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  who_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type High_Security_Set_Sum_Fields = {
+  __typename?: 'high_security_set_sum_fields';
+  delay?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type High_Security_Set_Var_Pop_Fields = {
+  __typename?: 'high_security_set_var_pop_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type High_Security_Set_Var_Samp_Fields = {
+  __typename?: 'high_security_set_var_samp_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type High_Security_Set_Variance_Fields = {
+  __typename?: 'high_security_set_variance_fields';
+  delay?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "miner_reward" */
+export type Miner_Reward = {
+  __typename?: 'miner_reward';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  miner?: Maybe<Account>;
+  miner_id?: Maybe<Scalars['String']['output']>;
+  reward: Scalars['numeric']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "miner_reward" */
+export type Miner_Reward_Aggregate = {
+  __typename?: 'miner_reward_aggregate';
+  aggregate?: Maybe<Miner_Reward_Aggregate_Fields>;
+  nodes: Array<Miner_Reward>;
+};
+
+/** aggregate fields of "miner_reward" */
+export type Miner_Reward_Aggregate_Fields = {
+  __typename?: 'miner_reward_aggregate_fields';
+  avg?: Maybe<Miner_Reward_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Miner_Reward_Max_Fields>;
+  min?: Maybe<Miner_Reward_Min_Fields>;
+  stddev?: Maybe<Miner_Reward_Stddev_Fields>;
+  stddev_pop?: Maybe<Miner_Reward_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Miner_Reward_Stddev_Samp_Fields>;
+  sum?: Maybe<Miner_Reward_Sum_Fields>;
+  var_pop?: Maybe<Miner_Reward_Var_Pop_Fields>;
+  var_samp?: Maybe<Miner_Reward_Var_Samp_Fields>;
+  variance?: Maybe<Miner_Reward_Variance_Fields>;
+};
+
+/** aggregate fields of "miner_reward" */
+export type Miner_Reward_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Miner_Reward_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Miner_Reward_Avg_Fields = {
+  __typename?: 'miner_reward_avg_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "miner_reward". All fields are combined with a logical 'AND'. */
+export type Miner_Reward_Bool_Exp = {
+  _and?: InputMaybe<Array<Miner_Reward_Bool_Exp>>;
+  _not?: InputMaybe<Miner_Reward_Bool_Exp>;
+  _or?: InputMaybe<Array<Miner_Reward_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  miner?: InputMaybe<Account_Bool_Exp>;
+  miner_id?: InputMaybe<String_Comparison_Exp>;
+  reward?: InputMaybe<Numeric_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Miner_Reward_Max_Fields = {
+  __typename?: 'miner_reward_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  miner_id?: Maybe<Scalars['String']['output']>;
+  reward?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Miner_Reward_Min_Fields = {
+  __typename?: 'miner_reward_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  miner_id?: Maybe<Scalars['String']['output']>;
+  reward?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "miner_reward". */
+export type Miner_Reward_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  id?: InputMaybe<Order_By>;
+  miner?: InputMaybe<Account_Order_By>;
+  miner_id?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "miner_reward" */
+export enum Miner_Reward_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MinerId = 'miner_id',
+  /** column name */
+  Reward = 'reward',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Miner_Reward_Stddev_Fields = {
+  __typename?: 'miner_reward_stddev_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Miner_Reward_Stddev_Pop_Fields = {
+  __typename?: 'miner_reward_stddev_pop_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Miner_Reward_Stddev_Samp_Fields = {
+  __typename?: 'miner_reward_stddev_samp_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "miner_reward" */
+export type Miner_Reward_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Miner_Reward_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Miner_Reward_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  miner_id?: InputMaybe<Scalars['String']['input']>;
+  reward?: InputMaybe<Scalars['numeric']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Miner_Reward_Sum_Fields = {
+  __typename?: 'miner_reward_sum_fields';
+  reward?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Miner_Reward_Var_Pop_Fields = {
+  __typename?: 'miner_reward_var_pop_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Miner_Reward_Var_Samp_Fields = {
+  __typename?: 'miner_reward_var_samp_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Miner_Reward_Variance_Fields = {
+  __typename?: 'miner_reward_variance_fields';
+  reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
+export type Numeric_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['numeric']['input']>;
+  _gt?: InputMaybe<Scalars['numeric']['input']>;
+  _gte?: InputMaybe<Scalars['numeric']['input']>;
+  _in?: InputMaybe<Array<Scalars['numeric']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['numeric']['input']>;
+  _lte?: InputMaybe<Scalars['numeric']['input']>;
+  _neq?: InputMaybe<Scalars['numeric']['input']>;
+  _nin?: InputMaybe<Array<Scalars['numeric']['input']>>;
+};
+
+/** column ordering options */
+export enum Order_By {
+  /** in ascending order, nulls last */
+  Asc = 'asc',
+  /** in ascending order, nulls first */
+  AscNullsFirst = 'asc_nulls_first',
+  /** in ascending order, nulls last */
+  AscNullsLast = 'asc_nulls_last',
+  /** in descending order, nulls first */
+  Desc = 'desc',
+  /** in descending order, nulls first */
+  DescNullsFirst = 'desc_nulls_first',
+  /** in descending order, nulls last */
+  DescNullsLast = 'desc_nulls_last'
+}
+
+export type Query_Root = {
+  __typename?: 'query_root';
+  /** fetch data from the table: "account" */
+  account: Array<Account>;
+  /** fetch aggregated fields from the table: "account" */
+  account_aggregate: Account_Aggregate;
+  /** fetch data from the table: "account" using primary key columns */
+  account_by_pk?: Maybe<Account>;
+  /** fetch data from the table: "account_event" */
+  account_event: Array<Account_Event>;
+  /** fetch aggregated fields from the table: "account_event" */
+  account_event_aggregate: Account_Event_Aggregate;
+  /** fetch data from the table: "account_event" using primary key columns */
+  account_event_by_pk?: Maybe<Account_Event>;
+  /** fetch data from the table: "account_stats" */
+  account_stats: Array<Account_Stats>;
+  /** fetch aggregated fields from the table: "account_stats" */
+  account_stats_aggregate: Account_Stats_Aggregate;
+  /** fetch data from the table: "account_stats" using primary key columns */
+  account_stats_by_pk?: Maybe<Account_Stats>;
+  /** fetch data from the table: "block" */
+  block: Array<Block>;
+  /** fetch aggregated fields from the table: "block" */
+  block_aggregate: Block_Aggregate;
+  /** fetch data from the table: "block" using primary key columns */
+  block_by_pk?: Maybe<Block>;
+  /** fetch data from the table: "cancelled_reversible_transfer" */
+  cancelled_reversible_transfer: Array<Cancelled_Reversible_Transfer>;
+  /** fetch aggregated fields from the table: "cancelled_reversible_transfer" */
+  cancelled_reversible_transfer_aggregate: Cancelled_Reversible_Transfer_Aggregate;
+  /** fetch data from the table: "cancelled_reversible_transfer" using primary key columns */
+  cancelled_reversible_transfer_by_pk?: Maybe<Cancelled_Reversible_Transfer>;
+  /** fetch data from the table: "chain_stats" */
+  chain_stats: Array<Chain_Stats>;
+  /** fetch aggregated fields from the table: "chain_stats" */
+  chain_stats_aggregate: Chain_Stats_Aggregate;
+  /** fetch data from the table: "chain_stats" using primary key columns */
+  chain_stats_by_pk?: Maybe<Chain_Stats>;
+  /** fetch data from the table: "deposit_pool_stats" */
+  deposit_pool_stats: Array<Deposit_Pool_Stats>;
+  /** fetch aggregated fields from the table: "deposit_pool_stats" */
+  deposit_pool_stats_aggregate: Deposit_Pool_Stats_Aggregate;
+  /** fetch data from the table: "deposit_pool_stats" using primary key columns */
+  deposit_pool_stats_by_pk?: Maybe<Deposit_Pool_Stats>;
+  /** fetch data from the table: "error_event" */
+  error_event: Array<Error_Event>;
+  /** fetch aggregated fields from the table: "error_event" */
+  error_event_aggregate: Error_Event_Aggregate;
+  /** fetch data from the table: "error_event" using primary key columns */
+  error_event_by_pk?: Maybe<Error_Event>;
+  /** fetch data from the table: "event" */
+  event: Array<Event>;
+  /** fetch aggregated fields from the table: "event" */
+  event_aggregate: Event_Aggregate;
+  /** fetch data from the table: "event" using primary key columns */
+  event_by_pk?: Maybe<Event>;
+  /** fetch data from the table: "executed_reversible_transfer" */
+  executed_reversible_transfer: Array<Executed_Reversible_Transfer>;
+  /** fetch aggregated fields from the table: "executed_reversible_transfer" */
+  executed_reversible_transfer_aggregate: Executed_Reversible_Transfer_Aggregate;
+  /** fetch data from the table: "executed_reversible_transfer" using primary key columns */
+  executed_reversible_transfer_by_pk?: Maybe<Executed_Reversible_Transfer>;
+  /** fetch data from the table: "extrinsic" */
+  extrinsic: Array<Extrinsic>;
+  /** fetch aggregated fields from the table: "extrinsic" */
+  extrinsic_aggregate: Extrinsic_Aggregate;
+  /** fetch data from the table: "extrinsic" using primary key columns */
+  extrinsic_by_pk?: Maybe<Extrinsic>;
+  /** fetch data from the table: "high_security_set" */
+  high_security_set: Array<High_Security_Set>;
+  /** fetch aggregated fields from the table: "high_security_set" */
+  high_security_set_aggregate: High_Security_Set_Aggregate;
+  /** fetch data from the table: "high_security_set" using primary key columns */
+  high_security_set_by_pk?: Maybe<High_Security_Set>;
+  /** fetch data from the table: "miner_reward" */
+  miner_reward: Array<Miner_Reward>;
+  /** fetch aggregated fields from the table: "miner_reward" */
+  miner_reward_aggregate: Miner_Reward_Aggregate;
+  /** fetch data from the table: "miner_reward" using primary key columns */
+  miner_reward_by_pk?: Maybe<Miner_Reward>;
+  /** fetch data from the table: "scheduled_reversible_transfer" */
+  scheduled_reversible_transfer: Array<Scheduled_Reversible_Transfer>;
+  /** fetch aggregated fields from the table: "scheduled_reversible_transfer" */
+  scheduled_reversible_transfer_aggregate: Scheduled_Reversible_Transfer_Aggregate;
+  /** fetch data from the table: "scheduled_reversible_transfer" using primary key columns */
+  scheduled_reversible_transfer_by_pk?: Maybe<Scheduled_Reversible_Transfer>;
+  /** fetch data from the table: "transfer" */
+  transfer: Array<Transfer>;
+  /** fetch aggregated fields from the table: "transfer" */
+  transfer_aggregate: Transfer_Aggregate;
+  /** fetch data from the table: "transfer" using primary key columns */
+  transfer_by_pk?: Maybe<Transfer>;
+  /** fetch data from the table: "wormhole_extrinsic" */
+  wormhole_extrinsic: Array<Wormhole_Extrinsic>;
+  /** fetch aggregated fields from the table: "wormhole_extrinsic" */
+  wormhole_extrinsic_aggregate: Wormhole_Extrinsic_Aggregate;
+  /** fetch data from the table: "wormhole_extrinsic" using primary key columns */
+  wormhole_extrinsic_by_pk?: Maybe<Wormhole_Extrinsic>;
+  /** fetch data from the table: "wormhole_nullifier" */
+  wormhole_nullifier: Array<Wormhole_Nullifier>;
+  /** fetch aggregated fields from the table: "wormhole_nullifier" */
+  wormhole_nullifier_aggregate: Wormhole_Nullifier_Aggregate;
+  /** fetch data from the table: "wormhole_nullifier" using primary key columns */
+  wormhole_nullifier_by_pk?: Maybe<Wormhole_Nullifier>;
+  /** fetch data from the table: "wormhole_output" */
+  wormhole_output: Array<Wormhole_Output>;
+  /** fetch aggregated fields from the table: "wormhole_output" */
+  wormhole_output_aggregate: Wormhole_Output_Aggregate;
+  /** fetch data from the table: "wormhole_output" using primary key columns */
+  wormhole_output_by_pk?: Maybe<Wormhole_Output>;
+};
+
+export type Query_RootAccountArgs = {
+  distinct_on?: InputMaybe<Array<Account_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Order_By>>;
+  where?: InputMaybe<Account_Bool_Exp>;
+};
+
+export type Query_RootAccount_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Order_By>>;
+  where?: InputMaybe<Account_Bool_Exp>;
+};
+
+export type Query_RootAccount_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootAccount_EventArgs = {
+  distinct_on?: InputMaybe<Array<Account_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Event_Order_By>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
+};
+
+export type Query_RootAccount_Event_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Event_Order_By>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
+};
+
+export type Query_RootAccount_Event_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootAccount_StatsArgs = {
+  distinct_on?: InputMaybe<Array<Account_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Stats_Order_By>>;
+  where?: InputMaybe<Account_Stats_Bool_Exp>;
+};
+
+export type Query_RootAccount_Stats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Stats_Order_By>>;
+  where?: InputMaybe<Account_Stats_Bool_Exp>;
+};
+
+export type Query_RootAccount_Stats_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootBlockArgs = {
+  distinct_on?: InputMaybe<Array<Block_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Block_Order_By>>;
+  where?: InputMaybe<Block_Bool_Exp>;
+};
+
+export type Query_RootBlock_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Block_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Block_Order_By>>;
+  where?: InputMaybe<Block_Bool_Exp>;
+};
+
+export type Query_RootBlock_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootCancelled_Reversible_TransferArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Query_RootCancelled_Reversible_Transfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Query_RootCancelled_Reversible_Transfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootChain_StatsArgs = {
+  distinct_on?: InputMaybe<Array<Chain_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Chain_Stats_Order_By>>;
+  where?: InputMaybe<Chain_Stats_Bool_Exp>;
+};
+
+export type Query_RootChain_Stats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Chain_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Chain_Stats_Order_By>>;
+  where?: InputMaybe<Chain_Stats_Bool_Exp>;
+};
+
+export type Query_RootChain_Stats_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootDeposit_Pool_StatsArgs = {
+  distinct_on?: InputMaybe<Array<Deposit_Pool_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Deposit_Pool_Stats_Order_By>>;
+  where?: InputMaybe<Deposit_Pool_Stats_Bool_Exp>;
+};
+
+export type Query_RootDeposit_Pool_Stats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Deposit_Pool_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Deposit_Pool_Stats_Order_By>>;
+  where?: InputMaybe<Deposit_Pool_Stats_Bool_Exp>;
+};
+
+export type Query_RootDeposit_Pool_Stats_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootError_EventArgs = {
+  distinct_on?: InputMaybe<Array<Error_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Error_Event_Order_By>>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
+};
+
+export type Query_RootError_Event_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Error_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Error_Event_Order_By>>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
+};
+
+export type Query_RootError_Event_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootEventArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+export type Query_RootEvent_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+export type Query_RootEvent_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootExecuted_Reversible_TransferArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Query_RootExecuted_Reversible_Transfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Query_RootExecuted_Reversible_Transfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootExtrinsicArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+export type Query_RootExtrinsic_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+export type Query_RootExtrinsic_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootHigh_Security_SetArgs = {
+  distinct_on?: InputMaybe<Array<High_Security_Set_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<High_Security_Set_Order_By>>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
+};
+
+export type Query_RootHigh_Security_Set_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<High_Security_Set_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<High_Security_Set_Order_By>>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
+};
+
+export type Query_RootHigh_Security_Set_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMiner_RewardArgs = {
+  distinct_on?: InputMaybe<Array<Miner_Reward_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Miner_Reward_Order_By>>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
+};
+
+export type Query_RootMiner_Reward_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Miner_Reward_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Miner_Reward_Order_By>>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
+};
+
+export type Query_RootMiner_Reward_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootScheduled_Reversible_TransferArgs = {
+  distinct_on?: InputMaybe<Array<Scheduled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Scheduled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Query_RootScheduled_Reversible_Transfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Scheduled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Scheduled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Query_RootScheduled_Reversible_Transfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootTransferArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+export type Query_RootTransfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+export type Query_RootTransfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootWormhole_ExtrinsicArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Extrinsic_Order_By>>;
+  where?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+};
+
+export type Query_RootWormhole_Extrinsic_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Extrinsic_Order_By>>;
+  where?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+};
+
+export type Query_RootWormhole_Extrinsic_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootWormhole_NullifierArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Nullifier_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Nullifier_Order_By>>;
+  where?: InputMaybe<Wormhole_Nullifier_Bool_Exp>;
+};
+
+export type Query_RootWormhole_Nullifier_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Nullifier_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Nullifier_Order_By>>;
+  where?: InputMaybe<Wormhole_Nullifier_Bool_Exp>;
+};
+
+export type Query_RootWormhole_Nullifier_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootWormhole_OutputArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Output_Order_By>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+export type Query_RootWormhole_Output_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Output_Order_By>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+export type Query_RootWormhole_Output_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+/** columns and relationships of "scheduled_reversible_transfer" */
+export type Scheduled_Reversible_Transfer = {
+  __typename?: 'scheduled_reversible_transfer';
+  amount: Scalars['numeric']['output'];
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  /** An object relationship */
+  from?: Maybe<Account>;
+  from_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  scheduled_at: Scalars['timestamptz']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  to?: Maybe<Account>;
+  to_id?: Maybe<Scalars['String']['output']>;
+  tx_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "scheduled_reversible_transfer" */
+export type Scheduled_Reversible_Transfer_Aggregate = {
+  __typename?: 'scheduled_reversible_transfer_aggregate';
+  aggregate?: Maybe<Scheduled_Reversible_Transfer_Aggregate_Fields>;
+  nodes: Array<Scheduled_Reversible_Transfer>;
+};
+
+/** aggregate fields of "scheduled_reversible_transfer" */
+export type Scheduled_Reversible_Transfer_Aggregate_Fields = {
+  __typename?: 'scheduled_reversible_transfer_aggregate_fields';
+  avg?: Maybe<Scheduled_Reversible_Transfer_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Scheduled_Reversible_Transfer_Max_Fields>;
+  min?: Maybe<Scheduled_Reversible_Transfer_Min_Fields>;
+  stddev?: Maybe<Scheduled_Reversible_Transfer_Stddev_Fields>;
+  stddev_pop?: Maybe<Scheduled_Reversible_Transfer_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Scheduled_Reversible_Transfer_Stddev_Samp_Fields>;
+  sum?: Maybe<Scheduled_Reversible_Transfer_Sum_Fields>;
+  var_pop?: Maybe<Scheduled_Reversible_Transfer_Var_Pop_Fields>;
+  var_samp?: Maybe<Scheduled_Reversible_Transfer_Var_Samp_Fields>;
+  variance?: Maybe<Scheduled_Reversible_Transfer_Variance_Fields>;
+};
+
+/** aggregate fields of "scheduled_reversible_transfer" */
+export type Scheduled_Reversible_Transfer_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Scheduled_Reversible_Transfer_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Scheduled_Reversible_Transfer_Avg_Fields = {
+  __typename?: 'scheduled_reversible_transfer_avg_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "scheduled_reversible_transfer". All fields are combined with a logical 'AND'. */
+export type Scheduled_Reversible_Transfer_Bool_Exp = {
+  _and?: InputMaybe<Array<Scheduled_Reversible_Transfer_Bool_Exp>>;
+  _not?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+  _or?: InputMaybe<Array<Scheduled_Reversible_Transfer_Bool_Exp>>;
+  amount?: InputMaybe<Numeric_Comparison_Exp>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  from?: InputMaybe<Account_Bool_Exp>;
+  from_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  scheduled_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  to?: InputMaybe<Account_Bool_Exp>;
+  to_id?: InputMaybe<String_Comparison_Exp>;
+  tx_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Scheduled_Reversible_Transfer_Max_Fields = {
+  __typename?: 'scheduled_reversible_transfer_max_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  from_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  scheduled_at?: Maybe<Scalars['timestamptz']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  to_id?: Maybe<Scalars['String']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Scheduled_Reversible_Transfer_Min_Fields = {
+  __typename?: 'scheduled_reversible_transfer_min_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  from_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  scheduled_at?: Maybe<Scalars['timestamptz']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  to_id?: Maybe<Scalars['String']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** Ordering options when selecting data from "scheduled_reversible_transfer". */
+export type Scheduled_Reversible_Transfer_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  from?: InputMaybe<Account_Order_By>;
+  from_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  scheduled_at?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  to?: InputMaybe<Account_Order_By>;
+  to_id?: InputMaybe<Order_By>;
+  tx_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "scheduled_reversible_transfer" */
+export enum Scheduled_Reversible_Transfer_Select_Column {
+  /** column name */
+  Amount = 'amount',
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  FromId = 'from_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ScheduledAt = 'scheduled_at',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  ToId = 'to_id',
+  /** column name */
+  TxId = 'tx_id'
+}
+
+/** aggregate stddev on columns */
+export type Scheduled_Reversible_Transfer_Stddev_Fields = {
+  __typename?: 'scheduled_reversible_transfer_stddev_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Scheduled_Reversible_Transfer_Stddev_Pop_Fields = {
+  __typename?: 'scheduled_reversible_transfer_stddev_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Scheduled_Reversible_Transfer_Stddev_Samp_Fields = {
+  __typename?: 'scheduled_reversible_transfer_stddev_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "scheduled_reversible_transfer" */
+export type Scheduled_Reversible_Transfer_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Scheduled_Reversible_Transfer_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Scheduled_Reversible_Transfer_Stream_Cursor_Value_Input = {
+  amount?: InputMaybe<Scalars['numeric']['input']>;
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  from_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  scheduled_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  to_id?: InputMaybe<Scalars['String']['input']>;
+  tx_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Scheduled_Reversible_Transfer_Sum_Fields = {
+  __typename?: 'scheduled_reversible_transfer_sum_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Scheduled_Reversible_Transfer_Var_Pop_Fields = {
+  __typename?: 'scheduled_reversible_transfer_var_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Scheduled_Reversible_Transfer_Var_Samp_Fields = {
+  __typename?: 'scheduled_reversible_transfer_var_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Scheduled_Reversible_Transfer_Variance_Fields = {
+  __typename?: 'scheduled_reversible_transfer_variance_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+export type Subscription_Root = {
+  __typename?: 'subscription_root';
+  /** fetch data from the table: "account" */
+  account: Array<Account>;
+  /** fetch aggregated fields from the table: "account" */
+  account_aggregate: Account_Aggregate;
+  /** fetch data from the table: "account" using primary key columns */
+  account_by_pk?: Maybe<Account>;
+  /** fetch data from the table: "account_event" */
+  account_event: Array<Account_Event>;
+  /** fetch aggregated fields from the table: "account_event" */
+  account_event_aggregate: Account_Event_Aggregate;
+  /** fetch data from the table: "account_event" using primary key columns */
+  account_event_by_pk?: Maybe<Account_Event>;
+  /** fetch data from the table in a streaming manner: "account_event" */
+  account_event_stream: Array<Account_Event>;
+  /** fetch data from the table: "account_stats" */
+  account_stats: Array<Account_Stats>;
+  /** fetch aggregated fields from the table: "account_stats" */
+  account_stats_aggregate: Account_Stats_Aggregate;
+  /** fetch data from the table: "account_stats" using primary key columns */
+  account_stats_by_pk?: Maybe<Account_Stats>;
+  /** fetch data from the table in a streaming manner: "account_stats" */
+  account_stats_stream: Array<Account_Stats>;
+  /** fetch data from the table in a streaming manner: "account" */
+  account_stream: Array<Account>;
+  /** fetch data from the table: "block" */
+  block: Array<Block>;
+  /** fetch aggregated fields from the table: "block" */
+  block_aggregate: Block_Aggregate;
+  /** fetch data from the table: "block" using primary key columns */
+  block_by_pk?: Maybe<Block>;
+  /** fetch data from the table in a streaming manner: "block" */
+  block_stream: Array<Block>;
+  /** fetch data from the table: "cancelled_reversible_transfer" */
+  cancelled_reversible_transfer: Array<Cancelled_Reversible_Transfer>;
+  /** fetch aggregated fields from the table: "cancelled_reversible_transfer" */
+  cancelled_reversible_transfer_aggregate: Cancelled_Reversible_Transfer_Aggregate;
+  /** fetch data from the table: "cancelled_reversible_transfer" using primary key columns */
+  cancelled_reversible_transfer_by_pk?: Maybe<Cancelled_Reversible_Transfer>;
+  /** fetch data from the table in a streaming manner: "cancelled_reversible_transfer" */
+  cancelled_reversible_transfer_stream: Array<Cancelled_Reversible_Transfer>;
+  /** fetch data from the table: "chain_stats" */
+  chain_stats: Array<Chain_Stats>;
+  /** fetch aggregated fields from the table: "chain_stats" */
+  chain_stats_aggregate: Chain_Stats_Aggregate;
+  /** fetch data from the table: "chain_stats" using primary key columns */
+  chain_stats_by_pk?: Maybe<Chain_Stats>;
+  /** fetch data from the table in a streaming manner: "chain_stats" */
+  chain_stats_stream: Array<Chain_Stats>;
+  /** fetch data from the table: "deposit_pool_stats" */
+  deposit_pool_stats: Array<Deposit_Pool_Stats>;
+  /** fetch aggregated fields from the table: "deposit_pool_stats" */
+  deposit_pool_stats_aggregate: Deposit_Pool_Stats_Aggregate;
+  /** fetch data from the table: "deposit_pool_stats" using primary key columns */
+  deposit_pool_stats_by_pk?: Maybe<Deposit_Pool_Stats>;
+  /** fetch data from the table in a streaming manner: "deposit_pool_stats" */
+  deposit_pool_stats_stream: Array<Deposit_Pool_Stats>;
+  /** fetch data from the table: "error_event" */
+  error_event: Array<Error_Event>;
+  /** fetch aggregated fields from the table: "error_event" */
+  error_event_aggregate: Error_Event_Aggregate;
+  /** fetch data from the table: "error_event" using primary key columns */
+  error_event_by_pk?: Maybe<Error_Event>;
+  /** fetch data from the table in a streaming manner: "error_event" */
+  error_event_stream: Array<Error_Event>;
+  /** fetch data from the table: "event" */
+  event: Array<Event>;
+  /** fetch aggregated fields from the table: "event" */
+  event_aggregate: Event_Aggregate;
+  /** fetch data from the table: "event" using primary key columns */
+  event_by_pk?: Maybe<Event>;
+  /** fetch data from the table in a streaming manner: "event" */
+  event_stream: Array<Event>;
+  /** fetch data from the table: "executed_reversible_transfer" */
+  executed_reversible_transfer: Array<Executed_Reversible_Transfer>;
+  /** fetch aggregated fields from the table: "executed_reversible_transfer" */
+  executed_reversible_transfer_aggregate: Executed_Reversible_Transfer_Aggregate;
+  /** fetch data from the table: "executed_reversible_transfer" using primary key columns */
+  executed_reversible_transfer_by_pk?: Maybe<Executed_Reversible_Transfer>;
+  /** fetch data from the table in a streaming manner: "executed_reversible_transfer" */
+  executed_reversible_transfer_stream: Array<Executed_Reversible_Transfer>;
+  /** fetch data from the table: "extrinsic" */
+  extrinsic: Array<Extrinsic>;
+  /** fetch aggregated fields from the table: "extrinsic" */
+  extrinsic_aggregate: Extrinsic_Aggregate;
+  /** fetch data from the table: "extrinsic" using primary key columns */
+  extrinsic_by_pk?: Maybe<Extrinsic>;
+  /** fetch data from the table in a streaming manner: "extrinsic" */
+  extrinsic_stream: Array<Extrinsic>;
+  /** fetch data from the table: "high_security_set" */
+  high_security_set: Array<High_Security_Set>;
+  /** fetch aggregated fields from the table: "high_security_set" */
+  high_security_set_aggregate: High_Security_Set_Aggregate;
+  /** fetch data from the table: "high_security_set" using primary key columns */
+  high_security_set_by_pk?: Maybe<High_Security_Set>;
+  /** fetch data from the table in a streaming manner: "high_security_set" */
+  high_security_set_stream: Array<High_Security_Set>;
+  /** fetch data from the table: "miner_reward" */
+  miner_reward: Array<Miner_Reward>;
+  /** fetch aggregated fields from the table: "miner_reward" */
+  miner_reward_aggregate: Miner_Reward_Aggregate;
+  /** fetch data from the table: "miner_reward" using primary key columns */
+  miner_reward_by_pk?: Maybe<Miner_Reward>;
+  /** fetch data from the table in a streaming manner: "miner_reward" */
+  miner_reward_stream: Array<Miner_Reward>;
+  /** fetch data from the table: "scheduled_reversible_transfer" */
+  scheduled_reversible_transfer: Array<Scheduled_Reversible_Transfer>;
+  /** fetch aggregated fields from the table: "scheduled_reversible_transfer" */
+  scheduled_reversible_transfer_aggregate: Scheduled_Reversible_Transfer_Aggregate;
+  /** fetch data from the table: "scheduled_reversible_transfer" using primary key columns */
+  scheduled_reversible_transfer_by_pk?: Maybe<Scheduled_Reversible_Transfer>;
+  /** fetch data from the table in a streaming manner: "scheduled_reversible_transfer" */
+  scheduled_reversible_transfer_stream: Array<Scheduled_Reversible_Transfer>;
+  /** fetch data from the table: "transfer" */
+  transfer: Array<Transfer>;
+  /** fetch aggregated fields from the table: "transfer" */
+  transfer_aggregate: Transfer_Aggregate;
+  /** fetch data from the table: "transfer" using primary key columns */
+  transfer_by_pk?: Maybe<Transfer>;
+  /** fetch data from the table in a streaming manner: "transfer" */
+  transfer_stream: Array<Transfer>;
+  /** fetch data from the table: "wormhole_extrinsic" */
+  wormhole_extrinsic: Array<Wormhole_Extrinsic>;
+  /** fetch aggregated fields from the table: "wormhole_extrinsic" */
+  wormhole_extrinsic_aggregate: Wormhole_Extrinsic_Aggregate;
+  /** fetch data from the table: "wormhole_extrinsic" using primary key columns */
+  wormhole_extrinsic_by_pk?: Maybe<Wormhole_Extrinsic>;
+  /** fetch data from the table in a streaming manner: "wormhole_extrinsic" */
+  wormhole_extrinsic_stream: Array<Wormhole_Extrinsic>;
+  /** fetch data from the table: "wormhole_nullifier" */
+  wormhole_nullifier: Array<Wormhole_Nullifier>;
+  /** fetch aggregated fields from the table: "wormhole_nullifier" */
+  wormhole_nullifier_aggregate: Wormhole_Nullifier_Aggregate;
+  /** fetch data from the table: "wormhole_nullifier" using primary key columns */
+  wormhole_nullifier_by_pk?: Maybe<Wormhole_Nullifier>;
+  /** fetch data from the table in a streaming manner: "wormhole_nullifier" */
+  wormhole_nullifier_stream: Array<Wormhole_Nullifier>;
+  /** fetch data from the table: "wormhole_output" */
+  wormhole_output: Array<Wormhole_Output>;
+  /** fetch aggregated fields from the table: "wormhole_output" */
+  wormhole_output_aggregate: Wormhole_Output_Aggregate;
+  /** fetch data from the table: "wormhole_output" using primary key columns */
+  wormhole_output_by_pk?: Maybe<Wormhole_Output>;
+  /** fetch data from the table in a streaming manner: "wormhole_output" */
+  wormhole_output_stream: Array<Wormhole_Output>;
+};
+
+export type Subscription_RootAccountArgs = {
+  distinct_on?: InputMaybe<Array<Account_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Order_By>>;
+  where?: InputMaybe<Account_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Order_By>>;
+  where?: InputMaybe<Account_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootAccount_EventArgs = {
+  distinct_on?: InputMaybe<Array<Account_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Event_Order_By>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_Event_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Event_Order_By>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_Event_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootAccount_Event_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Account_Event_Stream_Cursor_Input>>;
+  where?: InputMaybe<Account_Event_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_StatsArgs = {
+  distinct_on?: InputMaybe<Array<Account_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Stats_Order_By>>;
+  where?: InputMaybe<Account_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_Stats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Account_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Account_Stats_Order_By>>;
+  where?: InputMaybe<Account_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_Stats_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootAccount_Stats_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Account_Stats_Stream_Cursor_Input>>;
+  where?: InputMaybe<Account_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootAccount_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Account_Stream_Cursor_Input>>;
+  where?: InputMaybe<Account_Bool_Exp>;
+};
+
+export type Subscription_RootBlockArgs = {
+  distinct_on?: InputMaybe<Array<Block_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Block_Order_By>>;
+  where?: InputMaybe<Block_Bool_Exp>;
+};
+
+export type Subscription_RootBlock_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Block_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Block_Order_By>>;
+  where?: InputMaybe<Block_Bool_Exp>;
+};
+
+export type Subscription_RootBlock_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootBlock_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Block_Stream_Cursor_Input>>;
+  where?: InputMaybe<Block_Bool_Exp>;
+};
+
+export type Subscription_RootCancelled_Reversible_TransferArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootCancelled_Reversible_Transfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootCancelled_Reversible_Transfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootCancelled_Reversible_Transfer_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Cancelled_Reversible_Transfer_Stream_Cursor_Input>>;
+  where?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootChain_StatsArgs = {
+  distinct_on?: InputMaybe<Array<Chain_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Chain_Stats_Order_By>>;
+  where?: InputMaybe<Chain_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootChain_Stats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Chain_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Chain_Stats_Order_By>>;
+  where?: InputMaybe<Chain_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootChain_Stats_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootChain_Stats_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Chain_Stats_Stream_Cursor_Input>>;
+  where?: InputMaybe<Chain_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootDeposit_Pool_StatsArgs = {
+  distinct_on?: InputMaybe<Array<Deposit_Pool_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Deposit_Pool_Stats_Order_By>>;
+  where?: InputMaybe<Deposit_Pool_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootDeposit_Pool_Stats_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Deposit_Pool_Stats_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Deposit_Pool_Stats_Order_By>>;
+  where?: InputMaybe<Deposit_Pool_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootDeposit_Pool_Stats_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootDeposit_Pool_Stats_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Deposit_Pool_Stats_Stream_Cursor_Input>>;
+  where?: InputMaybe<Deposit_Pool_Stats_Bool_Exp>;
+};
+
+export type Subscription_RootError_EventArgs = {
+  distinct_on?: InputMaybe<Array<Error_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Error_Event_Order_By>>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
+};
+
+export type Subscription_RootError_Event_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Error_Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Error_Event_Order_By>>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
+};
+
+export type Subscription_RootError_Event_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootError_Event_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Error_Event_Stream_Cursor_Input>>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
+};
+
+export type Subscription_RootEventArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+export type Subscription_RootEvent_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Event_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Event_Order_By>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+export type Subscription_RootEvent_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootEvent_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Event_Stream_Cursor_Input>>;
+  where?: InputMaybe<Event_Bool_Exp>;
+};
+
+export type Subscription_RootExecuted_Reversible_TransferArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootExecuted_Reversible_Transfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootExecuted_Reversible_Transfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootExecuted_Reversible_Transfer_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Executed_Reversible_Transfer_Stream_Cursor_Input>>;
+  where?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootExtrinsicArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+export type Subscription_RootExtrinsic_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+export type Subscription_RootExtrinsic_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootExtrinsic_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Extrinsic_Stream_Cursor_Input>>;
+  where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+export type Subscription_RootHigh_Security_SetArgs = {
+  distinct_on?: InputMaybe<Array<High_Security_Set_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<High_Security_Set_Order_By>>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
+};
+
+export type Subscription_RootHigh_Security_Set_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<High_Security_Set_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<High_Security_Set_Order_By>>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
+};
+
+export type Subscription_RootHigh_Security_Set_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootHigh_Security_Set_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<High_Security_Set_Stream_Cursor_Input>>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
+};
+
+export type Subscription_RootMiner_RewardArgs = {
+  distinct_on?: InputMaybe<Array<Miner_Reward_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Miner_Reward_Order_By>>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
+};
+
+export type Subscription_RootMiner_Reward_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Miner_Reward_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Miner_Reward_Order_By>>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
+};
+
+export type Subscription_RootMiner_Reward_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMiner_Reward_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Miner_Reward_Stream_Cursor_Input>>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
+};
+
+export type Subscription_RootScheduled_Reversible_TransferArgs = {
+  distinct_on?: InputMaybe<Array<Scheduled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Scheduled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootScheduled_Reversible_Transfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Scheduled_Reversible_Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Scheduled_Reversible_Transfer_Order_By>>;
+  where?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootScheduled_Reversible_Transfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootScheduled_Reversible_Transfer_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Scheduled_Reversible_Transfer_Stream_Cursor_Input>>;
+  where?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootTransferArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootTransfer_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Transfer_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Transfer_Order_By>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootTransfer_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootTransfer_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Transfer_Stream_Cursor_Input>>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_ExtrinsicArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Extrinsic_Order_By>>;
+  where?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_Extrinsic_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Extrinsic_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Extrinsic_Order_By>>;
+  where?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_Extrinsic_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootWormhole_Extrinsic_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Wormhole_Extrinsic_Stream_Cursor_Input>>;
+  where?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_NullifierArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Nullifier_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Nullifier_Order_By>>;
+  where?: InputMaybe<Wormhole_Nullifier_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_Nullifier_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Nullifier_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Nullifier_Order_By>>;
+  where?: InputMaybe<Wormhole_Nullifier_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_Nullifier_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootWormhole_Nullifier_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Wormhole_Nullifier_Stream_Cursor_Input>>;
+  where?: InputMaybe<Wormhole_Nullifier_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_OutputArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Output_Order_By>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_Output_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Output_Order_By>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+export type Subscription_RootWormhole_Output_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootWormhole_Output_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Wormhole_Output_Stream_Cursor_Input>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _lte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _neq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+};
+
+/** columns and relationships of "transfer" */
+export type Transfer = {
+  __typename?: 'transfer';
+  amount: Scalars['numeric']['output'];
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  executedBy?: Maybe<Executed_Reversible_Transfer>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  /** An object relationship */
+  from?: Maybe<Account>;
+  from_hash: Scalars['String']['output'];
+  from_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  leaf_index: Scalars['numeric']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  to?: Maybe<Account>;
+  to_hash: Scalars['String']['output'];
+  to_id?: Maybe<Scalars['String']['output']>;
+  transfer_count: Scalars['numeric']['output'];
+};
+
+/** aggregated selection of "transfer" */
+export type Transfer_Aggregate = {
+  __typename?: 'transfer_aggregate';
+  aggregate?: Maybe<Transfer_Aggregate_Fields>;
+  nodes: Array<Transfer>;
+};
+
+export type Transfer_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Transfer_Aggregate_Bool_Exp_Count>;
+};
+
+export type Transfer_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Transfer_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Transfer_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "transfer" */
+export type Transfer_Aggregate_Fields = {
+  __typename?: 'transfer_aggregate_fields';
+  avg?: Maybe<Transfer_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Transfer_Max_Fields>;
+  min?: Maybe<Transfer_Min_Fields>;
+  stddev?: Maybe<Transfer_Stddev_Fields>;
+  stddev_pop?: Maybe<Transfer_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Transfer_Stddev_Samp_Fields>;
+  sum?: Maybe<Transfer_Sum_Fields>;
+  var_pop?: Maybe<Transfer_Var_Pop_Fields>;
+  var_samp?: Maybe<Transfer_Var_Samp_Fields>;
+  variance?: Maybe<Transfer_Variance_Fields>;
+};
+
+/** aggregate fields of "transfer" */
+export type Transfer_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Transfer_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "transfer" */
+export type Transfer_Aggregate_Order_By = {
+  avg?: InputMaybe<Transfer_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Transfer_Max_Order_By>;
+  min?: InputMaybe<Transfer_Min_Order_By>;
+  stddev?: InputMaybe<Transfer_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Transfer_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Transfer_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Transfer_Sum_Order_By>;
+  var_pop?: InputMaybe<Transfer_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Transfer_Var_Samp_Order_By>;
+  variance?: InputMaybe<Transfer_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Transfer_Avg_Fields = {
+  __typename?: 'transfer_avg_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "transfer" */
+export type Transfer_Avg_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "transfer". All fields are combined with a logical 'AND'. */
+export type Transfer_Bool_Exp = {
+  _and?: InputMaybe<Array<Transfer_Bool_Exp>>;
+  _not?: InputMaybe<Transfer_Bool_Exp>;
+  _or?: InputMaybe<Array<Transfer_Bool_Exp>>;
+  amount?: InputMaybe<Numeric_Comparison_Exp>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  executedBy?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  from?: InputMaybe<Account_Bool_Exp>;
+  from_hash?: InputMaybe<String_Comparison_Exp>;
+  from_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  leaf_index?: InputMaybe<Numeric_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  to?: InputMaybe<Account_Bool_Exp>;
+  to_hash?: InputMaybe<String_Comparison_Exp>;
+  to_id?: InputMaybe<String_Comparison_Exp>;
+  transfer_count?: InputMaybe<Numeric_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Transfer_Max_Fields = {
+  __typename?: 'transfer_max_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  from_hash?: Maybe<Scalars['String']['output']>;
+  from_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  leaf_index?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  to_hash?: Maybe<Scalars['String']['output']>;
+  to_id?: Maybe<Scalars['String']['output']>;
+  transfer_count?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by max() on columns of table "transfer" */
+export type Transfer_Max_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  from_hash?: InputMaybe<Order_By>;
+  from_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  to_hash?: InputMaybe<Order_By>;
+  to_id?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Transfer_Min_Fields = {
+  __typename?: 'transfer_min_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  from_hash?: Maybe<Scalars['String']['output']>;
+  from_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  leaf_index?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  to_hash?: Maybe<Scalars['String']['output']>;
+  to_id?: Maybe<Scalars['String']['output']>;
+  transfer_count?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by min() on columns of table "transfer" */
+export type Transfer_Min_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  from_hash?: InputMaybe<Order_By>;
+  from_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  to_hash?: InputMaybe<Order_By>;
+  to_id?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "transfer". */
+export type Transfer_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  executedBy?: InputMaybe<Executed_Reversible_Transfer_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  from?: InputMaybe<Account_Order_By>;
+  from_hash?: InputMaybe<Order_By>;
+  from_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  to?: InputMaybe<Account_Order_By>;
+  to_hash?: InputMaybe<Order_By>;
+  to_id?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "transfer" */
+export enum Transfer_Select_Column {
+  /** column name */
+  Amount = 'amount',
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  FromHash = 'from_hash',
+  /** column name */
+  FromId = 'from_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LeafIndex = 'leaf_index',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  ToHash = 'to_hash',
+  /** column name */
+  ToId = 'to_id',
+  /** column name */
+  TransferCount = 'transfer_count'
+}
+
+/** aggregate stddev on columns */
+export type Transfer_Stddev_Fields = {
+  __typename?: 'transfer_stddev_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "transfer" */
+export type Transfer_Stddev_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Transfer_Stddev_Pop_Fields = {
+  __typename?: 'transfer_stddev_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "transfer" */
+export type Transfer_Stddev_Pop_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Transfer_Stddev_Samp_Fields = {
+  __typename?: 'transfer_stddev_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "transfer" */
+export type Transfer_Stddev_Samp_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "transfer" */
+export type Transfer_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Transfer_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Transfer_Stream_Cursor_Value_Input = {
+  amount?: InputMaybe<Scalars['numeric']['input']>;
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  from_hash?: InputMaybe<Scalars['String']['input']>;
+  from_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  leaf_index?: InputMaybe<Scalars['numeric']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  to_hash?: InputMaybe<Scalars['String']['input']>;
+  to_id?: InputMaybe<Scalars['String']['input']>;
+  transfer_count?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Transfer_Sum_Fields = {
+  __typename?: 'transfer_sum_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  leaf_index?: Maybe<Scalars['numeric']['output']>;
+  transfer_count?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by sum() on columns of table "transfer" */
+export type Transfer_Sum_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Transfer_Var_Pop_Fields = {
+  __typename?: 'transfer_var_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "transfer" */
+export type Transfer_Var_Pop_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Transfer_Var_Samp_Fields = {
+  __typename?: 'transfer_var_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "transfer" */
+export type Transfer_Var_Samp_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Transfer_Variance_Fields = {
+  __typename?: 'transfer_variance_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+  leaf_index?: Maybe<Scalars['Float']['output']>;
+  transfer_count?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "transfer" */
+export type Transfer_Variance_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  leaf_index?: InputMaybe<Order_By>;
+  transfer_count?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "wormhole_extrinsic" */
+export type Wormhole_Extrinsic = {
+  __typename?: 'wormhole_extrinsic';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  output_count: Scalars['Int']['output'];
+  /** An array relationship */
+  outputs: Array<Wormhole_Output>;
+  /** An aggregate relationship */
+  outputs_aggregate: Wormhole_Output_Aggregate;
+  pool_snapshot: Scalars['String']['output'];
+  privacy_label: Scalars['String']['output'];
+  privacy_score: Scalars['numeric']['output'];
+  privacy_score01_pct: Scalars['numeric']['output'];
+  privacy_score1_pct: Scalars['numeric']['output'];
+  privacy_score5_pct: Scalars['numeric']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+  total_amount: Scalars['numeric']['output'];
+};
+
+/** columns and relationships of "wormhole_extrinsic" */
+export type Wormhole_ExtrinsicOutputsArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Output_Order_By>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+/** columns and relationships of "wormhole_extrinsic" */
+export type Wormhole_ExtrinsicOutputs_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Wormhole_Output_Order_By>>;
+  where?: InputMaybe<Wormhole_Output_Bool_Exp>;
+};
+
+/** aggregated selection of "wormhole_extrinsic" */
+export type Wormhole_Extrinsic_Aggregate = {
+  __typename?: 'wormhole_extrinsic_aggregate';
+  aggregate?: Maybe<Wormhole_Extrinsic_Aggregate_Fields>;
+  nodes: Array<Wormhole_Extrinsic>;
+};
+
+/** aggregate fields of "wormhole_extrinsic" */
+export type Wormhole_Extrinsic_Aggregate_Fields = {
+  __typename?: 'wormhole_extrinsic_aggregate_fields';
+  avg?: Maybe<Wormhole_Extrinsic_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Wormhole_Extrinsic_Max_Fields>;
+  min?: Maybe<Wormhole_Extrinsic_Min_Fields>;
+  stddev?: Maybe<Wormhole_Extrinsic_Stddev_Fields>;
+  stddev_pop?: Maybe<Wormhole_Extrinsic_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Wormhole_Extrinsic_Stddev_Samp_Fields>;
+  sum?: Maybe<Wormhole_Extrinsic_Sum_Fields>;
+  var_pop?: Maybe<Wormhole_Extrinsic_Var_Pop_Fields>;
+  var_samp?: Maybe<Wormhole_Extrinsic_Var_Samp_Fields>;
+  variance?: Maybe<Wormhole_Extrinsic_Variance_Fields>;
+};
+
+/** aggregate fields of "wormhole_extrinsic" */
+export type Wormhole_Extrinsic_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Wormhole_Extrinsic_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Wormhole_Extrinsic_Avg_Fields = {
+  __typename?: 'wormhole_extrinsic_avg_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "wormhole_extrinsic". All fields are combined with a logical 'AND'. */
+export type Wormhole_Extrinsic_Bool_Exp = {
+  _and?: InputMaybe<Array<Wormhole_Extrinsic_Bool_Exp>>;
+  _not?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+  _or?: InputMaybe<Array<Wormhole_Extrinsic_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  output_count?: InputMaybe<Int_Comparison_Exp>;
+  outputs?: InputMaybe<Wormhole_Output_Bool_Exp>;
+  outputs_aggregate?: InputMaybe<Wormhole_Output_Aggregate_Bool_Exp>;
+  pool_snapshot?: InputMaybe<String_Comparison_Exp>;
+  privacy_label?: InputMaybe<String_Comparison_Exp>;
+  privacy_score?: InputMaybe<Numeric_Comparison_Exp>;
+  privacy_score01_pct?: InputMaybe<Numeric_Comparison_Exp>;
+  privacy_score1_pct?: InputMaybe<Numeric_Comparison_Exp>;
+  privacy_score5_pct?: InputMaybe<Numeric_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  total_amount?: InputMaybe<Numeric_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Wormhole_Extrinsic_Max_Fields = {
+  __typename?: 'wormhole_extrinsic_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  output_count?: Maybe<Scalars['Int']['output']>;
+  pool_snapshot?: Maybe<Scalars['String']['output']>;
+  privacy_label?: Maybe<Scalars['String']['output']>;
+  privacy_score?: Maybe<Scalars['numeric']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['numeric']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['numeric']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  total_amount?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate min on columns */
+export type Wormhole_Extrinsic_Min_Fields = {
+  __typename?: 'wormhole_extrinsic_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  output_count?: Maybe<Scalars['Int']['output']>;
+  pool_snapshot?: Maybe<Scalars['String']['output']>;
+  privacy_label?: Maybe<Scalars['String']['output']>;
+  privacy_score?: Maybe<Scalars['numeric']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['numeric']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['numeric']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['numeric']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  total_amount?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** Ordering options when selecting data from "wormhole_extrinsic". */
+export type Wormhole_Extrinsic_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  output_count?: InputMaybe<Order_By>;
+  outputs_aggregate?: InputMaybe<Wormhole_Output_Aggregate_Order_By>;
+  pool_snapshot?: InputMaybe<Order_By>;
+  privacy_label?: InputMaybe<Order_By>;
+  privacy_score?: InputMaybe<Order_By>;
+  privacy_score01_pct?: InputMaybe<Order_By>;
+  privacy_score1_pct?: InputMaybe<Order_By>;
+  privacy_score5_pct?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  total_amount?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "wormhole_extrinsic" */
+export enum Wormhole_Extrinsic_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  OutputCount = 'output_count',
+  /** column name */
+  PoolSnapshot = 'pool_snapshot',
+  /** column name */
+  PrivacyLabel = 'privacy_label',
+  /** column name */
+  PrivacyScore = 'privacy_score',
+  /** column name */
+  PrivacyScore01Pct = 'privacy_score01_pct',
+  /** column name */
+  PrivacyScore1Pct = 'privacy_score1_pct',
+  /** column name */
+  PrivacyScore5Pct = 'privacy_score5_pct',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  TotalAmount = 'total_amount'
+}
+
+/** aggregate stddev on columns */
+export type Wormhole_Extrinsic_Stddev_Fields = {
+  __typename?: 'wormhole_extrinsic_stddev_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Wormhole_Extrinsic_Stddev_Pop_Fields = {
+  __typename?: 'wormhole_extrinsic_stddev_pop_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Wormhole_Extrinsic_Stddev_Samp_Fields = {
+  __typename?: 'wormhole_extrinsic_stddev_samp_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "wormhole_extrinsic" */
+export type Wormhole_Extrinsic_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Wormhole_Extrinsic_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Wormhole_Extrinsic_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  output_count?: InputMaybe<Scalars['Int']['input']>;
+  pool_snapshot?: InputMaybe<Scalars['String']['input']>;
+  privacy_label?: InputMaybe<Scalars['String']['input']>;
+  privacy_score?: InputMaybe<Scalars['numeric']['input']>;
+  privacy_score01_pct?: InputMaybe<Scalars['numeric']['input']>;
+  privacy_score1_pct?: InputMaybe<Scalars['numeric']['input']>;
+  privacy_score5_pct?: InputMaybe<Scalars['numeric']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  total_amount?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Wormhole_Extrinsic_Sum_Fields = {
+  __typename?: 'wormhole_extrinsic_sum_fields';
+  output_count?: Maybe<Scalars['Int']['output']>;
+  privacy_score?: Maybe<Scalars['numeric']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['numeric']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['numeric']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['numeric']['output']>;
+  total_amount?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Wormhole_Extrinsic_Var_Pop_Fields = {
+  __typename?: 'wormhole_extrinsic_var_pop_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Wormhole_Extrinsic_Var_Samp_Fields = {
+  __typename?: 'wormhole_extrinsic_var_samp_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Wormhole_Extrinsic_Variance_Fields = {
+  __typename?: 'wormhole_extrinsic_variance_fields';
+  output_count?: Maybe<Scalars['Float']['output']>;
+  privacy_score?: Maybe<Scalars['Float']['output']>;
+  privacy_score01_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score1_pct?: Maybe<Scalars['Float']['output']>;
+  privacy_score5_pct?: Maybe<Scalars['Float']['output']>;
+  total_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "wormhole_nullifier" */
+export type Wormhole_Nullifier = {
+  __typename?: 'wormhole_nullifier';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
   nullifier: Scalars['String']['output'];
-  /** Blake3 hash of the nullifier for prefix queries */
-  nullifierHash: Scalars['String']['output'];
-  timestamp: Scalars['DateTime']['output'];
-  /** The wormhole extrinsic that consumed this nullifier */
-  wormholeExtrinsic: WormholeExtrinsic;
+  nullifier_hash: Scalars['String']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  wormholeExtrinsic?: Maybe<Wormhole_Extrinsic>;
+  wormhole_extrinsic_id?: Maybe<Scalars['String']['output']>;
 };
 
-export type WormholeNullifierEdge = {
-  __typename?: 'WormholeNullifierEdge';
-  cursor: Scalars['String']['output'];
-  node: WormholeNullifier;
+/** aggregated selection of "wormhole_nullifier" */
+export type Wormhole_Nullifier_Aggregate = {
+  __typename?: 'wormhole_nullifier_aggregate';
+  aggregate?: Maybe<Wormhole_Nullifier_Aggregate_Fields>;
+  nodes: Array<Wormhole_Nullifier>;
 };
 
-export enum WormholeNullifierOrderByInput {
-  BlockHashAsc = 'block_hash_ASC',
-  BlockHashAscNullsFirst = 'block_hash_ASC_NULLS_FIRST',
-  BlockHashAscNullsLast = 'block_hash_ASC_NULLS_LAST',
-  BlockHashDesc = 'block_hash_DESC',
-  BlockHashDescNullsFirst = 'block_hash_DESC_NULLS_FIRST',
-  BlockHashDescNullsLast = 'block_hash_DESC_NULLS_LAST',
-  BlockHeightAsc = 'block_height_ASC',
-  BlockHeightAscNullsFirst = 'block_height_ASC_NULLS_FIRST',
-  BlockHeightAscNullsLast = 'block_height_ASC_NULLS_LAST',
-  BlockHeightDesc = 'block_height_DESC',
-  BlockHeightDescNullsFirst = 'block_height_DESC_NULLS_FIRST',
-  BlockHeightDescNullsLast = 'block_height_DESC_NULLS_LAST',
-  BlockIdAsc = 'block_id_ASC',
-  BlockIdAscNullsFirst = 'block_id_ASC_NULLS_FIRST',
-  BlockIdAscNullsLast = 'block_id_ASC_NULLS_LAST',
-  BlockIdDesc = 'block_id_DESC',
-  BlockIdDescNullsFirst = 'block_id_DESC_NULLS_FIRST',
-  BlockIdDescNullsLast = 'block_id_DESC_NULLS_LAST',
-  BlockRewardAsc = 'block_reward_ASC',
-  BlockRewardAscNullsFirst = 'block_reward_ASC_NULLS_FIRST',
-  BlockRewardAscNullsLast = 'block_reward_ASC_NULLS_LAST',
-  BlockRewardDesc = 'block_reward_DESC',
-  BlockRewardDescNullsFirst = 'block_reward_DESC_NULLS_FIRST',
-  BlockRewardDescNullsLast = 'block_reward_DESC_NULLS_LAST',
-  BlockTimestampAsc = 'block_timestamp_ASC',
-  BlockTimestampAscNullsFirst = 'block_timestamp_ASC_NULLS_FIRST',
-  BlockTimestampAscNullsLast = 'block_timestamp_ASC_NULLS_LAST',
-  BlockTimestampDesc = 'block_timestamp_DESC',
-  BlockTimestampDescNullsFirst = 'block_timestamp_DESC_NULLS_FIRST',
-  BlockTimestampDescNullsLast = 'block_timestamp_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  NullifierHashAsc = 'nullifierHash_ASC',
-  NullifierHashAscNullsFirst = 'nullifierHash_ASC_NULLS_FIRST',
-  NullifierHashAscNullsLast = 'nullifierHash_ASC_NULLS_LAST',
-  NullifierHashDesc = 'nullifierHash_DESC',
-  NullifierHashDescNullsFirst = 'nullifierHash_DESC_NULLS_FIRST',
-  NullifierHashDescNullsLast = 'nullifierHash_DESC_NULLS_LAST',
-  NullifierAsc = 'nullifier_ASC',
-  NullifierAscNullsFirst = 'nullifier_ASC_NULLS_FIRST',
-  NullifierAscNullsLast = 'nullifier_ASC_NULLS_LAST',
-  NullifierDesc = 'nullifier_DESC',
-  NullifierDescNullsFirst = 'nullifier_DESC_NULLS_FIRST',
-  NullifierDescNullsLast = 'nullifier_DESC_NULLS_LAST',
-  TimestampAsc = 'timestamp_ASC',
-  TimestampAscNullsFirst = 'timestamp_ASC_NULLS_FIRST',
-  TimestampAscNullsLast = 'timestamp_ASC_NULLS_LAST',
-  TimestampDesc = 'timestamp_DESC',
-  TimestampDescNullsFirst = 'timestamp_DESC_NULLS_FIRST',
-  TimestampDescNullsLast = 'timestamp_DESC_NULLS_LAST',
-  WormholeExtrinsicIdAsc = 'wormholeExtrinsic_id_ASC',
-  WormholeExtrinsicIdAscNullsFirst = 'wormholeExtrinsic_id_ASC_NULLS_FIRST',
-  WormholeExtrinsicIdAscNullsLast = 'wormholeExtrinsic_id_ASC_NULLS_LAST',
-  WormholeExtrinsicIdDesc = 'wormholeExtrinsic_id_DESC',
-  WormholeExtrinsicIdDescNullsFirst = 'wormholeExtrinsic_id_DESC_NULLS_FIRST',
-  WormholeExtrinsicIdDescNullsLast = 'wormholeExtrinsic_id_DESC_NULLS_LAST',
-  WormholeExtrinsicOutputCountAsc = 'wormholeExtrinsic_outputCount_ASC',
-  WormholeExtrinsicOutputCountAscNullsFirst = 'wormholeExtrinsic_outputCount_ASC_NULLS_FIRST',
-  WormholeExtrinsicOutputCountAscNullsLast = 'wormholeExtrinsic_outputCount_ASC_NULLS_LAST',
-  WormholeExtrinsicOutputCountDesc = 'wormholeExtrinsic_outputCount_DESC',
-  WormholeExtrinsicOutputCountDescNullsFirst = 'wormholeExtrinsic_outputCount_DESC_NULLS_FIRST',
-  WormholeExtrinsicOutputCountDescNullsLast = 'wormholeExtrinsic_outputCount_DESC_NULLS_LAST',
-  WormholeExtrinsicPoolSnapshotAsc = 'wormholeExtrinsic_poolSnapshot_ASC',
-  WormholeExtrinsicPoolSnapshotAscNullsFirst = 'wormholeExtrinsic_poolSnapshot_ASC_NULLS_FIRST',
-  WormholeExtrinsicPoolSnapshotAscNullsLast = 'wormholeExtrinsic_poolSnapshot_ASC_NULLS_LAST',
-  WormholeExtrinsicPoolSnapshotDesc = 'wormholeExtrinsic_poolSnapshot_DESC',
-  WormholeExtrinsicPoolSnapshotDescNullsFirst = 'wormholeExtrinsic_poolSnapshot_DESC_NULLS_FIRST',
-  WormholeExtrinsicPoolSnapshotDescNullsLast = 'wormholeExtrinsic_poolSnapshot_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyLabelAsc = 'wormholeExtrinsic_privacyLabel_ASC',
-  WormholeExtrinsicPrivacyLabelAscNullsFirst = 'wormholeExtrinsic_privacyLabel_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyLabelAscNullsLast = 'wormholeExtrinsic_privacyLabel_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyLabelDesc = 'wormholeExtrinsic_privacyLabel_DESC',
-  WormholeExtrinsicPrivacyLabelDescNullsFirst = 'wormholeExtrinsic_privacyLabel_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyLabelDescNullsLast = 'wormholeExtrinsic_privacyLabel_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore01PctAsc = 'wormholeExtrinsic_privacyScore01Pct_ASC',
-  WormholeExtrinsicPrivacyScore01PctAscNullsFirst = 'wormholeExtrinsic_privacyScore01Pct_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore01PctAscNullsLast = 'wormholeExtrinsic_privacyScore01Pct_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore01PctDesc = 'wormholeExtrinsic_privacyScore01Pct_DESC',
-  WormholeExtrinsicPrivacyScore01PctDescNullsFirst = 'wormholeExtrinsic_privacyScore01Pct_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore01PctDescNullsLast = 'wormholeExtrinsic_privacyScore01Pct_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore1PctAsc = 'wormholeExtrinsic_privacyScore1Pct_ASC',
-  WormholeExtrinsicPrivacyScore1PctAscNullsFirst = 'wormholeExtrinsic_privacyScore1Pct_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore1PctAscNullsLast = 'wormholeExtrinsic_privacyScore1Pct_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore1PctDesc = 'wormholeExtrinsic_privacyScore1Pct_DESC',
-  WormholeExtrinsicPrivacyScore1PctDescNullsFirst = 'wormholeExtrinsic_privacyScore1Pct_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore1PctDescNullsLast = 'wormholeExtrinsic_privacyScore1Pct_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore5PctAsc = 'wormholeExtrinsic_privacyScore5Pct_ASC',
-  WormholeExtrinsicPrivacyScore5PctAscNullsFirst = 'wormholeExtrinsic_privacyScore5Pct_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore5PctAscNullsLast = 'wormholeExtrinsic_privacyScore5Pct_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore5PctDesc = 'wormholeExtrinsic_privacyScore5Pct_DESC',
-  WormholeExtrinsicPrivacyScore5PctDescNullsFirst = 'wormholeExtrinsic_privacyScore5Pct_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore5PctDescNullsLast = 'wormholeExtrinsic_privacyScore5Pct_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScoreAsc = 'wormholeExtrinsic_privacyScore_ASC',
-  WormholeExtrinsicPrivacyScoreAscNullsFirst = 'wormholeExtrinsic_privacyScore_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScoreAscNullsLast = 'wormholeExtrinsic_privacyScore_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScoreDesc = 'wormholeExtrinsic_privacyScore_DESC',
-  WormholeExtrinsicPrivacyScoreDescNullsFirst = 'wormholeExtrinsic_privacyScore_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScoreDescNullsLast = 'wormholeExtrinsic_privacyScore_DESC_NULLS_LAST',
-  WormholeExtrinsicTimestampAsc = 'wormholeExtrinsic_timestamp_ASC',
-  WormholeExtrinsicTimestampAscNullsFirst = 'wormholeExtrinsic_timestamp_ASC_NULLS_FIRST',
-  WormholeExtrinsicTimestampAscNullsLast = 'wormholeExtrinsic_timestamp_ASC_NULLS_LAST',
-  WormholeExtrinsicTimestampDesc = 'wormholeExtrinsic_timestamp_DESC',
-  WormholeExtrinsicTimestampDescNullsFirst = 'wormholeExtrinsic_timestamp_DESC_NULLS_FIRST',
-  WormholeExtrinsicTimestampDescNullsLast = 'wormholeExtrinsic_timestamp_DESC_NULLS_LAST',
-  WormholeExtrinsicTotalAmountAsc = 'wormholeExtrinsic_totalAmount_ASC',
-  WormholeExtrinsicTotalAmountAscNullsFirst = 'wormholeExtrinsic_totalAmount_ASC_NULLS_FIRST',
-  WormholeExtrinsicTotalAmountAscNullsLast = 'wormholeExtrinsic_totalAmount_ASC_NULLS_LAST',
-  WormholeExtrinsicTotalAmountDesc = 'wormholeExtrinsic_totalAmount_DESC',
-  WormholeExtrinsicTotalAmountDescNullsFirst = 'wormholeExtrinsic_totalAmount_DESC_NULLS_FIRST',
-  WormholeExtrinsicTotalAmountDescNullsLast = 'wormholeExtrinsic_totalAmount_DESC_NULLS_LAST'
+/** aggregate fields of "wormhole_nullifier" */
+export type Wormhole_Nullifier_Aggregate_Fields = {
+  __typename?: 'wormhole_nullifier_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Wormhole_Nullifier_Max_Fields>;
+  min?: Maybe<Wormhole_Nullifier_Min_Fields>;
+};
+
+/** aggregate fields of "wormhole_nullifier" */
+export type Wormhole_Nullifier_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Wormhole_Nullifier_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "wormhole_nullifier". All fields are combined with a logical 'AND'. */
+export type Wormhole_Nullifier_Bool_Exp = {
+  _and?: InputMaybe<Array<Wormhole_Nullifier_Bool_Exp>>;
+  _not?: InputMaybe<Wormhole_Nullifier_Bool_Exp>;
+  _or?: InputMaybe<Array<Wormhole_Nullifier_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  nullifier?: InputMaybe<String_Comparison_Exp>;
+  nullifier_hash?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  wormholeExtrinsic?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+  wormhole_extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Wormhole_Nullifier_Max_Fields = {
+  __typename?: 'wormhole_nullifier_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  nullifier?: Maybe<Scalars['String']['output']>;
+  nullifier_hash?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  wormhole_extrinsic_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Wormhole_Nullifier_Min_Fields = {
+  __typename?: 'wormhole_nullifier_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  nullifier?: Maybe<Scalars['String']['output']>;
+  nullifier_hash?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  wormhole_extrinsic_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** Ordering options when selecting data from "wormhole_nullifier". */
+export type Wormhole_Nullifier_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nullifier?: InputMaybe<Order_By>;
+  nullifier_hash?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  wormholeExtrinsic?: InputMaybe<Wormhole_Extrinsic_Order_By>;
+  wormhole_extrinsic_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "wormhole_nullifier" */
+export enum Wormhole_Nullifier_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Nullifier = 'nullifier',
+  /** column name */
+  NullifierHash = 'nullifier_hash',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  WormholeExtrinsicId = 'wormhole_extrinsic_id'
 }
 
-export type WormholeNullifierWhereInput = {
-  AND?: InputMaybe<Array<WormholeNullifierWhereInput>>;
-  OR?: InputMaybe<Array<WormholeNullifierWhereInput>>;
-  block?: InputMaybe<BlockWhereInput>;
-  block_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_gt?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_gte?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifierHash_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  nullifierHash_lt?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_lte?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_containsInsensitive?: InputMaybe<
-    Scalars['String']['input']
-  >;
-  nullifierHash_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifierHash_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifierHash_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifier_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  nullifier_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifier_gt?: InputMaybe<Scalars['String']['input']>;
-  nullifier_gte?: InputMaybe<Scalars['String']['input']>;
-  nullifier_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifier_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  nullifier_lt?: InputMaybe<Scalars['String']['input']>;
-  nullifier_lte?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_contains?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_eq?: InputMaybe<Scalars['String']['input']>;
-  nullifier_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  nullifier_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  nullifier_startsWith?: InputMaybe<Scalars['String']['input']>;
-  timestamp_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_gte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  timestamp_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  timestamp_lt?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_lte?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_eq?: InputMaybe<Scalars['DateTime']['input']>;
-  timestamp_not_in?: InputMaybe<Array<Scalars['DateTime']['input']>>;
-  wormholeExtrinsic?: InputMaybe<WormholeExtrinsicWhereInput>;
-  wormholeExtrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+/** Streaming cursor of the table "wormhole_nullifier" */
+export type Wormhole_Nullifier_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Wormhole_Nullifier_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
 };
 
-export type WormholeNullifiersConnection = {
-  __typename?: 'WormholeNullifiersConnection';
-  edges: Array<WormholeNullifierEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
+/** Initial value of the column from where the streaming should start */
+export type Wormhole_Nullifier_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  nullifier?: InputMaybe<Scalars['String']['input']>;
+  nullifier_hash?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  wormhole_extrinsic_id?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** An individual exit output within a wormhole proof verification. */
-export type WormholeOutput = {
-  __typename?: 'WormholeOutput';
-  amount: Scalars['BigInt']['output'];
-  exitAccount: Account;
+/** columns and relationships of "wormhole_output" */
+export type Wormhole_Output = {
+  __typename?: 'wormhole_output';
+  amount: Scalars['numeric']['output'];
+  /** An object relationship */
+  exitAccount?: Maybe<Account>;
+  exit_account_id?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
-  wormholeExtrinsic: WormholeExtrinsic;
+  /** An object relationship */
+  wormholeExtrinsic?: Maybe<Wormhole_Extrinsic>;
+  wormhole_extrinsic_id?: Maybe<Scalars['String']['output']>;
 };
 
-export type WormholeOutputEdge = {
-  __typename?: 'WormholeOutputEdge';
-  cursor: Scalars['String']['output'];
-  node: WormholeOutput;
+/** aggregated selection of "wormhole_output" */
+export type Wormhole_Output_Aggregate = {
+  __typename?: 'wormhole_output_aggregate';
+  aggregate?: Maybe<Wormhole_Output_Aggregate_Fields>;
+  nodes: Array<Wormhole_Output>;
 };
 
-export enum WormholeOutputOrderByInput {
-  AmountAsc = 'amount_ASC',
-  AmountAscNullsFirst = 'amount_ASC_NULLS_FIRST',
-  AmountAscNullsLast = 'amount_ASC_NULLS_LAST',
-  AmountDesc = 'amount_DESC',
-  AmountDescNullsFirst = 'amount_DESC_NULLS_FIRST',
-  AmountDescNullsLast = 'amount_DESC_NULLS_LAST',
-  ExitAccountFreeAsc = 'exitAccount_free_ASC',
-  ExitAccountFreeAscNullsFirst = 'exitAccount_free_ASC_NULLS_FIRST',
-  ExitAccountFreeAscNullsLast = 'exitAccount_free_ASC_NULLS_LAST',
-  ExitAccountFreeDesc = 'exitAccount_free_DESC',
-  ExitAccountFreeDescNullsFirst = 'exitAccount_free_DESC_NULLS_FIRST',
-  ExitAccountFreeDescNullsLast = 'exitAccount_free_DESC_NULLS_LAST',
-  ExitAccountFrozenAsc = 'exitAccount_frozen_ASC',
-  ExitAccountFrozenAscNullsFirst = 'exitAccount_frozen_ASC_NULLS_FIRST',
-  ExitAccountFrozenAscNullsLast = 'exitAccount_frozen_ASC_NULLS_LAST',
-  ExitAccountFrozenDesc = 'exitAccount_frozen_DESC',
-  ExitAccountFrozenDescNullsFirst = 'exitAccount_frozen_DESC_NULLS_FIRST',
-  ExitAccountFrozenDescNullsLast = 'exitAccount_frozen_DESC_NULLS_LAST',
-  ExitAccountIdAsc = 'exitAccount_id_ASC',
-  ExitAccountIdAscNullsFirst = 'exitAccount_id_ASC_NULLS_FIRST',
-  ExitAccountIdAscNullsLast = 'exitAccount_id_ASC_NULLS_LAST',
-  ExitAccountIdDesc = 'exitAccount_id_DESC',
-  ExitAccountIdDescNullsFirst = 'exitAccount_id_DESC_NULLS_FIRST',
-  ExitAccountIdDescNullsLast = 'exitAccount_id_DESC_NULLS_LAST',
-  ExitAccountIsDepositOnlyAsc = 'exitAccount_isDepositOnly_ASC',
-  ExitAccountIsDepositOnlyAscNullsFirst = 'exitAccount_isDepositOnly_ASC_NULLS_FIRST',
-  ExitAccountIsDepositOnlyAscNullsLast = 'exitAccount_isDepositOnly_ASC_NULLS_LAST',
-  ExitAccountIsDepositOnlyDesc = 'exitAccount_isDepositOnly_DESC',
-  ExitAccountIsDepositOnlyDescNullsFirst = 'exitAccount_isDepositOnly_DESC_NULLS_FIRST',
-  ExitAccountIsDepositOnlyDescNullsLast = 'exitAccount_isDepositOnly_DESC_NULLS_LAST',
-  ExitAccountLastUpdatedAsc = 'exitAccount_lastUpdated_ASC',
-  ExitAccountLastUpdatedAscNullsFirst = 'exitAccount_lastUpdated_ASC_NULLS_FIRST',
-  ExitAccountLastUpdatedAscNullsLast = 'exitAccount_lastUpdated_ASC_NULLS_LAST',
-  ExitAccountLastUpdatedDesc = 'exitAccount_lastUpdated_DESC',
-  ExitAccountLastUpdatedDescNullsFirst = 'exitAccount_lastUpdated_DESC_NULLS_FIRST',
-  ExitAccountLastUpdatedDescNullsLast = 'exitAccount_lastUpdated_DESC_NULLS_LAST',
-  ExitAccountPrivacyDepositsAsc = 'exitAccount_privacyDeposits_ASC',
-  ExitAccountPrivacyDepositsAscNullsFirst = 'exitAccount_privacyDeposits_ASC_NULLS_FIRST',
-  ExitAccountPrivacyDepositsAscNullsLast = 'exitAccount_privacyDeposits_ASC_NULLS_LAST',
-  ExitAccountPrivacyDepositsDesc = 'exitAccount_privacyDeposits_DESC',
-  ExitAccountPrivacyDepositsDescNullsFirst = 'exitAccount_privacyDeposits_DESC_NULLS_FIRST',
-  ExitAccountPrivacyDepositsDescNullsLast = 'exitAccount_privacyDeposits_DESC_NULLS_LAST',
-  ExitAccountReservedAsc = 'exitAccount_reserved_ASC',
-  ExitAccountReservedAscNullsFirst = 'exitAccount_reserved_ASC_NULLS_FIRST',
-  ExitAccountReservedAscNullsLast = 'exitAccount_reserved_ASC_NULLS_LAST',
-  ExitAccountReservedDesc = 'exitAccount_reserved_DESC',
-  ExitAccountReservedDescNullsFirst = 'exitAccount_reserved_DESC_NULLS_FIRST',
-  ExitAccountReservedDescNullsLast = 'exitAccount_reserved_DESC_NULLS_LAST',
-  IdAsc = 'id_ASC',
-  IdAscNullsFirst = 'id_ASC_NULLS_FIRST',
-  IdAscNullsLast = 'id_ASC_NULLS_LAST',
-  IdDesc = 'id_DESC',
-  IdDescNullsFirst = 'id_DESC_NULLS_FIRST',
-  IdDescNullsLast = 'id_DESC_NULLS_LAST',
-  WormholeExtrinsicIdAsc = 'wormholeExtrinsic_id_ASC',
-  WormholeExtrinsicIdAscNullsFirst = 'wormholeExtrinsic_id_ASC_NULLS_FIRST',
-  WormholeExtrinsicIdAscNullsLast = 'wormholeExtrinsic_id_ASC_NULLS_LAST',
-  WormholeExtrinsicIdDesc = 'wormholeExtrinsic_id_DESC',
-  WormholeExtrinsicIdDescNullsFirst = 'wormholeExtrinsic_id_DESC_NULLS_FIRST',
-  WormholeExtrinsicIdDescNullsLast = 'wormholeExtrinsic_id_DESC_NULLS_LAST',
-  WormholeExtrinsicOutputCountAsc = 'wormholeExtrinsic_outputCount_ASC',
-  WormholeExtrinsicOutputCountAscNullsFirst = 'wormholeExtrinsic_outputCount_ASC_NULLS_FIRST',
-  WormholeExtrinsicOutputCountAscNullsLast = 'wormholeExtrinsic_outputCount_ASC_NULLS_LAST',
-  WormholeExtrinsicOutputCountDesc = 'wormholeExtrinsic_outputCount_DESC',
-  WormholeExtrinsicOutputCountDescNullsFirst = 'wormholeExtrinsic_outputCount_DESC_NULLS_FIRST',
-  WormholeExtrinsicOutputCountDescNullsLast = 'wormholeExtrinsic_outputCount_DESC_NULLS_LAST',
-  WormholeExtrinsicPoolSnapshotAsc = 'wormholeExtrinsic_poolSnapshot_ASC',
-  WormholeExtrinsicPoolSnapshotAscNullsFirst = 'wormholeExtrinsic_poolSnapshot_ASC_NULLS_FIRST',
-  WormholeExtrinsicPoolSnapshotAscNullsLast = 'wormholeExtrinsic_poolSnapshot_ASC_NULLS_LAST',
-  WormholeExtrinsicPoolSnapshotDesc = 'wormholeExtrinsic_poolSnapshot_DESC',
-  WormholeExtrinsicPoolSnapshotDescNullsFirst = 'wormholeExtrinsic_poolSnapshot_DESC_NULLS_FIRST',
-  WormholeExtrinsicPoolSnapshotDescNullsLast = 'wormholeExtrinsic_poolSnapshot_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyLabelAsc = 'wormholeExtrinsic_privacyLabel_ASC',
-  WormholeExtrinsicPrivacyLabelAscNullsFirst = 'wormholeExtrinsic_privacyLabel_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyLabelAscNullsLast = 'wormholeExtrinsic_privacyLabel_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyLabelDesc = 'wormholeExtrinsic_privacyLabel_DESC',
-  WormholeExtrinsicPrivacyLabelDescNullsFirst = 'wormholeExtrinsic_privacyLabel_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyLabelDescNullsLast = 'wormholeExtrinsic_privacyLabel_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore01PctAsc = 'wormholeExtrinsic_privacyScore01Pct_ASC',
-  WormholeExtrinsicPrivacyScore01PctAscNullsFirst = 'wormholeExtrinsic_privacyScore01Pct_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore01PctAscNullsLast = 'wormholeExtrinsic_privacyScore01Pct_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore01PctDesc = 'wormholeExtrinsic_privacyScore01Pct_DESC',
-  WormholeExtrinsicPrivacyScore01PctDescNullsFirst = 'wormholeExtrinsic_privacyScore01Pct_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore01PctDescNullsLast = 'wormholeExtrinsic_privacyScore01Pct_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore1PctAsc = 'wormholeExtrinsic_privacyScore1Pct_ASC',
-  WormholeExtrinsicPrivacyScore1PctAscNullsFirst = 'wormholeExtrinsic_privacyScore1Pct_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore1PctAscNullsLast = 'wormholeExtrinsic_privacyScore1Pct_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore1PctDesc = 'wormholeExtrinsic_privacyScore1Pct_DESC',
-  WormholeExtrinsicPrivacyScore1PctDescNullsFirst = 'wormholeExtrinsic_privacyScore1Pct_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore1PctDescNullsLast = 'wormholeExtrinsic_privacyScore1Pct_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore5PctAsc = 'wormholeExtrinsic_privacyScore5Pct_ASC',
-  WormholeExtrinsicPrivacyScore5PctAscNullsFirst = 'wormholeExtrinsic_privacyScore5Pct_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore5PctAscNullsLast = 'wormholeExtrinsic_privacyScore5Pct_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScore5PctDesc = 'wormholeExtrinsic_privacyScore5Pct_DESC',
-  WormholeExtrinsicPrivacyScore5PctDescNullsFirst = 'wormholeExtrinsic_privacyScore5Pct_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScore5PctDescNullsLast = 'wormholeExtrinsic_privacyScore5Pct_DESC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScoreAsc = 'wormholeExtrinsic_privacyScore_ASC',
-  WormholeExtrinsicPrivacyScoreAscNullsFirst = 'wormholeExtrinsic_privacyScore_ASC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScoreAscNullsLast = 'wormholeExtrinsic_privacyScore_ASC_NULLS_LAST',
-  WormholeExtrinsicPrivacyScoreDesc = 'wormholeExtrinsic_privacyScore_DESC',
-  WormholeExtrinsicPrivacyScoreDescNullsFirst = 'wormholeExtrinsic_privacyScore_DESC_NULLS_FIRST',
-  WormholeExtrinsicPrivacyScoreDescNullsLast = 'wormholeExtrinsic_privacyScore_DESC_NULLS_LAST',
-  WormholeExtrinsicTimestampAsc = 'wormholeExtrinsic_timestamp_ASC',
-  WormholeExtrinsicTimestampAscNullsFirst = 'wormholeExtrinsic_timestamp_ASC_NULLS_FIRST',
-  WormholeExtrinsicTimestampAscNullsLast = 'wormholeExtrinsic_timestamp_ASC_NULLS_LAST',
-  WormholeExtrinsicTimestampDesc = 'wormholeExtrinsic_timestamp_DESC',
-  WormholeExtrinsicTimestampDescNullsFirst = 'wormholeExtrinsic_timestamp_DESC_NULLS_FIRST',
-  WormholeExtrinsicTimestampDescNullsLast = 'wormholeExtrinsic_timestamp_DESC_NULLS_LAST',
-  WormholeExtrinsicTotalAmountAsc = 'wormholeExtrinsic_totalAmount_ASC',
-  WormholeExtrinsicTotalAmountAscNullsFirst = 'wormholeExtrinsic_totalAmount_ASC_NULLS_FIRST',
-  WormholeExtrinsicTotalAmountAscNullsLast = 'wormholeExtrinsic_totalAmount_ASC_NULLS_LAST',
-  WormholeExtrinsicTotalAmountDesc = 'wormholeExtrinsic_totalAmount_DESC',
-  WormholeExtrinsicTotalAmountDescNullsFirst = 'wormholeExtrinsic_totalAmount_DESC_NULLS_FIRST',
-  WormholeExtrinsicTotalAmountDescNullsLast = 'wormholeExtrinsic_totalAmount_DESC_NULLS_LAST'
+export type Wormhole_Output_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Wormhole_Output_Aggregate_Bool_Exp_Count>;
+};
+
+export type Wormhole_Output_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Wormhole_Output_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "wormhole_output" */
+export type Wormhole_Output_Aggregate_Fields = {
+  __typename?: 'wormhole_output_aggregate_fields';
+  avg?: Maybe<Wormhole_Output_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Wormhole_Output_Max_Fields>;
+  min?: Maybe<Wormhole_Output_Min_Fields>;
+  stddev?: Maybe<Wormhole_Output_Stddev_Fields>;
+  stddev_pop?: Maybe<Wormhole_Output_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Wormhole_Output_Stddev_Samp_Fields>;
+  sum?: Maybe<Wormhole_Output_Sum_Fields>;
+  var_pop?: Maybe<Wormhole_Output_Var_Pop_Fields>;
+  var_samp?: Maybe<Wormhole_Output_Var_Samp_Fields>;
+  variance?: Maybe<Wormhole_Output_Variance_Fields>;
+};
+
+/** aggregate fields of "wormhole_output" */
+export type Wormhole_Output_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Wormhole_Output_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "wormhole_output" */
+export type Wormhole_Output_Aggregate_Order_By = {
+  avg?: InputMaybe<Wormhole_Output_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Wormhole_Output_Max_Order_By>;
+  min?: InputMaybe<Wormhole_Output_Min_Order_By>;
+  stddev?: InputMaybe<Wormhole_Output_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Wormhole_Output_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Wormhole_Output_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Wormhole_Output_Sum_Order_By>;
+  var_pop?: InputMaybe<Wormhole_Output_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Wormhole_Output_Var_Samp_Order_By>;
+  variance?: InputMaybe<Wormhole_Output_Variance_Order_By>;
+};
+
+/** aggregate avg on columns */
+export type Wormhole_Output_Avg_Fields = {
+  __typename?: 'wormhole_output_avg_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "wormhole_output" */
+export type Wormhole_Output_Avg_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "wormhole_output". All fields are combined with a logical 'AND'. */
+export type Wormhole_Output_Bool_Exp = {
+  _and?: InputMaybe<Array<Wormhole_Output_Bool_Exp>>;
+  _not?: InputMaybe<Wormhole_Output_Bool_Exp>;
+  _or?: InputMaybe<Array<Wormhole_Output_Bool_Exp>>;
+  amount?: InputMaybe<Numeric_Comparison_Exp>;
+  exitAccount?: InputMaybe<Account_Bool_Exp>;
+  exit_account_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  wormholeExtrinsic?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
+  wormhole_extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Wormhole_Output_Max_Fields = {
+  __typename?: 'wormhole_output_max_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  exit_account_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  wormhole_extrinsic_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "wormhole_output" */
+export type Wormhole_Output_Max_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  exit_account_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  wormhole_extrinsic_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Wormhole_Output_Min_Fields = {
+  __typename?: 'wormhole_output_min_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+  exit_account_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  wormhole_extrinsic_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "wormhole_output" */
+export type Wormhole_Output_Min_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  exit_account_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  wormhole_extrinsic_id?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "wormhole_output". */
+export type Wormhole_Output_Order_By = {
+  amount?: InputMaybe<Order_By>;
+  exitAccount?: InputMaybe<Account_Order_By>;
+  exit_account_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  wormholeExtrinsic?: InputMaybe<Wormhole_Extrinsic_Order_By>;
+  wormhole_extrinsic_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "wormhole_output" */
+export enum Wormhole_Output_Select_Column {
+  /** column name */
+  Amount = 'amount',
+  /** column name */
+  ExitAccountId = 'exit_account_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  WormholeExtrinsicId = 'wormhole_extrinsic_id'
 }
 
-export type WormholeOutputWhereInput = {
-  AND?: InputMaybe<Array<WormholeOutputWhereInput>>;
-  OR?: InputMaybe<Array<WormholeOutputWhereInput>>;
-  amount_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_gte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  amount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  amount_lt?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_lte?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_eq?: InputMaybe<Scalars['BigInt']['input']>;
-  amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
-  exitAccount?: InputMaybe<AccountWhereInput>;
-  exitAccount_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_contains?: InputMaybe<Scalars['String']['input']>;
-  id_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_eq?: InputMaybe<Scalars['String']['input']>;
-  id_gt?: InputMaybe<Scalars['String']['input']>;
-  id_gte?: InputMaybe<Scalars['String']['input']>;
-  id_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  id_lt?: InputMaybe<Scalars['String']['input']>;
-  id_lte?: InputMaybe<Scalars['String']['input']>;
-  id_not_contains?: InputMaybe<Scalars['String']['input']>;
-  id_not_containsInsensitive?: InputMaybe<Scalars['String']['input']>;
-  id_not_endsWith?: InputMaybe<Scalars['String']['input']>;
-  id_not_eq?: InputMaybe<Scalars['String']['input']>;
-  id_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  id_not_startsWith?: InputMaybe<Scalars['String']['input']>;
-  id_startsWith?: InputMaybe<Scalars['String']['input']>;
-  wormholeExtrinsic?: InputMaybe<WormholeExtrinsicWhereInput>;
-  wormholeExtrinsic_isNull?: InputMaybe<Scalars['Boolean']['input']>;
+/** aggregate stddev on columns */
+export type Wormhole_Output_Stddev_Fields = {
+  __typename?: 'wormhole_output_stddev_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
 };
 
-export type WormholeOutputsConnection = {
-  __typename?: 'WormholeOutputsConnection';
-  edges: Array<WormholeOutputEdge>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
+/** order by stddev() on columns of table "wormhole_output" */
+export type Wormhole_Output_Stddev_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Wormhole_Output_Stddev_Pop_Fields = {
+  __typename?: 'wormhole_output_stddev_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "wormhole_output" */
+export type Wormhole_Output_Stddev_Pop_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Wormhole_Output_Stddev_Samp_Fields = {
+  __typename?: 'wormhole_output_stddev_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "wormhole_output" */
+export type Wormhole_Output_Stddev_Samp_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "wormhole_output" */
+export type Wormhole_Output_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Wormhole_Output_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Wormhole_Output_Stream_Cursor_Value_Input = {
+  amount?: InputMaybe<Scalars['numeric']['input']>;
+  exit_account_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  wormhole_extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Wormhole_Output_Sum_Fields = {
+  __typename?: 'wormhole_output_sum_fields';
+  amount?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by sum() on columns of table "wormhole_output" */
+export type Wormhole_Output_Sum_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_pop on columns */
+export type Wormhole_Output_Var_Pop_Fields = {
+  __typename?: 'wormhole_output_var_pop_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "wormhole_output" */
+export type Wormhole_Output_Var_Pop_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Wormhole_Output_Var_Samp_Fields = {
+  __typename?: 'wormhole_output_var_samp_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "wormhole_output" */
+export type Wormhole_Output_Var_Samp_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Wormhole_Output_Variance_Fields = {
+  __typename?: 'wormhole_output_variance_fields';
+  amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "wormhole_output" */
+export type Wormhole_Output_Variance_Order_By = {
+  amount?: InputMaybe<Order_By>;
 };
 
 export type GetAccountsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AccountOrderByInput> | AccountOrderByInput>;
+  orderBy?: InputMaybe<Array<Account_Order_By> | Account_Order_By>;
 }>;
 
 export type GetAccountsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   accounts: Array<{
-    __typename?: 'Account';
+    __typename?: 'account';
     id: string;
     free: any;
     frozen: any;
     reserved: any;
   }>;
-  meta: { __typename?: 'AccountsConnection'; totalCount: number };
+  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetAccountByIdQueryVariables = Exact<{
@@ -4994,498 +5293,340 @@ export type GetAccountByIdQueryVariables = Exact<{
 }>;
 
 export type GetAccountByIdQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   account?: {
-    __typename?: 'Account';
+    __typename?: 'account';
     id: string;
     free: any;
     frozen: any;
     reserved: any;
   } | null;
-  transactions: {
-    __typename?: 'TransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'TransferEdge';
-      node: {
-        __typename?: 'Transfer';
-        fee: any;
-        amount: any;
-        timestamp: any;
-        extrinsic?: {
-          __typename?: 'Extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block: { __typename?: 'Block'; height: number };
-        from: { __typename?: 'Account'; id: string };
-        to: { __typename?: 'Account'; id: string };
-      };
-    }>;
-  };
-  scheduledReversibleTransactions: {
-    __typename?: 'ScheduledReversibleTransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'ScheduledReversibleTransferEdge';
-      node: {
-        __typename?: 'ScheduledReversibleTransfer';
-        timestamp: any;
-        amount: any;
-        scheduledAt: any;
-        txId: string;
-        fee: any;
-        extrinsic?: {
-          __typename?: 'Extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block: { __typename?: 'Block'; height: number };
-        from: { __typename?: 'Account'; id: string };
-        to: { __typename?: 'Account'; id: string };
-      };
-    }>;
-  };
-  executedReversibleTransactions: {
-    __typename?: 'ExecutedReversibleTransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'ExecutedReversibleTransferEdge';
-      node: {
-        __typename?: 'ExecutedReversibleTransfer';
-        timestamp: any;
-        txId: string;
-        block: { __typename?: 'Block'; height: number };
-        scheduledTransfer: {
-          __typename?: 'ScheduledReversibleTransfer';
-          amount: any;
-          timestamp: any;
-          scheduledAt: any;
-          txId: string;
-          fee: any;
-          extrinsic?: {
-            __typename?: 'Extrinsic';
-            id: string;
-            pallet: string;
-            call: string;
-          } | null;
-          block: { __typename?: 'Block'; height: number };
-          from: { __typename?: 'Account'; id: string };
-          to: { __typename?: 'Account'; id: string };
-        };
-      };
-    }>;
-  };
-  cancelledReversibleTransactions: {
-    __typename?: 'CancelledReversibleTransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'CancelledReversibleTransferEdge';
-      node: {
-        __typename?: 'CancelledReversibleTransfer';
-        timestamp: any;
-        txId: string;
-        block: { __typename?: 'Block'; height: number };
-        cancelledBy: { __typename?: 'Account'; id: string };
-        scheduledTransfer: {
-          __typename?: 'ScheduledReversibleTransfer';
-          amount: any;
-          timestamp: any;
-          scheduledAt: any;
-          txId: string;
-          fee: any;
-          extrinsic?: {
-            __typename?: 'Extrinsic';
-            id: string;
-            pallet: string;
-            call: string;
-          } | null;
-          block: { __typename?: 'Block'; height: number };
-          from: { __typename?: 'Account'; id: string };
-          to: { __typename?: 'Account'; id: string };
-        };
-      };
-    }>;
-  };
-  minerRewards: {
-    __typename?: 'MinerRewardsConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'MinerRewardEdge';
-      node: {
-        __typename?: 'MinerReward';
-        reward: any;
-        timestamp: any;
-        block: { __typename?: 'Block'; height: number; hash: string };
-        miner: { __typename?: 'Account'; id: string };
-      };
-    }>;
-  };
-  guardian: {
-    __typename?: 'HighSecuritySetsConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'HighSecuritySetEdge';
-      node: {
-        __typename?: 'HighSecuritySet';
-        timestamp: any;
-        block: { __typename?: 'Block'; height: number };
-        interceptor: {
-          __typename?: 'Account';
-          id: string;
-          free: any;
-          frozen: any;
-          reserved: any;
-        };
-      };
-    }>;
-  };
-  beneficiaries: {
-    __typename?: 'HighSecuritySetsConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'HighSecuritySetEdge';
-      node: {
-        __typename?: 'HighSecuritySet';
-        timestamp: any;
-        block: { __typename?: 'Block'; height: number };
-        who: {
-          __typename?: 'Account';
-          id: string;
-          free: any;
-          frozen: any;
-          reserved: any;
-        };
-      };
-    }>;
-  };
-  wormholeOutputs: Array<{
-    __typename?: 'WormholeOutput';
-    id: string;
-    amount: any;
-    exitAccount: { __typename?: 'Account'; id: string };
-    wormholeExtrinsic: {
-      __typename?: 'WormholeExtrinsic';
-      id: string;
-      totalAmount: any;
-      outputCount: number;
+  accountStats?: {
+    __typename?: 'account_stats';
+    total_cancelled_transfers: number;
+    total_executed_transfers: number;
+    total_immediate_transfers: number;
+    total_mined_blocks: number;
+    total_rewards: any;
+    total_scheduled_transfers: number;
+  } | null;
+  accountEvents: Array<{
+    __typename?: 'account_event';
+    transfer?: {
+      __typename?: 'transfer';
+      fee: any;
+      amount: any;
       timestamp: any;
       extrinsic?: {
-        __typename?: 'Extrinsic';
+        __typename?: 'extrinsic';
         id: string;
         pallet: string;
         call: string;
       } | null;
-      block: { __typename?: 'Block'; height: number };
+      block?: { __typename?: 'block'; height: number } | null;
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
+    scheduledReversibleTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
+      timestamp: any;
+      amount: any;
+      scheduled_at: any;
+      tx_id: string;
+      fee: any;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block?: { __typename?: 'block'; height: number } | null;
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
+    executedReversibleTransfer?: {
+      __typename?: 'executed_reversible_transfer';
+      timestamp: any;
+      tx_id: string;
+      block?: { __typename?: 'block'; height: number } | null;
+      scheduledTransfer?: {
+        __typename?: 'scheduled_reversible_transfer';
+        amount: any;
+        timestamp: any;
+        scheduled_at: any;
+        tx_id: string;
+        fee: any;
+        extrinsic?: {
+          __typename?: 'extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block?: { __typename?: 'block'; height: number } | null;
+        from?: { __typename?: 'account'; id: string } | null;
+        to?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    cancelledReversibleTransfer?: {
+      __typename?: 'cancelled_reversible_transfer';
+      timestamp: any;
+      tx_id: string;
+      block?: { __typename?: 'block'; height: number } | null;
+      cancelledBy?: { __typename?: 'account'; id: string } | null;
+      scheduledTransfer?: {
+        __typename?: 'scheduled_reversible_transfer';
+        amount: any;
+        timestamp: any;
+        scheduled_at: any;
+        tx_id: string;
+        fee: any;
+        extrinsic?: {
+          __typename?: 'extrinsic';
+          id: string;
+          pallet: string;
+          call: string;
+        } | null;
+        block?: { __typename?: 'block'; height: number } | null;
+        from?: { __typename?: 'account'; id: string } | null;
+        to?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    minerReward?: {
+      __typename?: 'miner_reward';
+      reward: any;
+      timestamp: any;
+      block?: { __typename?: 'block'; height: number; hash: string } | null;
+      miner?: { __typename?: 'account'; id: string } | null;
+    } | null;
+  }>;
+  guardian: {
+    __typename?: 'high_security_set_aggregate';
+    nodes: Array<{
+      __typename?: 'high_security_set';
+      timestamp: any;
+      block?: { __typename?: 'block'; height: number } | null;
+      interceptor?: {
+        __typename?: 'account';
+        id: string;
+        free: any;
+        frozen: any;
+        reserved: any;
+      } | null;
+    }>;
+    aggregate?: {
+      __typename?: 'high_security_set_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  beneficiaries: {
+    __typename?: 'high_security_set_aggregate';
+    nodes: Array<{
+      __typename?: 'high_security_set';
+      timestamp: any;
+      block?: { __typename?: 'block'; height: number } | null;
+      who?: {
+        __typename?: 'account';
+        id: string;
+        free: any;
+        frozen: any;
+        reserved: any;
+      } | null;
+    }>;
+    aggregate?: {
+      __typename?: 'high_security_set_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  wormholeOutputs: Array<{
+    __typename?: 'wormhole_output';
+    id: string;
+    amount: any;
+    exitAccount?: { __typename?: 'account'; id: string } | null;
+    wormholeExtrinsic?: {
+      __typename?: 'wormhole_extrinsic';
+      id: string;
+      total_amount: any;
+      output_count: number;
+      timestamp: any;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      block?: { __typename?: 'block'; height: number } | null;
       outputs: Array<{
-        __typename?: 'WormholeOutput';
+        __typename?: 'wormhole_output';
         id: string;
         amount: any;
-        exitAccount: { __typename?: 'Account'; id: string };
+        exitAccount?: { __typename?: 'account'; id: string } | null;
       }>;
-    };
+    } | null;
   }>;
 };
 
 export type GetAccountsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetAccountsStatsQuery = {
-  __typename?: 'Query';
-  all: { __typename?: 'AccountsConnection'; totalCount: number };
-  recentlyActive: { __typename?: 'AccountsConnection'; totalCount: number };
-  recentlyDeposited: { __typename?: 'AccountsConnection'; totalCount: number };
+  __typename?: 'query_root';
+  all?: { __typename?: 'chain_stats'; total_accounts: number } | null;
+  recentlyActive: {
+    __typename?: 'account_aggregate';
+    aggregate?: {
+      __typename?: 'account_aggregate_fields';
+      count: number;
+    } | null;
+  };
+  recentlyDeposited: {
+    __typename?: 'account_aggregate';
+    aggregate?: {
+      __typename?: 'account_aggregate_fields';
+      count: number;
+    } | null;
+  };
 };
 
 export type GetBlocksQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<BlockOrderByInput> | BlockOrderByInput;
-  where?: InputMaybe<BlockWhereInput>;
+  orderBy: Array<Block_Order_By> | Block_Order_By;
+  where?: InputMaybe<Block_Bool_Exp>;
 }>;
 
 export type GetBlocksQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   blocks: Array<{
-    __typename?: 'Block';
+    __typename?: 'block';
     id: string;
     hash: string;
     height: number;
     reward: any;
     timestamp: any;
-    extrinsics: Array<{ __typename?: 'Extrinsic'; id: string }>;
+    extrinsics: Array<{ __typename?: 'extrinsic'; id: string }>;
   }>;
-  meta: { __typename?: 'BlocksConnection'; totalCount: number };
+  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetRecentBlocksQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<BlockOrderByInput> | BlockOrderByInput>;
+  orderBy?: InputMaybe<Array<Block_Order_By> | Block_Order_By>;
 }>;
 
 export type GetRecentBlocksQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   blocks: Array<{
-    __typename?: 'Block';
+    __typename?: 'block';
     id: string;
     hash: string;
     height: number;
     reward: any;
     timestamp: any;
-    extrinsics: Array<{ __typename?: 'Extrinsic'; id: string }>;
+    extrinsics: Array<{ __typename?: 'extrinsic'; id: string }>;
   }>;
 };
 
 export type GetBlockByIdQueryVariables = Exact<{
   height: Scalars['Int']['input'];
   hash: Scalars['String']['input'];
-  limit: Scalars['Int']['input'];
 }>;
 
 export type GetBlockByIdQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   blocks: Array<{
-    __typename?: 'Block';
+    __typename?: 'block';
     id: string;
     hash: string;
     height: number;
     reward: any;
     timestamp: any;
     extrinsics: Array<{
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
       success: boolean;
       fee: any;
       timestamp: any;
-      indexInBlock: number;
-      signer?: { __typename?: 'Account'; id: string } | null;
+      index_in_block: number;
+      signer?: { __typename?: 'account'; id: string } | null;
     }>;
   }>;
   minerRewards: Array<{
-    __typename?: 'MinerReward';
+    __typename?: 'miner_reward';
     reward: any;
     timestamp: any;
-    miner: { __typename?: 'Account'; id: string };
-    block: { __typename?: 'Block'; height: number; hash: string };
+    miner?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
   }>;
-  transactions: {
-    __typename?: 'TransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'TransferEdge';
-      node: {
-        __typename?: 'Transfer';
-        fee: any;
-        amount: any;
-        timestamp: any;
-        extrinsic?: {
-          __typename?: 'Extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block: { __typename?: 'Block'; height: number };
-        from: { __typename?: 'Account'; id: string };
-        to: { __typename?: 'Account'; id: string };
-      };
-    }>;
-  };
-  scheduledReversibleTransactions: {
-    __typename?: 'ScheduledReversibleTransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'ScheduledReversibleTransferEdge';
-      node: {
-        __typename?: 'ScheduledReversibleTransfer';
-        timestamp: any;
-        amount: any;
-        scheduledAt: any;
-        txId: string;
-        fee: any;
-        extrinsic?: {
-          __typename?: 'Extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block: { __typename?: 'Block'; height: number };
-        from: { __typename?: 'Account'; id: string };
-        to: { __typename?: 'Account'; id: string };
-      };
-    }>;
-  };
-  executedReversibleTransactions: {
-    __typename?: 'ExecutedReversibleTransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'ExecutedReversibleTransferEdge';
-      node: {
-        __typename?: 'ExecutedReversibleTransfer';
-        timestamp: any;
-        txId: string;
-        block: { __typename?: 'Block'; height: number };
-        scheduledTransfer: {
-          __typename?: 'ScheduledReversibleTransfer';
-          amount: any;
-          timestamp: any;
-          scheduledAt: any;
-          txId: string;
-          fee: any;
-          extrinsic?: {
-            __typename?: 'Extrinsic';
-            id: string;
-            pallet: string;
-            call: string;
-          } | null;
-          block: { __typename?: 'Block'; height: number };
-          from: { __typename?: 'Account'; id: string };
-          to: { __typename?: 'Account'; id: string };
-        };
-      };
-    }>;
-  };
-  cancelledReversibleTransactions: {
-    __typename?: 'CancelledReversibleTransfersConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'CancelledReversibleTransferEdge';
-      node: {
-        __typename?: 'CancelledReversibleTransfer';
-        timestamp: any;
-        txId: string;
-        block: { __typename?: 'Block'; height: number };
-        cancelledBy: { __typename?: 'Account'; id: string };
-        scheduledTransfer: {
-          __typename?: 'ScheduledReversibleTransfer';
-          amount: any;
-          timestamp: any;
-          scheduledAt: any;
-          txId: string;
-          fee: any;
-          extrinsic?: {
-            __typename?: 'Extrinsic';
-            id: string;
-            pallet: string;
-            call: string;
-          } | null;
-          block: { __typename?: 'Block'; height: number };
-          from: { __typename?: 'Account'; id: string };
-          to: { __typename?: 'Account'; id: string };
-        };
-      };
-    }>;
-  };
-  highSecuritySets: {
-    __typename?: 'HighSecuritySetsConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'HighSecuritySetEdge';
-      node: {
-        __typename?: 'HighSecuritySet';
-        timestamp: any;
-        delay: any;
-        extrinsic?: {
-          __typename?: 'Extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block: { __typename?: 'Block'; height: number };
-        who: { __typename?: 'Account'; id: string };
-        interceptor: { __typename?: 'Account'; id: string };
-      };
-    }>;
-  };
-  errorEvents: {
-    __typename?: 'ErrorEventsConnection';
-    totalCount: number;
-    edges: Array<{
-      __typename?: 'ErrorEventEdge';
-      node: {
-        __typename?: 'ErrorEvent';
-        errorDocs?: string | null;
-        errorModule?: string | null;
-        errorName?: string | null;
-        errorType: string;
-        timestamp: any;
-        extrinsic?: {
-          __typename?: 'Extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block: { __typename?: 'Block'; height: number };
-      };
-    }>;
-  };
-  wormholeExtrinsics: Array<{
-    __typename?: 'WormholeExtrinsic';
-    id: string;
-    totalAmount: any;
-    outputCount: number;
-    timestamp: any;
-    extrinsic?: {
-      __typename?: 'Extrinsic';
-      id: string;
-      pallet: string;
-      call: string;
+};
+
+export type GetBlockStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetBlockStatsQuery = {
+  __typename?: 'query_root';
+  chain?: {
+    __typename?: 'chain_stats';
+    block_height: number;
+    finalized_block_height: number;
+  } | null;
+  minedIn24Hours: {
+    __typename?: 'block_aggregate';
+    aggregate?: {
+      __typename?: 'block_aggregate_fields';
+      totalCount: number;
     } | null;
-    block: { __typename?: 'Block'; height: number };
-    outputs: Array<{
-      __typename?: 'WormholeOutput';
-      id: string;
-      amount: any;
-      exitAccount: { __typename?: 'Account'; id: string };
-    }>;
-  }>;
+  };
 };
 
 export type GetCancelledReversibleTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    | Array<CancelledReversibleTransferOrderByInput>
-    | CancelledReversibleTransferOrderByInput
+    | Array<Cancelled_Reversible_Transfer_Order_By>
+    | Cancelled_Reversible_Transfer_Order_By
   >;
-  where?: InputMaybe<CancelledReversibleTransferWhereInput>;
+  where?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
 }>;
 
 export type GetCancelledReversibleTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   cancelledReversibleTransactions: Array<{
-    __typename?: 'CancelledReversibleTransfer';
+    __typename?: 'cancelled_reversible_transfer';
     timestamp: any;
-    txId: string;
-    block: { __typename?: 'Block'; height: number };
-    cancelledBy: { __typename?: 'Account'; id: string };
-    scheduledTransfer: {
-      __typename?: 'ScheduledReversibleTransfer';
+    tx_id: string;
+    block?: { __typename?: 'block'; height: number } | null;
+    cancelledBy?: { __typename?: 'account'; id: string } | null;
+    scheduledTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
       amount: any;
       timestamp: any;
-      scheduledAt: any;
-      txId: string;
+      scheduled_at: any;
+      tx_id: string;
       fee: any;
       extrinsic?: {
-        __typename?: 'Extrinsic';
+        __typename?: 'extrinsic';
         id: string;
         pallet: string;
         call: string;
       } | null;
-      block: { __typename?: 'Block'; height: number };
-      from: { __typename?: 'Account'; id: string };
-      to: { __typename?: 'Account'; id: string };
-    };
+      block?: { __typename?: 'block'; height: number } | null;
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
   }>;
   meta: {
-    __typename?: 'CancelledReversibleTransfersConnection';
-    totalCount: number;
+    __typename?: 'cancelled_reversible_transfer_aggregate';
+    aggregate?: {
+      __typename?: 'cancelled_reversible_transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
   };
 };
 
@@ -5493,162 +5634,180 @@ export type GetRecentCancelledReversibleTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    | Array<CancelledReversibleTransferOrderByInput>
-    | CancelledReversibleTransferOrderByInput
+    | Array<Cancelled_Reversible_Transfer_Order_By>
+    | Cancelled_Reversible_Transfer_Order_By
   >;
 }>;
 
 export type GetRecentCancelledReversibleTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   cancelledReversibleTransactions: Array<{
-    __typename?: 'CancelledReversibleTransfer';
+    __typename?: 'cancelled_reversible_transfer';
     timestamp: any;
-    txId: string;
-    block: { __typename?: 'Block'; height: number };
-    cancelledBy: { __typename?: 'Account'; id: string };
-    scheduledTransfer: {
-      __typename?: 'ScheduledReversibleTransfer';
+    tx_id: string;
+    block?: { __typename?: 'block'; height: number } | null;
+    cancelledBy?: { __typename?: 'account'; id: string } | null;
+    scheduledTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
       amount: any;
       timestamp: any;
-      scheduledAt: any;
-      txId: string;
+      scheduled_at: any;
+      tx_id: string;
       fee: any;
       extrinsic?: {
-        __typename?: 'Extrinsic';
+        __typename?: 'extrinsic';
         id: string;
         pallet: string;
         call: string;
       } | null;
-      block: { __typename?: 'Block'; height: number };
-      from: { __typename?: 'Account'; id: string };
-      to: { __typename?: 'Account'; id: string };
-    };
+      block?: { __typename?: 'block'; height: number } | null;
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
   }>;
 };
 
 export type GetCancelledReversibleTransactionsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetCancelledReversibleTransactionsStatsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   last24Hour: {
-    __typename?: 'CancelledReversibleTransfersConnection';
-    totalCount: number;
+    __typename?: 'cancelled_reversible_transfer_aggregate';
+    aggregate?: {
+      __typename?: 'cancelled_reversible_transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
   };
-  allTime: {
-    __typename?: 'CancelledReversibleTransfersConnection';
-    totalCount: number;
-  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_cancelled_transfers: number;
+  } | null;
 };
 
 export type GetCancelledReversibleTransactionByTxIdQueryVariables = Exact<{
-  txId: Scalars['String']['input'];
+  tx_id: Scalars['String']['input'];
 }>;
 
 export type GetCancelledReversibleTransactionByTxIdQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   cancelledReversibleTransactions: Array<{
-    __typename?: 'CancelledReversibleTransfer';
+    __typename?: 'cancelled_reversible_transfer';
     timestamp: any;
-    txId: string;
-    block: { __typename?: 'Block'; height: number };
-    cancelledBy: { __typename?: 'Account'; id: string };
+    tx_id: string;
+    block?: { __typename?: 'block'; height: number } | null;
+    cancelledBy?: { __typename?: 'account'; id: string } | null;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    scheduledTransfer: {
-      __typename?: 'ScheduledReversibleTransfer';
+    scheduledTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
       amount: any;
-      scheduledAt: any;
+      scheduled_at: any;
       fee: any;
-      from: { __typename?: 'Account'; id: string };
-      to: { __typename?: 'Account'; id: string };
-    };
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
   }>;
 };
 
 export type GetStatusQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetStatusQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   status?: {
-    __typename?: 'SquidStatus';
-    hash?: string | null;
-    height?: number | null;
-    finalizedHeight?: number | null;
-    finalizedHash?: string | null;
+    __typename?: 'chain_stats';
+    block_height: number;
+    total_accounts: number;
+    total_deposit_accounts: number;
+    total_executed_transfers: number;
+    total_immediate_transfers: number;
+    total_scheduled_transfers: number;
+    total_cancelled_transfers: number;
   } | null;
 };
 
 export type GetErrorEventsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ErrorEventOrderByInput> | ErrorEventOrderByInput>;
-  where?: InputMaybe<ErrorEventWhereInput>;
+  orderBy?: InputMaybe<Array<Error_Event_Order_By> | Error_Event_Order_By>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
 }>;
 
 export type GetErrorEventsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   errorEvents: Array<{
-    __typename?: 'ErrorEvent';
-    errorDocs?: string | null;
-    errorModule?: string | null;
-    errorName?: string | null;
-    errorType: string;
+    __typename?: 'error_event';
+    error_docs?: string | null;
+    error_module?: string | null;
+    error_name?: string | null;
+    error_type: string;
     id: string;
     timestamp: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
-  meta: { __typename?: 'ErrorEventsConnection'; totalCount: number };
+  meta: {
+    __typename?: 'error_event_aggregate';
+    aggregate?: {
+      __typename?: 'error_event_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
 };
 
 export type GetRecentErrorEventsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ErrorEventOrderByInput> | ErrorEventOrderByInput>;
-  where?: InputMaybe<ErrorEventWhereInput>;
+  orderBy?: InputMaybe<Array<Error_Event_Order_By> | Error_Event_Order_By>;
+  where?: InputMaybe<Error_Event_Bool_Exp>;
 }>;
 
 export type GetRecentErrorEventsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   errorEvents: Array<{
-    __typename?: 'ErrorEvent';
-    errorDocs?: string | null;
-    errorModule?: string | null;
-    errorName?: string | null;
-    errorType: string;
+    __typename?: 'error_event';
+    error_docs?: string | null;
+    error_module?: string | null;
+    error_name?: string | null;
+    error_type: string;
     id: string;
     timestamp: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
 };
 
 export type GetErrorEventsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetErrorEventsStatsQuery = {
-  __typename?: 'Query';
-  last24Hour: { __typename?: 'ErrorEventsConnection'; totalCount: number };
-  allTime: { __typename?: 'ErrorEventsConnection'; totalCount: number };
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'error_event_aggregate';
+    aggregate?: {
+      __typename?: 'error_event_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: { __typename?: 'chain_stats'; total_error_events: number } | null;
 };
 
 export type GetErrorEventByHashQueryVariables = Exact<{
@@ -5656,22 +5815,22 @@ export type GetErrorEventByHashQueryVariables = Exact<{
 }>;
 
 export type GetErrorEventByHashQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   errorEvents: Array<{
-    __typename?: 'ErrorEvent';
-    errorDocs?: string | null;
-    errorModule?: string | null;
-    errorName?: string | null;
-    errorType: string;
+    __typename?: 'error_event';
+    error_docs?: string | null;
+    error_module?: string | null;
+    error_name?: string | null;
+    error_type: string;
     id: string;
     timestamp: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
 };
 
@@ -5679,40 +5838,43 @@ export type GetExecutedReversibleTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    | Array<ExecutedReversibleTransferOrderByInput>
-    | ExecutedReversibleTransferOrderByInput
+    | Array<Executed_Reversible_Transfer_Order_By>
+    | Executed_Reversible_Transfer_Order_By
   >;
-  where?: InputMaybe<ExecutedReversibleTransferWhereInput>;
+  where?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
 }>;
 
 export type GetExecutedReversibleTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   executedReversibleTransactions: Array<{
-    __typename?: 'ExecutedReversibleTransfer';
+    __typename?: 'executed_reversible_transfer';
     timestamp: any;
-    txId: string;
-    block: { __typename?: 'Block'; height: number };
-    scheduledTransfer: {
-      __typename?: 'ScheduledReversibleTransfer';
+    tx_id: string;
+    block?: { __typename?: 'block'; height: number } | null;
+    scheduledTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
       amount: any;
       timestamp: any;
-      scheduledAt: any;
-      txId: string;
+      scheduled_at: any;
+      tx_id: string;
       fee: any;
       extrinsic?: {
-        __typename?: 'Extrinsic';
+        __typename?: 'extrinsic';
         id: string;
         pallet: string;
         call: string;
       } | null;
-      block: { __typename?: 'Block'; height: number };
-      from: { __typename?: 'Account'; id: string };
-      to: { __typename?: 'Account'; id: string };
-    };
+      block?: { __typename?: 'block'; height: number } | null;
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
   }>;
   meta: {
-    __typename?: 'ExecutedReversibleTransfersConnection';
-    totalCount: number;
+    __typename?: 'executed_reversible_transfer_aggregate';
+    aggregate?: {
+      __typename?: 'executed_reversible_transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
   };
 };
 
@@ -5720,74 +5882,77 @@ export type GetRecentExecutedReversibleTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    | Array<ExecutedReversibleTransferOrderByInput>
-    | ExecutedReversibleTransferOrderByInput
+    | Array<Executed_Reversible_Transfer_Order_By>
+    | Executed_Reversible_Transfer_Order_By
   >;
 }>;
 
 export type GetRecentExecutedReversibleTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   executedReversibleTransactions: Array<{
-    __typename?: 'ExecutedReversibleTransfer';
+    __typename?: 'executed_reversible_transfer';
     timestamp: any;
-    txId: string;
-    block: { __typename?: 'Block'; height: number };
-    scheduledTransfer: {
-      __typename?: 'ScheduledReversibleTransfer';
+    tx_id: string;
+    block?: { __typename?: 'block'; height: number } | null;
+    scheduledTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
       amount: any;
       timestamp: any;
-      scheduledAt: any;
-      txId: string;
+      scheduled_at: any;
+      tx_id: string;
       fee: any;
       extrinsic?: {
-        __typename?: 'Extrinsic';
+        __typename?: 'extrinsic';
         id: string;
         pallet: string;
         call: string;
       } | null;
-      block: { __typename?: 'Block'; height: number };
-      from: { __typename?: 'Account'; id: string };
-      to: { __typename?: 'Account'; id: string };
-    };
+      block?: { __typename?: 'block'; height: number } | null;
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
   }>;
 };
 
 export type GetExecutedReversibleTransactionsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetExecutedReversibleTransactionsStatsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   last24Hour: {
-    __typename?: 'ExecutedReversibleTransfersConnection';
-    totalCount: number;
+    __typename?: 'executed_reversible_transfer_aggregate';
+    aggregate?: {
+      __typename?: 'executed_reversible_transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
   };
-  allTime: {
-    __typename?: 'ExecutedReversibleTransfersConnection';
-    totalCount: number;
-  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_executed_transfers: number;
+  } | null;
 };
 
 export type GetExecutedReversibleTransactionByTxIdQueryVariables = Exact<{
-  txId: Scalars['String']['input'];
+  tx_id: Scalars['String']['input'];
 }>;
 
 export type GetExecutedReversibleTransactionByTxIdQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   executedReversibleTransactions: Array<{
-    __typename?: 'ExecutedReversibleTransfer';
+    __typename?: 'executed_reversible_transfer';
     timestamp: any;
-    txId: string;
-    block: { __typename?: 'Block'; height: number };
-    scheduledTransfer: {
-      __typename?: 'ScheduledReversibleTransfer';
+    tx_id: string;
+    block?: { __typename?: 'block'; height: number } | null;
+    scheduledTransfer?: {
+      __typename?: 'scheduled_reversible_transfer';
       amount: any;
-      scheduledAt: any;
+      scheduled_at: any;
       fee: any;
-      from: { __typename?: 'Account'; id: string };
-      to: { __typename?: 'Account'; id: string };
-    };
+      from?: { __typename?: 'account'; id: string } | null;
+      to?: { __typename?: 'account'; id: string } | null;
+    } | null;
   }>;
 };
 
@@ -5795,68 +5960,83 @@ export type GetHighSecuritySetsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    Array<HighSecuritySetOrderByInput> | HighSecuritySetOrderByInput
+    Array<High_Security_Set_Order_By> | High_Security_Set_Order_By
   >;
-  where?: InputMaybe<HighSecuritySetWhereInput>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
 }>;
 
 export type GetHighSecuritySetsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   highSecuritySets: Array<{
-    __typename?: 'HighSecuritySet';
+    __typename?: 'high_security_set';
     id: string;
     timestamp: any;
     delay: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    who: { __typename?: 'Account'; id: string };
-    interceptor: { __typename?: 'Account'; id: string };
-    block: { __typename?: 'Block'; height: number };
+    who?: { __typename?: 'account'; id: string } | null;
+    interceptor?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
-  meta: { __typename?: 'HighSecuritySetsConnection'; totalCount: number };
+  meta: {
+    __typename?: 'high_security_set_aggregate';
+    aggregate?: {
+      __typename?: 'high_security_set_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
 };
 
 export type GetRecentHighSecuritySetsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    Array<HighSecuritySetOrderByInput> | HighSecuritySetOrderByInput
+    Array<High_Security_Set_Order_By> | High_Security_Set_Order_By
   >;
-  where?: InputMaybe<HighSecuritySetWhereInput>;
+  where?: InputMaybe<High_Security_Set_Bool_Exp>;
 }>;
 
 export type GetRecentHighSecuritySetsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   highSecuritySets: Array<{
-    __typename?: 'HighSecuritySet';
+    __typename?: 'high_security_set';
     id: string;
     timestamp: any;
     delay: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    who: { __typename?: 'Account'; id: string };
-    interceptor: { __typename?: 'Account'; id: string };
-    block: { __typename?: 'Block'; height: number };
+    who?: { __typename?: 'account'; id: string } | null;
+    interceptor?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
 };
 
 export type GetHighSecuritySetsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetHighSecuritySetsStatsQuery = {
-  __typename?: 'Query';
-  last24Hour: { __typename?: 'HighSecuritySetsConnection'; totalCount: number };
-  allTime: { __typename?: 'HighSecuritySetsConnection'; totalCount: number };
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'high_security_set_aggregate';
+    aggregate?: {
+      __typename?: 'high_security_set_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_high_security_sets: number;
+  } | null;
 };
 
 export type GetHighSecuritySetByHashQueryVariables = Exact<{
@@ -5864,21 +6044,21 @@ export type GetHighSecuritySetByHashQueryVariables = Exact<{
 }>;
 
 export type GetHighSecuritySetByHashQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   highSecuritySets: Array<{
-    __typename?: 'HighSecuritySet';
+    __typename?: 'high_security_set';
     id: string;
     timestamp: any;
     delay: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    who: { __typename?: 'Account'; id: string };
-    interceptor: { __typename?: 'Account'; id: string };
-    block: { __typename?: 'Block'; height: number };
+    who?: { __typename?: 'account'; id: string } | null;
+    interceptor?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
 };
 
@@ -5888,66 +6068,74 @@ export type GetMinerLeaderboardQueryVariables = Exact<{
 }>;
 
 export type GetMinerLeaderboardQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   leaderboardEntries: Array<{
-    __typename?: 'MinerStats';
+    __typename?: 'account_stats';
     id: string;
-    totalMinedBlocks: number;
-    totalRewards: any;
+    total_mined_blocks: number;
+    total_rewards: any;
   }>;
-  meta: { __typename?: 'MinerStatsConnection'; totalCount: number };
+  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetMinerRewardsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<
-    Array<MinerRewardOrderByInput> | MinerRewardOrderByInput
-  >;
-  where?: InputMaybe<MinerRewardWhereInput>;
+  orderBy?: InputMaybe<Array<Miner_Reward_Order_By> | Miner_Reward_Order_By>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
 }>;
 
 export type GetMinerRewardsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   minerRewards: Array<{
-    __typename?: 'MinerReward';
+    __typename?: 'miner_reward';
     reward: any;
     timestamp: any;
-    block: { __typename?: 'Block'; height: number; hash: string };
-    miner: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
+    miner?: { __typename?: 'account'; id: string } | null;
   }>;
-  meta: { __typename?: 'MinerRewardsConnection'; totalCount: number };
+  meta: {
+    __typename?: 'miner_reward_aggregate';
+    aggregate?: {
+      __typename?: 'miner_reward_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
 };
 
 export type GetRecentMinerRewardsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<
-    Array<MinerRewardOrderByInput> | MinerRewardOrderByInput
-  >;
-  where?: InputMaybe<MinerRewardWhereInput>;
+  orderBy?: InputMaybe<Array<Miner_Reward_Order_By> | Miner_Reward_Order_By>;
+  where?: InputMaybe<Miner_Reward_Bool_Exp>;
 }>;
 
 export type GetRecentMinerRewardsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   minerRewards: Array<{
-    __typename?: 'MinerReward';
+    __typename?: 'miner_reward';
     reward: any;
     timestamp: any;
-    block: { __typename?: 'Block'; height: number; hash: string };
-    miner: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
+    miner?: { __typename?: 'account'; id: string } | null;
   }>;
 };
 
 export type GetMinerRewardsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetMinerRewardsStatsQuery = {
-  __typename?: 'Query';
-  last24Hour: { __typename?: 'MinerRewardsConnection'; totalCount: number };
-  allTime: { __typename?: 'MinerRewardsConnection'; totalCount: number };
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'miner_reward_aggregate';
+    aggregate?: {
+      __typename?: 'miner_reward_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: { __typename?: 'chain_stats'; total_miner_rewards: number } | null;
 };
 
 export type GetMinerRewardByHashQueryVariables = Exact<{
@@ -5955,13 +6143,13 @@ export type GetMinerRewardByHashQueryVariables = Exact<{
 }>;
 
 export type GetMinerRewardByHashQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   minerRewards: Array<{
-    __typename?: 'MinerReward';
+    __typename?: 'miner_reward';
     reward: any;
     timestamp: any;
-    block: { __typename?: 'Block'; height: number; hash: string };
-    miner: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
+    miner?: { __typename?: 'account'; id: string } | null;
   }>;
 };
 
@@ -5969,34 +6157,37 @@ export type GetScheduledReversibleTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    | Array<ScheduledReversibleTransferOrderByInput>
-    | ScheduledReversibleTransferOrderByInput
+    | Array<Scheduled_Reversible_Transfer_Order_By>
+    | Scheduled_Reversible_Transfer_Order_By
   >;
-  where?: InputMaybe<ScheduledReversibleTransferWhereInput>;
+  where?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
 }>;
 
 export type GetScheduledReversibleTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   scheduledReversibleTransactions: Array<{
-    __typename?: 'ScheduledReversibleTransfer';
+    __typename?: 'scheduled_reversible_transfer';
     amount: any;
     timestamp: any;
-    scheduledAt: any;
-    txId: string;
+    scheduled_at: any;
+    tx_id: string;
     fee: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
-    from: { __typename?: 'Account'; id: string };
-    to: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number } | null;
+    from?: { __typename?: 'account'; id: string } | null;
+    to?: { __typename?: 'account'; id: string } | null;
   }>;
   meta: {
-    __typename?: 'ScheduledReversibleTransfersConnection';
-    totalCount: number;
+    __typename?: 'scheduled_reversible_transfer_aggregate';
+    aggregate?: {
+      __typename?: 'scheduled_reversible_transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
   };
 };
 
@@ -6004,71 +6195,74 @@ export type GetRecentScheduledReversibleTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<
-    | Array<ScheduledReversibleTransferOrderByInput>
-    | ScheduledReversibleTransferOrderByInput
+    | Array<Scheduled_Reversible_Transfer_Order_By>
+    | Scheduled_Reversible_Transfer_Order_By
   >;
 }>;
 
 export type GetRecentScheduledReversibleTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   scheduledReversibleTransactions: Array<{
-    __typename?: 'ScheduledReversibleTransfer';
+    __typename?: 'scheduled_reversible_transfer';
     amount: any;
     timestamp: any;
-    scheduledAt: any;
-    txId: string;
+    scheduled_at: any;
+    tx_id: string;
     fee: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
-    from: { __typename?: 'Account'; id: string };
-    to: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number } | null;
+    from?: { __typename?: 'account'; id: string } | null;
+    to?: { __typename?: 'account'; id: string } | null;
   }>;
 };
 
 export type GetScheduledReversibleTransactionsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetScheduledReversibleTransactionsStatsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   last24Hour: {
-    __typename?: 'ScheduledReversibleTransfersConnection';
-    totalCount: number;
+    __typename?: 'scheduled_reversible_transfer_aggregate';
+    aggregate?: {
+      __typename?: 'scheduled_reversible_transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
   };
-  allTime: {
-    __typename?: 'ScheduledReversibleTransfersConnection';
-    totalCount: number;
-  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_scheduled_transfers: number;
+  } | null;
 };
 
 export type GetScheduledReversibleTransactionByTxIdQueryVariables = Exact<{
-  txId: Scalars['String']['input'];
+  tx_id: Scalars['String']['input'];
 }>;
 
 export type GetScheduledReversibleTransactionByTxIdQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   scheduledReversibleTransactions: Array<{
-    __typename?: 'ScheduledReversibleTransfer';
+    __typename?: 'scheduled_reversible_transfer';
     amount: any;
     timestamp: any;
-    scheduledAt: any;
-    txId: string;
+    scheduled_at: any;
+    tx_id: string;
     fee: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
-    from: { __typename?: 'Account'; id: string };
-    to: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number } | null;
+    from?: { __typename?: 'account'; id: string } | null;
+    to?: { __typename?: 'account'; id: string } | null;
   }>;
 };
 
@@ -6079,56 +6273,56 @@ export type SearchAllQueryVariables = Exact<{
 }>;
 
 export type SearchAllQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   transactions: Array<{
-    __typename?: 'Transfer';
+    __typename?: 'transfer';
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
   }>;
   scheduledReversibleTransactions: Array<{
-    __typename?: 'ScheduledReversibleTransfer';
-    txId: string;
+    __typename?: 'scheduled_reversible_transfer';
+    tx_id: string;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
   }>;
   executedReversibleTransactions: Array<{
-    __typename?: 'ExecutedReversibleTransfer';
-    txId: string;
+    __typename?: 'executed_reversible_transfer';
+    tx_id: string;
   }>;
   cancelledReversibleTransactions: Array<{
-    __typename?: 'CancelledReversibleTransfer';
-    txId: string;
+    __typename?: 'cancelled_reversible_transfer';
+    tx_id: string;
   }>;
-  accounts: Array<{ __typename?: 'Account'; id: string }>;
-  blocks: Array<{ __typename?: 'Block'; height: number }>;
+  accounts: Array<{ __typename?: 'account'; id: string }>;
+  blocks: Array<{ __typename?: 'block'; height: number }>;
   highSecuritySets: Array<{
-    __typename?: 'HighSecuritySet';
+    __typename?: 'high_security_set';
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
   }>;
   minerRewards: Array<{
-    __typename?: 'MinerReward';
+    __typename?: 'miner_reward';
     reward: any;
     timestamp: any;
-    block: { __typename?: 'Block'; height: number; hash: string };
-    miner: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
+    miner?: { __typename?: 'account'; id: string } | null;
   }>;
   errorEvents: Array<{
-    __typename?: 'ErrorEvent';
+    __typename?: 'error_event';
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
@@ -6139,65 +6333,80 @@ export type SearchAllQuery = {
 export type GetTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<TransferOrderByInput> | TransferOrderByInput>;
-  where?: InputMaybe<TransferWhereInput>;
+  orderBy?: InputMaybe<Array<Transfer_Order_By> | Transfer_Order_By>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
 }>;
 
 export type GetTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   transactions: Array<{
-    __typename?: 'Transfer';
+    __typename?: 'transfer';
     fee: any;
     amount: any;
     timestamp: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
-    from: { __typename?: 'Account'; id: string };
-    to: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number } | null;
+    from?: { __typename?: 'account'; id: string } | null;
+    to?: { __typename?: 'account'; id: string } | null;
   }>;
-  meta: { __typename?: 'TransfersConnection'; totalCount: number };
+  meta: {
+    __typename?: 'transfer_aggregate';
+    aggregate?: {
+      __typename?: 'transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
 };
 
 export type GetRecentTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<TransferOrderByInput> | TransferOrderByInput>;
-  where?: InputMaybe<TransferWhereInput>;
+  orderBy?: InputMaybe<Array<Transfer_Order_By> | Transfer_Order_By>;
+  where?: InputMaybe<Transfer_Bool_Exp>;
 }>;
 
 export type GetRecentTransactionsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   transactions: Array<{
-    __typename?: 'Transfer';
+    __typename?: 'transfer';
     fee: any;
     amount: any;
     timestamp: any;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
-    from: { __typename?: 'Account'; id: string };
-    to: { __typename?: 'Account'; id: string };
+    block?: { __typename?: 'block'; height: number } | null;
+    from?: { __typename?: 'account'; id: string } | null;
+    to?: { __typename?: 'account'; id: string } | null;
   }>;
 };
 
 export type GetTransactionsStatsQueryVariables = Exact<{
-  startDate: Scalars['DateTime']['input'];
-  endDate: Scalars['DateTime']['input'];
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
 }>;
 
 export type GetTransactionsStatsQuery = {
-  __typename?: 'Query';
-  last24Hour: { __typename?: 'TransfersConnection'; totalCount: number };
-  allTime: { __typename?: 'TransfersConnection'; totalCount: number };
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'transfer_aggregate';
+    aggregate?: {
+      __typename?: 'transfer_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_immediate_transfers: number;
+  } | null;
 };
 
 export type GetExtrinsicByHashQueryVariables = Exact<{
@@ -6205,55 +6414,61 @@ export type GetExtrinsicByHashQueryVariables = Exact<{
 }>;
 
 export type GetExtrinsicByHashQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   extrinsics: Array<{
-    __typename?: 'Extrinsic';
+    __typename?: 'extrinsic';
     id: string;
     pallet: string;
     call: string;
     success: boolean;
     fee: any;
     timestamp: any;
-    indexInBlock: number;
-    signer?: { __typename?: 'Account'; id: string } | null;
-    block: { __typename?: 'Block'; height: number };
+    index_in_block: number;
+    signer?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
   transfers: Array<{
-    __typename?: 'Transfer';
+    __typename?: 'transfer';
     id: string;
     amount: any;
     timestamp: any;
-    from: { __typename?: 'Account'; id: string };
-    to: { __typename?: 'Account'; id: string };
+    from?: { __typename?: 'account'; id: string } | null;
+    to?: { __typename?: 'account'; id: string } | null;
   }>;
 };
 
 export type GetWormholeExtrinsicsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy: Array<WormholeExtrinsicOrderByInput> | WormholeExtrinsicOrderByInput;
-  where?: InputMaybe<WormholeExtrinsicWhereInput>;
+  orderBy: Array<Wormhole_Extrinsic_Order_By> | Wormhole_Extrinsic_Order_By;
+  where?: InputMaybe<Wormhole_Extrinsic_Bool_Exp>;
 }>;
 
 export type GetWormholeExtrinsicsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   wormholeExtrinsics: Array<{
-    __typename?: 'WormholeExtrinsic';
+    __typename?: 'wormhole_extrinsic';
     id: string;
-    totalAmount: any;
-    outputCount: number;
+    total_amount: any;
+    output_count: number;
     timestamp: any;
-    privacyScore: number;
-    privacyLabel: string;
+    privacy_score: any;
+    privacy_label: string;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: { __typename?: 'Block'; height: number };
+    block?: { __typename?: 'block'; height: number } | null;
   }>;
-  meta: { __typename?: 'WormholeExtrinsicsConnection'; totalCount: number };
+  meta: {
+    __typename?: 'wormhole_extrinsic_aggregate';
+    aggregate?: {
+      __typename?: 'wormhole_extrinsic_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
 };
 
 export type GetWormholeExtrinsicByIdQueryVariables = Exact<{
@@ -6261,53 +6476,53 @@ export type GetWormholeExtrinsicByIdQueryVariables = Exact<{
 }>;
 
 export type GetWormholeExtrinsicByIdQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   wormholeExtrinsicById?: {
-    __typename?: 'WormholeExtrinsic';
+    __typename?: 'wormhole_extrinsic';
     id: string;
-    totalAmount: any;
-    outputCount: number;
+    total_amount: any;
+    output_count: number;
     timestamp: any;
-    privacyScore: number;
-    privacyScore01Pct: number;
-    privacyScore1Pct: number;
-    privacyScore5Pct: number;
-    privacyLabel: string;
-    poolSnapshot: string;
+    privacy_score: any;
+    privacy_score01_pct: any;
+    privacy_score1_pct: any;
+    privacy_score5_pct: any;
+    privacy_label: string;
+    pool_snapshot: string;
     extrinsic?: {
-      __typename?: 'Extrinsic';
+      __typename?: 'extrinsic';
       id: string;
       pallet: string;
       call: string;
     } | null;
-    block: {
-      __typename?: 'Block';
+    block?: {
+      __typename?: 'block';
       id: string;
       height: number;
       hash: string;
       timestamp: any;
-    };
+    } | null;
     outputs: Array<{
-      __typename?: 'WormholeOutput';
+      __typename?: 'wormhole_output';
       id: string;
       amount: any;
-      exitAccount: { __typename?: 'Account'; id: string };
+      exitAccount?: { __typename?: 'account'; id: string } | null;
     }>;
   } | null;
   wormholeNullifiers: Array<{
-    __typename?: 'WormholeNullifier';
+    __typename?: 'wormhole_nullifier';
     nullifier: string;
-    nullifierHash: string;
+    nullifier_hash: string;
   }>;
 };
 
 export type GetDepositPoolStatsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDepositPoolStatsQuery = {
-  __typename?: 'Query';
+  __typename?: 'query_root';
   depositPoolStatsById?: {
-    __typename?: 'DepositPoolStats';
-    lastUpdatedBlock: number;
+    __typename?: 'deposit_pool_stats';
+    last_updated_block: number;
     buckets: string;
   } | null;
 };
@@ -6348,7 +6563,7 @@ export const GetAccountsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'AccountOrderByInput' }
+                name: { kind: 'Name', value: 'account_order_by' }
               }
             }
           }
@@ -6359,7 +6574,8 @@ export const GetAccountsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'accounts' },
+            alias: { kind: 'Name', value: 'accounts' },
+            name: { kind: 'Name', value: 'account' },
             arguments: [
               {
                 kind: 'Argument',
@@ -6379,7 +6595,7 @@ export const GetAccountsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -6399,18 +6615,22 @@ export const GetAccountsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'accountsConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'totalCount' },
+                  name: { kind: 'Name', value: 'total_accounts' }
+                }
               ]
             }
           }
@@ -6453,7 +6673,7 @@ export const GetAccountByIdDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'account' },
-            name: { kind: 'Name', value: 'accountById' },
+            name: { kind: 'Name', value: 'account_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
@@ -6473,17 +6693,53 @@ export const GetAccountByIdDocument = {
           },
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'transactions' },
-            name: { kind: 'Name', value: 'transfersConnection' },
+            alias: { kind: 'Name', value: 'accountStats' },
+            name: { kind: 'Name', value: 'account_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_cancelled_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_executed_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_immediate_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_mined_blocks' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_rewards' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_scheduled_transfers' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'accountEvents' },
+            name: { kind: 'Name', value: 'account_event' },
+            arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
+                name: { kind: 'Name', value: 'limit' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'limit' }
@@ -6497,56 +6753,16 @@ export const GetAccountByIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic_isNull' },
-                      value: { kind: 'BooleanValue', value: false }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'AND' },
+                      name: { kind: 'Name', value: 'account_id' },
                       value: {
                         kind: 'ObjectValue',
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'from' },
+                            name: { kind: 'Name', value: '_eq' },
                             value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'id_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'OR' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'to' },
-                                  value: {
-                                    kind: 'ObjectValue',
-                                    fields: [
-                                      {
-                                        kind: 'ObjectField',
-                                        name: { kind: 'Name', value: 'id_eq' },
-                                        value: {
-                                          kind: 'Variable',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      }
-                                    ]
-                                  }
-                                }
-                              ]
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
                             }
                           }
                         ]
@@ -6561,20 +6777,199 @@ export const GetAccountByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
+                  name: { kind: 'Name', value: 'transfer' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
+                        name: { kind: 'Name', value: 'extrinsic' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'fee' }
+                              name: { kind: 'Name', value: 'id' }
                             },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduledReversibleTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'amount' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduled_at' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'to' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'executedReversibleTransfer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledTransfer' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'extrinsic' },
@@ -6598,6 +6993,26 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
+                              name: { kind: 'Name', value: 'amount' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'timestamp' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'scheduled_at' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'tx_id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'fee' }
+                            },
+                            {
+                              kind: 'Field',
                               name: { kind: 'Name', value: 'block' },
                               selectionSet: {
                                 kind: 'SelectionSet',
@@ -6608,14 +7023,6 @@ export const GetAccountByIdDocument = {
                                   }
                                 ]
                               }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'amount' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
                             },
                             {
                               kind: 'Field',
@@ -6649,96 +7056,46 @@ export const GetAccountByIdDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'scheduledReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'from' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'to' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'id_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
+                  name: { kind: 'Name', value: 'cancelledReversibleTransfer' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'cancelledBy' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'scheduledTransfer' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
@@ -6765,10 +7122,6 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'amount' }
                             },
                             {
@@ -6777,11 +7130,11 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'scheduledAt' }
+                              name: { kind: 'Name', value: 'scheduled_at' }
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'txId' }
+                              name: { kind: 'Name', value: 'tx_id' }
                             },
                             {
                               kind: 'Field',
@@ -6832,624 +7185,78 @@ export const GetAccountByIdDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'executedReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'scheduledTransfer' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'from' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'id_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'OR' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'to' },
-                                  value: {
-                                    kind: 'ObjectValue',
-                                    fields: [
-                                      {
-                                        kind: 'ObjectField',
-                                        name: { kind: 'Name', value: 'id_eq' },
-                                        value: {
-                                          kind: 'Variable',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      }
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
+                  name: { kind: 'Name', value: 'minerReward' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
+                        name: { kind: 'Name', value: 'block' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
+                              name: { kind: 'Name', value: 'height' }
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'txId' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'scheduledTransfer'
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'extrinsic' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'pallet'
-                                          }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'call' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'amount' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'timestamp' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'scheduledAt' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'txId' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'fee' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'block' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'height'
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'from' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'to' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
+                              name: { kind: 'Name', value: 'hash' }
                             }
                           ]
                         }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'cancelledReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'scheduledTransfer' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'from' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'id_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'OR' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'to' },
-                                  value: {
-                                    kind: 'ObjectValue',
-                                    fields: [
-                                      {
-                                        kind: 'ObjectField',
-                                        name: { kind: 'Name', value: 'id_eq' },
-                                        value: {
-                                          kind: 'Variable',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      }
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'cancelledBy' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'id_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
+                      },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
+                        name: { kind: 'Name', value: 'reward' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'miner' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'txId' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'cancelledBy' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'scheduledTransfer'
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'extrinsic' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'pallet'
-                                          }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'call' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'amount' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'timestamp' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'scheduledAt' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'txId' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'fee' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'block' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'height'
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'from' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'to' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'minerRewards' },
-            name: { kind: 'Name', value: 'minerRewardsConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'miner' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
-                            value: {
-                              kind: 'Variable',
                               name: { kind: 'Name', value: 'id' }
                             }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'reward' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'miner' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            }
                           ]
                         }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
                       }
                     ]
                   }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'guardian' },
-            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            name: { kind: 'Name', value: 'high_security_set_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'desc' }
+                    }
+                  ]
+                }
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
+                name: { kind: 'Name', value: 'limit' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'limit' }
@@ -7469,10 +7276,19 @@ export const GetAccountByIdDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'id' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -7487,57 +7303,48 @@ export const GetAccountByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
+                  name: { kind: 'Name', value: 'nodes' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'interceptor' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
+                              name: { kind: 'Name', value: 'free' }
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'interceptor' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'free' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'frozen' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'reserved' }
-                                  }
-                                ]
-                              }
+                              name: { kind: 'Name', value: 'frozen' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'reserved' }
                             }
                           ]
                         }
@@ -7545,23 +7352,45 @@ export const GetAccountByIdDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'beneficiaries' },
-            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            name: { kind: 'Name', value: 'high_security_set_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'desc' }
+                    }
+                  ]
+                }
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
+                name: { kind: 'Name', value: 'limit' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'limit' }
@@ -7581,10 +7410,19 @@ export const GetAccountByIdDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'id' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -7599,57 +7437,48 @@ export const GetAccountByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
+                  name: { kind: 'Name', value: 'nodes' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'who' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
+                              name: { kind: 'Name', value: 'free' }
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'who' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'free' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'frozen' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'reserved' }
-                                  }
-                                ]
-                              }
+                              name: { kind: 'Name', value: 'frozen' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'reserved' }
                             }
                           ]
                         }
@@ -7657,21 +7486,49 @@ export const GetAccountByIdDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'wormholeOutputs' },
-            name: { kind: 'Name', value: 'wormholeOutputs' },
+            name: { kind: 'Name', value: 'wormhole_output' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
-                  kind: 'EnumValue',
-                  value: 'wormholeExtrinsic_timestamp_DESC'
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'wormholeExtrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'timestamp' },
+                            value: { kind: 'EnumValue', value: 'desc' }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -7696,10 +7553,19 @@ export const GetAccountByIdDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'id' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -7754,11 +7620,11 @@ export const GetAccountByIdDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'totalAmount' }
+                        name: { kind: 'Name', value: 'total_amount' }
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'outputCount' }
+                        name: { kind: 'Name', value: 'output_count' }
                       },
                       {
                         kind: 'Field',
@@ -7836,7 +7702,7 @@ export const GetAccountsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -7850,7 +7716,7 @@ export const GetAccountsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -7861,31 +7727,29 @@ export const GetAccountsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'all' },
-            name: { kind: 'Name', value: 'accountsConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_accounts' }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'recentlyActive' },
-            name: { kind: 'Name', value: 'accountsConnection' },
+            name: { kind: 'Name', value: 'account_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -7894,24 +7758,33 @@ export const GetAccountsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'transfersFrom_some' },
+                      name: { kind: 'Name', value: 'transfersFrom' },
                       value: {
                         kind: 'ObjectValue',
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_gte' },
+                            name: { kind: 'Name', value: 'timestamp' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'startDate' }
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_lte' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'endDate' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_gte' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'startDate' }
+                                  }
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_lte' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'endDate' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -7924,20 +7797,24 @@ export const GetAccountsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'count' } }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'recentlyDeposited' },
-            name: { kind: 'Name', value: 'accountsConnection' },
+            name: { kind: 'Name', value: 'account_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -7946,24 +7823,33 @@ export const GetAccountsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'transfersTo_some' },
+                      name: { kind: 'Name', value: 'transfersTo' },
                       value: {
                         kind: 'ObjectValue',
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_gte' },
+                            name: { kind: 'Name', value: 'timestamp' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'startDate' }
-                            }
-                          },
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp_lte' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'endDate' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_gte' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'startDate' }
+                                  }
+                                },
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_lte' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'endDate' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -7976,7 +7862,16 @@ export const GetAccountsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'count' } }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -8026,7 +7921,7 @@ export const GetBlocksDocument = {
                 kind: 'NonNullType',
                 type: {
                   kind: 'NamedType',
-                  name: { kind: 'Name', value: 'BlockOrderByInput' }
+                  name: { kind: 'Name', value: 'block_order_by' }
                 }
               }
             }
@@ -8040,7 +7935,7 @@ export const GetBlocksDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'BlockWhereInput' }
+            name: { kind: 'Name', value: 'block_bool_exp' }
           }
         }
       ],
@@ -8049,7 +7944,8 @@ export const GetBlocksDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'blocks' },
+            alias: { kind: 'Name', value: 'blocks' },
+            name: { kind: 'Name', value: 'block' },
             arguments: [
               {
                 kind: 'Argument',
@@ -8069,7 +7965,7 @@ export const GetBlocksDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -8108,18 +8004,22 @@ export const GetBlocksDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'blocksConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'totalCount' },
+                  name: { kind: 'Name', value: 'block_height' }
+                }
               ]
             }
           }
@@ -8164,7 +8064,7 @@ export const GetRecentBlocksDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'BlockOrderByInput' }
+                name: { kind: 'Name', value: 'block_order_by' }
               }
             }
           }
@@ -8175,7 +8075,8 @@ export const GetRecentBlocksDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'blocks' },
+            alias: { kind: 'Name', value: 'blocks' },
+            name: { kind: 'Name', value: 'block' },
             arguments: [
               {
                 kind: 'Argument',
@@ -8195,7 +8096,7 @@ export const GetRecentBlocksDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -8257,17 +8158,6 @@ export const GetBlockByIdDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
           }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'limit' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
-          }
         }
       ],
       selectionSet: {
@@ -8275,7 +8165,8 @@ export const GetBlockByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'blocks' },
+            alias: { kind: 'Name', value: 'blocks' },
+            name: { kind: 'Name', value: 'block' },
             arguments: [
               {
                 kind: 'Argument',
@@ -8285,25 +8176,53 @@ export const GetBlockByIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'height_eq' },
+                      name: { kind: 'Name', value: '_or' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'height' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
+                        kind: 'ListValue',
+                        values: [
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'hash_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'hash' }
-                            }
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'height' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_eq' },
+                                      value: {
+                                        kind: 'Variable',
+                                        name: { kind: 'Name', value: 'height' }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'hash' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_eq' },
+                                      value: {
+                                        kind: 'Variable',
+                                        name: { kind: 'Name', value: 'hash' }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
                           }
                         ]
                       }
@@ -8326,8 +8245,17 @@ export const GetBlockByIdDocument = {
                   arguments: [
                     {
                       kind: 'Argument',
-                      name: { kind: 'Name', value: 'orderBy' },
-                      value: { kind: 'EnumValue', value: 'indexInBlock_ASC' }
+                      name: { kind: 'Name', value: 'order_by' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'index_in_block' },
+                            value: { kind: 'EnumValue', value: 'asc' }
+                          }
+                        ]
+                      }
                     }
                   ],
                   selectionSet: {
@@ -8350,7 +8278,8 @@ export const GetBlockByIdDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'indexInBlock' }
+                        alias: { kind: 'Name', value: 'index_in_block' },
+                        name: { kind: 'Name', value: 'index_in_block' }
                       },
                       {
                         kind: 'Field',
@@ -8373,7 +8302,8 @@ export const GetBlockByIdDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'minerRewards' },
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'miner_reward' },
             arguments: [
               {
                 kind: 'Argument',
@@ -8389,34 +8319,65 @@ export const GetBlockByIdDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
+                            name: { kind: 'Name', value: '_or' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
+                              kind: 'ListValue',
+                              values: [
                                 {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'height' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: '_eq'
+                                            },
+                                            value: {
+                                              kind: 'Variable',
+                                              name: {
+                                                kind: 'Name',
+                                                value: 'height'
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'hash' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: '_eq'
+                                            },
+                                            value: {
+                                              kind: 'Variable',
+                                              name: {
+                                                kind: 'Name',
+                                                value: 'hash'
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
                                 }
                               ]
                             }
@@ -8459,25 +8420,82 @@ export const GetBlockByIdDocument = {
                 }
               ]
             }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetBlockByIdQuery, GetBlockByIdQueryVariables>;
+export const GetBlockStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetBlockStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
           },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'transactions' },
-            name: { kind: 'Name', value: 'transfersConnection' },
+            alias: { kind: 'Name', value: 'chain' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block_height' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'finalized_block_height' }
                 }
-              },
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minedIn24Hours' },
+            name: { kind: 'Name', value: 'block_aggregate' },
+            arguments: [
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -8486,230 +8504,24 @@ export const GetBlockByIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic_isNull' },
-                      value: { kind: 'BooleanValue', value: false }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'AND' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
                         kind: 'ObjectValue',
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
+                            name: { kind: 'Name', value: '_gte' },
                             value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'height_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                }
-                              ]
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
                             }
                           },
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'OR' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'block' },
-                                  value: {
-                                    kind: 'ObjectValue',
-                                    fields: [
-                                      {
-                                        kind: 'ObjectField',
-                                        name: {
-                                          kind: 'Name',
-                                          value: 'hash_eq'
-                                        },
-                                        value: {
-                                          kind: 'Variable',
-                                          name: { kind: 'Name', value: 'hash' }
-                                        }
-                                      }
-                                    ]
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'fee' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'extrinsic' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'pallet' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'call' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'amount' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'from' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'to' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'scheduledReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
+                            name: { kind: 'Name', value: '_lte' },
                             value: {
                               kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                }
-                              ]
+                              name: { kind: 'Name', value: 'endDate' }
                             }
                           }
                         ]
@@ -8724,996 +8536,15 @@ export const GetBlockByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
+                  name: { kind: 'Name', value: 'aggregate' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'extrinsic' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'pallet' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'call' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'amount' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'scheduledAt' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'txId' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'fee' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'from' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'to' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
                       }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'executedReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'txId' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'scheduledTransfer'
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'extrinsic' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'pallet'
-                                          }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'call' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'amount' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'timestamp' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'scheduledAt' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'txId' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'fee' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'block' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'height'
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'from' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'to' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: {
-              kind: 'Name',
-              value: 'cancelledReversibleTransfersConnection'
-            },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'txId' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'cancelledBy' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: {
-                                kind: 'Name',
-                                value: 'scheduledTransfer'
-                              },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'extrinsic' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'pallet'
-                                          }
-                                        },
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'call' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'amount' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'timestamp' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'scheduledAt' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'txId' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'fee' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'block' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: {
-                                            kind: 'Name',
-                                            value: 'height'
-                                          }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'from' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'to' },
-                                    selectionSet: {
-                                      kind: 'SelectionSet',
-                                      selections: [
-                                        {
-                                          kind: 'Field',
-                                          name: { kind: 'Name', value: 'id' }
-                                        }
-                                      ]
-                                    }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'highSecuritySets' },
-            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'extrinsic' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'pallet' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'call' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'delay' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'who' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'interceptor' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'errorEvents' },
-            name: { kind: 'Name', value: 'errorEventsConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'first' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'edges' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'node' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'errorDocs' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'errorModule' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'errorName' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'errorType' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'extrinsic' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'pallet' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'call' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeExtrinsics' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_DESC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'block' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'block' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'hash_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'hash' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'extrinsic' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'pallet' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
-                    ]
-                  }
-                },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'block' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'outputs' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'exitAccount' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'amount' } }
                     ]
                   }
                 }
@@ -9724,7 +8555,7 @@ export const GetBlockByIdDocument = {
       }
     }
   ]
-} as unknown as DocumentNode<GetBlockByIdQuery, GetBlockByIdQueryVariables>;
+} as unknown as DocumentNode<GetBlockStatsQuery, GetBlockStatsQueryVariables>;
 export const GetCancelledReversibleTransactionsDocument = {
   kind: 'Document',
   definitions: [
@@ -9763,7 +8594,7 @@ export const GetCancelledReversibleTransactionsDocument = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'CancelledReversibleTransferOrderByInput'
+                  value: 'cancelled_reversible_transfer_order_by'
                 }
               }
             }
@@ -9779,7 +8610,7 @@ export const GetCancelledReversibleTransactionsDocument = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'CancelledReversibleTransferWhereInput'
+              value: 'cancelled_reversible_transfer_bool_exp'
             }
           }
         }
@@ -9790,7 +8621,7 @@ export const GetCancelledReversibleTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            name: { kind: 'Name', value: 'cancelled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -9810,7 +8641,7 @@ export const GetCancelledReversibleTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -9829,7 +8660,7 @@ export const GetCancelledReversibleTransactionsDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
@@ -9887,9 +8718,9 @@ export const GetCancelledReversibleTransactionsDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledAt' }
+                        name: { kind: 'Name', value: 'scheduled_at' }
                       },
-                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
                         kind: 'Field',
@@ -9941,14 +8772,9 @@ export const GetCancelledReversibleTransactionsDocument = {
             alias: { kind: 'Name', value: 'meta' },
             name: {
               kind: 'Name',
-              value: 'cancelledReversibleTransfersConnection'
+              value: 'cancelled_reversible_transfer_aggregate'
             },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -9961,7 +8787,20 @@ export const GetCancelledReversibleTransactionsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -10011,7 +8850,7 @@ export const GetRecentCancelledReversibleTransactionsDocument = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'CancelledReversibleTransferOrderByInput'
+                  value: 'cancelled_reversible_transfer_order_by'
                 }
               }
             }
@@ -10024,7 +8863,7 @@ export const GetRecentCancelledReversibleTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            name: { kind: 'Name', value: 'cancelled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -10044,7 +8883,7 @@ export const GetRecentCancelledReversibleTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -10055,7 +8894,7 @@ export const GetRecentCancelledReversibleTransactionsDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
@@ -10113,9 +8952,9 @@ export const GetRecentCancelledReversibleTransactionsDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledAt' }
+                        name: { kind: 'Name', value: 'scheduled_at' }
                       },
-                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
                         kind: 'Field',
@@ -10188,7 +9027,7 @@ export const GetCancelledReversibleTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -10202,7 +9041,7 @@ export const GetCancelledReversibleTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -10215,14 +9054,9 @@ export const GetCancelledReversibleTransactionsStatsDocument = {
             alias: { kind: 'Name', value: 'last24Hour' },
             name: {
               kind: 'Name',
-              value: 'cancelledReversibleTransfersConnection'
+              value: 'cancelled_reversible_transfer_aggregate'
             },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -10231,18 +9065,27 @@ export const GetCancelledReversibleTransactionsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -10252,28 +9095,41 @@ export const GetCancelledReversibleTransactionsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: {
-              kind: 'Name',
-              value: 'cancelledReversibleTransfersConnection'
-            },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_cancelled_transfers' }
+                }
               ]
             }
           }
@@ -10295,7 +9151,10 @@ export const GetCancelledReversibleTransactionByTxIdDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'txId' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'tx_id' }
+          },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -10308,7 +9167,7 @@ export const GetCancelledReversibleTransactionByTxIdDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            name: { kind: 'Name', value: 'cancelled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -10318,10 +9177,19 @@ export const GetCancelledReversibleTransactionByTxIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'txId_eq' },
+                      name: { kind: 'Name', value: 'tx_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'txId' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'tx_id' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -10332,7 +9200,7 @@ export const GetCancelledReversibleTransactionByTxIdDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
@@ -10380,7 +9248,7 @@ export const GetCancelledReversibleTransactionByTxIdDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledAt' }
+                        name: { kind: 'Name', value: 'scheduled_at' }
                       },
                       { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
@@ -10436,19 +9304,44 @@ export const GetStatusDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'status' },
-            name: { kind: 'Name', value: 'squidStatus' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'finalizedHeight' }
+                  name: { kind: 'Name', value: 'block_height' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'finalizedHash' }
+                  name: { kind: 'Name', value: 'total_accounts' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_deposit_accounts' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_executed_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_immediate_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_scheduled_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_cancelled_transfers' }
                 }
               ]
             }
@@ -10494,7 +9387,7 @@ export const GetErrorEventsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'ErrorEventOrderByInput' }
+                name: { kind: 'Name', value: 'error_event_order_by' }
               }
             }
           }
@@ -10507,7 +9400,7 @@ export const GetErrorEventsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'ErrorEventWhereInput' }
+            name: { kind: 'Name', value: 'error_event_bool_exp' }
           }
         }
       ],
@@ -10516,7 +9409,8 @@ export const GetErrorEventsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'errorEvents' },
+            alias: { kind: 'Name', value: 'errorEvents' },
+            name: { kind: 'Name', value: 'error_event' },
             arguments: [
               {
                 kind: 'Argument',
@@ -10536,7 +9430,7 @@ export const GetErrorEventsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -10554,10 +9448,13 @@ export const GetErrorEventsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'errorDocs' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorModule' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_docs' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'error_module' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_type' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'extrinsic' },
@@ -10591,13 +9488,8 @@ export const GetErrorEventsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'errorEventsConnection' },
+            name: { kind: 'Name', value: 'error_event_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -10610,7 +9502,20 @@ export const GetErrorEventsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -10655,7 +9560,7 @@ export const GetRecentErrorEventsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'ErrorEventOrderByInput' }
+                name: { kind: 'Name', value: 'error_event_order_by' }
               }
             }
           }
@@ -10668,7 +9573,7 @@ export const GetRecentErrorEventsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'ErrorEventWhereInput' }
+            name: { kind: 'Name', value: 'error_event_bool_exp' }
           }
         }
       ],
@@ -10677,7 +9582,8 @@ export const GetRecentErrorEventsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'errorEvents' },
+            alias: { kind: 'Name', value: 'errorEvents' },
+            name: { kind: 'Name', value: 'error_event' },
             arguments: [
               {
                 kind: 'Argument',
@@ -10697,7 +9603,7 @@ export const GetRecentErrorEventsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -10715,10 +9621,13 @@ export const GetRecentErrorEventsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'errorDocs' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorModule' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_docs' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'error_module' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_type' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'extrinsic' },
@@ -10775,7 +9684,7 @@ export const GetErrorEventsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -10789,7 +9698,7 @@ export const GetErrorEventsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -10800,13 +9709,8 @@ export const GetErrorEventsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'last24Hour' },
-            name: { kind: 'Name', value: 'errorEventsConnection' },
+            name: { kind: 'Name', value: 'error_event_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -10815,18 +9719,27 @@ export const GetErrorEventsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -10836,25 +9749,41 @@ export const GetErrorEventsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'errorEventsConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_error_events' }
+                }
               ]
             }
           }
@@ -10889,7 +9818,7 @@ export const GetErrorEventByHashDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'errorEvents' },
-            name: { kind: 'Name', value: 'errorEvents' },
+            name: { kind: 'Name', value: 'error_event' },
             arguments: [
               {
                 kind: 'Argument',
@@ -10905,10 +9834,19 @@ export const GetErrorEventByHashDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'hash' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -10921,10 +9859,13 @@ export const GetErrorEventByHashDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'errorDocs' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorModule' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'errorType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_docs' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'error_module' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'error_type' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'extrinsic' },
@@ -11001,7 +9942,7 @@ export const GetExecutedReversibleTransactionsDocument = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'ExecutedReversibleTransferOrderByInput'
+                  value: 'executed_reversible_transfer_order_by'
                 }
               }
             }
@@ -11017,7 +9958,7 @@ export const GetExecutedReversibleTransactionsDocument = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'ExecutedReversibleTransferWhereInput'
+              value: 'executed_reversible_transfer_bool_exp'
             }
           }
         }
@@ -11028,7 +9969,7 @@ export const GetExecutedReversibleTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            name: { kind: 'Name', value: 'executed_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -11048,7 +9989,7 @@ export const GetExecutedReversibleTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -11067,7 +10008,7 @@ export const GetExecutedReversibleTransactionsDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
@@ -11115,9 +10056,9 @@ export const GetExecutedReversibleTransactionsDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledAt' }
+                        name: { kind: 'Name', value: 'scheduled_at' }
                       },
-                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
                         kind: 'Field',
@@ -11169,14 +10110,9 @@ export const GetExecutedReversibleTransactionsDocument = {
             alias: { kind: 'Name', value: 'meta' },
             name: {
               kind: 'Name',
-              value: 'executedReversibleTransfersConnection'
+              value: 'executed_reversible_transfer_aggregate'
             },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -11189,7 +10125,20 @@ export const GetExecutedReversibleTransactionsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -11239,7 +10188,7 @@ export const GetRecentExecutedReversibleTransactionsDocument = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'ExecutedReversibleTransferOrderByInput'
+                  value: 'executed_reversible_transfer_order_by'
                 }
               }
             }
@@ -11252,7 +10201,7 @@ export const GetRecentExecutedReversibleTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            name: { kind: 'Name', value: 'executed_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -11272,7 +10221,7 @@ export const GetRecentExecutedReversibleTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -11283,7 +10232,7 @@ export const GetRecentExecutedReversibleTransactionsDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
@@ -11331,9 +10280,9 @@ export const GetRecentExecutedReversibleTransactionsDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledAt' }
+                        name: { kind: 'Name', value: 'scheduled_at' }
                       },
-                      { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
                         kind: 'Field',
@@ -11406,7 +10355,7 @@ export const GetExecutedReversibleTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -11420,7 +10369,7 @@ export const GetExecutedReversibleTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -11433,14 +10382,9 @@ export const GetExecutedReversibleTransactionsStatsDocument = {
             alias: { kind: 'Name', value: 'last24Hour' },
             name: {
               kind: 'Name',
-              value: 'executedReversibleTransfersConnection'
+              value: 'executed_reversible_transfer_aggregate'
             },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -11449,18 +10393,27 @@ export const GetExecutedReversibleTransactionsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -11470,28 +10423,41 @@ export const GetExecutedReversibleTransactionsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: {
-              kind: 'Name',
-              value: 'executedReversibleTransfersConnection'
-            },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_executed_transfers' }
+                }
               ]
             }
           }
@@ -11513,7 +10479,10 @@ export const GetExecutedReversibleTransactionByTxIdDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'txId' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'tx_id' }
+          },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -11526,7 +10495,7 @@ export const GetExecutedReversibleTransactionByTxIdDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            name: { kind: 'Name', value: 'executed_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -11536,10 +10505,19 @@ export const GetExecutedReversibleTransactionByTxIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'txId_eq' },
+                      name: { kind: 'Name', value: 'tx_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'txId' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'tx_id' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -11550,7 +10528,7 @@ export const GetExecutedReversibleTransactionByTxIdDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
@@ -11573,7 +10551,7 @@ export const GetExecutedReversibleTransactionByTxIdDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledAt' }
+                        name: { kind: 'Name', value: 'scheduled_at' }
                       },
                       { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                       {
@@ -11652,7 +10630,7 @@ export const GetHighSecuritySetsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'HighSecuritySetOrderByInput' }
+                name: { kind: 'Name', value: 'high_security_set_order_by' }
               }
             }
           }
@@ -11665,7 +10643,7 @@ export const GetHighSecuritySetsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'HighSecuritySetWhereInput' }
+            name: { kind: 'Name', value: 'high_security_set_bool_exp' }
           }
         }
       ],
@@ -11674,7 +10652,8 @@ export const GetHighSecuritySetsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'highSecuritySets' },
+            alias: { kind: 'Name', value: 'highSecuritySets' },
+            name: { kind: 'Name', value: 'high_security_set' },
             arguments: [
               {
                 kind: 'Argument',
@@ -11694,7 +10673,7 @@ export const GetHighSecuritySetsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -11766,13 +10745,8 @@ export const GetHighSecuritySetsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            name: { kind: 'Name', value: 'high_security_set_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -11785,7 +10759,20 @@ export const GetHighSecuritySetsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -11833,7 +10820,7 @@ export const GetRecentHighSecuritySetsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'HighSecuritySetOrderByInput' }
+                name: { kind: 'Name', value: 'high_security_set_order_by' }
               }
             }
           }
@@ -11846,7 +10833,7 @@ export const GetRecentHighSecuritySetsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'HighSecuritySetWhereInput' }
+            name: { kind: 'Name', value: 'high_security_set_bool_exp' }
           }
         }
       ],
@@ -11855,7 +10842,8 @@ export const GetRecentHighSecuritySetsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'highSecuritySets' },
+            alias: { kind: 'Name', value: 'highSecuritySets' },
+            name: { kind: 'Name', value: 'high_security_set' },
             arguments: [
               {
                 kind: 'Argument',
@@ -11875,7 +10863,7 @@ export const GetRecentHighSecuritySetsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -11970,7 +10958,7 @@ export const GetHighSecuritySetsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -11984,7 +10972,7 @@ export const GetHighSecuritySetsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -11995,13 +10983,8 @@ export const GetHighSecuritySetsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'last24Hour' },
-            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            name: { kind: 'Name', value: 'high_security_set_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -12010,18 +10993,27 @@ export const GetHighSecuritySetsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -12031,25 +11023,41 @@ export const GetHighSecuritySetsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'highSecuritySetsConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_high_security_sets' }
+                }
               ]
             }
           }
@@ -12083,7 +11091,8 @@ export const GetHighSecuritySetByHashDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'highSecuritySets' },
+            alias: { kind: 'Name', value: 'highSecuritySets' },
+            name: { kind: 'Name', value: 'high_security_set' },
             arguments: [
               {
                 kind: 'Argument',
@@ -12099,10 +11108,19 @@ export const GetHighSecuritySetByHashDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'hash' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -12205,7 +11223,7 @@ export const GetMinerLeaderboardDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'leaderboardEntries' },
-            name: { kind: 'Name', value: 'minerStats' },
+            name: { kind: 'Name', value: 'account_stats' },
             arguments: [
               {
                 kind: 'Argument',
@@ -12225,8 +11243,17 @@ export const GetMinerLeaderboardDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'totalMinedBlocks_DESC' }
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'total_rewards' },
+                      value: { kind: 'EnumValue', value: 'desc' }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -12235,27 +11262,34 @@ export const GetMinerLeaderboardDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'totalMinedBlocks' }
+                  name: { kind: 'Name', value: 'total_mined_blocks' }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalRewards' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_rewards' }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'minerStatsConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'totalCount' },
+                  name: { kind: 'Name', value: 'total_miner_rewards' }
+                }
               ]
             }
           }
@@ -12303,7 +11337,7 @@ export const GetMinerRewardsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'MinerRewardOrderByInput' }
+                name: { kind: 'Name', value: 'miner_reward_order_by' }
               }
             }
           }
@@ -12316,7 +11350,7 @@ export const GetMinerRewardsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'MinerRewardWhereInput' }
+            name: { kind: 'Name', value: 'miner_reward_bool_exp' }
           }
         }
       ],
@@ -12325,7 +11359,8 @@ export const GetMinerRewardsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'minerRewards' },
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'miner_reward' },
             arguments: [
               {
                 kind: 'Argument',
@@ -12345,7 +11380,7 @@ export const GetMinerRewardsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -12395,13 +11430,8 @@ export const GetMinerRewardsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            name: { kind: 'Name', value: 'miner_reward_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -12414,7 +11444,20 @@ export const GetMinerRewardsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -12462,7 +11505,7 @@ export const GetRecentMinerRewardsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'MinerRewardOrderByInput' }
+                name: { kind: 'Name', value: 'miner_reward_order_by' }
               }
             }
           }
@@ -12475,7 +11518,7 @@ export const GetRecentMinerRewardsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'MinerRewardWhereInput' }
+            name: { kind: 'Name', value: 'miner_reward_bool_exp' }
           }
         }
       ],
@@ -12484,7 +11527,8 @@ export const GetRecentMinerRewardsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'minerRewards' },
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'miner_reward' },
             arguments: [
               {
                 kind: 'Argument',
@@ -12504,7 +11548,7 @@ export const GetRecentMinerRewardsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -12577,7 +11621,7 @@ export const GetMinerRewardsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -12591,7 +11635,7 @@ export const GetMinerRewardsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -12602,13 +11646,8 @@ export const GetMinerRewardsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'last24Hour' },
-            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            name: { kind: 'Name', value: 'miner_reward_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -12617,18 +11656,27 @@ export const GetMinerRewardsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -12638,25 +11686,41 @@ export const GetMinerRewardsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'minerRewardsConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_miner_rewards' }
+                }
               ]
             }
           }
@@ -12690,7 +11754,8 @@ export const GetMinerRewardByHashDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'minerRewards' },
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'miner_reward' },
             arguments: [
               {
                 kind: 'Argument',
@@ -12706,10 +11771,19 @@ export const GetMinerRewardByHashDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'hash_eq' },
+                            name: { kind: 'Name', value: 'hash' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'hash' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -12797,7 +11871,7 @@ export const GetScheduledReversibleTransactionsDocument = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'ScheduledReversibleTransferOrderByInput'
+                  value: 'scheduled_reversible_transfer_order_by'
                 }
               }
             }
@@ -12813,7 +11887,7 @@ export const GetScheduledReversibleTransactionsDocument = {
             kind: 'NamedType',
             name: {
               kind: 'Name',
-              value: 'ScheduledReversibleTransferWhereInput'
+              value: 'scheduled_reversible_transfer_bool_exp'
             }
           }
         }
@@ -12824,7 +11898,7 @@ export const GetScheduledReversibleTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            name: { kind: 'Name', value: 'scheduled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -12844,7 +11918,7 @@ export const GetScheduledReversibleTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -12879,8 +11953,11 @@ export const GetScheduledReversibleTransactionsDocument = {
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'scheduledAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduled_at' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                 {
                   kind: 'Field',
@@ -12920,14 +11997,9 @@ export const GetScheduledReversibleTransactionsDocument = {
             alias: { kind: 'Name', value: 'meta' },
             name: {
               kind: 'Name',
-              value: 'scheduledReversibleTransfersConnection'
+              value: 'scheduled_reversible_transfer_aggregate'
             },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -12940,7 +12012,20 @@ export const GetScheduledReversibleTransactionsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -12990,7 +12075,7 @@ export const GetRecentScheduledReversibleTransactionsDocument = {
                 kind: 'NamedType',
                 name: {
                   kind: 'Name',
-                  value: 'ScheduledReversibleTransferOrderByInput'
+                  value: 'scheduled_reversible_transfer_order_by'
                 }
               }
             }
@@ -13003,7 +12088,7 @@ export const GetRecentScheduledReversibleTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            name: { kind: 'Name', value: 'scheduled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13023,7 +12108,7 @@ export const GetRecentScheduledReversibleTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -13050,8 +12135,11 @@ export const GetRecentScheduledReversibleTransactionsDocument = {
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'scheduledAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduled_at' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                 {
                   kind: 'Field',
@@ -13112,7 +12200,7 @@ export const GetScheduledReversibleTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -13126,7 +12214,7 @@ export const GetScheduledReversibleTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -13139,14 +12227,9 @@ export const GetScheduledReversibleTransactionsStatsDocument = {
             alias: { kind: 'Name', value: 'last24Hour' },
             name: {
               kind: 'Name',
-              value: 'scheduledReversibleTransfersConnection'
+              value: 'scheduled_reversible_transfer_aggregate'
             },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -13155,18 +12238,27 @@ export const GetScheduledReversibleTransactionsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
-                      value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -13176,28 +12268,41 @@ export const GetScheduledReversibleTransactionsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: {
-              kind: 'Name',
-              value: 'scheduledReversibleTransfersConnection'
-            },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_scheduled_transfers' }
+                }
               ]
             }
           }
@@ -13219,7 +12324,10 @@ export const GetScheduledReversibleTransactionByTxIdDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'txId' } },
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'tx_id' }
+          },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -13232,7 +12340,7 @@ export const GetScheduledReversibleTransactionByTxIdDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            name: { kind: 'Name', value: 'scheduled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13242,10 +12350,19 @@ export const GetScheduledReversibleTransactionByTxIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'txId_eq' },
+                      name: { kind: 'Name', value: 'tx_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'txId' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'tx_id' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -13272,8 +12389,11 @@ export const GetScheduledReversibleTransactionByTxIdDocument = {
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'scheduledAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'scheduled_at' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
                 {
                   kind: 'Field',
@@ -13355,7 +12475,7 @@ export const SearchAllDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'transactions' },
-            name: { kind: 'Name', value: 'transfers' },
+            name: { kind: 'Name', value: 'transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13379,10 +12499,19 @@ export const SearchAllDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_startsWith' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'keyword' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'keyword' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -13416,7 +12545,7 @@ export const SearchAllDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'scheduledReversibleTransactions' },
-            name: { kind: 'Name', value: 'scheduledReversibleTransfers' },
+            name: { kind: 'Name', value: 'scheduled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13434,10 +12563,19 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'txId_startsWith' },
+                      name: { kind: 'Name', value: 'tx_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'keyword' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_ilike' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -13462,14 +12600,14 @@ export const SearchAllDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'executedReversibleTransactions' },
-            name: { kind: 'Name', value: 'executedReversibleTransfers' },
+            name: { kind: 'Name', value: 'executed_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13487,10 +12625,19 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'txId_startsWith' },
+                      name: { kind: 'Name', value: 'tx_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'keyword' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_ilike' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -13500,14 +12647,14 @@ export const SearchAllDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'cancelledReversibleTransactions' },
-            name: { kind: 'Name', value: 'cancelledReversibleTransfers' },
+            name: { kind: 'Name', value: 'cancelled_reversible_transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13525,10 +12672,19 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'txId_startsWith' },
+                      name: { kind: 'Name', value: 'tx_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'keyword' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_ilike' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -13538,13 +12694,14 @@ export const SearchAllDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'txId' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } }
               ]
             }
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'accounts' },
+            alias: { kind: 'Name', value: 'accounts' },
+            name: { kind: 'Name', value: 'account' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13562,10 +12719,19 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'id_startsWith' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'keyword' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_ilike' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'keyword' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -13581,7 +12747,8 @@ export const SearchAllDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'blocks' },
+            alias: { kind: 'Name', value: 'blocks' },
+            name: { kind: 'Name', value: 'block' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13599,25 +12766,56 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'hash_startsWith' },
+                      name: { kind: 'Name', value: '_or' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'keyword' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
+                        kind: 'ListValue',
+                        values: [
                           {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'height_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'keyword_number' }
-                            }
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'hash' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_ilike' },
+                                      value: {
+                                        kind: 'Variable',
+                                        name: { kind: 'Name', value: 'keyword' }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'height' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_eq' },
+                                      value: {
+                                        kind: 'Variable',
+                                        name: {
+                                          kind: 'Name',
+                                          value: 'keyword_number'
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
                           }
                         ]
                       }
@@ -13635,7 +12833,8 @@ export const SearchAllDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'highSecuritySets' },
+            alias: { kind: 'Name', value: 'highSecuritySets' },
+            name: { kind: 'Name', value: 'high_security_set' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13659,10 +12858,19 @@ export const SearchAllDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_startsWith' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'keyword' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'keyword' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -13695,7 +12903,8 @@ export const SearchAllDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'minerRewards' },
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'miner_reward' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13719,10 +12928,19 @@ export const SearchAllDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'hash_startsWith' },
+                            name: { kind: 'Name', value: 'hash' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'keyword' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_ilike' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'keyword' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -13766,7 +12984,8 @@ export const SearchAllDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'errorEvents' },
+            alias: { kind: 'Name', value: 'errorEvents' },
+            name: { kind: 'Name', value: 'error_event' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13784,31 +13003,53 @@ export const SearchAllDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: {
-                        kind: 'Name',
-                        value: 'errorType_containsInsensitive'
-                      },
+                      name: { kind: 'Name', value: '_or' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'keyword' }
-                      }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'OR' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
+                        kind: 'ListValue',
+                        values: [
                           {
-                            kind: 'ObjectField',
-                            name: {
-                              kind: 'Name',
-                              value: 'errorName_containsInsensitive'
-                            },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'keyword' }
-                            }
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'error_type' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_ilike' },
+                                      value: {
+                                        kind: 'Variable',
+                                        name: { kind: 'Name', value: 'keyword' }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            kind: 'ObjectValue',
+                            fields: [
+                              {
+                                kind: 'ObjectField',
+                                name: { kind: 'Name', value: 'error_name' },
+                                value: {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: '_ilike' },
+                                      value: {
+                                        kind: 'Variable',
+                                        name: { kind: 'Name', value: 'keyword' }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
                           }
                         ]
                       }
@@ -13879,7 +13120,7 @@ export const GetTransactionsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'TransferOrderByInput' }
+                name: { kind: 'Name', value: 'transfer_order_by' }
               }
             }
           }
@@ -13892,7 +13133,7 @@ export const GetTransactionsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'TransferWhereInput' }
+            name: { kind: 'Name', value: 'transfer_bool_exp' }
           }
         }
       ],
@@ -13902,7 +13143,7 @@ export const GetTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'transactions' },
-            name: { kind: 'Name', value: 'transfers' },
+            name: { kind: 'Name', value: 'transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -13922,7 +13163,7 @@ export const GetTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -13994,13 +13235,8 @@ export const GetTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'transfersConnection' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -14013,7 +13249,20 @@ export const GetTransactionsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -14061,7 +13310,7 @@ export const GetRecentTransactionsDocument = {
               kind: 'NonNullType',
               type: {
                 kind: 'NamedType',
-                name: { kind: 'Name', value: 'TransferOrderByInput' }
+                name: { kind: 'Name', value: 'transfer_order_by' }
               }
             }
           }
@@ -14074,7 +13323,7 @@ export const GetRecentTransactionsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'TransferWhereInput' }
+            name: { kind: 'Name', value: 'transfer_bool_exp' }
           }
         }
       ],
@@ -14084,7 +13333,7 @@ export const GetRecentTransactionsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'transactions' },
-            name: { kind: 'Name', value: 'transfers' },
+            name: { kind: 'Name', value: 'transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14104,7 +13353,7 @@ export const GetRecentTransactionsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -14199,7 +13448,7 @@ export const GetTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         },
@@ -14213,7 +13462,7 @@ export const GetTransactionsStatsDocument = {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'DateTime' }
+              name: { kind: 'Name', value: 'timestamptz' }
             }
           }
         }
@@ -14224,13 +13473,8 @@ export const GetTransactionsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'last24Hour' },
-            name: { kind: 'Name', value: 'transfersConnection' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -14239,24 +13483,42 @@ export const GetTransactionsStatsDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_gte' },
+                      name: { kind: 'Name', value: 'timestamp' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'startDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp_lte' },
+                      name: { kind: 'Name', value: 'extrinsic_id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'endDate' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
                       }
-                    },
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic_isNull' },
-                      value: { kind: 'BooleanValue', value: false }
                     }
                   ]
                 }
@@ -14265,71 +13527,41 @@ export const GetTransactionsStatsDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'transfersConnection' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic_isNull' },
-                      value: { kind: 'BooleanValue', value: false }
-                    }
-                  ]
-                }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'transfersConnection' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'extrinsic_isNull' },
-                      value: { kind: 'BooleanValue', value: false }
-                    }
-                  ]
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_immediate_transfers' }
                 }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
               ]
             }
           }
@@ -14363,7 +13595,8 @@ export const GetExtrinsicByHashDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'extrinsics' },
+            alias: { kind: 'Name', value: 'extrinsics' },
+            name: { kind: 'Name', value: 'extrinsic' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14373,10 +13606,19 @@ export const GetExtrinsicByHashDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'id_eq' },
+                      name: { kind: 'Name', value: 'id' },
                       value: {
-                        kind: 'Variable',
-                        name: { kind: 'Name', value: 'hash' }
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'hash' }
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -14394,7 +13636,7 @@ export const GetExtrinsicByHashDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'indexInBlock' }
+                  name: { kind: 'Name', value: 'index_in_block' }
                 },
                 {
                   kind: 'Field',
@@ -14421,7 +13663,8 @@ export const GetExtrinsicByHashDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'transfers' },
+            alias: { kind: 'Name', value: 'transfers' },
+            name: { kind: 'Name', value: 'transfer' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14437,10 +13680,19 @@ export const GetExtrinsicByHashDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id_eq' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'hash' }
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -14451,8 +13703,17 @@ export const GetExtrinsicByHashDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'timestamp_ASC' }
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -14530,7 +13791,7 @@ export const GetWormholeExtrinsicsDocument = {
                 kind: 'NonNullType',
                 type: {
                   kind: 'NamedType',
-                  name: { kind: 'Name', value: 'WormholeExtrinsicOrderByInput' }
+                  name: { kind: 'Name', value: 'wormhole_extrinsic_order_by' }
                 }
               }
             }
@@ -14544,7 +13805,7 @@ export const GetWormholeExtrinsicsDocument = {
           },
           type: {
             kind: 'NamedType',
-            name: { kind: 'Name', value: 'WormholeExtrinsicWhereInput' }
+            name: { kind: 'Name', value: 'wormhole_extrinsic_bool_exp' }
           }
         }
       ],
@@ -14553,7 +13814,8 @@ export const GetWormholeExtrinsicsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeExtrinsics' },
+            alias: { kind: 'Name', value: 'wormholeExtrinsics' },
+            name: { kind: 'Name', value: 'wormhole_extrinsic' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14573,7 +13835,7 @@ export const GetWormholeExtrinsicsDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
+                name: { kind: 'Name', value: 'order_by' },
                 value: {
                   kind: 'Variable',
                   name: { kind: 'Name', value: 'orderBy' }
@@ -14607,16 +13869,22 @@ export const GetWormholeExtrinsicsDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore' }
+                  name: { kind: 'Name', value: 'total_amount' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyLabel' }
+                  name: { kind: 'Name', value: 'output_count' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacy_score' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'privacy_label' }
                 },
                 {
                   kind: 'Field',
@@ -14634,18 +13902,34 @@ export const GetWormholeExtrinsicsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'wormholeExtrinsicsConnection' },
+            name: { kind: 'Name', value: 'wormhole_extrinsic_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'orderBy' },
-                value: { kind: 'EnumValue', value: 'id_ASC' }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'totalCount' } }
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           }
@@ -14679,7 +13963,8 @@ export const GetWormholeExtrinsicByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeExtrinsicById' },
+            alias: { kind: 'Name', value: 'wormholeExtrinsicById' },
+            name: { kind: 'Name', value: 'wormhole_extrinsic_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14706,32 +13991,38 @@ export const GetWormholeExtrinsicByIdDocument = {
                     ]
                   }
                 },
-                { kind: 'Field', name: { kind: 'Name', value: 'totalAmount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'outputCount' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_amount' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'output_count' }
+                },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore' }
+                  name: { kind: 'Name', value: 'privacy_score' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore01Pct' }
+                  name: { kind: 'Name', value: 'privacy_score01_pct' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore1Pct' }
+                  name: { kind: 'Name', value: 'privacy_score1_pct' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyScore5Pct' }
+                  name: { kind: 'Name', value: 'privacy_score5_pct' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'privacyLabel' }
+                  name: { kind: 'Name', value: 'privacy_label' }
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'poolSnapshot' }
+                  name: { kind: 'Name', value: 'pool_snapshot' }
                 },
                 {
                   kind: 'Field',
@@ -14781,7 +14072,8 @@ export const GetWormholeExtrinsicByIdDocument = {
           },
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'wormholeNullifiers' },
+            alias: { kind: 'Name', value: 'wormholeNullifiers' },
+            name: { kind: 'Name', value: 'wormhole_nullifier' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14797,13 +14089,13 @@ export const GetWormholeExtrinsicByIdDocument = {
                         fields: [
                           {
                             kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'extrinsic' },
+                            name: { kind: 'Name', value: 'id' },
                             value: {
                               kind: 'ObjectValue',
                               fields: [
                                 {
                                   kind: 'ObjectField',
-                                  name: { kind: 'Name', value: 'id_eq' },
+                                  name: { kind: 'Name', value: '_eq' },
                                   value: {
                                     kind: 'Variable',
                                     name: { kind: 'Name', value: 'id' }
@@ -14825,7 +14117,7 @@ export const GetWormholeExtrinsicByIdDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'nullifier' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'nullifierHash' }
+                  name: { kind: 'Name', value: 'nullifier_hash' }
                 }
               ]
             }
@@ -14850,7 +14142,8 @@ export const GetDepositPoolStatsDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'depositPoolStatsById' },
+            alias: { kind: 'Name', value: 'depositPoolStatsById' },
+            name: { kind: 'Name', value: 'deposit_pool_stats_by_pk' },
             arguments: [
               {
                 kind: 'Argument',
@@ -14863,7 +14156,7 @@ export const GetDepositPoolStatsDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'lastUpdatedBlock' }
+                  name: { kind: 'Name', value: 'last_updated_block' }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'buckets' } }
               ]

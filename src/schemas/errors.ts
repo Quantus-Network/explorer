@@ -1,6 +1,6 @@
 import type * as gql from '../__generated__/graphql';
 
-export interface ErrorEvent extends Omit<gql.ErrorEvent, 'block' | 'event'> {
+export interface ErrorEvent extends Omit<gql.Error_Event, 'block' | 'event'> {
   block: Pick<gql.Block, 'height'>;
 }
 
@@ -11,7 +11,9 @@ export interface ErrorEventResponse {
 export interface ErrorEventListResponse {
   errorEvents: ErrorEvent[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -21,9 +23,11 @@ export interface RecentErrorEventsResponse {
 
 export interface ErrorEventsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_error_events: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }

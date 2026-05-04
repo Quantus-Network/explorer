@@ -3,7 +3,7 @@ import type { ScheduledReversibleTransaction } from './scheduled-reversible-tran
 
 export interface ExecutedReversibleTransaction
   extends Omit<
-    gql.ExecutedReversibleTransfer,
+    gql.Executed_Reversible_Transfer,
     'id' | 'block' | 'event' | 'executedTransfer' | 'scheduledTransfer'
   > {
   block: Pick<gql.Block, 'height'>;
@@ -17,7 +17,9 @@ export interface ExecutedReversibleTransactionResponse {
 export interface ExecutedReversibleTransactionListResponse {
   executedReversibleTransactions: ExecutedReversibleTransaction[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -27,9 +29,11 @@ export interface RecentExecutedReversibleTransactionsResponse {
 
 export interface ExecutedReversibleTransactionsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_executed_transfers: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }

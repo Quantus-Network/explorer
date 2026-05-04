@@ -1,40 +1,17 @@
-import type { OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { parseAsInteger, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
 import useApiClient from '@/api';
 import { MINER_LEADERBOARD_COLUMNS } from '@/components/common/table-columns/MINER_LEADERBOARD_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
+import { useTableState } from '@/hooks/useTableState';
 import type { MinerStats } from '@/schemas';
 
 export const useMinerLeaderboardTable = () => {
   const api = useApiClient();
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
-  const [limit, setLimit] = useQueryState(
-    'limit',
-    parseAsInteger.withDefault(QUERY_DEFAULT_LIMIT)
-  );
-
-  const currentPageIndex = page - 1;
-
-  const paginationValue: PaginationState = {
-    pageSize: limit,
-    pageIndex: currentPageIndex
-  };
-
-  const handleChangePagination: OnChangeFn<PaginationState> = (pagination) => {
-    if (typeof pagination === 'function') {
-      const newPagination = pagination(paginationValue);
-
-      setPage(newPagination.pageIndex + 1);
-      setLimit(newPagination.pageSize);
-    } else {
-      setPage(pagination.pageIndex + 1);
-      setLimit(pagination.pageSize);
-    }
-  };
+  const { limit, currentPageIndex, handleChangePagination, paginationValue } =
+    useTableState(null, QUERY_DEFAULT_LIMIT);
 
   const {
     loading,

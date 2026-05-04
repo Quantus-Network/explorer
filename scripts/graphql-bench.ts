@@ -1,6 +1,6 @@
 import { runGraphqlBenchmarks } from '../src/lib/graphql-benchmark/run';
 
-const defaultUrl = 'https://subsquid.quantus.com/blue/graphql';
+const defaultUrl = 'https://sub2.quantus.com/v1/graphql';
 const endpoint = process.env.GRAPHQL_BENCH_URL ?? defaultUrl;
 
 async function main() {
