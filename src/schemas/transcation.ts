@@ -14,7 +14,9 @@ export interface TransactionResponse {
 export interface TransactionListResponse {
   transactions: Transaction[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -24,10 +26,12 @@ export interface RecentTransactionsResponse {
 
 export interface TransactionsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_immediate_transfers: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 

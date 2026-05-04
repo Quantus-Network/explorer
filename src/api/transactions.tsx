@@ -27,7 +27,7 @@ export const transactions = {
         $limit: Int
         $offset: Int
         $orderBy: [transfer_order_by!]
-        $where: Transfer_Bool_Exp
+        $where: transfer_bool_exp
       ) {
         transactions: transfer(
           limit: $limit
@@ -87,7 +87,7 @@ export const transactions = {
         $limit: Int
         $offset: Int
         $orderBy: [transfer_order_by!]
-        $where: Transfer_Bool_Exp
+        $where: transfer_bool_exp
       ) {
         transactions: transfer(
           limit: $limit
@@ -149,8 +149,8 @@ export const transactions = {
             totalCount: count
           }
         }
-        allTime: chain_stats {
-          totalCount: total_immediate_transfers
+        allTime: chain_stats_by_pk(id: "global") {
+          total_immediate_transfers
         }
       }
     `;
