@@ -27,7 +27,7 @@ export const errors = {
         $limit: Int
         $offset: Int
         $orderBy: [error_event_order_by!]
-        $where: Error_Event_Bool_Exp
+        $where: error_event_bool_exp
       ) {
         errorEvents: error_event(
           limit: $limit
@@ -79,7 +79,7 @@ export const errors = {
         $limit: Int
         $offset: Int
         $orderBy: [error_event_order_by!]
-        $where: Error_Event_Bool_Exp
+        $where: error_event_bool_exp
       ) {
         errorEvents: error_event(
           limit: $limit
@@ -134,10 +134,8 @@ export const errors = {
             totalCount: count
           }
         }
-        allTime: error_event_aggregate {
-          aggregate {
-            totalCount: count
-          }
+        allTime: chain_stats_by_pk(id: "global") {
+          total_error_events
         }
       }
     `;

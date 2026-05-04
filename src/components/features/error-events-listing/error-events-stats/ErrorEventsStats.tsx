@@ -26,27 +26,35 @@ export const ErrorEventsStats: React.FC<ErrorEventsStatsProps> = () => {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle>
-            <h3>Total Error Events</h3>
-          </CardTitle>
+          <CardTitle>Total Error Events</CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.totalCount}</p>}
-          {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {success && (
+            <p className="text-2xl font-bold">
+              {data?.allTime.total_error_events.toLocaleString()}
+            </p>
+          )}
+          {loading && <Skeleton className="h-8 w-24" />}
+          {error && (
+            <p className="text-sm text-destructive">Error: {error.message}</p>
+          )}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>
-            <h3>Recent Error Events (24H)</h3>
-          </CardTitle>
+          <CardTitle>Recent Error Events (24H)</CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.totalCount}</p>}
-          {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {success && (
+            <p className="text-2xl font-bold">
+              {data?.last24Hour.aggregate.totalCount.toLocaleString()}
+            </p>
+          )}
+          {loading && <Skeleton className="h-8 w-24" />}
+          {error && (
+            <p className="text-sm text-destructive">Error: {error.message}</p>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -41,13 +41,13 @@ export const ERROR_EVENT_COLUMNS = [
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('errorType', {
+  columnHelper.accessor('error_type', {
     id: 'errorType',
     header: 'Type',
     cell: (props) => props.getValue(),
     enableSorting: true
   }),
-  columnHelper.accessor('errorName', {
+  columnHelper.accessor('error_name', {
     id: 'errorName',
     header: 'Name',
     cell: (props) => props.getValue() ?? '-',
