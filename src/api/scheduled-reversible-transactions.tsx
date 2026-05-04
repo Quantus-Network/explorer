@@ -30,7 +30,7 @@ export const scheduledReversibleTransactions = {
         $limit: Int
         $offset: Int
         $orderBy: [scheduled_reversible_transfer_order_by!]
-        $where: Scheduled_Reversible_Transfer_Bool_Exp
+        $where: scheduled_reversible_transfer_bool_exp
       ) {
         scheduledReversibleTransactions: scheduled_reversible_transfer(
           limit: $limit
@@ -154,8 +154,8 @@ export const scheduledReversibleTransactions = {
             totalCount: count
           }
         }
-        allTime: chain_stats {
-          totalCount: total_scheduled_transfers
+        allTime: chain_stats_by_pk(id: "global") {
+          total_scheduled_transfers
         }
       }
     `;

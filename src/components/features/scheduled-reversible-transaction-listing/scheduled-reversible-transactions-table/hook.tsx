@@ -56,7 +56,9 @@ export const useScheduledReversibleTransactionsTable = () => {
   });
 
   const columns = useMemo(() => SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS, []);
-  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
+  const [rowCount, setRowCount] = useState<number>(
+    data?.meta.aggregate.totalCount ?? 0
+  );
 
   const table = useReactTable<ScheduledReversibleTransaction>({
     data: data?.scheduledReversibleTransactions ?? [],
@@ -90,8 +92,9 @@ export const useScheduledReversibleTransactionsTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
-  }, [loading, data?.meta.totalCount]);
+    if (!loading && data?.meta.aggregate.totalCount)
+      setRowCount(data.meta.aggregate.totalCount);
+  }, [loading, data?.meta.aggregate.totalCount]);
 
   return {
     table,

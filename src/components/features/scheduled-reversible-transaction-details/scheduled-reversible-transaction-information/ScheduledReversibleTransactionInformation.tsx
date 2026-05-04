@@ -31,12 +31,12 @@ export const ScheduledReversibleTransactionInformation: React.FC<
 
   const information: Partial<ScheduledReversibleTransaction>[] = [
     {
-      txId: tx?.txId,
+      tx_id: tx?.tx_id,
       amount: tx?.amount,
       extrinsic: tx?.extrinsic,
       block: tx?.block,
       timestamp: tx?.timestamp,
-      scheduledAt: tx?.scheduledAt,
+      scheduled_at: tx?.scheduled_at,
       from: tx?.from,
       to: tx?.to,
       fee: tx?.fee
@@ -50,7 +50,7 @@ export const ScheduledReversibleTransactionInformation: React.FC<
       fields={[
         {
           label: 'ID',
-          key: 'txId',
+          key: 'tx_id',
           render: (value) => (
             <TextWithCopy text={value || '-'} className="break-all" />
           )
@@ -86,7 +86,7 @@ export const ScheduledReversibleTransactionInformation: React.FC<
         },
         {
           label: 'Scheduled At',
-          key: 'scheduledAt',
+          key: 'scheduled_at',
           render: (value) => formatTimestamp(value, true)
         },
         {

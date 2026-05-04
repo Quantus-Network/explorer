@@ -17,7 +17,9 @@ export interface ScheduledReversibleTransactionResponse {
 export interface ScheduledReversibleTransactionListResponse {
   scheduledReversibleTransactions: ScheduledReversibleTransaction[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -27,9 +29,11 @@ export interface RecentScheduledReversibleTransactionsResponse {
 
 export interface ScheduledReversibleTransactionsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_scheduled_transfers: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
