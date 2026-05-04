@@ -10,7 +10,7 @@ export const useBlockHighSecuritySets = (query: QueryResult<BlockResponse>) => {
   const blockColumns = useMemo(() => BLOCK_HIGH_SECURITY_SET_COLUMNS, []);
 
   const table = useReactTable<BlockHighSecuritySet>({
-    data: data?.highSecuritySets?.edges ?? [],
+    data: data?.highSecuritySets?.nodes ?? [],
     columns: blockColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false

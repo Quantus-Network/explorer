@@ -23,22 +23,22 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
 
   const event = data?.errorEvents[0];
 
-  const information: Partial<ErrorEvent>[] = [
+  const information: Partial<ErrorEvent['node']>[] = [
     {
-      timestamp: event?.timestamp,
-      block: event?.block,
-      extrinsic: event?.extrinsic,
-      error_type: event?.error_type,
-      error_module: event?.error_module,
-      error_name: event?.error_name,
-      error_docs: event?.error_docs
+      timestamp: event?.node.timestamp,
+      block: event?.node.block,
+      extrinsic: event?.node.extrinsic,
+      error_type: event?.node.error_type,
+      error_module: event?.node.error_module,
+      error_name: event?.node.error_name,
+      error_docs: event?.node.error_docs
     }
   ];
 
   return (
     <>
       <h2 className="text-lg font-semibold">Event Information</h2>
-      <DataList<Partial<ErrorEvent>>
+      <DataList<Partial<ErrorEvent['node']>>
         loading={loading}
         data={information}
         fields={[
@@ -46,9 +46,9 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
             label: 'Extrinsic Hash',
             key: 'extrinsic',
             render: (value) =>
-              (value as ErrorEvent['extrinsic'])?.id ? (
+              (value as ErrorEvent['node']['extrinsic'])?.id ? (
                 <TextWithCopy
-                  text={(value as ErrorEvent['extrinsic'])?.id ?? '-'}
+                  text={(value as ErrorEvent['node']['extrinsic'])?.id ?? '-'}
                   className="break-all"
                 />
               ) : (
@@ -58,15 +58,15 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
           {
             label: 'Timestamp',
             key: 'timestamp',
-            render: (value) => formatTimestamp(value, true)
+            render: (value) => formatTimestamp(value as string, true)
           },
           {
             label: 'Block',
             key: 'block',
             render: (value) => (
               <LinkWithCopy
-                text={(value as ErrorEvent['block']).height.toString()}
-                href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
+                text={(value as ErrorEvent['node']['block']).height.toString()}
+                href={`${RESOURCES.blocks}/${(value as ErrorEvent['node']['block']).height}`}
                 className="break-all"
               />
             )

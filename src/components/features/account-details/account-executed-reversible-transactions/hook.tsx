@@ -15,8 +15,8 @@ export const useAccountExecutedReversibleTransactions = (
   const columns = useMemo(() => ACCOUNT_EXECUTED_REVERSIBLE_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.executedReversibleTransactions?.edges ?? [],
-    [data?.executedReversibleTransactions?.edges]
+    () => data?.executedReversibleTransactions?.nodes ?? [],
+    [data?.executedReversibleTransactions?.nodes]
   );
 
   const table = useReactTable<AccountExecutedReversibleTransaction>({

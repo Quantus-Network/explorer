@@ -36,9 +36,22 @@ export const formatDistanceTimestamp = (timestamp?: string | Date) => {
   return distance;
 };
 
-export const formatMonetaryValue = (value: number, digits?: number) => {
+export const formatMonetaryValue = (
+  value: number | string | bigint,
+  digits?: number
+) => {
   const denominator = 10 ** 12;
-  const convertedValue = value / denominator;
+  let numValue: number;
+
+  if (typeof value === 'string') {
+    numValue = Number.parseFloat(value);
+  } else if (typeof value === 'bigint') {
+    numValue = Number(value);
+  } else {
+    numValue = value;
+  }
+
+  const convertedValue = numValue / denominator;
 
   if (!digits) return `${convertedValue} ${env.COIN_SYMBOL}`;
 

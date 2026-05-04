@@ -10,8 +10,8 @@ export const useAccountTransactions = (query: QueryResult<AccountResponse>) => {
   const transactionColumns = useMemo(() => ACCOUNT_TRANSACTION_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.transactions?.edges ?? [],
-    [data?.transactions?.edges]
+    () => data?.transactions?.nodes ?? [],
+    [data?.transactions?.nodes]
   );
 
   const table = useReactTable<AccountTransaction>({

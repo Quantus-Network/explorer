@@ -26,19 +26,19 @@ export const HighSecuritySetInformation: React.FC<
 
   const highSecuritySet = data?.highSecuritySets[0];
 
-  const information: Partial<HighSecuritySet>[] = [
+  const information: Partial<HighSecuritySet['node']>[] = [
     {
-      extrinsic: highSecuritySet?.extrinsic,
-      block: highSecuritySet?.block,
-      timestamp: highSecuritySet?.timestamp,
-      who: highSecuritySet?.who,
-      interceptor: highSecuritySet?.interceptor,
-      delay: highSecuritySet?.delay
+      extrinsic: highSecuritySet?.node.extrinsic,
+      block: highSecuritySet?.node.block,
+      timestamp: highSecuritySet?.node.timestamp,
+      who: highSecuritySet?.node.who,
+      interceptor: highSecuritySet?.node.interceptor,
+      delay: highSecuritySet?.node.delay
     }
   ];
 
   return (
-    <DataList<Partial<HighSecuritySet>>
+    <DataList<Partial<HighSecuritySet['node']>>
       loading={loading}
       data={information}
       fields={[
@@ -47,7 +47,7 @@ export const HighSecuritySetInformation: React.FC<
           key: 'extrinsic',
           render: (value) => (
             <TextWithCopy
-              text={(value as HighSecuritySet['extrinsic'])?.id ?? '-'}
+              text={(value as HighSecuritySet['node']['extrinsic'])?.id ?? '-'}
               className="break-all"
             />
           )
@@ -57,9 +57,11 @@ export const HighSecuritySetInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as HighSecuritySet['block']).height.toString()}
+              text={(
+                value as HighSecuritySet['node']['block']
+              ).height.toString()}
               href={`${RESOURCES.blocks}/${
-                (value as HighSecuritySet['block']).height
+                (value as HighSecuritySet['node']['block']).height
               }`}
               className="break-all"
             />
@@ -68,7 +70,7 @@ export const HighSecuritySetInformation: React.FC<
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => formatTimestamp(value as string, true)
         },
         {
           label: 'Beneficiary',
@@ -76,9 +78,9 @@ export const HighSecuritySetInformation: React.FC<
           key: 'who',
           render: (value) => (
             <LinkWithCopy
-              text={(value as HighSecuritySet['who']).id}
+              text={(value as HighSecuritySet['node']['who']).id}
               href={`${RESOURCES.accounts}/${
-                (value as HighSecuritySet['who']).id
+                (value as HighSecuritySet['node']['who']).id
               }`}
               className="break-all"
             />
@@ -90,9 +92,9 @@ export const HighSecuritySetInformation: React.FC<
           key: 'interceptor',
           render: (value) => (
             <LinkWithCopy
-              text={(value as HighSecuritySet['interceptor']).id}
+              text={(value as HighSecuritySet['node']['interceptor']).id}
               href={`${RESOURCES.accounts}/${
-                (value as HighSecuritySet['interceptor']).id
+                (value as HighSecuritySet['node']['interceptor']).id
               }`}
               className="break-all"
             />

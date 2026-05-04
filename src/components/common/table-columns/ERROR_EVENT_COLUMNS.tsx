@@ -9,7 +9,7 @@ import { formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<ErrorEvent>();
 
 export const ERROR_EVENT_COLUMNS = [
-  columnHelper.accessor('extrinsic.id', {
+  columnHelper.accessor('node.extrinsic.id', {
     id: 'extrinsicHash',
     header: 'Extrinsic Hash',
     cell: (props) =>
@@ -24,7 +24,7 @@ export const ERROR_EVENT_COLUMNS = [
       ),
     enableSorting: false
   }),
-  columnHelper.accessor('block.height', {
+  columnHelper.accessor('node.block.height', {
     id: 'block_height',
     header: 'Block',
     cell: (props) => (
@@ -35,19 +35,19 @@ export const ERROR_EVENT_COLUMNS = [
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('timestamp', {
+  columnHelper.accessor('node.timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('error_type', {
+  columnHelper.accessor('node.error_type', {
     id: 'errorType',
     header: 'Type',
     cell: (props) => props.getValue(),
     enableSorting: true
   }),
-  columnHelper.accessor('error_name', {
+  columnHelper.accessor('node.error_name', {
     id: 'errorName',
     header: 'Name',
     cell: (props) => props.getValue() ?? '-',

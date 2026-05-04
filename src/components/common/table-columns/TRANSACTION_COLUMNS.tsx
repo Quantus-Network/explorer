@@ -9,7 +9,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<Transaction>();
 
 export const TRANSACTION_COLUMNS = [
-  columnHelper.accessor('extrinsic.id', {
+  columnHelper.accessor('node.extrinsic.id', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) =>
@@ -24,7 +24,7 @@ export const TRANSACTION_COLUMNS = [
       ),
     enableSorting: false
   }),
-  columnHelper.accessor('block.height', {
+  columnHelper.accessor('node.block.height', {
     id: 'block_height',
     header: 'Block',
     cell: (props) => (
@@ -35,13 +35,13 @@ export const TRANSACTION_COLUMNS = [
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('timestamp', {
+  columnHelper.accessor('node.timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('from.id', {
+  columnHelper.accessor('node.from.id', {
     id: 'from',
     header: 'From',
     cell: (props) => (
@@ -53,7 +53,7 @@ export const TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('to.id', {
+  columnHelper.accessor('node.to.id', {
     id: 'to',
     header: 'To',
     cell: (props) => (
@@ -65,13 +65,13 @@ export const TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('amount', {
+  columnHelper.accessor('node.amount', {
     id: 'amount',
     header: 'Amount',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   }),
-  columnHelper.accessor('fee', {
+  columnHelper.accessor('node.fee', {
     id: 'fee',
     header: 'Fee',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),

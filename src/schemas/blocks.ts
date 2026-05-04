@@ -55,6 +55,42 @@ export interface BlockWormholeExtrinsic {
 export interface BlockResponse {
   blocks: [Block];
   minerRewards: BlockMinerReward[];
+  transactions: {
+    nodes: Transaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  scheduledReversibleTransactions: {
+    nodes: ScheduledReversibleTransaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  executedReversibleTransactions: {
+    nodes: ExecutedReversibleTransaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  cancelledReversibleTransactions: {
+    nodes: CancelledReversibleTransaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  highSecuritySets: {
+    nodes: HighSecuritySet[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  errorEvents: {
+    nodes: ErrorEvent[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
 }
 
 export interface BlockListResponse {
@@ -69,27 +105,27 @@ export interface RecentBlocksResponse {
 }
 
 export interface BlockTransaction {
-  node: Transaction;
+  node: Transaction['node'];
 }
 
 export interface BlockScheduledReversibleTransaction {
-  node: ScheduledReversibleTransaction;
+  node: ScheduledReversibleTransaction['node'];
 }
 
 export interface BlockExecutedReversibleTransaction {
-  node: ExecutedReversibleTransaction;
+  node: ExecutedReversibleTransaction['node'];
 }
 
 export interface BlockCancelledReversibleTransaction {
-  node: CancelledReversibleTransaction;
+  node: CancelledReversibleTransaction['node'];
 }
 
 export interface BlockHighSecuritySet {
-  node: HighSecuritySet;
+  node: HighSecuritySet['node'];
 }
 
 export interface BlockErrorEvent {
-  node: ErrorEvent;
+  node: ErrorEvent['node'];
 }
 
 export interface BlockStatsResponse {

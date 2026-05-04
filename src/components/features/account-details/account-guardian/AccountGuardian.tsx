@@ -30,7 +30,7 @@ export const AccountGuardian: React.FC<Props> = ({ query, accountId }) => {
         }}
       />
 
-      {!query.loading && query.data?.guardian.totalCount !== 0 && (
+      {!query.loading && query.data?.guardian.aggregate.totalCount !== 0 && (
         <Button variant="link" className="mx-auto w-fit">
           <Link to={RESOURCES.highSecuritySets} search={{ accountId }}>
             See all guardian accounts

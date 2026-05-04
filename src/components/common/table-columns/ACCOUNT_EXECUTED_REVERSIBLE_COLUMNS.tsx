@@ -9,12 +9,12 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<AccountExecutedReversibleTransaction>();
 
 export const ACCOUNT_EXECUTED_REVERSIBLE_COLUMNS = [
-  columnHelper.accessor('node.scheduledTransfer.txId', {
+  columnHelper.accessor('node.scheduledTransfer.tx_id', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.executedReversibleTransactions}/${props.row.original.node.txId}`}
+        href={`${RESOURCES.executedReversibleTransactions}/${props.row.original.node.scheduledTransfer.tx_id}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />
