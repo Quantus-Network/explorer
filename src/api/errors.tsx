@@ -3,11 +3,10 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
-import type { ErrorEventWhereInput } from '@/__generated__/graphql';
+import type { Error_Event_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { ErrorEventSorts } from '@/constants/query-sorts';
-import { ERROR_EVENT_SORTS } from '@/constants/query-sorts';
 import type {
   ErrorEventListResponse,
   ErrorEventResponse,
@@ -20,26 +19,26 @@ export const errors = {
   useGetAll: (
     config?: QueryHookOptions<
       ErrorEventListResponse,
-      PaginatedQueryVariables<ErrorEventSorts, ErrorEventWhereInput>
+      PaginatedQueryVariables<ErrorEventSorts, Error_Event_Bool_Exp>
     >
   ) => {
     const GET_ERROR_EVENTS = gql`
       query GetErrorEvents(
         $limit: Int
         $offset: Int
-        $orderBy: [ErrorEventOrderByInput!]
-        $where: ErrorEventWhereInput
+        $orderBy: [error_event_order_by!]
+        $where: Error_Event_Bool_Exp
       ) {
-        errorEvents(
+        errorEvents: error_event(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
-          errorDocs
-          errorModule
-          errorName
-          errorType
+          error_docs
+          error_module
+          error_name
+          error_type
           extrinsic {
             id
             pallet
@@ -51,19 +50,21 @@ export const errors = {
             height
           }
         }
-        meta: errorEventsConnection(orderBy: id_ASC, where: $where) {
-          totalCount
+        meta: error_event_aggregate(where: $where) {
+          aggregate {
+            totalCount: count
+          }
         }
       }
     `;
 
     return useQuery<
       ErrorEventListResponse,
-      PaginatedQueryVariables<ErrorEventSorts, ErrorEventWhereInput>
+      PaginatedQueryVariables<ErrorEventSorts, Error_Event_Bool_Exp>
     >(GET_ERROR_EVENTS, {
       ...config,
       variables: {
-        orderBy: config?.variables?.orderBy ?? ERROR_EVENT_SORTS.timestamp.DESC,
+        orderBy: config?.variables?.orderBy ?? { timestamp: 'desc' },
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
@@ -77,19 +78,19 @@ export const errors = {
       query GetRecentErrorEvents(
         $limit: Int
         $offset: Int
-        $orderBy: [ErrorEventOrderByInput!]
-        $where: ErrorEventWhereInput
+        $orderBy: [error_event_order_by!]
+        $where: Error_Event_Bool_Exp
       ) {
-        errorEvents(
+        errorEvents: error_event(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
-          errorDocs
-          errorModule
-          errorName
-          errorType
+          error_docs
+          error_module
+          error_name
+          error_type
           extrinsic {
             id
             pallet
@@ -106,11 +107,11 @@ export const errors = {
 
     return useQuery<
       RecentErrorEventsResponse,
-      PaginatedQueryVariables<ErrorEventSorts, ErrorEventWhereInput>
+      PaginatedQueryVariables<ErrorEventSorts, Error_Event_Bool_Exp>
     >(GET_RECENT_ERROR_EVENTS, {
       ...config,
       variables: {
-        orderBy: ERROR_EVENT_SORTS.timestamp.DESC,
+        orderBy: { timestamp: 'desc' },
         limit: QUERY_RECENT_LIMIT
       }
     });
@@ -122,15 +123,21 @@ export const errors = {
     const endDate = endOfToday().toISOString();
 
     const GET_ERROR_EVENTS_STATS = gql`
-      query GetErrorEventsStats($startDate: DateTime!, $endDate: DateTime!) {
-        last24Hour: errorEventsConnection(
-          orderBy: id_ASC
-          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+      query GetErrorEventsStats(
+        $startDate: timestamptz!
+        $endDate: timestamptz!
+      ) {
+        last24Hour: error_event_aggregate(
+          where: { timestamp: { _gte: $startDate, _lte: $endDate } }
         ) {
-          totalCount
+          aggregate {
+            totalCount: count
+          }
         }
-        allTime: errorEventsConnection(orderBy: id_ASC) {
-          totalCount
+        allTime: error_event_aggregate {
+          aggregate {
+            totalCount: count
+          }
         }
       }
     `;
@@ -146,11 +153,11 @@ export const errors = {
   getByHash: () => {
     const GET_ERROR_EVENT_BY_HASH = gql`
       query GetErrorEventByHash($hash: String!) {
-        errorEvents: errorEvents(where: { extrinsic: { id_eq: $hash } }) {
-          errorDocs
-          errorModule
-          errorName
-          errorType
+        errorEvents: error_event(where: { extrinsic: { id: { _eq: $hash } } }) {
+          error_docs
+          error_module
+          error_name
+          error_type
           extrinsic {
             id
             pallet

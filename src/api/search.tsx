@@ -10,9 +10,9 @@ export const search = (fetcher: DataFetcher) => ({
   all: () => {
     const SEARCH_ALL = gql`
       query SearchAll($keyword: String, $keyword_number: Int, $limit: Int) {
-        transactions: transfers(
+        transactions: transfer(
           limit: $limit
-          where: { extrinsic: { id_startsWith: $keyword } }
+          where: { extrinsic: { id: { _ilike: $keyword } } }
         ) {
           extrinsic {
             id
@@ -20,44 +20,46 @@ export const search = (fetcher: DataFetcher) => ({
             call
           }
         }
-        scheduledReversibleTransactions: scheduledReversibleTransfers(
+        scheduledReversibleTransactions: scheduled_reversible_transfer(
           limit: $limit
-          where: { txId_startsWith: $keyword }
+          where: { tx_id: { _ilike: $keyword } }
         ) {
           extrinsic {
             id
             pallet
             call
           }
-          txId
+          tx_id
         }
-        executedReversibleTransactions: executedReversibleTransfers(
+        executedReversibleTransactions: executed_reversible_transfer(
           limit: $limit
-          where: { txId_startsWith: $keyword }
+          where: { tx_id: { _ilike: $keyword } }
         ) {
-          txId
+          tx_id
         }
-        cancelledReversibleTransactions: cancelledReversibleTransfers(
+        cancelledReversibleTransactions: cancelled_reversible_transfer(
           limit: $limit
-          where: { txId_startsWith: $keyword }
+          where: { tx_id: { _ilike: $keyword } }
         ) {
-          txId
+          tx_id
         }
-        accounts(limit: $limit, where: { id_startsWith: $keyword }) {
+        accounts: account(limit: $limit, where: { id: { _ilike: $keyword } }) {
           id
         }
-        blocks(
+        blocks: block(
           limit: $limit
           where: {
-            hash_startsWith: $keyword
-            OR: { height_eq: $keyword_number }
+            _or: [
+              { hash: { _ilike: $keyword } }
+              { height: { _eq: $keyword_number } }
+            ]
           }
         ) {
           height
         }
-        highSecuritySets(
+        highSecuritySets: high_security_set(
           limit: $limit
-          where: { extrinsic: { id_startsWith: $keyword } }
+          where: { extrinsic: { id: { _ilike: $keyword } } }
         ) {
           extrinsic {
             id
@@ -65,9 +67,9 @@ export const search = (fetcher: DataFetcher) => ({
             call
           }
         }
-        minerRewards(
+        minerRewards: miner_reward(
           limit: $limit
-          where: { block: { hash_startsWith: $keyword } }
+          where: { block: { hash: { _ilike: $keyword } } }
         ) {
           block {
             height
@@ -79,11 +81,13 @@ export const search = (fetcher: DataFetcher) => ({
           }
           timestamp
         }
-        errorEvents(
+        errorEvents: error_event(
           limit: $limit
           where: {
-            errorType_containsInsensitive: $keyword
-            OR: { errorName_containsInsensitive: $keyword }
+            _or: [
+              { error_type: { _ilike: $keyword } }
+              { error_name: { _ilike: $keyword } }
+            ]
           }
         ) {
           extrinsic {

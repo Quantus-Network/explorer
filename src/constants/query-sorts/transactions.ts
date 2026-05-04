@@ -1,45 +1,31 @@
-export const TRANSACTION_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  fee: {
-    ASC: 'fee_ASC',
-    DESC: 'fee_DESC'
-  },
-  extrinsic: {
-    ASC: 'extrinsic_id_ASC',
-    DESC: 'extrinsic_id_DESC'
-  },
-  blockHeight: {
-    ASC: 'block_height_ASC',
-    DESC: 'block_height_DESC'
-  },
-  amount: {
-    ASC: 'amount_ASC',
-    DESC: 'amount_DESC'
-  },
-  from: {
-    id_ASC: 'from_id_ASC',
-    id_DESC: 'from_id_DESC'
-  },
-  to: {
-    id_ASC: 'to_id_ASC',
-    id_DESC: 'to_id_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const TRANSACTION_SORTS_LITERALS = Object.values(
-  TRANSACTION_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface TransactionSorts {
+  id?: SortDirection;
+  timestamp?: SortDirection;
+  fee?: SortDirection;
+  extrinsic_id?: SortDirection;
+  block_height?: SortDirection;
+  amount?: SortDirection;
+  from_id?: SortDirection;
+  to_id?: SortDirection;
+}
 
-export const TRANSACTION_SORTS_KEY = Object.keys(TRANSACTION_SORTS);
-
-// Adding null, because we can sort by null to indicate no sorting
-export type TransactionSorts =
-  | (typeof TRANSACTION_SORTS_LITERALS)[number]
-  | null;
+export const TRANSACTION_SORTS_LITERALS = [
+  'id:desc',
+  'timestamp:desc',
+  'fee:desc',
+  'extrinsic_id:desc',
+  'block_height:desc',
+  'amount:desc',
+  'from_id:desc',
+  'to_id:desc',
+  'id:asc',
+  'timestamp:asc',
+  'fee:asc',
+  'extrinsic_id:asc',
+  'block_height:asc',
+  'amount:asc',
+  'from_id:asc',
+  'to_id:asc'
+];

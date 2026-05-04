@@ -1,41 +1,28 @@
-export const HIGH_SECURITY_SET_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  delay: {
-    ASC: 'delay_ASC',
-    DESC: 'delay_DESC'
-  },
-  extrinsic: {
-    ASC: 'extrinsic_id_ASC',
-    DESC: 'extrinsic_id_DESC'
-  },
-  blockHeight: {
-    ASC: 'block_height_ASC',
-    DESC: 'block_height_DESC'
-  },
-  who: {
-    id_ASC: 'who_id_ASC',
-    id_DESC: 'who_id_DESC'
-  },
-  interceptor: {
-    id_ASC: 'interceptor_id_ASC',
-    id_DESC: 'interceptor_id_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const HIGH_SECURITY_SET_SORTS_LITERALS = Object.values(
-  HIGH_SECURITY_SET_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface HighSecuritySetSorts {
+  id?: SortDirection;
+  timestamp?: SortDirection;
+  delay?: SortDirection;
+  extrinsic_id?: SortDirection;
+  block_height?: SortDirection;
+  who_id?: SortDirection;
+  interceptor_id?: SortDirection;
+}
 
-export const HIGH_SECURITY_SET_SORTS_KEY = Object.keys(HIGH_SECURITY_SET_SORTS);
-
-// Adding null, because we can sort by null to indicate no sorting
-export type HighSecuritySetSorts =
-  | (typeof HIGH_SECURITY_SET_SORTS_LITERALS)[number]
-  | null;
+export const HIGH_SECURITY_SET_SORTS_LITERALS = [
+  'id:desc',
+  'timestamp:desc',
+  'delay:desc',
+  'extrinsic_id:desc',
+  'block_height:desc',
+  'who_id:desc',
+  'interceptor_id:desc',
+  'id:asc',
+  'timestamp:asc',
+  'delay:asc',
+  'extrinsic_id:asc',
+  'block_height:asc',
+  'who_id:asc',
+  'interceptor_id:asc'
+];

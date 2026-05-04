@@ -4,11 +4,11 @@ const ENABLE_LOCAL_NETWORK =
   import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true';
 
 const BASE_NETWORKS = {
-  planck: 'https://subsquid.quantus.com/blue/graphql'
+  planck: 'https://sub2.quantus.com/v1/graphql'
 } as const;
 
 const LOCAL_NETWORK = {
-  local: 'http://localhost:4350/graphql'
+  local: 'http://localhost:8080/v1/graphql'
 } as const;
 
 export const NETWORKS: Record<string, string> = ENABLE_LOCAL_NETWORK
