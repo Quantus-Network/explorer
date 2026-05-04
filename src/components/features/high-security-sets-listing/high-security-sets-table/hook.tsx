@@ -57,7 +57,9 @@ export const useHighSecuritySetsTable = () => {
   });
 
   const highSecuritySetColumns = useMemo(() => HIGH_SECURITY_SET_COLUMNS, []);
-  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
+  const [rowCount, setRowCount] = useState<number>(
+    data?.meta.aggregate.totalCount ?? 0
+  );
 
   const table = useReactTable<HighSecuritySet>({
     data: data?.highSecuritySets ?? [],
@@ -91,8 +93,9 @@ export const useHighSecuritySetsTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
-  }, [loading, data?.meta.totalCount]);
+    if (!loading && data?.meta.aggregate.totalCount)
+      setRowCount(data.meta.aggregate.totalCount);
+  }, [loading, data?.meta.aggregate.totalCount]);
 
   return {
     table,

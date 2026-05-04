@@ -2,7 +2,7 @@ import type * as gql from '../__generated__/graphql';
 
 export interface HighSecuritySet
   extends Omit<
-    gql.HighSecuritySet,
+    gql.High_Security_Set,
     'id' | 'who' | 'interceptor' | 'block' | 'event'
   > {
   who: Pick<gql.Account, 'id'>;
@@ -17,7 +17,9 @@ export interface HighSecuritySetResponse {
 export interface HighSecuritySetListResponse {
   highSecuritySets: HighSecuritySet[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -27,9 +29,11 @@ export interface RecentHighSecuritySetsResponse {
 
 export interface HighSecuritySetsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_high_security_sets: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }

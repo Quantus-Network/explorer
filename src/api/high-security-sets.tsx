@@ -141,10 +141,8 @@ export const highSecuritySets = {
             totalCount: count
           }
         }
-        allTime: high_security_set_aggregate {
-          aggregate {
-            totalCount: count
-          }
+        allTime: chain_stats_by_pk(id: "global") {
+          total_high_security_sets
         }
       }
     `;
