@@ -5284,7 +5284,7 @@ export type GetAccountsQuery = {
     frozen: any;
     reserved: any;
   }>;
-  meta: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetAccountByIdQueryVariables = Exact<{
@@ -5472,7 +5472,7 @@ export type GetAccountsStatsQueryVariables = Exact<{
 
 export type GetAccountsStatsQuery = {
   __typename?: 'query_root';
-  all: Array<{ __typename?: 'chain_stats'; total_accounts: number }>;
+  all?: { __typename?: 'chain_stats'; total_accounts: number } | null;
   recentlyActive: {
     __typename?: 'account_aggregate';
     aggregate?: {
@@ -5498,7 +5498,7 @@ export type GetBlocksQueryVariables = Exact<{
 
 export type GetBlocksQuery = {
   __typename?: 'query_root';
-  block: Array<{
+  blocks: Array<{
     __typename?: 'block';
     id: string;
     hash: string;
@@ -5507,7 +5507,7 @@ export type GetBlocksQuery = {
     timestamp: any;
     extrinsics: Array<{ __typename?: 'extrinsic'; id: string }>;
   }>;
-  meta: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetRecentBlocksQueryVariables = Exact<{
@@ -5518,7 +5518,7 @@ export type GetRecentBlocksQueryVariables = Exact<{
 
 export type GetRecentBlocksQuery = {
   __typename?: 'query_root';
-  block: Array<{
+  blocks: Array<{
     __typename?: 'block';
     id: string;
     hash: string;
@@ -5532,12 +5532,11 @@ export type GetRecentBlocksQuery = {
 export type GetBlockByIdQueryVariables = Exact<{
   height: Scalars['Int']['input'];
   hash: Scalars['String']['input'];
-  limit: Scalars['Int']['input'];
 }>;
 
 export type GetBlockByIdQuery = {
   __typename?: 'query_root';
-  block: Array<{
+  blocks: Array<{
     __typename?: 'block';
     id: string;
     hash: string;
@@ -5556,6 +5555,34 @@ export type GetBlockByIdQuery = {
       signer?: { __typename?: 'account'; id: string } | null;
     }>;
   }>;
+  minerRewards: Array<{
+    __typename?: 'miner_reward';
+    reward: any;
+    timestamp: any;
+    miner?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
+  }>;
+};
+
+export type GetBlockStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetBlockStatsQuery = {
+  __typename?: 'query_root';
+  chain?: {
+    __typename?: 'chain_stats';
+    block_height: number;
+    finalized_block_height: number;
+  } | null;
+  minedIn24Hours: {
+    __typename?: 'block_aggregate';
+    aggregate?: {
+      __typename?: 'block_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
 };
 
 export type GetCancelledReversibleTransactionsQueryVariables = Exact<{
@@ -5654,7 +5681,10 @@ export type GetCancelledReversibleTransactionsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_cancelled_transfers: number;
+  } | null;
 };
 
 export type GetCancelledReversibleTransactionByTxIdQueryVariables = Exact<{
@@ -5690,11 +5720,16 @@ export type GetStatusQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetStatusQuery = {
   __typename?: 'query_root';
-  status: Array<{
+  status?: {
     __typename?: 'chain_stats';
-    height: number;
-    finalizedHeight: number;
-  }>;
+    block_height: number;
+    total_accounts: number;
+    total_deposit_accounts: number;
+    total_executed_transfers: number;
+    total_immediate_transfers: number;
+    total_scheduled_transfers: number;
+    total_cancelled_transfers: number;
+  } | null;
 };
 
 export type GetErrorEventsQueryVariables = Exact<{
@@ -5772,13 +5807,7 @@ export type GetErrorEventsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: {
-    __typename?: 'error_event_aggregate';
-    aggregate?: {
-      __typename?: 'error_event_aggregate_fields';
-      totalCount: number;
-    } | null;
-  };
+  allTime?: { __typename?: 'chain_stats'; total_error_events: number } | null;
 };
 
 export type GetErrorEventByHashQueryVariables = Exact<{
@@ -5899,7 +5928,10 @@ export type GetExecutedReversibleTransactionsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_executed_transfers: number;
+  } | null;
 };
 
 export type GetExecutedReversibleTransactionByTxIdQueryVariables = Exact<{
@@ -6001,13 +6033,10 @@ export type GetHighSecuritySetsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: {
-    __typename?: 'high_security_set_aggregate';
-    aggregate?: {
-      __typename?: 'high_security_set_aggregate_fields';
-      totalCount: number;
-    } | null;
-  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_high_security_sets: number;
+  } | null;
 };
 
 export type GetHighSecuritySetByHashQueryVariables = Exact<{
@@ -6041,18 +6070,12 @@ export type GetMinerLeaderboardQueryVariables = Exact<{
 export type GetMinerLeaderboardQuery = {
   __typename?: 'query_root';
   leaderboardEntries: Array<{
-    __typename?: 'chain_stats';
+    __typename?: 'account_stats';
     id: string;
-    totalMinedBlocks: number;
-    totalRewards: number;
+    total_mined_blocks: number;
+    total_rewards: any;
   }>;
-  meta: {
-    __typename?: 'chain_stats_aggregate';
-    aggregate?: {
-      __typename?: 'chain_stats_aggregate_fields';
-      totalCount: number;
-    } | null;
-  };
+  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetMinerRewardsQueryVariables = Exact<{
@@ -6112,7 +6135,7 @@ export type GetMinerRewardsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  allTime?: { __typename?: 'chain_stats'; total_miner_rewards: number } | null;
 };
 
 export type GetMinerRewardByHashQueryVariables = Exact<{
@@ -6212,7 +6235,10 @@ export type GetScheduledReversibleTransactionsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_scheduled_transfers: number;
+  } | null;
 };
 
 export type GetScheduledReversibleTransactionByTxIdQueryVariables = Exact<{
@@ -6377,7 +6403,10 @@ export type GetTransactionsStatsQuery = {
       totalCount: number;
     } | null;
   };
-  allTime: Array<{ __typename?: 'chain_stats'; totalCount: number }>;
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_immediate_transfers: number;
+  } | null;
 };
 
 export type GetExtrinsicByHashQueryVariables = Exact<{
@@ -6420,11 +6449,11 @@ export type GetWormholeExtrinsicsQuery = {
   wormholeExtrinsics: Array<{
     __typename?: 'wormhole_extrinsic';
     id: string;
+    total_amount: any;
+    output_count: number;
     timestamp: any;
-    totalAmount: any;
-    outputCount: number;
-    privacyScore: any;
-    privacyLabel: string;
+    privacy_score: any;
+    privacy_label: string;
     extrinsic?: {
       __typename?: 'extrinsic';
       id: string;
@@ -6451,15 +6480,15 @@ export type GetWormholeExtrinsicByIdQuery = {
   wormholeExtrinsicById?: {
     __typename?: 'wormhole_extrinsic';
     id: string;
+    total_amount: any;
+    output_count: number;
     timestamp: any;
-    totalAmount: any;
-    outputCount: number;
-    privacyScore: any;
-    privacyScore01Pct: any;
-    privacyScore1Pct: any;
-    privacyScore5Pct: any;
-    privacyLabel: string;
-    poolSnapshot: string;
+    privacy_score: any;
+    privacy_score01_pct: any;
+    privacy_score1_pct: any;
+    privacy_score5_pct: any;
+    privacy_label: string;
+    pool_snapshot: string;
     extrinsic?: {
       __typename?: 'extrinsic';
       id: string;
@@ -6483,7 +6512,7 @@ export type GetWormholeExtrinsicByIdQuery = {
   wormholeNullifiers: Array<{
     __typename?: 'wormhole_nullifier';
     nullifier: string;
-    nullifierHash: string;
+    nullifier_hash: string;
   }>;
 };
 
@@ -6493,8 +6522,8 @@ export type GetDepositPoolStatsQuery = {
   __typename?: 'query_root';
   depositPoolStatsById?: {
     __typename?: 'deposit_pool_stats';
+    last_updated_block: number;
     buckets: string;
-    lastUpdatedBlock: number;
   } | null;
 };
 
@@ -6586,7 +6615,14 @@ export const GetAccountsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -7691,7 +7727,14 @@ export const GetAccountsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'all' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -7901,6 +7944,7 @@ export const GetBlocksDocument = {
         selections: [
           {
             kind: 'Field',
+            alias: { kind: 'Name', value: 'blocks' },
             name: { kind: 'Name', value: 'block' },
             arguments: [
               {
@@ -7960,7 +8004,14 @@ export const GetBlocksDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
@@ -8024,6 +8075,7 @@ export const GetRecentBlocksDocument = {
         selections: [
           {
             kind: 'Field',
+            alias: { kind: 'Name', value: 'blocks' },
             name: { kind: 'Name', value: 'block' },
             arguments: [
               {
@@ -8106,17 +8158,6 @@ export const GetBlockByIdDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
           }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'limit' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
-          }
         }
       ],
       selectionSet: {
@@ -8124,6 +8165,7 @@ export const GetBlockByIdDocument = {
         selections: [
           {
             kind: 'Field',
+            alias: { kind: 'Name', value: 'blocks' },
             name: { kind: 'Name', value: 'block' },
             arguments: [
               {
@@ -8187,11 +8229,6 @@ export const GetBlockByIdDocument = {
                     }
                   ]
                 }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: { kind: 'IntValue', value: '1' }
               }
             ],
             selectionSet: {
@@ -8241,6 +8278,7 @@ export const GetBlockByIdDocument = {
                       },
                       {
                         kind: 'Field',
+                        alias: { kind: 'Name', value: 'index_in_block' },
                         name: { kind: 'Name', value: 'index_in_block' }
                       },
                       {
@@ -8261,12 +8299,263 @@ export const GetBlockByIdDocument = {
                 }
               ]
             }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minerRewards' },
+            name: { kind: 'Name', value: 'miner_reward' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'block' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_or' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'height' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: '_eq'
+                                            },
+                                            value: {
+                                              kind: 'Variable',
+                                              name: {
+                                                kind: 'Name',
+                                                value: 'height'
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: { kind: 'Name', value: 'hash' },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: '_eq'
+                                            },
+                                            value: {
+                                              kind: 'Variable',
+                                              name: {
+                                                kind: 'Name',
+                                                value: 'hash'
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'miner' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
+                }
+              ]
+            }
           }
         ]
       }
     }
   ]
 } as unknown as DocumentNode<GetBlockByIdQuery, GetBlockByIdQueryVariables>;
+export const GetBlockStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetBlockStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'chain' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block_height' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'finalized_block_height' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'minedIn24Hours' },
+            name: { kind: 'Name', value: 'block_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GetBlockStatsQuery, GetBlockStatsQueryVariables>;
 export const GetCancelledReversibleTransactionsDocument = {
   kind: 'Document',
   definitions: [
@@ -8826,13 +9115,19 @@ export const GetCancelledReversibleTransactionsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalCount' },
                   name: { kind: 'Name', value: 'total_cancelled_transfers' }
                 }
               ]
@@ -9009,19 +9304,44 @@ export const GetStatusDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'status' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'height' },
                   name: { kind: 'Name', value: 'block_height' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'finalizedHeight' },
-                  name: { kind: 'Name', value: 'finalized_block_height' }
+                  name: { kind: 'Name', value: 'total_accounts' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_deposit_accounts' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_executed_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_immediate_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_scheduled_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_cancelled_transfers' }
                 }
               ]
             }
@@ -9449,23 +9769,20 @@ export const GetErrorEventsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'error_event_aggregate' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        alias: { kind: 'Name', value: 'totalCount' },
-                        name: { kind: 'Name', value: 'count' }
-                      }
-                    ]
-                  }
+                  name: { kind: 'Name', value: 'total_error_events' }
                 }
               ]
             }
@@ -10126,13 +10443,19 @@ export const GetExecutedReversibleTransactionsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalCount' },
                   name: { kind: 'Name', value: 'total_executed_transfers' }
                 }
               ]
@@ -10720,23 +11043,20 @@ export const GetHighSecuritySetsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'high_security_set_aggregate' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        alias: { kind: 'Name', value: 'totalCount' },
-                        name: { kind: 'Name', value: 'count' }
-                      }
-                    ]
-                  }
+                  name: { kind: 'Name', value: 'total_high_security_sets' }
                 }
               ]
             }
@@ -10903,7 +11223,7 @@ export const GetMinerLeaderboardDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'leaderboardEntries' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'account_stats' },
             arguments: [
               {
                 kind: 'Argument',
@@ -10929,7 +11249,7 @@ export const GetMinerLeaderboardDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'total_miner_rewards' },
+                      name: { kind: 'Name', value: 'total_rewards' },
                       value: { kind: 'EnumValue', value: 'desc' }
                     }
                   ]
@@ -10942,13 +11262,11 @@ export const GetMinerLeaderboardDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalMinedBlocks' },
-                  name: { kind: 'Name', value: 'block_height' }
+                  name: { kind: 'Name', value: 'total_mined_blocks' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalRewards' },
-                  name: { kind: 'Name', value: 'total_miner_rewards' }
+                  name: { kind: 'Name', value: 'total_rewards' }
                 }
               ]
             }
@@ -10956,23 +11274,21 @@ export const GetMinerLeaderboardDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'meta' },
-            name: { kind: 'Name', value: 'chain_stats_aggregate' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'aggregate' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        alias: { kind: 'Name', value: 'totalCount' },
-                        name: { kind: 'Name', value: 'count' }
-                      }
-                    ]
-                  }
+                  alias: { kind: 'Name', value: 'totalCount' },
+                  name: { kind: 'Name', value: 'total_miner_rewards' }
                 }
               ]
             }
@@ -11390,13 +11706,19 @@ export const GetMinerRewardsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalCount' },
                   name: { kind: 'Name', value: 'total_miner_rewards' }
                 }
               ]
@@ -11966,13 +12288,19 @@ export const GetScheduledReversibleTransactionsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalCount' },
                   name: { kind: 'Name', value: 'total_scheduled_transfers' }
                 }
               ]
@@ -13219,13 +13547,19 @@ export const GetTransactionsStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'allTime' },
-            name: { kind: 'Name', value: 'chain_stats' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalCount' },
                   name: { kind: 'Name', value: 'total_immediate_transfers' }
                 }
               ]
@@ -13537,23 +13871,19 @@ export const GetWormholeExtrinsicsDocument = {
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalAmount' },
                   name: { kind: 'Name', value: 'total_amount' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'outputCount' },
                   name: { kind: 'Name', value: 'output_count' }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyScore' },
                   name: { kind: 'Name', value: 'privacy_score' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyLabel' },
                   name: { kind: 'Name', value: 'privacy_label' }
                 },
                 {
@@ -13663,43 +13993,35 @@ export const GetWormholeExtrinsicByIdDocument = {
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'totalAmount' },
                   name: { kind: 'Name', value: 'total_amount' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'outputCount' },
                   name: { kind: 'Name', value: 'output_count' }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyScore' },
                   name: { kind: 'Name', value: 'privacy_score' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyScore01Pct' },
                   name: { kind: 'Name', value: 'privacy_score01_pct' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyScore1Pct' },
                   name: { kind: 'Name', value: 'privacy_score1_pct' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyScore5Pct' },
                   name: { kind: 'Name', value: 'privacy_score5_pct' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'privacyLabel' },
                   name: { kind: 'Name', value: 'privacy_label' }
                 },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'poolSnapshot' },
                   name: { kind: 'Name', value: 'pool_snapshot' }
                 },
                 {
@@ -13795,7 +14117,6 @@ export const GetWormholeExtrinsicByIdDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'nullifier' } },
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'nullifierHash' },
                   name: { kind: 'Name', value: 'nullifier_hash' }
                 }
               ]
@@ -13835,7 +14156,6 @@ export const GetDepositPoolStatsDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  alias: { kind: 'Name', value: 'lastUpdatedBlock' },
                   name: { kind: 'Name', value: 'last_updated_block' }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'buckets' } }

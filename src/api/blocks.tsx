@@ -97,7 +97,7 @@ export const blocks = {
     );
   },
   getById: () => {
-    const QUERY = gql`
+    const GET_BLOCK_BY_ID = gql`
       query GetBlockById($height: Int!, $hash: String!) {
         blocks: block(
           where: {
@@ -146,7 +146,7 @@ export const blocks = {
       useQuery: (id: string, config?: QueryHookOptions<BlockResponse>) => {
         const isHash = id.startsWith('0x');
 
-        return useQuery<BlockResponse>(QUERY, {
+        return useQuery<BlockResponse>(GET_BLOCK_BY_ID, {
           ...config,
           variables: {
             height: !isHash ? Number(id) : -1,

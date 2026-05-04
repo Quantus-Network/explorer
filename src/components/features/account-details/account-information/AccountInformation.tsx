@@ -32,7 +32,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
     data?.accountStats.total_executed_transfers;
   const cancelledReversibleTransactions =
     data?.accountStats.total_cancelled_transfers;
-  const miningRewards = data?.accountStats.total_rewards;
+  const miningRewards = data?.accountStats.total_mined_blocks;
   const beneficiaries = data?.beneficiaries.aggregate.totalCount;
   const guardians = data?.guardian.aggregate.totalCount;
 
