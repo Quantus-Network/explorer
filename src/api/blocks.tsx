@@ -1,15 +1,16 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
+import { endOfToday } from 'date-fns/endOfToday';
+import { startOfToday } from 'date-fns/startOfToday';
 
-import type { BlockWhereInput } from '@/__generated__/graphql';
+import type { Block_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { BlockSorts } from '@/constants/query-sorts';
-import { BLOCK_SORTS } from '@/constants/query-sorts';
-import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type {
   BlockListResponse,
   BlockResponse,
+  BlockStatsResponse,
   RecentBlocksResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
@@ -18,20 +19,20 @@ export const blocks = {
   useGetAll: (
     config?: QueryHookOptions<
       BlockListResponse,
-      PaginatedQueryVariables<BlockSorts, BlockWhereInput>
+      PaginatedQueryVariables<BlockSorts, Block_Bool_Exp>
     >
   ) => {
     const GET_BLOCKS = gql`
       query GetBlocks(
         $limit: Int
         $offset: Int
-        $orderBy: [BlockOrderByInput!]!
-        $where: BlockWhereInput
+        $orderBy: [block_order_by!]!
+        $where: block_bool_exp
       ) {
-        blocks(
+        blocks: block(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           id
@@ -43,19 +44,19 @@ export const blocks = {
             id
           }
         }
-        meta: blocksConnection(orderBy: id_ASC) {
-          totalCount
+        meta: chain_stats_by_pk(id: "global") {
+          totalCount: block_height
         }
       }
     `;
 
     return useQuery<
       BlockListResponse,
-      PaginatedQueryVariables<BlockSorts, BlockWhereInput>
+      PaginatedQueryVariables<BlockSorts, Block_Bool_Exp>
     >(GET_BLOCKS, {
       ...config,
       variables: {
-        orderBy: config?.variables?.orderBy ?? BLOCK_SORTS.timestamp.DESC,
+        orderBy: config?.variables?.orderBy ?? { timestamp: 'desc' },
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
@@ -69,9 +70,9 @@ export const blocks = {
       query GetRecentBlocks(
         $limit: Int
         $offset: Int
-        $orderBy: [BlockOrderByInput!]
+        $orderBy: [block_order_by!]
       ) {
-        blocks(limit: $limit, offset: $offset, orderBy: $orderBy) {
+        blocks: block(limit: $limit, offset: $offset, order_by: $orderBy) {
           id
           hash
           height
@@ -89,38 +90,43 @@ export const blocks = {
       {
         ...config,
         variables: {
-          orderBy: BLOCK_SORTS.timestamp.DESC,
+          orderBy: { timestamp: 'desc' },
           limit: QUERY_RECENT_LIMIT
         }
       }
     );
   },
   getById: () => {
-    const QUERY = gql`
-      query GetBlockById($height: Int!, $hash: String!, $limit: Int!) {
-        blocks(where: { height_eq: $height, OR: { hash_eq: $hash } }) {
+    const GET_BLOCK_BY_ID = gql`
+      query GetBlockById($height: Int!, $hash: String!) {
+        blocks: block(
+          where: {
+            _or: [{ height: { _eq: $height } }, { hash: { _eq: $hash } }]
+          }
+        ) {
           id
           hash
           height
           reward
           timestamp
-          extrinsics(orderBy: indexInBlock_ASC) {
+          extrinsics(order_by: { index_in_block: asc }) {
             id
             pallet
             call
             success
             fee
             timestamp
-            indexInBlock
+            index_in_block: index_in_block
             signer {
               id
             }
           }
         }
-        minerRewards(
+        minerRewards: miner_reward(
           where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
+            block: {
+              _or: [{ height: { _eq: $height } }, { hash: { _eq: $hash } }]
+            }
           }
         ) {
           reward
@@ -133,245 +139,6 @@ export const blocks = {
             hash
           }
         }
-        transactions: transfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            extrinsic_isNull: false
-            AND: {
-              block: { height_eq: $height }
-              OR: { block: { hash_eq: $hash } }
-            }
-          }
-        ) {
-          edges {
-            node {
-              fee
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              block {
-                height
-              }
-              amount
-              timestamp
-              from {
-                id
-              }
-              to {
-                id
-              }
-            }
-          }
-
-          totalCount
-        }
-        scheduledReversibleTransactions: scheduledReversibleTransfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
-          }
-        ) {
-          edges {
-            node {
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              timestamp
-              amount
-              timestamp
-              scheduledAt
-              txId
-              fee
-              block {
-                height
-              }
-              from {
-                id
-              }
-              to {
-                id
-              }
-            }
-          }
-          totalCount
-        }
-        executedReversibleTransactions: executedReversibleTransfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
-          }
-        ) {
-          edges {
-            node {
-              timestamp
-              txId
-              block {
-                height
-              }
-              scheduledTransfer {
-                extrinsic {
-                  id
-                  pallet
-                  call
-                }
-                amount
-                timestamp
-                scheduledAt
-                txId
-                fee
-                block {
-                  height
-                }
-                from {
-                  id
-                }
-                to {
-                  id
-                }
-              }
-            }
-          }
-          totalCount
-        }
-        cancelledReversibleTransactions: cancelledReversibleTransfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
-          }
-        ) {
-          edges {
-            node {
-              timestamp
-              txId
-              block {
-                height
-              }
-              cancelledBy {
-                id
-              }
-              scheduledTransfer {
-                extrinsic {
-                  id
-                  pallet
-                  call
-                }
-                amount
-                timestamp
-                scheduledAt
-                txId
-                fee
-                block {
-                  height
-                }
-                from {
-                  id
-                }
-                to {
-                  id
-                }
-              }
-            }
-          }
-          totalCount
-        }
-        highSecuritySets: highSecuritySetsConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
-          }
-        ) {
-          edges {
-            node {
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              timestamp
-              delay
-              block {
-                height
-              }
-              who {
-                id
-              }
-              interceptor {
-                id
-              }
-            }
-          }
-
-          totalCount
-        }
-        errorEvents: errorEventsConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
-          }
-        ) {
-          edges {
-            node {
-              errorDocs
-              errorModule
-              errorName
-              errorType
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              timestamp
-              block {
-                height
-              }
-            }
-          }
-
-          totalCount
-        }
-        wormholeExtrinsics(
-          orderBy: timestamp_DESC
-          limit: $limit
-          where: {
-            block: { height_eq: $height }
-            OR: { block: { hash_eq: $hash } }
-          }
-        ) {
-          id
-          extrinsic {
-            id
-            pallet
-            call
-          }
-          totalAmount
-          outputCount
-          timestamp
-          block {
-            height
-          }
-          outputs {
-            id
-            exitAccount {
-              id
-            }
-            amount
-          }
-        }
       }
     `;
 
@@ -379,12 +146,43 @@ export const blocks = {
       useQuery: (id: string, config?: QueryHookOptions<BlockResponse>) => {
         const isHash = id.startsWith('0x');
 
-        return useQuery<BlockResponse>(QUERY, {
+        return useQuery<BlockResponse>(GET_BLOCK_BY_ID, {
           ...config,
           variables: {
             height: !isHash ? Number(id) : -1,
-            hash: isHash ? id : '',
-            limit: QUERY_UNIFIED_LIMIT
+            hash: isHash ? id : ''
+          }
+        });
+      }
+    };
+  },
+  getStats: () => {
+    const startDate = startOfToday().toISOString();
+    const endDate = endOfToday().toISOString();
+
+    const QUERY = gql`
+      query GetBlockStats($startDate: timestamptz!, $endDate: timestamptz!) {
+        chain: chain_stats_by_pk(id: "global") {
+          block_height
+          finalized_block_height
+        }
+        minedIn24Hours: block_aggregate(
+          where: { timestamp: { _gte: $startDate, _lte: $endDate } }
+        ) {
+          aggregate {
+            totalCount: count
+          }
+        }
+      }
+    `;
+
+    return {
+      useQuery: (config?: QueryHookOptions<BlockStatsResponse>) => {
+        return useQuery<BlockStatsResponse>(QUERY, {
+          ...config,
+          variables: {
+            startDate,
+            endDate
           }
         });
       }

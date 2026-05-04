@@ -3,11 +3,10 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
-import type { TransferWhereInput } from '@/__generated__/graphql';
+import type { Transfer_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { TransactionSorts } from '@/constants/query-sorts';
-import { TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
   ExtrinsicDetailResponse,
   RecentTransactionsResponse,
@@ -20,20 +19,20 @@ export const transactions = {
   useGetAll: (
     config?: QueryHookOptions<
       TransactionListResponse,
-      PaginatedQueryVariables<TransactionSorts, TransferWhereInput>
+      PaginatedQueryVariables<TransactionSorts, Transfer_Bool_Exp>
     >
   ) => {
     const GET_TRANSACTIONS = gql`
       query GetTransactions(
         $limit: Int
         $offset: Int
-        $orderBy: [TransferOrderByInput!]
-        $where: TransferWhereInput
+        $orderBy: [transfer_order_by!]
+        $where: transfer_bool_exp
       ) {
-        transactions: transfers(
+        transactions: transfer(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           fee
@@ -54,23 +53,28 @@ export const transactions = {
             id
           }
         }
-        meta: transfersConnection(orderBy: id_ASC, where: $where) {
-          totalCount
+        meta: transfer_aggregate(where: $where) {
+          aggregate {
+            totalCount: count
+          }
         }
       }
     `;
 
     return useQuery<
       TransactionListResponse,
-      PaginatedQueryVariables<TransactionSorts, TransferWhereInput>
+      PaginatedQueryVariables<TransactionSorts, Transfer_Bool_Exp>
     >(GET_TRANSACTIONS, {
       ...config,
       variables: {
-        orderBy: config?.variables?.orderBy ?? TRANSACTION_SORTS.timestamp.DESC,
+        orderBy: config?.variables?.orderBy ?? { timestamp: 'desc' },
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: {
-          AND: [{ extrinsic_isNull: false }, { ...config?.variables?.where }]
+          _and: [
+            { extrinsic_id: { _is_null: false } },
+            { ...config?.variables?.where }
+          ]
         }
       }
     });
@@ -82,13 +86,13 @@ export const transactions = {
       query GetRecentTransactions(
         $limit: Int
         $offset: Int
-        $orderBy: [TransferOrderByInput!]
-        $where: TransferWhereInput
+        $orderBy: [transfer_order_by!]
+        $where: transfer_bool_exp
       ) {
-        transactions: transfers(
+        transactions: transfer(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           fee
@@ -114,13 +118,13 @@ export const transactions = {
 
     return useQuery<
       RecentTransactionsResponse,
-      PaginatedQueryVariables<TransactionSorts, TransferWhereInput>
+      PaginatedQueryVariables<TransactionSorts, Transfer_Bool_Exp>
     >(GET_RECENT_TRANSACTIONS, {
       ...config,
       variables: {
-        orderBy: TRANSACTION_SORTS.timestamp.DESC,
+        orderBy: { timestamp: 'desc' },
         limit: QUERY_RECENT_LIMIT,
-        where: { extrinsic_isNull: false }
+        where: { extrinsic_id: { _is_null: false } }
       }
     });
   },
@@ -131,28 +135,22 @@ export const transactions = {
     const endDate = endOfToday().toISOString();
 
     const GET_TRANSACTIONS_STATS = gql`
-      query GetTransactionsStats($startDate: DateTime!, $endDate: DateTime!) {
-        last24Hour: transfersConnection(
-          orderBy: id_ASC
+      query GetTransactionsStats(
+        $startDate: timestamptz!
+        $endDate: timestamptz!
+      ) {
+        last24Hour: transfer_aggregate(
           where: {
-            timestamp_gte: $startDate
-            timestamp_lte: $endDate
-            extrinsic_isNull: false
+            timestamp: { _gte: $startDate, _lte: $endDate }
+            extrinsic_id: { _is_null: false }
           }
         ) {
-          totalCount
+          aggregate {
+            totalCount: count
+          }
         }
-        allTime: transfersConnection(
-          orderBy: id_ASC
-          where: { extrinsic_isNull: false }
-        ) {
-          totalCount
-        }
-        allTime: transfersConnection(
-          orderBy: id_ASC
-          where: { extrinsic_isNull: false }
-        ) {
-          totalCount
+        allTime: chain_stats_by_pk(id: "global") {
+          total_immediate_transfers
         }
       }
     `;
@@ -168,14 +166,14 @@ export const transactions = {
   getByHash: () => {
     const QUERY = gql`
       query GetExtrinsicByHash($hash: String!) {
-        extrinsics(where: { id_eq: $hash }) {
+        extrinsics: extrinsic(where: { id: { _eq: $hash } }) {
           id
           pallet
           call
           success
           fee
           timestamp
-          indexInBlock
+          index_in_block
           signer {
             id
           }
@@ -183,9 +181,9 @@ export const transactions = {
             height
           }
         }
-        transfers(
-          where: { extrinsic: { id_eq: $hash } }
-          orderBy: timestamp_ASC
+        transfers: transfer(
+          where: { extrinsic: { id: { _eq: $hash } } }
+          order_by: { timestamp: asc }
         ) {
           id
           amount

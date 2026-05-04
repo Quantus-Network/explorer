@@ -10,12 +10,12 @@ const columnHelper =
   createColumnHelper<AccountCancelledReversibleTransaction>();
 
 export const ACCOUNT_CANCELLED_REVERSIBLE_COLUMNS = [
-  columnHelper.accessor('node.scheduledTransfer.txId', {
+  columnHelper.accessor('node.scheduledTransfer.tx_id', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.cancelledReversibleTransactions}/${props.row.original.node.txId}`}
+        href={`${RESOURCES.cancelledReversibleTransactions}/${props.row.original.node.scheduledTransfer.tx_id}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />

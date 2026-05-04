@@ -6,9 +6,7 @@ import { SearchPreview } from '../../../ui/composites/search-preview/SearchPrevi
 import { ChainStats } from './chain-stats/ChainStats';
 import { useHero } from './hook';
 
-export interface HeroProps {}
-
-export const Hero = (props: HeroProps) => {
+export const Hero = () => {
   const {
     handleKeywordChange,
     handleInputFocus,

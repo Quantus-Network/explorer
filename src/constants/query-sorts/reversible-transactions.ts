@@ -1,100 +1,64 @@
-export const REVERSIBLE_TRANSACTION_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  scheduledAt: {
-    ASC: 'scheduledAt_ASC',
-    DESC: 'scheduledAt_DESC'
-  },
-  status: {
-    ASC: 'status_ASC',
-    DESC: 'status_DESC'
-  },
-  extrinsic: {
-    ASC: 'extrinsic_id_ASC',
-    DESC: 'extrinsic_id_DESC'
-  },
-  tx: {
-    ASC: 'tx_ASC',
-    DESC: 'tx_DESC'
-  },
-  blockHeight: {
-    ASC: 'block_height_ASC',
-    DESC: 'block_height_DESC'
-  },
-  who: {
-    id_ASC: 'who_id_ASC',
-    id_DESC: 'who_id_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
-  REVERSIBLE_TRANSACTION_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface ReversibleTransactionSorts {
+  id?: SortDirection;
+  timestamp?: SortDirection;
+  scheduled_at?: SortDirection;
+  status?: SortDirection;
+  extrinsic_id?: SortDirection;
+  tx_id?: SortDirection;
+  block_height?: SortDirection;
+  who_id?: SortDirection;
+}
 
-export const REVERSIBLE_TRANSACTION_SORTS_KEY = Object.keys(
-  REVERSIBLE_TRANSACTION_SORTS
-);
+export const REVERSIBLE_TRANSACTION_SORTS_LITERALS = [
+  'id:desc',
+  'timestamp:desc',
+  'scheduled_at:desc',
+  'status:desc',
+  'extrinsic_id:desc',
+  'tx_id:desc',
+  'block_height:desc',
+  'who_id:desc',
+  'id:asc',
+  'timestamp:asc',
+  'scheduled_at:asc',
+  'status:asc',
+  'extrinsic_id:asc',
+  'tx_id:asc',
+  'block_height:asc',
+  'who_id:asc'
+];
 
-// Adding null, because we can sort by null to indicate no sorting
-export type ReversibleTransactionSorts =
-  | (typeof REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
-  | null;
+export interface ScheduledReversibleTransactionSorts {
+  timestamp?: SortDirection;
+  scheduled_at?: SortDirection;
+  amount?: SortDirection;
+}
 
-export const SCHEDULED_REVERSIBLE_TRANSACTION_SORTS = {
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  scheduledAt: {
-    ASC: 'scheduledAt_ASC',
-    DESC: 'scheduledAt_DESC'
-  },
-  amount: {
-    ASC: 'amount_ASC',
-    DESC: 'amount_DESC'
-  }
-} as const;
+export const SCHEDULED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = [
+  'timestamp:desc',
+  'scheduled_at:desc',
+  'amount:desc',
+  'timestamp:asc',
+  'scheduled_at:asc',
+  'amount:asc'
+];
 
-export const SCHEDULED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
-  SCHEDULED_REVERSIBLE_TRANSACTION_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface ExecutedReversibleTransactionSorts {
+  timestamp?: SortDirection;
+}
 
-export type ScheduledReversibleTransactionSorts =
-  | (typeof SCHEDULED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
-  | null;
+export const EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = [
+  'timestamp:desc',
+  'timestamp:asc'
+];
 
-export const EXECUTED_REVERSIBLE_TRANSACTION_SORTS = {
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  }
-} as const;
+export interface CancelledReversibleTransactionSorts {
+  timestamp?: SortDirection;
+}
 
-export const EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
-  EXECUTED_REVERSIBLE_TRANSACTION_SORTS
-).flatMap((sort) => Object.values(sort));
-
-export type ExecutedReversibleTransactionSorts =
-  | (typeof EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
-  | null;
-
-export const CANCELLED_REVERSIBLE_TRANSACTION_SORTS = {
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  }
-} as const;
-
-export const CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = Object.values(
-  CANCELLED_REVERSIBLE_TRANSACTION_SORTS
-).flatMap((sort) => Object.values(sort));
-
-export type CancelledReversibleTransactionSorts =
-  | (typeof CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)[number]
-  | null;
+export const CANCELLED_REVERSIBLE_TRANSACTION_SORTS_LITERALS = [
+  'timestamp:desc',
+  'timestamp:asc'
+];

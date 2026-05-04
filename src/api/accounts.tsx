@@ -6,7 +6,6 @@ import { subDays } from 'date-fns/subDays';
 
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
-import { ACCOUNT_SORTS } from '@/constants/query-sorts';
 import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type {
   AccountListResponse,
@@ -26,16 +25,16 @@ export const accounts = {
       query GetAccounts(
         $limit: Int
         $offset: Int
-        $orderBy: [AccountOrderByInput!]
+        $orderBy: [account_order_by!]
       ) {
-        accounts(limit: $limit, offset: $offset, orderBy: $orderBy) {
+        accounts: account(limit: $limit, offset: $offset, order_by: $orderBy) {
           id
           free
           frozen
           reserved
         }
-        meta: accountsConnection(orderBy: id_ASC) {
-          totalCount
+        meta: chain_stats_by_pk(id: "global") {
+          totalCount: total_accounts
         }
       }
     `;
@@ -45,7 +44,7 @@ export const accounts = {
       {
         ...config,
         variables: {
-          orderBy: config?.variables?.orderBy ?? ACCOUNT_SORTS.id.DESC,
+          orderBy: config?.variables?.orderBy ?? { id: 'desc' },
           limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
           offset: config?.variables?.offset ?? 0
         }
@@ -55,232 +54,185 @@ export const accounts = {
   getById: () => {
     const GET_ACCOUNT = gql`
       query GetAccountById($id: String!, $limit: Int!) {
-        account: accountById(id: $id) {
+        account: account_by_pk(id: $id) {
           id
           free
           frozen
           reserved
         }
-        transactions: transfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            extrinsic_isNull: false
-            AND: { from: { id_eq: $id }, OR: { to: { id_eq: $id } } }
-          }
-        ) {
-          edges {
-            node {
-              fee
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              block {
-                height
-              }
-              amount
-              timestamp
-              from {
-                id
-              }
-              to {
-                id
-              }
-            }
-          }
-
-          totalCount
+        accountStats: account_stats_by_pk(id: $id) {
+          total_cancelled_transfers
+          total_executed_transfers
+          total_immediate_transfers
+          total_mined_blocks
+          total_rewards
+          total_scheduled_transfers
         }
-        scheduledReversibleTransactions: scheduledReversibleTransfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: { from: { id_eq: $id }, OR: { to: { id_eq: $id } } }
-        ) {
-          edges {
-            node {
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              timestamp
-              amount
-              timestamp
-              scheduledAt
-              txId
-              fee
-              block {
-                height
-              }
-              from {
-                id
-              }
-              to {
-                id
-              }
-            }
-          }
-          totalCount
-        }
-        executedReversibleTransactions: executedReversibleTransfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            scheduledTransfer: {
-              from: { id_eq: $id }
-              OR: { to: { id_eq: $id } }
-            }
-          }
-        ) {
-          edges {
-            node {
-              timestamp
-              txId
-              block {
-                height
-              }
-              scheduledTransfer {
-                extrinsic {
-                  id
-                  pallet
-                  call
-                }
-                amount
-                timestamp
-                scheduledAt
-                txId
-                fee
-                block {
-                  height
-                }
-                from {
-                  id
-                }
-                to {
-                  id
-                }
-              }
-            }
-          }
-          totalCount
-        }
-        cancelledReversibleTransactions: cancelledReversibleTransfersConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: {
-            scheduledTransfer: {
-              from: { id_eq: $id }
-              OR: { to: { id_eq: $id } }
-            }
-            OR: { cancelledBy: { id_eq: $id } }
-          }
-        ) {
-          edges {
-            node {
-              timestamp
-              txId
-              block {
-                height
-              }
-              cancelledBy {
-                id
-              }
-              scheduledTransfer {
-                extrinsic {
-                  id
-                  pallet
-                  call
-                }
-                amount
-                timestamp
-                scheduledAt
-                txId
-                fee
-                block {
-                  height
-                }
-                from {
-                  id
-                }
-                to {
-                  id
-                }
-              }
-            }
-          }
-          totalCount
-        }
-        minerRewards: minerRewardsConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: { miner: { id_eq: $id } }
-        ) {
-          edges {
-            node {
-              block {
-                height
-                hash
-              }
-              reward
-              miner {
-                id
-              }
-              timestamp
-            }
-          }
-
-          totalCount
-        }
-        guardian: highSecuritySetsConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: { who: { id_eq: $id } }
-        ) {
-          edges {
-            node {
-              timestamp
-              block {
-                height
-              }
-              interceptor {
-                id
-                free
-                frozen
-                reserved
-              }
-            }
-          }
-
-          totalCount
-        }
-        beneficiaries: highSecuritySetsConnection(
-          orderBy: timestamp_DESC
-          first: $limit
-          where: { interceptor: { id_eq: $id } }
-        ) {
-          edges {
-            node {
-              timestamp
-              block {
-                height
-              }
-              who {
-                id
-                free
-                frozen
-                reserved
-              }
-            }
-          }
-
-          totalCount
-        }
-        wormholeOutputs: wormholeOutputs(
-          orderBy: wormholeExtrinsic_timestamp_DESC
+        accountEvents: account_event(
           limit: $limit
-          where: { exitAccount: { id_eq: $id } }
+          where: { account_id: { _eq: $id } }
+        ) {
+          transfer {
+            fee
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            block {
+              height
+            }
+            amount
+            timestamp
+            from {
+              id
+            }
+            to {
+              id
+            }
+          }
+          scheduledReversibleTransfer {
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            timestamp
+            amount
+            timestamp
+            scheduled_at
+            tx_id
+            fee
+            block {
+              height
+            }
+            from {
+              id
+            }
+            to {
+              id
+            }
+          }
+          executedReversibleTransfer {
+            timestamp
+            tx_id
+            block {
+              height
+            }
+            scheduledTransfer {
+              extrinsic {
+                id
+                pallet
+                call
+              }
+              amount
+              timestamp
+              scheduled_at
+              tx_id
+              fee
+              block {
+                height
+              }
+              from {
+                id
+              }
+              to {
+                id
+              }
+            }
+          }
+          cancelledReversibleTransfer {
+            timestamp
+            tx_id
+            block {
+              height
+            }
+            cancelledBy {
+              id
+            }
+            scheduledTransfer {
+              extrinsic {
+                id
+                pallet
+                call
+              }
+              amount
+              timestamp
+              scheduled_at
+              tx_id
+              fee
+              block {
+                height
+              }
+              from {
+                id
+              }
+              to {
+                id
+              }
+            }
+          }
+          minerReward {
+            block {
+              height
+              hash
+            }
+            reward
+            miner {
+              id
+            }
+            timestamp
+          }
+        }
+
+        guardian: high_security_set_aggregate(
+          order_by: { timestamp: desc }
+          limit: $limit
+          where: { who: { id: { _eq: $id } } }
+        ) {
+          nodes {
+            timestamp
+            block {
+              height
+            }
+            interceptor {
+              id
+              free
+              frozen
+              reserved
+            }
+          }
+          aggregate {
+            totalCount: count
+          }
+        }
+
+        beneficiaries: high_security_set_aggregate(
+          order_by: { timestamp: desc }
+          limit: $limit
+          where: { interceptor: { id: { _eq: $id } } }
+        ) {
+          nodes {
+            timestamp
+            block {
+              height
+            }
+            who {
+              id
+              free
+              frozen
+              reserved
+            }
+          }
+          aggregate {
+            totalCount: count
+          }
+        }
+
+        wormholeOutputs: wormhole_output(
+          order_by: { wormholeExtrinsic: { timestamp: desc } }
+          limit: $limit
+          where: { exitAccount: { id: { _eq: $id } } }
         ) {
           id
           amount
@@ -294,8 +246,8 @@ export const accounts = {
               pallet
               call
             }
-            totalAmount
-            outputCount
+            total_amount
+            output_count
             timestamp
             block {
               height
@@ -330,31 +282,29 @@ export const accounts = {
     const endDate = endOfToday().toISOString();
 
     const GET_ACCOUNTS_STATS = gql`
-      query GetAccountsStats($startDate: DateTime!, $endDate: DateTime!) {
-        all: accountsConnection(orderBy: id_ASC) {
-          totalCount
+      query GetAccountsStats($startDate: timestamptz!, $endDate: timestamptz!) {
+        all: chain_stats_by_pk(id: "global") {
+          total_accounts
         }
-        recentlyActive: accountsConnection(
-          orderBy: id_ASC
+
+        recentlyActive: account_aggregate(
           where: {
-            transfersFrom_some: {
-              timestamp_gte: $startDate
-              timestamp_lte: $endDate
-            }
+            transfersFrom: { timestamp: { _gte: $startDate, _lte: $endDate } }
           }
         ) {
-          totalCount
+          aggregate {
+            count
+          }
         }
-        recentlyDeposited: accountsConnection(
-          orderBy: id_ASC
+
+        recentlyDeposited: account_aggregate(
           where: {
-            transfersTo_some: {
-              timestamp_gte: $startDate
-              timestamp_lte: $endDate
-            }
+            transfersTo: { timestamp: { _gte: $startDate, _lte: $endDate } }
           }
         ) {
-          totalCount
+          aggregate {
+            count
+          }
         }
       }
     `;

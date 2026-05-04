@@ -10,13 +10,19 @@ import { createUnifiedTransactionColumns } from '@/components/common/table-colum
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import {
   sortByTimestampDesc,
+  transformCancelledTransaction,
+  transformExecutedTransaction,
   transformHighSecuritySet,
   transformImmediateTransaction,
   transformMinerReward,
-  transformReversibleTransaction,
+  transformScheduledTransaction,
   transformWormholeOutput
 } from '@/hooks/useUnifiedTransactions';
-import type { AccountResponse, UnifiedTransaction } from '@/schemas';
+import type {
+  AccountResponse,
+  HighSecuritySet,
+  UnifiedTransaction
+} from '@/schemas';
 
 // Account page shows block column
 const columns = createUnifiedTransactionColumns({ showBlockColumn: true });
@@ -37,51 +43,64 @@ export const useAccountAllTransactions = (
     const unified: UnifiedTransaction[] = [];
 
     // Add immediate transactions
-    data.transactions?.edges?.forEach((edge, idx) => {
-      unified.push(transformImmediateTransaction(edge.node, idx));
-    });
+    data.accountEvents?.forEach((event, idx) => {
+      if (event.transfer) {
+        unified.push(transformImmediateTransaction(event.transfer, idx));
+      }
+      if (event.scheduledReversibleTransfer) {
+        unified.push(
+          transformScheduledTransaction(event.scheduledReversibleTransfer)
+        );
+      }
+      if (event.executedReversibleTransfer) {
+        unified.push(
+          transformExecutedTransaction(event.executedReversibleTransfer)
+        );
+      }
+      if (event.cancelledReversibleTransfer) {
+        unified.push(
+          transformCancelledTransaction(event.cancelledReversibleTransfer)
+        );
+      }
 
-    // Add reversible transactions
-    data.scheduledReversibleTransactions?.edges?.forEach((edge, idx) => {
-      unified.push(transformReversibleTransaction(edge.node, idx));
-    });
-
-    // Add miner rewards
-    data.minerRewards?.edges?.forEach((edge, idx) => {
-      unified.push(transformMinerReward(edge.node, idx));
+      if (event.minerReward) {
+        unified.push(transformMinerReward(event.minerReward, idx));
+      }
     });
 
     // Add guardian relationships (as high-security type)
-    data.guardian?.edges?.forEach((edge, idx) => {
-      const guardian = edge.node;
+    data.guardian?.nodes?.forEach((guardian, idx) => {
       unified.push(
         transformHighSecuritySet(
           {
-            timestamp: (guardian as { timestamp?: string }).timestamp ?? '',
-            block: (guardian as { block?: { height: number } }).block ?? {
-              height: 0
-            },
-            who: { id: '' }, // Guardian view doesn't have who (it's the current account)
-            interceptor: guardian.interceptor
-          },
+            node: {
+              timestamp: (guardian as any).timestamp ?? '',
+              block: (guardian as any).block ?? {
+                height: 0
+              },
+              who: { id: '' }, // Guardian view doesn't have who (it's the current account)
+              interceptor: guardian.node.interceptor
+            }
+          } as HighSecuritySet,
           idx
         )
       );
     });
 
     // Add beneficiary relationships (as high-security type)
-    data.beneficiaries?.edges?.forEach((edge, idx) => {
-      const beneficiary = edge.node;
+    data.beneficiaries?.nodes?.forEach((beneficiary, idx) => {
       unified.push(
         transformHighSecuritySet(
           {
-            timestamp: (beneficiary as { timestamp?: string }).timestamp ?? '',
-            block: (beneficiary as { block?: { height: number } }).block ?? {
-              height: 0
-            },
-            who: beneficiary.who,
-            interceptor: { id: '' } // Beneficiary view doesn't have interceptor (it's the current account)
-          },
+            node: {
+              timestamp: (beneficiary as any).timestamp ?? '',
+              block: (beneficiary as any).block ?? {
+                height: 0
+              },
+              who: beneficiary.node.who,
+              interceptor: { id: '' } // Beneficiary view doesn't have interceptor (it's the current account)
+            }
+          } as HighSecuritySet,
           idx
         )
       );

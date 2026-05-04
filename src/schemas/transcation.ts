@@ -1,10 +1,11 @@
 import type * as gql from '../__generated__/graphql';
 
-export interface Transaction
-  extends Omit<gql.Transfer, 'id' | 'from' | 'to' | 'block' | 'event'> {
-  from: Pick<gql.Account, 'id'>;
-  to: Pick<gql.Account, 'id'>;
-  block: Pick<gql.Block, 'height'>;
+export interface Transaction {
+  node: Omit<gql.Transfer, 'id' | 'from' | 'to' | 'block' | 'event'> & {
+    from: Pick<gql.Account, 'id'>;
+    to: Pick<gql.Account, 'id'>;
+    block: Pick<gql.Block, 'height'>;
+  };
 }
 
 export interface TransactionResponse {
@@ -14,7 +15,9 @@ export interface TransactionResponse {
 export interface TransactionListResponse {
   transactions: Transaction[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -24,10 +27,12 @@ export interface RecentTransactionsResponse {
 
 export interface TransactionsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_immediate_transfers: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 

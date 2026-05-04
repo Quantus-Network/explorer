@@ -3,13 +3,13 @@ import type * as gql from '../__generated__/graphql';
 // Core wormhole extrinsic for list views
 export interface WormholeExtrinsic
   extends Pick<
-    gql.WormholeExtrinsic,
+    gql.Wormhole_Extrinsic,
     | 'id'
-    | 'totalAmount'
-    | 'outputCount'
+    | 'total_amount'
+    | 'output_count'
     | 'timestamp'
-    | 'privacyScore'
-    | 'privacyLabel'
+    | 'privacy_score'
+    | 'privacy_label'
   > {
   extrinsic: Pick<gql.Extrinsic, 'id' | 'pallet' | 'call'> | null;
   block: Pick<gql.Block, 'height'>;
@@ -18,17 +18,17 @@ export interface WormholeExtrinsic
 // Full wormhole extrinsic for detail view
 export interface WormholeExtrinsicDetail
   extends Pick<
-    gql.WormholeExtrinsic,
+    gql.Wormhole_Extrinsic,
     | 'id'
-    | 'totalAmount'
-    | 'outputCount'
+    | 'total_amount'
+    | 'output_count'
     | 'timestamp'
-    | 'privacyScore'
-    | 'privacyScore01Pct'
-    | 'privacyScore1Pct'
-    | 'privacyScore5Pct'
-    | 'privacyLabel'
-    | 'poolSnapshot'
+    | 'privacy_score'
+    | 'privacy_score01_pct'
+    | 'privacy_score1_pct'
+    | 'privacy_score5_pct'
+    | 'privacy_label'
+    | 'pool_snapshot'
   > {
   extrinsic: Pick<gql.Extrinsic, 'id' | 'pallet' | 'call'> | null;
   block: Pick<gql.Block, 'id' | 'height' | 'hash' | 'timestamp'>;
@@ -38,20 +38,22 @@ export interface WormholeExtrinsicDetail
 export interface WormholeOutput {
   id: string;
   exitAccount: Pick<gql.Account, 'id'>;
-  amount: gql.Scalars['BigInt']['output'];
+  amount: gql.Scalars['numeric']['output'];
 }
 
 export interface WormholeNullifier
-  extends Pick<gql.WormholeNullifier, 'nullifier' | 'nullifierHash'> {}
+  extends Pick<gql.Wormhole_Nullifier, 'nullifier' | 'nullifier_hash'> {}
 
 export interface DepositPoolStats
-  extends Pick<gql.DepositPoolStats, 'lastUpdatedBlock' | 'buckets'> {}
+  extends Pick<gql.Deposit_Pool_Stats, 'last_updated_block' | 'buckets'> {}
 
 // API Response types
 export interface WormholeExtrinsicListResponse {
   wormholeExtrinsics: WormholeExtrinsic[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 

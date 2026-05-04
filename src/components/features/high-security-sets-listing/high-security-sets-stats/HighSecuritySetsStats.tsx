@@ -33,7 +33,7 @@ export const HighSecuritySetsStats: React.FC<
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.totalCount}</p>}
+          {success && <p>{data?.allTime.total_high_security_sets}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -46,7 +46,7 @@ export const HighSecuritySetsStats: React.FC<
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.totalCount}</p>}
+          {success && <p>{data?.last24Hour.aggregate.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

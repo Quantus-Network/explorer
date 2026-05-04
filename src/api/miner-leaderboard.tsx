@@ -11,17 +11,17 @@ export const minerLeaderboard = {
   ) => {
     const GET_MINER_LEADERBOARD = gql`
       query GetMinerLeaderboard($limit: Int, $offset: Int) {
-        leaderboardEntries: minerStats(
+        leaderboardEntries: account_stats(
           limit: $limit
           offset: $offset
-          orderBy: totalMinedBlocks_DESC
+          order_by: { total_rewards: desc }
         ) {
           id
-          totalMinedBlocks
-          totalRewards
+          total_mined_blocks
+          total_rewards
         }
-        meta: minerStatsConnection(orderBy: id_ASC) {
-          totalCount
+        meta: chain_stats_by_pk(id: "global") {
+          totalCount: total_miner_rewards
         }
       }
     `;

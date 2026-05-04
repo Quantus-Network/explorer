@@ -3,11 +3,10 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
-import type { HighSecuritySetWhereInput } from '@/__generated__/graphql';
+import type { High_Security_Set_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { HighSecuritySetSorts } from '@/constants/query-sorts';
-import { HIGH_SECURITY_SET_SORTS } from '@/constants/query-sorts';
 import type {
   HighSecuritySetListResponse,
   HighSecuritySetResponse,
@@ -20,20 +19,20 @@ export const highSecuritySets = {
   useGetAll: (
     config?: QueryHookOptions<
       HighSecuritySetListResponse,
-      PaginatedQueryVariables<HighSecuritySetSorts, HighSecuritySetWhereInput>
+      PaginatedQueryVariables<HighSecuritySetSorts, High_Security_Set_Bool_Exp>
     >
   ) => {
     const GET_HIGH_SECURITY_SETS = gql`
       query GetHighSecuritySets(
         $limit: Int
         $offset: Int
-        $orderBy: [HighSecuritySetOrderByInput!]
-        $where: HighSecuritySetWhereInput
+        $orderBy: [high_security_set_order_by!]
+        $where: high_security_set_bool_exp
       ) {
-        highSecuritySets(
+        highSecuritySets: high_security_set(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           id
@@ -54,20 +53,21 @@ export const highSecuritySets = {
             height
           }
         }
-        meta: highSecuritySetsConnection(orderBy: id_ASC, where: $where) {
-          totalCount
+        meta: high_security_set_aggregate(where: $where) {
+          aggregate {
+            totalCount: count
+          }
         }
       }
     `;
 
     return useQuery<
       HighSecuritySetListResponse,
-      PaginatedQueryVariables<HighSecuritySetSorts, HighSecuritySetWhereInput>
+      PaginatedQueryVariables<HighSecuritySetSorts, High_Security_Set_Bool_Exp>
     >(GET_HIGH_SECURITY_SETS, {
       ...config,
       variables: {
-        orderBy:
-          config?.variables?.orderBy ?? HIGH_SECURITY_SET_SORTS.timestamp.DESC,
+        orderBy: config?.variables?.orderBy ?? { timestamp: 'desc' },
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
@@ -81,13 +81,13 @@ export const highSecuritySets = {
       query GetRecentHighSecuritySets(
         $limit: Int
         $offset: Int
-        $orderBy: [HighSecuritySetOrderByInput!]
-        $where: HighSecuritySetWhereInput
+        $orderBy: [high_security_set_order_by!]
+        $where: high_security_set_bool_exp
       ) {
-        highSecuritySets(
+        highSecuritySets: high_security_set(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           id
@@ -113,11 +113,11 @@ export const highSecuritySets = {
 
     return useQuery<
       RecentHighSecuritySetsResponse,
-      PaginatedQueryVariables<HighSecuritySetSorts, HighSecuritySetWhereInput>
+      PaginatedQueryVariables<HighSecuritySetSorts, High_Security_Set_Bool_Exp>
     >(GET_RECENT_HIGH_SECURITY_SETS, {
       ...config,
       variables: {
-        orderBy: HIGH_SECURITY_SET_SORTS.timestamp.DESC,
+        orderBy: { timestamp: 'desc' },
         limit: QUERY_RECENT_LIMIT,
         where: {}
       }
@@ -131,17 +131,18 @@ export const highSecuritySets = {
 
     const GET_HIGH_SECURITY_SETS_STATS = gql`
       query GetHighSecuritySetsStats(
-        $startDate: DateTime!
-        $endDate: DateTime!
+        $startDate: timestamptz!
+        $endDate: timestamptz!
       ) {
-        last24Hour: highSecuritySetsConnection(
-          orderBy: id_ASC
-          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+        last24Hour: high_security_set_aggregate(
+          where: { timestamp: { _gte: $startDate, _lte: $endDate } }
         ) {
-          totalCount
+          aggregate {
+            totalCount: count
+          }
         }
-        allTime: highSecuritySetsConnection(orderBy: id_ASC) {
-          totalCount
+        allTime: chain_stats_by_pk(id: "global") {
+          total_high_security_sets
         }
       }
     `;
@@ -160,7 +161,9 @@ export const highSecuritySets = {
   getByHash: () => {
     const QUERY = gql`
       query GetHighSecuritySetByHash($hash: String!) {
-        highSecuritySets(where: { extrinsic: { id_eq: $hash } }) {
+        highSecuritySets: high_security_set(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           id
           extrinsic {
             id

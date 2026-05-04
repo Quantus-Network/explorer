@@ -1,4 +1,12 @@
 import type {
+  CancelledReversibleTransaction,
+  ExecutedReversibleTransaction,
+  HighSecuritySet,
+  MinerReward,
+  ScheduledReversibleTransaction,
+  Transaction
+} from '@/schemas';
+import type {
   ExtrinsicInfo,
   UnifiedTransaction,
   UnifiedTransactionType
@@ -6,32 +14,6 @@ import type {
 import type { WormholeOutput } from '@/schemas/wormhole';
 
 // Common transformer input types
-interface TransferInput {
-  extrinsic?: ExtrinsicInfo | null;
-  timestamp: string;
-  amount: number;
-  fee?: number;
-  from: { id: string };
-  to: { id: string };
-  block: { height: number };
-}
-
-interface MinerRewardInput {
-  reward: string | number;
-  timestamp: string;
-  miner: { id: string };
-  block: { height: number; hash?: string };
-}
-
-interface HighSecuritySetInput {
-  extrinsic?: ExtrinsicInfo | null;
-  timestamp: string;
-  who: { id: string };
-  interceptor: { id: string };
-  delay?: number;
-  block: { height: number };
-}
-
 interface WormholeInput {
   id: string;
   extrinsic?: ExtrinsicInfo | null;
@@ -54,58 +36,88 @@ interface ErrorEventInput {
 
 // Transformer functions
 export const transformImmediateTransaction = (
-  tx: TransferInput,
+  tx: Transaction,
   idx: number
 ): UnifiedTransaction => ({
-  id: `immediate-${tx.extrinsic?.id ?? idx}`,
+  id: `immediate-${tx.node.extrinsic?.id ?? idx}`,
   type: 'immediate' as UnifiedTransactionType,
-  timestamp: tx.timestamp,
-  block: tx.block,
-  extrinsic: tx.extrinsic,
-  from: tx.from,
-  to: tx.to,
-  amount: tx.amount,
-  fee: tx.fee
+  timestamp: tx.node.timestamp,
+  block: tx.node.block,
+  extrinsic: tx.node.extrinsic,
+  from: tx.node.from,
+  to: tx.node.to,
+  amount: Number(tx.node.amount),
+  fee: Number(tx.node.fee)
 });
 
-export const transformReversibleTransaction = (
-  tx: TransferInput,
-  idx: number
+export const transformScheduledTransaction = (
+  tx: ScheduledReversibleTransaction
 ): UnifiedTransaction => ({
-  id: `reversible-${tx.extrinsic?.id ?? idx}`,
-  type: 'reversible' as UnifiedTransactionType,
-  timestamp: tx.timestamp,
-  block: tx.block,
-  extrinsic: tx.extrinsic,
-  from: tx.from,
-  to: tx.to,
-  amount: tx.amount
+  id: `scheduled-${tx.node.tx_id}`,
+  type: 'scheduled-reversible' as UnifiedTransactionType,
+  timestamp: tx.node.timestamp,
+  block: tx.node.block,
+  extrinsic: tx.node.extrinsic,
+  from: tx.node.from,
+  to: tx.node.to,
+  amount: Number(tx.node.amount),
+  scheduled_at: tx.node.scheduled_at
+});
+
+export const transformExecutedTransaction = (
+  tx: ExecutedReversibleTransaction
+): UnifiedTransaction => ({
+  id: `executed-${tx.node.tx_id}`,
+  type: 'executed-reversible' as UnifiedTransactionType,
+  timestamp: tx.node.timestamp,
+  block: tx.node.block,
+  extrinsic: {
+    id: 'N/A (unsigned)',
+    pallet: 'ReversibleTransfers',
+    call: 'transaction_executed'
+  },
+  from: tx.node.scheduledTransfer.from,
+  to: tx.node.scheduledTransfer.to,
+  amount: Number(tx.node.scheduledTransfer.amount)
+});
+
+export const transformCancelledTransaction = (
+  tx: CancelledReversibleTransaction
+): UnifiedTransaction => ({
+  id: `cancelled-${tx.node.tx_id}`,
+  type: 'cancelled-reversible' as UnifiedTransactionType,
+  timestamp: tx.node.timestamp,
+  block: tx.node.block,
+  extrinsic: tx.node.extrinsic,
+  from: tx.node.scheduledTransfer.from,
+  to: tx.node.scheduledTransfer.to,
+  amount: Number(tx.node.scheduledTransfer.amount)
 });
 
 export const transformMinerReward = (
-  reward: MinerRewardInput,
+  reward: MinerReward,
   idx: number
 ): UnifiedTransaction => ({
-  id: `miner-reward-${reward.block?.hash ?? idx}`,
+  id: `miner-reward-${reward.node.block?.hash ?? idx}`,
   type: 'miner-reward' as UnifiedTransactionType,
-  timestamp: reward.timestamp,
-  block: reward.block,
-  reward: String(reward.reward),
-  miner: reward.miner
+  timestamp: reward.node.timestamp,
+  block: reward.node.block,
+  reward: String(reward.node.reward),
+  miner: reward.node.miner
 });
 
 export const transformHighSecuritySet = (
-  hss: HighSecuritySetInput,
+  hss: HighSecuritySet,
   idx: number
 ): UnifiedTransaction => ({
-  id: `high-security-${hss.extrinsic?.id ?? idx}`,
+  id: `high-security-${hss.node.extrinsic?.id ?? idx}`,
   type: 'high-security' as UnifiedTransactionType,
-  timestamp: hss.timestamp,
-  block: hss.block,
-  extrinsic: hss.extrinsic,
-  who: hss.who,
-  interceptor: hss.interceptor,
-  delay: hss.delay
+  timestamp: hss.node.timestamp,
+  block: hss.node.block,
+  extrinsic: hss.node.extrinsic,
+  who: hss.node.who,
+  interceptor: hss.node.interceptor,
+  delay: hss.node.delay
 });
 
 export const transformWormholeOutput = (

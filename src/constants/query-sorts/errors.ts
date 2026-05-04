@@ -1,41 +1,28 @@
-export const ERROR_EVENT_SORTS = {
-  id: {
-    ASC: 'id_ASC',
-    DESC: 'id_DESC'
-  },
-  timestamp: {
-    ASC: 'timestamp_ASC',
-    DESC: 'timestamp_DESC'
-  },
-  errorType: {
-    ASC: 'errorType_ASC',
-    DESC: 'errorType_DESC'
-  },
-  errorModule: {
-    ASC: 'errorModule_ASC',
-    DESC: 'errorModule_DESC'
-  },
-  errorName: {
-    ASC: 'errorName_ASC',
-    DESC: 'errorName_DESC'
-  },
-  extrinsic: {
-    ASC: 'extrinsic_id_ASC',
-    DESC: 'extrinsic_id_DESC'
-  },
-  blockHeight: {
-    ASC: 'block_height_ASC',
-    DESC: 'block_height_DESC'
-  }
-} as const;
+import type { SortDirection } from '@/types/query';
 
-export const ERROR_EVENT_SORTS_LITERALS = Object.values(
-  ERROR_EVENT_SORTS
-).flatMap((sort) => Object.values(sort));
+export interface ErrorEventSorts {
+  id?: SortDirection;
+  timestamp?: SortDirection;
+  error_type?: SortDirection;
+  error_module?: SortDirection;
+  error_name?: SortDirection;
+  extrinsic_id?: SortDirection;
+  block_height?: SortDirection;
+}
 
-export const ERROR_EVENT_SORTS_KEY = Object.keys(ERROR_EVENT_SORTS);
-
-// Adding null, because we can sort by null to indicate no sorting
-export type ErrorEventSorts =
-  | (typeof ERROR_EVENT_SORTS_LITERALS)[number]
-  | null;
+export const ERROR_EVENT_SORTS_LITERALS = [
+  'id:desc',
+  'timestamp:desc',
+  'error_type:desc',
+  'error_module:desc',
+  'error_name:desc',
+  'extrinsic_id:desc',
+  'block_height:desc',
+  'id:asc',
+  'timestamp:asc',
+  'error_type:asc',
+  'error_module:asc',
+  'error_name:asc',
+  'extrinsic_id:asc',
+  'block_height:asc'
+];

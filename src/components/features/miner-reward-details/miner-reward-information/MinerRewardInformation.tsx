@@ -25,17 +25,14 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
     (prev: MinerReward | undefined, curr: MinerReward) => {
       if (!prev) return curr;
 
-      const newReward = BigInt(prev.reward) + BigInt(curr.reward);
+      const newReward = BigInt(prev.node.reward) + BigInt(curr.node.reward);
 
       const acc: MinerReward = {
         ...prev,
-        block: {
-          ...prev.block
-        },
-        miner: {
-          ...prev.miner
-        },
-        reward: newReward.toString()
+        node: {
+          ...prev.node,
+          reward: newReward.toString()
+        }
       };
 
       return acc;
@@ -43,19 +40,17 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
     undefined
   );
 
-  const information: Partial<MinerReward>[] = [
+  const information: Partial<MinerReward['node']>[] = [
     {
-      block: minerReward?.block,
-      miner: minerReward?.miner,
-      reward: minerReward?.reward,
-      timestamp: minerReward?.timestamp
+      block: minerReward?.node.block,
+      miner: minerReward?.node.miner,
+      reward: minerReward?.node.reward,
+      timestamp: minerReward?.node.timestamp
     }
   ];
 
-  console.log(minerReward);
-
   return (
-    <DataList<Partial<MinerReward & { hash: string }>>
+    <DataList<Partial<MinerReward['node'] & { hash: string }>>
       loading={loading}
       data={information}
       fields={[
@@ -64,7 +59,7 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
           key: 'block',
           render: (value) => (
             <TextWithCopy
-              text={(value as MinerReward['block']).hash.toString()}
+              text={(value as MinerReward['node']['block']).hash.toString()}
               className="break-all"
             />
           )
@@ -74,8 +69,8 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as MinerReward['block']).height.toString()}
-              href={`${RESOURCES.blocks}/${(value as MinerReward['block']).height}`}
+              text={(value as MinerReward['node']['block']).height.toString()}
+              href={`${RESOURCES.blocks}/${(value as MinerReward['node']['block']).height}`}
               className="break-all"
             />
           )
@@ -85,8 +80,8 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
           key: 'miner',
           render: (value) => (
             <LinkWithCopy
-              text={(value as MinerReward['miner']).id}
-              href={`${RESOURCES.accounts}/${(value as MinerReward['miner']).id}`}
+              text={(value as MinerReward['node']['miner']).id}
+              href={`${RESOURCES.accounts}/${(value as MinerReward['node']['miner']).id}`}
               className="break-all"
             />
           )
@@ -94,12 +89,12 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
         {
           label: 'Reward',
           key: 'reward',
-          render: (value) => formatMonetaryValue(value)
+          render: (value) => formatMonetaryValue(value as string)
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => formatTimestamp(value as string, true)
         }
       ]}
     />

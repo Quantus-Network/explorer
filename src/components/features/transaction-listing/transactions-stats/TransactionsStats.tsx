@@ -31,7 +31,7 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.totalCount}</p>}
+          {success && <p>{data?.allTime.total_immediate_transfers}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -44,7 +44,7 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.totalCount}</p>}
+          {success && <p>{data?.last24Hour.aggregate.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

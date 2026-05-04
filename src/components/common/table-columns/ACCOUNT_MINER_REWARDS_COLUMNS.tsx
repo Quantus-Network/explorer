@@ -16,6 +16,7 @@ export const ACCOUNT_MINER_REWARDS_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.minerRewards}/${props.getValue()}`}
         text={formatTxAddress(props.getValue() ?? '-')}
+        textCopy={props.getValue() ?? ''}
       />
     ),
     enableSorting: true
@@ -27,6 +28,7 @@ export const ACCOUNT_MINER_REWARDS_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={props.getValue().toString()}
+        textCopy={props.getValue().toString()}
       />
     ),
     enableSorting: true
@@ -38,6 +40,7 @@ export const ACCOUNT_MINER_REWARDS_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.accounts}/${props.getValue()}`}
         text={props.getValue()}
+        textCopy={props.getValue()}
       />
     ),
     enableSorting: false

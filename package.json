@@ -42,7 +42,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "graphql": "^16.11.0",
-    "human-readable-checksum": "./package/human-readable-checksum-0.2.0.tgz",
+    "human-readable-checksum": "./package/human-readable-checksum-0.3.0.tgz",
     "lucide-react": "^0.516.0",
     "nuqs": "2.4.3",
     "react": "19.1.1",

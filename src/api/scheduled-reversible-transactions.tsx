@@ -3,11 +3,10 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
-import type { ScheduledReversibleTransferWhereInput } from '@/__generated__/graphql';
+import type { Scheduled_Reversible_Transfer_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { ScheduledReversibleTransactionSorts } from '@/constants/query-sorts';
-import { SCHEDULED_REVERSIBLE_TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
   RecentScheduledReversibleTransactionsResponse,
   ScheduledReversibleTransactionListResponse,
@@ -22,7 +21,7 @@ export const scheduledReversibleTransactions = {
       ScheduledReversibleTransactionListResponse,
       PaginatedQueryVariables<
         ScheduledReversibleTransactionSorts,
-        ScheduledReversibleTransferWhereInput
+        Scheduled_Reversible_Transfer_Bool_Exp
       >
     >
   ) => {
@@ -30,13 +29,13 @@ export const scheduledReversibleTransactions = {
       query GetScheduledReversibleTransactions(
         $limit: Int
         $offset: Int
-        $orderBy: [ScheduledReversibleTransferOrderByInput!]
-        $where: ScheduledReversibleTransferWhereInput
+        $orderBy: [scheduled_reversible_transfer_order_by!]
+        $where: scheduled_reversible_transfer_bool_exp
       ) {
-        scheduledReversibleTransactions: scheduledReversibleTransfers(
+        scheduledReversibleTransactions: scheduled_reversible_transfer(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           extrinsic {
@@ -46,8 +45,8 @@ export const scheduledReversibleTransactions = {
           }
           amount
           timestamp
-          scheduledAt
-          txId
+          scheduled_at
+          tx_id
           fee
           block {
             height
@@ -59,11 +58,10 @@ export const scheduledReversibleTransactions = {
             id
           }
         }
-        meta: scheduledReversibleTransfersConnection(
-          orderBy: id_ASC
-          where: $where
-        ) {
-          totalCount
+        meta: scheduled_reversible_transfer_aggregate(where: $where) {
+          aggregate {
+            totalCount: count
+          }
         }
       }
     `;
@@ -72,14 +70,12 @@ export const scheduledReversibleTransactions = {
       ScheduledReversibleTransactionListResponse,
       PaginatedQueryVariables<
         ScheduledReversibleTransactionSorts,
-        ScheduledReversibleTransferWhereInput
+        Scheduled_Reversible_Transfer_Bool_Exp
       >
     >(GET_SCHEDULED_REVERSIBLE_TRANSACTIONS, {
       ...config,
       variables: {
-        orderBy:
-          config?.variables?.orderBy ??
-          SCHEDULED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+        orderBy: config?.variables?.orderBy ?? { timestamp: 'desc' },
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
@@ -96,12 +92,12 @@ export const scheduledReversibleTransactions = {
       query GetRecentScheduledReversibleTransactions(
         $limit: Int
         $offset: Int
-        $orderBy: [ScheduledReversibleTransferOrderByInput!]
+        $orderBy: [scheduled_reversible_transfer_order_by!]
       ) {
-        scheduledReversibleTransactions: scheduledReversibleTransfers(
+        scheduledReversibleTransactions: scheduled_reversible_transfer(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
         ) {
           extrinsic {
             id
@@ -110,8 +106,8 @@ export const scheduledReversibleTransactions = {
           }
           amount
           timestamp
-          scheduledAt
-          txId
+          scheduled_at
+          tx_id
           fee
           block {
             height
@@ -132,7 +128,7 @@ export const scheduledReversibleTransactions = {
     >(GET_RECENT_SCHEDULED_REVERSIBLE_TRANSACTIONS, {
       ...config,
       variables: {
-        orderBy: SCHEDULED_REVERSIBLE_TRANSACTION_SORTS.timestamp.DESC,
+        orderBy: { timestamp: 'desc' },
         limit: QUERY_RECENT_LIMIT
       }
     });
@@ -148,17 +144,18 @@ export const scheduledReversibleTransactions = {
 
     const GET_SCHEDULED_REVERSIBLE_TRANSACTIONS_STATS = gql`
       query GetScheduledReversibleTransactionsStats(
-        $startDate: DateTime!
-        $endDate: DateTime!
+        $startDate: timestamptz!
+        $endDate: timestamptz!
       ) {
-        last24Hour: scheduledReversibleTransfersConnection(
-          orderBy: id_ASC
-          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+        last24Hour: scheduled_reversible_transfer_aggregate(
+          where: { timestamp: { _gte: $startDate, _lte: $endDate } }
         ) {
-          totalCount
+          aggregate {
+            totalCount: count
+          }
         }
-        allTime: scheduledReversibleTransfersConnection(orderBy: id_ASC) {
-          totalCount
+        allTime: chain_stats_by_pk(id: "global") {
+          total_scheduled_transfers
         }
       }
     `;
@@ -176,9 +173,9 @@ export const scheduledReversibleTransactions = {
   },
   getByTxId: () => {
     const QUERY = gql`
-      query GetScheduledReversibleTransactionByTxId($txId: String!) {
-        scheduledReversibleTransactions: scheduledReversibleTransfers(
-          where: { txId_eq: $txId }
+      query GetScheduledReversibleTransactionByTxId($tx_id: String!) {
+        scheduledReversibleTransactions: scheduled_reversible_transfer(
+          where: { tx_id: { _eq: $tx_id } }
         ) {
           extrinsic {
             id
@@ -187,8 +184,8 @@ export const scheduledReversibleTransactions = {
           }
           amount
           timestamp
-          scheduledAt
-          txId
+          scheduled_at
+          tx_id
           fee
           block {
             height
@@ -205,13 +202,13 @@ export const scheduledReversibleTransactions = {
 
     return {
       useQuery: (
-        txId: string,
+        tx_id: string,
         config?: QueryHookOptions<ScheduledReversibleTransactionResponse>
       ) =>
         useQuery<ScheduledReversibleTransactionResponse>(QUERY, {
           ...config,
           variables: {
-            txId
+            tx_id
           }
         })
     };

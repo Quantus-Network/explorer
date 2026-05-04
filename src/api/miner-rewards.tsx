@@ -3,11 +3,10 @@ import { gql, useQuery } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
-import type { MinerRewardWhereInput } from '@/__generated__/graphql';
+import type { Miner_Reward_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MinerRewardSorts } from '@/constants/query-sorts';
-import { TRANSACTION_SORTS } from '@/constants/query-sorts';
 import type {
   MinerRewardListResponse,
   MinerRewardResponse,
@@ -20,20 +19,20 @@ export const minerRewards = {
   useGetAll: (
     config?: QueryHookOptions<
       MinerRewardListResponse,
-      PaginatedQueryVariables<MinerRewardSorts, MinerRewardWhereInput>
+      PaginatedQueryVariables<MinerRewardSorts, Miner_Reward_Bool_Exp>
     >
   ) => {
     const GET_MINER_REWARDS = gql`
       query GetMinerRewards(
         $limit: Int
         $offset: Int
-        $orderBy: [MinerRewardOrderByInput!]
-        $where: MinerRewardWhereInput
+        $orderBy: [miner_reward_order_by!]
+        $where: miner_reward_bool_exp
       ) {
-        minerRewards(
+        minerRewards: miner_reward(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           block {
@@ -46,19 +45,21 @@ export const minerRewards = {
           }
           timestamp
         }
-        meta: minerRewardsConnection(orderBy: id_ASC, where: $where) {
-          totalCount
+        meta: miner_reward_aggregate(where: $where) {
+          aggregate {
+            totalCount: count
+          }
         }
       }
     `;
 
     return useQuery<
       MinerRewardListResponse,
-      PaginatedQueryVariables<MinerRewardSorts, MinerRewardWhereInput>
+      PaginatedQueryVariables<MinerRewardSorts, Miner_Reward_Bool_Exp>
     >(GET_MINER_REWARDS, {
       ...config,
       variables: {
-        orderBy: config?.variables?.orderBy ?? TRANSACTION_SORTS.timestamp.DESC,
+        orderBy: config?.variables?.orderBy ?? { timestamp: 'desc' },
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
@@ -72,13 +73,13 @@ export const minerRewards = {
       query GetRecentMinerRewards(
         $limit: Int
         $offset: Int
-        $orderBy: [MinerRewardOrderByInput!]
-        $where: MinerRewardWhereInput
+        $orderBy: [miner_reward_order_by!]
+        $where: miner_reward_bool_exp
       ) {
-        minerRewards(
+        minerRewards: miner_reward(
           limit: $limit
           offset: $offset
-          orderBy: $orderBy
+          order_by: $orderBy
           where: $where
         ) {
           block {
@@ -96,11 +97,11 @@ export const minerRewards = {
 
     return useQuery<
       RecentMinerRewardsResponse,
-      PaginatedQueryVariables<MinerRewardSorts, MinerRewardWhereInput>
+      PaginatedQueryVariables<MinerRewardSorts, Miner_Reward_Bool_Exp>
     >(GET_RECENT_MINER_REWARDS, {
       ...config,
       variables: {
-        orderBy: TRANSACTION_SORTS.timestamp.DESC,
+        orderBy: { timestamp: 'desc' },
         limit: QUERY_RECENT_LIMIT
       }
     });
@@ -112,15 +113,19 @@ export const minerRewards = {
     const endDate = endOfToday().toISOString();
 
     const GET_MINER_REWARDS_STATS = gql`
-      query GetMinerRewardsStats($startDate: DateTime!, $endDate: DateTime!) {
-        last24Hour: minerRewardsConnection(
-          orderBy: id_ASC
-          where: { timestamp_gte: $startDate, timestamp_lte: $endDate }
+      query GetMinerRewardsStats(
+        $startDate: timestamptz!
+        $endDate: timestamptz!
+      ) {
+        last24Hour: miner_reward_aggregate(
+          where: { timestamp: { _gte: $startDate, _lte: $endDate } }
         ) {
-          totalCount
+          aggregate {
+            totalCount: count
+          }
         }
-        allTime: minerRewardsConnection(orderBy: id_ASC) {
-          totalCount
+        allTime: chain_stats_by_pk(id: "global") {
+          total_miner_rewards
         }
       }
     `;
@@ -136,7 +141,7 @@ export const minerRewards = {
   getByHash: () => {
     const QUERY = gql`
       query GetMinerRewardByHash($hash: String!) {
-        minerRewards(where: { block: { hash_eq: $hash } }) {
+        minerRewards: miner_reward(where: { block: { hash: { _eq: $hash } } }) {
           block {
             height
             hash

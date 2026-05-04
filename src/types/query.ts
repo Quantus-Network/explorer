@@ -4,3 +4,5 @@ export interface PaginatedQueryVariables<T = string, U = string> {
   orderBy?: T;
   where?: U;
 }
+
+export type SortDirection = 'asc' | 'desc';

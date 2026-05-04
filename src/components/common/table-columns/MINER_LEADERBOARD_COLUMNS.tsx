@@ -35,13 +35,13 @@ export const MINER_LEADERBOARD_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('totalMinedBlocks', {
+  columnHelper.accessor('total_mined_blocks', {
     id: 'total_mined_blocks',
     header: 'Mined Blocks',
     cell: (props) => props.getValue(),
     enableSorting: false
   }),
-  columnHelper.accessor('totalRewards', {
+  columnHelper.accessor('total_rewards', {
     id: 'total_rewards',
     header: 'Total Rewards',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),

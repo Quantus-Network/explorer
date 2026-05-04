@@ -28,42 +28,70 @@ export interface AccountWormholeOutput {
   };
 }
 
+export interface AccountStats {
+  total_cancelled_transfers: number;
+  total_executed_transfers: number;
+  total_immediate_transfers: number;
+  total_mined_blocks: number;
+  total_rewards: number;
+  total_scheduled_transfers: number;
+}
+
+export interface AccountEvent {
+  transfer?: Transaction;
+  scheduledReversibleTransfer?: ScheduledReversibleTransaction;
+  executedReversibleTransfer?: ExecutedReversibleTransaction;
+  cancelledReversibleTransfer?: CancelledReversibleTransaction;
+  minerReward?: MinerReward;
+}
+
 export interface AccountResponse {
   account: Account;
-  transactions: {
-    edges: AccountTransaction[];
-    /** @description the grand total of the transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  scheduledReversibleTransactions: {
-    edges: AccountScheduledReversibleTransaction[];
-    /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  executedReversibleTransactions: {
-    edges: AccountExecutedReversibleTransaction[];
-    /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  cancelledReversibleTransactions: {
-    edges: AccountCancelledReversibleTransaction[];
-    /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
-  minerRewards: {
-    edges: AccountMinerRewards[];
-    /** @description the grand total of the reversible transactions regardless of the return node limit using `first` parameter */
-    totalCount: number;
-  };
+  accountStats: AccountStats;
+  accountEvents: AccountEvent[];
   beneficiaries: {
-    edges: AccountBeneficiary[];
+    nodes: AccountBeneficiary[];
     /** @description the grand total of the beneficiary high security sets regardless of the return node limit using `first` parameter */
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
   guardian: {
-    edges: AccountGuardian[];
+    nodes: AccountGuardian[];
     /** @description the grand total of the guardian high security sets regardless of the return node limit using `first` parameter */
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  transactions: {
+    nodes: Transaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  scheduledReversibleTransactions: {
+    nodes: ScheduledReversibleTransaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  executedReversibleTransactions: {
+    nodes: ExecutedReversibleTransaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  cancelledReversibleTransactions: {
+    nodes: CancelledReversibleTransaction[];
+    aggregate: {
+      totalCount: number;
+    };
+  };
+  minerRewards: {
+    nodes: MinerReward[];
+    aggregate: {
+      totalCount: number;
+    };
   };
   wormholeOutputs: AccountWormholeOutput[];
 }
@@ -73,26 +101,6 @@ export interface AccountListResponse {
   meta: {
     totalCount: number;
   };
-}
-
-export interface AccountTransaction {
-  node: Transaction;
-}
-
-export interface AccountMinerRewards {
-  node: MinerReward;
-}
-
-export interface AccountScheduledReversibleTransaction {
-  node: ScheduledReversibleTransaction;
-}
-
-export interface AccountExecutedReversibleTransaction {
-  node: ExecutedReversibleTransaction;
-}
-
-export interface AccountCancelledReversibleTransaction {
-  node: CancelledReversibleTransaction;
 }
 
 export interface AccountBeneficiary {
@@ -107,14 +115,27 @@ export interface AccountGuardian {
   };
 }
 
+export type AccountTransaction = Transaction;
+export type AccountScheduledReversibleTransaction =
+  ScheduledReversibleTransaction;
+export type AccountExecutedReversibleTransaction =
+  ExecutedReversibleTransaction;
+export type AccountCancelledReversibleTransaction =
+  CancelledReversibleTransaction;
+export type AccountMinerRewards = MinerReward;
+
 export interface AccountStatsResponse {
   all: {
-    totalCount: number;
+    total_accounts: number;
   };
   recentlyActive: {
-    totalCount: number;
+    aggregate: {
+      count: number;
+    };
   };
   recentlyDeposited: {
-    totalCount: number;
+    aggregate: {
+      count: number;
+    };
   };
 }

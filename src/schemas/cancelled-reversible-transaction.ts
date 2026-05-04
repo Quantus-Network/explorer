@@ -1,14 +1,15 @@
 import type * as gql from '../__generated__/graphql';
 import type { ScheduledReversibleTransaction } from './scheduled-reversible-transaction';
 
-export interface CancelledReversibleTransaction
-  extends Omit<
-    gql.CancelledReversibleTransfer,
+export interface CancelledReversibleTransaction {
+  node: Omit<
+    gql.Cancelled_Reversible_Transfer,
     'id' | 'block' | 'event' | 'cancelledBy' | 'scheduledTransfer'
-  > {
-  block: Pick<gql.Block, 'height'>;
-  cancelledBy: Pick<gql.Account, 'id'>;
-  scheduledTransfer: ScheduledReversibleTransaction;
+  > & {
+    block: Pick<gql.Block, 'height'>;
+    cancelledBy: Pick<gql.Account, 'id'>;
+    scheduledTransfer: ScheduledReversibleTransaction['node'];
+  };
 }
 
 export interface CancelledReversibleTransactionResponse {
@@ -18,7 +19,9 @@ export interface CancelledReversibleTransactionResponse {
 export interface CancelledReversibleTransactionListResponse {
   cancelledReversibleTransactions: CancelledReversibleTransaction[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -28,9 +31,11 @@ export interface RecentCancelledReversibleTransactionsResponse {
 
 export interface CancelledReversibleTransactionsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_cancelled_transfers: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }

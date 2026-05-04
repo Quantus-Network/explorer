@@ -28,16 +28,17 @@ export const BlockHighSecuritySets: React.FC<Props> = ({ query }) => {
         }}
       />
 
-      {!query.loading && query.data?.highSecuritySets.totalCount !== 0 && (
-        <Button variant="link" className="mx-auto w-fit">
-          <Link
-            to="/high-security-sets"
-            search={{ block: query.data?.blocks[0]?.height }}
-          >
-            See all high security sets
-          </Link>
-        </Button>
-      )}
+      {!query.loading &&
+        query.data?.highSecuritySets.aggregate.totalCount !== 0 && (
+          <Button variant="link" className="mx-auto w-fit">
+            <Link
+              to="/high-security-sets"
+              search={{ block: query.data?.blocks[0]?.height }}
+            >
+              See all high security sets
+            </Link>
+          </Button>
+        )}
     </ContentContainer>
   );
 };

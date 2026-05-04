@@ -1,11 +1,5 @@
 import { useSearch } from '@tanstack/react-router';
-import type {
-  OnChangeFn,
-  PaginationState,
-  SortingState
-} from '@tanstack/react-table';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useEffect, useMemo, useState } from 'react';
 
 import useApiClient from '@/api';
@@ -13,7 +7,8 @@ import { EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS } from '@/components/common/tab
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { ExecutedReversibleTransactionSorts } from '@/constants/query-sorts';
-import { EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS } from '@/constants/query-sorts';
+import { useOrderBy } from '@/hooks/useOrderBy';
+import { useTableState } from '@/hooks/useTableState';
 import type { ExecutedReversibleTransaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
@@ -23,60 +18,19 @@ export const useExecutedReversibleTransactionsTable = () => {
     strict: false
   }) as any;
 
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
-  const [limit, setLimit] = useQueryState(
-    'limit',
-    parseAsInteger.withDefault(QUERY_DEFAULT_LIMIT)
+  const {
+    orderBy,
+    limit,
+    currentPageIndex,
+    handleChangeSorting,
+    handleChangePagination,
+    paginationValue
+  } = useTableState(null, QUERY_DEFAULT_LIMIT);
+
+  const orderByObject = useOrderBy<ExecutedReversibleTransactionSorts>(
+    orderBy ?? ''
   );
-  const [sortBy, setSortBy] = useQueryState(
-    'sortBy',
-    parseAsStringLiteral(EXECUTED_REVERSIBLE_TRANSACTION_SORTS_LITERALS)
-  );
-
-  const currentPageIndex = page - 1;
-
-  const sortingValue: SortingState = transformSortLiteral(sortBy);
-  const paginationValue: PaginationState = {
-    pageSize: limit,
-    pageIndex: currentPageIndex
-  };
-
-  const handleChangeSorting: OnChangeFn<SortingState> = (sorting) => {
-    if (typeof sorting === 'function') {
-      const newValue = sorting(sortingValue);
-
-      if (newValue[0]?.id) {
-        const key = newValue[0].id;
-        const order = newValue[0].desc ? 'DESC' : 'ASC';
-
-        const newSortBy =
-          `${key}_${order}` as ExecutedReversibleTransactionSorts;
-
-        setSortBy(newSortBy);
-      } else {
-        setSortBy(null);
-      }
-    } else if (sorting[0]?.id) {
-      const key = sorting[0].id;
-      const order = sorting[0].desc ? 'DESC' : 'ASC';
-
-      const newSortBy = `${key}_${order}` as ExecutedReversibleTransactionSorts;
-
-      setSortBy(newSortBy);
-    }
-  };
-
-  const handleChangePagination: OnChangeFn<PaginationState> = (pagination) => {
-    if (typeof pagination === 'function') {
-      const newPagination = pagination(paginationValue);
-
-      setPage(newPagination.pageIndex + 1);
-      setLimit(newPagination.pageSize);
-    } else {
-      setPage(pagination.pageIndex + 1);
-      setLimit(pagination.pageSize);
-    }
-  };
+  const sortingValue = transformSortLiteral(orderBy);
 
   const {
     loading,
@@ -85,7 +39,7 @@ export const useExecutedReversibleTransactionsTable = () => {
   } = api.executedReversibleTransactions.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
-      orderBy: sortBy,
+      orderBy: orderByObject,
       limit,
       offset: currentPageIndex * limit,
       ...(accountId && {
@@ -105,7 +59,9 @@ export const useExecutedReversibleTransactionsTable = () => {
   });
 
   const columns = useMemo(() => EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS, []);
-  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
+  const [rowCount, setRowCount] = useState<number>(
+    data?.meta.aggregate.totalCount ?? 0
+  );
 
   const table = useReactTable<ExecutedReversibleTransaction>({
     data: data?.executedReversibleTransactions ?? [],
@@ -139,8 +95,9 @@ export const useExecutedReversibleTransactionsTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
-  }, [loading, data?.meta.totalCount]);
+    if (!loading && data?.meta.aggregate.totalCount)
+      setRowCount(data.meta.aggregate.totalCount);
+  }, [loading, data?.meta.aggregate.totalCount]);
 
   return {
     table,

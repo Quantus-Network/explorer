@@ -9,7 +9,7 @@ export interface BlocksStatsProps {}
 
 export const BlocksStats: React.FC<BlocksStatsProps> = () => {
   const api = useApiClient();
-  const { loading, data, error } = api.chainStatus.useGetStatus({
+  const { loading, data, error } = api.blocks.getStats().useQuery({
     pollInterval: DATA_POOL_INTERVAL
   });
 
@@ -24,7 +24,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.status.height}</p>}
+          {success && <p>{data?.chain.block_height}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -37,7 +37,20 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.status.finalizedHeight}</p>}
+          {success && <p>{data?.chain.finalized_block_height}</p>}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <h3>Mined Blocks (24H)</h3>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {success && <p>{data?.minedIn24Hours.aggregate.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

@@ -10,12 +10,12 @@ const columnHelper =
   createColumnHelper<AccountScheduledReversibleTransaction>();
 
 export const ACCOUNT_SCHEDULED_REVERSIBLE_COLUMNS = [
-  columnHelper.accessor('node.txId', {
+  columnHelper.accessor('node.tx_id', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (
       <LinkWithCopy
-        href={`${RESOURCES.scheduledReversibleTransactions}/${props.row.original.node.txId}`}
+        href={`${RESOURCES.scheduledReversibleTransactions}/${props.row.original.node.tx_id}`}
         text={formatTxAddress(props.getValue() ?? '-')}
         textCopy={props.getValue() ?? ''}
       />
@@ -40,7 +40,7 @@ export const ACCOUNT_SCHEDULED_REVERSIBLE_COLUMNS = [
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('node.scheduledAt', {
+  columnHelper.accessor('node.scheduled_at', {
     id: 'scheduledAt',
     header: 'Scheduled At',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,

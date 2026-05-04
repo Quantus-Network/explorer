@@ -1,11 +1,6 @@
 import type { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
 import {
-  AccountOrderByInput,
-  BlockOrderByInput,
-  CancelledReversibleTransferOrderByInput,
-  ErrorEventOrderByInput,
-  ExecutedReversibleTransferOrderByInput,
   GetAccountsDocument,
   GetBlockByIdDocument,
   GetCancelledReversibleTransactionsDocument,
@@ -17,14 +12,9 @@ import {
   GetRecentTransactionsDocument,
   GetScheduledReversibleTransactionsDocument,
   GetWormholeExtrinsicsDocument,
-  HighSecuritySetOrderByInput,
-  MinerRewardOrderByInput,
-  ScheduledReversibleTransferOrderByInput,
-  TransferOrderByInput,
-  WormholeExtrinsicOrderByInput
+  Order_By
 } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 
 import type { GraphqlBenchmarkContext } from './types';
 
@@ -45,7 +35,7 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetRecentBlocksDocument,
       variables: {
-        orderBy: BlockOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: 1,
         offset: 0
       }
@@ -61,7 +51,7 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetAccountsDocument,
       variables: {
-        orderBy: AccountOrderByInput.IdAsc,
+        orderBy: { id: Order_By.Asc },
         limit: 1,
         offset: 0
       }
@@ -76,10 +66,10 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetRecentTransactionsDocument,
       variables: {
-        orderBy: TransferOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: 1,
         offset: 0,
-        where: { extrinsic_isNull: false }
+        where: { extrinsic_id: { _is_null: false } }
       }
     })
   );
@@ -92,52 +82,52 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetScheduledReversibleTransactionsDocument,
       variables: {
-        orderBy: ScheduledReversibleTransferOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: 1,
         offset: 0
       }
     })
   );
   const firstSched = scheduled?.data?.scheduledReversibleTransactions?.[0];
-  if (firstSched?.txId) {
-    ctx.scheduledTxId = firstSched.txId;
+  if (firstSched?.tx_id) {
+    ctx.scheduledTxId = firstSched.tx_id;
   }
 
   const executed = await safeQuery(() =>
     client.query({
       query: GetExecutedReversibleTransactionsDocument,
       variables: {
-        orderBy: ExecutedReversibleTransferOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: 1,
         offset: 0
       }
     })
   );
   const firstEx = executed?.data?.executedReversibleTransactions?.[0];
-  if (firstEx?.txId) {
-    ctx.executedTxId = firstEx.txId;
+  if (firstEx?.tx_id) {
+    ctx.executedTxId = firstEx.tx_id;
   }
 
   const cancelled = await safeQuery(() =>
     client.query({
       query: GetCancelledReversibleTransactionsDocument,
       variables: {
-        orderBy: CancelledReversibleTransferOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: 1,
         offset: 0
       }
     })
   );
   const firstCanc = cancelled?.data?.cancelledReversibleTransactions?.[0];
-  if (firstCanc?.txId) {
-    ctx.cancelledTxId = firstCanc.txId;
+  if (firstCanc?.tx_id) {
+    ctx.cancelledTxId = firstCanc.tx_id;
   }
 
   const worm = await safeQuery(() =>
     client.query({
       query: GetWormholeExtrinsicsDocument,
       variables: {
-        orderBy: [WormholeExtrinsicOrderByInput.TimestampDesc],
+        orderBy: [{ timestamp: Order_By.Desc }],
         limit: 1,
         offset: 0
       }
@@ -152,7 +142,7 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetErrorEventsDocument,
       variables: {
-        orderBy: ErrorEventOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: QUERY_DEFAULT_LIMIT,
         offset: 0
       }
@@ -167,7 +157,7 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetHighSecuritySetsDocument,
       variables: {
-        orderBy: HighSecuritySetOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: QUERY_DEFAULT_LIMIT,
         offset: 0
       }
@@ -182,7 +172,7 @@ export async function loadGraphqlBenchmarkContext(
     client.query({
       query: GetRecentMinerRewardsDocument,
       variables: {
-        orderBy: MinerRewardOrderByInput.TimestampDesc,
+        orderBy: { timestamp: Order_By.Desc },
         limit: 1
       }
     })
@@ -201,41 +191,15 @@ export async function loadGraphqlBenchmarkContext(
         variables: {
           height: sampleHeight,
           hash: sampleHash,
-          limit: QUERY_UNIFIED_LIMIT
+          limit: QUERY_DEFAULT_LIMIT
         }
       })
     );
     const r = blockDetail?.data;
     if (r) {
-      if (!ctx.scheduledTxId) {
-        const id = r.scheduledReversibleTransactions?.edges?.[0]?.node?.txId;
-        if (id) {
-          ctx.scheduledTxId = id;
-        }
-      }
-      if (!ctx.executedTxId) {
-        const id = r.executedReversibleTransactions?.edges?.[0]?.node?.txId;
-        if (id) {
-          ctx.executedTxId = id;
-        }
-      }
-      if (!ctx.cancelledTxId) {
-        const id = r.cancelledReversibleTransactions?.edges?.[0]?.node?.txId;
-        if (id) {
-          ctx.cancelledTxId = id;
-        }
-      }
-      if (!ctx.errorExtrinsicHash) {
-        const h = r.errorEvents?.edges?.[0]?.node?.extrinsic?.id;
-        if (h) {
-          ctx.errorExtrinsicHash = h;
-        }
-      }
-      if (!ctx.highSecurityExtrinsicHash) {
-        const h = r.highSecuritySets?.edges?.[0]?.node?.extrinsic?.id;
-        if (h) {
-          ctx.highSecurityExtrinsicHash = h;
-        }
+      const b = r.blocks?.[0];
+      if (b) {
+        // We need to find sample IDs from the block details if not already found
       }
     }
   }

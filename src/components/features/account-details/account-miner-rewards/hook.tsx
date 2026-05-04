@@ -10,8 +10,8 @@ export const useAccountMinerRewards = (query: QueryResult<AccountResponse>) => {
   const minerRewardColumns = useMemo(() => ACCOUNT_MINER_REWARDS_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.minerRewards?.edges ?? [],
-    [data?.minerRewards?.edges]
+    () => data?.minerRewards?.nodes ?? [],
+    [data?.minerRewards?.nodes]
   );
 
   const table = useReactTable<AccountMinerRewards>({
