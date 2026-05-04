@@ -59,7 +59,9 @@ export const useExecutedReversibleTransactionsTable = () => {
   });
 
   const columns = useMemo(() => EXECUTED_REVERSIBLE_TRANSACTION_COLUMNS, []);
-  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
+  const [rowCount, setRowCount] = useState<number>(
+    data?.meta.aggregate.totalCount ?? 0
+  );
 
   const table = useReactTable<ExecutedReversibleTransaction>({
     data: data?.executedReversibleTransactions ?? [],
@@ -93,8 +95,9 @@ export const useExecutedReversibleTransactionsTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
-  }, [loading, data?.meta.totalCount]);
+    if (!loading && data?.meta.aggregate.totalCount)
+      setRowCount(data.meta.aggregate.totalCount);
+  }, [loading, data?.meta.aggregate.totalCount]);
 
   return {
     table,

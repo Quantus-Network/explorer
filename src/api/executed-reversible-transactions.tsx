@@ -169,7 +169,7 @@ export const executedReversibleTransactions = {
           }
         }
         allTime: chain_stats_by_pk(id: "global") {
-          totalCount: total_executed_transfers
+          total_executed_transfers
         }
       }
     `;
