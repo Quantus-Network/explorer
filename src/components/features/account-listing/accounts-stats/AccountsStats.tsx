@@ -31,7 +31,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.all.totalCount}</p>}
+          {success && <p>{data?.all.total_accounts}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -44,7 +44,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.recentlyActive.totalCount}</p>}
+          {success && <p>{data?.recentlyActive.aggregate.count}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -57,7 +57,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.recentlyDeposited.totalCount}</p>}
+          {success && <p>{data?.recentlyDeposited.aggregate.count}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

@@ -25,16 +25,16 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
     loading,
     accountId
   );
-  const transactions = data?.transactions.totalCount;
+  const transactions = data?.accountStats.total_immediate_transfers;
   const scheduledReversibleTransactions =
-    data?.scheduledReversibleTransactions.totalCount;
+    data?.accountStats.total_scheduled_transfers;
   const executedReversibleTransactions =
-    data?.executedReversibleTransactions.totalCount;
+    data?.accountStats.total_executed_transfers;
   const cancelledReversibleTransactions =
-    data?.cancelledReversibleTransactions.totalCount;
-  const miningRewards = data?.minerRewards.totalCount;
-  const beneficiaries = data?.beneficiaries.totalCount;
-  const guardians = data?.guardian.totalCount;
+    data?.accountStats.total_cancelled_transfers;
+  const miningRewards = data?.accountStats.total_rewards;
+  const beneficiaries = data?.beneficiaries.aggregate.totalCount;
+  const guardians = data?.guardian.aggregate.totalCount;
 
   const information = [
     {

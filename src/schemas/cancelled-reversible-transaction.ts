@@ -3,7 +3,7 @@ import type { ScheduledReversibleTransaction } from './scheduled-reversible-tran
 
 export interface CancelledReversibleTransaction
   extends Omit<
-    gql.CancelledReversibleTransfer,
+    gql.Cancelled_Reversible_Transfer,
     'id' | 'block' | 'event' | 'cancelledBy' | 'scheduledTransfer'
   > {
   block: Pick<gql.Block, 'height'>;

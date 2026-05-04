@@ -2,7 +2,7 @@ import type * as gql from '../__generated__/graphql';
 
 export interface ScheduledReversibleTransaction
   extends Omit<
-    gql.ScheduledReversibleTransfer,
+    gql.Scheduled_Reversible_Transfer,
     'id' | 'block' | 'event' | 'from' | 'to'
   > {
   block: Pick<gql.Block, 'height'>;
