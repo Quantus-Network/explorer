@@ -31,7 +31,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
 
   const information: Partial<CancelledReversibleTransaction>[] = [
     {
-      txId: tx?.txId,
+      tx_id: tx?.tx_id,
       block: tx?.block,
       timestamp: tx?.timestamp,
       cancelledBy: tx?.cancelledBy,
@@ -47,7 +47,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
       fields={[
         {
           label: 'ID',
-          key: 'txId',
+          key: 'tx_id',
           render: (value) => (
             <TextWithCopy text={value || '-'} className="break-all" />
           )

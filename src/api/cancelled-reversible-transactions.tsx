@@ -175,7 +175,7 @@ export const cancelledReversibleTransactions = {
           }
         }
         allTime: chain_stats_by_pk(id: "global") {
-          totalCount: total_cancelled_transfers
+          total_cancelled_transfers
         }
       }
     `;

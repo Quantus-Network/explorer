@@ -18,7 +18,9 @@ export interface CancelledReversibleTransactionResponse {
 export interface CancelledReversibleTransactionListResponse {
   cancelledReversibleTransactions: CancelledReversibleTransaction[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 
@@ -28,9 +30,11 @@ export interface RecentCancelledReversibleTransactionsResponse {
 
 export interface CancelledReversibleTransactionsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_cancelled_transfers: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }

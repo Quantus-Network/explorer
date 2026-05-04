@@ -9,7 +9,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<CancelledReversibleTransaction>();
 
 export const CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('txId', {
+  columnHelper.accessor('tx_id', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (

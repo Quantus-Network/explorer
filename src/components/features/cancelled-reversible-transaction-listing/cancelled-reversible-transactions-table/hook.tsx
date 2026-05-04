@@ -60,7 +60,9 @@ export const useCancelledReversibleTransactionsTable = () => {
   });
 
   const columns = useMemo(() => CANCELLED_REVERSIBLE_TRANSACTION_COLUMNS, []);
-  const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
+  const [rowCount, setRowCount] = useState<number>(
+    data?.meta.aggregate.totalCount ?? 0
+  );
 
   const table = useReactTable<CancelledReversibleTransaction>({
     data: data?.cancelledReversibleTransactions ?? [],
@@ -94,8 +96,9 @@ export const useCancelledReversibleTransactionsTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.totalCount) setRowCount(data.meta.totalCount);
-  }, [loading, data?.meta.totalCount]);
+    if (!loading && data?.meta.aggregate.totalCount)
+      setRowCount(data.meta.aggregate.totalCount);
+  }, [loading, data?.meta.aggregate.totalCount]);
 
   return {
     table,
