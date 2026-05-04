@@ -1,5 +1,4 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs';
 import { useMemo } from 'react';
 
 import useApiClient from '@/api';
@@ -10,35 +9,34 @@ import {
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-
-const SORT_OPTIONS = [
-  'timestamp_DESC',
-  'timestamp_ASC',
-  'totalAmount_DESC',
-  'totalAmount_ASC'
-] as const;
+import { type WormholeExtrinsicSorts } from '@/constants/query-sorts';
+import { useOrderBy } from '@/hooks/useOrderBy';
+import { useTableState } from '@/hooks/useTableState';
+import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const WormholeOutputsTable = () => {
   const api = useApiClient();
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
-  const [limit, setLimit] = useQueryState(
-    'limit',
-    parseAsInteger.withDefault(QUERY_DEFAULT_LIMIT)
-  );
-  const [sortBy] = useQueryState(
-    'sortBy',
-    parseAsStringLiteral(SORT_OPTIONS).withDefault('timestamp_DESC')
-  );
+  const {
+    orderBy,
+    limit,
+    currentPageIndex,
+    handleChangeSorting,
+    handleChangePagination,
+    paginationValue
+  } = useTableState('timestamp:desc', QUERY_DEFAULT_LIMIT);
 
-  const offset = (page - 1) * limit;
+  const orderByObject = useOrderBy<WormholeExtrinsicSorts>(
+    orderBy ?? 'timestamp:desc'
+  );
+  const sortingValue = transformSortLiteral(orderBy);
 
   const { data, loading, error } = api.wormhole.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
-      orderBy: sortBy,
+      orderBy: orderByObject,
       limit,
-      offset,
-      where: { extrinsic_isNull: false }
+      offset: currentPageIndex * limit,
+      where: { extrinsic: { id: { _is_null: false } } }
     }
   });
 
@@ -46,7 +44,7 @@ export const WormholeOutputsTable = () => {
     () => data?.wormholeExtrinsics ?? [],
     [data]
   );
-  const totalCount = data?.meta?.totalCount ?? 0;
+  const totalCount = data?.meta?.aggregate?.totalCount ?? 0;
 
   const table = useReactTable<WormholeExtrinsicRow>({
     data: rows,
@@ -54,17 +52,13 @@ export const WormholeOutputsTable = () => {
     getCoreRowModel: getCoreRowModel(),
     manualSorting: true,
     manualPagination: true,
-    pageCount: Math.ceil(totalCount / limit),
+    rowCount: totalCount,
     state: {
-      pagination: { pageIndex: page - 1, pageSize: limit }
+      pagination: paginationValue,
+      sorting: sortingValue
     },
-    onPaginationChange: (updater) => {
-      if (typeof updater === 'function') {
-        const next = updater({ pageIndex: page - 1, pageSize: limit });
-        setPage(next.pageIndex + 1);
-        setLimit(next.pageSize);
-      }
-    }
+    onPaginationChange: handleChangePagination,
+    onSortingChange: handleChangeSorting
   });
 
   const getStatus = () => {

@@ -27,25 +27,25 @@ export const WORMHOLE_EXTRINSIC_COLUMNS = [
     },
     enableSorting: false
   }),
-  columnHelper.accessor('totalAmount', {
+  columnHelper.accessor('total_amount', {
     id: 'total_amount',
     header: 'Total Amount',
     cell: (props) => formatMonetaryValue(Number(props.getValue())),
     enableSorting: true
   }),
-  columnHelper.accessor('outputCount', {
+  columnHelper.accessor('output_count', {
     id: 'output_count',
     header: 'Outputs',
     cell: (props) => props.getValue(),
     enableSorting: false
   }),
-  columnHelper.accessor('privacyScore', {
+  columnHelper.accessor('privacy_score', {
     id: 'privacy_score',
     header: 'Privacy',
     cell: (props) => (
       <PrivacyScoreBadge
         score={props.getValue()}
-        label={props.row.original.privacyLabel}
+        label={props.row.original.privacy_label}
       />
     ),
     enableSorting: true

@@ -15,7 +15,7 @@ const GET_WORMHOLE_EXTRINSICS = gql`
     $limit: Int
     $offset: Int
     $orderBy: [wormhole_extrinsic_order_by!]!
-    $where: Wormhole_Extrinsic_Bool_Exp
+    $where: wormhole_extrinsic_bool_exp
   ) {
     wormholeExtrinsics: wormhole_extrinsic(
       limit: $limit
@@ -29,11 +29,11 @@ const GET_WORMHOLE_EXTRINSICS = gql`
         pallet
         call
       }
-      totalAmount: total_amount
-      outputCount: output_count
+      total_amount
+      output_count
       timestamp
-      privacyScore: privacy_score
-      privacyLabel: privacy_label
+      privacy_score
+      privacy_label
       block {
         height
       }
@@ -55,15 +55,15 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
         pallet
         call
       }
-      totalAmount: total_amount
-      outputCount: output_count
+      total_amount
+      output_count
       timestamp
-      privacyScore: privacy_score
-      privacyScore01Pct: privacy_score01_pct
-      privacyScore1Pct: privacy_score1_pct
-      privacyScore5Pct: privacy_score5_pct
-      privacyLabel: privacy_label
-      poolSnapshot: pool_snapshot
+      privacy_score
+      privacy_score01_pct
+      privacy_score1_pct
+      privacy_score5_pct
+      privacy_label
+      pool_snapshot
       block {
         id
         height
@@ -82,7 +82,7 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
       where: { wormholeExtrinsic: { id: { _eq: $id } } }
     ) {
       nullifier
-      nullifierHash: nullifier_hash
+      nullifier_hash
     }
   }
 `;
@@ -90,7 +90,7 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
 const GET_DEPOSIT_POOL_STATS = gql`
   query GetDepositPoolStats {
     depositPoolStatsById: deposit_pool_stats_by_pk(id: "global") {
-      lastUpdatedBlock: last_updated_block
+      last_updated_block
       buckets
     }
   }
