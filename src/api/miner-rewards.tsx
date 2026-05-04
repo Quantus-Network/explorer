@@ -27,7 +27,7 @@ export const minerRewards = {
         $limit: Int
         $offset: Int
         $orderBy: [miner_reward_order_by!]
-        $where: Miner_Reward_Bool_Exp
+        $where: miner_reward_bool_exp
       ) {
         minerRewards: miner_reward(
           limit: $limit
@@ -74,7 +74,7 @@ export const minerRewards = {
         $limit: Int
         $offset: Int
         $orderBy: [miner_reward_order_by!]
-        $where: Miner_Reward_Bool_Exp
+        $where: miner_reward_bool_exp
       ) {
         minerRewards: miner_reward(
           limit: $limit
@@ -124,8 +124,8 @@ export const minerRewards = {
             totalCount: count
           }
         }
-        allTime: chain_stats {
-          totalCount: total_miner_rewards
+        allTime: chain_stats_by_pk(id: "global") {
+          total_miner_rewards
         }
       }
     `;

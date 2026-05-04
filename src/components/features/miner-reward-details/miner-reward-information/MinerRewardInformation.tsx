@@ -52,8 +52,6 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
     }
   ];
 
-  console.log(minerReward);
-
   return (
     <DataList<Partial<MinerReward & { hash: string }>>
       loading={loading}

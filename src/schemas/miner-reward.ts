@@ -23,9 +23,11 @@ export interface RecentMinerRewardsResponse {
 
 export interface MinerRewardsStatsResponse {
   allTime: {
-    totalCount: number;
+    total_miner_rewards: number;
   };
   last24Hour: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
