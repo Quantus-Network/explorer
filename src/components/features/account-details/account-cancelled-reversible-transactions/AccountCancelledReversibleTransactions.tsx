@@ -35,8 +35,7 @@ export const AccountCancelledReversibleTransactions: FC<Props> = ({
       />
 
       {!query.loading &&
-        query.data?.cancelledReversibleTransactions.aggregate.totalCount !==
-          0 && (
+        query.data?.cancelledReversibleTransactions.totalCount !== 0 && (
           <Button variant="link" className="mx-auto w-fit">
             <Link
               to={RESOURCES.cancelledReversibleTransactions}

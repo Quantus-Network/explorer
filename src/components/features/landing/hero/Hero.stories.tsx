@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { WithProviders } from '@/decorators/WithProviders';
 
-import { Hero } from './Hero';
+import { Hero, type HeroProps } from './Hero';
 
-const meta: Meta = {
+const meta: Meta<HeroProps> = {
   title: 'Components/Features/Landing/Hero',
   component: Hero,
   parameters: {
@@ -16,7 +16,7 @@ const meta: Meta = {
 
 export default meta;
 
-type Story = StoryObj;
+type Story = StoryObj<HeroProps>;
 
 export const Default: Story = {
   args: {}

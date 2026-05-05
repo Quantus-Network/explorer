@@ -9,7 +9,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<MinerReward>();
 
 export const MINER_REWARD_COLUMNS = [
-  columnHelper.accessor('node.block.hash', {
+  columnHelper.accessor('block.hash', {
     id: 'block_hash',
     header: 'Hash',
     cell: (props) => (
@@ -20,7 +20,7 @@ export const MINER_REWARD_COLUMNS = [
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('node.block.height', {
+  columnHelper.accessor('block.height', {
     id: 'block_height',
     header: 'Block',
     cell: (props) => (
@@ -31,7 +31,7 @@ export const MINER_REWARD_COLUMNS = [
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('node.miner.id', {
+  columnHelper.accessor('miner.id', {
     id: 'miner',
     header: 'Mined by',
     cell: (props) => (
@@ -42,13 +42,13 @@ export const MINER_REWARD_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.reward', {
+  columnHelper.accessor('reward', {
     id: 'reward',
     header: 'Reward',
     cell: (props) => formatMonetaryValue(props.getValue()),
     enableSorting: true
   }),
-  columnHelper.accessor('node.timestamp', {
+  columnHelper.accessor('timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,

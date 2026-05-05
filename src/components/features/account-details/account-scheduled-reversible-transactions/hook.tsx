@@ -15,8 +15,8 @@ export const useAccountScheduledReversibleTransactions = (
   const columns = useMemo(() => ACCOUNT_SCHEDULED_REVERSIBLE_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.scheduledReversibleTransactions?.nodes ?? [],
-    [data?.scheduledReversibleTransactions?.nodes]
+    () => data?.scheduledReversibleTransactions?.edges ?? [],
+    [data?.scheduledReversibleTransactions?.edges]
   );
 
   const table = useReactTable<AccountScheduledReversibleTransaction>({

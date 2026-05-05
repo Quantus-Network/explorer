@@ -15,8 +15,8 @@ export const useBlockCancelledReversibleTransactions = (
   const columns = useMemo(() => BLOCK_CANCELLED_REVERSIBLE_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.cancelledReversibleTransactions?.nodes ?? [],
-    [data?.cancelledReversibleTransactions?.nodes]
+    () => data?.cancelledReversibleTransactions?.edges ?? [],
+    [data?.cancelledReversibleTransactions?.edges]
   );
 
   const table = useReactTable<BlockCancelledReversibleTransaction>({

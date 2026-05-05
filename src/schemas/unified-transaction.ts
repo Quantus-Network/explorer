@@ -31,7 +31,6 @@ export interface UnifiedTransaction {
   to?: { id: string };
   amount?: string | number;
   fee?: number;
-  scheduled_at?: string;
 
   // Miner reward fields
   reward?: string;

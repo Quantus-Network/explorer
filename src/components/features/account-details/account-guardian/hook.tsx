@@ -10,8 +10,8 @@ export const useAccountGuardian = (query: QueryResult<AccountResponse>) => {
   const guardianColumns = useMemo(() => ACCOUNT_GUARDIAN_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.guardian?.nodes ?? [],
-    [data?.guardian?.nodes]
+    () => data?.guardian?.edges ?? [],
+    [data?.guardian?.edges]
   );
 
   const table = useReactTable<AccountGuardian>({

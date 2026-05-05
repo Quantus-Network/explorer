@@ -18,11 +18,7 @@ import {
   transformScheduledTransaction,
   transformWormholeOutput
 } from '@/hooks/useUnifiedTransactions';
-import type {
-  AccountResponse,
-  HighSecuritySet,
-  UnifiedTransaction
-} from '@/schemas';
+import type { AccountResponse, UnifiedTransaction } from '@/schemas';
 
 // Account page shows block column
 const columns = createUnifiedTransactionColumns({ showBlockColumn: true });
@@ -73,15 +69,13 @@ export const useAccountAllTransactions = (
       unified.push(
         transformHighSecuritySet(
           {
-            node: {
-              timestamp: (guardian as any).timestamp ?? '',
-              block: (guardian as any).block ?? {
-                height: 0
-              },
-              who: { id: '' }, // Guardian view doesn't have who (it's the current account)
-              interceptor: guardian.node.interceptor
-            }
-          } as HighSecuritySet,
+            timestamp: (guardian as { timestamp?: string }).timestamp ?? '',
+            block: (guardian as { block?: { height: number } }).block ?? {
+              height: 0
+            },
+            who: { id: '' }, // Guardian view doesn't have who (it's the current account)
+            interceptor: guardian.interceptor
+          },
           idx
         )
       );
@@ -92,15 +86,13 @@ export const useAccountAllTransactions = (
       unified.push(
         transformHighSecuritySet(
           {
-            node: {
-              timestamp: (beneficiary as any).timestamp ?? '',
-              block: (beneficiary as any).block ?? {
-                height: 0
-              },
-              who: beneficiary.node.who,
-              interceptor: { id: '' } // Beneficiary view doesn't have interceptor (it's the current account)
-            }
-          } as HighSecuritySet,
+            timestamp: (beneficiary as { timestamp?: string }).timestamp ?? '',
+            block: (beneficiary as { block?: { height: number } }).block ?? {
+              height: 0
+            },
+            who: beneficiary.who,
+            interceptor: { id: '' } // Beneficiary view doesn't have interceptor (it's the current account)
+          },
           idx
         )
       );

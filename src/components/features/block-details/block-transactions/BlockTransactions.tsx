@@ -28,17 +28,16 @@ export const BlockTransactions: React.FC<Props> = ({ query }) => {
         }}
       />
 
-      {!query.loading &&
-        query.data?.transactions.aggregate.totalCount !== 0 && (
-          <Button variant="link" className="mx-auto w-fit">
-            <Link
-              to="/immediate-transactions"
-              search={{ block: query.data?.blocks[0]?.height }}
-            >
-              See all immediate transactions
-            </Link>
-          </Button>
-        )}
+      {!query.loading && query.data?.transactions.totalCount !== 0 && (
+        <Button variant="link" className="mx-auto w-fit">
+          <Link
+            to="/immediate-transactions"
+            search={{ block: query.data?.blocks[0]?.height }}
+          >
+            See all immediate transactions
+          </Link>
+        </Button>
+      )}
     </ContentContainer>
   );
 };

@@ -65,9 +65,7 @@ export const DepositPoolStatsCard = () => {
           </div>
           <div>
             <p className="text-sm text-muted-foreground">Last Updated</p>
-            <p className="text-2xl font-bold">
-              Block {stats.last_updated_block}
-            </p>
+            <p className="text-2xl font-bold">Block {stats.lastUpdatedBlock}</p>
           </div>
         </div>
       </CardContent>

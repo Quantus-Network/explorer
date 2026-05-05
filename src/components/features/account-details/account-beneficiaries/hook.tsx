@@ -12,8 +12,8 @@ export const useAccountBeneficiaries = (
   const beneficiariesColumns = useMemo(() => ACCOUNT_BENEFICIARIES_COLUMNS, []);
 
   const tableData = useMemo(
-    () => data?.beneficiaries?.nodes ?? [],
-    [data?.beneficiaries?.nodes]
+    () => data?.beneficiaries?.edges ?? [],
+    [data?.beneficiaries?.edges]
   );
 
   const table = useReactTable<AccountBeneficiary>({

@@ -10,7 +10,7 @@ export const useBlockTransactions = (query: QueryResult<BlockResponse>) => {
   const blockColumns = useMemo(() => BLOCK_TRANSACTION_COLUMNS, []);
 
   const table = useReactTable<BlockTransaction>({
-    data: data?.transactions?.nodes ?? [],
+    data: data?.transactions?.edges ?? [],
     columns: blockColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false

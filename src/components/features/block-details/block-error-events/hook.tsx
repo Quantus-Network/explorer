@@ -10,7 +10,7 @@ export const useBlockErrorEvents = (query: QueryResult<BlockResponse>) => {
   const blockColumns = useMemo(() => BLOCK_ERROR_EVENT_COLUMNS, []);
 
   const table = useReactTable<BlockErrorEvent>({
-    data: data?.errorEvents?.nodes ?? [],
+    data: data?.errorEvents?.edges ?? [],
     columns: blockColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false

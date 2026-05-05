@@ -16,8 +16,8 @@ export const useBlockScheduledReversibleTransactions = (
 
   // Map BlockScheduledReversibleTransaction[] to ScheduledReversibleTransaction[]
   const tableData = useMemo(
-    () => data?.scheduledReversibleTransactions?.nodes ?? [],
-    [data?.scheduledReversibleTransactions?.nodes]
+    () => data?.scheduledReversibleTransactions?.edges ?? [],
+    [data?.scheduledReversibleTransactions?.edges]
   );
 
   const table = useReactTable<BlockScheduledReversibleTransaction>({

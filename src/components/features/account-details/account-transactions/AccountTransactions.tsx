@@ -29,14 +29,13 @@ export const AccountTransactions: React.FC<Props> = ({ query, accountId }) => {
         }}
       />
 
-      {!query.loading &&
-        query.data?.transactions.aggregate.totalCount !== 0 && (
-          <Button variant="link" className="mx-auto w-fit">
-            <Link to="/immediate-transactions" search={{ accountId }}>
-              See all immediate transactions
-            </Link>
-          </Button>
-        )}
+      {!query.loading && query.data?.transactions.totalCount !== 0 && (
+        <Button variant="link" className="mx-auto w-fit">
+          <Link to="/immediate-transactions" search={{ accountId }}>
+            See all immediate transactions
+          </Link>
+        </Button>
+      )}
     </ContentContainer>
   );
 };

@@ -1,11 +1,10 @@
 import type * as gql from '../__generated__/graphql';
 
-export interface Transaction {
-  node: Omit<gql.Transfer, 'id' | 'from' | 'to' | 'block' | 'event'> & {
-    from: Pick<gql.Account, 'id'>;
-    to: Pick<gql.Account, 'id'>;
-    block: Pick<gql.Block, 'height'>;
-  };
+export interface Transaction
+  extends Omit<gql.Transfer, 'id' | 'from' | 'to' | 'block' | 'event'> {
+  from: Pick<gql.Account, 'id'>;
+  to: Pick<gql.Account, 'id'>;
+  block: Pick<gql.Block, 'height'>;
 }
 
 export interface TransactionResponse {

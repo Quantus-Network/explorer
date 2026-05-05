@@ -29,14 +29,13 @@ export const AccountMinerRewards: React.FC<Props> = ({ query, accountId }) => {
         }}
       />
 
-      {!query.loading &&
-        query.data?.minerRewards.aggregate.totalCount !== 0 && (
-          <Button variant="link" className="mx-auto w-fit">
-            <Link to="/miner-rewards" search={{ accountId }}>
-              See all miner rewards
-            </Link>
-          </Button>
-        )}
+      {!query.loading && query.data?.minerRewards.totalCount !== 0 && (
+        <Button variant="link" className="mx-auto w-fit">
+          <Link to="/miner-rewards" search={{ accountId }}>
+            See all miner rewards
+          </Link>
+        </Button>
+      )}
     </ContentContainer>
   );
 };

@@ -28,7 +28,7 @@ export const BlockErrorEvents: React.FC<Props> = ({ query }) => {
         }}
       />
 
-      {!query.loading && query.data?.errorEvents.aggregate.totalCount !== 0 && (
+      {!query.loading && query.data?.errorEvents.totalCount !== 0 && (
         <Button variant="link" className="mx-auto w-fit">
           <Link to="/errors" search={{ block: query.data?.blocks[0]?.height }}>
             See all error events

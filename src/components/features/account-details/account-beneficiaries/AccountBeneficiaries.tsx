@@ -30,14 +30,13 @@ export const AccountBeneficiaries: React.FC<Props> = ({ query, accountId }) => {
         }}
       />
 
-      {!query.loading &&
-        query.data?.beneficiaries.aggregate.totalCount !== 0 && (
-          <Button variant="link" className="mx-auto w-fit">
-            <Link to={RESOURCES.highSecuritySets} search={{ accountId }}>
-              See all beneficiary accounts
-            </Link>
-          </Button>
-        )}
+      {!query.loading && query.data?.beneficiaries.totalCount !== 0 && (
+        <Button variant="link" className="mx-auto w-fit">
+          <Link to={RESOURCES.highSecuritySets} search={{ accountId }}>
+            See all beneficiary accounts
+          </Link>
+        </Button>
+      )}
     </ContentContainer>
   );
 };

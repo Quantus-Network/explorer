@@ -33,8 +33,7 @@ export const BlockScheduledReversibleTransactions: React.FC<Props> = ({
       />
 
       {!query.loading &&
-        query.data?.scheduledReversibleTransactions.aggregate.totalCount !==
-          0 && (
+        query.data?.scheduledReversibleTransactions.totalCount !== 0 && (
           <Button variant="link" className="mx-auto w-fit">
             <Link
               to={RESOURCES.scheduledReversibleTransactions}
