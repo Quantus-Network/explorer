@@ -9,19 +9,22 @@ import type { ScheduledReversibleTransaction } from './scheduled-reversible-tran
 import type { Transaction } from './transcation';
 
 export interface SearchAllResponse {
-  transactions: { node: Pick<Transaction['node'], 'extrinsic'> }[];
-  scheduledReversibleTransactions: {
-    node: Pick<ScheduledReversibleTransaction['node'], 'extrinsic' | 'tx_id'>;
-  }[];
-  executedReversibleTransactions: {
-    node: Pick<ExecutedReversibleTransaction['node'], 'tx_id'>;
-  }[];
-  cancelledReversibleTransactions: {
-    node: Pick<CancelledReversibleTransaction['node'], 'tx_id'>;
-  }[];
+  transactions: Pick<Transaction, 'extrinsic'>[];
+  scheduledReversibleTransactions: Pick<
+    ScheduledReversibleTransaction,
+    'extrinsic' | 'tx_id'
+  >[];
+  executedReversibleTransactions: Pick<
+    ExecutedReversibleTransaction,
+    'tx_id'
+  >[];
+  cancelledReversibleTransactions: Pick<
+    CancelledReversibleTransaction,
+    'tx_id'
+  >[];
   accounts: Pick<Account, 'id'>[];
   blocks: Pick<Block, 'height'>[];
-  highSecuritySets: { node: Pick<HighSecuritySet['node'], 'extrinsic'> }[];
-  minerRewards: { node: Pick<MinerReward['node'], 'block'> }[];
-  errorEvents: { node: Pick<ErrorEvent['node'], 'extrinsic'> }[];
+  highSecuritySets: Pick<HighSecuritySet, 'extrinsic'>[];
+  minerRewards: Pick<MinerReward, 'block'>[];
+  errorEvents: Pick<ErrorEvent, 'extrinsic'>[];
 }

@@ -29,22 +29,22 @@ export const ScheduledReversibleTransactionInformation: React.FC<
 
   const tx = data?.scheduledReversibleTransactions[0];
 
-  const information: Partial<ScheduledReversibleTransaction['node']>[] = [
+  const information: Partial<ScheduledReversibleTransaction>[] = [
     {
-      tx_id: tx?.node.tx_id,
-      amount: tx?.node.amount,
-      extrinsic: tx?.node.extrinsic,
-      block: tx?.node.block,
-      timestamp: tx?.node.timestamp,
-      scheduled_at: tx?.node.scheduled_at,
-      from: tx?.node.from,
-      to: tx?.node.to,
-      fee: (tx?.node as any).fee
+      tx_id: tx?.tx_id,
+      amount: tx?.amount,
+      extrinsic: tx?.extrinsic,
+      block: tx?.block,
+      timestamp: tx?.timestamp,
+      scheduled_at: tx?.scheduled_at,
+      from: tx?.from,
+      to: tx?.to,
+      fee: tx?.fee
     }
   ];
 
   return (
-    <DataList<Partial<ScheduledReversibleTransaction['node']>>
+    <DataList<Partial<ScheduledReversibleTransaction>>
       loading={loading}
       data={information}
       fields={[
@@ -61,8 +61,8 @@ export const ScheduledReversibleTransactionInformation: React.FC<
           render: (value) => (
             <TextWithCopy
               text={
-                (value as ScheduledReversibleTransaction['node']['extrinsic'])
-                  ?.id ?? '-'
+                (value as ScheduledReversibleTransaction['extrinsic'])?.id ??
+                '-'
               }
               className="break-all"
             />
@@ -73,8 +73,8 @@ export const ScheduledReversibleTransactionInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={value?.height.toString() ?? '-'}
-              href={`${RESOURCES.blocks}/${value?.height}`}
+              text={value.height.toString()}
+              href={`${RESOURCES.blocks}/${value.height}`}
               className="break-all"
             />
           )
@@ -82,20 +82,20 @@ export const ScheduledReversibleTransactionInformation: React.FC<
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value as string, true)
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'Scheduled At',
           key: 'scheduled_at',
-          render: (value) => formatTimestamp(value as string, true)
+          render: (value) => formatTimestamp(value, true)
         },
         {
           label: 'From',
           key: 'from',
           render: (value) => (
             <LinkWithCopy
-              text={value?.id ?? '-'}
-              href={`${RESOURCES.accounts}/${value?.id}`}
+              text={value.id}
+              href={`${RESOURCES.accounts}/${value.id}`}
               className="break-all"
             />
           )
@@ -105,8 +105,8 @@ export const ScheduledReversibleTransactionInformation: React.FC<
           key: 'to',
           render: (value) => (
             <LinkWithCopy
-              text={value?.id ?? '-'}
-              href={`${RESOURCES.accounts}/${value?.id}`}
+              text={value.id}
+              href={`${RESOURCES.accounts}/${value.id}`}
               className="break-all"
             />
           )
@@ -114,12 +114,12 @@ export const ScheduledReversibleTransactionInformation: React.FC<
         {
           label: 'Amount',
           key: 'amount',
-          render: (value) => formatMonetaryValue(value as string)
+          render: (value) => formatMonetaryValue(value)
         },
         {
           label: 'Fee',
           key: 'fee',
-          render: (value) => formatMonetaryValue(value as string)
+          render: (value) => formatMonetaryValue(value)
         }
       ]}
     />

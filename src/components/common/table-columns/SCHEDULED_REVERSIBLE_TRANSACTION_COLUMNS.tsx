@@ -9,7 +9,7 @@ import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<ScheduledReversibleTransaction>();
 
 export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
-  columnHelper.accessor('node.tx_id', {
+  columnHelper.accessor('tx_id', {
     id: 'tx-id',
     header: 'Tx ID',
     cell: (props) => (
@@ -21,7 +21,7 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.block.height', {
+  columnHelper.accessor('block.height', {
     id: 'block_height',
     header: 'Block',
     cell: (props) => (
@@ -32,19 +32,19 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('node.timestamp', {
+  columnHelper.accessor('timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('node.scheduled_at', {
+  columnHelper.accessor('scheduled_at', {
     id: 'scheduled_at',
     header: 'Scheduled At',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('node.from.id', {
+  columnHelper.accessor('from.id', {
     id: 'from',
     header: 'From',
     cell: (props) => (
@@ -56,7 +56,7 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.to.id', {
+  columnHelper.accessor('to.id', {
     id: 'to',
     header: 'To',
     cell: (props) => (
@@ -68,7 +68,7 @@ export const SCHEDULED_REVERSIBLE_TRANSACTION_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.amount', {
+  columnHelper.accessor('amount', {
     id: 'amount',
     header: 'Amount',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),

@@ -1,10 +1,9 @@
 import type * as gql from '../__generated__/graphql';
 
-export interface MinerReward {
-  node: Omit<gql.Miner_Reward, 'id' | 'block' | 'miner' | 'event'> & {
-    miner: Pick<gql.Account, 'id'>;
-    block: Pick<gql.Block, 'height' | 'hash'>;
-  };
+export interface MinerReward
+  extends Omit<gql.Miner_Reward, 'id' | 'block' | 'miner' | 'event'> {
+  miner: Pick<gql.Account, 'id'>;
+  block: Pick<gql.Block, 'height' | 'hash'>;
 }
 
 export interface MinerRewardResponse {

@@ -63,36 +63,6 @@ export interface AccountResponse {
       totalCount: number;
     };
   };
-  transactions: {
-    nodes: Transaction[];
-    aggregate: {
-      totalCount: number;
-    };
-  };
-  scheduledReversibleTransactions: {
-    nodes: ScheduledReversibleTransaction[];
-    aggregate: {
-      totalCount: number;
-    };
-  };
-  executedReversibleTransactions: {
-    nodes: ExecutedReversibleTransaction[];
-    aggregate: {
-      totalCount: number;
-    };
-  };
-  cancelledReversibleTransactions: {
-    nodes: CancelledReversibleTransaction[];
-    aggregate: {
-      totalCount: number;
-    };
-  };
-  minerRewards: {
-    nodes: MinerReward[];
-    aggregate: {
-      totalCount: number;
-    };
-  };
   wormholeOutputs: AccountWormholeOutput[];
 }
 
@@ -104,25 +74,12 @@ export interface AccountListResponse {
 }
 
 export interface AccountBeneficiary {
-  node: {
-    who: Account;
-  };
+  who: Account;
 }
 
 export interface AccountGuardian {
-  node: {
-    interceptor: Account;
-  };
+  interceptor: Account;
 }
-
-export type AccountTransaction = Transaction;
-export type AccountScheduledReversibleTransaction =
-  ScheduledReversibleTransaction;
-export type AccountExecutedReversibleTransaction =
-  ExecutedReversibleTransaction;
-export type AccountCancelledReversibleTransaction =
-  CancelledReversibleTransaction;
-export type AccountMinerRewards = MinerReward;
 
 export interface AccountStatsResponse {
   all: {

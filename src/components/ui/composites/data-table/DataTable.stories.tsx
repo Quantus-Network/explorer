@@ -28,80 +28,72 @@ export const Primary: Omit<Story, 'args'> = {
       const transactionDataTable = useReactTable<Transaction>({
         data: [
           {
-            node: {
-              block: { height: 293293 },
-              extrinsic: {
-                id: '0xjdwjaidwjaidj',
-                pallet: 'balances',
-                call: 'transfer'
-              } as any,
-              fee: '120000000',
-              amount: '999999',
-              transfer_count: 1,
-              from: { id: '0x2131313' },
-              to: { id: '0xdjwaidjiajdi' },
-              timestamp: new Date().toISOString(),
-              from_hash: '0x2131313',
-              to_hash: '0xdjwaidjiajdi',
-              leaf_index: 0
-            }
+            block: { height: 293293 },
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
+            fee: '120000000',
+            amount: '999999',
+            transfer_count: 1,
+            from: { id: '0x2131313' },
+            to: { id: '0xdjwaidjiajdi' },
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
+            timestamp: new Date().toISOString(),
+            leaf_index: 0
           },
           {
-            node: {
-              block: { height: 293293 },
-              extrinsic: {
-                id: '0xjdwjaidwjaidj',
-                pallet: 'balances',
-                call: 'transfer'
-              } as any,
-              fee: '120000000',
-              amount: '999999',
-              transfer_count: 1,
-              from: { id: '0x2131313' },
-              to: { id: '0xdjwaidjiajdi' },
-              timestamp: new Date().toISOString(),
-              from_hash: '0x2131313',
-              to_hash: '0xdjwaidjiajdi',
-              leaf_index: 0
-            }
+            block: { height: 293293 },
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
+            fee: '120000000',
+            amount: '999999',
+            transfer_count: 1,
+            from: { id: '0x2131313' },
+            to: { id: '0xdjwaidjiajdi' },
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
+            timestamp: new Date().toISOString(),
+            leaf_index: 0
           },
           {
-            node: {
-              block: { height: 293293 },
-              extrinsic: {
-                id: '0xjdwjaidwjaidj',
-                pallet: 'balances',
-                call: 'transfer'
-              } as any,
-              fee: '120000000',
-              amount: '999999',
-              transfer_count: 1,
-              from: { id: '0x2131313' },
-              to: { id: '0xdjwaidjiajdi' },
-              timestamp: new Date().toISOString(),
-              from_hash: '0x2131313',
-              to_hash: '0xdjwaidjiajdi',
-              leaf_index: 0
-            }
+            block: { height: 293293 },
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
+            fee: '120000000',
+            amount: '999999',
+            transfer_count: 1,
+            from: { id: '0x2131313' },
+            to: { id: '0xdjwaidjiajdi' },
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
+            timestamp: new Date().toISOString(),
+            leaf_index: 0
           },
           {
-            node: {
-              block: { height: 293293 },
-              extrinsic: {
-                id: '0xjdwjaidwjaidj',
-                pallet: 'balances',
-                call: 'transfer'
-              } as any,
-              fee: '120000000',
-              amount: '999999',
-              from: { id: '0x2131313' },
-              to: { id: '0xdjwaidjiajdi' },
-              transfer_count: 1,
-              timestamp: new Date().toISOString(),
-              from_hash: '0x2131313',
-              to_hash: '0xdjwaidjiajdi',
-              leaf_index: 0
-            }
+            block: { height: 293293 },
+            extrinsic: {
+              id: '0xjdwjaidwjaidj',
+              pallet: 'balances',
+              call: 'transfer'
+            } as any,
+            fee: '120000000',
+            amount: '999999',
+            from: { id: '0x2131313' },
+            to: { id: '0xdjwaidjiajdi' },
+            transfer_count: 1,
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
+            timestamp: new Date().toISOString(),
+            leaf_index: 0
           }
         ],
         columns: transactionColumns,

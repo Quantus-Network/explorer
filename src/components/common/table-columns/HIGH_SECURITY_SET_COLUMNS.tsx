@@ -9,7 +9,7 @@ import { formatDuration, formatTxAddress } from '@/utils/formatter';
 const columnHelper = createColumnHelper<HighSecuritySet>();
 
 export const HIGH_SECURITY_SET_COLUMNS = [
-  columnHelper.accessor('node.extrinsic.id', {
+  columnHelper.accessor('extrinsic.id', {
     id: 'tx-hash',
     header: 'Hash',
     cell: (props) =>
@@ -24,7 +24,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
       ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.block.height', {
+  columnHelper.accessor('block.height', {
     id: 'block_height',
     header: 'Block',
     cell: (props) => (
@@ -35,13 +35,13 @@ export const HIGH_SECURITY_SET_COLUMNS = [
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('node.timestamp', {
+  columnHelper.accessor('timestamp', {
     id: 'timestamp',
     header: 'Timestamp',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
-  columnHelper.accessor('node.who.id', {
+  columnHelper.accessor('who.id', {
     id: 'who',
     header: 'Beneficiary',
     cell: (props) => (
@@ -53,7 +53,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.interceptor.id', {
+  columnHelper.accessor('interceptor.id', {
     id: 'interceptor',
     header: 'Guardian',
     cell: (props) => (
@@ -65,7 +65,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.delay', {
+  columnHelper.accessor('delay', {
     id: 'delay',
     header: 'Reversible Time',
     cell: (props) => formatDuration(props.getValue()),

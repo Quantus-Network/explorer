@@ -8,7 +8,7 @@ import { formatMonetaryValue } from '@/utils/formatter';
 const columnHelper = createColumnHelper<AccountBeneficiary>();
 
 export const ACCOUNT_BENEFICIARIES_COLUMNS = [
-  columnHelper.accessor('node.who.id', {
+  columnHelper.accessor('who.id', {
     id: 'id',
     header: 'Identity',
     cell: (props) => (
@@ -19,19 +19,19 @@ export const ACCOUNT_BENEFICIARIES_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('node.who.free', {
+  columnHelper.accessor('who.free', {
     id: 'free',
     header: 'Free',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   }),
-  columnHelper.accessor('node.who.frozen', {
+  columnHelper.accessor('who.frozen', {
     id: 'frozen',
     header: 'Frozen',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   }),
-  columnHelper.accessor('node.who.reserved', {
+  columnHelper.accessor('who.reserved', {
     id: 'reserved',
     header: 'Reserved',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
