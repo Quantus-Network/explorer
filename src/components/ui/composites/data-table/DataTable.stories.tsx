@@ -36,13 +36,13 @@ export const Primary: Omit<Story, 'args'> = {
             } as any,
             fee: '120000000',
             amount: '999999',
-            transferCount: 1,
+            transfer_count: 1,
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
-            fromHash: '0x2131313',
-            toHash: '0xdjwaidjiajdi',
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString(),
-            leafIndex: 0
+            leaf_index: 0
           },
           {
             block: { height: 293293 },
@@ -53,13 +53,13 @@ export const Primary: Omit<Story, 'args'> = {
             } as any,
             fee: '120000000',
             amount: '999999',
-            transferCount: 1,
+            transfer_count: 1,
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
-            fromHash: '0x2131313',
-            toHash: '0xdjwaidjiajdi',
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString(),
-            leafIndex: 0
+            leaf_index: 0
           },
           {
             block: { height: 293293 },
@@ -70,13 +70,13 @@ export const Primary: Omit<Story, 'args'> = {
             } as any,
             fee: '120000000',
             amount: '999999',
-            transferCount: 1,
+            transfer_count: 1,
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
-            fromHash: '0x2131313',
-            toHash: '0xdjwaidjiajdi',
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString(),
-            leafIndex: 0
+            leaf_index: 0
           },
           {
             block: { height: 293293 },
@@ -89,11 +89,11 @@ export const Primary: Omit<Story, 'args'> = {
             amount: '999999',
             from: { id: '0x2131313' },
             to: { id: '0xdjwaidjiajdi' },
-            transferCount: 1,
-            fromHash: '0x2131313',
-            toHash: '0xdjwaidjiajdi',
+            transfer_count: 1,
+            from_hash: '0x2131313',
+            to_hash: '0xdjwaidjiajdi',
             timestamp: new Date().toISOString(),
-            leafIndex: 0
+            leaf_index: 0
           }
         ],
         columns: transactionColumns,

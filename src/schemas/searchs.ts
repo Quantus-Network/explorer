@@ -12,12 +12,15 @@ export interface SearchAllResponse {
   transactions: Pick<Transaction, 'extrinsic'>[];
   scheduledReversibleTransactions: Pick<
     ScheduledReversibleTransaction,
-    'extrinsic' | 'txId'
+    'extrinsic' | 'tx_id'
   >[];
-  executedReversibleTransactions: Pick<ExecutedReversibleTransaction, 'txId'>[];
+  executedReversibleTransactions: Pick<
+    ExecutedReversibleTransaction,
+    'tx_id'
+  >[];
   cancelledReversibleTransactions: Pick<
     CancelledReversibleTransaction,
-    'txId'
+    'tx_id'
   >[];
   accounts: Pick<Account, 'id'>[];
   blocks: Pick<Block, 'height'>[];
