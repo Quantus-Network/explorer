@@ -269,17 +269,17 @@ export const createUnifiedTransactionColumns = (
           ].includes(row.type) &&
           row.amount !== undefined
         ) {
-          return formatMonetaryValue(Number(row.amount), 5);
+          return formatMonetaryValue(BigInt(row.amount), 5);
         }
 
         // For miner rewards
         if (row.type === 'miner-reward' && row.reward !== undefined) {
-          return formatMonetaryValue(Number(row.reward), 5);
+          return formatMonetaryValue(row.reward, 5);
         }
 
         // For wormhole
         if (row.type === 'wormhole' && row.totalAmount !== undefined) {
-          return formatMonetaryValue(Number(row.totalAmount), 5);
+          return formatMonetaryValue(row.totalAmount, 5);
         }
 
         // For high security sets - show delay

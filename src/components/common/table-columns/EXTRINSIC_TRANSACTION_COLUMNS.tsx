@@ -46,7 +46,7 @@ export const EXTRINSIC_TRANSACTION_COLUMNS = [
     cell: ({ getValue }) => {
       const amount = getValue();
 
-      return formatMonetaryValue(Number(amount), 5);
+      return formatMonetaryValue(amount, 5);
     },
     enableSorting: true
   })

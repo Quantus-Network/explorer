@@ -109,7 +109,7 @@ export const createExtrinsicColumns = () => {
         if (!fee || fee === '0') {
           return <span className="text-muted-foreground">-</span>;
         }
-        return formatMonetaryValue(Number(fee), 5);
+        return formatMonetaryValue(fee, 5);
       },
       enableSorting: false
     }),

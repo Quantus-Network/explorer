@@ -30,7 +30,7 @@ export const WORMHOLE_EXTRINSIC_COLUMNS = [
   columnHelper.accessor('total_amount', {
     id: 'total_amount',
     header: 'Total Amount',
-    cell: (props) => formatMonetaryValue(Number(props.getValue())),
+    cell: (props) => formatMonetaryValue(props.getValue()),
     enableSorting: true
   }),
   columnHelper.accessor('output_count', {
@@ -44,7 +44,7 @@ export const WORMHOLE_EXTRINSIC_COLUMNS = [
     header: 'Privacy',
     cell: (props) => (
       <PrivacyScoreBadge
-        score={props.getValue()}
+        score={Number(props.getValue())}
         label={props.row.original.privacy_label}
       />
     ),

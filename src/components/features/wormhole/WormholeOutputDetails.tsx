@@ -20,11 +20,11 @@ interface ExtrinsicInfo {
   outputCount: number;
   block: { height: number; hash: string };
   timestamp: string;
-  privacyScore: number;
+  privacyScore: string;
   privacyLabel: string;
-  privacyScore01Pct: number;
-  privacyScore1Pct: number;
-  privacyScore5Pct: number;
+  privacyScore01Pct: string;
+  privacyScore1Pct: string;
+  privacyScore5Pct: string;
   poolSnapshot: string;
 }
 
@@ -78,7 +78,7 @@ export const WormholeOutputInformation = ({
           {
             label: 'Total Amount',
             key: 'totalAmount',
-            render: (value) => formatMonetaryValue(Number(value))
+            render: (value) => formatMonetaryValue(value)
           },
           {
             label: 'Exit Outputs',
@@ -113,7 +113,7 @@ export const WormholeOutputInformation = ({
             key: 'privacyScore',
             render: (value, item) => (
               <PrivacyScoreBadge
-                score={value as number}
+                score={Number(value)}
                 label={(item.privacyLabel as string) ?? ''}
               />
             ),
@@ -123,21 +123,21 @@ export const WormholeOutputInformation = ({
           {
             label: 'With 0.1% sacrifice',
             key: 'privacyScore01Pct',
-            render: (value) => `${(value as number).toFixed(1)} bits`,
+            render: (value) => `${Number(value).toFixed(1)} bits`,
             tooltip:
               'Score if the user had sacrificed 0.1% of the output for privacy.'
           },
           {
             label: 'With 1% sacrifice',
             key: 'privacyScore1Pct',
-            render: (value) => `${(value as number).toFixed(1)} bits`,
+            render: (value) => `${Number(value).toFixed(1)} bits`,
             tooltip:
               'Score if the user had sacrificed 1% of the output for privacy.'
           },
           {
             label: 'With 5% sacrifice',
             key: 'privacyScore5Pct',
-            render: (value) => `${(value as number).toFixed(1)} bits`,
+            render: (value) => `${Number(value).toFixed(1)} bits`,
             tooltip:
               'Score if the user had sacrificed 5% of the output for privacy.'
           },
@@ -189,7 +189,7 @@ export const WormholeOutputInformation = ({
                       <dt className="font-medium text-muted-foreground">
                         Output {idx + 1} of {extrinsic.output_count}
                       </dt>
-                      <dd>{formatMonetaryValue(Number(output.amount))}</dd>
+                      <dd>{formatMonetaryValue(output.amount)}</dd>
                     </div>
                     <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
                       <dt className="font-medium text-muted-foreground">

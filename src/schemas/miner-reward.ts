@@ -13,7 +13,9 @@ export interface MinerRewardResponse {
 export interface MinerRewardListResponse {
   minerRewards: MinerReward[];
   meta: {
-    totalCount: number;
+    aggregate: {
+      totalCount: number;
+    };
   };
 }
 

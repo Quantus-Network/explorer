@@ -36,15 +36,21 @@ export const formatDistanceTimestamp = (timestamp?: string | Date) => {
   return distance;
 };
 
-export const formatMonetaryValue = (value: number, digits?: number) => {
-  const denominator = 10 ** 12;
-  const convertedValue = value / denominator;
+export const formatMonetaryValue = (
+  value: bigint | string,
+  digits?: number
+) => {
+  const num = typeof value === 'string' ? BigInt(value) : value;
+  const decimals = digits ?? 12;
+  const factor = BigInt(10) ** BigInt(decimals);
+  const result = (num * factor) / BigInt(10 ** 12);
 
-  if (!digits) return `${convertedValue} ${env.COIN_SYMBOL}`;
+  const integerPart = result / factor;
+  const fractionalPart = result % factor;
+  const combinedPart = `${integerPart}.${fractionalPart.toString().padStart(decimals, '0')}`;
+  const formatted = combinedPart.replace(/\.?(0+)$/, '');
 
-  const str = convertedValue.toFixed(digits).replace(/\.?(0+)$/, '');
-
-  return `${str} ${env.COIN_SYMBOL}`;
+  return `${formatted} ${env.COIN_SYMBOL}`;
 };
 
 export const formatTxAddress = (address: string) => {
