@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import { MinerLeaderboardChart } from '@/components/features/miner-leaderboard/miner-leaderboard-chart/MinerLeaderboardChart';
 import { MinerLeaderboardTable } from '@/components/features/miner-leaderboard/miner-leaderboard-table/MinerLeaderboardTable';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
@@ -13,6 +14,8 @@ function MinerLeaderboard() {
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
         <h1>Miner Leaderboard</h1>
+
+        <MinerLeaderboardChart />
 
         <MinerLeaderboardTable />
       </ContentContainer>

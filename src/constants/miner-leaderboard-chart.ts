@@ -1,0 +1,1 @@
+export const MINER_LEADERBOARD_CHART_TOP_N = 10;

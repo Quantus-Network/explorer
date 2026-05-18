@@ -12,3 +12,8 @@ export interface MinerLeaderboardResponse {
     totalCount: number;
   };
 }
+
+export interface MinerLeaderboardChartResponse {
+  topMiners: Pick<MinerStats, 'id' | 'total_mined_blocks'>[];
+  blocks: { totalCount: number };
+}
