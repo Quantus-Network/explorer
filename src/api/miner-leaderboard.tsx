@@ -56,7 +56,7 @@ export const minerLeaderboard = {
           total_rewards
         }
         meta: chain_stats_by_pk(id: "global") {
-          totalCount: total_miner_rewards
+          totalCount: total_miners
         }
       }
     `;
