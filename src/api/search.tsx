@@ -6,6 +6,24 @@ import type { SearchAllResponse } from '@/schemas';
 import type DataFetcher from '@/utils/fetcher';
 import { getGqlString } from '@/utils/get-gql-string';
 
+const getSearchVariables = (oriKeyword: string) => {
+  let keyword_number = -1;
+  if (!oriKeyword.startsWith('0x') && !Number.isNaN(Number(oriKeyword))) {
+    keyword_number = Number(oriKeyword);
+  }
+
+  let keyword = oriKeyword;
+  if (keyword.length > 0) {
+    keyword = `${keyword}%`;
+  }
+
+  return {
+    keyword,
+    keyword_number,
+    limit: SEARCH_PREVIEW_RESULTS_LIMIT
+  };
+};
+
 export const search = (fetcher: DataFetcher) => ({
   all: () => {
     const SEARCH_ALL = gql`
@@ -104,13 +122,7 @@ export const search = (fetcher: DataFetcher) => ({
         fetcher.graphql<SearchAllResponse>(
           {
             query: getGqlString(SEARCH_ALL),
-            variables: {
-              keyword,
-              keyword_number: keyword.startsWith('0x')
-                ? -1
-                : Number(keyword) || -1, // if the result of conversion is NaN, use -1 as fallback.
-              limit: SEARCH_PREVIEW_RESULTS_LIMIT
-            },
+            variables: getSearchVariables(keyword),
             operationName: 'SearchAll'
           },
           {
@@ -123,13 +135,7 @@ export const search = (fetcher: DataFetcher) => ({
       ) =>
         useQuery<SearchAllResponse>(SEARCH_ALL, {
           ...config,
-          variables: {
-            keyword,
-            keyword_number: keyword.startsWith('0x')
-              ? -1
-              : Number(keyword) || -1, // if the result of conversion is NaN, use -1 as fallback.
-            limit: SEARCH_PREVIEW_RESULTS_LIMIT
-          }
+          variables: getSearchVariables(keyword)
         })
     };
   }
