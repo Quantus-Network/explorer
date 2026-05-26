@@ -5,6 +5,7 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import { cn } from '@/lib/utils';
 import type { BlockExtrinsic } from '@/schemas/blocks';
+import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<BlockExtrinsic>();
@@ -26,32 +27,7 @@ export const createExtrinsicColumns = () => {
       cell: (props) => {
         const hash = props.getValue();
         const { pallet, call } = props.row.original;
-
-        // Determine the appropriate resource based on pallet
-        let href = '';
-        if (pallet === 'Wormhole') {
-          href = `${RESOURCES.wormhole}/${hash}`;
-        } else if (pallet === 'Balances') {
-          href = `${RESOURCES.transactions}/${hash}`;
-        } else if (
-          pallet === 'ReversibleTransfers' &&
-          call === 'schedule_transfer'
-        ) {
-          href = `${RESOURCES.scheduledReversibleTransactions}/${hash}`;
-        } else if (
-          pallet === 'ReversibleTransfers' &&
-          call === 'execute_transfer'
-        ) {
-          href = `${RESOURCES.executedReversibleTransactions}/${hash}`;
-        } else if (
-          pallet === 'ReversibleTransfers' &&
-          call === 'cancel_transfer'
-        ) {
-          href = `${RESOURCES.cancelledReversibleTransactions}/${hash}`;
-        } else {
-          // Default to transactions for now
-          href = `${RESOURCES.transactions}/${hash}`;
-        }
+        const href = getExtrinsicDetailPath({ id: hash, pallet, call });
 
         return (
           <LinkWithCopy
