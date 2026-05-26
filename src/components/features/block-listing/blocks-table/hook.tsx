@@ -5,8 +5,7 @@ import useApiClient from '@/api';
 import { BLOCK_COLUMNS } from '@/components/common/table-columns/BLOCK_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { BlockSorts } from '@/constants/query-sorts';
-import { useOrderBy } from '@/hooks/useOrderBy';
+import { transformBlockOrderBy } from '@/constants/query-sorts';
 import { useTableState } from '@/hooks/useTableState';
 import type { Block } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
@@ -22,7 +21,10 @@ export const useBlocksTable = () => {
     paginationValue
   } = useTableState('timestamp:desc', QUERY_DEFAULT_LIMIT);
 
-  const orderByObject = useOrderBy<BlockSorts>(orderBy ?? 'timestamp:desc');
+  const orderByObject = useMemo(
+    () => transformBlockOrderBy(orderBy ?? 'timestamp:desc'),
+    [orderBy]
+  );
   const sortingValue = transformSortLiteral(orderBy);
 
   const {

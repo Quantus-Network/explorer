@@ -4,6 +4,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { Transaction } from '@/schemas';
+import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<Transaction>();
@@ -12,16 +13,26 @@ export const TRANSACTION_COLUMNS = [
   columnHelper.accessor('extrinsic.id', {
     id: 'tx-hash',
     header: 'Hash',
-    cell: (props) =>
-      props.getValue() ? (
+    cell: (props) => {
+      const extrinsicId = props.getValue();
+      const extrinsic = props.row.original.extrinsic;
+
+      if (!extrinsicId || !extrinsic?.pallet || !extrinsic?.call) {
+        return 'Is not available';
+      }
+
+      return (
         <LinkWithCopy
-          href={`${RESOURCES.transactions}/${props.getValue()}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          href={getExtrinsicDetailPath({
+            id: extrinsicId,
+            pallet: extrinsic.pallet,
+            call: extrinsic.call
+          })}
+          text={formatTxAddress(extrinsicId)}
+          textCopy={extrinsicId}
         />
-      ) : (
-        'Is not available'
-      ),
+      );
+    },
     enableSorting: false
   }),
   columnHelper.accessor('block.height', {

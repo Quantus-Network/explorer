@@ -5,6 +5,7 @@ import React, { forwardRef } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
+import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 
 import { Card, CardContent } from '../../card';
 
@@ -133,13 +134,21 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         title: 'Transactions',
         emptyMsg: 'No transactions found.',
         items: transactions,
-        renderItem: (tx: any) => (
-          <PreviewLink
-            href={`${RESOURCES.transactions}/${tx.extrinsic?.id}`}
-            label={`${tx.extrinsic?.id}`}
-            onSelect={handleClosePreview}
-          />
-        )
+        renderItem: (tx: any) => {
+          const { id, pallet, call } = tx.extrinsic ?? {};
+          const href =
+            id && pallet && call
+              ? getExtrinsicDetailPath({ id, pallet, call })
+              : `${RESOURCES.transactions}/${id}`;
+
+          return (
+            <PreviewLink
+              href={href}
+              label={`${id}`}
+              onSelect={handleClosePreview}
+            />
+          );
+        }
       },
       {
         title: 'Scheduled Reversible Transactions',

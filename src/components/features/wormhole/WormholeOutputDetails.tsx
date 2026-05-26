@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
@@ -38,6 +39,11 @@ export const WormholeOutputInformation = ({
   const nullifiers = data?.wormholeNullifiers ?? [];
 
   if (!loading && !extrinsic) throw notFound();
+
+  const outputs = extrinsic?.outputs ?? [];
+  const showExitOutputs = loading || outputs.length > 0;
+  const showNullifiers = loading || nullifiers.length > 0;
+  const nullifierCount = loading ? 16 : nullifiers.length;
 
   const extrinsicInfo: Partial<ExtrinsicInfo>[] = [
     {
@@ -161,97 +167,112 @@ export const WormholeOutputInformation = ({
         ]}
       />
 
-      <h2 className="text-lg font-semibold">Exit Outputs</h2>
-      {loading ? (
-        <Card>
-          <CardContent className="p-4">
-            <div className="animate-pulse space-y-3">
-              <div className="h-12 rounded bg-muted" />
-              <div className="h-12 rounded bg-muted" />
-            </div>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="flex flex-col gap-3">
-          {extrinsic?.outputs?.map(
-            (
-              output: {
-                id: string;
-                exitAccount: { id: string };
-                amount: string;
-              },
-              idx: number
-            ) => (
-              <Card key={output.id}>
+      {showExitOutputs && (
+        <>
+          <h2 className="text-lg font-semibold">Exit Outputs</h2>
+          <div className="flex flex-col gap-4">
+            {(loading ? [null] : outputs).map((output, idx) => (
+              <Card key={loading ? 'loading' : output!.id}>
                 <CardContent className="p-4">
                   <dl className="grid grid-cols-1 gap-y-2">
                     <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
                       <dt className="font-medium text-muted-foreground">
-                        Output {idx + 1} of {extrinsic.output_count}
+                        {loading ? (
+                          <Skeleton className="h-6 w-36" />
+                        ) : (
+                          `Output ${idx + 1} of ${extrinsic!.output_count}`
+                        )}
                       </dt>
-                      <dd>{formatMonetaryValue(output.amount)}</dd>
+                      {loading ? (
+                        <Skeleton className="h-6" />
+                      ) : (
+                        <dd>{formatMonetaryValue(output!.amount)}</dd>
+                      )}
                     </div>
                     <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
                       <dt className="font-medium text-muted-foreground">
                         Exit Account
                       </dt>
-                      <dd>
-                        <LinkWithCopy
-                          href={`${RESOURCES.accounts}/${output.exitAccount.id}`}
-                          text={output.exitAccount.id}
-                          className="break-all"
-                        />
-                      </dd>
+                      {loading ? (
+                        <Skeleton className="h-6" />
+                      ) : (
+                        <dd>
+                          <LinkWithCopy
+                            href={`${RESOURCES.accounts}/${output!.exitAccount.id}`}
+                            text={output!.exitAccount.id}
+                            className="break-all"
+                          />
+                        </dd>
+                      )}
                     </div>
                   </dl>
                 </CardContent>
               </Card>
-            )
-          )}
-        </div>
+            ))}
+          </div>
+        </>
       )}
 
-      {nullifiers.length > 0 && (
+      {showNullifiers && (
         <>
           <h2 className="text-lg font-semibold">Nullifiers</h2>
           <Card>
             <CardContent className="p-4">
               <p className="mb-3 text-sm text-muted-foreground">
-                {nullifiers.length} nullifier
-                {nullifiers.length !== 1 ? 's' : ''} consumed by this proof
+                {nullifierCount} nullifier
+                {nullifierCount !== 1 ? 's' : ''} consumed by this proof
                 verification. Each corresponds to a spent wormhole deposit.
               </p>
               <div className="space-y-2">
-                {nullifiers.map(
-                  (
-                    n: { nullifier: string; nullifier_hash: string },
-                    idx: number
-                  ) => (
-                    <div key={idx} className="rounded border p-2">
-                      <dl className="grid grid-cols-1 gap-y-1">
-                        <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                          <dt className="text-sm font-medium text-muted-foreground">
-                            Nullifier {idx + 1}
-                          </dt>
-                          <dd>
-                            <TextWithCopy
-                              text={n.nullifier}
-                              className="break-all text-xs"
-                            />
-                          </dd>
+                {loading
+                  ? Array.from({ length: 16 }, (_, idx) => (
+                      <div key={idx} className="rounded border p-2">
+                        <dl className="grid grid-cols-1 gap-y-1">
+                          <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
+                            <dt className="text-sm font-medium text-muted-foreground">
+                              Nullifier {idx + 1}
+                            </dt>
+                            <Skeleton className="h-6" />
+                          </div>
+                          <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
+                            <dt className="text-sm font-medium text-muted-foreground">
+                              Hash (blake3)
+                            </dt>
+                            <Skeleton className="h-6" />
+                          </div>
+                        </dl>
+                      </div>
+                    ))
+                  : nullifiers.map(
+                      (
+                        n: { nullifier: string; nullifier_hash: string },
+                        idx: number
+                      ) => (
+                        <div key={idx} className="rounded border p-2">
+                          <dl className="grid grid-cols-1 gap-y-1">
+                            <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
+                              <dt className="text-sm font-medium text-muted-foreground">
+                                Nullifier {idx + 1}
+                              </dt>
+                              <dd>
+                                <TextWithCopy
+                                  text={n.nullifier}
+                                  className="break-all text-xs"
+                                />
+                              </dd>
+                            </div>
+                            <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
+                              <dt className="text-sm font-medium text-muted-foreground">
+                                Hash (blake3)
+                              </dt>
+                              <dd className="break-all text-xs text-muted-foreground">
+                                {n.nullifier_hash}
+                              </dd>
+                            </div>
+                          </dl>
                         </div>
-                        <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                          <dt className="text-sm font-medium text-muted-foreground">
-                            Hash (blake3)
-                          </dt>
-                          <dd className="break-all text-xs text-muted-foreground">
-                            {n.nullifier_hash}
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
-                  )
-                )}
+                      )
+                    )}
               </div>
             </CardContent>
           </Card>

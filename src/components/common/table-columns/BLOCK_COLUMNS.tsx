@@ -35,7 +35,7 @@ export const BLOCK_COLUMNS = [
     id: 'extrinsicsCount',
     header: 'Extrinsics',
     cell: (props) => props.getValue(),
-    enableSorting: false
+    enableSorting: true
   }),
   columnHelper.accessor('reward', {
     id: 'reward',

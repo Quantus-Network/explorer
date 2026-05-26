@@ -1,4 +1,4 @@
-import { notFound } from '@tanstack/react-router';
+import { notFound, useNavigate } from '@tanstack/react-router';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import * as React from 'react';
 
@@ -12,6 +12,7 @@ import { RESOURCES } from '@/constants/resources';
 import { cn } from '@/lib/utils';
 import type { ExtrinsicDetail, ExtrinsicTransfer } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { isWormholeExtrinsic } from '@/utils/get-extrinsic-detail-path';
 
 export interface TransactionInformationProps {
   hash: string;
@@ -21,16 +22,29 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
   hash
 }) => {
   const api = useApiClient();
+  const navigate = useNavigate();
   const { data, loading } = api.transactions.getByHash().useQuery(hash);
 
-  if (!loading && (!data || data.extrinsics.length === 0)) throw notFound();
+  const extrinsic = data?.extrinsics[0];
+
+  const isRedirectingToWormhole =
+    !loading && !!extrinsic && isWormholeExtrinsic(extrinsic);
+
+  React.useEffect(() => {
+    if (!isRedirectingToWormhole) return;
+
+    navigate({
+      to: '/wormhole/$id',
+      params: { id: hash },
+      replace: true
+    });
+  }, [isRedirectingToWormhole, hash, navigate]);
 
   const extrinsicTransactionColumns = React.useMemo(
     () => EXTRINSIC_TRANSACTION_COLUMNS,
     []
   );
 
-  const extrinsic = data?.extrinsics[0];
   const transfers = data?.transfers ?? [];
   const table = useReactTable<ExtrinsicTransfer>({
     data: transfers,
@@ -39,6 +53,12 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
     manualSorting: true,
     manualPagination: true
   });
+
+  if (!loading && (!data || data.extrinsics.length === 0)) throw notFound();
+
+  if (isRedirectingToWormhole) {
+    return null;
+  }
 
   const extrinsicInfo: Partial<ExtrinsicDetail>[] = [
     {
