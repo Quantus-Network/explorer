@@ -32,7 +32,7 @@ interface HighSecuritySetInput {
   extrinsic?: ExtrinsicInfo | null;
   timestamp: string;
   who: { id: string };
-  interceptor: { id: string };
+  guardian: { id: string };
   delay?: number;
   block: { height: number };
 }
@@ -138,7 +138,7 @@ export const transformHighSecuritySet = (
   block: hss.block,
   extrinsic: hss.extrinsic,
   who: hss.who,
-  interceptor: hss.interceptor,
+  guardian: hss.guardian,
   delay: hss.delay
 });
 

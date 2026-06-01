@@ -191,13 +191,13 @@ export const createUnifiedTransactionColumns = (
                   />
                 </div>
               )}
-              {row.interceptor && (
+              {row.guardian && (
                 <div className="flex items-center gap-1">
                   <span className="text-muted-foreground">Guardian:</span>
                   <LinkWithCopy
-                    href={`${RESOURCES.accounts}/${row.interceptor.id}`}
-                    text={formatTxAddress(row.interceptor.id)}
-                    textCopy={row.interceptor.id}
+                    href={`${RESOURCES.accounts}/${row.guardian.id}`}
+                    text={formatTxAddress(row.guardian.id)}
+                    textCopy={row.guardian.id}
                   />
                 </div>
               )}

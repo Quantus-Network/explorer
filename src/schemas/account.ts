@@ -78,7 +78,7 @@ export interface AccountBeneficiary {
 }
 
 export interface AccountGuardian {
-  interceptor: Account;
+  guardian: Account;
 }
 
 export interface AccountStatsResponse {

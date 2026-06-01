@@ -195,7 +195,7 @@ export const accounts = {
             block {
               height
             }
-            interceptor {
+            guardian {
               id
               free
               frozen
@@ -210,7 +210,7 @@ export const accounts = {
         beneficiaries: high_security_set_aggregate(
           order_by: { timestamp: desc }
           limit: $limit
-          where: { interceptor: { id: { _eq: $id } } }
+          where: { guardian: { id: { _eq: $id } } }
         ) {
           nodes {
             timestamp

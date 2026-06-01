@@ -38,7 +38,7 @@ export interface UnifiedTransaction {
 
   // High security set fields
   who?: { id: string };
-  interceptor?: { id: string };
+  guardian?: { id: string };
   delay?: number;
 
   // Wormhole fields

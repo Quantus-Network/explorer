@@ -44,7 +44,7 @@ export const highSecuritySets = {
           who {
             id
           }
-          interceptor {
+          guardian {
             id
           }
           timestamp
@@ -99,7 +99,7 @@ export const highSecuritySets = {
           who {
             id
           }
-          interceptor {
+          guardian {
             id
           }
           timestamp
@@ -173,7 +173,7 @@ export const highSecuritySets = {
           who {
             id
           }
-          interceptor {
+          guardian {
             id
           }
           timestamp

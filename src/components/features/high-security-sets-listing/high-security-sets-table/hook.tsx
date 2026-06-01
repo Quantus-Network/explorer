@@ -44,7 +44,7 @@ export const useHighSecuritySetsTable = () => {
         where: {
           OR: [
             { who: { id_eq: accountId } },
-            { interceptor: { id_eq: accountId } }
+            { guardian: { id_eq: accountId } }
           ]
         }
       }),

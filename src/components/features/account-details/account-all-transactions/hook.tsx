@@ -74,7 +74,7 @@ export const useAccountAllTransactions = (
               height: 0
             },
             who: { id: '' }, // Guardian view doesn't have who (it's the current account)
-            interceptor: guardian.interceptor
+            guardian: guardian.guardian
           },
           idx
         )
@@ -91,7 +91,7 @@ export const useAccountAllTransactions = (
               height: 0
             },
             who: beneficiary.who,
-            interceptor: { id: '' } // Beneficiary view doesn't have interceptor (it's the current account)
+            guardian: { id: '' } // Beneficiary view doesn't have guardian (it's the current account)
           },
           idx
         )

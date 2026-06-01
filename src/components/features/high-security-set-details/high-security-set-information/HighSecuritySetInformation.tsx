@@ -32,7 +32,7 @@ export const HighSecuritySetInformation: React.FC<
       block: highSecuritySet?.block,
       timestamp: highSecuritySet?.timestamp,
       who: highSecuritySet?.who,
-      interceptor: highSecuritySet?.interceptor,
+      guardian: highSecuritySet?.guardian,
       delay: highSecuritySet?.delay
     }
   ];
@@ -87,12 +87,12 @@ export const HighSecuritySetInformation: React.FC<
         {
           label: 'Guardian',
           tooltip: 'The entrustee who can intercept the reversible transaction',
-          key: 'interceptor',
+          key: 'guardian',
           render: (value) => (
             <LinkWithCopy
-              text={(value as HighSecuritySet['interceptor']).id}
+              text={(value as HighSecuritySet['guardian']).id}
               href={`${RESOURCES.accounts}/${
-                (value as HighSecuritySet['interceptor']).id
+                (value as HighSecuritySet['guardian']).id
               }`}
               className="break-all"
             />
