@@ -26,6 +26,17 @@ export const getMultisigProposalKind = (
   }
 
   if (
+    proposal.pallet === 'HighSecurity' &&
+    proposal.call === 'set_high_security'
+  ) {
+    return 'set-high-security';
+  }
+
+  if (proposal.pallet === 'Balances' && proposal.call === 'recover_funds') {
+    return 'recover-funds';
+  }
+
+  if (
     proposal.pallet === 'Balances' &&
     (proposal.call === 'transfer' || proposal.call === 'transfer_keep_alive')
   ) {
@@ -38,17 +49,6 @@ export const getMultisigProposalKind = (
 
   if (proposal.transferTo?.id != null || proposal.transfer_amount != null) {
     return 'balance-transfer';
-  }
-
-  if (
-    proposal.pallet === 'HighSecurity' &&
-    proposal.call === 'set_high_security'
-  ) {
-    return 'set-high-security';
-  }
-
-  if (proposal.pallet === 'Balances' && proposal.call === 'recover_funds') {
-    return 'recover-funds';
   }
 
   return 'unknown';

@@ -12,11 +12,14 @@ export const MultisigProposalStats: React.FC = () => {
     strict: false
   }) as { block?: string };
 
-  if (block) return null;
+  const shouldHide = !!block;
 
   const { loading, data, error } = api.multisigProposals.useGetStats({
-    pollInterval: DATA_POOL_INTERVAL
+    pollInterval: DATA_POOL_INTERVAL,
+    skip: shouldHide
   });
+
+  if (shouldHide) return null;
 
   const success = !loading && !error;
 

@@ -14,11 +14,14 @@ export const ErrorEventsStats: React.FC<ErrorEventsStatsProps> = () => {
     strict: false
   }) as any;
 
-  if (block) return null;
+  const shouldHide = !!block;
 
   const { loading, data, error } = api.errors.useGetStats({
-    pollInterval: DATA_POOL_INTERVAL
+    pollInterval: DATA_POOL_INTERVAL,
+    skip: shouldHide
   });
+
+  if (shouldHide) return null;
 
   const success = !loading && !error;
 

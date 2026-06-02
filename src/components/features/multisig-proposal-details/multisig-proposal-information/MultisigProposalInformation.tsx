@@ -303,9 +303,10 @@ export const MultisigProposalInformation: React.FC<
   const api = useApiClient();
   const { data, loading } = api.multisigProposals.getById().useQuery(id);
 
-  if (!loading && !data?.multisigProposal) throw notFound();
-
   const proposal = data?.multisigProposal;
+  const fields = useMemo(() => getProposalFields(proposal), [proposal]);
+
+  if (!loading && !data?.multisigProposal) throw notFound();
 
   const information: Partial<MultisigProposal>[] = proposal ? [proposal] : [];
 
@@ -318,8 +319,6 @@ export const MultisigProposalInformation: React.FC<
   ).sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
-
-  const fields = useMemo(() => getProposalFields(proposal), [proposal]);
 
   return (
     <>
