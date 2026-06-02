@@ -5,6 +5,7 @@ export * from './high-security-sets';
 export * from './miner-rewards';
 export * from './multisig-created';
 export * from './multisig-deposits-claimed';
+export * from './multisig-proposal';
 export * from './multisig-proposal-cancelled';
 export * from './multisig-proposal-created';
 export * from './multisig-proposal-executed';

@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as WormholeIndexRouteImport } from './routes/wormhole/index'
 import { Route as ScheduledReversibleTransactionsIndexRouteImport } from './routes/scheduled-reversible-transactions/index'
 import { Route as MultisigSignerApprovedIndexRouteImport } from './routes/multisig-signer-approved/index'
+import { Route as MultisigProposalsIndexRouteImport } from './routes/multisig-proposals/index'
 import { Route as MultisigProposalRemovedIndexRouteImport } from './routes/multisig-proposal-removed/index'
 import { Route as MultisigProposalReadyIndexRouteImport } from './routes/multisig-proposal-ready/index'
 import { Route as MultisigProposalExecutedIndexRouteImport } from './routes/multisig-proposal-executed/index'
@@ -32,6 +33,7 @@ import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
 import { Route as WormholeIdRouteImport } from './routes/wormhole/$id'
 import { Route as ScheduledReversibleTransactionsTxIdRouteImport } from './routes/scheduled-reversible-transactions/$txId'
 import { Route as MultisigSignerApprovedHashRouteImport } from './routes/multisig-signer-approved/$hash'
+import { Route as MultisigProposalsIdRouteImport } from './routes/multisig-proposals/$id'
 import { Route as MultisigProposalRemovedHashRouteImport } from './routes/multisig-proposal-removed/$hash'
 import { Route as MultisigProposalReadyHashRouteImport } from './routes/multisig-proposal-ready/$hash'
 import { Route as MultisigProposalExecutedHashRouteImport } from './routes/multisig-proposal-executed/$hash'
@@ -71,6 +73,11 @@ const MultisigSignerApprovedIndexRoute =
     path: '/multisig-signer-approved/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MultisigProposalsIndexRoute = MultisigProposalsIndexRouteImport.update({
+  id: '/multisig-proposals/',
+  path: '/multisig-proposals/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MultisigProposalRemovedIndexRoute =
   MultisigProposalRemovedIndexRouteImport.update({
     id: '/multisig-proposal-removed/',
@@ -177,6 +184,11 @@ const MultisigSignerApprovedHashRoute =
     path: '/multisig-signer-approved/$hash',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MultisigProposalsIdRoute = MultisigProposalsIdRouteImport.update({
+  id: '/multisig-proposals/$id',
+  path: '/multisig-proposals/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MultisigProposalRemovedHashRoute =
   MultisigProposalRemovedHashRouteImport.update({
     id: '/multisig-proposal-removed/$hash',
@@ -285,6 +297,7 @@ export interface FileRoutesByFullPath {
   '/multisig-proposal-executed/$hash': typeof MultisigProposalExecutedHashRoute
   '/multisig-proposal-ready/$hash': typeof MultisigProposalReadyHashRoute
   '/multisig-proposal-removed/$hash': typeof MultisigProposalRemovedHashRoute
+  '/multisig-proposals/$id': typeof MultisigProposalsIdRoute
   '/multisig-signer-approved/$hash': typeof MultisigSignerApprovedHashRoute
   '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
@@ -304,6 +317,7 @@ export interface FileRoutesByFullPath {
   '/multisig-proposal-executed': typeof MultisigProposalExecutedIndexRoute
   '/multisig-proposal-ready': typeof MultisigProposalReadyIndexRoute
   '/multisig-proposal-removed': typeof MultisigProposalRemovedIndexRoute
+  '/multisig-proposals': typeof MultisigProposalsIndexRoute
   '/multisig-signer-approved': typeof MultisigSignerApprovedIndexRoute
   '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
@@ -326,6 +340,7 @@ export interface FileRoutesByTo {
   '/multisig-proposal-executed/$hash': typeof MultisigProposalExecutedHashRoute
   '/multisig-proposal-ready/$hash': typeof MultisigProposalReadyHashRoute
   '/multisig-proposal-removed/$hash': typeof MultisigProposalRemovedHashRoute
+  '/multisig-proposals/$id': typeof MultisigProposalsIdRoute
   '/multisig-signer-approved/$hash': typeof MultisigSignerApprovedHashRoute
   '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
@@ -345,6 +360,7 @@ export interface FileRoutesByTo {
   '/multisig-proposal-executed': typeof MultisigProposalExecutedIndexRoute
   '/multisig-proposal-ready': typeof MultisigProposalReadyIndexRoute
   '/multisig-proposal-removed': typeof MultisigProposalRemovedIndexRoute
+  '/multisig-proposals': typeof MultisigProposalsIndexRoute
   '/multisig-signer-approved': typeof MultisigSignerApprovedIndexRoute
   '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
@@ -368,6 +384,7 @@ export interface FileRoutesById {
   '/multisig-proposal-executed/$hash': typeof MultisigProposalExecutedHashRoute
   '/multisig-proposal-ready/$hash': typeof MultisigProposalReadyHashRoute
   '/multisig-proposal-removed/$hash': typeof MultisigProposalRemovedHashRoute
+  '/multisig-proposals/$id': typeof MultisigProposalsIdRoute
   '/multisig-signer-approved/$hash': typeof MultisigSignerApprovedHashRoute
   '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
@@ -387,6 +404,7 @@ export interface FileRoutesById {
   '/multisig-proposal-executed/': typeof MultisigProposalExecutedIndexRoute
   '/multisig-proposal-ready/': typeof MultisigProposalReadyIndexRoute
   '/multisig-proposal-removed/': typeof MultisigProposalRemovedIndexRoute
+  '/multisig-proposals/': typeof MultisigProposalsIndexRoute
   '/multisig-signer-approved/': typeof MultisigSignerApprovedIndexRoute
   '/scheduled-reversible-transactions/': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole/': typeof WormholeIndexRoute
@@ -411,6 +429,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-executed/$hash'
     | '/multisig-proposal-ready/$hash'
     | '/multisig-proposal-removed/$hash'
+    | '/multisig-proposals/$id'
     | '/multisig-signer-approved/$hash'
     | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
@@ -430,6 +449,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-executed'
     | '/multisig-proposal-ready'
     | '/multisig-proposal-removed'
+    | '/multisig-proposals'
     | '/multisig-signer-approved'
     | '/scheduled-reversible-transactions'
     | '/wormhole'
@@ -452,6 +472,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-executed/$hash'
     | '/multisig-proposal-ready/$hash'
     | '/multisig-proposal-removed/$hash'
+    | '/multisig-proposals/$id'
     | '/multisig-signer-approved/$hash'
     | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
@@ -471,6 +492,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-executed'
     | '/multisig-proposal-ready'
     | '/multisig-proposal-removed'
+    | '/multisig-proposals'
     | '/multisig-signer-approved'
     | '/scheduled-reversible-transactions'
     | '/wormhole'
@@ -493,6 +515,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-executed/$hash'
     | '/multisig-proposal-ready/$hash'
     | '/multisig-proposal-removed/$hash'
+    | '/multisig-proposals/$id'
     | '/multisig-signer-approved/$hash'
     | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
@@ -512,6 +535,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-executed/'
     | '/multisig-proposal-ready/'
     | '/multisig-proposal-removed/'
+    | '/multisig-proposals/'
     | '/multisig-signer-approved/'
     | '/scheduled-reversible-transactions/'
     | '/wormhole/'
@@ -535,6 +559,7 @@ export interface RootRouteChildren {
   MultisigProposalExecutedHashRoute: typeof MultisigProposalExecutedHashRoute
   MultisigProposalReadyHashRoute: typeof MultisigProposalReadyHashRoute
   MultisigProposalRemovedHashRoute: typeof MultisigProposalRemovedHashRoute
+  MultisigProposalsIdRoute: typeof MultisigProposalsIdRoute
   MultisigSignerApprovedHashRoute: typeof MultisigSignerApprovedHashRoute
   ScheduledReversibleTransactionsTxIdRoute: typeof ScheduledReversibleTransactionsTxIdRoute
   WormholeIdRoute: typeof WormholeIdRoute
@@ -554,6 +579,7 @@ export interface RootRouteChildren {
   MultisigProposalExecutedIndexRoute: typeof MultisigProposalExecutedIndexRoute
   MultisigProposalReadyIndexRoute: typeof MultisigProposalReadyIndexRoute
   MultisigProposalRemovedIndexRoute: typeof MultisigProposalRemovedIndexRoute
+  MultisigProposalsIndexRoute: typeof MultisigProposalsIndexRoute
   MultisigSignerApprovedIndexRoute: typeof MultisigSignerApprovedIndexRoute
   ScheduledReversibleTransactionsIndexRoute: typeof ScheduledReversibleTransactionsIndexRoute
   WormholeIndexRoute: typeof WormholeIndexRoute
@@ -588,6 +614,13 @@ declare module '@tanstack/react-router' {
       path: '/multisig-signer-approved'
       fullPath: '/multisig-signer-approved'
       preLoaderRoute: typeof MultisigSignerApprovedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposals/': {
+      id: '/multisig-proposals/'
+      path: '/multisig-proposals'
+      fullPath: '/multisig-proposals'
+      preLoaderRoute: typeof MultisigProposalsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/multisig-proposal-removed/': {
@@ -721,6 +754,13 @@ declare module '@tanstack/react-router' {
       path: '/multisig-signer-approved/$hash'
       fullPath: '/multisig-signer-approved/$hash'
       preLoaderRoute: typeof MultisigSignerApprovedHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposals/$id': {
+      id: '/multisig-proposals/$id'
+      path: '/multisig-proposals/$id'
+      fullPath: '/multisig-proposals/$id'
+      preLoaderRoute: typeof MultisigProposalsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/multisig-proposal-removed/$hash': {
@@ -857,6 +897,7 @@ const rootRouteChildren: RootRouteChildren = {
   MultisigProposalExecutedHashRoute: MultisigProposalExecutedHashRoute,
   MultisigProposalReadyHashRoute: MultisigProposalReadyHashRoute,
   MultisigProposalRemovedHashRoute: MultisigProposalRemovedHashRoute,
+  MultisigProposalsIdRoute: MultisigProposalsIdRoute,
   MultisigSignerApprovedHashRoute: MultisigSignerApprovedHashRoute,
   ScheduledReversibleTransactionsTxIdRoute:
     ScheduledReversibleTransactionsTxIdRoute,
@@ -879,6 +920,7 @@ const rootRouteChildren: RootRouteChildren = {
   MultisigProposalExecutedIndexRoute: MultisigProposalExecutedIndexRoute,
   MultisigProposalReadyIndexRoute: MultisigProposalReadyIndexRoute,
   MultisigProposalRemovedIndexRoute: MultisigProposalRemovedIndexRoute,
+  MultisigProposalsIndexRoute: MultisigProposalsIndexRoute,
   MultisigSignerApprovedIndexRoute: MultisigSignerApprovedIndexRoute,
   ScheduledReversibleTransactionsIndexRoute:
     ScheduledReversibleTransactionsIndexRoute,

@@ -1,7 +1,5 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import { endOfToday } from 'date-fns/endOfToday';
-import { startOfToday } from 'date-fns/startOfToday';
 
 import type { Multisig_Signer_Approved_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -14,6 +12,7 @@ import type {
   RecentMultisigSignerApprovedResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
 
 const MULTISIG_SIGNER_APPROVED_FIELDS = gql`
   fragment MultisigSignerApprovedFields on multisig_signer_approved {
@@ -25,7 +24,6 @@ const MULTISIG_SIGNER_APPROVED_FIELDS = gql`
     }
     proposal {
       id
-      proposal_id
       multisig {
         id
       }
@@ -120,8 +118,7 @@ export const multisigSignerApproved = {
       'variables'
     >
   ) => {
-    const startDate = startOfToday().toISOString();
-    const endDate = endOfToday().toISOString();
+    const { startDate, endDate } = useGetRecentDateRange();
 
     const QUERY = gql`
       query GetMultisigSignerApprovedStats(

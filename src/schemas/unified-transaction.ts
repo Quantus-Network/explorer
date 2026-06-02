@@ -65,7 +65,8 @@ export interface UnifiedTransaction {
   threshold?: number;
   signers?: string[];
   nonce?: string | number;
-  proposalId?: number;
+  /** `multisig_proposal.id` — use for routes, links, and display. */
+  proposalId?: string;
   multisig?: { id: string };
   proposer?: { id: string };
   approver?: { id: string };

@@ -1,7 +1,5 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import { endOfToday } from 'date-fns/endOfToday';
-import { startOfToday } from 'date-fns/startOfToday';
 
 import type { Multisig_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -14,6 +12,7 @@ import type {
   RecentMultisigCreatedResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
 
 const MULTISIG_CREATED_FIELDS = gql`
   fragment MultisigCreatedFields on multisig {
@@ -109,8 +108,7 @@ export const multisigCreated = {
   useGetStats: (
     config?: Omit<QueryHookOptions<MultisigCreatedStatsResponse>, 'variables'>
   ) => {
-    const startDate = startOfToday().toISOString();
-    const endDate = endOfToday().toISOString();
+    const { startDate, endDate } = useGetRecentDateRange();
 
     const GET_MULTISIG_CREATED_STATS = gql`
       query GetMultisigCreatedStats(

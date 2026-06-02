@@ -11,6 +11,7 @@ import {
   formatMonetaryValue,
   formatTxAddress
 } from '@/utils/formatter';
+import { getMultisigProposalHref } from '@/utils/get-multisig-proposal-href';
 
 const columnHelper = createColumnHelper<UnifiedTransaction>();
 
@@ -307,10 +308,24 @@ export const createUnifiedTransactionColumns = (
         ) {
           return (
             <div className="flex flex-col gap-1 text-xs">
-              {row.proposalId != null && (
+              {row.proposalId && (
                 <div className="flex items-center gap-1">
                   <span className="text-muted-foreground">Proposal:</span>
-                  <span>#{row.proposalId}</span>
+                  {(() => {
+                    const href = getMultisigProposalHref({
+                      id: row.proposalId
+                    });
+                    const text = formatTxAddress(row.proposalId);
+                    return href ? (
+                      <LinkWithCopy
+                        href={href}
+                        text={text}
+                        textCopy={row.proposalId}
+                      />
+                    ) : (
+                      <span>{text}</span>
+                    );
+                  })()}
                 </div>
               )}
               {row.multisig && (

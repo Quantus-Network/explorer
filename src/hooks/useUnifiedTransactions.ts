@@ -189,7 +189,6 @@ interface MultisigProposalEventInput {
   block: { height: number };
   proposal?: {
     id: string;
-    proposal_id: number;
     multisig?: { id: string } | null;
     proposer?: { id: string } | null;
   } | null;
@@ -250,7 +249,7 @@ export const transformMultisigProposalCreated = (
   timestamp: event.timestamp,
   block: event.block,
   extrinsic: event.extrinsic,
-  proposalId: event.proposal?.proposal_id,
+  proposalId: event.proposal?.id,
   multisig: event.proposal?.multisig ?? undefined,
   proposer: event.proposal?.proposer ?? undefined
 });
@@ -263,7 +262,7 @@ export const transformMultisigSignerApproved = (
   timestamp: event.timestamp,
   block: event.block,
   extrinsic: event.extrinsic,
-  proposalId: event.proposal?.proposal_id,
+  proposalId: event.proposal?.id,
   multisig: event.proposal?.multisig ?? undefined,
   proposer: event.proposal?.proposer ?? undefined,
   approver: event.approver ?? undefined,
@@ -278,7 +277,7 @@ export const transformMultisigProposalReady = (
   timestamp: event.timestamp,
   block: event.block,
   extrinsic: event.extrinsic,
-  proposalId: event.proposal?.proposal_id,
+  proposalId: event.proposal?.id,
   multisig: event.proposal?.multisig ?? undefined,
   proposer: event.proposal?.proposer ?? undefined,
   approvalsCount: event.approvals_count
@@ -292,7 +291,7 @@ export const transformMultisigProposalExecuted = (
   timestamp: event.timestamp,
   block: event.block,
   extrinsic: event.extrinsic,
-  proposalId: event.proposal?.proposal_id,
+  proposalId: event.proposal?.id,
   multisig: event.proposal?.multisig ?? undefined,
   proposer: event.proposal?.proposer ?? undefined,
   approvers: event.approvers,
@@ -307,7 +306,7 @@ export const transformMultisigProposalCancelled = (
   timestamp: event.timestamp,
   block: event.block,
   extrinsic: event.extrinsic,
-  proposalId: event.proposal?.proposal_id,
+  proposalId: event.proposal?.id,
   multisig: event.proposal?.multisig ?? undefined,
   proposer: event.proposal?.proposer ?? undefined,
   cancelledBy: event.cancelledBy ?? undefined
@@ -321,7 +320,7 @@ export const transformMultisigProposalRemoved = (
   timestamp: event.timestamp,
   block: event.block,
   extrinsic: event.extrinsic,
-  proposalId: event.proposal?.proposal_id,
+  proposalId: event.proposal?.id,
   multisig: event.proposal?.multisig ?? undefined,
   proposer: event.proposal?.proposer ?? undefined,
   removedBy: event.removedBy ?? undefined

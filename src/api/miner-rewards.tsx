@@ -1,7 +1,5 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import { endOfToday } from 'date-fns/endOfToday';
-import { startOfToday } from 'date-fns/startOfToday';
 
 import type { Miner_Reward_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -14,6 +12,7 @@ import type {
   RecentMinerRewardsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
 
 export const minerRewards = {
   useGetAll: (
@@ -109,8 +108,7 @@ export const minerRewards = {
   useGetStats: (
     config?: Omit<QueryHookOptions<MinerRewardsStatsResponse>, 'variables'>
   ) => {
-    const startDate = startOfToday().toISOString();
-    const endDate = endOfToday().toISOString();
+    const { startDate, endDate } = useGetRecentDateRange();
 
     const GET_MINER_REWARDS_STATS = gql`
       query GetMinerRewardsStats(

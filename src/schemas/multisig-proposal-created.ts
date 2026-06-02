@@ -2,7 +2,6 @@ import type * as gql from '../__generated__/graphql';
 
 export interface MultisigProposalRef {
   id: string;
-  proposal_id: number;
   multisig?: Pick<gql.Multisig, 'id'> | null;
   proposer?: Pick<gql.Account, 'id'> | null;
 }

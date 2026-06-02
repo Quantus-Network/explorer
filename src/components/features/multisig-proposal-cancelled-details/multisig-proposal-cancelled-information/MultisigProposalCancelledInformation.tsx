@@ -4,6 +4,7 @@ import * as React from 'react';
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCancelled } from '@/schemas';
@@ -75,14 +76,13 @@ export const MultisigProposalCancelledInformation: React.FC<
           )
         },
         {
-          label: 'Proposal ID',
+          label: 'Proposal',
           key: 'proposal',
-          render: (value) => {
-            const proposal = value as MultisigProposalCancelled['proposal'];
-            return proposal?.proposal_id != null
-              ? String(proposal.proposal_id)
-              : '-';
-          }
+          render: (value) => (
+            <ProposalIdLink
+              proposal={value as MultisigProposalCancelled['proposal']}
+            />
+          )
         },
         {
           label: 'Multisig',

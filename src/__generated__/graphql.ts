@@ -8080,7 +8080,6 @@ export type GetAccountByIdQuery = {
       proposal?: {
         __typename?: 'multisig_proposal';
         id: string;
-        proposal_id: number;
         multisig?: { __typename?: 'multisig'; id: string } | null;
         proposer?: { __typename?: 'account'; id: string } | null;
       } | null;
@@ -8101,7 +8100,6 @@ export type GetAccountByIdQuery = {
       proposal?: {
         __typename?: 'multisig_proposal';
         id: string;
-        proposal_id: number;
         multisig?: { __typename?: 'multisig'; id: string } | null;
         proposer?: { __typename?: 'account'; id: string } | null;
       } | null;
@@ -8121,7 +8119,6 @@ export type GetAccountByIdQuery = {
       proposal?: {
         __typename?: 'multisig_proposal';
         id: string;
-        proposal_id: number;
         multisig?: { __typename?: 'multisig'; id: string } | null;
         proposer?: { __typename?: 'account'; id: string } | null;
       } | null;
@@ -8142,7 +8139,6 @@ export type GetAccountByIdQuery = {
       proposal?: {
         __typename?: 'multisig_proposal';
         id: string;
-        proposal_id: number;
         multisig?: { __typename?: 'multisig'; id: string } | null;
         proposer?: { __typename?: 'account'; id: string } | null;
       } | null;
@@ -8162,7 +8158,6 @@ export type GetAccountByIdQuery = {
       proposal?: {
         __typename?: 'multisig_proposal';
         id: string;
-        proposal_id: number;
         multisig?: { __typename?: 'multisig'; id: string } | null;
         proposer?: { __typename?: 'account'; id: string } | null;
       } | null;
@@ -8182,7 +8177,6 @@ export type GetAccountByIdQuery = {
       proposal?: {
         __typename?: 'multisig_proposal';
         id: string;
-        proposal_id: number;
         multisig?: { __typename?: 'multisig'; id: string } | null;
         proposer?: { __typename?: 'account'; id: string } | null;
       } | null;
@@ -9172,7 +9166,6 @@ export type MultisigProposalCancelledFieldsFragment = {
   proposal?: {
     __typename?: 'multisig_proposal';
     id: string;
-    proposal_id: number;
     multisig?: { __typename?: 'multisig'; id: string } | null;
     proposer?: { __typename?: 'account'; id: string } | null;
   } | null;
@@ -9270,7 +9263,6 @@ export type GetMultisigProposalCancelledByHashQuery = {
 export type MultisigProposalRefFieldsFragment = {
   __typename?: 'multisig_proposal';
   id: string;
-  proposal_id: number;
   multisig?: { __typename?: 'multisig'; id: string } | null;
   proposer?: { __typename?: 'account'; id: string } | null;
 } & { ' $fragmentName'?: 'MultisigProposalRefFieldsFragment' };
@@ -9386,7 +9378,6 @@ export type MultisigProposalExecutedFieldsFragment = {
   proposal?: {
     __typename?: 'multisig_proposal';
     id: string;
-    proposal_id: number;
     multisig?: { __typename?: 'multisig'; id: string } | null;
     proposer?: { __typename?: 'account'; id: string } | null;
   } | null;
@@ -9489,7 +9480,6 @@ export type MultisigProposalReadyFieldsFragment = {
   proposal?: {
     __typename?: 'multisig_proposal';
     id: string;
-    proposal_id: number;
     multisig?: { __typename?: 'multisig'; id: string } | null;
     proposer?: { __typename?: 'account'; id: string } | null;
   } | null;
@@ -9590,7 +9580,6 @@ export type MultisigProposalRemovedFieldsFragment = {
   proposal?: {
     __typename?: 'multisig_proposal';
     id: string;
-    proposal_id: number;
     multisig?: { __typename?: 'multisig'; id: string } | null;
     proposer?: { __typename?: 'account'; id: string } | null;
   } | null;
@@ -9685,6 +9674,162 @@ export type GetMultisigProposalRemovedByHashQuery = {
   >;
 };
 
+export type MultisigProposalListFieldsFragment = {
+  __typename?: 'multisig_proposal';
+  id: string;
+  status: string;
+  deposit: any;
+  expiry_block: number;
+  created_at: any;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
+  proposer?: { __typename?: 'account'; id: string } | null;
+} & { ' $fragmentName'?: 'MultisigProposalListFieldsFragment' };
+
+export type MultisigProposalDetailFieldsFragment = {
+  __typename?: 'multisig_proposal';
+  id: string;
+  status: string;
+  deposit: any;
+  expiry_block: number;
+  approvals: Array<string>;
+  pallet: string;
+  call: string;
+  call_raw: string;
+  decode_error?: string | null;
+  created_at: any;
+  tx_id?: string | null;
+  transfer_amount?: any | null;
+  schedule_amount?: any | null;
+  delay_kind?: string | null;
+  delay_value?: any | null;
+  schedule_asset_id?: number | null;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
+  proposer?: { __typename?: 'account'; id: string } | null;
+  guardian?: { __typename?: 'account'; id: string } | null;
+  transferTo?: { __typename?: 'account'; id: string } | null;
+  scheduleTo?: { __typename?: 'account'; id: string } | null;
+  recoverAccount?: { __typename?: 'account'; id: string } | null;
+  createdExtrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+  createdAtBlock?: { __typename?: 'block'; height: number } | null;
+} & { ' $fragmentName'?: 'MultisigProposalDetailFieldsFragment' };
+
+export type MultisigProposalLifecycleEventFieldsFragment = {
+  __typename?: 'multisig_proposal_created';
+  id: string;
+  timestamp: any;
+  extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+} & { ' $fragmentName'?: 'MultisigProposalLifecycleEventFieldsFragment' };
+
+export type GetMultisigProposalsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<Multisig_Proposal_Order_By> | Multisig_Proposal_Order_By
+  >;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalsQuery = {
+  __typename?: 'query_root';
+  multisigProposals: Array<
+    { __typename?: 'multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalListFieldsFragment: MultisigProposalListFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetMultisigProposalStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposals: number;
+  } | null;
+};
+
+export type GetMultisigProposalByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalByIdQuery = {
+  __typename?: 'query_root';
+  multisigProposal?:
+    | ({ __typename?: 'multisig_proposal' } & {
+        ' $fragmentRefs'?: {
+          MultisigProposalDetailFieldsFragment: MultisigProposalDetailFieldsFragment;
+        };
+      })
+    | null;
+  createdEvents: Array<
+    { __typename?: 'multisig_proposal_created' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalLifecycleEventFieldsFragment: MultisigProposalLifecycleEventFieldsFragment;
+      };
+    }
+  >;
+  signerApprovedEvents: Array<{
+    __typename?: 'multisig_signer_approved';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  readyEvents: Array<{
+    __typename?: 'multisig_proposal_ready';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  executedEvents: Array<{
+    __typename?: 'executed_multisig_proposal';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  cancelledEvents: Array<{
+    __typename?: 'cancelled_multisig_proposal';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  removedEvents: Array<{
+    __typename?: 'removed_multisig_proposal';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+};
+
 export type MultisigSignerApprovedFieldsFragment = {
   __typename?: 'multisig_signer_approved';
   id: string;
@@ -9694,7 +9839,6 @@ export type MultisigSignerApprovedFieldsFragment = {
   proposal?: {
     __typename?: 'multisig_proposal';
     id: string;
-    proposal_id: number;
     multisig?: { __typename?: 'multisig'; id: string } | null;
     proposer?: { __typename?: 'account'; id: string } | null;
   } | null;
@@ -10312,7 +10456,6 @@ export const MultisigProposalCancelledFieldsFragmentDoc = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -10377,7 +10520,6 @@ export const MultisigProposalRefFieldsFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'multisig' },
@@ -10467,7 +10609,6 @@ export const MultisigProposalCreatedFieldsFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'multisig' },
@@ -10517,7 +10658,6 @@ export const MultisigProposalExecutedFieldsFragmentDoc = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -10591,7 +10731,6 @@ export const MultisigProposalReadyFieldsFragmentDoc = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -10674,7 +10813,6 @@ export const MultisigProposalRemovedFieldsFragmentDoc = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -10725,6 +10863,208 @@ export const MultisigProposalRemovedFieldsFragmentDoc = {
     }
   ]
 } as unknown as DocumentNode<MultisigProposalRemovedFieldsFragment, unknown>;
+export const MultisigProposalListFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalListFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalListFieldsFragment, unknown>;
+export const MultisigProposalDetailFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalDetailFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call_raw' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'decode_error' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'transfer_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_kind' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_value' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_asset_id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'guardian' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transferTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'scheduleTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'recoverAccount' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdExtrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdAtBlock' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalDetailFieldsFragment, unknown>;
+export const MultisigProposalLifecycleEventFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalLifecycleEventFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  MultisigProposalLifecycleEventFieldsFragment,
+  unknown
+>;
 export const MultisigSignerApprovedFieldsFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -10758,7 +11098,6 @@ export const MultisigSignerApprovedFieldsFragmentDoc = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -11698,10 +12037,6 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'proposal_id' }
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'multisig' },
                               selectionSet: {
                                 kind: 'SelectionSet',
@@ -11806,10 +12141,6 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'proposal_id' }
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'multisig' },
                               selectionSet: {
                                 kind: 'SelectionSet',
@@ -11898,10 +12229,6 @@ export const GetAccountByIdDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposal_id' }
                             },
                             {
                               kind: 'Field',
@@ -11997,10 +12324,6 @@ export const GetAccountByIdDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposal_id' }
                             },
                             {
                               kind: 'Field',
@@ -12104,10 +12427,6 @@ export const GetAccountByIdDocument = {
                             },
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'proposal_id' }
-                            },
-                            {
-                              kind: 'Field',
                               name: { kind: 'Name', value: 'multisig' },
                               selectionSet: {
                                 kind: 'SelectionSet',
@@ -12205,10 +12524,6 @@ export const GetAccountByIdDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposal_id' }
                             },
                             {
                               kind: 'Field',
@@ -18446,7 +18761,6 @@ export const GetMultisigProposalCancelledDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -18607,7 +18921,6 @@ export const GetRecentMultisigProposalCancelledDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -18902,7 +19215,6 @@ export const GetMultisigProposalCancelledByHashDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -19114,7 +19426,6 @@ export const GetMultisigProposalCreatedDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'multisig' },
@@ -19279,7 +19590,6 @@ export const GetRecentMultisigProposalCreatedDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'multisig' },
@@ -19575,7 +19885,6 @@ export const GetMultisigProposalCreatedByHashDocument = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'multisig' },
@@ -19825,7 +20134,6 @@ export const GetMultisigProposalExecutedDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -19978,7 +20286,6 @@ export const GetRecentMultisigProposalExecutedDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -20265,7 +20572,6 @@ export const GetMultisigProposalExecutedByHashDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -20483,7 +20789,6 @@ export const GetMultisigProposalReadyDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -20632,7 +20937,6 @@ export const GetRecentMultisigProposalReadyDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -20909,7 +21213,6 @@ export const GetMultisigProposalReadyByHashDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -21139,7 +21442,6 @@ export const GetMultisigProposalRemovedDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -21297,7 +21599,6 @@ export const GetRecentMultisigProposalRemovedDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -21589,7 +21890,6 @@ export const GetMultisigProposalRemovedByHashDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -21642,6 +21942,943 @@ export const GetMultisigProposalRemovedByHashDocument = {
 } as unknown as DocumentNode<
   GetMultisigProposalRemovedByHashQuery,
   GetMultisigProposalRemovedByHashQueryVariables
+>;
+export const GetMultisigProposalsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposals' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'multisig_proposal_order_by' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_proposal_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposals' },
+            name: { kind: 'Name', value: 'multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalListFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'multisig_proposal_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalListFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalsQuery,
+  GetMultisigProposalsQueryVariables
+>;
+export const GetMultisigProposalStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'multisig_proposal_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'created_at' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_multisig_proposals' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalStatsQuery,
+  GetMultisigProposalStatsQueryVariables
+>;
+export const GetMultisigProposalByIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalById' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposal' },
+            name: { kind: 'Name', value: 'multisig_proposal_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalDetailFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'createdEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_created' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalLifecycleEventFields'
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'signerApprovedEvents' },
+            name: { kind: 'Name', value: 'multisig_signer_approved' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'readyEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedEvents' },
+            name: { kind: 'Name', value: 'executed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledEvents' },
+            name: { kind: 'Name', value: 'cancelled_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'removedEvents' },
+            name: { kind: 'Name', value: 'removed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalDetailFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call_raw' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'decode_error' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'transfer_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_kind' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_value' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_asset_id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'guardian' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transferTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'scheduleTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'recoverAccount' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdExtrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdAtBlock' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalLifecycleEventFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalByIdQuery,
+  GetMultisigProposalByIdQueryVariables
 >;
 export const GetMultisigSignerApprovedDocument = {
   kind: 'Document',
@@ -21817,7 +23054,6 @@ export const GetMultisigSignerApprovedDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -21976,7 +23212,6 @@ export const GetRecentMultisigSignerApprovedDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },
@@ -22266,7 +23501,6 @@ export const GetMultisigSignerApprovedByHashDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'proposal_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'multisig' },

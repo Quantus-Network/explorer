@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCreated } from '@/schemas';
@@ -38,11 +39,10 @@ export const MULTISIG_PROPOSAL_CREATED_COLUMNS = [
     enableSorting: true
   }),
 
-  columnHelper.accessor('proposal.proposal_id', {
-    id: 'proposal_id',
-    header: 'Proposal ID',
-    cell: (props) =>
-      props.getValue() != null ? String(props.getValue()) : '-',
+  columnHelper.accessor('proposal.id', {
+    id: 'proposal',
+    header: 'Proposal',
+    cell: (props) => <ProposalIdLink proposal={props.row.original.proposal} />,
     enableSorting: false
   }),
   columnHelper.accessor('proposal.multisig.id', {

@@ -10,6 +10,7 @@ export * from './miner-reward';
 export * from './multisig-created';
 export * from './multisig-deposits-claimed';
 export * from './multisig-proposal-cancelled';
+export * from './multisig-proposal';
 export * from './multisig-proposal-created';
 export * from './multisig-proposal-executed';
 export * from './multisig-proposal-ready';

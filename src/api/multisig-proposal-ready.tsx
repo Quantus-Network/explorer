@@ -1,7 +1,5 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import { endOfToday } from 'date-fns/endOfToday';
-import { startOfToday } from 'date-fns/startOfToday';
 
 import type { Multisig_Proposal_Ready_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
@@ -14,6 +12,7 @@ import type {
   RecentMultisigProposalReadyResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
 
 const MULTISIG_PROPOSAL_READY_FIELDS = gql`
   fragment MultisigProposalReadyFields on multisig_proposal_ready {
@@ -22,7 +21,6 @@ const MULTISIG_PROPOSAL_READY_FIELDS = gql`
     approvals_count
     proposal {
       id
-      proposal_id
       multisig {
         id
       }
@@ -117,8 +115,7 @@ export const multisigProposalReady = {
       'variables'
     >
   ) => {
-    const startDate = startOfToday().toISOString();
-    const endDate = endOfToday().toISOString();
+    const { startDate, endDate } = useGetRecentDateRange();
 
     const QUERY = gql`
       query GetMultisigProposalReadyStats(

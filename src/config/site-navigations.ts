@@ -70,6 +70,11 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
         longLabel: 'Multisig Created Events'
       },
       {
+        label: 'Multisig Proposals',
+        path: '/multisig-proposals',
+        longLabel: 'Multisig Proposals'
+      },
+      {
         label: 'Proposal Created',
         path: '/multisig-proposal-created',
         longLabel: 'Multisig Proposal Created Events'

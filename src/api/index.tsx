@@ -16,6 +16,7 @@ import { multisigProposalCreated } from './multisig-proposal-created';
 import { multisigProposalExecuted } from './multisig-proposal-executed';
 import { multisigProposalReady } from './multisig-proposal-ready';
 import { multisigProposalRemoved } from './multisig-proposal-removed';
+import { multisigProposals } from './multisig-proposals';
 import { multisigSignerApproved } from './multisig-signer-approved';
 import { scheduledReversibleTransactions } from './scheduled-reversible-transactions';
 import { search } from './search';
@@ -41,6 +42,7 @@ const useApiClient = () => {
     wormhole,
     multisigCreated,
     multisigProposalCreated,
+    multisigProposals,
     multisigSignerApproved,
     multisigProposalReady,
     multisigProposalExecuted,

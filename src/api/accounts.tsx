@@ -232,7 +232,6 @@ export const accounts = {
             }
             proposal {
               id
-              proposal_id
               multisig {
                 id
               }
@@ -258,7 +257,6 @@ export const accounts = {
             }
             proposal {
               id
-              proposal_id
               multisig {
                 id
               }
@@ -281,7 +279,6 @@ export const accounts = {
             }
             proposal {
               id
-              proposal_id
               multisig {
                 id
               }
@@ -305,7 +302,6 @@ export const accounts = {
             }
             proposal {
               id
-              proposal_id
               multisig {
                 id
               }
@@ -330,7 +326,6 @@ export const accounts = {
             }
             proposal {
               id
-              proposal_id
               multisig {
                 id
               }
@@ -355,7 +350,6 @@ export const accounts = {
             }
             proposal {
               id
-              proposal_id
               multisig {
                 id
               }

@@ -10,6 +10,7 @@ export const RESOURCES = {
   errors: '/errors',
   wormhole: '/wormhole',
   multisigCreated: '/multisig-created',
+  multisigProposals: '/multisig-proposals',
   multisigProposalCreated: '/multisig-proposal-created',
   multisigSignerApproved: '/multisig-signer-approved',
   multisigProposalReady: '/multisig-proposal-ready',
