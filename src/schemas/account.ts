@@ -2,6 +2,14 @@ import type * as gql from '../__generated__/graphql';
 import type { CancelledReversibleTransaction } from './cancelled-reversible-transaction';
 import type { ExecutedReversibleTransaction } from './executed-reversible-transaction';
 import type { MinerReward } from './miner-reward';
+import type { MultisigCreated } from './multisig-created';
+import type { MultisigDepositsClaimed } from './multisig-deposits-claimed';
+import type { MultisigProposalCancelled } from './multisig-proposal-cancelled';
+import type { MultisigProposalCreated } from './multisig-proposal-created';
+import type { MultisigProposalExecuted } from './multisig-proposal-executed';
+import type { MultisigProposalReady } from './multisig-proposal-ready';
+import type { MultisigProposalRemoved } from './multisig-proposal-removed';
+import type { MultisigSignerApproved } from './multisig-signer-approved';
 import type { ScheduledReversibleTransaction } from './scheduled-reversible-transaction';
 import type { Transaction } from './transcation';
 import type { WormholeOutput } from './wormhole';
@@ -43,6 +51,14 @@ export interface AccountEvent {
   executedReversibleTransfer?: ExecutedReversibleTransaction;
   cancelledReversibleTransfer?: CancelledReversibleTransaction;
   minerReward?: MinerReward;
+  multisig?: MultisigCreated;
+  multisigProposalCreated?: MultisigProposalCreated;
+  multisigSignerApproved?: MultisigSignerApproved;
+  multisigProposalReady?: MultisigProposalReady;
+  executedMultisigProposal?: MultisigProposalExecuted;
+  cancelledMultisigProposal?: MultisigProposalCancelled;
+  removedMultisigProposal?: MultisigProposalRemoved;
+  multisigDepositsClaimed?: MultisigDepositsClaimed;
 }
 
 export interface AccountResponse {

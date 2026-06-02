@@ -35,5 +35,37 @@ export const TRANSACTION_TYPE_CONFIG: Record<
   error: {
     label: 'Error',
     className: 'bg-red-100 text-red-800'
+  },
+  'multisig-created': {
+    label: 'Multisig Created',
+    className: 'bg-cyan-100 text-cyan-800'
+  },
+  'multisig-proposal-created': {
+    label: 'Proposal Created',
+    className: 'bg-teal-100 text-teal-800'
+  },
+  'multisig-signer-approved': {
+    label: 'Signer Approved',
+    className: 'bg-sky-100 text-sky-800'
+  },
+  'multisig-proposal-ready': {
+    label: 'Proposal Ready',
+    className: 'bg-lime-100 text-lime-800'
+  },
+  'multisig-proposal-executed': {
+    label: 'Proposal Executed',
+    className: 'bg-green-100 text-green-800'
+  },
+  'multisig-proposal-cancelled': {
+    label: 'Proposal Cancelled',
+    className: 'bg-orange-100 text-orange-800'
+  },
+  'multisig-proposal-removed': {
+    label: 'Proposal Removed',
+    className: 'bg-yellow-100 text-yellow-800'
+  },
+  'multisig-deposits-claimed': {
+    label: 'Deposits Claimed',
+    className: 'bg-violet-100 text-violet-800'
   }
 };

@@ -92,6 +92,46 @@ export const createUnifiedTransactionColumns = (
         } else if (row.type === 'error' && extrinsicId) {
           href = `${RESOURCES.errors}/${extrinsicId}`;
           displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-created') {
+          href = `${RESOURCES.multisigCreated}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-proposal-created') {
+          href = `${RESOURCES.multisigProposalCreated}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-signer-approved') {
+          href = `${RESOURCES.multisigSignerApproved}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-proposal-ready') {
+          href = `${RESOURCES.multisigProposalReady}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-proposal-executed') {
+          href = `${RESOURCES.multisigProposalExecuted}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-proposal-cancelled') {
+          href = `${RESOURCES.multisigProposalCancelled}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-proposal-removed') {
+          href = `${RESOURCES.multisigProposalRemoved}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-deposits-claimed') {
+          href = `${RESOURCES.multisigDepositsClaimed}/${row.id}`;
+          displayText = extrinsicId
+            ? formatTxAddress(extrinsicId)
+            : formatTxAddress(row.id);
         }
 
         if (!href) {
@@ -248,6 +288,130 @@ export const createUnifiedTransactionColumns = (
           );
         }
 
+        if (row.type === 'multisig-created') {
+          return (
+            <div className="flex flex-col gap-1 text-xs">
+              {row.creator && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Creator:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.creator.id}`}
+                    text={formatTxAddress(row.creator.id)}
+                    textCopy={row.creator.id}
+                  />
+                </div>
+              )}
+              {row.threshold != null && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Threshold:</span>
+                  <span>{row.threshold}</span>
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        if (
+          [
+            'multisig-proposal-created',
+            'multisig-signer-approved',
+            'multisig-proposal-ready',
+            'multisig-proposal-executed',
+            'multisig-proposal-cancelled',
+            'multisig-proposal-removed'
+          ].includes(row.type)
+        ) {
+          return (
+            <div className="flex flex-col gap-1 text-xs">
+              {row.proposalId != null && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Proposal:</span>
+                  <span>#{row.proposalId}</span>
+                </div>
+              )}
+              {row.multisig && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Multisig:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.multisig.id}`}
+                    text={formatTxAddress(row.multisig.id)}
+                    textCopy={row.multisig.id}
+                  />
+                </div>
+              )}
+              {row.approver && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Approver:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.approver.id}`}
+                    text={formatTxAddress(row.approver.id)}
+                    textCopy={row.approver.id}
+                  />
+                </div>
+              )}
+              {row.cancelledBy && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Cancelled by:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.cancelledBy.id}`}
+                    text={formatTxAddress(row.cancelledBy.id)}
+                    textCopy={row.cancelledBy.id}
+                  />
+                </div>
+              )}
+              {row.removedBy && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Removed by:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.removedBy.id}`}
+                    text={formatTxAddress(row.removedBy.id)}
+                    textCopy={row.removedBy.id}
+                  />
+                </div>
+              )}
+              {row.approvalsCount != null && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Approvals:</span>
+                  <span>{row.approvalsCount}</span>
+                </div>
+              )}
+              {row.result && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Result:</span>
+                  <span>{row.result}</span>
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        if (row.type === 'multisig-deposits-claimed') {
+          return (
+            <div className="flex flex-col gap-1 text-xs">
+              {row.claimer && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Claimer:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.claimer.id}`}
+                    text={formatTxAddress(row.claimer.id)}
+                    textCopy={row.claimer.id}
+                  />
+                </div>
+              )}
+              {row.multisig && (
+                <div className="flex items-center gap-1">
+                  <span className="text-muted-foreground">Multisig:</span>
+                  <LinkWithCopy
+                    href={`${RESOURCES.accounts}/${row.multisig.id}`}
+                    text={formatTxAddress(row.multisig.id)}
+                    textCopy={row.multisig.id}
+                  />
+                </div>
+              )}
+            </div>
+          );
+        }
+
         return <span className="text-muted-foreground">-</span>;
       }
     }),
@@ -289,6 +453,13 @@ export const createUnifiedTransactionColumns = (
               {formatDuration(row.delay)}
             </span>
           );
+        }
+
+        if (
+          row.type === 'multisig-deposits-claimed' &&
+          row.totalReturned != null
+        ) {
+          return formatMonetaryValue(String(row.totalReturned), 5);
         }
 
         return <span className="text-muted-foreground">-</span>;

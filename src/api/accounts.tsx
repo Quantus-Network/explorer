@@ -183,6 +183,189 @@ export const accounts = {
             }
             timestamp
           }
+          multisig {
+            id
+            timestamp
+            threshold
+            nonce
+            signers
+            creator {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+          }
+          multisigProposalCreated {
+            id
+            timestamp
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              proposal_id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          multisigSignerApproved {
+            id
+            timestamp
+            approvals_count
+            approver {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              proposal_id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          multisigProposalReady {
+            id
+            timestamp
+            approvals_count
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              proposal_id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          executedMultisigProposal {
+            id
+            timestamp
+            approvers
+            result
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              proposal_id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          cancelledMultisigProposal {
+            id
+            timestamp
+            cancelledBy {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              proposal_id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          removedMultisigProposal {
+            id
+            timestamp
+            removedBy {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              proposal_id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          multisigDepositsClaimed {
+            id
+            timestamp
+            total_returned
+            proposals_removed
+            claimer {
+              id
+            }
+            multisig {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+          }
         }
 
         guardian: high_security_set_aggregate(

@@ -3,6 +3,7 @@ import { format } from 'date-fns/format';
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 
 import env from '@/config/env';
+import { TOKEN_DECIMALS } from '@/constants/token-decimals';
 
 export const formatTimestamp = (
   timestamp?: string | Date,
@@ -41,9 +42,9 @@ export const formatMonetaryValue = (
   digits?: number
 ) => {
   const num = typeof value === 'string' ? BigInt(value) : value;
-  const decimals = digits ?? 12;
+  const decimals = digits ?? TOKEN_DECIMALS;
   const factor = BigInt(10) ** BigInt(decimals);
-  const result = (num * factor) / BigInt(10 ** 12);
+  const result = (num * factor) / BigInt(10 ** TOKEN_DECIMALS);
 
   const integerPart = result / factor;
   const fractionalPart = result % factor;

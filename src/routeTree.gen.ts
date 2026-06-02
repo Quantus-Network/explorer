@@ -12,6 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WormholeIndexRouteImport } from './routes/wormhole/index'
 import { Route as ScheduledReversibleTransactionsIndexRouteImport } from './routes/scheduled-reversible-transactions/index'
+import { Route as MultisigSignerApprovedIndexRouteImport } from './routes/multisig-signer-approved/index'
+import { Route as MultisigProposalRemovedIndexRouteImport } from './routes/multisig-proposal-removed/index'
+import { Route as MultisigProposalReadyIndexRouteImport } from './routes/multisig-proposal-ready/index'
+import { Route as MultisigProposalExecutedIndexRouteImport } from './routes/multisig-proposal-executed/index'
+import { Route as MultisigProposalCreatedIndexRouteImport } from './routes/multisig-proposal-created/index'
+import { Route as MultisigProposalCancelledIndexRouteImport } from './routes/multisig-proposal-cancelled/index'
+import { Route as MultisigDepositsClaimedIndexRouteImport } from './routes/multisig-deposits-claimed/index'
+import { Route as MultisigCreatedIndexRouteImport } from './routes/multisig-created/index'
 import { Route as MinerRewardsIndexRouteImport } from './routes/miner-rewards/index'
 import { Route as MinerLeaderboardIndexRouteImport } from './routes/miner-leaderboard/index'
 import { Route as ImmediateTransactionsIndexRouteImport } from './routes/immediate-transactions/index'
@@ -23,6 +31,14 @@ import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
 import { Route as WormholeIdRouteImport } from './routes/wormhole/$id'
 import { Route as ScheduledReversibleTransactionsTxIdRouteImport } from './routes/scheduled-reversible-transactions/$txId'
+import { Route as MultisigSignerApprovedIdRouteImport } from './routes/multisig-signer-approved/$id'
+import { Route as MultisigProposalRemovedIdRouteImport } from './routes/multisig-proposal-removed/$id'
+import { Route as MultisigProposalReadyIdRouteImport } from './routes/multisig-proposal-ready/$id'
+import { Route as MultisigProposalExecutedIdRouteImport } from './routes/multisig-proposal-executed/$id'
+import { Route as MultisigProposalCreatedIdRouteImport } from './routes/multisig-proposal-created/$id'
+import { Route as MultisigProposalCancelledIdRouteImport } from './routes/multisig-proposal-cancelled/$id'
+import { Route as MultisigDepositsClaimedIdRouteImport } from './routes/multisig-deposits-claimed/$id'
+import { Route as MultisigCreatedIdRouteImport } from './routes/multisig-created/$id'
 import { Route as MinerRewardsHashRouteImport } from './routes/miner-rewards/$hash'
 import { Route as ImmediateTransactionsHashRouteImport } from './routes/immediate-transactions/$hash'
 import { Route as HighSecuritySetsHashRouteImport } from './routes/high-security-sets/$hash'
@@ -49,6 +65,53 @@ const ScheduledReversibleTransactionsIndexRoute =
     path: '/scheduled-reversible-transactions/',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MultisigSignerApprovedIndexRoute =
+  MultisigSignerApprovedIndexRouteImport.update({
+    id: '/multisig-signer-approved/',
+    path: '/multisig-signer-approved/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalRemovedIndexRoute =
+  MultisigProposalRemovedIndexRouteImport.update({
+    id: '/multisig-proposal-removed/',
+    path: '/multisig-proposal-removed/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalReadyIndexRoute =
+  MultisigProposalReadyIndexRouteImport.update({
+    id: '/multisig-proposal-ready/',
+    path: '/multisig-proposal-ready/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalExecutedIndexRoute =
+  MultisigProposalExecutedIndexRouteImport.update({
+    id: '/multisig-proposal-executed/',
+    path: '/multisig-proposal-executed/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalCreatedIndexRoute =
+  MultisigProposalCreatedIndexRouteImport.update({
+    id: '/multisig-proposal-created/',
+    path: '/multisig-proposal-created/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalCancelledIndexRoute =
+  MultisigProposalCancelledIndexRouteImport.update({
+    id: '/multisig-proposal-cancelled/',
+    path: '/multisig-proposal-cancelled/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigDepositsClaimedIndexRoute =
+  MultisigDepositsClaimedIndexRouteImport.update({
+    id: '/multisig-deposits-claimed/',
+    path: '/multisig-deposits-claimed/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigCreatedIndexRoute = MultisigCreatedIndexRouteImport.update({
+  id: '/multisig-created/',
+  path: '/multisig-created/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MinerRewardsIndexRoute = MinerRewardsIndexRouteImport.update({
   id: '/miner-rewards/',
   path: '/miner-rewards/',
@@ -108,6 +171,52 @@ const ScheduledReversibleTransactionsTxIdRoute =
     path: '/scheduled-reversible-transactions/$txId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const MultisigSignerApprovedIdRoute =
+  MultisigSignerApprovedIdRouteImport.update({
+    id: '/multisig-signer-approved/$id',
+    path: '/multisig-signer-approved/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalRemovedIdRoute =
+  MultisigProposalRemovedIdRouteImport.update({
+    id: '/multisig-proposal-removed/$id',
+    path: '/multisig-proposal-removed/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalReadyIdRoute = MultisigProposalReadyIdRouteImport.update({
+  id: '/multisig-proposal-ready/$id',
+  path: '/multisig-proposal-ready/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MultisigProposalExecutedIdRoute =
+  MultisigProposalExecutedIdRouteImport.update({
+    id: '/multisig-proposal-executed/$id',
+    path: '/multisig-proposal-executed/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalCreatedIdRoute =
+  MultisigProposalCreatedIdRouteImport.update({
+    id: '/multisig-proposal-created/$id',
+    path: '/multisig-proposal-created/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigProposalCancelledIdRoute =
+  MultisigProposalCancelledIdRouteImport.update({
+    id: '/multisig-proposal-cancelled/$id',
+    path: '/multisig-proposal-cancelled/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigDepositsClaimedIdRoute =
+  MultisigDepositsClaimedIdRouteImport.update({
+    id: '/multisig-deposits-claimed/$id',
+    path: '/multisig-deposits-claimed/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MultisigCreatedIdRoute = MultisigCreatedIdRouteImport.update({
+  id: '/multisig-created/$id',
+  path: '/multisig-created/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MinerRewardsHashRoute = MinerRewardsHashRouteImport.update({
   id: '/miner-rewards/$hash',
   path: '/miner-rewards/$hash',
@@ -168,6 +277,14 @@ export interface FileRoutesByFullPath {
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
+  '/multisig-created/$id': typeof MultisigCreatedIdRoute
+  '/multisig-deposits-claimed/$id': typeof MultisigDepositsClaimedIdRoute
+  '/multisig-proposal-cancelled/$id': typeof MultisigProposalCancelledIdRoute
+  '/multisig-proposal-created/$id': typeof MultisigProposalCreatedIdRoute
+  '/multisig-proposal-executed/$id': typeof MultisigProposalExecutedIdRoute
+  '/multisig-proposal-ready/$id': typeof MultisigProposalReadyIdRoute
+  '/multisig-proposal-removed/$id': typeof MultisigProposalRemovedIdRoute
+  '/multisig-signer-approved/$id': typeof MultisigSignerApprovedIdRoute
   '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
   '/accounts': typeof AccountsIndexRoute
@@ -179,6 +296,14 @@ export interface FileRoutesByFullPath {
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
+  '/multisig-created': typeof MultisigCreatedIndexRoute
+  '/multisig-deposits-claimed': typeof MultisigDepositsClaimedIndexRoute
+  '/multisig-proposal-cancelled': typeof MultisigProposalCancelledIndexRoute
+  '/multisig-proposal-created': typeof MultisigProposalCreatedIndexRoute
+  '/multisig-proposal-executed': typeof MultisigProposalExecutedIndexRoute
+  '/multisig-proposal-ready': typeof MultisigProposalReadyIndexRoute
+  '/multisig-proposal-removed': typeof MultisigProposalRemovedIndexRoute
+  '/multisig-signer-approved': typeof MultisigSignerApprovedIndexRoute
   '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
   '/dev/graphql-benchmark': typeof DevGraphqlBenchmarkIndexRoute
@@ -193,6 +318,14 @@ export interface FileRoutesByTo {
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
+  '/multisig-created/$id': typeof MultisigCreatedIdRoute
+  '/multisig-deposits-claimed/$id': typeof MultisigDepositsClaimedIdRoute
+  '/multisig-proposal-cancelled/$id': typeof MultisigProposalCancelledIdRoute
+  '/multisig-proposal-created/$id': typeof MultisigProposalCreatedIdRoute
+  '/multisig-proposal-executed/$id': typeof MultisigProposalExecutedIdRoute
+  '/multisig-proposal-ready/$id': typeof MultisigProposalReadyIdRoute
+  '/multisig-proposal-removed/$id': typeof MultisigProposalRemovedIdRoute
+  '/multisig-signer-approved/$id': typeof MultisigSignerApprovedIdRoute
   '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
   '/accounts': typeof AccountsIndexRoute
@@ -204,6 +337,14 @@ export interface FileRoutesByTo {
   '/immediate-transactions': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard': typeof MinerLeaderboardIndexRoute
   '/miner-rewards': typeof MinerRewardsIndexRoute
+  '/multisig-created': typeof MultisigCreatedIndexRoute
+  '/multisig-deposits-claimed': typeof MultisigDepositsClaimedIndexRoute
+  '/multisig-proposal-cancelled': typeof MultisigProposalCancelledIndexRoute
+  '/multisig-proposal-created': typeof MultisigProposalCreatedIndexRoute
+  '/multisig-proposal-executed': typeof MultisigProposalExecutedIndexRoute
+  '/multisig-proposal-ready': typeof MultisigProposalReadyIndexRoute
+  '/multisig-proposal-removed': typeof MultisigProposalRemovedIndexRoute
+  '/multisig-signer-approved': typeof MultisigSignerApprovedIndexRoute
   '/scheduled-reversible-transactions': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole': typeof WormholeIndexRoute
   '/dev/graphql-benchmark': typeof DevGraphqlBenchmarkIndexRoute
@@ -219,6 +360,14 @@ export interface FileRoutesById {
   '/high-security-sets/$hash': typeof HighSecuritySetsHashRoute
   '/immediate-transactions/$hash': typeof ImmediateTransactionsHashRoute
   '/miner-rewards/$hash': typeof MinerRewardsHashRoute
+  '/multisig-created/$id': typeof MultisigCreatedIdRoute
+  '/multisig-deposits-claimed/$id': typeof MultisigDepositsClaimedIdRoute
+  '/multisig-proposal-cancelled/$id': typeof MultisigProposalCancelledIdRoute
+  '/multisig-proposal-created/$id': typeof MultisigProposalCreatedIdRoute
+  '/multisig-proposal-executed/$id': typeof MultisigProposalExecutedIdRoute
+  '/multisig-proposal-ready/$id': typeof MultisigProposalReadyIdRoute
+  '/multisig-proposal-removed/$id': typeof MultisigProposalRemovedIdRoute
+  '/multisig-signer-approved/$id': typeof MultisigSignerApprovedIdRoute
   '/scheduled-reversible-transactions/$txId': typeof ScheduledReversibleTransactionsTxIdRoute
   '/wormhole/$id': typeof WormholeIdRoute
   '/accounts/': typeof AccountsIndexRoute
@@ -230,6 +379,14 @@ export interface FileRoutesById {
   '/immediate-transactions/': typeof ImmediateTransactionsIndexRoute
   '/miner-leaderboard/': typeof MinerLeaderboardIndexRoute
   '/miner-rewards/': typeof MinerRewardsIndexRoute
+  '/multisig-created/': typeof MultisigCreatedIndexRoute
+  '/multisig-deposits-claimed/': typeof MultisigDepositsClaimedIndexRoute
+  '/multisig-proposal-cancelled/': typeof MultisigProposalCancelledIndexRoute
+  '/multisig-proposal-created/': typeof MultisigProposalCreatedIndexRoute
+  '/multisig-proposal-executed/': typeof MultisigProposalExecutedIndexRoute
+  '/multisig-proposal-ready/': typeof MultisigProposalReadyIndexRoute
+  '/multisig-proposal-removed/': typeof MultisigProposalRemovedIndexRoute
+  '/multisig-signer-approved/': typeof MultisigSignerApprovedIndexRoute
   '/scheduled-reversible-transactions/': typeof ScheduledReversibleTransactionsIndexRoute
   '/wormhole/': typeof WormholeIndexRoute
   '/dev/graphql-benchmark/': typeof DevGraphqlBenchmarkIndexRoute
@@ -246,6 +403,14 @@ export interface FileRouteTypes {
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
+    | '/multisig-created/$id'
+    | '/multisig-deposits-claimed/$id'
+    | '/multisig-proposal-cancelled/$id'
+    | '/multisig-proposal-created/$id'
+    | '/multisig-proposal-executed/$id'
+    | '/multisig-proposal-ready/$id'
+    | '/multisig-proposal-removed/$id'
+    | '/multisig-signer-approved/$id'
     | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
     | '/accounts'
@@ -257,6 +422,14 @@ export interface FileRouteTypes {
     | '/immediate-transactions'
     | '/miner-leaderboard'
     | '/miner-rewards'
+    | '/multisig-created'
+    | '/multisig-deposits-claimed'
+    | '/multisig-proposal-cancelled'
+    | '/multisig-proposal-created'
+    | '/multisig-proposal-executed'
+    | '/multisig-proposal-ready'
+    | '/multisig-proposal-removed'
+    | '/multisig-signer-approved'
     | '/scheduled-reversible-transactions'
     | '/wormhole'
     | '/dev/graphql-benchmark'
@@ -271,6 +444,14 @@ export interface FileRouteTypes {
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
+    | '/multisig-created/$id'
+    | '/multisig-deposits-claimed/$id'
+    | '/multisig-proposal-cancelled/$id'
+    | '/multisig-proposal-created/$id'
+    | '/multisig-proposal-executed/$id'
+    | '/multisig-proposal-ready/$id'
+    | '/multisig-proposal-removed/$id'
+    | '/multisig-signer-approved/$id'
     | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
     | '/accounts'
@@ -282,6 +463,14 @@ export interface FileRouteTypes {
     | '/immediate-transactions'
     | '/miner-leaderboard'
     | '/miner-rewards'
+    | '/multisig-created'
+    | '/multisig-deposits-claimed'
+    | '/multisig-proposal-cancelled'
+    | '/multisig-proposal-created'
+    | '/multisig-proposal-executed'
+    | '/multisig-proposal-ready'
+    | '/multisig-proposal-removed'
+    | '/multisig-signer-approved'
     | '/scheduled-reversible-transactions'
     | '/wormhole'
     | '/dev/graphql-benchmark'
@@ -296,6 +485,14 @@ export interface FileRouteTypes {
     | '/high-security-sets/$hash'
     | '/immediate-transactions/$hash'
     | '/miner-rewards/$hash'
+    | '/multisig-created/$id'
+    | '/multisig-deposits-claimed/$id'
+    | '/multisig-proposal-cancelled/$id'
+    | '/multisig-proposal-created/$id'
+    | '/multisig-proposal-executed/$id'
+    | '/multisig-proposal-ready/$id'
+    | '/multisig-proposal-removed/$id'
+    | '/multisig-signer-approved/$id'
     | '/scheduled-reversible-transactions/$txId'
     | '/wormhole/$id'
     | '/accounts/'
@@ -307,6 +504,14 @@ export interface FileRouteTypes {
     | '/immediate-transactions/'
     | '/miner-leaderboard/'
     | '/miner-rewards/'
+    | '/multisig-created/'
+    | '/multisig-deposits-claimed/'
+    | '/multisig-proposal-cancelled/'
+    | '/multisig-proposal-created/'
+    | '/multisig-proposal-executed/'
+    | '/multisig-proposal-ready/'
+    | '/multisig-proposal-removed/'
+    | '/multisig-signer-approved/'
     | '/scheduled-reversible-transactions/'
     | '/wormhole/'
     | '/dev/graphql-benchmark/'
@@ -322,6 +527,14 @@ export interface RootRouteChildren {
   HighSecuritySetsHashRoute: typeof HighSecuritySetsHashRoute
   ImmediateTransactionsHashRoute: typeof ImmediateTransactionsHashRoute
   MinerRewardsHashRoute: typeof MinerRewardsHashRoute
+  MultisigCreatedIdRoute: typeof MultisigCreatedIdRoute
+  MultisigDepositsClaimedIdRoute: typeof MultisigDepositsClaimedIdRoute
+  MultisigProposalCancelledIdRoute: typeof MultisigProposalCancelledIdRoute
+  MultisigProposalCreatedIdRoute: typeof MultisigProposalCreatedIdRoute
+  MultisigProposalExecutedIdRoute: typeof MultisigProposalExecutedIdRoute
+  MultisigProposalReadyIdRoute: typeof MultisigProposalReadyIdRoute
+  MultisigProposalRemovedIdRoute: typeof MultisigProposalRemovedIdRoute
+  MultisigSignerApprovedIdRoute: typeof MultisigSignerApprovedIdRoute
   ScheduledReversibleTransactionsTxIdRoute: typeof ScheduledReversibleTransactionsTxIdRoute
   WormholeIdRoute: typeof WormholeIdRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
@@ -333,6 +546,14 @@ export interface RootRouteChildren {
   ImmediateTransactionsIndexRoute: typeof ImmediateTransactionsIndexRoute
   MinerLeaderboardIndexRoute: typeof MinerLeaderboardIndexRoute
   MinerRewardsIndexRoute: typeof MinerRewardsIndexRoute
+  MultisigCreatedIndexRoute: typeof MultisigCreatedIndexRoute
+  MultisigDepositsClaimedIndexRoute: typeof MultisigDepositsClaimedIndexRoute
+  MultisigProposalCancelledIndexRoute: typeof MultisigProposalCancelledIndexRoute
+  MultisigProposalCreatedIndexRoute: typeof MultisigProposalCreatedIndexRoute
+  MultisigProposalExecutedIndexRoute: typeof MultisigProposalExecutedIndexRoute
+  MultisigProposalReadyIndexRoute: typeof MultisigProposalReadyIndexRoute
+  MultisigProposalRemovedIndexRoute: typeof MultisigProposalRemovedIndexRoute
+  MultisigSignerApprovedIndexRoute: typeof MultisigSignerApprovedIndexRoute
   ScheduledReversibleTransactionsIndexRoute: typeof ScheduledReversibleTransactionsIndexRoute
   WormholeIndexRoute: typeof WormholeIndexRoute
   DevGraphqlBenchmarkIndexRoute: typeof DevGraphqlBenchmarkIndexRoute
@@ -359,6 +580,62 @@ declare module '@tanstack/react-router' {
       path: '/scheduled-reversible-transactions'
       fullPath: '/scheduled-reversible-transactions'
       preLoaderRoute: typeof ScheduledReversibleTransactionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-signer-approved/': {
+      id: '/multisig-signer-approved/'
+      path: '/multisig-signer-approved'
+      fullPath: '/multisig-signer-approved'
+      preLoaderRoute: typeof MultisigSignerApprovedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-removed/': {
+      id: '/multisig-proposal-removed/'
+      path: '/multisig-proposal-removed'
+      fullPath: '/multisig-proposal-removed'
+      preLoaderRoute: typeof MultisigProposalRemovedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-ready/': {
+      id: '/multisig-proposal-ready/'
+      path: '/multisig-proposal-ready'
+      fullPath: '/multisig-proposal-ready'
+      preLoaderRoute: typeof MultisigProposalReadyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-executed/': {
+      id: '/multisig-proposal-executed/'
+      path: '/multisig-proposal-executed'
+      fullPath: '/multisig-proposal-executed'
+      preLoaderRoute: typeof MultisigProposalExecutedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-created/': {
+      id: '/multisig-proposal-created/'
+      path: '/multisig-proposal-created'
+      fullPath: '/multisig-proposal-created'
+      preLoaderRoute: typeof MultisigProposalCreatedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-cancelled/': {
+      id: '/multisig-proposal-cancelled/'
+      path: '/multisig-proposal-cancelled'
+      fullPath: '/multisig-proposal-cancelled'
+      preLoaderRoute: typeof MultisigProposalCancelledIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-deposits-claimed/': {
+      id: '/multisig-deposits-claimed/'
+      path: '/multisig-deposits-claimed'
+      fullPath: '/multisig-deposits-claimed'
+      preLoaderRoute: typeof MultisigDepositsClaimedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-created/': {
+      id: '/multisig-created/'
+      path: '/multisig-created'
+      fullPath: '/multisig-created'
+      preLoaderRoute: typeof MultisigCreatedIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/miner-rewards/': {
@@ -436,6 +713,62 @@ declare module '@tanstack/react-router' {
       path: '/scheduled-reversible-transactions/$txId'
       fullPath: '/scheduled-reversible-transactions/$txId'
       preLoaderRoute: typeof ScheduledReversibleTransactionsTxIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-signer-approved/$id': {
+      id: '/multisig-signer-approved/$id'
+      path: '/multisig-signer-approved/$id'
+      fullPath: '/multisig-signer-approved/$id'
+      preLoaderRoute: typeof MultisigSignerApprovedIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-removed/$id': {
+      id: '/multisig-proposal-removed/$id'
+      path: '/multisig-proposal-removed/$id'
+      fullPath: '/multisig-proposal-removed/$id'
+      preLoaderRoute: typeof MultisigProposalRemovedIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-ready/$id': {
+      id: '/multisig-proposal-ready/$id'
+      path: '/multisig-proposal-ready/$id'
+      fullPath: '/multisig-proposal-ready/$id'
+      preLoaderRoute: typeof MultisigProposalReadyIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-executed/$id': {
+      id: '/multisig-proposal-executed/$id'
+      path: '/multisig-proposal-executed/$id'
+      fullPath: '/multisig-proposal-executed/$id'
+      preLoaderRoute: typeof MultisigProposalExecutedIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-created/$id': {
+      id: '/multisig-proposal-created/$id'
+      path: '/multisig-proposal-created/$id'
+      fullPath: '/multisig-proposal-created/$id'
+      preLoaderRoute: typeof MultisigProposalCreatedIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-proposal-cancelled/$id': {
+      id: '/multisig-proposal-cancelled/$id'
+      path: '/multisig-proposal-cancelled/$id'
+      fullPath: '/multisig-proposal-cancelled/$id'
+      preLoaderRoute: typeof MultisigProposalCancelledIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-deposits-claimed/$id': {
+      id: '/multisig-deposits-claimed/$id'
+      path: '/multisig-deposits-claimed/$id'
+      fullPath: '/multisig-deposits-claimed/$id'
+      preLoaderRoute: typeof MultisigDepositsClaimedIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig-created/$id': {
+      id: '/multisig-created/$id'
+      path: '/multisig-created/$id'
+      fullPath: '/multisig-created/$id'
+      preLoaderRoute: typeof MultisigCreatedIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/miner-rewards/$hash': {
@@ -516,6 +849,14 @@ const rootRouteChildren: RootRouteChildren = {
   HighSecuritySetsHashRoute: HighSecuritySetsHashRoute,
   ImmediateTransactionsHashRoute: ImmediateTransactionsHashRoute,
   MinerRewardsHashRoute: MinerRewardsHashRoute,
+  MultisigCreatedIdRoute: MultisigCreatedIdRoute,
+  MultisigDepositsClaimedIdRoute: MultisigDepositsClaimedIdRoute,
+  MultisigProposalCancelledIdRoute: MultisigProposalCancelledIdRoute,
+  MultisigProposalCreatedIdRoute: MultisigProposalCreatedIdRoute,
+  MultisigProposalExecutedIdRoute: MultisigProposalExecutedIdRoute,
+  MultisigProposalReadyIdRoute: MultisigProposalReadyIdRoute,
+  MultisigProposalRemovedIdRoute: MultisigProposalRemovedIdRoute,
+  MultisigSignerApprovedIdRoute: MultisigSignerApprovedIdRoute,
   ScheduledReversibleTransactionsTxIdRoute:
     ScheduledReversibleTransactionsTxIdRoute,
   WormholeIdRoute: WormholeIdRoute,
@@ -530,6 +871,14 @@ const rootRouteChildren: RootRouteChildren = {
   ImmediateTransactionsIndexRoute: ImmediateTransactionsIndexRoute,
   MinerLeaderboardIndexRoute: MinerLeaderboardIndexRoute,
   MinerRewardsIndexRoute: MinerRewardsIndexRoute,
+  MultisigCreatedIndexRoute: MultisigCreatedIndexRoute,
+  MultisigDepositsClaimedIndexRoute: MultisigDepositsClaimedIndexRoute,
+  MultisigProposalCancelledIndexRoute: MultisigProposalCancelledIndexRoute,
+  MultisigProposalCreatedIndexRoute: MultisigProposalCreatedIndexRoute,
+  MultisigProposalExecutedIndexRoute: MultisigProposalExecutedIndexRoute,
+  MultisigProposalReadyIndexRoute: MultisigProposalReadyIndexRoute,
+  MultisigProposalRemovedIndexRoute: MultisigProposalRemovedIndexRoute,
+  MultisigSignerApprovedIndexRoute: MultisigSignerApprovedIndexRoute,
   ScheduledReversibleTransactionsIndexRoute:
     ScheduledReversibleTransactionsIndexRoute,
   WormholeIndexRoute: WormholeIndexRoute,

@@ -15,6 +15,14 @@ import {
   transformHighSecuritySet,
   transformImmediateTransaction,
   transformMinerReward,
+  transformMultisigCreated,
+  transformMultisigDepositsClaimed,
+  transformMultisigProposalCancelled,
+  transformMultisigProposalCreated,
+  transformMultisigProposalExecuted,
+  transformMultisigProposalReady,
+  transformMultisigProposalRemoved,
+  transformMultisigSignerApproved,
   transformScheduledTransaction,
   transformWormholeOutput
 } from '@/hooks/useUnifiedTransactions';
@@ -61,6 +69,44 @@ export const useAccountAllTransactions = (
 
       if (event.minerReward) {
         unified.push(transformMinerReward(event.minerReward, idx));
+      }
+      if (event.multisig) {
+        unified.push(transformMultisigCreated(event.multisig));
+      }
+      if (event.multisigProposalCreated) {
+        unified.push(
+          transformMultisigProposalCreated(event.multisigProposalCreated)
+        );
+      }
+      if (event.multisigSignerApproved) {
+        unified.push(
+          transformMultisigSignerApproved(event.multisigSignerApproved)
+        );
+      }
+      if (event.multisigProposalReady) {
+        unified.push(
+          transformMultisigProposalReady(event.multisigProposalReady)
+        );
+      }
+      if (event.executedMultisigProposal) {
+        unified.push(
+          transformMultisigProposalExecuted(event.executedMultisigProposal)
+        );
+      }
+      if (event.cancelledMultisigProposal) {
+        unified.push(
+          transformMultisigProposalCancelled(event.cancelledMultisigProposal)
+        );
+      }
+      if (event.removedMultisigProposal) {
+        unified.push(
+          transformMultisigProposalRemoved(event.removedMultisigProposal)
+        );
+      }
+      if (event.multisigDepositsClaimed) {
+        unified.push(
+          transformMultisigDepositsClaimed(event.multisigDepositsClaimed)
+        );
       }
     });
 
