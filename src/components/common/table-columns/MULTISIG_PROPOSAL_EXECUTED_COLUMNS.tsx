@@ -13,12 +13,12 @@ export const MULTISIG_PROPOSAL_EXECUTED_COLUMNS = [
     id: 'extrinsicHash',
     header: 'Extrinsic Hash',
     cell: (props) => {
-      const row = props.row.original;
-      return props.getValue() ? (
+      const extrinsicId = props.getValue();
+      return extrinsicId ? (
         <LinkWithCopy
-          href={`${RESOURCES.multisigProposalExecuted}/${row.id}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          href={`${RESOURCES.multisigProposalExecuted}/${extrinsicId}`}
+          text={formatTxAddress(extrinsicId)}
+          textCopy={extrinsicId}
         />
       ) : (
         'Is not available'

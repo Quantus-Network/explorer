@@ -14,7 +14,7 @@ export interface MultisigSignerApproved
 }
 
 export interface MultisigSignerApprovedResponse {
-  multisigSignerApproved: MultisigSignerApproved | null;
+  multisigSignerApprovedEvents: MultisigSignerApproved[];
 }
 
 export interface MultisigSignerApprovedListResponse {

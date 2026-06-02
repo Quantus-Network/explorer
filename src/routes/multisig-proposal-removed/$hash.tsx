@@ -4,12 +4,12 @@ import { MultisigProposalRemovedInformation } from '@/components/features/multis
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/multisig-proposal-removed/$id')({
+export const Route = createFileRoute('/multisig-proposal-removed/$hash')({
   component: MultisigProposalRemovedDetails
 });
 
 function MultisigProposalRemovedDetails() {
-  const { id } = Route.useParams();
+  const { hash } = Route.useParams();
 
   return (
     <SectionContainer>
@@ -20,7 +20,7 @@ function MultisigProposalRemovedDetails() {
             Detailed information about a multisig proposal removal event.
           </p>
         </div>
-        <MultisigProposalRemovedInformation id={id} />
+        <MultisigProposalRemovedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>
   );

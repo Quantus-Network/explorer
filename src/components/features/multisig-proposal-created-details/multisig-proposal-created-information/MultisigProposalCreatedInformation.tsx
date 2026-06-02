@@ -10,18 +10,21 @@ import type { MultisigProposalCreated } from '@/schemas';
 import { formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigProposalCreatedInformationProps {
-  id: string;
+  hash: string;
 }
 
 export const MultisigProposalCreatedInformation: React.FC<
   MultisigProposalCreatedInformationProps
-> = ({ id }) => {
+> = ({ hash }) => {
   const api = useApiClient();
-  const { data, loading } = api.multisigProposalCreated.getById().useQuery(id);
+  const { data, loading } = api.multisigProposalCreated
+    .getByHash()
+    .useQuery(hash);
 
-  if (!loading && !data?.multisigProposalCreated) throw notFound();
+  if (!loading && (!data || data.multisigProposalCreatedEvents.length !== 1))
+    throw notFound();
 
-  const event = data?.multisigProposalCreated;
+  const event = data?.multisigProposalCreatedEvents[0];
 
   const information: Partial<MultisigProposalCreated>[] = [
     {
@@ -90,6 +93,7 @@ export const MultisigProposalCreatedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${multisigId}`}
                 text={multisigId}
+                className="break-all"
               />
             ) : (
               '-'
@@ -106,6 +110,7 @@ export const MultisigProposalCreatedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
+                className="break-all"
               />
             ) : (
               '-'

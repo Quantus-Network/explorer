@@ -4,12 +4,12 @@ import { MultisigProposalReadyInformation } from '@/components/features/multisig
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/multisig-proposal-ready/$id')({
+export const Route = createFileRoute('/multisig-proposal-ready/$hash')({
   component: MultisigProposalReadyDetails
 });
 
 function MultisigProposalReadyDetails() {
-  const { id } = Route.useParams();
+  const { hash } = Route.useParams();
 
   return (
     <SectionContainer>
@@ -20,7 +20,7 @@ function MultisigProposalReadyDetails() {
             Detailed information about a multisig proposal ready event.
           </p>
         </div>
-        <MultisigProposalReadyInformation id={id} />
+        <MultisigProposalReadyInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>
   );

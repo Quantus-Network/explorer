@@ -138,11 +138,13 @@ export const multisigCreated = {
       }
     });
   },
-  getById: () => {
-    const GET_MULTISIG_CREATED_BY_ID = gql`
+  getByHash: () => {
+    const GET_MULTISIG_CREATED_BY_HASH = gql`
       ${MULTISIG_CREATED_FIELDS}
-      query GetMultisigCreatedById($id: String!) {
-        multisigCreated: multisig_by_pk(id: $id) {
+      query GetMultisigCreatedByHash($hash: String!) {
+        multisigCreatedEvents: multisig(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           ...MultisigCreatedFields
         }
       }
@@ -150,12 +152,12 @@ export const multisigCreated = {
 
     return {
       useQuery: (
-        id: string,
+        hash: string,
         config?: QueryHookOptions<MultisigCreatedResponse>
       ) =>
-        useQuery<MultisigCreatedResponse>(GET_MULTISIG_CREATED_BY_ID, {
+        useQuery<MultisigCreatedResponse>(GET_MULTISIG_CREATED_BY_HASH, {
           ...config,
-          variables: { id }
+          variables: { hash }
         })
     };
   }

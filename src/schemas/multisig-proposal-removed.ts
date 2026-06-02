@@ -14,7 +14,7 @@ export interface MultisigProposalRemoved
 }
 
 export interface MultisigProposalRemovedResponse {
-  multisigProposalRemoved: MultisigProposalRemoved | null;
+  multisigProposalRemovedEvents: MultisigProposalRemoved[];
 }
 
 export interface MultisigProposalRemovedListResponse {

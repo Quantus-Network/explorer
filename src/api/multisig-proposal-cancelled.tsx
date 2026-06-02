@@ -145,11 +145,13 @@ export const multisigProposalCancelled = {
       variables: { startDate, endDate }
     });
   },
-  getById: () => {
+  getByHash: () => {
     const QUERY = gql`
       ${MULTISIG_PROPOSAL_CANCELLED_FIELDS}
-      query GetMultisigProposalCancelledById($id: String!) {
-        multisigProposalCancelled: cancelled_multisig_proposal_by_pk(id: $id) {
+      query GetMultisigProposalCancelledByHash($hash: String!) {
+        multisigProposalCancelledEvents: cancelled_multisig_proposal(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           ...MultisigProposalCancelledFields
         }
       }
@@ -157,9 +159,9 @@ export const multisigProposalCancelled = {
 
     return {
       useQuery: (
-        id: string,
+        hash: string,
         config?: QueryHookOptions<MultisigProposalCancelledResponse>
-      ) => useQuery(QUERY, { ...config, variables: { id } })
+      ) => useQuery(QUERY, { ...config, variables: { hash } })
     };
   }
 };

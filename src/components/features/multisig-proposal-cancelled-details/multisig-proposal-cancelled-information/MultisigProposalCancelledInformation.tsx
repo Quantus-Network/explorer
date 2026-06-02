@@ -10,20 +10,21 @@ import type { MultisigProposalCancelled } from '@/schemas';
 import { formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigProposalCancelledInformationProps {
-  id: string;
+  hash: string;
 }
 
 export const MultisigProposalCancelledInformation: React.FC<
   MultisigProposalCancelledInformationProps
-> = ({ id }) => {
+> = ({ hash }) => {
   const api = useApiClient();
   const { data, loading } = api.multisigProposalCancelled
-    .getById()
-    .useQuery(id);
+    .getByHash()
+    .useQuery(hash);
 
-  if (!loading && !data?.multisigProposalCancelled) throw notFound();
+  if (!loading && (!data || data.multisigProposalCancelledEvents.length !== 1))
+    throw notFound();
 
-  const event = data?.multisigProposalCancelled;
+  const event = data?.multisigProposalCancelledEvents[0];
 
   const information: Partial<MultisigProposalCancelled>[] = [
     {
@@ -93,6 +94,7 @@ export const MultisigProposalCancelledInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${multisigId}`}
                 text={multisigId}
+                className="break-all"
               />
             ) : (
               '-'
@@ -109,6 +111,7 @@ export const MultisigProposalCancelledInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
+                className="break-all"
               />
             ) : (
               '-'
@@ -126,6 +129,7 @@ export const MultisigProposalCancelledInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${cancelledById}`}
                 text={cancelledById}
+                className="break-all"
               />
             ) : (
               '-'

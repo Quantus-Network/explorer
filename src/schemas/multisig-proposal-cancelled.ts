@@ -14,7 +14,7 @@ export interface MultisigProposalCancelled
 }
 
 export interface MultisigProposalCancelledResponse {
-  multisigProposalCancelled: MultisigProposalCancelled | null;
+  multisigProposalCancelledEvents: MultisigProposalCancelled[];
 }
 
 export interface MultisigProposalCancelledListResponse {

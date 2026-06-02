@@ -4,12 +4,12 @@ import { MultisigCreatedInformation } from '@/components/features/multisig-creat
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/multisig-created/$id')({
+export const Route = createFileRoute('/multisig-created/$hash')({
   component: MultisigCreatedDetails
 });
 
 function MultisigCreatedDetails() {
-  const { id } = Route.useParams();
+  const { hash } = Route.useParams();
 
   return (
     <SectionContainer>
@@ -20,7 +20,7 @@ function MultisigCreatedDetails() {
             Detailed information about a multisig creation event.
           </p>
         </div>
-        <MultisigCreatedInformation id={id} />
+        <MultisigCreatedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>
   );

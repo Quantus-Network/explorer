@@ -10,18 +10,21 @@ import type { MultisigDepositsClaimed } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigDepositsClaimedInformationProps {
-  id: string;
+  hash: string;
 }
 
 export const MultisigDepositsClaimedInformation: React.FC<
   MultisigDepositsClaimedInformationProps
-> = ({ id }) => {
+> = ({ hash }) => {
   const api = useApiClient();
-  const { data, loading } = api.multisigDepositsClaimed.getById().useQuery(id);
+  const { data, loading } = api.multisigDepositsClaimed
+    .getByHash()
+    .useQuery(hash);
 
-  if (!loading && !data?.multisigDepositsClaimed) throw notFound();
+  if (!loading && (!data || data.multisigDepositsClaimedEvents.length !== 1))
+    throw notFound();
 
-  const event = data?.multisigDepositsClaimed;
+  const event = data?.multisigDepositsClaimedEvents[0];
 
   const information: Partial<MultisigDepositsClaimed>[] = [
     {
@@ -83,6 +86,7 @@ export const MultisigDepositsClaimedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${multisigId}`}
                 text={multisigId}
+                className="break-all"
               />
             ) : (
               '-'
@@ -98,6 +102,7 @@ export const MultisigDepositsClaimedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${claimerId}`}
                 text={claimerId}
+                className="break-all"
               />
             ) : (
               '-'

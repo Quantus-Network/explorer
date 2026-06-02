@@ -4,12 +4,12 @@ import { MultisigSignerApprovedInformation } from '@/components/features/multisi
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/multisig-signer-approved/$id')({
+export const Route = createFileRoute('/multisig-signer-approved/$hash')({
   component: MultisigSignerApprovedDetails
 });
 
 function MultisigSignerApprovedDetails() {
-  const { id } = Route.useParams();
+  const { hash } = Route.useParams();
 
   return (
     <SectionContainer>
@@ -20,7 +20,7 @@ function MultisigSignerApprovedDetails() {
             Detailed information about a multisig signer approval event.
           </p>
         </div>
-        <MultisigSignerApprovedInformation id={id} />
+        <MultisigSignerApprovedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>
   );

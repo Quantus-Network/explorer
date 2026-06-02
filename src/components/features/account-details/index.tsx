@@ -8,6 +8,7 @@ import { validateAccountId } from '@/utils/validate-account-id';
 
 import { AccountDataTabs } from './account-data-tabs/AccountDataTabs';
 import { AccountInformation } from './account-information/AccountInformation';
+import { AccountMultisigInformation } from './account-multisig-information/AccountMultisigInformation';
 
 interface Props {
   id: string;
@@ -28,6 +29,13 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
           <h1>Account Details</h1>
 
           <AccountInformation accountId={id} query={query} />
+
+          {data?.multisig && (
+            <AccountMultisigInformation
+              multisig={data.multisig}
+              loading={loading}
+            />
+          )}
         </ContentContainer>
       </SectionContainer>
 

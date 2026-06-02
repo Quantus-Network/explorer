@@ -13,7 +13,7 @@ export interface MultisigProposalReady
 }
 
 export interface MultisigProposalReadyResponse {
-  multisigProposalReady: MultisigProposalReady | null;
+  multisigProposalReadyEvents: MultisigProposalReady[];
 }
 
 export interface MultisigProposalReadyListResponse {

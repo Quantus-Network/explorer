@@ -18,7 +18,7 @@ export interface MultisigProposalCreated
 }
 
 export interface MultisigProposalCreatedResponse {
-  multisigProposalCreated: MultisigProposalCreated | null;
+  multisigProposalCreatedEvents: MultisigProposalCreated[];
 }
 
 export interface MultisigProposalCreatedListResponse {

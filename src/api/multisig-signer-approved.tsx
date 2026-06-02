@@ -146,11 +146,13 @@ export const multisigSignerApproved = {
       variables: { startDate, endDate }
     });
   },
-  getById: () => {
+  getByHash: () => {
     const QUERY = gql`
       ${MULTISIG_SIGNER_APPROVED_FIELDS}
-      query GetMultisigSignerApprovedById($id: String!) {
-        multisigSignerApproved: multisig_signer_approved_by_pk(id: $id) {
+      query GetMultisigSignerApprovedByHash($hash: String!) {
+        multisigSignerApprovedEvents: multisig_signer_approved(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           ...MultisigSignerApprovedFields
         }
       }
@@ -158,9 +160,9 @@ export const multisigSignerApproved = {
 
     return {
       useQuery: (
-        id: string,
+        hash: string,
         config?: QueryHookOptions<MultisigSignerApprovedResponse>
-      ) => useQuery(QUERY, { ...config, variables: { id } })
+      ) => useQuery(QUERY, { ...config, variables: { hash } })
     };
   }
 };

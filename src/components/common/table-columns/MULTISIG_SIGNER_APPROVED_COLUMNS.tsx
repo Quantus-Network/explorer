@@ -13,12 +13,12 @@ export const MULTISIG_SIGNER_APPROVED_COLUMNS = [
     id: 'extrinsicHash',
     header: 'Extrinsic Hash',
     cell: (props) => {
-      const row = props.row.original;
-      return props.getValue() ? (
+      const extrinsicId = props.getValue();
+      return extrinsicId ? (
         <LinkWithCopy
-          href={`${RESOURCES.multisigSignerApproved}/${row.id}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          href={`${RESOURCES.multisigSignerApproved}/${extrinsicId}`}
+          text={formatTxAddress(extrinsicId)}
+          textCopy={extrinsicId}
         />
       ) : (
         'Is not available'

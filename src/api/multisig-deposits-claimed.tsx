@@ -140,11 +140,13 @@ export const multisigDepositsClaimed = {
       variables: { startDate, endDate }
     });
   },
-  getById: () => {
+  getByHash: () => {
     const QUERY = gql`
       ${MULTISIG_DEPOSITS_CLAIMED_FIELDS}
-      query GetMultisigDepositsClaimedById($id: String!) {
-        multisigDepositsClaimed: multisig_deposits_claimed_by_pk(id: $id) {
+      query GetMultisigDepositsClaimedByHash($hash: String!) {
+        multisigDepositsClaimedEvents: multisig_deposits_claimed(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           ...MultisigDepositsClaimedFields
         }
       }
@@ -152,9 +154,9 @@ export const multisigDepositsClaimed = {
 
     return {
       useQuery: (
-        id: string,
+        hash: string,
         config?: QueryHookOptions<MultisigDepositsClaimedResponse>
-      ) => useQuery(QUERY, { ...config, variables: { id } })
+      ) => useQuery(QUERY, { ...config, variables: { hash } })
     };
   }
 };

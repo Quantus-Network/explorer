@@ -149,11 +149,13 @@ export const multisigProposalCreated = {
       variables: { startDate, endDate }
     });
   },
-  getById: () => {
+  getByHash: () => {
     const QUERY = gql`
       ${MULTISIG_PROPOSAL_CREATED_FIELDS}
-      query GetMultisigProposalCreatedById($id: String!) {
-        multisigProposalCreated: multisig_proposal_created_by_pk(id: $id) {
+      query GetMultisigProposalCreatedByHash($hash: String!) {
+        multisigProposalCreatedEvents: multisig_proposal_created(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           ...MultisigProposalCreatedFields
         }
       }
@@ -161,9 +163,9 @@ export const multisigProposalCreated = {
 
     return {
       useQuery: (
-        id: string,
+        hash: string,
         config?: QueryHookOptions<MultisigProposalCreatedResponse>
-      ) => useQuery(QUERY, { ...config, variables: { id } })
+      ) => useQuery(QUERY, { ...config, variables: { hash } })
     };
   }
 };

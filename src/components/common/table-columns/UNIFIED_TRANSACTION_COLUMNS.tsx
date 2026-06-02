@@ -92,46 +92,30 @@ export const createUnifiedTransactionColumns = (
         } else if (row.type === 'error' && extrinsicId) {
           href = `${RESOURCES.errors}/${extrinsicId}`;
           displayText = formatTxAddress(extrinsicId);
-        } else if (row.type === 'multisig-created') {
-          href = `${RESOURCES.multisigCreated}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-proposal-created') {
-          href = `${RESOURCES.multisigProposalCreated}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-signer-approved') {
-          href = `${RESOURCES.multisigSignerApproved}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-proposal-ready') {
-          href = `${RESOURCES.multisigProposalReady}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-proposal-executed') {
-          href = `${RESOURCES.multisigProposalExecuted}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-proposal-cancelled') {
-          href = `${RESOURCES.multisigProposalCancelled}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-proposal-removed') {
-          href = `${RESOURCES.multisigProposalRemoved}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
-        } else if (row.type === 'multisig-deposits-claimed') {
-          href = `${RESOURCES.multisigDepositsClaimed}/${row.id}`;
-          displayText = extrinsicId
-            ? formatTxAddress(extrinsicId)
-            : formatTxAddress(row.id);
+        } else if (row.type === 'multisig-created' && extrinsicId) {
+          href = `${RESOURCES.multisigCreated}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-proposal-created' && extrinsicId) {
+          href = `${RESOURCES.multisigProposalCreated}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-signer-approved' && extrinsicId) {
+          href = `${RESOURCES.multisigSignerApproved}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-proposal-ready' && extrinsicId) {
+          href = `${RESOURCES.multisigProposalReady}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-proposal-executed' && extrinsicId) {
+          href = `${RESOURCES.multisigProposalExecuted}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-proposal-cancelled' && extrinsicId) {
+          href = `${RESOURCES.multisigProposalCancelled}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-proposal-removed' && extrinsicId) {
+          href = `${RESOURCES.multisigProposalRemoved}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
+        } else if (row.type === 'multisig-deposits-claimed' && extrinsicId) {
+          href = `${RESOURCES.multisigDepositsClaimed}/${extrinsicId}`;
+          displayText = formatTxAddress(extrinsicId);
         }
 
         if (!href) {

@@ -10,18 +10,21 @@ import type { MultisigProposalRemoved } from '@/schemas';
 import { formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigProposalRemovedInformationProps {
-  id: string;
+  hash: string;
 }
 
 export const MultisigProposalRemovedInformation: React.FC<
   MultisigProposalRemovedInformationProps
-> = ({ id }) => {
+> = ({ hash }) => {
   const api = useApiClient();
-  const { data, loading } = api.multisigProposalRemoved.getById().useQuery(id);
+  const { data, loading } = api.multisigProposalRemoved
+    .getByHash()
+    .useQuery(hash);
 
-  if (!loading && !data?.multisigProposalRemoved) throw notFound();
+  if (!loading && (!data || data.multisigProposalRemovedEvents.length !== 1))
+    throw notFound();
 
-  const event = data?.multisigProposalRemoved;
+  const event = data?.multisigProposalRemovedEvents[0];
 
   const information: Partial<MultisigProposalRemoved>[] = [
     {
@@ -34,106 +37,105 @@ export const MultisigProposalRemovedInformation: React.FC<
   ];
 
   return (
-    <>
-      <h2 className="text-lg font-semibold">Event Information</h2>
-      <DataList<Partial<MultisigProposalRemoved>>
-        loading={loading}
-        data={information}
-        fields={[
-          {
-            label: 'Extrinsic Hash',
-            key: 'extrinsic',
-            render: (value) =>
-              (value as MultisigProposalRemoved['extrinsic'])?.id ? (
-                <TextWithCopy
-                  text={
-                    (value as MultisigProposalRemoved['extrinsic'])?.id ?? '-'
-                  }
-                  className="break-all"
-                />
-              ) : (
-                '-'
-              )
-          },
-          {
-            label: 'Timestamp',
-            key: 'timestamp',
-            render: (value) => formatTimestamp(value, true)
-          },
-          {
-            label: 'Block',
-            key: 'block',
-            render: (value) => (
-              <LinkWithCopy
-                text={(
-                  value as MultisigProposalRemoved['block']
-                ).height.toString()}
-                href={`${RESOURCES.blocks}/${(value as MultisigProposalRemoved['block']).height}`}
+    <DataList<Partial<MultisigProposalRemoved>>
+      loading={loading}
+      data={information}
+      fields={[
+        {
+          label: 'Extrinsic Hash',
+          key: 'extrinsic',
+          render: (value) =>
+            (value as MultisigProposalRemoved['extrinsic'])?.id ? (
+              <TextWithCopy
+                text={
+                  (value as MultisigProposalRemoved['extrinsic'])?.id ?? '-'
+                }
                 className="break-all"
               />
+            ) : (
+              '-'
             )
-          },
-          {
-            label: 'Proposal ID',
-            key: 'proposal',
-            render: (value) => {
-              const proposal = value as MultisigProposalRemoved['proposal'];
-              return proposal?.proposal_id != null
-                ? String(proposal.proposal_id)
-                : '-';
-            }
-          },
-          {
-            label: 'Multisig',
-            key: 'proposal',
-            render: (value) => {
-              const multisigId = (value as MultisigProposalRemoved['proposal'])
-                ?.multisig?.id;
-              return multisigId ? (
-                <LinkWithCopy
-                  href={`${RESOURCES.accounts}/${multisigId}`}
-                  text={multisigId}
-                />
-              ) : (
-                '-'
-              );
-            }
-          },
-          {
-            label: 'Proposer',
-            key: 'proposal',
-            render: (value) => {
-              const proposerId = (value as MultisigProposalRemoved['proposal'])
-                ?.proposer?.id;
-              return proposerId ? (
-                <LinkWithCopy
-                  href={`${RESOURCES.accounts}/${proposerId}`}
-                  text={proposerId}
-                />
-              ) : (
-                '-'
-              );
-            }
-          },
-          {
-            label: 'Removed By',
-            key: 'removedBy',
-            render: (value) => {
-              const removedById = (
-                value as MultisigProposalRemoved['removedBy']
-              )?.id;
-              return removedById ? (
-                <LinkWithCopy
-                  href={`${RESOURCES.accounts}/${removedById}`}
-                  text={removedById}
-                />
-              ) : (
-                '-'
-              );
-            }
+        },
+        {
+          label: 'Timestamp',
+          key: 'timestamp',
+          render: (value) => formatTimestamp(value, true)
+        },
+        {
+          label: 'Block',
+          key: 'block',
+          render: (value) => (
+            <LinkWithCopy
+              text={(
+                value as MultisigProposalRemoved['block']
+              ).height.toString()}
+              href={`${RESOURCES.blocks}/${(value as MultisigProposalRemoved['block']).height}`}
+              className="break-all"
+            />
+          )
+        },
+        {
+          label: 'Proposal ID',
+          key: 'proposal',
+          render: (value) => {
+            const proposal = value as MultisigProposalRemoved['proposal'];
+            return proposal?.proposal_id != null
+              ? String(proposal.proposal_id)
+              : '-';
           }
-        ]}
-      />
-    </>
+        },
+        {
+          label: 'Multisig',
+          key: 'proposal',
+          render: (value) => {
+            const multisigId = (value as MultisigProposalRemoved['proposal'])
+              ?.multisig?.id;
+            return multisigId ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${multisigId}`}
+                text={multisigId}
+                className="break-all"
+              />
+            ) : (
+              '-'
+            );
+          }
+        },
+        {
+          label: 'Proposer',
+          key: 'proposal',
+          render: (value) => {
+            const proposerId = (value as MultisigProposalRemoved['proposal'])
+              ?.proposer?.id;
+            return proposerId ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${proposerId}`}
+                text={proposerId}
+                className="break-all"
+              />
+            ) : (
+              '-'
+            );
+          }
+        },
+        {
+          label: 'Removed By',
+          key: 'removedBy',
+          render: (value) => {
+            const removedById = (value as MultisigProposalRemoved['removedBy'])
+              ?.id;
+            return removedById ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${removedById}`}
+                text={removedById}
+                className="break-all"
+              />
+            ) : (
+              '-'
+            );
+          }
+        }
+      ]}
+    />
   );
 };

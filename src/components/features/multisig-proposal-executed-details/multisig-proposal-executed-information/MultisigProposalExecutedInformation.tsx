@@ -10,18 +10,21 @@ import type { MultisigProposalExecuted } from '@/schemas';
 import { formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigProposalExecutedInformationProps {
-  id: string;
+  hash: string;
 }
 
 export const MultisigProposalExecutedInformation: React.FC<
   MultisigProposalExecutedInformationProps
-> = ({ id }) => {
+> = ({ hash }) => {
   const api = useApiClient();
-  const { data, loading } = api.multisigProposalExecuted.getById().useQuery(id);
+  const { data, loading } = api.multisigProposalExecuted
+    .getByHash()
+    .useQuery(hash);
 
-  if (!loading && !data?.multisigProposalExecuted) throw notFound();
+  if (!loading && (!data || data.multisigProposalExecutedEvents.length !== 1))
+    throw notFound();
 
-  const event = data?.multisigProposalExecuted;
+  const event = data?.multisigProposalExecutedEvents[0];
 
   const information: Partial<MultisigProposalExecuted>[] = [
     {
@@ -92,6 +95,7 @@ export const MultisigProposalExecutedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${multisigId}`}
                 text={multisigId}
+                className="break-all"
               />
             ) : (
               '-'
@@ -108,6 +112,7 @@ export const MultisigProposalExecutedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
+                className="break-all"
               />
             ) : (
               '-'
@@ -127,6 +132,7 @@ export const MultisigProposalExecutedInformation: React.FC<
                     key={approver}
                     href={`${RESOURCES.accounts}/${approver}`}
                     text={approver}
+                    className="break-all"
                   />
                 ))}
               </div>

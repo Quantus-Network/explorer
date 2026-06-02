@@ -68,6 +68,24 @@ export const accounts = {
           total_rewards
           total_scheduled_transfers
         }
+        multisig: multisig_by_pk(id: $id) {
+          id
+          timestamp
+          threshold
+          nonce
+          signers
+          creator {
+            id
+          }
+          block {
+            height
+          }
+          extrinsic {
+            id
+            pallet
+            call
+          }
+        }
         accountEvents: account_event(
           limit: $limit
           where: { account_id: { _eq: $id } }

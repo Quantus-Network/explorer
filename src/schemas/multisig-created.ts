@@ -8,7 +8,7 @@ export interface MultisigCreated
 }
 
 export interface MultisigCreatedResponse {
-  multisigCreated: MultisigCreated | null;
+  multisigCreatedEvents: MultisigCreated[];
 }
 
 export interface MultisigCreatedListResponse {

@@ -64,6 +64,7 @@ export interface AccountEvent {
 export interface AccountResponse {
   account: Account;
   accountStats: AccountStats;
+  multisig?: MultisigCreated | null;
   accountEvents: AccountEvent[];
   beneficiaries: {
     nodes: AccountBeneficiary[];

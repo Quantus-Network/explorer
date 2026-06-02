@@ -4,12 +4,12 @@ import { MultisigProposalCreatedInformation } from '@/components/features/multis
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/multisig-proposal-created/$id')({
+export const Route = createFileRoute('/multisig-proposal-created/$hash')({
   component: MultisigProposalCreatedDetails
 });
 
 function MultisigProposalCreatedDetails() {
-  const { id } = Route.useParams();
+  const { hash } = Route.useParams();
 
   return (
     <SectionContainer>
@@ -20,7 +20,7 @@ function MultisigProposalCreatedDetails() {
             Detailed information about a multisig proposal creation event.
           </p>
         </div>
-        <MultisigProposalCreatedInformation id={id} />
+        <MultisigProposalCreatedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>
   );

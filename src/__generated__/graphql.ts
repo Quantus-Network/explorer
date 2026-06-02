@@ -7946,6 +7946,22 @@ export type GetAccountByIdQuery = {
     total_rewards: any;
     total_scheduled_transfers: number;
   } | null;
+  multisig?: {
+    __typename?: 'multisig';
+    id: string;
+    timestamp: any;
+    threshold: number;
+    nonce: any;
+    signers: Array<string>;
+    creator?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+    extrinsic?: {
+      __typename?: 'extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+  } | null;
   accountEvents: Array<{
     __typename?: 'account_event';
     transfer?: {
@@ -9034,19 +9050,19 @@ export type GetMultisigCreatedStatsQuery = {
   } | null;
 };
 
-export type GetMultisigCreatedByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigCreatedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigCreatedByIdQuery = {
+export type GetMultisigCreatedByHashQuery = {
   __typename?: 'query_root';
-  multisigCreated?:
-    | ({ __typename?: 'multisig' } & {
-        ' $fragmentRefs'?: {
-          MultisigCreatedFieldsFragment: MultisigCreatedFieldsFragment;
-        };
-      })
-    | null;
+  multisigCreatedEvents: Array<
+    { __typename?: 'multisig' } & {
+      ' $fragmentRefs'?: {
+        MultisigCreatedFieldsFragment: MultisigCreatedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigDepositsClaimedFieldsFragment = {
@@ -9133,19 +9149,19 @@ export type GetMultisigDepositsClaimedStatsQuery = {
   } | null;
 };
 
-export type GetMultisigDepositsClaimedByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigDepositsClaimedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigDepositsClaimedByIdQuery = {
+export type GetMultisigDepositsClaimedByHashQuery = {
   __typename?: 'query_root';
-  multisigDepositsClaimed?:
-    | ({ __typename?: 'multisig_deposits_claimed' } & {
-        ' $fragmentRefs'?: {
-          MultisigDepositsClaimedFieldsFragment: MultisigDepositsClaimedFieldsFragment;
-        };
-      })
-    | null;
+  multisigDepositsClaimedEvents: Array<
+    { __typename?: 'multisig_deposits_claimed' } & {
+      ' $fragmentRefs'?: {
+        MultisigDepositsClaimedFieldsFragment: MultisigDepositsClaimedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigProposalCancelledFieldsFragment = {
@@ -9236,19 +9252,19 @@ export type GetMultisigProposalCancelledStatsQuery = {
   } | null;
 };
 
-export type GetMultisigProposalCancelledByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigProposalCancelledByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigProposalCancelledByIdQuery = {
+export type GetMultisigProposalCancelledByHashQuery = {
   __typename?: 'query_root';
-  multisigProposalCancelled?:
-    | ({ __typename?: 'cancelled_multisig_proposal' } & {
-        ' $fragmentRefs'?: {
-          MultisigProposalCancelledFieldsFragment: MultisigProposalCancelledFieldsFragment;
-        };
-      })
-    | null;
+  multisigProposalCancelledEvents: Array<
+    { __typename?: 'cancelled_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCancelledFieldsFragment: MultisigProposalCancelledFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigProposalRefFieldsFragment = {
@@ -9346,19 +9362,19 @@ export type GetMultisigProposalCreatedStatsQuery = {
   } | null;
 };
 
-export type GetMultisigProposalCreatedByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigProposalCreatedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigProposalCreatedByIdQuery = {
+export type GetMultisigProposalCreatedByHashQuery = {
   __typename?: 'query_root';
-  multisigProposalCreated?:
-    | ({ __typename?: 'multisig_proposal_created' } & {
-        ' $fragmentRefs'?: {
-          MultisigProposalCreatedFieldsFragment: MultisigProposalCreatedFieldsFragment;
-        };
-      })
-    | null;
+  multisigProposalCreatedEvents: Array<
+    { __typename?: 'multisig_proposal_created' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCreatedFieldsFragment: MultisigProposalCreatedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigProposalExecutedFieldsFragment = {
@@ -9450,19 +9466,19 @@ export type GetMultisigProposalExecutedStatsQuery = {
   } | null;
 };
 
-export type GetMultisigProposalExecutedByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigProposalExecutedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigProposalExecutedByIdQuery = {
+export type GetMultisigProposalExecutedByHashQuery = {
   __typename?: 'query_root';
-  multisigProposalExecuted?:
-    | ({ __typename?: 'executed_multisig_proposal' } & {
-        ' $fragmentRefs'?: {
-          MultisigProposalExecutedFieldsFragment: MultisigProposalExecutedFieldsFragment;
-        };
-      })
-    | null;
+  multisigProposalExecutedEvents: Array<
+    { __typename?: 'executed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalExecutedFieldsFragment: MultisigProposalExecutedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigProposalReadyFieldsFragment = {
@@ -9551,19 +9567,19 @@ export type GetMultisigProposalReadyStatsQuery = {
   } | null;
 };
 
-export type GetMultisigProposalReadyByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigProposalReadyByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigProposalReadyByIdQuery = {
+export type GetMultisigProposalReadyByHashQuery = {
   __typename?: 'query_root';
-  multisigProposalReady?:
-    | ({ __typename?: 'multisig_proposal_ready' } & {
-        ' $fragmentRefs'?: {
-          MultisigProposalReadyFieldsFragment: MultisigProposalReadyFieldsFragment;
-        };
-      })
-    | null;
+  multisigProposalReadyEvents: Array<
+    { __typename?: 'multisig_proposal_ready' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalReadyFieldsFragment: MultisigProposalReadyFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigProposalRemovedFieldsFragment = {
@@ -9654,19 +9670,19 @@ export type GetMultisigProposalRemovedStatsQuery = {
   } | null;
 };
 
-export type GetMultisigProposalRemovedByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigProposalRemovedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigProposalRemovedByIdQuery = {
+export type GetMultisigProposalRemovedByHashQuery = {
   __typename?: 'query_root';
-  multisigProposalRemoved?:
-    | ({ __typename?: 'removed_multisig_proposal' } & {
-        ' $fragmentRefs'?: {
-          MultisigProposalRemovedFieldsFragment: MultisigProposalRemovedFieldsFragment;
-        };
-      })
-    | null;
+  multisigProposalRemovedEvents: Array<
+    { __typename?: 'removed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalRemovedFieldsFragment: MultisigProposalRemovedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type MultisigSignerApprovedFieldsFragment = {
@@ -9756,19 +9772,19 @@ export type GetMultisigSignerApprovedStatsQuery = {
   } | null;
 };
 
-export type GetMultisigSignerApprovedByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+export type GetMultisigSignerApprovedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
 }>;
 
-export type GetMultisigSignerApprovedByIdQuery = {
+export type GetMultisigSignerApprovedByHashQuery = {
   __typename?: 'query_root';
-  multisigSignerApproved?:
-    | ({ __typename?: 'multisig_signer_approved' } & {
-        ' $fragmentRefs'?: {
-          MultisigSignerApprovedFieldsFragment: MultisigSignerApprovedFieldsFragment;
-        };
-      })
-    | null;
+  multisigSignerApprovedEvents: Array<
+    { __typename?: 'multisig_signer_approved' } & {
+      ' $fragmentRefs'?: {
+        MultisigSignerApprovedFieldsFragment: MultisigSignerApprovedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type GetScheduledReversibleTransactionsQueryVariables = Exact<{
@@ -10994,6 +11010,63 @@ export const GetAccountByIdDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'total_scheduled_transfers' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisig' },
+            name: { kind: 'Name', value: 'multisig_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'creator' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
                 }
               ]
             }
@@ -17439,17 +17512,17 @@ export const GetMultisigCreatedStatsDocument = {
   GetMultisigCreatedStatsQuery,
   GetMultisigCreatedStatsQueryVariables
 >;
-export const GetMultisigCreatedByIdDocument = {
+export const GetMultisigCreatedByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigCreatedById' },
+      name: { kind: 'Name', value: 'GetMultisigCreatedByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -17461,13 +17534,43 @@ export const GetMultisigCreatedByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigCreated' },
-            name: { kind: 'Name', value: 'multisig_by_pk' },
+            alias: { kind: 'Name', value: 'multisigCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -17535,8 +17638,8 @@ export const GetMultisigCreatedByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigCreatedByIdQuery,
-  GetMultisigCreatedByIdQueryVariables
+  GetMultisigCreatedByHashQuery,
+  GetMultisigCreatedByHashQueryVariables
 >;
 export const GetMultisigDepositsClaimedDocument = {
   kind: 'Document',
@@ -18023,17 +18126,17 @@ export const GetMultisigDepositsClaimedStatsDocument = {
   GetMultisigDepositsClaimedStatsQuery,
   GetMultisigDepositsClaimedStatsQueryVariables
 >;
-export const GetMultisigDepositsClaimedByIdDocument = {
+export const GetMultisigDepositsClaimedByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigDepositsClaimedById' },
+      name: { kind: 'Name', value: 'GetMultisigDepositsClaimedByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -18045,13 +18148,43 @@ export const GetMultisigDepositsClaimedByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigDepositsClaimed' },
-            name: { kind: 'Name', value: 'multisig_deposits_claimed_by_pk' },
+            alias: { kind: 'Name', value: 'multisigDepositsClaimedEvents' },
+            name: { kind: 'Name', value: 'multisig_deposits_claimed' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -18128,8 +18261,8 @@ export const GetMultisigDepositsClaimedByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigDepositsClaimedByIdQuery,
-  GetMultisigDepositsClaimedByIdQueryVariables
+  GetMultisigDepositsClaimedByHashQuery,
+  GetMultisigDepositsClaimedByHashQueryVariables
 >;
 export const GetMultisigProposalCancelledDocument = {
   kind: 'Document',
@@ -18663,17 +18796,17 @@ export const GetMultisigProposalCancelledStatsDocument = {
   GetMultisigProposalCancelledStatsQuery,
   GetMultisigProposalCancelledStatsQueryVariables
 >;
-export const GetMultisigProposalCancelledByIdDocument = {
+export const GetMultisigProposalCancelledByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigProposalCancelledById' },
+      name: { kind: 'Name', value: 'GetMultisigProposalCancelledByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -18685,13 +18818,43 @@ export const GetMultisigProposalCancelledByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigProposalCancelled' },
-            name: { kind: 'Name', value: 'cancelled_multisig_proposal_by_pk' },
+            alias: { kind: 'Name', value: 'multisigProposalCancelledEvents' },
+            name: { kind: 'Name', value: 'cancelled_multisig_proposal' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -18790,8 +18953,8 @@ export const GetMultisigProposalCancelledByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigProposalCancelledByIdQuery,
-  GetMultisigProposalCancelledByIdQueryVariables
+  GetMultisigProposalCancelledByHashQuery,
+  GetMultisigProposalCancelledByHashQueryVariables
 >;
 export const GetMultisigProposalCreatedDocument = {
   kind: 'Document',
@@ -19327,17 +19490,17 @@ export const GetMultisigProposalCreatedStatsDocument = {
   GetMultisigProposalCreatedStatsQuery,
   GetMultisigProposalCreatedStatsQueryVariables
 >;
-export const GetMultisigProposalCreatedByIdDocument = {
+export const GetMultisigProposalCreatedByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigProposalCreatedById' },
+      name: { kind: 'Name', value: 'GetMultisigProposalCreatedByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -19349,13 +19512,43 @@ export const GetMultisigProposalCreatedByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigProposalCreated' },
-            name: { kind: 'Name', value: 'multisig_proposal_created_by_pk' },
+            alias: { kind: 'Name', value: 'multisigProposalCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_created' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -19458,8 +19651,8 @@ export const GetMultisigProposalCreatedByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigProposalCreatedByIdQuery,
-  GetMultisigProposalCreatedByIdQueryVariables
+  GetMultisigProposalCreatedByHashQuery,
+  GetMultisigProposalCreatedByHashQueryVariables
 >;
 export const GetMultisigProposalExecutedDocument = {
   kind: 'Document',
@@ -19974,17 +20167,17 @@ export const GetMultisigProposalExecutedStatsDocument = {
   GetMultisigProposalExecutedStatsQuery,
   GetMultisigProposalExecutedStatsQueryVariables
 >;
-export const GetMultisigProposalExecutedByIdDocument = {
+export const GetMultisigProposalExecutedByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigProposalExecutedById' },
+      name: { kind: 'Name', value: 'GetMultisigProposalExecutedByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -19996,13 +20189,43 @@ export const GetMultisigProposalExecutedByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigProposalExecuted' },
-            name: { kind: 'Name', value: 'executed_multisig_proposal_by_pk' },
+            alias: { kind: 'Name', value: 'multisigProposalExecutedEvents' },
+            name: { kind: 'Name', value: 'executed_multisig_proposal' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -20093,8 +20316,8 @@ export const GetMultisigProposalExecutedByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigProposalExecutedByIdQuery,
-  GetMultisigProposalExecutedByIdQueryVariables
+  GetMultisigProposalExecutedByHashQuery,
+  GetMultisigProposalExecutedByHashQueryVariables
 >;
 export const GetMultisigProposalReadyDocument = {
   kind: 'Document',
@@ -20592,17 +20815,17 @@ export const GetMultisigProposalReadyStatsDocument = {
   GetMultisigProposalReadyStatsQuery,
   GetMultisigProposalReadyStatsQueryVariables
 >;
-export const GetMultisigProposalReadyByIdDocument = {
+export const GetMultisigProposalReadyByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigProposalReadyById' },
+      name: { kind: 'Name', value: 'GetMultisigProposalReadyByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -20614,13 +20837,43 @@ export const GetMultisigProposalReadyByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigProposalReady' },
-            name: { kind: 'Name', value: 'multisig_proposal_ready_by_pk' },
+            alias: { kind: 'Name', value: 'multisigProposalReadyEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -20707,8 +20960,8 @@ export const GetMultisigProposalReadyByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigProposalReadyByIdQuery,
-  GetMultisigProposalReadyByIdQueryVariables
+  GetMultisigProposalReadyByHashQuery,
+  GetMultisigProposalReadyByHashQueryVariables
 >;
 export const GetMultisigProposalRemovedDocument = {
   kind: 'Document',
@@ -21233,17 +21486,17 @@ export const GetMultisigProposalRemovedStatsDocument = {
   GetMultisigProposalRemovedStatsQuery,
   GetMultisigProposalRemovedStatsQueryVariables
 >;
-export const GetMultisigProposalRemovedByIdDocument = {
+export const GetMultisigProposalRemovedByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigProposalRemovedById' },
+      name: { kind: 'Name', value: 'GetMultisigProposalRemovedByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -21255,13 +21508,43 @@ export const GetMultisigProposalRemovedByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigProposalRemoved' },
-            name: { kind: 'Name', value: 'removed_multisig_proposal_by_pk' },
+            alias: { kind: 'Name', value: 'multisigProposalRemovedEvents' },
+            name: { kind: 'Name', value: 'removed_multisig_proposal' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -21357,8 +21640,8 @@ export const GetMultisigProposalRemovedByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigProposalRemovedByIdQuery,
-  GetMultisigProposalRemovedByIdQueryVariables
+  GetMultisigProposalRemovedByHashQuery,
+  GetMultisigProposalRemovedByHashQueryVariables
 >;
 export const GetMultisigSignerApprovedDocument = {
   kind: 'Document',
@@ -21879,17 +22162,17 @@ export const GetMultisigSignerApprovedStatsDocument = {
   GetMultisigSignerApprovedStatsQuery,
   GetMultisigSignerApprovedStatsQueryVariables
 >;
-export const GetMultisigSignerApprovedByIdDocument = {
+export const GetMultisigSignerApprovedByHashDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'GetMultisigSignerApprovedById' },
+      name: { kind: 'Name', value: 'GetMultisigSignerApprovedByHash' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
@@ -21901,13 +22184,43 @@ export const GetMultisigSignerApprovedByIdDocument = {
         selections: [
           {
             kind: 'Field',
-            alias: { kind: 'Name', value: 'multisigSignerApproved' },
-            name: { kind: 'Name', value: 'multisig_signer_approved_by_pk' },
+            alias: { kind: 'Name', value: 'multisigSignerApprovedEvents' },
+            name: { kind: 'Name', value: 'multisig_signer_approved' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -22004,8 +22317,8 @@ export const GetMultisigSignerApprovedByIdDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  GetMultisigSignerApprovedByIdQuery,
-  GetMultisigSignerApprovedByIdQueryVariables
+  GetMultisigSignerApprovedByHashQuery,
+  GetMultisigSignerApprovedByHashQueryVariables
 >;
 export const GetScheduledReversibleTransactionsDocument = {
   kind: 'Document',

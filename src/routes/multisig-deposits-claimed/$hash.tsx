@@ -4,12 +4,12 @@ import { MultisigDepositsClaimedInformation } from '@/components/features/multis
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/multisig-deposits-claimed/$id')({
+export const Route = createFileRoute('/multisig-deposits-claimed/$hash')({
   component: MultisigDepositsClaimedDetails
 });
 
 function MultisigDepositsClaimedDetails() {
-  const { id } = Route.useParams();
+  const { hash } = Route.useParams();
 
   return (
     <SectionContainer>
@@ -20,7 +20,7 @@ function MultisigDepositsClaimedDetails() {
             Detailed information about a multisig deposit claim event.
           </p>
         </div>
-        <MultisigDepositsClaimedInformation id={id} />
+        <MultisigDepositsClaimedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>
   );

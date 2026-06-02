@@ -10,18 +10,21 @@ import type { MultisigSignerApproved } from '@/schemas';
 import { formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigSignerApprovedInformationProps {
-  id: string;
+  hash: string;
 }
 
 export const MultisigSignerApprovedInformation: React.FC<
   MultisigSignerApprovedInformationProps
-> = ({ id }) => {
+> = ({ hash }) => {
   const api = useApiClient();
-  const { data, loading } = api.multisigSignerApproved.getById().useQuery(id);
+  const { data, loading } = api.multisigSignerApproved
+    .getByHash()
+    .useQuery(hash);
 
-  if (!loading && !data?.multisigSignerApproved) throw notFound();
+  if (!loading && (!data || data.multisigSignerApprovedEvents.length !== 1))
+    throw notFound();
 
-  const event = data?.multisigSignerApproved;
+  const event = data?.multisigSignerApprovedEvents[0];
 
   const information: Partial<MultisigSignerApproved>[] = [
     {
@@ -35,110 +38,108 @@ export const MultisigSignerApprovedInformation: React.FC<
   ];
 
   return (
-    <>
-      <h2 className="text-lg font-semibold">Event Information</h2>
-      <DataList<Partial<MultisigSignerApproved>>
-        loading={loading}
-        data={information}
-        fields={[
-          {
-            label: 'Extrinsic Hash',
-            key: 'extrinsic',
-            render: (value) =>
-              (value as MultisigSignerApproved['extrinsic'])?.id ? (
-                <TextWithCopy
-                  text={
-                    (value as MultisigSignerApproved['extrinsic'])?.id ?? '-'
-                  }
-                  className="break-all"
-                />
-              ) : (
-                '-'
-              )
-          },
-          {
-            label: 'Timestamp',
-            key: 'timestamp',
-            render: (value) => formatTimestamp(value, true)
-          },
-          {
-            label: 'Block',
-            key: 'block',
-            render: (value) => (
-              <LinkWithCopy
-                text={(
-                  value as MultisigSignerApproved['block']
-                ).height.toString()}
-                href={`${RESOURCES.blocks}/${(value as MultisigSignerApproved['block']).height}`}
+    <DataList<Partial<MultisigSignerApproved>>
+      loading={loading}
+      data={information}
+      fields={[
+        {
+          label: 'Extrinsic Hash',
+          key: 'extrinsic',
+          render: (value) =>
+            (value as MultisigSignerApproved['extrinsic'])?.id ? (
+              <TextWithCopy
+                text={(value as MultisigSignerApproved['extrinsic'])?.id ?? '-'}
                 className="break-all"
               />
+            ) : (
+              '-'
             )
-          },
-          {
-            label: 'Approver',
-            key: 'approver',
-            render: (value) => {
-              const approverId = (value as MultisigSignerApproved['approver'])
-                ?.id;
-              return approverId ? (
-                <LinkWithCopy
-                  href={`${RESOURCES.accounts}/${approverId}`}
-                  text={approverId}
-                />
-              ) : (
-                '-'
-              );
-            }
-          },
-          {
-            label: 'Approvals Count',
-            key: 'approvals_count',
-            render: (value) => (value != null ? String(value) : '-')
-          },
-          {
-            label: 'Proposal ID',
-            key: 'proposal',
-            render: (value) => {
-              const proposal = value as MultisigSignerApproved['proposal'];
-              return proposal?.proposal_id != null
-                ? String(proposal.proposal_id)
-                : '-';
-            }
-          },
-          {
-            label: 'Multisig',
-            key: 'proposal',
-            render: (value) => {
-              const multisigId = (value as MultisigSignerApproved['proposal'])
-                ?.multisig?.id;
-              return multisigId ? (
-                <LinkWithCopy
-                  href={`${RESOURCES.accounts}/${multisigId}`}
-                  text={multisigId}
-                />
-              ) : (
-                '-'
-              );
-            }
-          },
-          {
-            label: 'Proposer',
-            key: 'proposal',
-            render: (value) => {
-              const proposerId = (value as MultisigSignerApproved['proposal'])
-                ?.proposer?.id;
-              return proposerId ? (
-                <LinkWithCopy
-                  href={`${RESOURCES.accounts}/${proposerId}`}
-                  text={proposerId}
-                />
-              ) : (
-                '-'
-              );
-            }
+        },
+        {
+          label: 'Timestamp',
+          key: 'timestamp',
+          render: (value) => formatTimestamp(value, true)
+        },
+        {
+          label: 'Block',
+          key: 'block',
+          render: (value) => (
+            <LinkWithCopy
+              text={(
+                value as MultisigSignerApproved['block']
+              ).height.toString()}
+              href={`${RESOURCES.blocks}/${(value as MultisigSignerApproved['block']).height}`}
+              className="break-all"
+            />
+          )
+        },
+        {
+          label: 'Approver',
+          key: 'approver',
+          render: (value) => {
+            const approverId = (value as MultisigSignerApproved['approver'])
+              ?.id;
+            return approverId ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${approverId}`}
+                text={approverId}
+                className="break-all"
+              />
+            ) : (
+              '-'
+            );
           }
-        ]}
-      />
-    </>
+        },
+        {
+          label: 'Approvals Count',
+          key: 'approvals_count',
+          render: (value) => (value != null ? String(value) : '-')
+        },
+        {
+          label: 'Proposal ID',
+          key: 'proposal',
+          render: (value) => {
+            const proposal = value as MultisigSignerApproved['proposal'];
+            return proposal?.proposal_id != null
+              ? String(proposal.proposal_id)
+              : '-';
+          }
+        },
+        {
+          label: 'Multisig',
+          key: 'proposal',
+          render: (value) => {
+            const multisigId = (value as MultisigSignerApproved['proposal'])
+              ?.multisig?.id;
+            return multisigId ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${multisigId}`}
+                text={multisigId}
+                className="break-all"
+              />
+            ) : (
+              '-'
+            );
+          }
+        },
+        {
+          label: 'Proposer',
+          key: 'proposal',
+          render: (value) => {
+            const proposerId = (value as MultisigSignerApproved['proposal'])
+              ?.proposer?.id;
+            return proposerId ? (
+              <LinkWithCopy
+                href={`${RESOURCES.accounts}/${proposerId}`}
+                text={proposerId}
+                className="break-all"
+              />
+            ) : (
+              '-'
+            );
+          }
+        }
+      ]}
+    />
   );
 };

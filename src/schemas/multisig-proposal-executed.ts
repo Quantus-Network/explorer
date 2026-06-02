@@ -13,7 +13,7 @@ export interface MultisigProposalExecuted
 }
 
 export interface MultisigProposalExecutedResponse {
-  multisigProposalExecuted: MultisigProposalExecuted | null;
+  multisigProposalExecutedEvents: MultisigProposalExecuted[];
 }
 
 export interface MultisigProposalExecutedListResponse {

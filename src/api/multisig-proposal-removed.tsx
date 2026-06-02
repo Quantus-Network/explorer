@@ -145,11 +145,13 @@ export const multisigProposalRemoved = {
       variables: { startDate, endDate }
     });
   },
-  getById: () => {
+  getByHash: () => {
     const QUERY = gql`
       ${MULTISIG_PROPOSAL_REMOVED_FIELDS}
-      query GetMultisigProposalRemovedById($id: String!) {
-        multisigProposalRemoved: removed_multisig_proposal_by_pk(id: $id) {
+      query GetMultisigProposalRemovedByHash($hash: String!) {
+        multisigProposalRemovedEvents: removed_multisig_proposal(
+          where: { extrinsic: { id: { _eq: $hash } } }
+        ) {
           ...MultisigProposalRemovedFields
         }
       }
@@ -157,9 +159,9 @@ export const multisigProposalRemoved = {
 
     return {
       useQuery: (
-        id: string,
+        hash: string,
         config?: QueryHookOptions<MultisigProposalRemovedResponse>
-      ) => useQuery(QUERY, { ...config, variables: { id } })
+      ) => useQuery(QUERY, { ...config, variables: { hash } })
     };
   }
 };

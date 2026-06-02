@@ -12,7 +12,7 @@ export interface MultisigDepositsClaimed
 }
 
 export interface MultisigDepositsClaimedResponse {
-  multisigDepositsClaimed: MultisigDepositsClaimed | null;
+  multisigDepositsClaimedEvents: MultisigDepositsClaimed[];
 }
 
 export interface MultisigDepositsClaimedListResponse {
