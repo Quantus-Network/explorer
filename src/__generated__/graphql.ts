@@ -1194,6 +1194,7 @@ export type Cancelled_Multisig_Proposal = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   proposal?: Maybe<Multisig_Proposal>;
@@ -1211,15 +1212,29 @@ export type Cancelled_Multisig_Proposal_Aggregate = {
 /** aggregate fields of "cancelled_multisig_proposal" */
 export type Cancelled_Multisig_Proposal_Aggregate_Fields = {
   __typename?: 'cancelled_multisig_proposal_aggregate_fields';
+  avg?: Maybe<Cancelled_Multisig_Proposal_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Cancelled_Multisig_Proposal_Max_Fields>;
   min?: Maybe<Cancelled_Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Cancelled_Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Cancelled_Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Cancelled_Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Cancelled_Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Cancelled_Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Cancelled_Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Cancelled_Multisig_Proposal_Variance_Fields>;
 };
 
 /** aggregate fields of "cancelled_multisig_proposal" */
 export type Cancelled_Multisig_Proposal_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Cancelled_Multisig_Proposal_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Cancelled_Multisig_Proposal_Avg_Fields = {
+  __typename?: 'cancelled_multisig_proposal_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "cancelled_multisig_proposal". All fields are combined with a logical 'AND'. */
@@ -1234,6 +1249,7 @@ export type Cancelled_Multisig_Proposal_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   proposal_id?: InputMaybe<String_Comparison_Exp>;
@@ -1246,6 +1262,7 @@ export type Cancelled_Multisig_Proposal_Max_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   cancelled_by_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -1257,6 +1274,7 @@ export type Cancelled_Multisig_Proposal_Min_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   cancelled_by_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -1271,6 +1289,7 @@ export type Cancelled_Multisig_Proposal_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   proposal?: InputMaybe<Multisig_Proposal_Order_By>;
   proposal_id?: InputMaybe<Order_By>;
@@ -1286,12 +1305,32 @@ export enum Cancelled_Multisig_Proposal_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
+  Fee = 'fee',
+  /** column name */
   Id = 'id',
   /** column name */
   ProposalId = 'proposal_id',
   /** column name */
   Timestamp = 'timestamp'
 }
+
+/** aggregate stddev on columns */
+export type Cancelled_Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'cancelled_multisig_proposal_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Cancelled_Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'cancelled_multisig_proposal_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Cancelled_Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'cancelled_multisig_proposal_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
 
 /** Streaming cursor of the table "cancelled_multisig_proposal" */
 export type Cancelled_Multisig_Proposal_Stream_Cursor_Input = {
@@ -1306,9 +1345,34 @@ export type Cancelled_Multisig_Proposal_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
   cancelled_by_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   proposal_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Cancelled_Multisig_Proposal_Sum_Fields = {
+  __typename?: 'cancelled_multisig_proposal_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Cancelled_Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'cancelled_multisig_proposal_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Cancelled_Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'cancelled_multisig_proposal_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Cancelled_Multisig_Proposal_Variance_Fields = {
+  __typename?: 'cancelled_multisig_proposal_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "cancelled_reversible_transfer" */
@@ -2548,6 +2612,7 @@ export type Executed_Multisig_Proposal = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   proposal?: Maybe<Multisig_Proposal>;
@@ -2566,15 +2631,29 @@ export type Executed_Multisig_Proposal_Aggregate = {
 /** aggregate fields of "executed_multisig_proposal" */
 export type Executed_Multisig_Proposal_Aggregate_Fields = {
   __typename?: 'executed_multisig_proposal_aggregate_fields';
+  avg?: Maybe<Executed_Multisig_Proposal_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Executed_Multisig_Proposal_Max_Fields>;
   min?: Maybe<Executed_Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Executed_Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Executed_Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Executed_Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Executed_Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Executed_Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Executed_Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Executed_Multisig_Proposal_Variance_Fields>;
 };
 
 /** aggregate fields of "executed_multisig_proposal" */
 export type Executed_Multisig_Proposal_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Executed_Multisig_Proposal_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Executed_Multisig_Proposal_Avg_Fields = {
+  __typename?: 'executed_multisig_proposal_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "executed_multisig_proposal". All fields are combined with a logical 'AND'. */
@@ -2588,6 +2667,7 @@ export type Executed_Multisig_Proposal_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   proposal_id?: InputMaybe<String_Comparison_Exp>;
@@ -2601,6 +2681,7 @@ export type Executed_Multisig_Proposal_Max_Fields = {
   approvers?: Maybe<Array<Scalars['String']['output']>>;
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   result?: Maybe<Scalars['String']['output']>;
@@ -2613,6 +2694,7 @@ export type Executed_Multisig_Proposal_Min_Fields = {
   approvers?: Maybe<Array<Scalars['String']['output']>>;
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   result?: Maybe<Scalars['String']['output']>;
@@ -2627,6 +2709,7 @@ export type Executed_Multisig_Proposal_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   proposal?: InputMaybe<Multisig_Proposal_Order_By>;
   proposal_id?: InputMaybe<Order_By>;
@@ -2643,6 +2726,8 @@ export enum Executed_Multisig_Proposal_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
+  Fee = 'fee',
+  /** column name */
   Id = 'id',
   /** column name */
   ProposalId = 'proposal_id',
@@ -2651,6 +2736,24 @@ export enum Executed_Multisig_Proposal_Select_Column {
   /** column name */
   Timestamp = 'timestamp'
 }
+
+/** aggregate stddev on columns */
+export type Executed_Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'executed_multisig_proposal_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Executed_Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'executed_multisig_proposal_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Executed_Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'executed_multisig_proposal_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
 
 /** Streaming cursor of the table "executed_multisig_proposal" */
 export type Executed_Multisig_Proposal_Stream_Cursor_Input = {
@@ -2665,10 +2768,35 @@ export type Executed_Multisig_Proposal_Stream_Cursor_Value_Input = {
   approvers?: InputMaybe<Array<Scalars['String']['input']>>;
   block_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   proposal_id?: InputMaybe<Scalars['String']['input']>;
   result?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Executed_Multisig_Proposal_Sum_Fields = {
+  __typename?: 'executed_multisig_proposal_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Executed_Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'executed_multisig_proposal_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Executed_Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'executed_multisig_proposal_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Executed_Multisig_Proposal_Variance_Fields = {
+  __typename?: 'executed_multisig_proposal_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "executed_reversible_transfer" */
@@ -3544,6 +3672,7 @@ export type Multisig = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   nonce: Scalars['numeric']['output'];
   signers: Array<Scalars['String']['output']>;
@@ -3583,6 +3712,7 @@ export type Multisig_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Multisig_Avg_Fields = {
   __typename?: 'multisig_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -3599,6 +3729,7 @@ export type Multisig_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   nonce?: InputMaybe<Numeric_Comparison_Exp>;
   signers?: InputMaybe<String_Array_Comparison_Exp>;
@@ -3620,6 +3751,7 @@ export type Multisig_Deposits_Claimed = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   multisig?: Maybe<Multisig>;
@@ -3661,6 +3793,7 @@ export type Multisig_Deposits_Claimed_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Multisig_Deposits_Claimed_Avg_Fields = {
   __typename?: 'multisig_deposits_claimed_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3677,6 +3810,7 @@ export type Multisig_Deposits_Claimed_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   multisig?: InputMaybe<Multisig_Bool_Exp>;
   multisig_id?: InputMaybe<String_Comparison_Exp>;
@@ -3691,6 +3825,7 @@ export type Multisig_Deposits_Claimed_Max_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   claimer_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   multisig_id?: Maybe<Scalars['String']['output']>;
   proposals_removed?: Maybe<Scalars['Int']['output']>;
@@ -3704,6 +3839,7 @@ export type Multisig_Deposits_Claimed_Min_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   claimer_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   multisig_id?: Maybe<Scalars['String']['output']>;
   proposals_removed?: Maybe<Scalars['Int']['output']>;
@@ -3720,6 +3856,7 @@ export type Multisig_Deposits_Claimed_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   multisig?: InputMaybe<Multisig_Order_By>;
   multisig_id?: InputMaybe<Order_By>;
@@ -3737,6 +3874,8 @@ export enum Multisig_Deposits_Claimed_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
+  Fee = 'fee',
+  /** column name */
   Id = 'id',
   /** column name */
   MultisigId = 'multisig_id',
@@ -3751,6 +3890,7 @@ export enum Multisig_Deposits_Claimed_Select_Column {
 /** aggregate stddev on columns */
 export type Multisig_Deposits_Claimed_Stddev_Fields = {
   __typename?: 'multisig_deposits_claimed_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3758,6 +3898,7 @@ export type Multisig_Deposits_Claimed_Stddev_Fields = {
 /** aggregate stddev_pop on columns */
 export type Multisig_Deposits_Claimed_Stddev_Pop_Fields = {
   __typename?: 'multisig_deposits_claimed_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3765,6 +3906,7 @@ export type Multisig_Deposits_Claimed_Stddev_Pop_Fields = {
 /** aggregate stddev_samp on columns */
 export type Multisig_Deposits_Claimed_Stddev_Samp_Fields = {
   __typename?: 'multisig_deposits_claimed_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3782,6 +3924,7 @@ export type Multisig_Deposits_Claimed_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
   claimer_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   multisig_id?: InputMaybe<Scalars['String']['input']>;
   proposals_removed?: InputMaybe<Scalars['Int']['input']>;
@@ -3792,6 +3935,7 @@ export type Multisig_Deposits_Claimed_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Multisig_Deposits_Claimed_Sum_Fields = {
   __typename?: 'multisig_deposits_claimed_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
   proposals_removed?: Maybe<Scalars['Int']['output']>;
   total_returned?: Maybe<Scalars['numeric']['output']>;
 };
@@ -3799,6 +3943,7 @@ export type Multisig_Deposits_Claimed_Sum_Fields = {
 /** aggregate var_pop on columns */
 export type Multisig_Deposits_Claimed_Var_Pop_Fields = {
   __typename?: 'multisig_deposits_claimed_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3806,6 +3951,7 @@ export type Multisig_Deposits_Claimed_Var_Pop_Fields = {
 /** aggregate var_samp on columns */
 export type Multisig_Deposits_Claimed_Var_Samp_Fields = {
   __typename?: 'multisig_deposits_claimed_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3813,6 +3959,7 @@ export type Multisig_Deposits_Claimed_Var_Samp_Fields = {
 /** aggregate variance on columns */
 export type Multisig_Deposits_Claimed_Variance_Fields = {
   __typename?: 'multisig_deposits_claimed_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   proposals_removed?: Maybe<Scalars['Float']['output']>;
   total_returned?: Maybe<Scalars['Float']['output']>;
 };
@@ -3823,6 +3970,7 @@ export type Multisig_Max_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   creator_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   nonce?: Maybe<Scalars['numeric']['output']>;
   signers?: Maybe<Array<Scalars['String']['output']>>;
@@ -3836,6 +3984,7 @@ export type Multisig_Min_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   creator_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   nonce?: Maybe<Scalars['numeric']['output']>;
   signers?: Maybe<Array<Scalars['String']['output']>>;
@@ -3852,6 +4001,7 @@ export type Multisig_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   nonce?: InputMaybe<Order_By>;
   signers?: InputMaybe<Order_By>;
@@ -3863,6 +4013,7 @@ export type Multisig_Order_By = {
 export type Multisig_Proposal = {
   __typename?: 'multisig_proposal';
   approvals: Array<Scalars['String']['output']>;
+  burned_pallet_fee: Scalars['numeric']['output'];
   call: Scalars['String']['output'];
   call_raw: Scalars['String']['output'];
   /** An object relationship */
@@ -3872,6 +4023,7 @@ export type Multisig_Proposal = {
   created_at: Scalars['timestamptz']['output'];
   created_at_block_id?: Maybe<Scalars['String']['output']>;
   created_extrinsic_id?: Maybe<Scalars['String']['output']>;
+  creation_network_fee: Scalars['numeric']['output'];
   decode_error?: Maybe<Scalars['String']['output']>;
   delay_kind?: Maybe<Scalars['String']['output']>;
   delay_value?: Maybe<Scalars['numeric']['output']>;
@@ -3903,6 +4055,7 @@ export type Multisig_Proposal = {
   transfer_amount?: Maybe<Scalars['numeric']['output']>;
   transfer_to_id?: Maybe<Scalars['String']['output']>;
   tx_id?: Maybe<Scalars['String']['output']>;
+  updated_at: Scalars['timestamptz']['output'];
 };
 
 /** aggregated selection of "multisig_proposal" */
@@ -3937,6 +4090,8 @@ export type Multisig_Proposal_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type Multisig_Proposal_Avg_Fields = {
   __typename?: 'multisig_proposal_avg_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -3952,6 +4107,7 @@ export type Multisig_Proposal_Bool_Exp = {
   _not?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   _or?: InputMaybe<Array<Multisig_Proposal_Bool_Exp>>;
   approvals?: InputMaybe<String_Array_Comparison_Exp>;
+  burned_pallet_fee?: InputMaybe<Numeric_Comparison_Exp>;
   call?: InputMaybe<String_Comparison_Exp>;
   call_raw?: InputMaybe<String_Comparison_Exp>;
   createdAtBlock?: InputMaybe<Block_Bool_Exp>;
@@ -3959,6 +4115,7 @@ export type Multisig_Proposal_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   created_at_block_id?: InputMaybe<String_Comparison_Exp>;
   created_extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  creation_network_fee?: InputMaybe<Numeric_Comparison_Exp>;
   decode_error?: InputMaybe<String_Comparison_Exp>;
   delay_kind?: InputMaybe<String_Comparison_Exp>;
   delay_value?: InputMaybe<Numeric_Comparison_Exp>;
@@ -3984,6 +4141,7 @@ export type Multisig_Proposal_Bool_Exp = {
   transfer_amount?: InputMaybe<Numeric_Comparison_Exp>;
   transfer_to_id?: InputMaybe<String_Comparison_Exp>;
   tx_id?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
 /** columns and relationships of "multisig_proposal_created" */
@@ -3992,11 +4150,14 @@ export type Multisig_Proposal_Created = {
   /** An object relationship */
   block?: Maybe<Block>;
   block_id?: Maybe<Scalars['String']['output']>;
+  burned_pallet_fee: Scalars['numeric']['output'];
+  deposit: Scalars['numeric']['output'];
   /** An object relationship */
   event?: Maybe<Event>;
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   proposal?: Maybe<Multisig_Proposal>;
@@ -4014,15 +4175,31 @@ export type Multisig_Proposal_Created_Aggregate = {
 /** aggregate fields of "multisig_proposal_created" */
 export type Multisig_Proposal_Created_Aggregate_Fields = {
   __typename?: 'multisig_proposal_created_aggregate_fields';
+  avg?: Maybe<Multisig_Proposal_Created_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Multisig_Proposal_Created_Max_Fields>;
   min?: Maybe<Multisig_Proposal_Created_Min_Fields>;
+  stddev?: Maybe<Multisig_Proposal_Created_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Proposal_Created_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Proposal_Created_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Proposal_Created_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Proposal_Created_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Proposal_Created_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Proposal_Created_Variance_Fields>;
 };
 
 /** aggregate fields of "multisig_proposal_created" */
 export type Multisig_Proposal_Created_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Multisig_Proposal_Created_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Proposal_Created_Avg_Fields = {
+  __typename?: 'multisig_proposal_created_avg_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "multisig_proposal_created". All fields are combined with a logical 'AND'. */
@@ -4032,9 +4209,12 @@ export type Multisig_Proposal_Created_Bool_Exp = {
   _or?: InputMaybe<Array<Multisig_Proposal_Created_Bool_Exp>>;
   block?: InputMaybe<Block_Bool_Exp>;
   block_id?: InputMaybe<String_Comparison_Exp>;
+  burned_pallet_fee?: InputMaybe<Numeric_Comparison_Exp>;
+  deposit?: InputMaybe<Numeric_Comparison_Exp>;
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   proposal_id?: InputMaybe<String_Comparison_Exp>;
@@ -4045,7 +4225,10 @@ export type Multisig_Proposal_Created_Bool_Exp = {
 export type Multisig_Proposal_Created_Max_Fields = {
   __typename?: 'multisig_proposal_created_max_fields';
   block_id?: Maybe<Scalars['String']['output']>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -4055,7 +4238,10 @@ export type Multisig_Proposal_Created_Max_Fields = {
 export type Multisig_Proposal_Created_Min_Fields = {
   __typename?: 'multisig_proposal_created_min_fields';
   block_id?: Maybe<Scalars['String']['output']>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -4065,9 +4251,12 @@ export type Multisig_Proposal_Created_Min_Fields = {
 export type Multisig_Proposal_Created_Order_By = {
   block?: InputMaybe<Block_Order_By>;
   block_id?: InputMaybe<Order_By>;
+  burned_pallet_fee?: InputMaybe<Order_By>;
+  deposit?: InputMaybe<Order_By>;
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   proposal?: InputMaybe<Multisig_Proposal_Order_By>;
   proposal_id?: InputMaybe<Order_By>;
@@ -4079,7 +4268,13 @@ export enum Multisig_Proposal_Created_Select_Column {
   /** column name */
   BlockId = 'block_id',
   /** column name */
+  BurnedPalletFee = 'burned_pallet_fee',
+  /** column name */
+  Deposit = 'deposit',
+  /** column name */
   ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
   /** column name */
   Id = 'id',
   /** column name */
@@ -4087,6 +4282,30 @@ export enum Multisig_Proposal_Created_Select_Column {
   /** column name */
   Timestamp = 'timestamp'
 }
+
+/** aggregate stddev on columns */
+export type Multisig_Proposal_Created_Stddev_Fields = {
+  __typename?: 'multisig_proposal_created_stddev_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Proposal_Created_Stddev_Pop_Fields = {
+  __typename?: 'multisig_proposal_created_stddev_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Proposal_Created_Stddev_Samp_Fields = {
+  __typename?: 'multisig_proposal_created_stddev_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
 
 /** Streaming cursor of the table "multisig_proposal_created" */
 export type Multisig_Proposal_Created_Stream_Cursor_Input = {
@@ -4099,21 +4318,58 @@ export type Multisig_Proposal_Created_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Multisig_Proposal_Created_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
+  burned_pallet_fee?: InputMaybe<Scalars['numeric']['input']>;
+  deposit?: InputMaybe<Scalars['numeric']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   proposal_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Proposal_Created_Sum_Fields = {
+  __typename?: 'multisig_proposal_created_sum_fields';
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Proposal_Created_Var_Pop_Fields = {
+  __typename?: 'multisig_proposal_created_var_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Proposal_Created_Var_Samp_Fields = {
+  __typename?: 'multisig_proposal_created_var_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Proposal_Created_Variance_Fields = {
+  __typename?: 'multisig_proposal_created_variance_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate max on columns */
 export type Multisig_Proposal_Max_Fields = {
   __typename?: 'multisig_proposal_max_fields';
   approvals?: Maybe<Array<Scalars['String']['output']>>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
   call?: Maybe<Scalars['String']['output']>;
   call_raw?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   created_at_block_id?: Maybe<Scalars['String']['output']>;
   created_extrinsic_id?: Maybe<Scalars['String']['output']>;
+  creation_network_fee?: Maybe<Scalars['numeric']['output']>;
   decode_error?: Maybe<Scalars['String']['output']>;
   delay_kind?: Maybe<Scalars['String']['output']>;
   delay_value?: Maybe<Scalars['numeric']['output']>;
@@ -4133,17 +4389,20 @@ export type Multisig_Proposal_Max_Fields = {
   transfer_amount?: Maybe<Scalars['numeric']['output']>;
   transfer_to_id?: Maybe<Scalars['String']['output']>;
   tx_id?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** aggregate min on columns */
 export type Multisig_Proposal_Min_Fields = {
   __typename?: 'multisig_proposal_min_fields';
   approvals?: Maybe<Array<Scalars['String']['output']>>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
   call?: Maybe<Scalars['String']['output']>;
   call_raw?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   created_at_block_id?: Maybe<Scalars['String']['output']>;
   created_extrinsic_id?: Maybe<Scalars['String']['output']>;
+  creation_network_fee?: Maybe<Scalars['numeric']['output']>;
   decode_error?: Maybe<Scalars['String']['output']>;
   delay_kind?: Maybe<Scalars['String']['output']>;
   delay_value?: Maybe<Scalars['numeric']['output']>;
@@ -4163,11 +4422,13 @@ export type Multisig_Proposal_Min_Fields = {
   transfer_amount?: Maybe<Scalars['numeric']['output']>;
   transfer_to_id?: Maybe<Scalars['String']['output']>;
   tx_id?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** Ordering options when selecting data from "multisig_proposal". */
 export type Multisig_Proposal_Order_By = {
   approvals?: InputMaybe<Order_By>;
+  burned_pallet_fee?: InputMaybe<Order_By>;
   call?: InputMaybe<Order_By>;
   call_raw?: InputMaybe<Order_By>;
   createdAtBlock?: InputMaybe<Block_Order_By>;
@@ -4175,6 +4436,7 @@ export type Multisig_Proposal_Order_By = {
   created_at?: InputMaybe<Order_By>;
   created_at_block_id?: InputMaybe<Order_By>;
   created_extrinsic_id?: InputMaybe<Order_By>;
+  creation_network_fee?: InputMaybe<Order_By>;
   decode_error?: InputMaybe<Order_By>;
   delay_kind?: InputMaybe<Order_By>;
   delay_value?: InputMaybe<Order_By>;
@@ -4200,6 +4462,7 @@ export type Multisig_Proposal_Order_By = {
   transfer_amount?: InputMaybe<Order_By>;
   transfer_to_id?: InputMaybe<Order_By>;
   tx_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "multisig_proposal_ready" */
@@ -4214,6 +4477,7 @@ export type Multisig_Proposal_Ready = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   proposal?: Maybe<Multisig_Proposal>;
@@ -4254,6 +4518,7 @@ export type Multisig_Proposal_Ready_Aggregate_FieldsCountArgs = {
 export type Multisig_Proposal_Ready_Avg_Fields = {
   __typename?: 'multisig_proposal_ready_avg_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "multisig_proposal_ready". All fields are combined with a logical 'AND'. */
@@ -4267,6 +4532,7 @@ export type Multisig_Proposal_Ready_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   proposal_id?: InputMaybe<String_Comparison_Exp>;
@@ -4279,6 +4545,7 @@ export type Multisig_Proposal_Ready_Max_Fields = {
   approvals_count?: Maybe<Scalars['Int']['output']>;
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -4290,6 +4557,7 @@ export type Multisig_Proposal_Ready_Min_Fields = {
   approvals_count?: Maybe<Scalars['Int']['output']>;
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -4303,6 +4571,7 @@ export type Multisig_Proposal_Ready_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   proposal?: InputMaybe<Multisig_Proposal_Order_By>;
   proposal_id?: InputMaybe<Order_By>;
@@ -4318,6 +4587,8 @@ export enum Multisig_Proposal_Ready_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
+  Fee = 'fee',
+  /** column name */
   Id = 'id',
   /** column name */
   ProposalId = 'proposal_id',
@@ -4329,18 +4600,21 @@ export enum Multisig_Proposal_Ready_Select_Column {
 export type Multisig_Proposal_Ready_Stddev_Fields = {
   __typename?: 'multisig_proposal_ready_stddev_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Multisig_Proposal_Ready_Stddev_Pop_Fields = {
   __typename?: 'multisig_proposal_ready_stddev_pop_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Multisig_Proposal_Ready_Stddev_Samp_Fields = {
   __typename?: 'multisig_proposal_ready_stddev_samp_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Streaming cursor of the table "multisig_proposal_ready" */
@@ -4356,6 +4630,7 @@ export type Multisig_Proposal_Ready_Stream_Cursor_Value_Input = {
   approvals_count?: InputMaybe<Scalars['Int']['input']>;
   block_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   proposal_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -4365,30 +4640,36 @@ export type Multisig_Proposal_Ready_Stream_Cursor_Value_Input = {
 export type Multisig_Proposal_Ready_Sum_Fields = {
   __typename?: 'multisig_proposal_ready_sum_fields';
   approvals_count?: Maybe<Scalars['Int']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** aggregate var_pop on columns */
 export type Multisig_Proposal_Ready_Var_Pop_Fields = {
   __typename?: 'multisig_proposal_ready_var_pop_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Multisig_Proposal_Ready_Var_Samp_Fields = {
   __typename?: 'multisig_proposal_ready_var_samp_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Multisig_Proposal_Ready_Variance_Fields = {
   __typename?: 'multisig_proposal_ready_variance_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** select columns of table "multisig_proposal" */
 export enum Multisig_Proposal_Select_Column {
   /** column name */
   Approvals = 'approvals',
+  /** column name */
+  BurnedPalletFee = 'burned_pallet_fee',
   /** column name */
   Call = 'call',
   /** column name */
@@ -4399,6 +4680,8 @@ export enum Multisig_Proposal_Select_Column {
   CreatedAtBlockId = 'created_at_block_id',
   /** column name */
   CreatedExtrinsicId = 'created_extrinsic_id',
+  /** column name */
+  CreationNetworkFee = 'creation_network_fee',
   /** column name */
   DecodeError = 'decode_error',
   /** column name */
@@ -4436,12 +4719,16 @@ export enum Multisig_Proposal_Select_Column {
   /** column name */
   TransferToId = 'transfer_to_id',
   /** column name */
-  TxId = 'tx_id'
+  TxId = 'tx_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
 }
 
 /** aggregate stddev on columns */
 export type Multisig_Proposal_Stddev_Fields = {
   __typename?: 'multisig_proposal_stddev_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -4454,6 +4741,8 @@ export type Multisig_Proposal_Stddev_Fields = {
 /** aggregate stddev_pop on columns */
 export type Multisig_Proposal_Stddev_Pop_Fields = {
   __typename?: 'multisig_proposal_stddev_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -4466,6 +4755,8 @@ export type Multisig_Proposal_Stddev_Pop_Fields = {
 /** aggregate stddev_samp on columns */
 export type Multisig_Proposal_Stddev_Samp_Fields = {
   __typename?: 'multisig_proposal_stddev_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -4486,11 +4777,13 @@ export type Multisig_Proposal_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Multisig_Proposal_Stream_Cursor_Value_Input = {
   approvals?: InputMaybe<Array<Scalars['String']['input']>>;
+  burned_pallet_fee?: InputMaybe<Scalars['numeric']['input']>;
   call?: InputMaybe<Scalars['String']['input']>;
   call_raw?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   created_at_block_id?: InputMaybe<Scalars['String']['input']>;
   created_extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  creation_network_fee?: InputMaybe<Scalars['numeric']['input']>;
   decode_error?: InputMaybe<Scalars['String']['input']>;
   delay_kind?: InputMaybe<Scalars['String']['input']>;
   delay_value?: InputMaybe<Scalars['numeric']['input']>;
@@ -4510,11 +4803,14 @@ export type Multisig_Proposal_Stream_Cursor_Value_Input = {
   transfer_amount?: InputMaybe<Scalars['numeric']['input']>;
   transfer_to_id?: InputMaybe<Scalars['String']['input']>;
   tx_id?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
 /** aggregate sum on columns */
 export type Multisig_Proposal_Sum_Fields = {
   __typename?: 'multisig_proposal_sum_fields';
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  creation_network_fee?: Maybe<Scalars['numeric']['output']>;
   delay_value?: Maybe<Scalars['numeric']['output']>;
   deposit?: Maybe<Scalars['numeric']['output']>;
   expiry_block?: Maybe<Scalars['Int']['output']>;
@@ -4527,6 +4823,8 @@ export type Multisig_Proposal_Sum_Fields = {
 /** aggregate var_pop on columns */
 export type Multisig_Proposal_Var_Pop_Fields = {
   __typename?: 'multisig_proposal_var_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -4539,6 +4837,8 @@ export type Multisig_Proposal_Var_Pop_Fields = {
 /** aggregate var_samp on columns */
 export type Multisig_Proposal_Var_Samp_Fields = {
   __typename?: 'multisig_proposal_var_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -4551,6 +4851,8 @@ export type Multisig_Proposal_Var_Samp_Fields = {
 /** aggregate variance on columns */
 export type Multisig_Proposal_Variance_Fields = {
   __typename?: 'multisig_proposal_variance_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
   delay_value?: Maybe<Scalars['Float']['output']>;
   deposit?: Maybe<Scalars['Float']['output']>;
   expiry_block?: Maybe<Scalars['Float']['output']>;
@@ -4568,6 +4870,8 @@ export enum Multisig_Select_Column {
   CreatorId = 'creator_id',
   /** column name */
   ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
   /** column name */
   Id = 'id',
   /** column name */
@@ -4595,6 +4899,7 @@ export type Multisig_Signer_Approved = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   proposal?: Maybe<Multisig_Proposal>;
@@ -4635,6 +4940,7 @@ export type Multisig_Signer_Approved_Aggregate_FieldsCountArgs = {
 export type Multisig_Signer_Approved_Avg_Fields = {
   __typename?: 'multisig_signer_approved_avg_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "multisig_signer_approved". All fields are combined with a logical 'AND'. */
@@ -4650,6 +4956,7 @@ export type Multisig_Signer_Approved_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   proposal_id?: InputMaybe<String_Comparison_Exp>;
@@ -4663,6 +4970,7 @@ export type Multisig_Signer_Approved_Max_Fields = {
   approver_id?: Maybe<Scalars['String']['output']>;
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -4675,6 +4983,7 @@ export type Multisig_Signer_Approved_Min_Fields = {
   approver_id?: Maybe<Scalars['String']['output']>;
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
@@ -4690,6 +4999,7 @@ export type Multisig_Signer_Approved_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   proposal?: InputMaybe<Multisig_Proposal_Order_By>;
   proposal_id?: InputMaybe<Order_By>;
@@ -4707,6 +5017,8 @@ export enum Multisig_Signer_Approved_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
+  Fee = 'fee',
+  /** column name */
   Id = 'id',
   /** column name */
   ProposalId = 'proposal_id',
@@ -4718,18 +5030,21 @@ export enum Multisig_Signer_Approved_Select_Column {
 export type Multisig_Signer_Approved_Stddev_Fields = {
   __typename?: 'multisig_signer_approved_stddev_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Multisig_Signer_Approved_Stddev_Pop_Fields = {
   __typename?: 'multisig_signer_approved_stddev_pop_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Multisig_Signer_Approved_Stddev_Samp_Fields = {
   __typename?: 'multisig_signer_approved_stddev_samp_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Streaming cursor of the table "multisig_signer_approved" */
@@ -4746,6 +5061,7 @@ export type Multisig_Signer_Approved_Stream_Cursor_Value_Input = {
   approver_id?: InputMaybe<Scalars['String']['input']>;
   block_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   proposal_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -4755,29 +5071,34 @@ export type Multisig_Signer_Approved_Stream_Cursor_Value_Input = {
 export type Multisig_Signer_Approved_Sum_Fields = {
   __typename?: 'multisig_signer_approved_sum_fields';
   approvals_count?: Maybe<Scalars['Int']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** aggregate var_pop on columns */
 export type Multisig_Signer_Approved_Var_Pop_Fields = {
   __typename?: 'multisig_signer_approved_var_pop_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate var_samp on columns */
 export type Multisig_Signer_Approved_Var_Samp_Fields = {
   __typename?: 'multisig_signer_approved_var_samp_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate variance on columns */
 export type Multisig_Signer_Approved_Variance_Fields = {
   __typename?: 'multisig_signer_approved_variance_fields';
   approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** aggregate stddev on columns */
 export type Multisig_Stddev_Fields = {
   __typename?: 'multisig_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -4785,6 +5106,7 @@ export type Multisig_Stddev_Fields = {
 /** aggregate stddev_pop on columns */
 export type Multisig_Stddev_Pop_Fields = {
   __typename?: 'multisig_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -4792,6 +5114,7 @@ export type Multisig_Stddev_Pop_Fields = {
 /** aggregate stddev_samp on columns */
 export type Multisig_Stddev_Samp_Fields = {
   __typename?: 'multisig_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -4809,6 +5132,7 @@ export type Multisig_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   nonce?: InputMaybe<Scalars['numeric']['input']>;
   signers?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -4819,6 +5143,7 @@ export type Multisig_Stream_Cursor_Value_Input = {
 /** aggregate sum on columns */
 export type Multisig_Sum_Fields = {
   __typename?: 'multisig_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
   nonce?: Maybe<Scalars['numeric']['output']>;
   threshold?: Maybe<Scalars['Int']['output']>;
 };
@@ -4826,6 +5151,7 @@ export type Multisig_Sum_Fields = {
 /** aggregate var_pop on columns */
 export type Multisig_Var_Pop_Fields = {
   __typename?: 'multisig_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -4833,6 +5159,7 @@ export type Multisig_Var_Pop_Fields = {
 /** aggregate var_samp on columns */
 export type Multisig_Var_Samp_Fields = {
   __typename?: 'multisig_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -4840,6 +5167,7 @@ export type Multisig_Var_Samp_Fields = {
 /** aggregate variance on columns */
 export type Multisig_Variance_Fields = {
   __typename?: 'multisig_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
   nonce?: Maybe<Scalars['Float']['output']>;
   threshold?: Maybe<Scalars['Float']['output']>;
 };
@@ -5590,6 +5918,7 @@ export type Removed_Multisig_Proposal = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
   id: Scalars['String']['output'];
   /** An object relationship */
   proposal?: Maybe<Multisig_Proposal>;
@@ -5610,15 +5939,29 @@ export type Removed_Multisig_Proposal_Aggregate = {
 /** aggregate fields of "removed_multisig_proposal" */
 export type Removed_Multisig_Proposal_Aggregate_Fields = {
   __typename?: 'removed_multisig_proposal_aggregate_fields';
+  avg?: Maybe<Removed_Multisig_Proposal_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Removed_Multisig_Proposal_Max_Fields>;
   min?: Maybe<Removed_Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Removed_Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Removed_Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Removed_Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Removed_Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Removed_Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Removed_Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Removed_Multisig_Proposal_Variance_Fields>;
 };
 
 /** aggregate fields of "removed_multisig_proposal" */
 export type Removed_Multisig_Proposal_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Removed_Multisig_Proposal_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Removed_Multisig_Proposal_Avg_Fields = {
+  __typename?: 'removed_multisig_proposal_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "removed_multisig_proposal". All fields are combined with a logical 'AND'. */
@@ -5631,6 +5974,7 @@ export type Removed_Multisig_Proposal_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
   proposal_id?: InputMaybe<String_Comparison_Exp>;
@@ -5644,6 +5988,7 @@ export type Removed_Multisig_Proposal_Max_Fields = {
   __typename?: 'removed_multisig_proposal_max_fields';
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   removed_by_id?: Maybe<Scalars['String']['output']>;
@@ -5655,6 +6000,7 @@ export type Removed_Multisig_Proposal_Min_Fields = {
   __typename?: 'removed_multisig_proposal_min_fields';
   block_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   proposal_id?: Maybe<Scalars['String']['output']>;
   removed_by_id?: Maybe<Scalars['String']['output']>;
@@ -5668,6 +6014,7 @@ export type Removed_Multisig_Proposal_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   proposal?: InputMaybe<Multisig_Proposal_Order_By>;
   proposal_id?: InputMaybe<Order_By>;
@@ -5683,6 +6030,8 @@ export enum Removed_Multisig_Proposal_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
+  Fee = 'fee',
+  /** column name */
   Id = 'id',
   /** column name */
   ProposalId = 'proposal_id',
@@ -5691,6 +6040,24 @@ export enum Removed_Multisig_Proposal_Select_Column {
   /** column name */
   Timestamp = 'timestamp'
 }
+
+/** aggregate stddev on columns */
+export type Removed_Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'removed_multisig_proposal_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Removed_Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'removed_multisig_proposal_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Removed_Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'removed_multisig_proposal_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
 
 /** Streaming cursor of the table "removed_multisig_proposal" */
 export type Removed_Multisig_Proposal_Stream_Cursor_Input = {
@@ -5704,10 +6071,35 @@ export type Removed_Multisig_Proposal_Stream_Cursor_Input = {
 export type Removed_Multisig_Proposal_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   proposal_id?: InputMaybe<Scalars['String']['input']>;
   removed_by_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Removed_Multisig_Proposal_Sum_Fields = {
+  __typename?: 'removed_multisig_proposal_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Removed_Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'removed_multisig_proposal_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Removed_Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'removed_multisig_proposal_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Removed_Multisig_Proposal_Variance_Fields = {
+  __typename?: 'removed_multisig_proposal_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "scheduled_reversible_transfer" */

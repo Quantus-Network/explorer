@@ -1,5 +1,4 @@
 import type * as gql from '../__generated__/graphql';
-
 import type { MultisigProposalRef } from './multisig-proposal-created';
 
 export interface MultisigProposalRemoved
