@@ -68,6 +68,24 @@ export const accounts = {
           total_rewards
           total_scheduled_transfers
         }
+        multisig: multisig_by_pk(id: $id) {
+          id
+          timestamp
+          threshold
+          nonce
+          signers
+          creator {
+            id
+          }
+          block {
+            height
+          }
+          extrinsic {
+            id
+            pallet
+            call
+          }
+        }
         accountEvents: account_event(
           limit: $limit
           where: { account_id: { _eq: $id } }
@@ -183,6 +201,183 @@ export const accounts = {
             }
             timestamp
           }
+          multisig {
+            id
+            timestamp
+            threshold
+            nonce
+            signers
+            creator {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+          }
+          multisigProposalCreated {
+            id
+            timestamp
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          multisigSignerApproved {
+            id
+            timestamp
+            approvals_count
+            approver {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          multisigProposalReady {
+            id
+            timestamp
+            approvals_count
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          executedMultisigProposal {
+            id
+            timestamp
+            approvers
+            result
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          cancelledMultisigProposal {
+            id
+            timestamp
+            cancelledBy {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          removedMultisigProposal {
+            id
+            timestamp
+            removedBy {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+            proposal {
+              id
+              multisig {
+                id
+              }
+              proposer {
+                id
+              }
+            }
+          }
+          multisigDepositsClaimed {
+            id
+            timestamp
+            total_returned
+            proposals_removed
+            claimer {
+              id
+            }
+            multisig {
+              id
+            }
+            block {
+              height
+            }
+            extrinsic {
+              id
+              pallet
+              call
+            }
+          }
         }
 
         guardian: high_security_set_aggregate(
@@ -195,7 +390,7 @@ export const accounts = {
             block {
               height
             }
-            interceptor {
+            guardian {
               id
               free
               frozen
@@ -210,7 +405,7 @@ export const accounts = {
         beneficiaries: high_security_set_aggregate(
           order_by: { timestamp: desc }
           limit: $limit
-          where: { interceptor: { id: { _eq: $id } } }
+          where: { guardian: { id: { _eq: $id } } }
         ) {
           nodes {
             timestamp

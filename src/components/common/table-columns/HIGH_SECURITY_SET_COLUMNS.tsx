@@ -53,8 +53,8 @@ export const HIGH_SECURITY_SET_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('interceptor.id', {
-    id: 'interceptor',
+  columnHelper.accessor('guardian.id', {
+    id: 'guardian',
     header: 'Guardian',
     cell: (props) => (
       <LinkWithCopy

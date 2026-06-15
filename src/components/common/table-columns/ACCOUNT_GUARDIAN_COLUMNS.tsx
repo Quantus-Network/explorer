@@ -8,7 +8,7 @@ import { formatMonetaryValue } from '@/utils/formatter';
 const columnHelper = createColumnHelper<AccountGuardian>();
 
 export const ACCOUNT_GUARDIAN_COLUMNS = [
-  columnHelper.accessor('interceptor.id', {
+  columnHelper.accessor('guardian.id', {
     id: 'id',
     header: 'Identity',
     cell: (props) => (
@@ -19,19 +19,19 @@ export const ACCOUNT_GUARDIAN_COLUMNS = [
     ),
     enableSorting: false
   }),
-  columnHelper.accessor('interceptor.free', {
+  columnHelper.accessor('guardian.free', {
     id: 'free',
     header: 'Free',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   }),
-  columnHelper.accessor('interceptor.frozen', {
+  columnHelper.accessor('guardian.frozen', {
     id: 'frozen',
     header: 'Frozen',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
     enableSorting: true
   }),
-  columnHelper.accessor('interceptor.reserved', {
+  columnHelper.accessor('guardian.reserved', {
     id: 'reserved',
     header: 'Reserved',
     cell: (props) => formatMonetaryValue(props.getValue(), 5),

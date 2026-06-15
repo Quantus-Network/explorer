@@ -49,7 +49,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       miningRewards,
       checksum,
       isHighSecurity: guardians && guardians > 0,
-      isGuardian: beneficiaries && beneficiaries > 0
+      isGuardian: beneficiaries && beneficiaries > 0,
+      isMultisig: !!data?.multisig
     }
   ];
 
@@ -87,6 +88,13 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           label: 'Is Guardian',
           key: 'isGuardian',
           tooltip: 'Whether the account is a guardian of a high security set',
+          render: (value) =>
+            value ? <Check className="size-4" /> : <X className="size-4" />
+        },
+        {
+          label: 'Is Multisig',
+          key: 'isMultisig',
+          tooltip: 'Whether this account is a multisig wallet',
           render: (value) =>
             value ? <Check className="size-4" /> : <X className="size-4" />
         },

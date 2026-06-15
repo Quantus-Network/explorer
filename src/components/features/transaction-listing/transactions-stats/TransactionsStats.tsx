@@ -14,11 +14,14 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
     strict: false
   }) as any;
 
-  if (accountId || block) return null;
+  const shouldHide = !!(accountId || block);
 
   const { loading, data, error } = api.transactions.useGetStats({
-    pollInterval: DATA_POOL_INTERVAL
+    pollInterval: DATA_POOL_INTERVAL,
+    skip: shouldHide
   });
+
+  if (shouldHide) return null;
 
   const success = !loading && !error;
 

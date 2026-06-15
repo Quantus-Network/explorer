@@ -14,11 +14,14 @@ export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
     strict: false
   }) as any;
 
-  if (accountId) return null;
+  const shouldHide = !!accountId;
 
   const { loading, data, error } = api.minerRewards.useGetStats({
-    pollInterval: DATA_POOL_INTERVAL
+    pollInterval: DATA_POOL_INTERVAL,
+    skip: shouldHide
   });
+
+  if (shouldHide) return null;
 
   const success = !loading && !error;
 

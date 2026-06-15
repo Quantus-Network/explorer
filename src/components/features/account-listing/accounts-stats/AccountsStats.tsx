@@ -9,16 +9,19 @@ import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 export interface AccountsStatsProps {}
 
 export const AccountsStats: React.FC<AccountsStatsProps> = () => {
+  const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
   }) as any;
 
-  if (accountId || block) return null;
+  const shouldHide = !!(accountId || block);
 
-  const api = useApiClient();
   const { loading, data, error } = api.accounts.useGetStats({
-    pollInterval: DATA_POOL_INTERVAL
+    pollInterval: DATA_POOL_INTERVAL,
+    skip: shouldHide
   });
+
+  if (shouldHide) return null;
 
   const success = !loading && !error;
 

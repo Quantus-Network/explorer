@@ -36,67 +36,64 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
   ];
 
   return (
-    <>
-      <h2 className="text-lg font-semibold">Event Information</h2>
-      <DataList<Partial<ErrorEvent>>
-        loading={loading}
-        data={information}
-        fields={[
-          {
-            label: 'Extrinsic Hash',
-            key: 'extrinsic',
-            render: (value) =>
-              (value as ErrorEvent['extrinsic'])?.id ? (
-                <TextWithCopy
-                  text={(value as ErrorEvent['extrinsic'])?.id ?? '-'}
-                  className="break-all"
-                />
-              ) : (
-                '-'
-              )
-          },
-          {
-            label: 'Timestamp',
-            key: 'timestamp',
-            render: (value) => formatTimestamp(value, true)
-          },
-          {
-            label: 'Block',
-            key: 'block',
-            render: (value) => (
-              <LinkWithCopy
-                text={(value as ErrorEvent['block']).height.toString()}
-                href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
+    <DataList<Partial<ErrorEvent>>
+      loading={loading}
+      data={information}
+      fields={[
+        {
+          label: 'Extrinsic Hash',
+          key: 'extrinsic',
+          render: (value) =>
+            (value as ErrorEvent['extrinsic'])?.id ? (
+              <TextWithCopy
+                text={(value as ErrorEvent['extrinsic'])?.id ?? '-'}
                 className="break-all"
               />
+            ) : (
+              '-'
             )
-          },
-          {
-            label: 'Error Type',
-            key: 'error_type'
-          },
-          {
-            label: 'Error Module',
-            key: 'error_module',
-            render: (value) => (value ? (value as string) : '-')
-          },
-          {
-            label: 'Error Name',
-            key: 'error_name',
-            render: (value) => (value ? (value as string) : '-')
-          },
-          {
-            label: 'Error Docs',
-            key: 'error_docs',
-            render: (value) =>
-              value ? (
-                <TextWithCopy text={value as string} className="break-all" />
-              ) : (
-                '-'
-              )
-          }
-        ]}
-      />
-    </>
+        },
+        {
+          label: 'Timestamp',
+          key: 'timestamp',
+          render: (value) => formatTimestamp(value, true)
+        },
+        {
+          label: 'Block',
+          key: 'block',
+          render: (value) => (
+            <LinkWithCopy
+              text={(value as ErrorEvent['block']).height.toString()}
+              href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
+              className="break-all"
+            />
+          )
+        },
+        {
+          label: 'Error Type',
+          key: 'error_type'
+        },
+        {
+          label: 'Error Module',
+          key: 'error_module',
+          render: (value) => (value ? (value as string) : '-')
+        },
+        {
+          label: 'Error Name',
+          key: 'error_name',
+          render: (value) => (value ? (value as string) : '-')
+        },
+        {
+          label: 'Error Docs',
+          key: 'error_docs',
+          render: (value) =>
+            value ? (
+              <TextWithCopy text={value as string} className="break-all" />
+            ) : (
+              '-'
+            )
+        }
+      ]}
+    />
   );
 };

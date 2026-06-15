@@ -58,6 +58,23 @@ export type Int_Comparison_Exp = {
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+export type String_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['String']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['String']['input']>;
   _gt?: InputMaybe<Scalars['String']['input']>;
@@ -257,10 +274,16 @@ export type Account_Event = {
   account?: Maybe<Account>;
   account_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
+  cancelledMultisigProposal?: Maybe<Cancelled_Multisig_Proposal>;
+  /** An object relationship */
   cancelledReversibleTransfer?: Maybe<Cancelled_Reversible_Transfer>;
+  cancelled_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
+  executedMultisigProposal?: Maybe<Executed_Multisig_Proposal>;
+  /** An object relationship */
   executedReversibleTransfer?: Maybe<Executed_Reversible_Transfer>;
+  executed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   highSecuritySet?: Maybe<High_Security_Set>;
@@ -269,6 +292,24 @@ export type Account_Event = {
   /** An object relationship */
   minerReward?: Maybe<Miner_Reward>;
   miner_reward_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  multisig?: Maybe<Multisig>;
+  /** An object relationship */
+  multisigDepositsClaimed?: Maybe<Multisig_Deposits_Claimed>;
+  /** An object relationship */
+  multisigProposalCreated?: Maybe<Multisig_Proposal_Created>;
+  /** An object relationship */
+  multisigProposalReady?: Maybe<Multisig_Proposal_Ready>;
+  /** An object relationship */
+  multisigSignerApproved?: Maybe<Multisig_Signer_Approved>;
+  multisig_deposits_claimed_id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_created_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_ready_id?: Maybe<Scalars['String']['output']>;
+  multisig_signer_approved_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  removedMultisigProposal?: Maybe<Removed_Multisig_Proposal>;
+  removed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   scheduledReversibleTransfer?: Maybe<Scheduled_Reversible_Transfer>;
   scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
@@ -324,15 +365,31 @@ export type Account_Event_Bool_Exp = {
   _or?: InputMaybe<Array<Account_Event_Bool_Exp>>;
   account?: InputMaybe<Account_Bool_Exp>;
   account_id?: InputMaybe<String_Comparison_Exp>;
+  cancelledMultisigProposal?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
   cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+  cancelled_multisig_proposal_id?: InputMaybe<String_Comparison_Exp>;
   cancelled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
+  executedMultisigProposal?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
   executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+  executed_multisig_proposal_id?: InputMaybe<String_Comparison_Exp>;
   executed_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
   highSecuritySet?: InputMaybe<High_Security_Set_Bool_Exp>;
   high_security_set_id?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   minerReward?: InputMaybe<Miner_Reward_Bool_Exp>;
   miner_reward_id?: InputMaybe<String_Comparison_Exp>;
+  multisig?: InputMaybe<Multisig_Bool_Exp>;
+  multisigDepositsClaimed?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+  multisigProposalCreated?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+  multisigProposalReady?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+  multisigSignerApproved?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+  multisig_deposits_claimed_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_proposal_created_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_proposal_ready_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_signer_approved_id?: InputMaybe<String_Comparison_Exp>;
+  removedMultisigProposal?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+  removed_multisig_proposal_id?: InputMaybe<String_Comparison_Exp>;
   scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
   scheduled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -344,11 +401,19 @@ export type Account_Event_Bool_Exp = {
 export type Account_Event_Max_Fields = {
   __typename?: 'account_event_max_fields';
   account_id?: Maybe<Scalars['String']['output']>;
+  cancelled_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  executed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   high_security_set_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   miner_reward_id?: Maybe<Scalars['String']['output']>;
+  multisig_deposits_claimed_id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_created_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_ready_id?: Maybe<Scalars['String']['output']>;
+  multisig_signer_approved_id?: Maybe<Scalars['String']['output']>;
+  removed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
   transfer_id?: Maybe<Scalars['String']['output']>;
@@ -357,11 +422,19 @@ export type Account_Event_Max_Fields = {
 /** order by max() on columns of table "account_event" */
 export type Account_Event_Max_Order_By = {
   account_id?: InputMaybe<Order_By>;
+  cancelled_multisig_proposal_id?: InputMaybe<Order_By>;
   cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  executed_multisig_proposal_id?: InputMaybe<Order_By>;
   executed_reversible_transfer_id?: InputMaybe<Order_By>;
   high_security_set_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   miner_reward_id?: InputMaybe<Order_By>;
+  multisig_deposits_claimed_id?: InputMaybe<Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  multisig_proposal_created_id?: InputMaybe<Order_By>;
+  multisig_proposal_ready_id?: InputMaybe<Order_By>;
+  multisig_signer_approved_id?: InputMaybe<Order_By>;
+  removed_multisig_proposal_id?: InputMaybe<Order_By>;
   scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   transfer_id?: InputMaybe<Order_By>;
@@ -371,11 +444,19 @@ export type Account_Event_Max_Order_By = {
 export type Account_Event_Min_Fields = {
   __typename?: 'account_event_min_fields';
   account_id?: Maybe<Scalars['String']['output']>;
+  cancelled_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
+  executed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   high_security_set_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   miner_reward_id?: Maybe<Scalars['String']['output']>;
+  multisig_deposits_claimed_id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_created_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_ready_id?: Maybe<Scalars['String']['output']>;
+  multisig_signer_approved_id?: Maybe<Scalars['String']['output']>;
+  removed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
   transfer_id?: Maybe<Scalars['String']['output']>;
@@ -384,11 +465,19 @@ export type Account_Event_Min_Fields = {
 /** order by min() on columns of table "account_event" */
 export type Account_Event_Min_Order_By = {
   account_id?: InputMaybe<Order_By>;
+  cancelled_multisig_proposal_id?: InputMaybe<Order_By>;
   cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  executed_multisig_proposal_id?: InputMaybe<Order_By>;
   executed_reversible_transfer_id?: InputMaybe<Order_By>;
   high_security_set_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   miner_reward_id?: InputMaybe<Order_By>;
+  multisig_deposits_claimed_id?: InputMaybe<Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  multisig_proposal_created_id?: InputMaybe<Order_By>;
+  multisig_proposal_ready_id?: InputMaybe<Order_By>;
+  multisig_signer_approved_id?: InputMaybe<Order_By>;
+  removed_multisig_proposal_id?: InputMaybe<Order_By>;
   scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   transfer_id?: InputMaybe<Order_By>;
@@ -398,15 +487,31 @@ export type Account_Event_Min_Order_By = {
 export type Account_Event_Order_By = {
   account?: InputMaybe<Account_Order_By>;
   account_id?: InputMaybe<Order_By>;
+  cancelledMultisigProposal?: InputMaybe<Cancelled_Multisig_Proposal_Order_By>;
   cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Order_By>;
+  cancelled_multisig_proposal_id?: InputMaybe<Order_By>;
   cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
+  executedMultisigProposal?: InputMaybe<Executed_Multisig_Proposal_Order_By>;
   executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Order_By>;
+  executed_multisig_proposal_id?: InputMaybe<Order_By>;
   executed_reversible_transfer_id?: InputMaybe<Order_By>;
   highSecuritySet?: InputMaybe<High_Security_Set_Order_By>;
   high_security_set_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   minerReward?: InputMaybe<Miner_Reward_Order_By>;
   miner_reward_id?: InputMaybe<Order_By>;
+  multisig?: InputMaybe<Multisig_Order_By>;
+  multisigDepositsClaimed?: InputMaybe<Multisig_Deposits_Claimed_Order_By>;
+  multisigProposalCreated?: InputMaybe<Multisig_Proposal_Created_Order_By>;
+  multisigProposalReady?: InputMaybe<Multisig_Proposal_Ready_Order_By>;
+  multisigSignerApproved?: InputMaybe<Multisig_Signer_Approved_Order_By>;
+  multisig_deposits_claimed_id?: InputMaybe<Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  multisig_proposal_created_id?: InputMaybe<Order_By>;
+  multisig_proposal_ready_id?: InputMaybe<Order_By>;
+  multisig_signer_approved_id?: InputMaybe<Order_By>;
+  removedMultisigProposal?: InputMaybe<Removed_Multisig_Proposal_Order_By>;
+  removed_multisig_proposal_id?: InputMaybe<Order_By>;
   scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Order_By>;
   scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
@@ -419,7 +524,11 @@ export enum Account_Event_Select_Column {
   /** column name */
   AccountId = 'account_id',
   /** column name */
+  CancelledMultisigProposalId = 'cancelled_multisig_proposal_id',
+  /** column name */
   CancelledReversibleTransferId = 'cancelled_reversible_transfer_id',
+  /** column name */
+  ExecutedMultisigProposalId = 'executed_multisig_proposal_id',
   /** column name */
   ExecutedReversibleTransferId = 'executed_reversible_transfer_id',
   /** column name */
@@ -428,6 +537,18 @@ export enum Account_Event_Select_Column {
   Id = 'id',
   /** column name */
   MinerRewardId = 'miner_reward_id',
+  /** column name */
+  MultisigDepositsClaimedId = 'multisig_deposits_claimed_id',
+  /** column name */
+  MultisigId = 'multisig_id',
+  /** column name */
+  MultisigProposalCreatedId = 'multisig_proposal_created_id',
+  /** column name */
+  MultisigProposalReadyId = 'multisig_proposal_ready_id',
+  /** column name */
+  MultisigSignerApprovedId = 'multisig_signer_approved_id',
+  /** column name */
+  RemovedMultisigProposalId = 'removed_multisig_proposal_id',
   /** column name */
   ScheduledReversibleTransferId = 'scheduled_reversible_transfer_id',
   /** column name */
@@ -447,11 +568,19 @@ export type Account_Event_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Account_Event_Stream_Cursor_Value_Input = {
   account_id?: InputMaybe<Scalars['String']['input']>;
+  cancelled_multisig_proposal_id?: InputMaybe<Scalars['String']['input']>;
   cancelled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
+  executed_multisig_proposal_id?: InputMaybe<Scalars['String']['input']>;
   executed_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
   high_security_set_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   miner_reward_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_deposits_claimed_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_proposal_created_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_proposal_ready_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_signer_approved_id?: InputMaybe<Scalars['String']['input']>;
+  removed_multisig_proposal_id?: InputMaybe<Scalars['String']['input']>;
   scheduled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
   transfer_id?: InputMaybe<Scalars['String']['input']>;
@@ -1051,6 +1180,201 @@ export type Block_Variance_Fields = {
   reward?: Maybe<Scalars['Float']['output']>;
 };
 
+/** columns and relationships of "cancelled_multisig_proposal" */
+export type Cancelled_Multisig_Proposal = {
+  __typename?: 'cancelled_multisig_proposal';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  cancelledBy?: Maybe<Account>;
+  cancelled_by_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  proposal?: Maybe<Multisig_Proposal>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "cancelled_multisig_proposal" */
+export type Cancelled_Multisig_Proposal_Aggregate = {
+  __typename?: 'cancelled_multisig_proposal_aggregate';
+  aggregate?: Maybe<Cancelled_Multisig_Proposal_Aggregate_Fields>;
+  nodes: Array<Cancelled_Multisig_Proposal>;
+};
+
+/** aggregate fields of "cancelled_multisig_proposal" */
+export type Cancelled_Multisig_Proposal_Aggregate_Fields = {
+  __typename?: 'cancelled_multisig_proposal_aggregate_fields';
+  avg?: Maybe<Cancelled_Multisig_Proposal_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Cancelled_Multisig_Proposal_Max_Fields>;
+  min?: Maybe<Cancelled_Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Cancelled_Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Cancelled_Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Cancelled_Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Cancelled_Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Cancelled_Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Cancelled_Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Cancelled_Multisig_Proposal_Variance_Fields>;
+};
+
+/** aggregate fields of "cancelled_multisig_proposal" */
+export type Cancelled_Multisig_Proposal_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Cancelled_Multisig_Proposal_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Cancelled_Multisig_Proposal_Avg_Fields = {
+  __typename?: 'cancelled_multisig_proposal_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "cancelled_multisig_proposal". All fields are combined with a logical 'AND'. */
+export type Cancelled_Multisig_Proposal_Bool_Exp = {
+  _and?: InputMaybe<Array<Cancelled_Multisig_Proposal_Bool_Exp>>;
+  _not?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+  _or?: InputMaybe<Array<Cancelled_Multisig_Proposal_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  cancelledBy?: InputMaybe<Account_Bool_Exp>;
+  cancelled_by_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  proposal_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Cancelled_Multisig_Proposal_Max_Fields = {
+  __typename?: 'cancelled_multisig_proposal_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_by_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Cancelled_Multisig_Proposal_Min_Fields = {
+  __typename?: 'cancelled_multisig_proposal_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_by_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "cancelled_multisig_proposal". */
+export type Cancelled_Multisig_Proposal_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  cancelledBy?: InputMaybe<Account_Order_By>;
+  cancelled_by_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  proposal?: InputMaybe<Multisig_Proposal_Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "cancelled_multisig_proposal" */
+export enum Cancelled_Multisig_Proposal_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  CancelledById = 'cancelled_by_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Cancelled_Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'cancelled_multisig_proposal_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Cancelled_Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'cancelled_multisig_proposal_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Cancelled_Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'cancelled_multisig_proposal_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "cancelled_multisig_proposal" */
+export type Cancelled_Multisig_Proposal_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Cancelled_Multisig_Proposal_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Cancelled_Multisig_Proposal_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  cancelled_by_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Cancelled_Multisig_Proposal_Sum_Fields = {
+  __typename?: 'cancelled_multisig_proposal_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Cancelled_Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'cancelled_multisig_proposal_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Cancelled_Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'cancelled_multisig_proposal_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Cancelled_Multisig_Proposal_Variance_Fields = {
+  __typename?: 'cancelled_multisig_proposal_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
 /** columns and relationships of "cancelled_reversible_transfer" */
 export type Cancelled_Reversible_Transfer = {
   __typename?: 'cancelled_reversible_transfer';
@@ -1204,6 +1528,15 @@ export type Chain_Stats = {
   total_high_security_sets: Scalars['Int']['output'];
   total_immediate_transfers: Scalars['Int']['output'];
   total_miner_rewards: Scalars['Int']['output'];
+  total_miners: Scalars['Int']['output'];
+  total_multisig_deposits_claimed: Scalars['Int']['output'];
+  total_multisig_proposal_ready: Scalars['Int']['output'];
+  total_multisig_proposals: Scalars['Int']['output'];
+  total_multisig_proposals_cancelled: Scalars['Int']['output'];
+  total_multisig_proposals_executed: Scalars['Int']['output'];
+  total_multisig_proposals_removed: Scalars['Int']['output'];
+  total_multisig_signer_approved: Scalars['Int']['output'];
+  total_multisigs_created: Scalars['Int']['output'];
   total_scheduled_transfers: Scalars['Int']['output'];
 };
 
@@ -1249,6 +1582,15 @@ export type Chain_Stats_Avg_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1268,6 +1610,15 @@ export type Chain_Stats_Bool_Exp = {
   total_high_security_sets?: InputMaybe<Int_Comparison_Exp>;
   total_immediate_transfers?: InputMaybe<Int_Comparison_Exp>;
   total_miner_rewards?: InputMaybe<Int_Comparison_Exp>;
+  total_miners?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_deposits_claimed?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_proposal_ready?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_proposals?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_proposals_cancelled?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_proposals_executed?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_proposals_removed?: InputMaybe<Int_Comparison_Exp>;
+  total_multisig_signer_approved?: InputMaybe<Int_Comparison_Exp>;
+  total_multisigs_created?: InputMaybe<Int_Comparison_Exp>;
   total_scheduled_transfers?: InputMaybe<Int_Comparison_Exp>;
 };
 
@@ -1285,6 +1636,15 @@ export type Chain_Stats_Max_Fields = {
   total_high_security_sets?: Maybe<Scalars['Int']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
   total_miner_rewards?: Maybe<Scalars['Int']['output']>;
+  total_miners?: Maybe<Scalars['Int']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Int']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Int']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -1302,6 +1662,15 @@ export type Chain_Stats_Min_Fields = {
   total_high_security_sets?: Maybe<Scalars['Int']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
   total_miner_rewards?: Maybe<Scalars['Int']['output']>;
+  total_miners?: Maybe<Scalars['Int']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Int']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Int']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -1318,6 +1687,15 @@ export type Chain_Stats_Order_By = {
   total_high_security_sets?: InputMaybe<Order_By>;
   total_immediate_transfers?: InputMaybe<Order_By>;
   total_miner_rewards?: InputMaybe<Order_By>;
+  total_miners?: InputMaybe<Order_By>;
+  total_multisig_deposits_claimed?: InputMaybe<Order_By>;
+  total_multisig_proposal_ready?: InputMaybe<Order_By>;
+  total_multisig_proposals?: InputMaybe<Order_By>;
+  total_multisig_proposals_cancelled?: InputMaybe<Order_By>;
+  total_multisig_proposals_executed?: InputMaybe<Order_By>;
+  total_multisig_proposals_removed?: InputMaybe<Order_By>;
+  total_multisig_signer_approved?: InputMaybe<Order_By>;
+  total_multisigs_created?: InputMaybe<Order_By>;
   total_scheduled_transfers?: InputMaybe<Order_By>;
 };
 
@@ -1346,6 +1724,24 @@ export enum Chain_Stats_Select_Column {
   /** column name */
   TotalMinerRewards = 'total_miner_rewards',
   /** column name */
+  TotalMiners = 'total_miners',
+  /** column name */
+  TotalMultisigDepositsClaimed = 'total_multisig_deposits_claimed',
+  /** column name */
+  TotalMultisigProposalReady = 'total_multisig_proposal_ready',
+  /** column name */
+  TotalMultisigProposals = 'total_multisig_proposals',
+  /** column name */
+  TotalMultisigProposalsCancelled = 'total_multisig_proposals_cancelled',
+  /** column name */
+  TotalMultisigProposalsExecuted = 'total_multisig_proposals_executed',
+  /** column name */
+  TotalMultisigProposalsRemoved = 'total_multisig_proposals_removed',
+  /** column name */
+  TotalMultisigSignerApproved = 'total_multisig_signer_approved',
+  /** column name */
+  TotalMultisigsCreated = 'total_multisigs_created',
+  /** column name */
   TotalScheduledTransfers = 'total_scheduled_transfers'
 }
 
@@ -1362,6 +1758,15 @@ export type Chain_Stats_Stddev_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1378,6 +1783,15 @@ export type Chain_Stats_Stddev_Pop_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1394,6 +1808,15 @@ export type Chain_Stats_Stddev_Samp_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1418,6 +1841,15 @@ export type Chain_Stats_Stream_Cursor_Value_Input = {
   total_high_security_sets?: InputMaybe<Scalars['Int']['input']>;
   total_immediate_transfers?: InputMaybe<Scalars['Int']['input']>;
   total_miner_rewards?: InputMaybe<Scalars['Int']['input']>;
+  total_miners?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_deposits_claimed?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_proposal_ready?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_proposals?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_proposals_cancelled?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_proposals_executed?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_proposals_removed?: InputMaybe<Scalars['Int']['input']>;
+  total_multisig_signer_approved?: InputMaybe<Scalars['Int']['input']>;
+  total_multisigs_created?: InputMaybe<Scalars['Int']['input']>;
   total_scheduled_transfers?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -1434,6 +1866,15 @@ export type Chain_Stats_Sum_Fields = {
   total_high_security_sets?: Maybe<Scalars['Int']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Int']['output']>;
   total_miner_rewards?: Maybe<Scalars['Int']['output']>;
+  total_miners?: Maybe<Scalars['Int']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Int']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Int']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Int']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -1450,6 +1891,15 @@ export type Chain_Stats_Var_Pop_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1466,6 +1916,15 @@ export type Chain_Stats_Var_Samp_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1482,6 +1941,15 @@ export type Chain_Stats_Variance_Fields = {
   total_high_security_sets?: Maybe<Scalars['Float']['output']>;
   total_immediate_transfers?: Maybe<Scalars['Float']['output']>;
   total_miner_rewards?: Maybe<Scalars['Float']['output']>;
+  total_miners?: Maybe<Scalars['Float']['output']>;
+  total_multisig_deposits_claimed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposal_ready?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_cancelled?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_executed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_multisig_signer_approved?: Maybe<Scalars['Float']['output']>;
+  total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1782,13 +2250,19 @@ export type Event = {
   block?: Maybe<Block>;
   block_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
+  cancelledMultisigProposal?: Maybe<Cancelled_Multisig_Proposal>;
+  /** An object relationship */
   cancelledReversibleTransfer?: Maybe<Cancelled_Reversible_Transfer>;
+  cancelled_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   errorEvent?: Maybe<Error_Event>;
   error_event_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
+  executedMultisigProposal?: Maybe<Executed_Multisig_Proposal>;
+  /** An object relationship */
   executedReversibleTransfer?: Maybe<Executed_Reversible_Transfer>;
+  executed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
@@ -1800,6 +2274,24 @@ export type Event = {
   /** An object relationship */
   minerReward?: Maybe<Miner_Reward>;
   miner_reward_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  multisig?: Maybe<Multisig>;
+  /** An object relationship */
+  multisigDepositsClaimed?: Maybe<Multisig_Deposits_Claimed>;
+  /** An object relationship */
+  multisigProposalCreated?: Maybe<Multisig_Proposal_Created>;
+  /** An object relationship */
+  multisigProposalReady?: Maybe<Multisig_Proposal_Ready>;
+  /** An object relationship */
+  multisigSignerApproved?: Maybe<Multisig_Signer_Approved>;
+  multisig_deposits_claimed_id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_created_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_ready_id?: Maybe<Scalars['String']['output']>;
+  multisig_signer_approved_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  removedMultisigProposal?: Maybe<Removed_Multisig_Proposal>;
+  removed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
   scheduledReversibleTransfer?: Maybe<Scheduled_Reversible_Transfer>;
   scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
@@ -1856,11 +2348,15 @@ export type Event_Bool_Exp = {
   _or?: InputMaybe<Array<Event_Bool_Exp>>;
   block?: InputMaybe<Block_Bool_Exp>;
   block_id?: InputMaybe<String_Comparison_Exp>;
+  cancelledMultisigProposal?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
   cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Bool_Exp>;
+  cancelled_multisig_proposal_id?: InputMaybe<String_Comparison_Exp>;
   cancelled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
   errorEvent?: InputMaybe<Error_Event_Bool_Exp>;
   error_event_id?: InputMaybe<String_Comparison_Exp>;
+  executedMultisigProposal?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
   executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Bool_Exp>;
+  executed_multisig_proposal_id?: InputMaybe<String_Comparison_Exp>;
   executed_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
@@ -1869,6 +2365,18 @@ export type Event_Bool_Exp = {
   id?: InputMaybe<String_Comparison_Exp>;
   minerReward?: InputMaybe<Miner_Reward_Bool_Exp>;
   miner_reward_id?: InputMaybe<String_Comparison_Exp>;
+  multisig?: InputMaybe<Multisig_Bool_Exp>;
+  multisigDepositsClaimed?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+  multisigProposalCreated?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+  multisigProposalReady?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+  multisigSignerApproved?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+  multisig_deposits_claimed_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_proposal_created_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_proposal_ready_id?: InputMaybe<String_Comparison_Exp>;
+  multisig_signer_approved_id?: InputMaybe<String_Comparison_Exp>;
+  removedMultisigProposal?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+  removed_multisig_proposal_id?: InputMaybe<String_Comparison_Exp>;
   scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Bool_Exp>;
   scheduled_reversible_transfer_id?: InputMaybe<String_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -1881,13 +2389,21 @@ export type Event_Bool_Exp = {
 export type Event_Max_Fields = {
   __typename?: 'event_max_fields';
   block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   error_event_id?: Maybe<Scalars['String']['output']>;
+  executed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
   high_security_set_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   miner_reward_id?: Maybe<Scalars['String']['output']>;
+  multisig_deposits_claimed_id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_created_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_ready_id?: Maybe<Scalars['String']['output']>;
+  multisig_signer_approved_id?: Maybe<Scalars['String']['output']>;
+  removed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
   transfer_id?: Maybe<Scalars['String']['output']>;
@@ -1897,13 +2413,21 @@ export type Event_Max_Fields = {
 /** order by max() on columns of table "event" */
 export type Event_Max_Order_By = {
   block_id?: InputMaybe<Order_By>;
+  cancelled_multisig_proposal_id?: InputMaybe<Order_By>;
   cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
   error_event_id?: InputMaybe<Order_By>;
+  executed_multisig_proposal_id?: InputMaybe<Order_By>;
   executed_reversible_transfer_id?: InputMaybe<Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
   high_security_set_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   miner_reward_id?: InputMaybe<Order_By>;
+  multisig_deposits_claimed_id?: InputMaybe<Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  multisig_proposal_created_id?: InputMaybe<Order_By>;
+  multisig_proposal_ready_id?: InputMaybe<Order_By>;
+  multisig_signer_approved_id?: InputMaybe<Order_By>;
+  removed_multisig_proposal_id?: InputMaybe<Order_By>;
   scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   transfer_id?: InputMaybe<Order_By>;
@@ -1914,13 +2438,21 @@ export type Event_Max_Order_By = {
 export type Event_Min_Fields = {
   __typename?: 'event_min_fields';
   block_id?: Maybe<Scalars['String']['output']>;
+  cancelled_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   cancelled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   error_event_id?: Maybe<Scalars['String']['output']>;
+  executed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   executed_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
   high_security_set_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   miner_reward_id?: Maybe<Scalars['String']['output']>;
+  multisig_deposits_claimed_id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_created_id?: Maybe<Scalars['String']['output']>;
+  multisig_proposal_ready_id?: Maybe<Scalars['String']['output']>;
+  multisig_signer_approved_id?: Maybe<Scalars['String']['output']>;
+  removed_multisig_proposal_id?: Maybe<Scalars['String']['output']>;
   scheduled_reversible_transfer_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
   transfer_id?: Maybe<Scalars['String']['output']>;
@@ -1930,13 +2462,21 @@ export type Event_Min_Fields = {
 /** order by min() on columns of table "event" */
 export type Event_Min_Order_By = {
   block_id?: InputMaybe<Order_By>;
+  cancelled_multisig_proposal_id?: InputMaybe<Order_By>;
   cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
   error_event_id?: InputMaybe<Order_By>;
+  executed_multisig_proposal_id?: InputMaybe<Order_By>;
   executed_reversible_transfer_id?: InputMaybe<Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
   high_security_set_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   miner_reward_id?: InputMaybe<Order_By>;
+  multisig_deposits_claimed_id?: InputMaybe<Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  multisig_proposal_created_id?: InputMaybe<Order_By>;
+  multisig_proposal_ready_id?: InputMaybe<Order_By>;
+  multisig_signer_approved_id?: InputMaybe<Order_By>;
+  removed_multisig_proposal_id?: InputMaybe<Order_By>;
   scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   transfer_id?: InputMaybe<Order_By>;
@@ -1947,11 +2487,15 @@ export type Event_Min_Order_By = {
 export type Event_Order_By = {
   block?: InputMaybe<Block_Order_By>;
   block_id?: InputMaybe<Order_By>;
+  cancelledMultisigProposal?: InputMaybe<Cancelled_Multisig_Proposal_Order_By>;
   cancelledReversibleTransfer?: InputMaybe<Cancelled_Reversible_Transfer_Order_By>;
+  cancelled_multisig_proposal_id?: InputMaybe<Order_By>;
   cancelled_reversible_transfer_id?: InputMaybe<Order_By>;
   errorEvent?: InputMaybe<Error_Event_Order_By>;
   error_event_id?: InputMaybe<Order_By>;
+  executedMultisigProposal?: InputMaybe<Executed_Multisig_Proposal_Order_By>;
   executedReversibleTransfer?: InputMaybe<Executed_Reversible_Transfer_Order_By>;
+  executed_multisig_proposal_id?: InputMaybe<Order_By>;
   executed_reversible_transfer_id?: InputMaybe<Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
@@ -1960,6 +2504,18 @@ export type Event_Order_By = {
   id?: InputMaybe<Order_By>;
   minerReward?: InputMaybe<Miner_Reward_Order_By>;
   miner_reward_id?: InputMaybe<Order_By>;
+  multisig?: InputMaybe<Multisig_Order_By>;
+  multisigDepositsClaimed?: InputMaybe<Multisig_Deposits_Claimed_Order_By>;
+  multisigProposalCreated?: InputMaybe<Multisig_Proposal_Created_Order_By>;
+  multisigProposalReady?: InputMaybe<Multisig_Proposal_Ready_Order_By>;
+  multisigSignerApproved?: InputMaybe<Multisig_Signer_Approved_Order_By>;
+  multisig_deposits_claimed_id?: InputMaybe<Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  multisig_proposal_created_id?: InputMaybe<Order_By>;
+  multisig_proposal_ready_id?: InputMaybe<Order_By>;
+  multisig_signer_approved_id?: InputMaybe<Order_By>;
+  removedMultisigProposal?: InputMaybe<Removed_Multisig_Proposal_Order_By>;
+  removed_multisig_proposal_id?: InputMaybe<Order_By>;
   scheduledReversibleTransfer?: InputMaybe<Scheduled_Reversible_Transfer_Order_By>;
   scheduled_reversible_transfer_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
@@ -1973,9 +2529,13 @@ export enum Event_Select_Column {
   /** column name */
   BlockId = 'block_id',
   /** column name */
+  CancelledMultisigProposalId = 'cancelled_multisig_proposal_id',
+  /** column name */
   CancelledReversibleTransferId = 'cancelled_reversible_transfer_id',
   /** column name */
   ErrorEventId = 'error_event_id',
+  /** column name */
+  ExecutedMultisigProposalId = 'executed_multisig_proposal_id',
   /** column name */
   ExecutedReversibleTransferId = 'executed_reversible_transfer_id',
   /** column name */
@@ -1986,6 +2546,18 @@ export enum Event_Select_Column {
   Id = 'id',
   /** column name */
   MinerRewardId = 'miner_reward_id',
+  /** column name */
+  MultisigDepositsClaimedId = 'multisig_deposits_claimed_id',
+  /** column name */
+  MultisigId = 'multisig_id',
+  /** column name */
+  MultisigProposalCreatedId = 'multisig_proposal_created_id',
+  /** column name */
+  MultisigProposalReadyId = 'multisig_proposal_ready_id',
+  /** column name */
+  MultisigSignerApprovedId = 'multisig_signer_approved_id',
+  /** column name */
+  RemovedMultisigProposalId = 'removed_multisig_proposal_id',
   /** column name */
   ScheduledReversibleTransferId = 'scheduled_reversible_transfer_id',
   /** column name */
@@ -2007,17 +2579,224 @@ export type Event_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Event_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
+  cancelled_multisig_proposal_id?: InputMaybe<Scalars['String']['input']>;
   cancelled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
   error_event_id?: InputMaybe<Scalars['String']['input']>;
+  executed_multisig_proposal_id?: InputMaybe<Scalars['String']['input']>;
   executed_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
   high_security_set_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   miner_reward_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_deposits_claimed_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_proposal_created_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_proposal_ready_id?: InputMaybe<Scalars['String']['input']>;
+  multisig_signer_approved_id?: InputMaybe<Scalars['String']['input']>;
+  removed_multisig_proposal_id?: InputMaybe<Scalars['String']['input']>;
   scheduled_reversible_transfer_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
   transfer_id?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** columns and relationships of "executed_multisig_proposal" */
+export type Executed_Multisig_Proposal = {
+  __typename?: 'executed_multisig_proposal';
+  approvers: Array<Scalars['String']['output']>;
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  proposal?: Maybe<Multisig_Proposal>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  result: Scalars['String']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "executed_multisig_proposal" */
+export type Executed_Multisig_Proposal_Aggregate = {
+  __typename?: 'executed_multisig_proposal_aggregate';
+  aggregate?: Maybe<Executed_Multisig_Proposal_Aggregate_Fields>;
+  nodes: Array<Executed_Multisig_Proposal>;
+};
+
+/** aggregate fields of "executed_multisig_proposal" */
+export type Executed_Multisig_Proposal_Aggregate_Fields = {
+  __typename?: 'executed_multisig_proposal_aggregate_fields';
+  avg?: Maybe<Executed_Multisig_Proposal_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Executed_Multisig_Proposal_Max_Fields>;
+  min?: Maybe<Executed_Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Executed_Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Executed_Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Executed_Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Executed_Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Executed_Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Executed_Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Executed_Multisig_Proposal_Variance_Fields>;
+};
+
+/** aggregate fields of "executed_multisig_proposal" */
+export type Executed_Multisig_Proposal_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Executed_Multisig_Proposal_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Executed_Multisig_Proposal_Avg_Fields = {
+  __typename?: 'executed_multisig_proposal_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "executed_multisig_proposal". All fields are combined with a logical 'AND'. */
+export type Executed_Multisig_Proposal_Bool_Exp = {
+  _and?: InputMaybe<Array<Executed_Multisig_Proposal_Bool_Exp>>;
+  _not?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+  _or?: InputMaybe<Array<Executed_Multisig_Proposal_Bool_Exp>>;
+  approvers?: InputMaybe<String_Array_Comparison_Exp>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  proposal_id?: InputMaybe<String_Comparison_Exp>;
+  result?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Executed_Multisig_Proposal_Max_Fields = {
+  __typename?: 'executed_multisig_proposal_max_fields';
+  approvers?: Maybe<Array<Scalars['String']['output']>>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  result?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Executed_Multisig_Proposal_Min_Fields = {
+  __typename?: 'executed_multisig_proposal_min_fields';
+  approvers?: Maybe<Array<Scalars['String']['output']>>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  result?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "executed_multisig_proposal". */
+export type Executed_Multisig_Proposal_Order_By = {
+  approvers?: InputMaybe<Order_By>;
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  proposal?: InputMaybe<Multisig_Proposal_Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  result?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "executed_multisig_proposal" */
+export enum Executed_Multisig_Proposal_Select_Column {
+  /** column name */
+  Approvers = 'approvers',
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  Result = 'result',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Executed_Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'executed_multisig_proposal_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Executed_Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'executed_multisig_proposal_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Executed_Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'executed_multisig_proposal_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "executed_multisig_proposal" */
+export type Executed_Multisig_Proposal_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Executed_Multisig_Proposal_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Executed_Multisig_Proposal_Stream_Cursor_Value_Input = {
+  approvers?: InputMaybe<Array<Scalars['String']['input']>>;
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['String']['input']>;
+  result?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Executed_Multisig_Proposal_Sum_Fields = {
+  __typename?: 'executed_multisig_proposal_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Executed_Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'executed_multisig_proposal_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Executed_Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'executed_multisig_proposal_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Executed_Multisig_Proposal_Variance_Fields = {
+  __typename?: 'executed_multisig_proposal_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "executed_reversible_transfer" */
@@ -2525,10 +3304,10 @@ export type High_Security_Set = {
   /** An object relationship */
   extrinsic?: Maybe<Extrinsic>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
-  id: Scalars['String']['output'];
   /** An object relationship */
-  interceptor?: Maybe<Account>;
-  interceptor_id?: Maybe<Scalars['String']['output']>;
+  guardian?: Maybe<Account>;
+  guardian_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
   timestamp: Scalars['timestamptz']['output'];
   /** An object relationship */
   who?: Maybe<Account>;
@@ -2581,9 +3360,9 @@ export type High_Security_Set_Bool_Exp = {
   event?: InputMaybe<Event_Bool_Exp>;
   extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
   extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  guardian?: InputMaybe<Account_Bool_Exp>;
+  guardian_id?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
-  interceptor?: InputMaybe<Account_Bool_Exp>;
-  interceptor_id?: InputMaybe<String_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
   who?: InputMaybe<Account_Bool_Exp>;
   who_id?: InputMaybe<String_Comparison_Exp>;
@@ -2595,8 +3374,8 @@ export type High_Security_Set_Max_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   delay?: Maybe<Scalars['numeric']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  guardian_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
-  interceptor_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
   who_id?: Maybe<Scalars['String']['output']>;
 };
@@ -2607,8 +3386,8 @@ export type High_Security_Set_Min_Fields = {
   block_id?: Maybe<Scalars['String']['output']>;
   delay?: Maybe<Scalars['numeric']['output']>;
   extrinsic_id?: Maybe<Scalars['String']['output']>;
+  guardian_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
-  interceptor_id?: Maybe<Scalars['String']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
   who_id?: Maybe<Scalars['String']['output']>;
 };
@@ -2621,9 +3400,9 @@ export type High_Security_Set_Order_By = {
   event?: InputMaybe<Event_Order_By>;
   extrinsic?: InputMaybe<Extrinsic_Order_By>;
   extrinsic_id?: InputMaybe<Order_By>;
+  guardian?: InputMaybe<Account_Order_By>;
+  guardian_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  interceptor?: InputMaybe<Account_Order_By>;
-  interceptor_id?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   who?: InputMaybe<Account_Order_By>;
   who_id?: InputMaybe<Order_By>;
@@ -2638,9 +3417,9 @@ export enum High_Security_Set_Select_Column {
   /** column name */
   ExtrinsicId = 'extrinsic_id',
   /** column name */
-  Id = 'id',
+  GuardianId = 'guardian_id',
   /** column name */
-  InterceptorId = 'interceptor_id',
+  Id = 'id',
   /** column name */
   Timestamp = 'timestamp',
   /** column name */
@@ -2678,8 +3457,8 @@ export type High_Security_Set_Stream_Cursor_Value_Input = {
   block_id?: InputMaybe<Scalars['String']['input']>;
   delay?: InputMaybe<Scalars['numeric']['input']>;
   extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  guardian_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
-  interceptor_id?: InputMaybe<Scalars['String']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
   who_id?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2879,6 +3658,1520 @@ export type Miner_Reward_Variance_Fields = {
   reward?: Maybe<Scalars['Float']['output']>;
 };
 
+/** columns and relationships of "multisig" */
+export type Multisig = {
+  __typename?: 'multisig';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  creator?: Maybe<Account>;
+  creator_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  nonce: Scalars['numeric']['output'];
+  signers: Array<Scalars['String']['output']>;
+  threshold: Scalars['Int']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "multisig" */
+export type Multisig_Aggregate = {
+  __typename?: 'multisig_aggregate';
+  aggregate?: Maybe<Multisig_Aggregate_Fields>;
+  nodes: Array<Multisig>;
+};
+
+/** aggregate fields of "multisig" */
+export type Multisig_Aggregate_Fields = {
+  __typename?: 'multisig_aggregate_fields';
+  avg?: Maybe<Multisig_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Multisig_Max_Fields>;
+  min?: Maybe<Multisig_Min_Fields>;
+  stddev?: Maybe<Multisig_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Variance_Fields>;
+};
+
+/** aggregate fields of "multisig" */
+export type Multisig_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Multisig_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Avg_Fields = {
+  __typename?: 'multisig_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "multisig". All fields are combined with a logical 'AND'. */
+export type Multisig_Bool_Exp = {
+  _and?: InputMaybe<Array<Multisig_Bool_Exp>>;
+  _not?: InputMaybe<Multisig_Bool_Exp>;
+  _or?: InputMaybe<Array<Multisig_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  creator?: InputMaybe<Account_Bool_Exp>;
+  creator_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  nonce?: InputMaybe<Numeric_Comparison_Exp>;
+  signers?: InputMaybe<String_Array_Comparison_Exp>;
+  threshold?: InputMaybe<Int_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** columns and relationships of "multisig_deposits_claimed" */
+export type Multisig_Deposits_Claimed = {
+  __typename?: 'multisig_deposits_claimed';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  claimer?: Maybe<Account>;
+  claimer_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  multisig?: Maybe<Multisig>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  proposals_removed: Scalars['Int']['output'];
+  timestamp: Scalars['timestamptz']['output'];
+  total_returned: Scalars['numeric']['output'];
+};
+
+/** aggregated selection of "multisig_deposits_claimed" */
+export type Multisig_Deposits_Claimed_Aggregate = {
+  __typename?: 'multisig_deposits_claimed_aggregate';
+  aggregate?: Maybe<Multisig_Deposits_Claimed_Aggregate_Fields>;
+  nodes: Array<Multisig_Deposits_Claimed>;
+};
+
+/** aggregate fields of "multisig_deposits_claimed" */
+export type Multisig_Deposits_Claimed_Aggregate_Fields = {
+  __typename?: 'multisig_deposits_claimed_aggregate_fields';
+  avg?: Maybe<Multisig_Deposits_Claimed_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Multisig_Deposits_Claimed_Max_Fields>;
+  min?: Maybe<Multisig_Deposits_Claimed_Min_Fields>;
+  stddev?: Maybe<Multisig_Deposits_Claimed_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Deposits_Claimed_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Deposits_Claimed_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Deposits_Claimed_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Deposits_Claimed_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Deposits_Claimed_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Deposits_Claimed_Variance_Fields>;
+};
+
+/** aggregate fields of "multisig_deposits_claimed" */
+export type Multisig_Deposits_Claimed_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Multisig_Deposits_Claimed_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Deposits_Claimed_Avg_Fields = {
+  __typename?: 'multisig_deposits_claimed_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "multisig_deposits_claimed". All fields are combined with a logical 'AND'. */
+export type Multisig_Deposits_Claimed_Bool_Exp = {
+  _and?: InputMaybe<Array<Multisig_Deposits_Claimed_Bool_Exp>>;
+  _not?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+  _or?: InputMaybe<Array<Multisig_Deposits_Claimed_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  claimer?: InputMaybe<Account_Bool_Exp>;
+  claimer_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  multisig?: InputMaybe<Multisig_Bool_Exp>;
+  multisig_id?: InputMaybe<String_Comparison_Exp>;
+  proposals_removed?: InputMaybe<Int_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+  total_returned?: InputMaybe<Numeric_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Multisig_Deposits_Claimed_Max_Fields = {
+  __typename?: 'multisig_deposits_claimed_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  claimer_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  proposals_removed?: Maybe<Scalars['Int']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  total_returned?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate min on columns */
+export type Multisig_Deposits_Claimed_Min_Fields = {
+  __typename?: 'multisig_deposits_claimed_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  claimer_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  proposals_removed?: Maybe<Scalars['Int']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+  total_returned?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** Ordering options when selecting data from "multisig_deposits_claimed". */
+export type Multisig_Deposits_Claimed_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  claimer?: InputMaybe<Account_Order_By>;
+  claimer_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  multisig?: InputMaybe<Multisig_Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  proposals_removed?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+  total_returned?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "multisig_deposits_claimed" */
+export enum Multisig_Deposits_Claimed_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ClaimerId = 'claimer_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MultisigId = 'multisig_id',
+  /** column name */
+  ProposalsRemoved = 'proposals_removed',
+  /** column name */
+  Timestamp = 'timestamp',
+  /** column name */
+  TotalReturned = 'total_returned'
+}
+
+/** aggregate stddev on columns */
+export type Multisig_Deposits_Claimed_Stddev_Fields = {
+  __typename?: 'multisig_deposits_claimed_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Deposits_Claimed_Stddev_Pop_Fields = {
+  __typename?: 'multisig_deposits_claimed_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Deposits_Claimed_Stddev_Samp_Fields = {
+  __typename?: 'multisig_deposits_claimed_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "multisig_deposits_claimed" */
+export type Multisig_Deposits_Claimed_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Multisig_Deposits_Claimed_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Multisig_Deposits_Claimed_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  claimer_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  multisig_id?: InputMaybe<Scalars['String']['input']>;
+  proposals_removed?: InputMaybe<Scalars['Int']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+  total_returned?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Deposits_Claimed_Sum_Fields = {
+  __typename?: 'multisig_deposits_claimed_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+  proposals_removed?: Maybe<Scalars['Int']['output']>;
+  total_returned?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Deposits_Claimed_Var_Pop_Fields = {
+  __typename?: 'multisig_deposits_claimed_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Deposits_Claimed_Var_Samp_Fields = {
+  __typename?: 'multisig_deposits_claimed_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Deposits_Claimed_Variance_Fields = {
+  __typename?: 'multisig_deposits_claimed_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  proposals_removed?: Maybe<Scalars['Float']['output']>;
+  total_returned?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate max on columns */
+export type Multisig_Max_Fields = {
+  __typename?: 'multisig_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  creator_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  nonce?: Maybe<Scalars['numeric']['output']>;
+  signers?: Maybe<Array<Scalars['String']['output']>>;
+  threshold?: Maybe<Scalars['Int']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Multisig_Min_Fields = {
+  __typename?: 'multisig_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  creator_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  nonce?: Maybe<Scalars['numeric']['output']>;
+  signers?: Maybe<Array<Scalars['String']['output']>>;
+  threshold?: Maybe<Scalars['Int']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "multisig". */
+export type Multisig_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  creator?: InputMaybe<Account_Order_By>;
+  creator_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nonce?: InputMaybe<Order_By>;
+  signers?: InputMaybe<Order_By>;
+  threshold?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "multisig_proposal" */
+export type Multisig_Proposal = {
+  __typename?: 'multisig_proposal';
+  approvals: Array<Scalars['String']['output']>;
+  burned_pallet_fee: Scalars['numeric']['output'];
+  call: Scalars['String']['output'];
+  call_raw: Scalars['String']['output'];
+  /** An object relationship */
+  createdAtBlock?: Maybe<Block>;
+  /** An object relationship */
+  createdExtrinsic?: Maybe<Extrinsic>;
+  created_at: Scalars['timestamptz']['output'];
+  created_at_block_id?: Maybe<Scalars['String']['output']>;
+  created_extrinsic_id?: Maybe<Scalars['String']['output']>;
+  creation_network_fee: Scalars['numeric']['output'];
+  decode_error?: Maybe<Scalars['String']['output']>;
+  delay_kind?: Maybe<Scalars['String']['output']>;
+  delay_value?: Maybe<Scalars['numeric']['output']>;
+  deposit: Scalars['numeric']['output'];
+  expiry_block: Scalars['Int']['output'];
+  /** An object relationship */
+  guardian?: Maybe<Account>;
+  guardian_id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  multisig?: Maybe<Multisig>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  pallet: Scalars['String']['output'];
+  proposal_id: Scalars['Int']['output'];
+  /** An object relationship */
+  proposer?: Maybe<Account>;
+  proposer_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  recoverAccount?: Maybe<Account>;
+  recover_account_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  scheduleTo?: Maybe<Account>;
+  schedule_amount?: Maybe<Scalars['numeric']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Int']['output']>;
+  schedule_to_id?: Maybe<Scalars['String']['output']>;
+  status: Scalars['String']['output'];
+  /** An object relationship */
+  transferTo?: Maybe<Account>;
+  transfer_amount?: Maybe<Scalars['numeric']['output']>;
+  transfer_to_id?: Maybe<Scalars['String']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "multisig_proposal" */
+export type Multisig_Proposal_Aggregate = {
+  __typename?: 'multisig_proposal_aggregate';
+  aggregate?: Maybe<Multisig_Proposal_Aggregate_Fields>;
+  nodes: Array<Multisig_Proposal>;
+};
+
+/** aggregate fields of "multisig_proposal" */
+export type Multisig_Proposal_Aggregate_Fields = {
+  __typename?: 'multisig_proposal_aggregate_fields';
+  avg?: Maybe<Multisig_Proposal_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Multisig_Proposal_Max_Fields>;
+  min?: Maybe<Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Proposal_Variance_Fields>;
+};
+
+/** aggregate fields of "multisig_proposal" */
+export type Multisig_Proposal_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Multisig_Proposal_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Proposal_Avg_Fields = {
+  __typename?: 'multisig_proposal_avg_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "multisig_proposal". All fields are combined with a logical 'AND'. */
+export type Multisig_Proposal_Bool_Exp = {
+  _and?: InputMaybe<Array<Multisig_Proposal_Bool_Exp>>;
+  _not?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  _or?: InputMaybe<Array<Multisig_Proposal_Bool_Exp>>;
+  approvals?: InputMaybe<String_Array_Comparison_Exp>;
+  burned_pallet_fee?: InputMaybe<Numeric_Comparison_Exp>;
+  call?: InputMaybe<String_Comparison_Exp>;
+  call_raw?: InputMaybe<String_Comparison_Exp>;
+  createdAtBlock?: InputMaybe<Block_Bool_Exp>;
+  createdExtrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_at_block_id?: InputMaybe<String_Comparison_Exp>;
+  created_extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  creation_network_fee?: InputMaybe<Numeric_Comparison_Exp>;
+  decode_error?: InputMaybe<String_Comparison_Exp>;
+  delay_kind?: InputMaybe<String_Comparison_Exp>;
+  delay_value?: InputMaybe<Numeric_Comparison_Exp>;
+  deposit?: InputMaybe<Numeric_Comparison_Exp>;
+  expiry_block?: InputMaybe<Int_Comparison_Exp>;
+  guardian?: InputMaybe<Account_Bool_Exp>;
+  guardian_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  multisig?: InputMaybe<Multisig_Bool_Exp>;
+  multisig_id?: InputMaybe<String_Comparison_Exp>;
+  pallet?: InputMaybe<String_Comparison_Exp>;
+  proposal_id?: InputMaybe<Int_Comparison_Exp>;
+  proposer?: InputMaybe<Account_Bool_Exp>;
+  proposer_id?: InputMaybe<String_Comparison_Exp>;
+  recoverAccount?: InputMaybe<Account_Bool_Exp>;
+  recover_account_id?: InputMaybe<String_Comparison_Exp>;
+  scheduleTo?: InputMaybe<Account_Bool_Exp>;
+  schedule_amount?: InputMaybe<Numeric_Comparison_Exp>;
+  schedule_asset_id?: InputMaybe<Int_Comparison_Exp>;
+  schedule_to_id?: InputMaybe<String_Comparison_Exp>;
+  status?: InputMaybe<String_Comparison_Exp>;
+  transferTo?: InputMaybe<Account_Bool_Exp>;
+  transfer_amount?: InputMaybe<Numeric_Comparison_Exp>;
+  transfer_to_id?: InputMaybe<String_Comparison_Exp>;
+  tx_id?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** columns and relationships of "multisig_proposal_created" */
+export type Multisig_Proposal_Created = {
+  __typename?: 'multisig_proposal_created';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  burned_pallet_fee: Scalars['numeric']['output'];
+  deposit: Scalars['numeric']['output'];
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  proposal?: Maybe<Multisig_Proposal>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "multisig_proposal_created" */
+export type Multisig_Proposal_Created_Aggregate = {
+  __typename?: 'multisig_proposal_created_aggregate';
+  aggregate?: Maybe<Multisig_Proposal_Created_Aggregate_Fields>;
+  nodes: Array<Multisig_Proposal_Created>;
+};
+
+/** aggregate fields of "multisig_proposal_created" */
+export type Multisig_Proposal_Created_Aggregate_Fields = {
+  __typename?: 'multisig_proposal_created_aggregate_fields';
+  avg?: Maybe<Multisig_Proposal_Created_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Multisig_Proposal_Created_Max_Fields>;
+  min?: Maybe<Multisig_Proposal_Created_Min_Fields>;
+  stddev?: Maybe<Multisig_Proposal_Created_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Proposal_Created_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Proposal_Created_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Proposal_Created_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Proposal_Created_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Proposal_Created_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Proposal_Created_Variance_Fields>;
+};
+
+/** aggregate fields of "multisig_proposal_created" */
+export type Multisig_Proposal_Created_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Multisig_Proposal_Created_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Proposal_Created_Avg_Fields = {
+  __typename?: 'multisig_proposal_created_avg_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "multisig_proposal_created". All fields are combined with a logical 'AND'. */
+export type Multisig_Proposal_Created_Bool_Exp = {
+  _and?: InputMaybe<Array<Multisig_Proposal_Created_Bool_Exp>>;
+  _not?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+  _or?: InputMaybe<Array<Multisig_Proposal_Created_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  burned_pallet_fee?: InputMaybe<Numeric_Comparison_Exp>;
+  deposit?: InputMaybe<Numeric_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  proposal_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Multisig_Proposal_Created_Max_Fields = {
+  __typename?: 'multisig_proposal_created_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Multisig_Proposal_Created_Min_Fields = {
+  __typename?: 'multisig_proposal_created_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "multisig_proposal_created". */
+export type Multisig_Proposal_Created_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  burned_pallet_fee?: InputMaybe<Order_By>;
+  deposit?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  proposal?: InputMaybe<Multisig_Proposal_Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "multisig_proposal_created" */
+export enum Multisig_Proposal_Created_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  BurnedPalletFee = 'burned_pallet_fee',
+  /** column name */
+  Deposit = 'deposit',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Multisig_Proposal_Created_Stddev_Fields = {
+  __typename?: 'multisig_proposal_created_stddev_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Proposal_Created_Stddev_Pop_Fields = {
+  __typename?: 'multisig_proposal_created_stddev_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Proposal_Created_Stddev_Samp_Fields = {
+  __typename?: 'multisig_proposal_created_stddev_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "multisig_proposal_created" */
+export type Multisig_Proposal_Created_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Multisig_Proposal_Created_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Multisig_Proposal_Created_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  burned_pallet_fee?: InputMaybe<Scalars['numeric']['input']>;
+  deposit?: InputMaybe<Scalars['numeric']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Proposal_Created_Sum_Fields = {
+  __typename?: 'multisig_proposal_created_sum_fields';
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Proposal_Created_Var_Pop_Fields = {
+  __typename?: 'multisig_proposal_created_var_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Proposal_Created_Var_Samp_Fields = {
+  __typename?: 'multisig_proposal_created_var_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Proposal_Created_Variance_Fields = {
+  __typename?: 'multisig_proposal_created_variance_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate max on columns */
+export type Multisig_Proposal_Max_Fields = {
+  __typename?: 'multisig_proposal_max_fields';
+  approvals?: Maybe<Array<Scalars['String']['output']>>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  call?: Maybe<Scalars['String']['output']>;
+  call_raw?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_at_block_id?: Maybe<Scalars['String']['output']>;
+  created_extrinsic_id?: Maybe<Scalars['String']['output']>;
+  creation_network_fee?: Maybe<Scalars['numeric']['output']>;
+  decode_error?: Maybe<Scalars['String']['output']>;
+  delay_kind?: Maybe<Scalars['String']['output']>;
+  delay_value?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  expiry_block?: Maybe<Scalars['Int']['output']>;
+  guardian_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  pallet?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['Int']['output']>;
+  proposer_id?: Maybe<Scalars['String']['output']>;
+  recover_account_id?: Maybe<Scalars['String']['output']>;
+  schedule_amount?: Maybe<Scalars['numeric']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Int']['output']>;
+  schedule_to_id?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  transfer_amount?: Maybe<Scalars['numeric']['output']>;
+  transfer_to_id?: Maybe<Scalars['String']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Multisig_Proposal_Min_Fields = {
+  __typename?: 'multisig_proposal_min_fields';
+  approvals?: Maybe<Array<Scalars['String']['output']>>;
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  call?: Maybe<Scalars['String']['output']>;
+  call_raw?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_at_block_id?: Maybe<Scalars['String']['output']>;
+  created_extrinsic_id?: Maybe<Scalars['String']['output']>;
+  creation_network_fee?: Maybe<Scalars['numeric']['output']>;
+  decode_error?: Maybe<Scalars['String']['output']>;
+  delay_kind?: Maybe<Scalars['String']['output']>;
+  delay_value?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  expiry_block?: Maybe<Scalars['Int']['output']>;
+  guardian_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  multisig_id?: Maybe<Scalars['String']['output']>;
+  pallet?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['Int']['output']>;
+  proposer_id?: Maybe<Scalars['String']['output']>;
+  recover_account_id?: Maybe<Scalars['String']['output']>;
+  schedule_amount?: Maybe<Scalars['numeric']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Int']['output']>;
+  schedule_to_id?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  transfer_amount?: Maybe<Scalars['numeric']['output']>;
+  transfer_to_id?: Maybe<Scalars['String']['output']>;
+  tx_id?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "multisig_proposal". */
+export type Multisig_Proposal_Order_By = {
+  approvals?: InputMaybe<Order_By>;
+  burned_pallet_fee?: InputMaybe<Order_By>;
+  call?: InputMaybe<Order_By>;
+  call_raw?: InputMaybe<Order_By>;
+  createdAtBlock?: InputMaybe<Block_Order_By>;
+  createdExtrinsic?: InputMaybe<Extrinsic_Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  created_at_block_id?: InputMaybe<Order_By>;
+  created_extrinsic_id?: InputMaybe<Order_By>;
+  creation_network_fee?: InputMaybe<Order_By>;
+  decode_error?: InputMaybe<Order_By>;
+  delay_kind?: InputMaybe<Order_By>;
+  delay_value?: InputMaybe<Order_By>;
+  deposit?: InputMaybe<Order_By>;
+  expiry_block?: InputMaybe<Order_By>;
+  guardian?: InputMaybe<Account_Order_By>;
+  guardian_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  multisig?: InputMaybe<Multisig_Order_By>;
+  multisig_id?: InputMaybe<Order_By>;
+  pallet?: InputMaybe<Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  proposer?: InputMaybe<Account_Order_By>;
+  proposer_id?: InputMaybe<Order_By>;
+  recoverAccount?: InputMaybe<Account_Order_By>;
+  recover_account_id?: InputMaybe<Order_By>;
+  scheduleTo?: InputMaybe<Account_Order_By>;
+  schedule_amount?: InputMaybe<Order_By>;
+  schedule_asset_id?: InputMaybe<Order_By>;
+  schedule_to_id?: InputMaybe<Order_By>;
+  status?: InputMaybe<Order_By>;
+  transferTo?: InputMaybe<Account_Order_By>;
+  transfer_amount?: InputMaybe<Order_By>;
+  transfer_to_id?: InputMaybe<Order_By>;
+  tx_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** columns and relationships of "multisig_proposal_ready" */
+export type Multisig_Proposal_Ready = {
+  __typename?: 'multisig_proposal_ready';
+  approvals_count: Scalars['Int']['output'];
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  proposal?: Maybe<Multisig_Proposal>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "multisig_proposal_ready" */
+export type Multisig_Proposal_Ready_Aggregate = {
+  __typename?: 'multisig_proposal_ready_aggregate';
+  aggregate?: Maybe<Multisig_Proposal_Ready_Aggregate_Fields>;
+  nodes: Array<Multisig_Proposal_Ready>;
+};
+
+/** aggregate fields of "multisig_proposal_ready" */
+export type Multisig_Proposal_Ready_Aggregate_Fields = {
+  __typename?: 'multisig_proposal_ready_aggregate_fields';
+  avg?: Maybe<Multisig_Proposal_Ready_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Multisig_Proposal_Ready_Max_Fields>;
+  min?: Maybe<Multisig_Proposal_Ready_Min_Fields>;
+  stddev?: Maybe<Multisig_Proposal_Ready_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Proposal_Ready_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Proposal_Ready_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Proposal_Ready_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Proposal_Ready_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Proposal_Ready_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Proposal_Ready_Variance_Fields>;
+};
+
+/** aggregate fields of "multisig_proposal_ready" */
+export type Multisig_Proposal_Ready_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Multisig_Proposal_Ready_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Proposal_Ready_Avg_Fields = {
+  __typename?: 'multisig_proposal_ready_avg_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "multisig_proposal_ready". All fields are combined with a logical 'AND'. */
+export type Multisig_Proposal_Ready_Bool_Exp = {
+  _and?: InputMaybe<Array<Multisig_Proposal_Ready_Bool_Exp>>;
+  _not?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+  _or?: InputMaybe<Array<Multisig_Proposal_Ready_Bool_Exp>>;
+  approvals_count?: InputMaybe<Int_Comparison_Exp>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  proposal_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Multisig_Proposal_Ready_Max_Fields = {
+  __typename?: 'multisig_proposal_ready_max_fields';
+  approvals_count?: Maybe<Scalars['Int']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Multisig_Proposal_Ready_Min_Fields = {
+  __typename?: 'multisig_proposal_ready_min_fields';
+  approvals_count?: Maybe<Scalars['Int']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "multisig_proposal_ready". */
+export type Multisig_Proposal_Ready_Order_By = {
+  approvals_count?: InputMaybe<Order_By>;
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  proposal?: InputMaybe<Multisig_Proposal_Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "multisig_proposal_ready" */
+export enum Multisig_Proposal_Ready_Select_Column {
+  /** column name */
+  ApprovalsCount = 'approvals_count',
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Multisig_Proposal_Ready_Stddev_Fields = {
+  __typename?: 'multisig_proposal_ready_stddev_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Proposal_Ready_Stddev_Pop_Fields = {
+  __typename?: 'multisig_proposal_ready_stddev_pop_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Proposal_Ready_Stddev_Samp_Fields = {
+  __typename?: 'multisig_proposal_ready_stddev_samp_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "multisig_proposal_ready" */
+export type Multisig_Proposal_Ready_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Multisig_Proposal_Ready_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Multisig_Proposal_Ready_Stream_Cursor_Value_Input = {
+  approvals_count?: InputMaybe<Scalars['Int']['input']>;
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Proposal_Ready_Sum_Fields = {
+  __typename?: 'multisig_proposal_ready_sum_fields';
+  approvals_count?: Maybe<Scalars['Int']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Proposal_Ready_Var_Pop_Fields = {
+  __typename?: 'multisig_proposal_ready_var_pop_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Proposal_Ready_Var_Samp_Fields = {
+  __typename?: 'multisig_proposal_ready_var_samp_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Proposal_Ready_Variance_Fields = {
+  __typename?: 'multisig_proposal_ready_variance_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** select columns of table "multisig_proposal" */
+export enum Multisig_Proposal_Select_Column {
+  /** column name */
+  Approvals = 'approvals',
+  /** column name */
+  BurnedPalletFee = 'burned_pallet_fee',
+  /** column name */
+  Call = 'call',
+  /** column name */
+  CallRaw = 'call_raw',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedAtBlockId = 'created_at_block_id',
+  /** column name */
+  CreatedExtrinsicId = 'created_extrinsic_id',
+  /** column name */
+  CreationNetworkFee = 'creation_network_fee',
+  /** column name */
+  DecodeError = 'decode_error',
+  /** column name */
+  DelayKind = 'delay_kind',
+  /** column name */
+  DelayValue = 'delay_value',
+  /** column name */
+  Deposit = 'deposit',
+  /** column name */
+  ExpiryBlock = 'expiry_block',
+  /** column name */
+  GuardianId = 'guardian_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MultisigId = 'multisig_id',
+  /** column name */
+  Pallet = 'pallet',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  ProposerId = 'proposer_id',
+  /** column name */
+  RecoverAccountId = 'recover_account_id',
+  /** column name */
+  ScheduleAmount = 'schedule_amount',
+  /** column name */
+  ScheduleAssetId = 'schedule_asset_id',
+  /** column name */
+  ScheduleToId = 'schedule_to_id',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  TransferAmount = 'transfer_amount',
+  /** column name */
+  TransferToId = 'transfer_to_id',
+  /** column name */
+  TxId = 'tx_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** aggregate stddev on columns */
+export type Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'multisig_proposal_stddev_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'multisig_proposal_stddev_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'multisig_proposal_stddev_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "multisig_proposal" */
+export type Multisig_Proposal_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Multisig_Proposal_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Multisig_Proposal_Stream_Cursor_Value_Input = {
+  approvals?: InputMaybe<Array<Scalars['String']['input']>>;
+  burned_pallet_fee?: InputMaybe<Scalars['numeric']['input']>;
+  call?: InputMaybe<Scalars['String']['input']>;
+  call_raw?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_at_block_id?: InputMaybe<Scalars['String']['input']>;
+  created_extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  creation_network_fee?: InputMaybe<Scalars['numeric']['input']>;
+  decode_error?: InputMaybe<Scalars['String']['input']>;
+  delay_kind?: InputMaybe<Scalars['String']['input']>;
+  delay_value?: InputMaybe<Scalars['numeric']['input']>;
+  deposit?: InputMaybe<Scalars['numeric']['input']>;
+  expiry_block?: InputMaybe<Scalars['Int']['input']>;
+  guardian_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  multisig_id?: InputMaybe<Scalars['String']['input']>;
+  pallet?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['Int']['input']>;
+  proposer_id?: InputMaybe<Scalars['String']['input']>;
+  recover_account_id?: InputMaybe<Scalars['String']['input']>;
+  schedule_amount?: InputMaybe<Scalars['numeric']['input']>;
+  schedule_asset_id?: InputMaybe<Scalars['Int']['input']>;
+  schedule_to_id?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  transfer_amount?: InputMaybe<Scalars['numeric']['input']>;
+  transfer_to_id?: InputMaybe<Scalars['String']['input']>;
+  tx_id?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Proposal_Sum_Fields = {
+  __typename?: 'multisig_proposal_sum_fields';
+  burned_pallet_fee?: Maybe<Scalars['numeric']['output']>;
+  creation_network_fee?: Maybe<Scalars['numeric']['output']>;
+  delay_value?: Maybe<Scalars['numeric']['output']>;
+  deposit?: Maybe<Scalars['numeric']['output']>;
+  expiry_block?: Maybe<Scalars['Int']['output']>;
+  proposal_id?: Maybe<Scalars['Int']['output']>;
+  schedule_amount?: Maybe<Scalars['numeric']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Int']['output']>;
+  transfer_amount?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'multisig_proposal_var_pop_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'multisig_proposal_var_samp_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Proposal_Variance_Fields = {
+  __typename?: 'multisig_proposal_variance_fields';
+  burned_pallet_fee?: Maybe<Scalars['Float']['output']>;
+  creation_network_fee?: Maybe<Scalars['Float']['output']>;
+  delay_value?: Maybe<Scalars['Float']['output']>;
+  deposit?: Maybe<Scalars['Float']['output']>;
+  expiry_block?: Maybe<Scalars['Float']['output']>;
+  proposal_id?: Maybe<Scalars['Float']['output']>;
+  schedule_amount?: Maybe<Scalars['Float']['output']>;
+  schedule_asset_id?: Maybe<Scalars['Float']['output']>;
+  transfer_amount?: Maybe<Scalars['Float']['output']>;
+};
+
+/** select columns of table "multisig" */
+export enum Multisig_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  CreatorId = 'creator_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Nonce = 'nonce',
+  /** column name */
+  Signers = 'signers',
+  /** column name */
+  Threshold = 'threshold',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** columns and relationships of "multisig_signer_approved" */
+export type Multisig_Signer_Approved = {
+  __typename?: 'multisig_signer_approved';
+  approvals_count: Scalars['Int']['output'];
+  /** An object relationship */
+  approver?: Maybe<Account>;
+  approver_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  proposal?: Maybe<Multisig_Proposal>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "multisig_signer_approved" */
+export type Multisig_Signer_Approved_Aggregate = {
+  __typename?: 'multisig_signer_approved_aggregate';
+  aggregate?: Maybe<Multisig_Signer_Approved_Aggregate_Fields>;
+  nodes: Array<Multisig_Signer_Approved>;
+};
+
+/** aggregate fields of "multisig_signer_approved" */
+export type Multisig_Signer_Approved_Aggregate_Fields = {
+  __typename?: 'multisig_signer_approved_aggregate_fields';
+  avg?: Maybe<Multisig_Signer_Approved_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Multisig_Signer_Approved_Max_Fields>;
+  min?: Maybe<Multisig_Signer_Approved_Min_Fields>;
+  stddev?: Maybe<Multisig_Signer_Approved_Stddev_Fields>;
+  stddev_pop?: Maybe<Multisig_Signer_Approved_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Multisig_Signer_Approved_Stddev_Samp_Fields>;
+  sum?: Maybe<Multisig_Signer_Approved_Sum_Fields>;
+  var_pop?: Maybe<Multisig_Signer_Approved_Var_Pop_Fields>;
+  var_samp?: Maybe<Multisig_Signer_Approved_Var_Samp_Fields>;
+  variance?: Maybe<Multisig_Signer_Approved_Variance_Fields>;
+};
+
+/** aggregate fields of "multisig_signer_approved" */
+export type Multisig_Signer_Approved_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Multisig_Signer_Approved_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Multisig_Signer_Approved_Avg_Fields = {
+  __typename?: 'multisig_signer_approved_avg_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "multisig_signer_approved". All fields are combined with a logical 'AND'. */
+export type Multisig_Signer_Approved_Bool_Exp = {
+  _and?: InputMaybe<Array<Multisig_Signer_Approved_Bool_Exp>>;
+  _not?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+  _or?: InputMaybe<Array<Multisig_Signer_Approved_Bool_Exp>>;
+  approvals_count?: InputMaybe<Int_Comparison_Exp>;
+  approver?: InputMaybe<Account_Bool_Exp>;
+  approver_id?: InputMaybe<String_Comparison_Exp>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  proposal_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Multisig_Signer_Approved_Max_Fields = {
+  __typename?: 'multisig_signer_approved_max_fields';
+  approvals_count?: Maybe<Scalars['Int']['output']>;
+  approver_id?: Maybe<Scalars['String']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Multisig_Signer_Approved_Min_Fields = {
+  __typename?: 'multisig_signer_approved_min_fields';
+  approvals_count?: Maybe<Scalars['Int']['output']>;
+  approver_id?: Maybe<Scalars['String']['output']>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "multisig_signer_approved". */
+export type Multisig_Signer_Approved_Order_By = {
+  approvals_count?: InputMaybe<Order_By>;
+  approver?: InputMaybe<Account_Order_By>;
+  approver_id?: InputMaybe<Order_By>;
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  proposal?: InputMaybe<Multisig_Proposal_Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "multisig_signer_approved" */
+export enum Multisig_Signer_Approved_Select_Column {
+  /** column name */
+  ApprovalsCount = 'approvals_count',
+  /** column name */
+  ApproverId = 'approver_id',
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Multisig_Signer_Approved_Stddev_Fields = {
+  __typename?: 'multisig_signer_approved_stddev_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Signer_Approved_Stddev_Pop_Fields = {
+  __typename?: 'multisig_signer_approved_stddev_pop_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Signer_Approved_Stddev_Samp_Fields = {
+  __typename?: 'multisig_signer_approved_stddev_samp_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "multisig_signer_approved" */
+export type Multisig_Signer_Approved_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Multisig_Signer_Approved_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Multisig_Signer_Approved_Stream_Cursor_Value_Input = {
+  approvals_count?: InputMaybe<Scalars['Int']['input']>;
+  approver_id?: InputMaybe<Scalars['String']['input']>;
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Signer_Approved_Sum_Fields = {
+  __typename?: 'multisig_signer_approved_sum_fields';
+  approvals_count?: Maybe<Scalars['Int']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Signer_Approved_Var_Pop_Fields = {
+  __typename?: 'multisig_signer_approved_var_pop_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Signer_Approved_Var_Samp_Fields = {
+  __typename?: 'multisig_signer_approved_var_samp_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Signer_Approved_Variance_Fields = {
+  __typename?: 'multisig_signer_approved_variance_fields';
+  approvals_count?: Maybe<Scalars['Float']['output']>;
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev on columns */
+export type Multisig_Stddev_Fields = {
+  __typename?: 'multisig_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Multisig_Stddev_Pop_Fields = {
+  __typename?: 'multisig_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Multisig_Stddev_Samp_Fields = {
+  __typename?: 'multisig_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "multisig" */
+export type Multisig_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Multisig_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Multisig_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  creator_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  nonce?: InputMaybe<Scalars['numeric']['input']>;
+  signers?: InputMaybe<Array<Scalars['String']['input']>>;
+  threshold?: InputMaybe<Scalars['Int']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Multisig_Sum_Fields = {
+  __typename?: 'multisig_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+  nonce?: Maybe<Scalars['numeric']['output']>;
+  threshold?: Maybe<Scalars['Int']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Multisig_Var_Pop_Fields = {
+  __typename?: 'multisig_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Multisig_Var_Samp_Fields = {
+  __typename?: 'multisig_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Multisig_Variance_Fields = {
+  __typename?: 'multisig_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+  nonce?: Maybe<Scalars['Float']['output']>;
+  threshold?: Maybe<Scalars['Float']['output']>;
+};
+
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
 export type Numeric_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['numeric']['input']>;
@@ -2934,6 +5227,12 @@ export type Query_Root = {
   block_aggregate: Block_Aggregate;
   /** fetch data from the table: "block" using primary key columns */
   block_by_pk?: Maybe<Block>;
+  /** fetch data from the table: "cancelled_multisig_proposal" */
+  cancelled_multisig_proposal: Array<Cancelled_Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "cancelled_multisig_proposal" */
+  cancelled_multisig_proposal_aggregate: Cancelled_Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "cancelled_multisig_proposal" using primary key columns */
+  cancelled_multisig_proposal_by_pk?: Maybe<Cancelled_Multisig_Proposal>;
   /** fetch data from the table: "cancelled_reversible_transfer" */
   cancelled_reversible_transfer: Array<Cancelled_Reversible_Transfer>;
   /** fetch aggregated fields from the table: "cancelled_reversible_transfer" */
@@ -2964,6 +5263,12 @@ export type Query_Root = {
   event_aggregate: Event_Aggregate;
   /** fetch data from the table: "event" using primary key columns */
   event_by_pk?: Maybe<Event>;
+  /** fetch data from the table: "executed_multisig_proposal" */
+  executed_multisig_proposal: Array<Executed_Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "executed_multisig_proposal" */
+  executed_multisig_proposal_aggregate: Executed_Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "executed_multisig_proposal" using primary key columns */
+  executed_multisig_proposal_by_pk?: Maybe<Executed_Multisig_Proposal>;
   /** fetch data from the table: "executed_reversible_transfer" */
   executed_reversible_transfer: Array<Executed_Reversible_Transfer>;
   /** fetch aggregated fields from the table: "executed_reversible_transfer" */
@@ -2988,6 +5293,48 @@ export type Query_Root = {
   miner_reward_aggregate: Miner_Reward_Aggregate;
   /** fetch data from the table: "miner_reward" using primary key columns */
   miner_reward_by_pk?: Maybe<Miner_Reward>;
+  /** fetch data from the table: "multisig" */
+  multisig: Array<Multisig>;
+  /** fetch aggregated fields from the table: "multisig" */
+  multisig_aggregate: Multisig_Aggregate;
+  /** fetch data from the table: "multisig" using primary key columns */
+  multisig_by_pk?: Maybe<Multisig>;
+  /** fetch data from the table: "multisig_deposits_claimed" */
+  multisig_deposits_claimed: Array<Multisig_Deposits_Claimed>;
+  /** fetch aggregated fields from the table: "multisig_deposits_claimed" */
+  multisig_deposits_claimed_aggregate: Multisig_Deposits_Claimed_Aggregate;
+  /** fetch data from the table: "multisig_deposits_claimed" using primary key columns */
+  multisig_deposits_claimed_by_pk?: Maybe<Multisig_Deposits_Claimed>;
+  /** fetch data from the table: "multisig_proposal" */
+  multisig_proposal: Array<Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "multisig_proposal" */
+  multisig_proposal_aggregate: Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "multisig_proposal" using primary key columns */
+  multisig_proposal_by_pk?: Maybe<Multisig_Proposal>;
+  /** fetch data from the table: "multisig_proposal_created" */
+  multisig_proposal_created: Array<Multisig_Proposal_Created>;
+  /** fetch aggregated fields from the table: "multisig_proposal_created" */
+  multisig_proposal_created_aggregate: Multisig_Proposal_Created_Aggregate;
+  /** fetch data from the table: "multisig_proposal_created" using primary key columns */
+  multisig_proposal_created_by_pk?: Maybe<Multisig_Proposal_Created>;
+  /** fetch data from the table: "multisig_proposal_ready" */
+  multisig_proposal_ready: Array<Multisig_Proposal_Ready>;
+  /** fetch aggregated fields from the table: "multisig_proposal_ready" */
+  multisig_proposal_ready_aggregate: Multisig_Proposal_Ready_Aggregate;
+  /** fetch data from the table: "multisig_proposal_ready" using primary key columns */
+  multisig_proposal_ready_by_pk?: Maybe<Multisig_Proposal_Ready>;
+  /** fetch data from the table: "multisig_signer_approved" */
+  multisig_signer_approved: Array<Multisig_Signer_Approved>;
+  /** fetch aggregated fields from the table: "multisig_signer_approved" */
+  multisig_signer_approved_aggregate: Multisig_Signer_Approved_Aggregate;
+  /** fetch data from the table: "multisig_signer_approved" using primary key columns */
+  multisig_signer_approved_by_pk?: Maybe<Multisig_Signer_Approved>;
+  /** fetch data from the table: "removed_multisig_proposal" */
+  removed_multisig_proposal: Array<Removed_Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "removed_multisig_proposal" */
+  removed_multisig_proposal_aggregate: Removed_Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "removed_multisig_proposal" using primary key columns */
+  removed_multisig_proposal_by_pk?: Maybe<Removed_Multisig_Proposal>;
   /** fetch data from the table: "scheduled_reversible_transfer" */
   scheduled_reversible_transfer: Array<Scheduled_Reversible_Transfer>;
   /** fetch aggregated fields from the table: "scheduled_reversible_transfer" */
@@ -3100,6 +5447,26 @@ export type Query_RootBlock_By_PkArgs = {
   id: Scalars['String']['input'];
 };
 
+export type Query_RootCancelled_Multisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootCancelled_Multisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootCancelled_Multisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
 export type Query_RootCancelled_Reversible_TransferArgs = {
   distinct_on?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -3200,6 +5567,26 @@ export type Query_RootEvent_By_PkArgs = {
   id: Scalars['String']['input'];
 };
 
+export type Query_RootExecuted_Multisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootExecuted_Multisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootExecuted_Multisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
 export type Query_RootExecuted_Reversible_TransferArgs = {
   distinct_on?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -3277,6 +5664,146 @@ export type Query_RootMiner_Reward_AggregateArgs = {
 };
 
 export type Query_RootMiner_Reward_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMultisigArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Order_By>>;
+  where?: InputMaybe<Multisig_Bool_Exp>;
+};
+
+export type Query_RootMultisig_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Order_By>>;
+  where?: InputMaybe<Multisig_Bool_Exp>;
+};
+
+export type Query_RootMultisig_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMultisig_Deposits_ClaimedArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Deposits_Claimed_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Deposits_Claimed_Order_By>>;
+  where?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Deposits_Claimed_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Deposits_Claimed_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Deposits_Claimed_Order_By>>;
+  where?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Deposits_Claimed_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMultisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMultisig_Proposal_CreatedArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Created_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Created_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Proposal_Created_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Created_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Created_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Proposal_Created_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMultisig_Proposal_ReadyArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Ready_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Ready_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Proposal_Ready_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Ready_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Ready_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Proposal_Ready_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootMultisig_Signer_ApprovedArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Signer_Approved_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Signer_Approved_Order_By>>;
+  where?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Signer_Approved_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Signer_Approved_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Signer_Approved_Order_By>>;
+  where?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+};
+
+export type Query_RootMultisig_Signer_Approved_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Query_RootRemoved_Multisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Removed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Removed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootRemoved_Multisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Removed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Removed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Query_RootRemoved_Multisig_Proposal_By_PkArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -3378,6 +5905,201 @@ export type Query_RootWormhole_Output_AggregateArgs = {
 
 export type Query_RootWormhole_Output_By_PkArgs = {
   id: Scalars['String']['input'];
+};
+
+/** columns and relationships of "removed_multisig_proposal" */
+export type Removed_Multisig_Proposal = {
+  __typename?: 'removed_multisig_proposal';
+  /** An object relationship */
+  block?: Maybe<Block>;
+  block_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  event?: Maybe<Event>;
+  /** An object relationship */
+  extrinsic?: Maybe<Extrinsic>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  /** An object relationship */
+  proposal?: Maybe<Multisig_Proposal>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  removedBy?: Maybe<Account>;
+  removed_by_id?: Maybe<Scalars['String']['output']>;
+  timestamp: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "removed_multisig_proposal" */
+export type Removed_Multisig_Proposal_Aggregate = {
+  __typename?: 'removed_multisig_proposal_aggregate';
+  aggregate?: Maybe<Removed_Multisig_Proposal_Aggregate_Fields>;
+  nodes: Array<Removed_Multisig_Proposal>;
+};
+
+/** aggregate fields of "removed_multisig_proposal" */
+export type Removed_Multisig_Proposal_Aggregate_Fields = {
+  __typename?: 'removed_multisig_proposal_aggregate_fields';
+  avg?: Maybe<Removed_Multisig_Proposal_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Removed_Multisig_Proposal_Max_Fields>;
+  min?: Maybe<Removed_Multisig_Proposal_Min_Fields>;
+  stddev?: Maybe<Removed_Multisig_Proposal_Stddev_Fields>;
+  stddev_pop?: Maybe<Removed_Multisig_Proposal_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Removed_Multisig_Proposal_Stddev_Samp_Fields>;
+  sum?: Maybe<Removed_Multisig_Proposal_Sum_Fields>;
+  var_pop?: Maybe<Removed_Multisig_Proposal_Var_Pop_Fields>;
+  var_samp?: Maybe<Removed_Multisig_Proposal_Var_Samp_Fields>;
+  variance?: Maybe<Removed_Multisig_Proposal_Variance_Fields>;
+};
+
+/** aggregate fields of "removed_multisig_proposal" */
+export type Removed_Multisig_Proposal_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Removed_Multisig_Proposal_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Removed_Multisig_Proposal_Avg_Fields = {
+  __typename?: 'removed_multisig_proposal_avg_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "removed_multisig_proposal". All fields are combined with a logical 'AND'. */
+export type Removed_Multisig_Proposal_Bool_Exp = {
+  _and?: InputMaybe<Array<Removed_Multisig_Proposal_Bool_Exp>>;
+  _not?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+  _or?: InputMaybe<Array<Removed_Multisig_Proposal_Bool_Exp>>;
+  block?: InputMaybe<Block_Bool_Exp>;
+  block_id?: InputMaybe<String_Comparison_Exp>;
+  event?: InputMaybe<Event_Bool_Exp>;
+  extrinsic?: InputMaybe<Extrinsic_Bool_Exp>;
+  extrinsic_id?: InputMaybe<String_Comparison_Exp>;
+  fee?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  proposal?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+  proposal_id?: InputMaybe<String_Comparison_Exp>;
+  removedBy?: InputMaybe<Account_Bool_Exp>;
+  removed_by_id?: InputMaybe<String_Comparison_Exp>;
+  timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Removed_Multisig_Proposal_Max_Fields = {
+  __typename?: 'removed_multisig_proposal_max_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  removed_by_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Removed_Multisig_Proposal_Min_Fields = {
+  __typename?: 'removed_multisig_proposal_min_fields';
+  block_id?: Maybe<Scalars['String']['output']>;
+  extrinsic_id?: Maybe<Scalars['String']['output']>;
+  fee?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  proposal_id?: Maybe<Scalars['String']['output']>;
+  removed_by_id?: Maybe<Scalars['String']['output']>;
+  timestamp?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** Ordering options when selecting data from "removed_multisig_proposal". */
+export type Removed_Multisig_Proposal_Order_By = {
+  block?: InputMaybe<Block_Order_By>;
+  block_id?: InputMaybe<Order_By>;
+  event?: InputMaybe<Event_Order_By>;
+  extrinsic?: InputMaybe<Extrinsic_Order_By>;
+  extrinsic_id?: InputMaybe<Order_By>;
+  fee?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  proposal?: InputMaybe<Multisig_Proposal_Order_By>;
+  proposal_id?: InputMaybe<Order_By>;
+  removedBy?: InputMaybe<Account_Order_By>;
+  removed_by_id?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "removed_multisig_proposal" */
+export enum Removed_Multisig_Proposal_Select_Column {
+  /** column name */
+  BlockId = 'block_id',
+  /** column name */
+  ExtrinsicId = 'extrinsic_id',
+  /** column name */
+  Fee = 'fee',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ProposalId = 'proposal_id',
+  /** column name */
+  RemovedById = 'removed_by_id',
+  /** column name */
+  Timestamp = 'timestamp'
+}
+
+/** aggregate stddev on columns */
+export type Removed_Multisig_Proposal_Stddev_Fields = {
+  __typename?: 'removed_multisig_proposal_stddev_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Removed_Multisig_Proposal_Stddev_Pop_Fields = {
+  __typename?: 'removed_multisig_proposal_stddev_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Removed_Multisig_Proposal_Stddev_Samp_Fields = {
+  __typename?: 'removed_multisig_proposal_stddev_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "removed_multisig_proposal" */
+export type Removed_Multisig_Proposal_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Removed_Multisig_Proposal_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Removed_Multisig_Proposal_Stream_Cursor_Value_Input = {
+  block_id?: InputMaybe<Scalars['String']['input']>;
+  extrinsic_id?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  proposal_id?: InputMaybe<Scalars['String']['input']>;
+  removed_by_id?: InputMaybe<Scalars['String']['input']>;
+  timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Removed_Multisig_Proposal_Sum_Fields = {
+  __typename?: 'removed_multisig_proposal_sum_fields';
+  fee?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Removed_Multisig_Proposal_Var_Pop_Fields = {
+  __typename?: 'removed_multisig_proposal_var_pop_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Removed_Multisig_Proposal_Var_Samp_Fields = {
+  __typename?: 'removed_multisig_proposal_var_samp_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Removed_Multisig_Proposal_Variance_Fields = {
+  __typename?: 'removed_multisig_proposal_variance_fields';
+  fee?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "scheduled_reversible_transfer" */
@@ -3641,6 +6363,14 @@ export type Subscription_Root = {
   block_by_pk?: Maybe<Block>;
   /** fetch data from the table in a streaming manner: "block" */
   block_stream: Array<Block>;
+  /** fetch data from the table: "cancelled_multisig_proposal" */
+  cancelled_multisig_proposal: Array<Cancelled_Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "cancelled_multisig_proposal" */
+  cancelled_multisig_proposal_aggregate: Cancelled_Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "cancelled_multisig_proposal" using primary key columns */
+  cancelled_multisig_proposal_by_pk?: Maybe<Cancelled_Multisig_Proposal>;
+  /** fetch data from the table in a streaming manner: "cancelled_multisig_proposal" */
+  cancelled_multisig_proposal_stream: Array<Cancelled_Multisig_Proposal>;
   /** fetch data from the table: "cancelled_reversible_transfer" */
   cancelled_reversible_transfer: Array<Cancelled_Reversible_Transfer>;
   /** fetch aggregated fields from the table: "cancelled_reversible_transfer" */
@@ -3681,6 +6411,14 @@ export type Subscription_Root = {
   event_by_pk?: Maybe<Event>;
   /** fetch data from the table in a streaming manner: "event" */
   event_stream: Array<Event>;
+  /** fetch data from the table: "executed_multisig_proposal" */
+  executed_multisig_proposal: Array<Executed_Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "executed_multisig_proposal" */
+  executed_multisig_proposal_aggregate: Executed_Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "executed_multisig_proposal" using primary key columns */
+  executed_multisig_proposal_by_pk?: Maybe<Executed_Multisig_Proposal>;
+  /** fetch data from the table in a streaming manner: "executed_multisig_proposal" */
+  executed_multisig_proposal_stream: Array<Executed_Multisig_Proposal>;
   /** fetch data from the table: "executed_reversible_transfer" */
   executed_reversible_transfer: Array<Executed_Reversible_Transfer>;
   /** fetch aggregated fields from the table: "executed_reversible_transfer" */
@@ -3713,6 +6451,62 @@ export type Subscription_Root = {
   miner_reward_by_pk?: Maybe<Miner_Reward>;
   /** fetch data from the table in a streaming manner: "miner_reward" */
   miner_reward_stream: Array<Miner_Reward>;
+  /** fetch data from the table: "multisig" */
+  multisig: Array<Multisig>;
+  /** fetch aggregated fields from the table: "multisig" */
+  multisig_aggregate: Multisig_Aggregate;
+  /** fetch data from the table: "multisig" using primary key columns */
+  multisig_by_pk?: Maybe<Multisig>;
+  /** fetch data from the table: "multisig_deposits_claimed" */
+  multisig_deposits_claimed: Array<Multisig_Deposits_Claimed>;
+  /** fetch aggregated fields from the table: "multisig_deposits_claimed" */
+  multisig_deposits_claimed_aggregate: Multisig_Deposits_Claimed_Aggregate;
+  /** fetch data from the table: "multisig_deposits_claimed" using primary key columns */
+  multisig_deposits_claimed_by_pk?: Maybe<Multisig_Deposits_Claimed>;
+  /** fetch data from the table in a streaming manner: "multisig_deposits_claimed" */
+  multisig_deposits_claimed_stream: Array<Multisig_Deposits_Claimed>;
+  /** fetch data from the table: "multisig_proposal" */
+  multisig_proposal: Array<Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "multisig_proposal" */
+  multisig_proposal_aggregate: Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "multisig_proposal" using primary key columns */
+  multisig_proposal_by_pk?: Maybe<Multisig_Proposal>;
+  /** fetch data from the table: "multisig_proposal_created" */
+  multisig_proposal_created: Array<Multisig_Proposal_Created>;
+  /** fetch aggregated fields from the table: "multisig_proposal_created" */
+  multisig_proposal_created_aggregate: Multisig_Proposal_Created_Aggregate;
+  /** fetch data from the table: "multisig_proposal_created" using primary key columns */
+  multisig_proposal_created_by_pk?: Maybe<Multisig_Proposal_Created>;
+  /** fetch data from the table in a streaming manner: "multisig_proposal_created" */
+  multisig_proposal_created_stream: Array<Multisig_Proposal_Created>;
+  /** fetch data from the table: "multisig_proposal_ready" */
+  multisig_proposal_ready: Array<Multisig_Proposal_Ready>;
+  /** fetch aggregated fields from the table: "multisig_proposal_ready" */
+  multisig_proposal_ready_aggregate: Multisig_Proposal_Ready_Aggregate;
+  /** fetch data from the table: "multisig_proposal_ready" using primary key columns */
+  multisig_proposal_ready_by_pk?: Maybe<Multisig_Proposal_Ready>;
+  /** fetch data from the table in a streaming manner: "multisig_proposal_ready" */
+  multisig_proposal_ready_stream: Array<Multisig_Proposal_Ready>;
+  /** fetch data from the table in a streaming manner: "multisig_proposal" */
+  multisig_proposal_stream: Array<Multisig_Proposal>;
+  /** fetch data from the table: "multisig_signer_approved" */
+  multisig_signer_approved: Array<Multisig_Signer_Approved>;
+  /** fetch aggregated fields from the table: "multisig_signer_approved" */
+  multisig_signer_approved_aggregate: Multisig_Signer_Approved_Aggregate;
+  /** fetch data from the table: "multisig_signer_approved" using primary key columns */
+  multisig_signer_approved_by_pk?: Maybe<Multisig_Signer_Approved>;
+  /** fetch data from the table in a streaming manner: "multisig_signer_approved" */
+  multisig_signer_approved_stream: Array<Multisig_Signer_Approved>;
+  /** fetch data from the table in a streaming manner: "multisig" */
+  multisig_stream: Array<Multisig>;
+  /** fetch data from the table: "removed_multisig_proposal" */
+  removed_multisig_proposal: Array<Removed_Multisig_Proposal>;
+  /** fetch aggregated fields from the table: "removed_multisig_proposal" */
+  removed_multisig_proposal_aggregate: Removed_Multisig_Proposal_Aggregate;
+  /** fetch data from the table: "removed_multisig_proposal" using primary key columns */
+  removed_multisig_proposal_by_pk?: Maybe<Removed_Multisig_Proposal>;
+  /** fetch data from the table in a streaming manner: "removed_multisig_proposal" */
+  removed_multisig_proposal_stream: Array<Removed_Multisig_Proposal>;
   /** fetch data from the table: "scheduled_reversible_transfer" */
   scheduled_reversible_transfer: Array<Scheduled_Reversible_Transfer>;
   /** fetch aggregated fields from the table: "scheduled_reversible_transfer" */
@@ -3859,6 +6653,32 @@ export type Subscription_RootBlock_StreamArgs = {
   where?: InputMaybe<Block_Bool_Exp>;
 };
 
+export type Subscription_RootCancelled_Multisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootCancelled_Multisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Cancelled_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Cancelled_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootCancelled_Multisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootCancelled_Multisig_Proposal_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Cancelled_Multisig_Proposal_Stream_Cursor_Input>>;
+  where?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+};
+
 export type Subscription_RootCancelled_Reversible_TransferArgs = {
   distinct_on?: InputMaybe<Array<Cancelled_Reversible_Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -3989,6 +6809,32 @@ export type Subscription_RootEvent_StreamArgs = {
   where?: InputMaybe<Event_Bool_Exp>;
 };
 
+export type Subscription_RootExecuted_Multisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootExecuted_Multisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Executed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Executed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootExecuted_Multisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootExecuted_Multisig_Proposal_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Executed_Multisig_Proposal_Stream_Cursor_Input>>;
+  where?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+};
+
 export type Subscription_RootExecuted_Reversible_TransferArgs = {
   distinct_on?: InputMaybe<Array<Executed_Reversible_Transfer_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -4091,6 +6937,188 @@ export type Subscription_RootMiner_Reward_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Miner_Reward_Stream_Cursor_Input>>;
   where?: InputMaybe<Miner_Reward_Bool_Exp>;
+};
+
+export type Subscription_RootMultisigArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Order_By>>;
+  where?: InputMaybe<Multisig_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Order_By>>;
+  where?: InputMaybe<Multisig_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMultisig_Deposits_ClaimedArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Deposits_Claimed_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Deposits_Claimed_Order_By>>;
+  where?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Deposits_Claimed_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Deposits_Claimed_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Deposits_Claimed_Order_By>>;
+  where?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Deposits_Claimed_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMultisig_Deposits_Claimed_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Multisig_Deposits_Claimed_Stream_Cursor_Input>>;
+  where?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMultisig_Proposal_CreatedArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Created_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Created_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_Created_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Created_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Created_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_Created_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMultisig_Proposal_Created_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Multisig_Proposal_Created_Stream_Cursor_Input>>;
+  where?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_ReadyArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Ready_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Ready_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_Ready_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Proposal_Ready_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Proposal_Ready_Order_By>>;
+  where?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_Ready_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMultisig_Proposal_Ready_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Multisig_Proposal_Ready_Stream_Cursor_Input>>;
+  where?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Proposal_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Multisig_Proposal_Stream_Cursor_Input>>;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Signer_ApprovedArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Signer_Approved_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Signer_Approved_Order_By>>;
+  where?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Signer_Approved_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Multisig_Signer_Approved_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Multisig_Signer_Approved_Order_By>>;
+  where?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_Signer_Approved_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootMultisig_Signer_Approved_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Multisig_Signer_Approved_Stream_Cursor_Input>>;
+  where?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+};
+
+export type Subscription_RootMultisig_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Multisig_Stream_Cursor_Input>>;
+  where?: InputMaybe<Multisig_Bool_Exp>;
+};
+
+export type Subscription_RootRemoved_Multisig_ProposalArgs = {
+  distinct_on?: InputMaybe<Array<Removed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Removed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootRemoved_Multisig_Proposal_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Removed_Multisig_Proposal_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Removed_Multisig_Proposal_Order_By>>;
+  where?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+};
+
+export type Subscription_RootRemoved_Multisig_Proposal_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type Subscription_RootRemoved_Multisig_Proposal_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Removed_Multisig_Proposal_Stream_Cursor_Input>>;
+  where?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
 };
 
 export type Subscription_RootScheduled_Reversible_TransferArgs = {
@@ -5310,6 +8338,22 @@ export type GetAccountByIdQuery = {
     total_rewards: any;
     total_scheduled_transfers: number;
   } | null;
+  multisig?: {
+    __typename?: 'multisig';
+    id: string;
+    timestamp: any;
+    threshold: number;
+    nonce: any;
+    signers: Array<string>;
+    creator?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+    extrinsic?: {
+      __typename?: 'extrinsic';
+      id: string;
+      pallet: string;
+      call: string;
+    } | null;
+  } | null;
   accountEvents: Array<{
     __typename?: 'account_event';
     transfer?: {
@@ -5398,6 +8442,153 @@ export type GetAccountByIdQuery = {
       block?: { __typename?: 'block'; height: number; hash: string } | null;
       miner?: { __typename?: 'account'; id: string } | null;
     } | null;
+    multisig?: {
+      __typename?: 'multisig';
+      id: string;
+      timestamp: any;
+      threshold: number;
+      nonce: any;
+      signers: Array<string>;
+      creator?: { __typename?: 'account'; id: string } | null;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+    } | null;
+    multisigProposalCreated?: {
+      __typename?: 'multisig_proposal_created';
+      id: string;
+      timestamp: any;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      proposal?: {
+        __typename?: 'multisig_proposal';
+        id: string;
+        multisig?: { __typename?: 'multisig'; id: string } | null;
+        proposer?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    multisigSignerApproved?: {
+      __typename?: 'multisig_signer_approved';
+      id: string;
+      timestamp: any;
+      approvals_count: number;
+      approver?: { __typename?: 'account'; id: string } | null;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      proposal?: {
+        __typename?: 'multisig_proposal';
+        id: string;
+        multisig?: { __typename?: 'multisig'; id: string } | null;
+        proposer?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    multisigProposalReady?: {
+      __typename?: 'multisig_proposal_ready';
+      id: string;
+      timestamp: any;
+      approvals_count: number;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      proposal?: {
+        __typename?: 'multisig_proposal';
+        id: string;
+        multisig?: { __typename?: 'multisig'; id: string } | null;
+        proposer?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    executedMultisigProposal?: {
+      __typename?: 'executed_multisig_proposal';
+      id: string;
+      timestamp: any;
+      approvers: Array<string>;
+      result: string;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      proposal?: {
+        __typename?: 'multisig_proposal';
+        id: string;
+        multisig?: { __typename?: 'multisig'; id: string } | null;
+        proposer?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    cancelledMultisigProposal?: {
+      __typename?: 'cancelled_multisig_proposal';
+      id: string;
+      timestamp: any;
+      cancelledBy?: { __typename?: 'account'; id: string } | null;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      proposal?: {
+        __typename?: 'multisig_proposal';
+        id: string;
+        multisig?: { __typename?: 'multisig'; id: string } | null;
+        proposer?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    removedMultisigProposal?: {
+      __typename?: 'removed_multisig_proposal';
+      id: string;
+      timestamp: any;
+      removedBy?: { __typename?: 'account'; id: string } | null;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+      proposal?: {
+        __typename?: 'multisig_proposal';
+        id: string;
+        multisig?: { __typename?: 'multisig'; id: string } | null;
+        proposer?: { __typename?: 'account'; id: string } | null;
+      } | null;
+    } | null;
+    multisigDepositsClaimed?: {
+      __typename?: 'multisig_deposits_claimed';
+      id: string;
+      timestamp: any;
+      total_returned: any;
+      proposals_removed: number;
+      claimer?: { __typename?: 'account'; id: string } | null;
+      multisig?: { __typename?: 'multisig'; id: string } | null;
+      block?: { __typename?: 'block'; height: number } | null;
+      extrinsic?: {
+        __typename?: 'extrinsic';
+        id: string;
+        pallet: string;
+        call: string;
+      } | null;
+    } | null;
   }>;
   guardian: {
     __typename?: 'high_security_set_aggregate';
@@ -5405,7 +8596,7 @@ export type GetAccountByIdQuery = {
       __typename?: 'high_security_set';
       timestamp: any;
       block?: { __typename?: 'block'; height: number } | null;
-      interceptor?: {
+      guardian?: {
         __typename?: 'account';
         id: string;
         free: any;
@@ -5979,7 +9170,7 @@ export type GetHighSecuritySetsQuery = {
       call: string;
     } | null;
     who?: { __typename?: 'account'; id: string } | null;
-    interceptor?: { __typename?: 'account'; id: string } | null;
+    guardian?: { __typename?: 'account'; id: string } | null;
     block?: { __typename?: 'block'; height: number } | null;
   }>;
   meta: {
@@ -6014,7 +9205,7 @@ export type GetRecentHighSecuritySetsQuery = {
       call: string;
     } | null;
     who?: { __typename?: 'account'; id: string } | null;
-    interceptor?: { __typename?: 'account'; id: string } | null;
+    guardian?: { __typename?: 'account'; id: string } | null;
     block?: { __typename?: 'block'; height: number } | null;
   }>;
 };
@@ -6057,9 +9248,23 @@ export type GetHighSecuritySetByHashQuery = {
       call: string;
     } | null;
     who?: { __typename?: 'account'; id: string } | null;
-    interceptor?: { __typename?: 'account'; id: string } | null;
+    guardian?: { __typename?: 'account'; id: string } | null;
     block?: { __typename?: 'block'; height: number } | null;
   }>;
+};
+
+export type GetMinerLeaderboardChartQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GetMinerLeaderboardChartQuery = {
+  __typename?: 'query_root';
+  topMiners: Array<{
+    __typename?: 'account_stats';
+    id: string;
+    total_mined_blocks: number;
+  }>;
+  blocks?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetMinerLeaderboardQueryVariables = Exact<{
@@ -6151,6 +9356,971 @@ export type GetMinerRewardByHashQuery = {
     block?: { __typename?: 'block'; height: number; hash: string } | null;
     miner?: { __typename?: 'account'; id: string } | null;
   }>;
+};
+
+export type MultisigCreatedFieldsFragment = {
+  __typename?: 'multisig';
+  id: string;
+  timestamp: any;
+  threshold: number;
+  nonce: any;
+  signers: Array<string>;
+  creator?: { __typename?: 'account'; id: string } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigCreatedFieldsFragment' };
+
+export type GetMultisigCreatedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Multisig_Order_By> | Multisig_Order_By>;
+  where?: InputMaybe<Multisig_Bool_Exp>;
+}>;
+
+export type GetMultisigCreatedQuery = {
+  __typename?: 'query_root';
+  multisigCreatedEvents: Array<
+    { __typename?: 'multisig' } & {
+      ' $fragmentRefs'?: {
+        MultisigCreatedFieldsFragment: MultisigCreatedFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigCreatedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<Multisig_Order_By> | Multisig_Order_By>;
+}>;
+
+export type GetRecentMultisigCreatedQuery = {
+  __typename?: 'query_root';
+  multisigCreatedEvents: Array<
+    { __typename?: 'multisig' } & {
+      ' $fragmentRefs'?: {
+        MultisigCreatedFieldsFragment: MultisigCreatedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigCreatedStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigCreatedStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisigs_created: number;
+  } | null;
+};
+
+export type GetMultisigCreatedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigCreatedByHashQuery = {
+  __typename?: 'query_root';
+  multisigCreatedEvents: Array<
+    { __typename?: 'multisig' } & {
+      ' $fragmentRefs'?: {
+        MultisigCreatedFieldsFragment: MultisigCreatedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigDepositsClaimedFieldsFragment = {
+  __typename?: 'multisig_deposits_claimed';
+  id: string;
+  timestamp: any;
+  total_returned: any;
+  proposals_removed: number;
+  claimer?: { __typename?: 'account'; id: string } | null;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigDepositsClaimedFieldsFragment' };
+
+export type GetMultisigDepositsClaimedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Multisig_Deposits_Claimed_Order_By>
+    | Multisig_Deposits_Claimed_Order_By
+  >;
+  where?: InputMaybe<Multisig_Deposits_Claimed_Bool_Exp>;
+}>;
+
+export type GetMultisigDepositsClaimedQuery = {
+  __typename?: 'query_root';
+  multisigDepositsClaimedEvents: Array<
+    { __typename?: 'multisig_deposits_claimed' } & {
+      ' $fragmentRefs'?: {
+        MultisigDepositsClaimedFieldsFragment: MultisigDepositsClaimedFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_deposits_claimed_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_deposits_claimed_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigDepositsClaimedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Multisig_Deposits_Claimed_Order_By>
+    | Multisig_Deposits_Claimed_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigDepositsClaimedQuery = {
+  __typename?: 'query_root';
+  multisigDepositsClaimedEvents: Array<
+    { __typename?: 'multisig_deposits_claimed' } & {
+      ' $fragmentRefs'?: {
+        MultisigDepositsClaimedFieldsFragment: MultisigDepositsClaimedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigDepositsClaimedStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigDepositsClaimedStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_deposits_claimed_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_deposits_claimed_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_deposits_claimed: number;
+  } | null;
+};
+
+export type GetMultisigDepositsClaimedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigDepositsClaimedByHashQuery = {
+  __typename?: 'query_root';
+  multisigDepositsClaimedEvents: Array<
+    { __typename?: 'multisig_deposits_claimed' } & {
+      ' $fragmentRefs'?: {
+        MultisigDepositsClaimedFieldsFragment: MultisigDepositsClaimedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigProposalCancelledFieldsFragment = {
+  __typename?: 'cancelled_multisig_proposal';
+  id: string;
+  timestamp: any;
+  cancelledBy?: { __typename?: 'account'; id: string } | null;
+  proposal?: {
+    __typename?: 'multisig_proposal';
+    id: string;
+    multisig?: { __typename?: 'multisig'; id: string } | null;
+    proposer?: { __typename?: 'account'; id: string } | null;
+  } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigProposalCancelledFieldsFragment' };
+
+export type GetMultisigProposalCancelledQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Cancelled_Multisig_Proposal_Order_By>
+    | Cancelled_Multisig_Proposal_Order_By
+  >;
+  where?: InputMaybe<Cancelled_Multisig_Proposal_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalCancelledQuery = {
+  __typename?: 'query_root';
+  multisigProposalCancelledEvents: Array<
+    { __typename?: 'cancelled_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCancelledFieldsFragment: MultisigProposalCancelledFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'cancelled_multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'cancelled_multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigProposalCancelledQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Cancelled_Multisig_Proposal_Order_By>
+    | Cancelled_Multisig_Proposal_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigProposalCancelledQuery = {
+  __typename?: 'query_root';
+  multisigProposalCancelledEvents: Array<
+    { __typename?: 'cancelled_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCancelledFieldsFragment: MultisigProposalCancelledFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigProposalCancelledStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalCancelledStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'cancelled_multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'cancelled_multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposals_cancelled: number;
+  } | null;
+};
+
+export type GetMultisigProposalCancelledByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalCancelledByHashQuery = {
+  __typename?: 'query_root';
+  multisigProposalCancelledEvents: Array<
+    { __typename?: 'cancelled_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCancelledFieldsFragment: MultisigProposalCancelledFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigProposalRefFieldsFragment = {
+  __typename?: 'multisig_proposal';
+  id: string;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
+  proposer?: { __typename?: 'account'; id: string } | null;
+} & { ' $fragmentName'?: 'MultisigProposalRefFieldsFragment' };
+
+export type MultisigProposalCreatedFieldsFragment = {
+  __typename?: 'multisig_proposal_created';
+  id: string;
+  timestamp: any;
+  proposal?:
+    | ({ __typename?: 'multisig_proposal' } & {
+        ' $fragmentRefs'?: {
+          MultisigProposalRefFieldsFragment: MultisigProposalRefFieldsFragment;
+        };
+      })
+    | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigProposalCreatedFieldsFragment' };
+
+export type GetMultisigProposalCreatedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Multisig_Proposal_Created_Order_By>
+    | Multisig_Proposal_Created_Order_By
+  >;
+  where?: InputMaybe<Multisig_Proposal_Created_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalCreatedQuery = {
+  __typename?: 'query_root';
+  multisigProposalCreatedEvents: Array<
+    { __typename?: 'multisig_proposal_created' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCreatedFieldsFragment: MultisigProposalCreatedFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_proposal_created_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_created_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigProposalCreatedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Multisig_Proposal_Created_Order_By>
+    | Multisig_Proposal_Created_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigProposalCreatedQuery = {
+  __typename?: 'query_root';
+  multisigProposalCreatedEvents: Array<
+    { __typename?: 'multisig_proposal_created' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCreatedFieldsFragment: MultisigProposalCreatedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigProposalCreatedStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalCreatedStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_proposal_created_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_created_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposals: number;
+  } | null;
+};
+
+export type GetMultisigProposalCreatedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalCreatedByHashQuery = {
+  __typename?: 'query_root';
+  multisigProposalCreatedEvents: Array<
+    { __typename?: 'multisig_proposal_created' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalCreatedFieldsFragment: MultisigProposalCreatedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigProposalExecutedFieldsFragment = {
+  __typename?: 'executed_multisig_proposal';
+  id: string;
+  timestamp: any;
+  approvers: Array<string>;
+  result: string;
+  proposal?: {
+    __typename?: 'multisig_proposal';
+    id: string;
+    multisig?: { __typename?: 'multisig'; id: string } | null;
+    proposer?: { __typename?: 'account'; id: string } | null;
+  } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigProposalExecutedFieldsFragment' };
+
+export type GetMultisigProposalExecutedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Executed_Multisig_Proposal_Order_By>
+    | Executed_Multisig_Proposal_Order_By
+  >;
+  where?: InputMaybe<Executed_Multisig_Proposal_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalExecutedQuery = {
+  __typename?: 'query_root';
+  multisigProposalExecutedEvents: Array<
+    { __typename?: 'executed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalExecutedFieldsFragment: MultisigProposalExecutedFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'executed_multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'executed_multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigProposalExecutedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Executed_Multisig_Proposal_Order_By>
+    | Executed_Multisig_Proposal_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigProposalExecutedQuery = {
+  __typename?: 'query_root';
+  multisigProposalExecutedEvents: Array<
+    { __typename?: 'executed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalExecutedFieldsFragment: MultisigProposalExecutedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigProposalExecutedStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalExecutedStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'executed_multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'executed_multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposals_executed: number;
+  } | null;
+};
+
+export type GetMultisigProposalExecutedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalExecutedByHashQuery = {
+  __typename?: 'query_root';
+  multisigProposalExecutedEvents: Array<
+    { __typename?: 'executed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalExecutedFieldsFragment: MultisigProposalExecutedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigProposalReadyFieldsFragment = {
+  __typename?: 'multisig_proposal_ready';
+  id: string;
+  timestamp: any;
+  approvals_count: number;
+  proposal?: {
+    __typename?: 'multisig_proposal';
+    id: string;
+    multisig?: { __typename?: 'multisig'; id: string } | null;
+    proposer?: { __typename?: 'account'; id: string } | null;
+  } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigProposalReadyFieldsFragment' };
+
+export type GetMultisigProposalReadyQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<Multisig_Proposal_Ready_Order_By> | Multisig_Proposal_Ready_Order_By
+  >;
+  where?: InputMaybe<Multisig_Proposal_Ready_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalReadyQuery = {
+  __typename?: 'query_root';
+  multisigProposalReadyEvents: Array<
+    { __typename?: 'multisig_proposal_ready' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalReadyFieldsFragment: MultisigProposalReadyFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_proposal_ready_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_ready_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigProposalReadyQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<Multisig_Proposal_Ready_Order_By> | Multisig_Proposal_Ready_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigProposalReadyQuery = {
+  __typename?: 'query_root';
+  multisigProposalReadyEvents: Array<
+    { __typename?: 'multisig_proposal_ready' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalReadyFieldsFragment: MultisigProposalReadyFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigProposalReadyStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalReadyStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_proposal_ready_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_ready_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposal_ready: number;
+  } | null;
+};
+
+export type GetMultisigProposalReadyByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalReadyByHashQuery = {
+  __typename?: 'query_root';
+  multisigProposalReadyEvents: Array<
+    { __typename?: 'multisig_proposal_ready' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalReadyFieldsFragment: MultisigProposalReadyFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigProposalRemovedFieldsFragment = {
+  __typename?: 'removed_multisig_proposal';
+  id: string;
+  timestamp: any;
+  removedBy?: { __typename?: 'account'; id: string } | null;
+  proposal?: {
+    __typename?: 'multisig_proposal';
+    id: string;
+    multisig?: { __typename?: 'multisig'; id: string } | null;
+    proposer?: { __typename?: 'account'; id: string } | null;
+  } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigProposalRemovedFieldsFragment' };
+
+export type GetMultisigProposalRemovedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Removed_Multisig_Proposal_Order_By>
+    | Removed_Multisig_Proposal_Order_By
+  >;
+  where?: InputMaybe<Removed_Multisig_Proposal_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalRemovedQuery = {
+  __typename?: 'query_root';
+  multisigProposalRemovedEvents: Array<
+    { __typename?: 'removed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalRemovedFieldsFragment: MultisigProposalRemovedFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'removed_multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'removed_multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigProposalRemovedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    | Array<Removed_Multisig_Proposal_Order_By>
+    | Removed_Multisig_Proposal_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigProposalRemovedQuery = {
+  __typename?: 'query_root';
+  multisigProposalRemovedEvents: Array<
+    { __typename?: 'removed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalRemovedFieldsFragment: MultisigProposalRemovedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigProposalRemovedStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalRemovedStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'removed_multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'removed_multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposals_removed: number;
+  } | null;
+};
+
+export type GetMultisigProposalRemovedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalRemovedByHashQuery = {
+  __typename?: 'query_root';
+  multisigProposalRemovedEvents: Array<
+    { __typename?: 'removed_multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalRemovedFieldsFragment: MultisigProposalRemovedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type MultisigProposalListFieldsFragment = {
+  __typename?: 'multisig_proposal';
+  id: string;
+  status: string;
+  deposit: any;
+  expiry_block: number;
+  created_at: any;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
+  proposer?: { __typename?: 'account'; id: string } | null;
+} & { ' $fragmentName'?: 'MultisigProposalListFieldsFragment' };
+
+export type MultisigProposalDetailFieldsFragment = {
+  __typename?: 'multisig_proposal';
+  id: string;
+  status: string;
+  deposit: any;
+  expiry_block: number;
+  approvals: Array<string>;
+  pallet: string;
+  call: string;
+  call_raw: string;
+  decode_error?: string | null;
+  created_at: any;
+  tx_id?: string | null;
+  transfer_amount?: any | null;
+  schedule_amount?: any | null;
+  delay_kind?: string | null;
+  delay_value?: any | null;
+  schedule_asset_id?: number | null;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
+  proposer?: { __typename?: 'account'; id: string } | null;
+  guardian?: { __typename?: 'account'; id: string } | null;
+  transferTo?: { __typename?: 'account'; id: string } | null;
+  scheduleTo?: { __typename?: 'account'; id: string } | null;
+  recoverAccount?: { __typename?: 'account'; id: string } | null;
+  createdExtrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+  createdAtBlock?: { __typename?: 'block'; height: number } | null;
+} & { ' $fragmentName'?: 'MultisigProposalDetailFieldsFragment' };
+
+export type MultisigProposalLifecycleEventFieldsFragment = {
+  __typename?: 'multisig_proposal_created';
+  id: string;
+  timestamp: any;
+  extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+} & { ' $fragmentName'?: 'MultisigProposalLifecycleEventFieldsFragment' };
+
+export type GetMultisigProposalsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<Multisig_Proposal_Order_By> | Multisig_Proposal_Order_By
+  >;
+  where?: InputMaybe<Multisig_Proposal_Bool_Exp>;
+}>;
+
+export type GetMultisigProposalsQuery = {
+  __typename?: 'query_root';
+  multisigProposals: Array<
+    { __typename?: 'multisig_proposal' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalListFieldsFragment: MultisigProposalListFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetMultisigProposalStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigProposalStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_proposal_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_proposal_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_proposals: number;
+  } | null;
+};
+
+export type GetMultisigProposalByIdQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+export type GetMultisigProposalByIdQuery = {
+  __typename?: 'query_root';
+  multisigProposal?:
+    | ({ __typename?: 'multisig_proposal' } & {
+        ' $fragmentRefs'?: {
+          MultisigProposalDetailFieldsFragment: MultisigProposalDetailFieldsFragment;
+        };
+      })
+    | null;
+  createdEvents: Array<
+    { __typename?: 'multisig_proposal_created' } & {
+      ' $fragmentRefs'?: {
+        MultisigProposalLifecycleEventFieldsFragment: MultisigProposalLifecycleEventFieldsFragment;
+      };
+    }
+  >;
+  signerApprovedEvents: Array<{
+    __typename?: 'multisig_signer_approved';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  readyEvents: Array<{
+    __typename?: 'multisig_proposal_ready';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  executedEvents: Array<{
+    __typename?: 'executed_multisig_proposal';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  cancelledEvents: Array<{
+    __typename?: 'cancelled_multisig_proposal';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+  removedEvents: Array<{
+    __typename?: 'removed_multisig_proposal';
+    id: string;
+    timestamp: any;
+    extrinsic?: { __typename?: 'extrinsic'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
+  }>;
+};
+
+export type MultisigSignerApprovedFieldsFragment = {
+  __typename?: 'multisig_signer_approved';
+  id: string;
+  timestamp: any;
+  approvals_count: number;
+  approver?: { __typename?: 'account'; id: string } | null;
+  proposal?: {
+    __typename?: 'multisig_proposal';
+    id: string;
+    multisig?: { __typename?: 'multisig'; id: string } | null;
+    proposer?: { __typename?: 'account'; id: string } | null;
+  } | null;
+  block?: { __typename?: 'block'; height: number } | null;
+  extrinsic?: {
+    __typename?: 'extrinsic';
+    id: string;
+    pallet: string;
+    call: string;
+  } | null;
+} & { ' $fragmentName'?: 'MultisigSignerApprovedFieldsFragment' };
+
+export type GetMultisigSignerApprovedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<Multisig_Signer_Approved_Order_By> | Multisig_Signer_Approved_Order_By
+  >;
+  where?: InputMaybe<Multisig_Signer_Approved_Bool_Exp>;
+}>;
+
+export type GetMultisigSignerApprovedQuery = {
+  __typename?: 'query_root';
+  multisigSignerApprovedEvents: Array<
+    { __typename?: 'multisig_signer_approved' } & {
+      ' $fragmentRefs'?: {
+        MultisigSignerApprovedFieldsFragment: MultisigSignerApprovedFieldsFragment;
+      };
+    }
+  >;
+  meta: {
+    __typename?: 'multisig_signer_approved_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_signer_approved_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
+export type GetRecentMultisigSignerApprovedQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<
+    Array<Multisig_Signer_Approved_Order_By> | Multisig_Signer_Approved_Order_By
+  >;
+}>;
+
+export type GetRecentMultisigSignerApprovedQuery = {
+  __typename?: 'query_root';
+  multisigSignerApprovedEvents: Array<
+    { __typename?: 'multisig_signer_approved' } & {
+      ' $fragmentRefs'?: {
+        MultisigSignerApprovedFieldsFragment: MultisigSignerApprovedFieldsFragment;
+      };
+    }
+  >;
+};
+
+export type GetMultisigSignerApprovedStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMultisigSignerApprovedStatsQuery = {
+  __typename?: 'query_root';
+  last24Hour: {
+    __typename?: 'multisig_signer_approved_aggregate';
+    aggregate?: {
+      __typename?: 'multisig_signer_approved_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+  allTime?: {
+    __typename?: 'chain_stats';
+    total_multisig_signer_approved: number;
+  } | null;
+};
+
+export type GetMultisigSignerApprovedByHashQueryVariables = Exact<{
+  hash: Scalars['String']['input'];
+}>;
+
+export type GetMultisigSignerApprovedByHashQuery = {
+  __typename?: 'query_root';
+  multisigSignerApprovedEvents: Array<
+    { __typename?: 'multisig_signer_approved' } & {
+      ' $fragmentRefs'?: {
+        MultisigSignerApprovedFieldsFragment: MultisigSignerApprovedFieldsFragment;
+      };
+    }
+  >;
 };
 
 export type GetScheduledReversibleTransactionsQueryVariables = Exact<{
@@ -6527,6 +10697,849 @@ export type GetDepositPoolStatsQuery = {
   } | null;
 };
 
+export const MultisigCreatedFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'creator' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigCreatedFieldsFragment, unknown>;
+export const MultisigDepositsClaimedFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_deposits_claimed' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'total_returned' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'proposals_removed' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'claimer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigDepositsClaimedFieldsFragment, unknown>;
+export const MultisigProposalCancelledFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCancelledFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'cancelled_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'cancelledBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalCancelledFieldsFragment, unknown>;
+export const MultisigProposalRefFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRefFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalRefFieldsFragment, unknown>;
+export const MultisigProposalCreatedFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRefFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRefFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalCreatedFieldsFragment, unknown>;
+export const MultisigProposalExecutedFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalExecutedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'executed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvers' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'result' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalExecutedFieldsFragment, unknown>;
+export const MultisigProposalReadyFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalReadyFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_ready' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalReadyFieldsFragment, unknown>;
+export const MultisigProposalRemovedFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRemovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'removed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'removedBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalRemovedFieldsFragment, unknown>;
+export const MultisigProposalListFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalListFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalListFieldsFragment, unknown>;
+export const MultisigProposalDetailFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalDetailFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call_raw' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'decode_error' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'transfer_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_kind' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_value' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_asset_id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'guardian' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transferTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'scheduleTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'recoverAccount' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdExtrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdAtBlock' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigProposalDetailFieldsFragment, unknown>;
+export const MultisigProposalLifecycleEventFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalLifecycleEventFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  MultisigProposalLifecycleEventFieldsFragment,
+  unknown
+>;
+export const MultisigSignerApprovedFieldsFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigSignerApprovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_signer_approved' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'approver' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MultisigSignerApprovedFieldsFragment, unknown>;
 export const GetAccountsDocument = {
   kind: 'Document',
   definitions: [
@@ -6728,6 +11741,63 @@ export const GetAccountByIdDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'total_scheduled_transfers' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisig' },
+            name: { kind: 'Name', value: 'multisig_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'creator' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'pallet' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+                    ]
+                  }
                 }
               ]
             }
@@ -7231,6 +12301,735 @@ export const GetAccountByIdDocument = {
                       }
                     ]
                   }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'threshold' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'signers' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'creator' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisigProposalCreated' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposal' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'multisig' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'proposer' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisigSignerApproved' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'approvals_count' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'approver' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposal' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'multisig' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'proposer' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisigProposalReady' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'approvals_count' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposal' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'multisig' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'proposer' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'executedMultisigProposal' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'approvers' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'result' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposal' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'multisig' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'proposer' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'cancelledMultisigProposal' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'cancelledBy' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposal' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'multisig' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'proposer' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'removedMultisigProposal' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'removedBy' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposal' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'multisig' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'proposer' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisigDepositsClaimed' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'timestamp' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'total_returned' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'proposals_removed' }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'claimer' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'multisig' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'block' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'height' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'extrinsic' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pallet' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'call' }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
                 }
               ]
             }
@@ -7326,7 +13125,7 @@ export const GetAccountByIdDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'interceptor' },
+                        name: { kind: 'Name', value: 'guardian' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
@@ -7404,7 +13203,7 @@ export const GetAccountByIdDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'interceptor' },
+                      name: { kind: 'Name', value: 'guardian' },
                       value: {
                         kind: 'ObjectValue',
                         fields: [
@@ -10719,7 +16518,7 @@ export const GetHighSecuritySetsDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'interceptor' },
+                  name: { kind: 'Name', value: 'guardian' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -10909,7 +16708,7 @@ export const GetRecentHighSecuritySetsDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'interceptor' },
+                  name: { kind: 'Name', value: 'guardian' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -11161,7 +16960,7 @@ export const GetHighSecuritySetByHashDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'interceptor' },
+                  name: { kind: 'Name', value: 'guardian' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -11191,6 +16990,118 @@ export const GetHighSecuritySetByHashDocument = {
 } as unknown as DocumentNode<
   GetHighSecuritySetByHashQuery,
   GetHighSecuritySetByHashQueryVariables
+>;
+export const GetMinerLeaderboardChartDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMinerLeaderboardChart' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'topMiners' },
+            name: { kind: 'Name', value: 'account_stats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'total_mined_blocks' },
+                      value: { kind: 'EnumValue', value: 'desc' }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'total_mined_blocks' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gt' },
+                            value: { kind: 'IntValue', value: '0' }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_mined_blocks' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'blocks' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'totalCount' },
+                  name: { kind: 'Name', value: 'block_height' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMinerLeaderboardChartQuery,
+  GetMinerLeaderboardChartQueryVariables
 >;
 export const GetMinerLeaderboardDocument = {
   kind: 'Document',
@@ -11254,6 +17165,29 @@ export const GetMinerLeaderboardDocument = {
                     }
                   ]
                 }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'total_mined_blocks' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gt' },
+                            value: { kind: 'IntValue', value: '0' }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
               }
             ],
             selectionSet: {
@@ -11288,7 +17222,7 @@ export const GetMinerLeaderboardDocument = {
                 {
                   kind: 'Field',
                   alias: { kind: 'Name', value: 'totalCount' },
-                  name: { kind: 'Name', value: 'total_miner_rewards' }
+                  name: { kind: 'Name', value: 'total_miners' }
                 }
               ]
             }
@@ -11832,6 +17766,6185 @@ export const GetMinerRewardByHashDocument = {
 } as unknown as DocumentNode<
   GetMinerRewardByHashQuery,
   GetMinerRewardByHashQueryVariables
+>;
+export const GetMultisigCreatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigCreated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'multisig_order_by' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigCreatedFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'multisig_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'creator' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigCreatedQuery,
+  GetMultisigCreatedQueryVariables
+>;
+export const GetRecentMultisigCreatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigCreated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'multisig_order_by' }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigCreatedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'creator' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigCreatedQuery,
+  GetRecentMultisigCreatedQueryVariables
+>;
+export const GetMultisigCreatedStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigCreatedStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'multisig_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_multisigs_created' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigCreatedStatsQuery,
+  GetMultisigCreatedStatsQueryVariables
+>;
+export const GetMultisigCreatedByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigCreatedByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigCreatedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'creator' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigCreatedByHashQuery,
+  GetMultisigCreatedByHashQueryVariables
+>;
+export const GetMultisigDepositsClaimedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigDepositsClaimed' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_deposits_claimed_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_deposits_claimed_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigDepositsClaimedEvents' },
+            name: { kind: 'Name', value: 'multisig_deposits_claimed' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'multisig_deposits_claimed_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_deposits_claimed' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'total_returned' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'proposals_removed' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'claimer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigDepositsClaimedQuery,
+  GetMultisigDepositsClaimedQueryVariables
+>;
+export const GetRecentMultisigDepositsClaimedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigDepositsClaimed' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_deposits_claimed_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigDepositsClaimedEvents' },
+            name: { kind: 'Name', value: 'multisig_deposits_claimed' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_deposits_claimed' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'total_returned' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'proposals_removed' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'claimer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigDepositsClaimedQuery,
+  GetRecentMultisigDepositsClaimedQueryVariables
+>;
+export const GetMultisigDepositsClaimedStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigDepositsClaimedStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'multisig_deposits_claimed_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: {
+                    kind: 'Name',
+                    value: 'total_multisig_deposits_claimed'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigDepositsClaimedStatsQuery,
+  GetMultisigDepositsClaimedStatsQueryVariables
+>;
+export const GetMultisigDepositsClaimedByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigDepositsClaimedByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigDepositsClaimedEvents' },
+            name: { kind: 'Name', value: 'multisig_deposits_claimed' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigDepositsClaimedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_deposits_claimed' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'total_returned' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'proposals_removed' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'claimer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigDepositsClaimedByHashQuery,
+  GetMultisigDepositsClaimedByHashQueryVariables
+>;
+export const GetMultisigProposalCancelledDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalCancelled' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'cancelled_multisig_proposal_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: {
+              kind: 'Name',
+              value: 'cancelled_multisig_proposal_bool_exp'
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalCancelledEvents' },
+            name: { kind: 'Name', value: 'cancelled_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalCancelledFields'
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'cancelled_multisig_proposal_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCancelledFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'cancelled_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'cancelledBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalCancelledQuery,
+  GetMultisigProposalCancelledQueryVariables
+>;
+export const GetRecentMultisigProposalCancelledDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigProposalCancelled' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'cancelled_multisig_proposal_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalCancelledEvents' },
+            name: { kind: 'Name', value: 'cancelled_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalCancelledFields'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCancelledFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'cancelled_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'cancelledBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigProposalCancelledQuery,
+  GetRecentMultisigProposalCancelledQueryVariables
+>;
+export const GetMultisigProposalCancelledStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalCancelledStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'cancelled_multisig_proposal_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: {
+                    kind: 'Name',
+                    value: 'total_multisig_proposals_cancelled'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalCancelledStatsQuery,
+  GetMultisigProposalCancelledStatsQueryVariables
+>;
+export const GetMultisigProposalCancelledByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalCancelledByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalCancelledEvents' },
+            name: { kind: 'Name', value: 'cancelled_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalCancelledFields'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCancelledFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'cancelled_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'cancelledBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalCancelledByHashQuery,
+  GetMultisigProposalCancelledByHashQueryVariables
+>;
+export const GetMultisigProposalCreatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalCreated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_proposal_created_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_proposal_created_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_created' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalCreatedFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'multisig_proposal_created_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRefFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRefFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalCreatedQuery,
+  GetMultisigProposalCreatedQueryVariables
+>;
+export const GetRecentMultisigProposalCreatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigProposalCreated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_proposal_created_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_created' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalCreatedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRefFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRefFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigProposalCreatedQuery,
+  GetRecentMultisigProposalCreatedQueryVariables
+>;
+export const GetMultisigProposalCreatedStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalCreatedStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'multisig_proposal_created_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_multisig_proposals' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalCreatedStatsQuery,
+  GetMultisigProposalCreatedStatsQueryVariables
+>;
+export const GetMultisigProposalCreatedByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalCreatedByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalCreatedEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_created' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalCreatedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRefFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalCreatedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRefFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalCreatedByHashQuery,
+  GetMultisigProposalCreatedByHashQueryVariables
+>;
+export const GetMultisigProposalExecutedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalExecuted' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'executed_multisig_proposal_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'executed_multisig_proposal_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalExecutedEvents' },
+            name: { kind: 'Name', value: 'executed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalExecutedFields'
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'executed_multisig_proposal_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalExecutedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'executed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvers' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'result' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalExecutedQuery,
+  GetMultisigProposalExecutedQueryVariables
+>;
+export const GetRecentMultisigProposalExecutedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigProposalExecuted' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'executed_multisig_proposal_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalExecutedEvents' },
+            name: { kind: 'Name', value: 'executed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalExecutedFields'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalExecutedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'executed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvers' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'result' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigProposalExecutedQuery,
+  GetRecentMultisigProposalExecutedQueryVariables
+>;
+export const GetMultisigProposalExecutedStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalExecutedStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'executed_multisig_proposal_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: {
+                    kind: 'Name',
+                    value: 'total_multisig_proposals_executed'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalExecutedStatsQuery,
+  GetMultisigProposalExecutedStatsQueryVariables
+>;
+export const GetMultisigProposalExecutedByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalExecutedByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalExecutedEvents' },
+            name: { kind: 'Name', value: 'executed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalExecutedFields'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalExecutedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'executed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvers' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'result' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalExecutedByHashQuery,
+  GetMultisigProposalExecutedByHashQueryVariables
+>;
+export const GetMultisigProposalReadyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalReady' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_proposal_ready_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_proposal_ready_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalReadyEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalReadyFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalReadyFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_ready' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalReadyQuery,
+  GetMultisigProposalReadyQueryVariables
+>;
+export const GetRecentMultisigProposalReadyDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigProposalReady' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_proposal_ready_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalReadyEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalReadyFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalReadyFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_ready' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigProposalReadyQuery,
+  GetRecentMultisigProposalReadyQueryVariables
+>;
+export const GetMultisigProposalReadyStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalReadyStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_multisig_proposal_ready' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalReadyStatsQuery,
+  GetMultisigProposalReadyStatsQueryVariables
+>;
+export const GetMultisigProposalReadyByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalReadyByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalReadyEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalReadyFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalReadyFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_ready' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalReadyByHashQuery,
+  GetMultisigProposalReadyByHashQueryVariables
+>;
+export const GetMultisigProposalRemovedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalRemoved' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'removed_multisig_proposal_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'removed_multisig_proposal_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalRemovedEvents' },
+            name: { kind: 'Name', value: 'removed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRemovedFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: {
+              kind: 'Name',
+              value: 'removed_multisig_proposal_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRemovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'removed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'removedBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalRemovedQuery,
+  GetMultisigProposalRemovedQueryVariables
+>;
+export const GetRecentMultisigProposalRemovedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigProposalRemoved' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'removed_multisig_proposal_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalRemovedEvents' },
+            name: { kind: 'Name', value: 'removed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRemovedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRemovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'removed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'removedBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigProposalRemovedQuery,
+  GetRecentMultisigProposalRemovedQueryVariables
+>;
+export const GetMultisigProposalRemovedStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalRemovedStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: {
+              kind: 'Name',
+              value: 'removed_multisig_proposal_aggregate'
+            },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: {
+                    kind: 'Name',
+                    value: 'total_multisig_proposals_removed'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalRemovedStatsQuery,
+  GetMultisigProposalRemovedStatsQueryVariables
+>;
+export const GetMultisigProposalRemovedByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalRemovedByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposalRemovedEvents' },
+            name: { kind: 'Name', value: 'removed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalRemovedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalRemovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'removed_multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'removedBy' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalRemovedByHashQuery,
+  GetMultisigProposalRemovedByHashQueryVariables
+>;
+export const GetMultisigProposalsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposals' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: { kind: 'Name', value: 'multisig_proposal_order_by' }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_proposal_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposals' },
+            name: { kind: 'Name', value: 'multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalListFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'multisig_proposal_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalListFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalsQuery,
+  GetMultisigProposalsQueryVariables
+>;
+export const GetMultisigProposalStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'multisig_proposal_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'created_at' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_multisig_proposals' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalStatsQuery,
+  GetMultisigProposalStatsQueryVariables
+>;
+export const GetMultisigProposalByIdDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigProposalById' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigProposal' },
+            name: { kind: 'Name', value: 'multisig_proposal_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigProposalDetailFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'createdEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_created' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: {
+                    kind: 'Name',
+                    value: 'MultisigProposalLifecycleEventFields'
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'signerApprovedEvents' },
+            name: { kind: 'Name', value: 'multisig_signer_approved' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'readyEvents' },
+            name: { kind: 'Name', value: 'multisig_proposal_ready' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'executedEvents' },
+            name: { kind: 'Name', value: 'executed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'cancelledEvents' },
+            name: { kind: 'Name', value: 'cancelled_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'removedEvents' },
+            name: { kind: 'Name', value: 'removed_multisig_proposal' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'proposal_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_eq' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'id' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: { kind: 'EnumValue', value: 'asc' }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'extrinsic' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalDetailFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'status' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'deposit' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'expiry_block' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'call_raw' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'decode_error' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'created_at' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'transfer_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_amount' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_kind' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'delay_value' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'schedule_asset_id' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'multisig' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'guardian' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'transferTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'scheduleTo' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'recoverAccount' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdExtrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createdAtBlock' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigProposalLifecycleEventFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_proposal_created' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigProposalByIdQuery,
+  GetMultisigProposalByIdQueryVariables
+>;
+export const GetMultisigSignerApprovedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigSignerApproved' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'offset' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_signer_approved_order_by'
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' }
+          },
+          type: {
+            kind: 'NamedType',
+            name: { kind: 'Name', value: 'multisig_signer_approved_bool_exp' }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigSignerApprovedEvents' },
+            name: { kind: 'Name', value: 'multisig_signer_approved' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'offset' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'offset' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigSignerApprovedFields' }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'meta' },
+            name: { kind: 'Name', value: 'multisig_signer_approved_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigSignerApprovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_signer_approved' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'approver' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigSignerApprovedQuery,
+  GetMultisigSignerApprovedQueryVariables
+>;
+export const GetRecentMultisigSignerApprovedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetRecentMultisigSignerApproved' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'limit' }
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'orderBy' }
+          },
+          type: {
+            kind: 'ListType',
+            type: {
+              kind: 'NonNullType',
+              type: {
+                kind: 'NamedType',
+                name: {
+                  kind: 'Name',
+                  value: 'multisig_signer_approved_order_by'
+                }
+              }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigSignerApprovedEvents' },
+            name: { kind: 'Name', value: 'multisig_signer_approved' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'limit' }
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'orderBy' }
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigSignerApprovedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigSignerApprovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_signer_approved' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'approver' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetRecentMultisigSignerApprovedQuery,
+  GetRecentMultisigSignerApprovedQueryVariables
+>;
+export const GetMultisigSignerApprovedStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigSignerApprovedStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'multisig_signer_approved_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'allTime' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: {
+                    kind: 'Name',
+                    value: 'total_multisig_signer_approved'
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigSignerApprovedStatsQuery,
+  GetMultisigSignerApprovedStatsQueryVariables
+>;
+export const GetMultisigSignerApprovedByHashDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMultisigSignerApprovedByHash' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'hash' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'multisigSignerApprovedEvents' },
+            name: { kind: 'Name', value: 'multisig_signer_approved' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'extrinsic' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'id' },
+                            value: {
+                              kind: 'ObjectValue',
+                              fields: [
+                                {
+                                  kind: 'ObjectField',
+                                  name: { kind: 'Name', value: '_eq' },
+                                  value: {
+                                    kind: 'Variable',
+                                    name: { kind: 'Name', value: 'hash' }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'FragmentSpread',
+                  name: { kind: 'Name', value: 'MultisigSignerApprovedFields' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'MultisigSignerApprovedFields' },
+      typeCondition: {
+        kind: 'NamedType',
+        name: { kind: 'Name', value: 'multisig_signer_approved' }
+      },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'approvals_count' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'approver' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'proposal' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'multisig' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'proposer' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'block' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'extrinsic' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'pallet' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'call' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMultisigSignerApprovedByHashQuery,
+  GetMultisigSignerApprovedByHashQueryVariables
 >;
 export const GetScheduledReversibleTransactionsDocument = {
   kind: 'Document',

@@ -8,5 +8,14 @@ export const RESOURCES = {
   minerRewards: '/miner-rewards',
   highSecuritySets: '/high-security-sets',
   errors: '/errors',
-  wormhole: '/wormhole'
+  wormhole: '/wormhole',
+  multisigCreated: '/multisig-created',
+  multisigProposals: '/multisig-proposals',
+  multisigProposalCreated: '/multisig-proposal-created',
+  multisigSignerApproved: '/multisig-signer-approved',
+  multisigProposalReady: '/multisig-proposal-ready',
+  multisigProposalExecuted: '/multisig-proposal-executed',
+  multisigProposalCancelled: '/multisig-proposal-cancelled',
+  multisigProposalRemoved: '/multisig-proposal-removed',
+  multisigDepositsClaimed: '/multisig-deposits-claimed'
 } as const;

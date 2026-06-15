@@ -32,7 +32,7 @@ interface HighSecuritySetInput {
   extrinsic?: ExtrinsicInfo | null;
   timestamp: string;
   who: { id: string };
-  interceptor: { id: string };
+  guardian: { id: string };
   delay?: number;
   block: { height: number };
 }
@@ -138,7 +138,7 @@ export const transformHighSecuritySet = (
   block: hss.block,
   extrinsic: hss.extrinsic,
   who: hss.who,
-  interceptor: hss.interceptor,
+  guardian: hss.guardian,
   delay: hss.delay
 });
 
@@ -169,6 +169,175 @@ export const transformErrorEvent = (
   errorName: err.errorName,
   errorModule: err.errorModule,
   errorDocs: err.errorDocs
+});
+
+interface MultisigCreatedInput {
+  id: string;
+  extrinsic?: ExtrinsicInfo | null;
+  timestamp: string;
+  block: { height: number };
+  creator?: { id: string } | null;
+  threshold: number;
+  signers: string[];
+  nonce: string | number;
+}
+
+interface MultisigProposalEventInput {
+  id: string;
+  extrinsic?: ExtrinsicInfo | null;
+  timestamp: string;
+  block: { height: number };
+  proposal?: {
+    id: string;
+    multisig?: { id: string } | null;
+    proposer?: { id: string } | null;
+  } | null;
+}
+
+interface MultisigSignerApprovedInput extends MultisigProposalEventInput {
+  approver?: { id: string } | null;
+  approvals_count: number;
+}
+
+interface MultisigProposalReadyInput extends MultisigProposalEventInput {
+  approvals_count: number;
+}
+
+interface MultisigProposalExecutedInput extends MultisigProposalEventInput {
+  approvers: string[];
+  result: string;
+}
+
+interface MultisigProposalCancelledInput extends MultisigProposalEventInput {
+  cancelledBy?: { id: string } | null;
+}
+
+interface MultisigProposalRemovedInput extends MultisigProposalEventInput {
+  removedBy?: { id: string } | null;
+}
+
+interface MultisigDepositsClaimedInput {
+  id: string;
+  extrinsic?: ExtrinsicInfo | null;
+  timestamp: string;
+  block: { height: number };
+  multisig?: { id: string } | null;
+  claimer?: { id: string } | null;
+  total_returned: string | number;
+  proposals_removed: number;
+}
+
+export const transformMultisigCreated = (
+  event: MultisigCreatedInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-created',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  creator: event.creator ?? undefined,
+  threshold: event.threshold,
+  signers: event.signers,
+  nonce: event.nonce
+});
+
+export const transformMultisigProposalCreated = (
+  event: MultisigProposalEventInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-proposal-created',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  proposalId: event.proposal?.id,
+  multisig: event.proposal?.multisig ?? undefined,
+  proposer: event.proposal?.proposer ?? undefined
+});
+
+export const transformMultisigSignerApproved = (
+  event: MultisigSignerApprovedInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-signer-approved',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  proposalId: event.proposal?.id,
+  multisig: event.proposal?.multisig ?? undefined,
+  proposer: event.proposal?.proposer ?? undefined,
+  approver: event.approver ?? undefined,
+  approvalsCount: event.approvals_count
+});
+
+export const transformMultisigProposalReady = (
+  event: MultisigProposalReadyInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-proposal-ready',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  proposalId: event.proposal?.id,
+  multisig: event.proposal?.multisig ?? undefined,
+  proposer: event.proposal?.proposer ?? undefined,
+  approvalsCount: event.approvals_count
+});
+
+export const transformMultisigProposalExecuted = (
+  event: MultisigProposalExecutedInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-proposal-executed',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  proposalId: event.proposal?.id,
+  multisig: event.proposal?.multisig ?? undefined,
+  proposer: event.proposal?.proposer ?? undefined,
+  approvers: event.approvers,
+  result: event.result
+});
+
+export const transformMultisigProposalCancelled = (
+  event: MultisigProposalCancelledInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-proposal-cancelled',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  proposalId: event.proposal?.id,
+  multisig: event.proposal?.multisig ?? undefined,
+  proposer: event.proposal?.proposer ?? undefined,
+  cancelledBy: event.cancelledBy ?? undefined
+});
+
+export const transformMultisigProposalRemoved = (
+  event: MultisigProposalRemovedInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-proposal-removed',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  proposalId: event.proposal?.id,
+  multisig: event.proposal?.multisig ?? undefined,
+  proposer: event.proposal?.proposer ?? undefined,
+  removedBy: event.removedBy ?? undefined
+});
+
+export const transformMultisigDepositsClaimed = (
+  event: MultisigDepositsClaimedInput
+): UnifiedTransaction => ({
+  id: event.id,
+  type: 'multisig-deposits-claimed',
+  timestamp: event.timestamp,
+  block: event.block,
+  extrinsic: event.extrinsic,
+  multisig: event.multisig ?? undefined,
+  claimer: event.claimer ?? undefined,
+  totalReturned: event.total_returned,
+  proposalsRemoved: event.proposals_removed
 });
 
 // Sort transactions by timestamp descending

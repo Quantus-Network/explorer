@@ -9,6 +9,15 @@ import { executedReversibleTransactions } from './executed-reversible-transactio
 import { highSecuritySets } from './high-security-sets';
 import { minerLeaderboard } from './miner-leaderboard';
 import { minerRewards } from './miner-rewards';
+import { multisigCreated } from './multisig-created';
+import { multisigDepositsClaimed } from './multisig-deposits-claimed';
+import { multisigProposalCancelled } from './multisig-proposal-cancelled';
+import { multisigProposalCreated } from './multisig-proposal-created';
+import { multisigProposalExecuted } from './multisig-proposal-executed';
+import { multisigProposalReady } from './multisig-proposal-ready';
+import { multisigProposalRemoved } from './multisig-proposal-removed';
+import { multisigProposals } from './multisig-proposals';
+import { multisigSignerApproved } from './multisig-signer-approved';
 import { scheduledReversibleTransactions } from './scheduled-reversible-transactions';
 import { search } from './search';
 import { transactions } from './transactions';
@@ -30,7 +39,16 @@ const useApiClient = () => {
     minerRewards,
     minerLeaderboard,
     highSecuritySets,
-    wormhole
+    wormhole,
+    multisigCreated,
+    multisigProposalCreated,
+    multisigProposals,
+    multisigSignerApproved,
+    multisigProposalReady,
+    multisigProposalExecuted,
+    multisigProposalCancelled,
+    multisigProposalRemoved,
+    multisigDepositsClaimed
   };
 
   return api;
