@@ -10,13 +10,14 @@ import { useDebounceCallback } from 'usehooks-ts';
 import { INPUT_DEBOUNCE_INTERVAL } from '@/constants/debounce-interval';
 import { cn } from '@/lib/utils';
 
-import { Button } from '../../button';
+import { Button, type ButtonProps } from '../../button';
 import { Input } from '../../input';
 
 export interface SearchBoxProps
   extends Pick<HTMLAttributes<HTMLInputElement>, 'onFocus' | 'onKeyDown'> {
   inputClassName?: string;
   buttonClassName?: string;
+  buttonVariant?: ButtonProps['variant'];
   onKeywordChange: (val: string, e: ChangeEvent<HTMLInputElement>) => void;
   onSearch?: (val: string, e: FormEvent<HTMLFormElement>) => void;
   placeholder?: string;
@@ -54,12 +55,19 @@ export const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>(
           />
 
           <Button
+            variant={props.buttonVariant}
             className={cn(
               'absolute right-3 top-1/2 size-9 -translate-y-1/2',
               props.buttonClassName
             )}
           >
-            <Search className="text-primary-foreground" />
+            <Search
+              className={cn(
+                props.buttonVariant === 'ghost'
+                  ? 'text-muted-text'
+                  : 'text-primary-foreground'
+              )}
+            />
           </Button>
         </form>
       </div>

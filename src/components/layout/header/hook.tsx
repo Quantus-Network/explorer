@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useLocation } from '@tanstack/react-router';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useOnClickOutside } from 'usehooks-ts';
 
@@ -7,8 +8,13 @@ import type { SearchAllResponse } from '@/schemas/searchs';
 
 export const useHeader = () => {
   const api = useApiClient();
+  const location = useLocation().pathname;
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen((open) => !open);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   const [searchResult, setSearchResult] = useState<SearchAllResponse>();
   const [searchLoading, setSearchLoading] = useState(false);
