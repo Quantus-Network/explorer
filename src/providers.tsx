@@ -3,7 +3,6 @@ import { NuqsAdapter } from 'nuqs/adapters/react';
 import type { PropsWithChildren } from 'react';
 import * as React from 'react';
 
-import { ThemeProvider } from '@/components/common/theme-provider/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 
 import {
@@ -26,11 +25,7 @@ const Providers = ({ children }: PropsWithChildren) => {
   return (
     <NuqsAdapter>
       <NetworkProvider defaultNetwork="planck" storageKey="qube-network-planck">
-        <DynamicApolloProvider>
-          <ThemeProvider defaultTheme="system" storageKey="qube-theme">
-            {children}
-          </ThemeProvider>
-        </DynamicApolloProvider>
+        <DynamicApolloProvider>{children}</DynamicApolloProvider>
       </NetworkProvider>
 
       <Toaster />

@@ -4,7 +4,6 @@ import * as React from 'react';
 import { NetworkSelect } from '@/components/ui/composites/network-select/NetworkSelect';
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
 import { SearchPreview } from '@/components/ui/composites/search-preview/SearchPreview';
-import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
 import { ContentContainer } from '@/components/ui/content-container';
 import { cn } from '@/lib/utils';
 import type { SearchAllResponse } from '@/schemas';
@@ -79,7 +78,6 @@ export const Topbar: React.FC<TopbarProps> = ({
 
         <div className="hidden md:flex md:gap-3">
           <NetworkSelect />
-          <ThemeToggle />
         </div>
       </ContentContainer>
     </div>

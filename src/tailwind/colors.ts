@@ -47,5 +47,30 @@ export const colors = {
     '8': 'hsl(var(--chart-8))',
     '9': 'hsl(var(--chart-9))',
     '10': 'hsl(var(--chart-10))'
+  },
+  /* Quantus v5 primitives */
+  void: 'var(--void)',
+  surface: {
+    DEFAULT: 'var(--surface)',
+    2: 'var(--surface-2)'
+  },
+  flare: {
+    DEFAULT: 'var(--flare)',
+    dim: 'var(--flare-dim)'
+  },
+  content: 'var(--content)',
+  'muted-text': {
+    DEFAULT: 'var(--muted-text)',
+    2: 'var(--muted-text-2)'
+  },
+  'border-subtle': 'var(--border-subtle)',
+  'border-strong': 'var(--border-strong)',
+  gamboge: 'var(--gamboge)',
+  glacier: 'var(--glacier)',
+  sage: 'var(--sage)',
+  ember: 'var(--ember)',
+  rank: {
+    2: 'var(--rank-2)',
+    3: 'var(--rank-3)'
   }
 };

@@ -24,6 +24,8 @@
   "dependencies": {
     "@apollo/client": "^3.13.8",
     "@date-fns/utc": "^2.1.1",
+    "@fontsource/geist-mono": "^5.2.8",
+    "@fontsource/geist-sans": "^5.2.5",
     "@fontsource/inter": "^5.2.6",
     "@fontsource/jetbrains-mono": "^5.2.6",
     "@radix-ui/react-navigation-menu": "^1.2.13",

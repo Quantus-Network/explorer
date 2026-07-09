@@ -2,7 +2,6 @@ import { Link, useLocation } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { NetworkSelect } from '@/components/ui/composites/network-select/NetworkSelect';
-import { ThemeToggle } from '@/components/ui/composites/theme-toggle/ThemeToggle';
 import { ContentContainer } from '@/components/ui/content-container';
 import {
   NavigationMenu,
@@ -87,7 +86,6 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
           })}
 
           <NetworkSelect />
-          <ThemeToggle />
         </NavigationMenuList>
       </NavigationMenu>
     </ContentContainer>

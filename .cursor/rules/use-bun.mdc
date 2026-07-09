@@ -1,0 +1,14 @@
+---
+description: Use Bun as the package manager and script runner
+alwaysApply: true
+---
+
+# Use Bun, not npm
+
+This project uses **Bun** (`bun.lock` / `bun.lockb`). Prefer Bun for all package and script work.
+
+- Install deps: `bun add <pkg>` / `bun add -d <pkg>` / `bun install`
+- Run scripts: `bun run <script>` (e.g. `bun run build`, `bun run dev`)
+- Execute files: `bun <file.ts>`
+
+Do **not** use `npm`, `npx`, `yarn`, or `pnpm` unless the user explicitly asks.
