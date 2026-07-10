@@ -1,5 +1,6 @@
 import useApiClient from '@/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const DepositPoolStatsCard = () => {
   const api = useApiClient();
@@ -14,9 +15,9 @@ export const DepositPoolStatsCard = () => {
           <CardTitle>Deposit Pool</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="animate-pulse space-y-2">
-            <div className="h-4 w-24 rounded bg-muted" />
-            <div className="h-4 w-32 rounded bg-muted" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-32" />
           </div>
         </CardContent>
       </Card>

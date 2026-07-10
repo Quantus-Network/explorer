@@ -63,7 +63,7 @@ const Section = <T,>({
       </div>
 
       {loading && (
-        <Skeleton className="mx-3.5 mb-3 h-8 w-[calc(100%-1.75rem)] rounded-none" />
+        <Skeleton className="mx-3.5 mb-3 h-8 w-[calc(100%-1.75rem)]" />
       )}
 
       {error && (
