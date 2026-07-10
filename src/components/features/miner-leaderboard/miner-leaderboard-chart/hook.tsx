@@ -2,11 +2,21 @@ import { useMemo } from 'react';
 
 import useApiClient from '@/api';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
-import { MINER_LEADERBOARD_CHART_TOP_N } from '@/constants/miner-leaderboard-chart';
+import {
+  MINER_DISTRIBUTION_COLORS,
+  MINER_DISTRIBUTION_OTHERS_COLOR,
+  MINER_LEADERBOARD_CHART_LEGEND_N,
+  MINER_LEADERBOARD_CHART_TOP_N
+} from '@/constants/miner-leaderboard-chart';
 import { formatTxAddress } from '@/utils/formatter';
 
-const getCssVar = (name: string) =>
-  `hsl(${getComputedStyle(document.documentElement).getPropertyValue(name).trim()})`;
+export type DistributionSegment = {
+  id: string | null;
+  label: string;
+  blocks: number;
+  pct: number;
+  color: string;
+};
 
 export const useMinerLeaderboardChart = () => {
   const api = useApiClient();
@@ -20,59 +30,60 @@ export const useMinerLeaderboardChart = () => {
     variables: { limit: MINER_LEADERBOARD_CHART_TOP_N }
   });
 
-  const chartData = useMemo(() => {
-    if (!data) return null;
+  const { segments, legendItems, total } = useMemo(() => {
+    if (!data) {
+      return {
+        segments: [] as DistributionSegment[],
+        legendItems: [],
+        total: 0
+      };
+    }
 
-    const total = data.blocks.totalCount ?? 0;
+    const totalBlocks = data.blocks.totalCount ?? 0;
     const { topMiners } = data;
     const topBlocksSum = topMiners.reduce(
       (sum, m) => sum + (m.total_mined_blocks ?? 0),
       0
     );
-    const othersBlocks = total - topBlocksSum;
+    const othersBlocks = Math.max(0, totalBlocks - topBlocksSum);
 
-    const labels = [
-      ...topMiners.map((m) => formatTxAddress(m.id ?? '')),
-      ...(othersBlocks > 0 ? ['Others'] : [])
-    ];
+    const minerSegments: DistributionSegment[] = topMiners.map((m, i) => {
+      const blocks = m.total_mined_blocks ?? 0;
+      return {
+        id: m.id ?? null,
+        label: formatTxAddress(m.id ?? ''),
+        blocks,
+        pct: totalBlocks > 0 ? (blocks / totalBlocks) * 100 : 0,
+        color: MINER_DISTRIBUTION_COLORS[i % MINER_DISTRIBUTION_COLORS.length]
+      };
+    });
 
-    const values = [
-      ...topMiners.map((m) => m.total_mined_blocks ?? 0),
-      ...(othersBlocks > 0 ? [othersBlocks] : [])
-    ];
+    const othersSegment: DistributionSegment | null =
+      othersBlocks > 0
+        ? {
+            id: null,
+            label: 'Others',
+            blocks: othersBlocks,
+            pct: totalBlocks > 0 ? (othersBlocks / totalBlocks) * 100 : 0,
+            color: MINER_DISTRIBUTION_OTHERS_COLOR
+          }
+        : null;
 
-    const chartColors = [
-      getCssVar('--chart-1'),
-      getCssVar('--chart-2'),
-      getCssVar('--chart-3'),
-      getCssVar('--chart-4'),
-      getCssVar('--chart-5'),
-      getCssVar('--chart-6'),
-      getCssVar('--chart-7'),
-      getCssVar('--chart-8'),
-      getCssVar('--chart-9'),
-      getCssVar('--chart-10')
-    ];
+    const allSegments = othersSegment
+      ? [...minerSegments, othersSegment]
+      : minerSegments;
 
-    const backgroundColors = [
-      ...topMiners.map((_, i) => chartColors[i % chartColors.length]),
-      ...(othersBlocks > 0 ? [getCssVar('--muted-foreground')] : [])
+    const legendItems = [
+      ...minerSegments.slice(0, MINER_LEADERBOARD_CHART_LEGEND_N),
+      ...(othersSegment ? [othersSegment] : [])
     ];
 
     return {
-      labels,
-      datasets: [
-        {
-          data: values,
-          backgroundColor: backgroundColors,
-          borderWidth: 0
-        }
-      ]
+      segments: allSegments,
+      legendItems,
+      total: totalBlocks
     };
   }, [data]);
-
-  const dominantMiner = data?.topMiners[0] ?? null;
-  const total = data?.blocks.totalCount ?? 0;
 
   const success = !loading && !fetchError;
   const error = !loading && fetchError;
@@ -91,8 +102,8 @@ export const useMinerLeaderboardChart = () => {
   };
 
   return {
-    chartData,
-    dominantMiner,
+    segments,
+    legendItems,
     total,
     getStatus,
     error
