@@ -1,6 +1,6 @@
 import type { Table as ReactTable } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
-import { ArrowDown, ArrowUp, Info } from 'lucide-react';
+import { Info } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -26,6 +26,20 @@ interface DataTableProps {
   withControls?: boolean;
   customCellProps?: Record<string, any>;
 }
+
+const SortIndicator = ({
+  direction
+}: {
+  direction: false | 'asc' | 'desc';
+}) => {
+  if (!direction) return null;
+
+  return (
+    <span aria-hidden className="font-mono text-[11px] leading-none">
+      {direction === 'asc' ? '↑' : '↓'}
+    </span>
+  );
+};
 
 export const DataTable = ({
   table,
@@ -82,13 +96,9 @@ export const DataTable = ({
                           )}
 
                       {header.column.getCanSort() && (
-                        <>
-                          {header.column.getIsSorted() === 'asc' && <ArrowUp />}
-
-                          {header.column.getIsSorted() === 'desc' && (
-                            <ArrowDown />
-                          )}
-                        </>
+                        <SortIndicator
+                          direction={header.column.getIsSorted()}
+                        />
                       )}
                     </div>
                   </TableHead>
