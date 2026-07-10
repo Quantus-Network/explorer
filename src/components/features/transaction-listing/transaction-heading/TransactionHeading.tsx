@@ -6,11 +6,11 @@ export interface TransactionHeadingProps {}
 export const TransactionHeading: React.FC<TransactionHeadingProps> = () => {
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   return (
     <div>
-      <h1>Immediate Transactions</h1>
+      <h1>Transactions</h1>
 
       {block && (
         <div className="flex gap-1">

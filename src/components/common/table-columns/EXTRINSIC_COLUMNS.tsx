@@ -1,9 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { Badge } from '@/components/ui/badge';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import { cn } from '@/lib/utils';
 import type { BlockExtrinsic } from '@/schemas/blocks';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
@@ -97,16 +97,9 @@ export const createExtrinsicColumns = () => {
       cell: (props) => {
         const success = props.getValue();
         return (
-          <span
-            className={cn(
-              'rounded px-2 py-1 text-xs font-medium',
-              success
-                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-            )}
-          >
+          <Badge variant={success ? 'success' : 'error'}>
             {success ? 'Success' : 'Failed'}
-          </span>
+          </Badge>
         );
       },
       enableSorting: false

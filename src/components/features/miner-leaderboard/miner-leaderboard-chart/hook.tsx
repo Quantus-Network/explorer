@@ -54,7 +54,9 @@ export const useMinerLeaderboardChart = () => {
         label: formatTxAddress(m.id ?? ''),
         blocks,
         pct: totalBlocks > 0 ? (blocks / totalBlocks) * 100 : 0,
-        color: MINER_DISTRIBUTION_COLORS[i % MINER_DISTRIBUTION_COLORS.length]
+        color:
+          MINER_DISTRIBUTION_COLORS[i % MINER_DISTRIBUTION_COLORS.length] ??
+          MINER_DISTRIBUTION_OTHERS_COLOR
       };
     });
 

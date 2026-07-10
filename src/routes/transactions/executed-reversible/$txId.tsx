@@ -5,7 +5,7 @@ import { ExecutedReversibleTransactionInformation } from '@/components/features/
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/executed-reversible-transactions/$txId')(
+export const Route = createFileRoute('/transactions/executed-reversible/$txId')(
   {
     component: ExecutedReversibleTransactionDetails
   }
@@ -17,7 +17,7 @@ function ExecutedReversibleTransactionDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Executed Reversible Transaction Details</h1>
+        <h1>Executed Reversible Transaction</h1>
 
         <ExecutedReversibleTransactionInformation txId={txId} />
       </ContentContainer>

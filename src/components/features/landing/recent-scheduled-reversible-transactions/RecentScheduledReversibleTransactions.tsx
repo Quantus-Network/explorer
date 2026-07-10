@@ -14,9 +14,7 @@ export const RecentScheduledReversibleTransactions = () => {
       <ScheduledReversibleTransactionsTable />
 
       <Button variant="link" className="mx-auto w-fit">
-        <Link to={RESOURCES.scheduledReversibleTransactions}>
-          See all scheduled reversible transactions
-        </Link>
+        <Link to={RESOURCES.transactions}>See all transactions</Link>
       </Button>
     </ContentContainer>
   );

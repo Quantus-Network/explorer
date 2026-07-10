@@ -58,5 +58,10 @@ export interface ExtrinsicTransfer {
 
 export interface ExtrinsicDetailResponse {
   extrinsics: ExtrinsicDetail[];
-  transfers: ExtrinsicTransfer[];
+  transfersByExtrinsic: (ExtrinsicTransfer & {
+    extrinsic?: ExtrinsicDetail | null;
+  })[];
+  transfersById: (ExtrinsicTransfer & {
+    extrinsic?: ExtrinsicDetail | null;
+  })[];
 }

@@ -1,71 +1,76 @@
+import type { VariantProps } from 'class-variance-authority';
+
+import type { badgeVariants } from '@/components/ui/badge';
 import type { UnifiedTransactionType } from '@/schemas/unified-transaction';
+
+type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>;
 
 export const TRANSACTION_TYPE_CONFIG: Record<
   UnifiedTransactionType,
-  { label: string; className: string }
+  { label: string; variant: BadgeVariant }
 > = {
   immediate: {
     label: 'Immediate',
-    className: 'bg-blue-100 text-blue-800'
+    variant: 'immediate'
   },
   'scheduled-reversible': {
     label: 'Scheduled Reversible',
-    className: 'bg-purple-100 text-purple-800'
+    variant: 'reversible'
   },
   'executed-reversible': {
     label: 'Executed Reversible',
-    className: 'bg-green-100 text-green-800'
+    variant: 'success'
   },
   'cancelled-reversible': {
     label: 'Cancelled Reversible',
-    className: 'bg-gray-100 text-gray-800'
+    variant: 'error'
   },
   'miner-reward': {
     label: 'Miner Reward',
-    className: 'bg-amber-100 text-amber-800'
+    variant: 'miner'
   },
   'high-security': {
     label: 'High Security',
-    className: 'bg-emerald-100 text-emerald-800'
+    variant: 'reversible'
   },
   wormhole: {
     label: 'Wormhole',
-    className: 'bg-indigo-100 text-indigo-800'
+    variant: 'reversible'
   },
   error: {
     label: 'Error',
-    className: 'bg-red-100 text-red-800'
+    variant: 'error'
   },
   'multisig-created': {
     label: 'Multisig Created',
-    className: 'bg-cyan-100 text-cyan-800'
+    variant: 'miner'
   },
   'multisig-proposal-created': {
     label: 'Proposal Created',
-    className: 'bg-teal-100 text-teal-800'
+    variant: 'reversible'
   },
   'multisig-signer-approved': {
     label: 'Signer Approved',
-    className: 'bg-sky-100 text-sky-800'
+    variant: 'immediate'
   },
   'multisig-proposal-ready': {
     label: 'Proposal Ready',
-    className: 'bg-lime-100 text-lime-800'
+    variant: 'immediate'
   },
   'multisig-proposal-executed': {
     label: 'Proposal Executed',
-    className: 'bg-green-100 text-green-800'
+    variant: 'success'
   },
   'multisig-proposal-cancelled': {
     label: 'Proposal Cancelled',
-    className: 'bg-orange-100 text-orange-800'
+    variant: 'error'
   },
   'multisig-proposal-removed': {
     label: 'Proposal Removed',
-    className: 'bg-yellow-100 text-yellow-800'
+    variant: 'miner'
   },
   'multisig-deposits-claimed': {
     label: 'Deposits Claimed',
-    className: 'bg-violet-100 text-violet-800'
+    variant: 'miner'
   }
 };

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 import { Skeleton } from '../../skeleton';
@@ -56,7 +55,7 @@ export function DataList<T>({
     );
 
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
+    <div className={cn('flex flex-col gap-6', className)}>
       {data.map((item, idx) => {
         if (renderItem) {
           return (
@@ -66,33 +65,38 @@ export function DataList<T>({
 
         if (fields) {
           return (
-            <Card key={idx}>
-              <CardContent className="p-4">
-                <dl className="grid grid-cols-1 gap-y-2">
-                  {fields.map((field) => (
-                    <div
-                      key={String(field.key) + String(field.label)}
-                      className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]"
-                    >
-                      <dt className="flex items-center gap-1 font-medium text-muted-foreground">
-                        <span>{field.label}</span>
+            <div
+              key={idx}
+              className="mb-0 overflow-hidden rounded-none border border-border-subtle bg-surface"
+            >
+              <dl>
+                {fields.map((field, fieldIdx) => (
+                  <div
+                    key={String(field.key) + String(field.label)}
+                    className={cn(
+                      'grid grid-cols-1 items-center gap-3 px-5 py-3 sm:grid-cols-[150px_1fr]',
+                      fieldIdx < fields.length - 1 &&
+                        'border-b border-border-subtle'
+                    )}
+                  >
+                    <dt className="flex items-center gap-1 font-mono text-xs text-muted-text">
+                      <span>{field.label}</span>
 
-                        {field.tooltip && <Info>{field.tooltip}</Info>}
-                      </dt>
-                      {loading && <Skeleton className="h-6" />}
+                      {field.tooltip && <Info>{field.tooltip}</Info>}
+                    </dt>
+                    {loading && <Skeleton className="h-6" />}
 
-                      {!loading && (
-                        <dd>
-                          {field.render
-                            ? field.render(item[field.key], item)
-                            : String(item[field.key] ?? '')}
-                        </dd>
-                      )}
-                    </div>
-                  ))}
-                </dl>
-              </CardContent>
-            </Card>
+                    {!loading && (
+                      <dd className="flex items-center gap-1.5 break-all text-[13px] text-content">
+                        {field.render
+                          ? field.render(item[field.key], item)
+                          : String(item[field.key] ?? '')}
+                      </dd>
+                    )}
+                  </div>
+                ))}
+              </dl>
+            </div>
           );
         }
 

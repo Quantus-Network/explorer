@@ -14,9 +14,7 @@ export const RecentCancelledReversibleTransactions = () => {
       <CancelledReversibleTransactionsTable />
 
       <Button variant="link" className="mx-auto w-fit">
-        <Link to={RESOURCES.cancelledReversibleTransactions}>
-          See all cancelled reversible transactions
-        </Link>
+        <Link to={RESOURCES.transactions}>See all transactions</Link>
       </Button>
     </ContentContainer>
   );

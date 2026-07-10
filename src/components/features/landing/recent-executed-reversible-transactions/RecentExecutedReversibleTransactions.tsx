@@ -14,9 +14,7 @@ export const RecentExecutedReversibleTransactions = () => {
       <ExecutedReversibleTransactionsTable />
 
       <Button variant="link" className="mx-auto w-fit">
-        <Link to={RESOURCES.executedReversibleTransactions}>
-          See all executed reversible transactions
-        </Link>
+        <Link to={RESOURCES.transactions}>See all transactions</Link>
       </Button>
     </ContentContainer>
   );

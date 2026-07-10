@@ -6,7 +6,7 @@ import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
 export const Route = createFileRoute(
-  '/scheduled-reversible-transactions/$txId'
+  '/transactions/scheduled-reversible/$txId'
 )({
   component: ScheduledReversibleTransactionDetails
 });
@@ -17,7 +17,7 @@ function ScheduledReversibleTransactionDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Scheduled Reversible Transaction Details</h1>
+        <h1>Scheduled Reversible Transaction</h1>
 
         <ScheduledReversibleTransactionInformation txId={txId} />
       </ContentContainer>

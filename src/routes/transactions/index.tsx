@@ -6,7 +6,7 @@ import { TransactionsTable } from '@/components/features/transaction-listing/tra
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/immediate-transactions/')({
+export const Route = createFileRoute('/transactions/')({
   component: Transactions
 });
 

@@ -179,7 +179,7 @@ export const transactions = {
             height
           }
         }
-        transfers: transfer(
+        transfersByExtrinsic: transfer(
           where: { extrinsic: { id: { _eq: $hash } } }
           order_by: { timestamp: asc }
         ) {
@@ -191,6 +191,47 @@ export const transactions = {
           }
           to {
             id
+          }
+          extrinsic {
+            id
+            pallet
+            call
+            success
+            fee
+            timestamp
+            index_in_block
+            signer {
+              id
+            }
+            block {
+              height
+            }
+          }
+        }
+        transfersById: transfer(where: { id: { _eq: $hash } }) {
+          id
+          amount
+          timestamp
+          from {
+            id
+          }
+          to {
+            id
+          }
+          extrinsic {
+            id
+            pallet
+            call
+            success
+            fee
+            timestamp
+            index_in_block
+            signer {
+              id
+            }
+            block {
+              height
+            }
           }
         }
       }

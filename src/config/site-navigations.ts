@@ -11,7 +11,7 @@ export interface ParentNavigation {
 
 export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
   { label: 'Home', path: '/' },
-  { label: 'Transactions', path: '/immediate-transactions' },
+  { label: 'Transactions', path: '/transactions' },
   {
     label: 'Blocks',
     children: [

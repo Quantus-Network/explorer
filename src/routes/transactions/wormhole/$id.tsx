@@ -4,7 +4,7 @@ import { WormholeOutputInformation } from '@/components/features/wormhole/Wormho
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-export const Route = createFileRoute('/wormhole/$id')({
+export const Route = createFileRoute('/transactions/wormhole/$id')({
   component: WormholeOutputDetailsPage
 });
 

@@ -21,6 +21,7 @@ import { multisigSignerApproved } from './multisig-signer-approved';
 import { scheduledReversibleTransactions } from './scheduled-reversible-transactions';
 import { search } from './search';
 import { transactions } from './transactions';
+import { unifiedTransactions } from './unified-transactions';
 import { wormhole } from './wormhole';
 
 const useApiClient = () => {
@@ -31,6 +32,7 @@ const useApiClient = () => {
     chainStatus,
     errors,
     transactions,
+    unifiedTransactions,
     scheduledReversibleTransactions,
     executedReversibleTransactions,
     cancelledReversibleTransactions,

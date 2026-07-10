@@ -4,12 +4,12 @@ import * as React from 'react';
 
 import useApiClient from '@/api';
 import { EXTRINSIC_TRANSACTION_COLUMNS } from '@/components/common/table-columns/EXTRINSIC_TRANSACTION_COLUMNS';
+import { Badge } from '@/components/ui/badge';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { RESOURCES } from '@/constants/resources';
-import { cn } from '@/lib/utils';
 import type { ExtrinsicDetail, ExtrinsicTransfer } from '@/schemas';
 import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
 import { isWormholeExtrinsic } from '@/utils/get-extrinsic-detail-path';
@@ -25,7 +25,36 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
   const navigate = useNavigate();
   const { data, loading } = api.transactions.getByHash().useQuery(hash);
 
-  const extrinsic = data?.extrinsics[0];
+  const transfers: ExtrinsicTransfer[] = React.useMemo(() => {
+    if (!data) return [];
+    if (data.transfersByExtrinsic.length > 0) {
+      return data.transfersByExtrinsic.map(
+        ({ id, amount, timestamp, from, to }) => ({
+          id,
+          amount,
+          timestamp,
+          from,
+          to
+        })
+      );
+    }
+    return data.transfersById.map(({ id, amount, timestamp, from, to }) => ({
+      id,
+      amount,
+      timestamp,
+      from,
+      to
+    }));
+  }, [data]);
+
+  const extrinsic: ExtrinsicDetail | undefined = React.useMemo(() => {
+    if (!data) return undefined;
+    if (data.extrinsics[0]) return data.extrinsics[0];
+    const fromTransfer =
+      data.transfersByExtrinsic[0]?.extrinsic ??
+      data.transfersById[0]?.extrinsic;
+    return fromTransfer ?? undefined;
+  }, [data]);
 
   const isRedirectingToWormhole =
     !loading && !!extrinsic && isWormholeExtrinsic(extrinsic);
@@ -34,18 +63,17 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
     if (!isRedirectingToWormhole) return;
 
     navigate({
-      to: '/wormhole/$id',
-      params: { id: hash },
+      to: '/transactions/wormhole/$id',
+      params: { id: extrinsic.id },
       replace: true
     });
-  }, [isRedirectingToWormhole, hash, navigate]);
+  }, [isRedirectingToWormhole, extrinsic, navigate]);
 
   const extrinsicTransactionColumns = React.useMemo(
     () => EXTRINSIC_TRANSACTION_COLUMNS,
     []
   );
 
-  const transfers = data?.transfers ?? [];
   const table = useReactTable<ExtrinsicTransfer>({
     data: transfers,
     columns: extrinsicTransactionColumns,
@@ -54,7 +82,15 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
     manualPagination: true
   });
 
-  if (!loading && (!data || data.extrinsics.length === 0)) throw notFound();
+  if (
+    !loading &&
+    (!data ||
+      (data.extrinsics.length === 0 &&
+        data.transfersByExtrinsic.length === 0 &&
+        data.transfersById.length === 0))
+  ) {
+    throw notFound();
+  }
 
   if (isRedirectingToWormhole) {
     return null;
@@ -75,41 +111,55 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Extrinsic Information */}
       <DataList<Partial<ExtrinsicDetail>>
         loading={loading}
         data={extrinsicInfo}
         fields={[
           {
-            label: 'Extrinsic Hash',
+            label: 'Hash',
             key: 'id',
-            render: (value) => (
-              <TextWithCopy text={value as string} className="break-all" />
-            )
+            render: (value) =>
+              value ? (
+                <TextWithCopy text={value as string} className="break-all" />
+              ) : (
+                <span className="text-muted-text">—</span>
+              )
           },
           {
             label: 'Call',
             key: 'pallet',
-            render: (_, item) => (
-              <span className="font-mono">
-                {item.pallet}.{item.call}
-              </span>
-            )
+            render: (_, item) =>
+              item.pallet && item.call ? (
+                <span className="inline-block border border-border-subtle bg-surface-2 px-2 py-0.5 font-mono text-xs text-muted-text">
+                  {item.pallet}.{item.call}
+                </span>
+              ) : (
+                <span className="text-muted-text">—</span>
+              )
           },
           {
             label: 'Block',
             key: 'block',
-            render: (value) => (
-              <LinkWithCopy
-                text={(value as ExtrinsicDetail['block']).height.toString()}
-                href={`${RESOURCES.blocks}/${(value as ExtrinsicDetail['block']).height}`}
-              />
-            )
+            render: (value) => {
+              const block = value as ExtrinsicDetail['block'] | undefined;
+              if (!block) return <span className="text-muted-text">—</span>;
+              return (
+                <LinkWithCopy
+                  text={block.height.toString()}
+                  href={`${RESOURCES.blocks}/${block.height}`}
+                />
+              );
+            }
           },
           {
-            label: 'Timestamp',
+            label: 'Time',
             key: 'timestamp',
-            render: (value) => formatTimestamp(value, true)
+            render: (value) =>
+              value ? (
+                formatTimestamp(value, true)
+              ) : (
+                <span className="text-muted-text">—</span>
+              )
           },
           {
             label: 'Signer',
@@ -117,7 +167,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
             render: (value) => {
               const signer = value as ExtrinsicDetail['signer'];
               if (!signer) {
-                return <span className="text-muted-foreground">unsigned</span>;
+                return <span className="text-muted-text">unsigned</span>;
               }
               return (
                 <LinkWithCopy
@@ -131,28 +181,28 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
           {
             label: 'Fee',
             key: 'fee',
-            render: (value) => formatMonetaryValue(value)
+            render: (value) =>
+              value != null ? (
+                formatMonetaryValue(value)
+              ) : (
+                <span className="text-muted-text">—</span>
+              )
           },
           {
             label: 'Result',
             key: 'success',
-            render: (value) => (
-              <span
-                className={cn(
-                  'rounded px-2 py-1 text-xs font-medium',
-                  value
-                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                    : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-                )}
-              >
-                {value ? 'Success' : 'Failed'}
-              </span>
-            )
+            render: (value) =>
+              value == null ? (
+                <span className="text-muted-text">—</span>
+              ) : (
+                <Badge variant={value ? 'success' : 'error'}>
+                  {value ? 'Success' : 'Failed'}
+                </Badge>
+              )
           }
         ]}
       />
 
-      {/* Transfers Table */}
       {transfers.length > 0 && (
         <DataTable
           table={table}

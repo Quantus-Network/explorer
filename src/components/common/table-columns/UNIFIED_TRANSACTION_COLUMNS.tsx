@@ -1,10 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { Badge } from '@/components/ui/badge';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import { TRANSACTION_TYPE_CONFIG } from '@/constants/transaction-types';
-import { cn } from '@/lib/utils';
 import type { UnifiedTransaction } from '@/schemas/unified-transaction';
 import {
   formatDuration,
@@ -33,18 +33,9 @@ export const createUnifiedTransactionColumns = (
         const type = props.getValue();
         const config = TRANSACTION_TYPE_CONFIG[type] ?? {
           label: type,
-          className: 'bg-gray-100 text-gray-800'
+          variant: 'miner' as const
         };
-        return (
-          <span
-            className={cn(
-              'rounded px-2 py-1 text-xs font-medium whitespace-nowrap',
-              config.className
-            )}
-          >
-            {config.label}
-          </span>
-        );
+        return <Badge variant={config.variant}>{config.label}</Badge>;
       },
       enableSorting: false
     }),
