@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { cn } from '@/lib/utils';
+
 import { CopyableText } from '../../copyable-text';
 
 export interface TextWithCopyProps {
@@ -14,8 +16,8 @@ export const TextWithCopy: React.FC<TextWithCopyProps> = ({
   className
 }) => {
   return (
-    <div className="flex items-center gap-1">
-      <p className={className} title={textCopy}>
+    <div className="group flex items-center gap-1">
+      <p className={cn(className)} title={textCopy}>
         {text}
       </p>
 

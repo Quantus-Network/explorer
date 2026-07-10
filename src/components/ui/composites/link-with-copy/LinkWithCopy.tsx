@@ -1,6 +1,8 @@
 import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 
+import { cn } from '@/lib/utils';
+
 import { CopyableText } from '../../copyable-text';
 
 export interface LinkWithCopyProps {
@@ -17,8 +19,15 @@ export const LinkWithCopy: React.FC<LinkWithCopyProps> = ({
   className
 }) => {
   return (
-    <div className="flex items-center gap-1">
-      <Link className={className} to={href} title={textCopy}>
+    <div className="group flex items-center gap-1">
+      <Link
+        className={cn(
+          'inline-block max-w-[200px] truncate font-mono text-xs text-flare hover:underline',
+          className
+        )}
+        to={href}
+        title={textCopy}
+      >
         {text}
       </Link>
 

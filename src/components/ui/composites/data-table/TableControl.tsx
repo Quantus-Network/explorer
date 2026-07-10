@@ -1,4 +1,5 @@
 import type { Table } from '@tanstack/react-table';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import * as React from 'react';
 import { useDebounceCallback } from 'usehooks-ts';
 
@@ -51,7 +52,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
   }, [currentPage]);
 
   return (
-    <div className="flex flex-col gap-6 rounded-b-md border px-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+    <div className="flex flex-col gap-6 rounded-none border border-t-0 border-border-subtle px-2 py-4 font-mono text-xs text-muted-text sm:flex-row sm:items-center sm:justify-between sm:gap-4">
       <div className="flex items-center gap-2">
         <span>Show:</span>
 
@@ -61,7 +62,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
             table.setPageSize(Number(val));
           }}
         >
-          <SelectTrigger className="max-w-16">
+          <SelectTrigger className="max-w-16 rounded-none">
             <SelectValue placeholder="25" />
           </SelectTrigger>
 
@@ -81,6 +82,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
           <PaginationItem>
             <Button
               variant="outline"
+              className="gap-1.5 rounded-none border-border-strong bg-surface px-2.5 py-1 font-mono text-xs text-muted-text shadow-none hover:border-flare hover:bg-surface hover:text-content disabled:opacity-30 [&_svg]:size-3"
               onClick={() => {
                 table.previousPage();
 
@@ -91,7 +93,8 @@ export const TableControls: React.FC<TableControlsProps> = ({
               }}
               disabled={!table.getCanPreviousPage()}
             >
-              Previous
+              <ArrowLeft />
+              Prev
             </Button>
           </PaginationItem>
 
@@ -99,7 +102,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
             <span className="hidden sm:inline">Page</span>
 
             <Input
-              className="h-9 w-14"
+              className="h-9 w-14 rounded-none"
               value={page}
               onChange={(e) => {
                 const newPage = Number(e.target.value) || undefined;
@@ -117,6 +120,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
           <PaginationItem>
             <Button
               variant="outline"
+              className="gap-1.5 rounded-none border-border-strong bg-surface px-2.5 py-1 font-mono text-xs text-muted-text shadow-none hover:border-flare hover:bg-surface hover:text-content disabled:opacity-30 [&_svg]:size-3"
               onClick={() => {
                 table.nextPage();
 
@@ -128,6 +132,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
               disabled={!table.getCanNextPage()}
             >
               Next
+              <ArrowRight />
             </Button>
           </PaginationItem>
         </PaginationContent>

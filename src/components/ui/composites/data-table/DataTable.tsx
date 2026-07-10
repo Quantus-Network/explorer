@@ -55,9 +55,7 @@ export const DataTable = ({
 
   return (
     <div>
-      <div
-        className={cn('border', withControls ? 'rounded-t-md' : 'rounded-md')}
-      >
+      <div className="overflow-hidden rounded-none border border-border-subtle">
         <Table ref={tableRef}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -68,7 +66,7 @@ export const DataTable = ({
                     colSpan={header.colSpan}
                     onClick={header.column.getToggleSortingHandler()}
                     data-sortable={header.column.getCanSort()}
-                    className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-foreground/70"
+                    className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-text"
                   >
                     <div
                       className={cn(
