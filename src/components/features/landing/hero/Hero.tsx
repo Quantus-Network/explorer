@@ -37,6 +37,7 @@ export const Hero = () => {
         <div className="relative mx-auto w-full max-w-3xl">
           <SearchBox
             ref={inputRef}
+            size="md"
             onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
             placeholder="Search by hash, id, tx id, block height, or error name/type"

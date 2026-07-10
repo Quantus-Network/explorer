@@ -52,6 +52,7 @@ export const useHeader = () => {
     }
 
     try {
+      setSearchError(undefined);
       setSearchLoading(true);
 
       const { data } = await api.search.all().query(keyword);

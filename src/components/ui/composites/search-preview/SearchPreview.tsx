@@ -7,8 +7,6 @@ import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 
-import { Card, CardContent } from '../../card';
-
 // Helper: Preview link
 function PreviewLink({
   href,
@@ -22,7 +20,7 @@ function PreviewLink({
   return (
     <Link
       to={href}
-      className="block rounded px-2 py-1 text-sm hover:bg-accent focus:bg-accent focus:outline-none"
+      className="block px-3.5 py-2 text-sm text-muted-text no-underline transition-colors hover:bg-surface-2 hover:text-content focus:bg-surface-2 focus:text-content focus:outline-none"
       tabIndex={0}
       role="option"
       onClick={onSelect}
@@ -59,27 +57,27 @@ const Section = <T,>({
   const isSuccess = !loading && !error && items && items.length > 0;
 
   return (
-    <div>
-      <div className="px-2 py-1 text-lg font-semibold text-muted-foreground">
+    <div className="border-b border-border-subtle last:border-b-0">
+      <div className="px-3.5 pb-1.5 pt-3 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-text">
         {title}
       </div>
 
-      {loading && <Skeleton className="mb-2 h-8 w-full" />}
+      {loading && (
+        <Skeleton className="mx-3.5 mb-3 h-8 w-[calc(100%-1.75rem)] rounded-none" />
+      )}
 
       {error && (
-        <div className="px-2 py-1 text-sm text-destructive">
+        <div className="px-3.5 py-2 text-sm text-destructive">
           Error loading {title.toLowerCase()}.
         </div>
       )}
 
       {isEmpty && (
-        <div className="px-2 py-1 text-sm text-muted-foreground">
-          {emptyMsg}
-        </div>
+        <div className="px-3.5 py-2 text-sm text-muted-text">{emptyMsg}</div>
       )}
 
       {isSuccess && (
-        <ul className="flex flex-col gap-1" role="group">
+        <ul className="flex flex-col" role="group">
           {items.map((item: any, idx: number) => (
             <li key={idx} className="break-words">
               {renderItem(item)}
@@ -272,26 +270,24 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
       <div
         ref={ref}
         onKeyDown={onKeyDown}
-        className="absolute left-0 z-50 mt-2 w-full rounded-md border bg-popover text-popover-foreground shadow-lg focus:outline-none"
+        className="absolute left-0 z-50 mt-1 w-full rounded-none border border-border-strong bg-surface text-content shadow-[0_8px_32px_rgba(0,0,0,0.4)] focus:outline-none"
         role="listbox"
         aria-label="Search suggestions"
         tabIndex={-1}
       >
-        <Card className="border-none shadow-none">
-          <CardContent className="flex flex-col gap-2 p-2">
-            {sortedSections.map((section) => (
-              <Section
-                key={section.title}
-                title={section.title}
-                loading={isLoading}
-                error={error}
-                emptyMsg={section.emptyMsg}
-                items={section.items}
-                renderItem={section.renderItem}
-              />
-            ))}
-          </CardContent>
-        </Card>
+        <div className="flex max-h-[min(70vh,28rem)] flex-col overflow-y-auto">
+          {sortedSections.map((section) => (
+            <Section
+              key={section.title}
+              title={section.title}
+              loading={isLoading}
+              error={error}
+              emptyMsg={section.emptyMsg}
+              items={section.items}
+              renderItem={section.renderItem}
+            />
+          ))}
+        </div>
       </div>
     );
   }

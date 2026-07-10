@@ -7,7 +7,6 @@ import { NetworkSelect } from '@/components/ui/composites/network-select/Network
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
 import { SearchPreview } from '@/components/ui/composites/search-preview/SearchPreview';
 import env from '@/config/env';
-import { cn } from '@/lib/utils';
 
 import { DesktopMenu } from './DesktopMenu';
 import { useHeader } from './hook';
@@ -87,16 +86,12 @@ export const Header = (_props: HeaderProps) => {
             <div className="relative w-[260px]">
               <SearchBox
                 ref={inputRef}
+                size="sm"
+                buttonVariant="ghost"
                 onFocus={handleInputFocus}
                 onKeyDown={handleKeyDown}
                 placeholder={SEARCH_PLACEHOLDER}
                 onKeywordChange={handleKeywordChange}
-                buttonVariant="ghost"
-                inputClassName={cn(
-                  'h-8 rounded-none border-border-strong bg-surface pe-10 font-mono text-xs shadow-none',
-                  'placeholder:text-muted-text-2 focus-visible:border-flare focus-visible:ring-0'
-                )}
-                buttonClassName="right-0 top-0 size-8 translate-y-0 rounded-none border-0 border-l border-border-strong bg-transparent shadow-none hover:bg-transparent hover:text-content"
               />
               {searchPreview}
             </div>
@@ -124,16 +119,12 @@ export const Header = (_props: HeaderProps) => {
           <div className="relative w-full">
             <SearchBox
               ref={inputRef}
+              size="sm"
               onFocus={handleInputFocus}
               onKeyDown={handleKeyDown}
               placeholder={SEARCH_PLACEHOLDER}
               onKeywordChange={handleKeywordChange}
               buttonVariant="ghost"
-              inputClassName={cn(
-                'h-9 rounded-none border-border-strong bg-void pe-10 font-mono text-xs shadow-none',
-                'placeholder:text-muted-text-2 focus-visible:border-flare focus-visible:ring-0'
-              )}
-              buttonClassName="right-0 top-0 size-9 translate-y-0 rounded-none border-0 border-l border-border-strong bg-void shadow-none hover:bg-transparent hover:text-content"
             />
             {searchPreview}
           </div>
