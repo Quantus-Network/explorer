@@ -2,7 +2,13 @@ import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import useApiClient from '@/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardGroup,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -24,7 +30,7 @@ export const MultisigProposalCancelledStats: React.FC = () => {
   const success = !loading && !error;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <CardGroup className="grid-cols-1 sm:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>Total Proposal Cancelled</CardTitle>
@@ -58,6 +64,6 @@ export const MultisigProposalCancelledStats: React.FC = () => {
           )}
         </CardContent>
       </Card>
-    </div>
+    </CardGroup>
   );
 };

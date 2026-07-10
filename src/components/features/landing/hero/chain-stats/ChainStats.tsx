@@ -1,7 +1,13 @@
 import React from 'react';
 
 import useApiClient from '@/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardGroup,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 import { Info } from '@/components/ui/composites/info/Info';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
@@ -34,7 +40,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
     totalCancelledTransactions;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <CardGroup className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -94,6 +100,6 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
           {error && <p>Error: {error.message}</p>}
         </CardContent>
       </Card>
-    </div>
+    </CardGroup>
   );
 };
