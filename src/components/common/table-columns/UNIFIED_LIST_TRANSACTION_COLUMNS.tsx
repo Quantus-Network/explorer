@@ -55,7 +55,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toLocaleString()}
+        text={props.getValue().toString()}
         className="font-mono text-flare"
       />
     ),

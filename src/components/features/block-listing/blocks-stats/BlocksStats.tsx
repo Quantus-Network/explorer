@@ -22,7 +22,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <CardGroup className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <CardGroup className="max-w-[600px] grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -30,7 +30,11 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.chain.block_height}</p>}
+          {success && (
+            <p className="font-mono text-flare">
+              #{data?.chain.block_height.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -39,11 +43,15 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Finalized Blocks</h3>
+            <h3>Finalized</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.chain.finalized_block_height}</p>}
+          {success && (
+            <p className="font-mono">
+              #{data?.chain.finalized_block_height.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>
@@ -52,11 +60,15 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Mined Blocks (24H)</h3>
+            <h3>Mined (24h)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.minedIn24Hours.aggregate.totalCount}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.minedIn24Hours.aggregate.totalCount.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <p>Error: {error.message}</p>}
         </CardContent>

@@ -966,6 +966,7 @@ export type Block = {
   hash: Scalars['String']['output'];
   height: Scalars['Int']['output'];
   id: Scalars['String']['output'];
+  mined_by_id?: Maybe<Scalars['String']['output']>;
   reward: Scalars['numeric']['output'];
   timestamp: Scalars['timestamptz']['output'];
   /** An array relationship */
@@ -1076,6 +1077,7 @@ export type Block_Bool_Exp = {
   hash?: InputMaybe<String_Comparison_Exp>;
   height?: InputMaybe<Int_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
+  mined_by_id?: InputMaybe<String_Comparison_Exp>;
   reward?: InputMaybe<Numeric_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
   transactions?: InputMaybe<Transfer_Bool_Exp>;
@@ -1088,6 +1090,7 @@ export type Block_Max_Fields = {
   hash?: Maybe<Scalars['String']['output']>;
   height?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  mined_by_id?: Maybe<Scalars['String']['output']>;
   reward?: Maybe<Scalars['numeric']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
 };
@@ -1098,6 +1101,7 @@ export type Block_Min_Fields = {
   hash?: Maybe<Scalars['String']['output']>;
   height?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  mined_by_id?: Maybe<Scalars['String']['output']>;
   reward?: Maybe<Scalars['numeric']['output']>;
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
 };
@@ -1109,6 +1113,7 @@ export type Block_Order_By = {
   hash?: InputMaybe<Order_By>;
   height?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  mined_by_id?: InputMaybe<Order_By>;
   reward?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
   transactions_aggregate?: InputMaybe<Transfer_Aggregate_Order_By>;
@@ -1122,6 +1127,8 @@ export enum Block_Select_Column {
   Height = 'height',
   /** column name */
   Id = 'id',
+  /** column name */
+  MinedById = 'mined_by_id',
   /** column name */
   Reward = 'reward',
   /** column name */
@@ -1162,6 +1169,7 @@ export type Block_Stream_Cursor_Value_Input = {
   hash?: InputMaybe<Scalars['String']['input']>;
   height?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
+  mined_by_id?: InputMaybe<Scalars['String']['input']>;
   reward?: InputMaybe<Scalars['numeric']['input']>;
   timestamp?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -9966,9 +9974,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay0: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -9984,9 +9992,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay1: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -10002,9 +10010,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay2: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -10020,9 +10028,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay3: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -10038,9 +10046,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay4: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -10056,9 +10064,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay5: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -10074,9 +10082,9 @@ export type GetHomeChainStatsQuery = {
     } | null;
   };
   activeAccountsDay6: {
-    __typename?: 'account_event_aggregate';
+    __typename?: 'transfer_aggregate';
     aggregate?: {
-      __typename?: 'account_event_aggregate_fields';
+      __typename?: 'transfer_aggregate_fields';
       count: number;
     } | null;
   };
@@ -10428,6 +10436,27 @@ export type GetHighSecuritySetByHashQuery = {
   }>;
 };
 
+export type GetMinerLeaderboardStatsQueryVariables = Exact<{
+  startDate: Scalars['timestamptz']['input'];
+  endDate: Scalars['timestamptz']['input'];
+}>;
+
+export type GetMinerLeaderboardStatsQuery = {
+  __typename?: 'query_root';
+  chain?: {
+    __typename?: 'chain_stats';
+    block_height: number;
+    total_miners: number;
+  } | null;
+  last24Hour: {
+    __typename?: 'miner_reward_aggregate';
+    aggregate?: {
+      __typename?: 'miner_reward_aggregate_fields';
+      totalCount: number;
+    } | null;
+  };
+};
+
 export type GetMinerLeaderboardChartQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
 }>;
@@ -10455,7 +10484,12 @@ export type GetMinerLeaderboardQuery = {
     total_mined_blocks: number;
     total_rewards: any;
   }>;
-  meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
+  meta?: {
+    __typename?: 'chain_stats';
+    block_height: number;
+    totalCount: number;
+  } | null;
+  topMiner: Array<{ __typename?: 'account_stats'; total_mined_blocks: number }>;
 };
 
 export type GetMinerRewardsQueryVariables = Exact<{
@@ -11779,6 +11813,7 @@ export type GetExtrinsicByHashQuery = {
     timestamp: any;
     from?: { __typename?: 'account'; id: string } | null;
     to?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
     extrinsic?: {
       __typename?: 'extrinsic';
       id: string;
@@ -11799,6 +11834,7 @@ export type GetExtrinsicByHashQuery = {
     timestamp: any;
     from?: { __typename?: 'account'; id: string } | null;
     to?: { __typename?: 'account'; id: string } | null;
+    block?: { __typename?: 'block'; height: number } | null;
     extrinsic?: {
       __typename?: 'extrinsic';
       id: string;
@@ -16860,7 +16896,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay0' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -16892,6 +16928,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -16915,9 +16965,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -17062,7 +17110,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay1' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -17094,6 +17142,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -17117,9 +17179,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -17264,7 +17324,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay2' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -17296,6 +17356,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -17319,9 +17393,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -17466,7 +17538,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay3' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -17498,6 +17570,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -17521,9 +17607,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -17668,7 +17752,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay4' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -17700,6 +17784,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -17723,9 +17821,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -17870,7 +17966,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay5' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -17902,6 +17998,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -17925,9 +18035,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -18072,7 +18180,7 @@ export const GetHomeChainStatsDocument = {
           {
             kind: 'Field',
             alias: { kind: 'Name', value: 'activeAccountsDay6' },
-            name: { kind: 'Name', value: 'account_event_aggregate' },
+            name: { kind: 'Name', value: 'transfer_aggregate' },
             arguments: [
               {
                 kind: 'Argument',
@@ -18104,6 +18212,20 @@ export const GetHomeChainStatsDocument = {
                           }
                         ]
                       }
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'from_id' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_is_null' },
+                            value: { kind: 'BooleanValue', value: false }
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -18127,9 +18249,7 @@ export const GetHomeChainStatsDocument = {
                             name: { kind: 'Name', value: 'columns' },
                             value: {
                               kind: 'ListValue',
-                              values: [
-                                { kind: 'EnumValue', value: 'account_id' }
-                              ]
+                              values: [{ kind: 'EnumValue', value: 'from_id' }]
                             }
                           },
                           {
@@ -20054,6 +20174,136 @@ export const GetHighSecuritySetByHashDocument = {
   GetHighSecuritySetByHashQuery,
   GetHighSecuritySetByHashQueryVariables
 >;
+export const GetMinerLeaderboardStatsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetMinerLeaderboardStats' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'startDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'endDate' }
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'timestamptz' }
+            }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'chain' },
+            name: { kind: 'Name', value: 'chain_stats_by_pk' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'StringValue', value: 'global', block: false }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block_height' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'total_miners' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'last24Hour' },
+            name: { kind: 'Name', value: 'miner_reward_aggregate' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'timestamp' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'startDate' }
+                            }
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_lte' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'endDate' }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'aggregate' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        alias: { kind: 'Name', value: 'totalCount' },
+                        name: { kind: 'Name', value: 'count' }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<
+  GetMinerLeaderboardStatsQuery,
+  GetMinerLeaderboardStatsQueryVariables
+>;
 export const GetMinerLeaderboardChartDocument = {
   kind: 'Document',
   definitions: [
@@ -20223,7 +20473,7 @@ export const GetMinerLeaderboardDocument = {
                   fields: [
                     {
                       kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'total_rewards' },
+                      name: { kind: 'Name', value: 'total_mined_blocks' },
                       value: { kind: 'EnumValue', value: 'desc' }
                     }
                   ]
@@ -20286,6 +20536,65 @@ export const GetMinerLeaderboardDocument = {
                   kind: 'Field',
                   alias: { kind: 'Name', value: 'totalCount' },
                   name: { kind: 'Name', value: 'total_miners' }
+                },
+                { kind: 'Field', name: { kind: 'Name', value: 'block_height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'topMiner' },
+            name: { kind: 'Name', value: 'account_stats' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'limit' },
+                value: { kind: 'IntValue', value: '1' }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'order_by' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'total_mined_blocks' },
+                      value: { kind: 'EnumValue', value: 'desc' }
+                    }
+                  ]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'total_mined_blocks' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_gt' },
+                            value: { kind: 'IntValue', value: '0' }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_mined_blocks' }
                 }
               ]
             }
@@ -28920,6 +29229,16 @@ export const GetExtrinsicByHashDocument = {
                 },
                 {
                   kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
                   name: { kind: 'Name', value: 'extrinsic' },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -29030,6 +29349,16 @@ export const GetExtrinsicByHashDocument = {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
                     ]
                   }
                 },

@@ -39,6 +39,7 @@ export const blocks = {
           height
           reward
           timestamp
+          mined_by_id
           extrinsics {
             id
           }
@@ -77,6 +78,7 @@ export const blocks = {
           height
           reward
           timestamp
+          mined_by_id
           extrinsics {
             id
           }
