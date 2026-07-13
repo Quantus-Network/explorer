@@ -181,6 +181,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
               }
               return (
                 <LinkWithCopy
+                  truncate={false}
                   text={signer.id}
                   href={`${RESOURCES.accounts}/${signer.id}`}
                   className="break-all"
