@@ -10,6 +10,8 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import ErrorPage from './error';
+import NotFound from './not-found';
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
 
@@ -20,7 +22,9 @@ const router = createRouter({
   defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
-  defaultPreloadStaleTime: 0
+  defaultPreloadStaleTime: 0,
+  defaultNotFoundComponent: NotFound,
+  defaultErrorComponent: ErrorPage
 });
 
 // Register the router instance for type safety

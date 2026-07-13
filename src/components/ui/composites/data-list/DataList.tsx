@@ -74,7 +74,7 @@ export function DataList<T>({
                   <div
                     key={String(field.key) + String(field.label)}
                     className={cn(
-                      'grid grid-cols-1 items-center gap-3 px-5 py-3 sm:grid-cols-[150px_1fr]',
+                      'grid grid-cols-1 items-center gap-3 px-5 py-3 sm:grid-cols-[200px_1fr]',
                       fieldIdx < fields.length - 1 &&
                         'border-b border-border-subtle'
                     )}

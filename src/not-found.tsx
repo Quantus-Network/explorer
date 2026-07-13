@@ -1,21 +1,16 @@
-import { useNavigate } from '@tanstack/react-router';
-
-import { Button } from '@/components/ui/button';
+import { StatusPage } from '@/components/common/status-page/StatusPage';
 
 export default function NotFound() {
-  const navigate = useNavigate();
-
   return (
-    <div className="m-auto flex flex-col items-center justify-center">
-      <h1>404</h1>
-      <p>Looks like this page doesn’t exist.</p>
-      <Button
-        className="mt-8"
-        type="button"
-        onClick={() => navigate({ to: '/', replace: true })}
-      >
-        Back to Home
-      </Button>
-    </div>
+    <StatusPage
+      eyebrow="Not found"
+      code="404"
+      title="This page doesn’t exist"
+      description="The resource you’re looking for couldn’t be found on this network. It may have moved, or the identifier might be incorrect."
+      actions={[
+        { label: 'Back to home', to: '/' },
+        { label: 'Browse blocks', to: '/blocks', variant: 'outline' }
+      ]}
+    />
   );
 }
