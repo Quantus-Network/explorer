@@ -4,9 +4,10 @@ import * as React from 'react';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { BlockResponse } from '@/schemas';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatMonetaryValue } from '@/utils/formatter';
 
 export interface BlockInformationProps {
   query: QueryResult<BlockResponse>;
@@ -77,7 +78,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => <TimestampDisplay timestamp={value as string} />
         },
         {
           label: 'Extrinsics',

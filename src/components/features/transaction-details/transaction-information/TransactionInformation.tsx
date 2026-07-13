@@ -9,9 +9,10 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { ExtrinsicDetail, ExtrinsicTransfer } from '@/schemas';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatMonetaryValue } from '@/utils/formatter';
 import { isWormholeExtrinsic } from '@/utils/get-extrinsic-detail-path';
 
 export interface TransactionInformationProps {
@@ -165,7 +166,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
             key: 'timestamp',
             render: (value) =>
               value ? (
-                formatTimestamp(value, true)
+                <TimestampDisplay timestamp={value as string} />
               ) : (
                 <span className="text-muted-text">—</span>
               )

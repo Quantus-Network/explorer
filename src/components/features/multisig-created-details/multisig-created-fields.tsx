@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigCreated } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
 
 type MultisigCreatedField = {
   label: string;
@@ -81,7 +81,7 @@ export const getMultisigCreatedEventFields = (): MultisigCreatedField[] => [
   {
     label: 'Timestamp',
     key: 'timestamp',
-    render: (value) => formatTimestamp(value as string, true)
+    render: (value) => <TimestampDisplay timestamp={value as string} />
   },
   {
     label: 'Block',
@@ -102,7 +102,7 @@ export const getMultisigAccountFields = (): MultisigCreatedField[] => [
   {
     label: 'Created At',
     key: 'timestamp',
-    render: (value) => formatTimestamp(value as string, true)
+    render: (value) => <TimestampDisplay timestamp={value as string} />
   },
   {
     label: 'Block',

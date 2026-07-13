@@ -6,9 +6,9 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigSignerApproved } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
 
 export interface MultisigSignerApprovedInformationProps {
   hash: string;
@@ -59,7 +59,7 @@ export const MultisigSignerApprovedInformation: React.FC<
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => <TimestampDisplay timestamp={value as string} />
         },
         {
           label: 'Block',

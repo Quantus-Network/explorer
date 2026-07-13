@@ -14,7 +14,7 @@ import type {
   MultisigProposalLifecycleEvent
 } from '@/schemas';
 import type { UnifiedTransactionType } from '@/schemas/unified-transaction';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatMonetaryValue } from '@/utils/formatter';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { getMultisigProposalEventHref } from '@/utils/get-multisig-proposal-event-href';
 import { getMultisigProposalKind } from '@/utils/get-multisig-proposal-kind';
@@ -102,7 +102,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
   {
     label: 'Created At',
     key: 'created_at',
-    render: (value) => formatTimestamp(value as string, true)
+    render: (value) => <TimestampDisplay timestamp={value as string} />
   },
   {
     label: 'Creation Block',

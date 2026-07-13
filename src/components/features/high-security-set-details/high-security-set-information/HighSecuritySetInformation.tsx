@@ -5,9 +5,10 @@ import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { HighSecuritySetResponse } from '@/schemas';
-import { formatDuration, formatTimestamp } from '@/utils/formatter';
+import { formatDuration } from '@/utils/formatter';
 
 export interface HighSecuritySetInformationProps {
   hash: string;
@@ -68,7 +69,7 @@ export const HighSecuritySetInformation: React.FC<
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => <TimestampDisplay timestamp={value as string} />
         },
         {
           label: 'Beneficiary',

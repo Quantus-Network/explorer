@@ -5,9 +5,9 @@ import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { ErrorEvent } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
 
 export interface ErrorEventInformationProps {
   id: string;
@@ -56,7 +56,7 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => <TimestampDisplay timestamp={value as string} />
         },
         {
           label: 'Block',
