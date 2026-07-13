@@ -62,7 +62,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
             table.setPageSize(Number(val));
           }}
         >
-          <SelectTrigger className="max-w-16 rounded-none">
+          <SelectTrigger className="max-w-20 rounded-none">
             <SelectValue placeholder="25" />
           </SelectTrigger>
 
