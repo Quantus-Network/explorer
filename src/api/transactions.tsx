@@ -192,6 +192,9 @@ export const transactions = {
           to {
             id
           }
+          block {
+            height
+          }
           extrinsic {
             id
             pallet
@@ -217,6 +220,9 @@ export const transactions = {
           }
           to {
             id
+          }
+          block {
+            height
           }
           extrinsic {
             id

@@ -39,7 +39,10 @@ export const unifiedTransactions = {
           id
           type
           hash
-          block_height
+          block {
+            height
+            hash
+          }
           timestamp
           amount
           fee
@@ -97,7 +100,10 @@ export const unifiedTransactions = {
           id
           type
           hash
-          block_height
+          block {
+            height
+            hash
+          }
           timestamp
           amount
           fee

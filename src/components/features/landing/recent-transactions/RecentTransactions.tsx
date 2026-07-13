@@ -8,7 +8,7 @@ import { TransactionsTable } from '../transactions-table/TransactionsTable';
 export const RecentTransactions = () => {
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2 className="font-mono text-[11px] font-normal uppercase tracking-[0.06em] text-muted-text">
+      <h2 className="font-mono text-[11px] font-normal uppercase leading-none tracking-[0.06em] text-muted-text">
         Recent Transactions
       </h2>
 

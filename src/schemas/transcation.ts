@@ -54,6 +54,7 @@ export interface ExtrinsicTransfer {
   timestamp: string;
   from: { id: string };
   to: { id: string };
+  block?: { height: number };
 }
 
 export interface ExtrinsicDetailResponse {

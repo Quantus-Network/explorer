@@ -30,7 +30,7 @@ const columnHelper = createColumnHelper<UnifiedListTransaction>();
 export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
   columnHelper.accessor((row) => row.hash ?? row.detail_id, {
     id: 'hash',
-    header: 'Hash',
+    header: 'Hash / ID',
     cell: (props) => {
       const row = props.row.original;
       const display = row.hash ?? row.detail_id;
@@ -39,7 +39,8 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
           href={getUnifiedTransactionDetailPath({
             type: row.type,
             hash: row.hash,
-            detailId: row.detail_id
+            detailId: row.detail_id,
+            block: row.block
           })}
           text={formatTxAddress(display)}
           textCopy={display}
@@ -48,7 +49,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
     },
     enableSorting: false
   }),
-  columnHelper.accessor('block_height', {
+  columnHelper.accessor('block.height', {
     id: 'block_height',
     header: 'Block',
     cell: (props) => (
@@ -145,7 +146,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
 export const RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS = [
   columnHelper.accessor((row) => row.hash ?? row.detail_id, {
     id: 'hash',
-    header: 'Hash',
+    header: 'Hash / ID',
     cell: (props) => {
       const row = props.row.original;
       const display = row.hash ?? row.detail_id;
@@ -154,7 +155,8 @@ export const RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS = [
           href={getUnifiedTransactionDetailPath({
             type: row.type,
             hash: row.hash,
-            detailId: row.detail_id
+            detailId: row.detail_id,
+            block: row.block
           })}
           text={formatTxAddress(display)}
           textCopy={display}

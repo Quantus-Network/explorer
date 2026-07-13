@@ -29,22 +29,26 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
     if (!data) return [];
     if (data.transfersByExtrinsic.length > 0) {
       return data.transfersByExtrinsic.map(
-        ({ id, amount, timestamp, from, to }) => ({
+        ({ id, amount, timestamp, from, to, block }) => ({
           id,
           amount,
           timestamp,
           from,
-          to
+          to,
+          block
         })
       );
     }
-    return data.transfersById.map(({ id, amount, timestamp, from, to }) => ({
-      id,
-      amount,
-      timestamp,
-      from,
-      to
-    }));
+    return data.transfersById.map(
+      ({ id, amount, timestamp, from, to, block }) => ({
+        id,
+        amount,
+        timestamp,
+        from,
+        to,
+        block
+      })
+    );
   }, [data]);
 
   const extrinsic: ExtrinsicDetail | undefined = React.useMemo(() => {
@@ -55,6 +59,11 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
       data.transfersById[0]?.extrinsic;
     return fromTransfer ?? undefined;
   }, [data]);
+
+  const primaryTransfer = transfers[0];
+  const primaryId = extrinsic?.id ?? primaryTransfer?.id;
+  const primaryBlock = extrinsic?.block ?? primaryTransfer?.block;
+  const primaryTimestamp = extrinsic?.timestamp ?? primaryTransfer?.timestamp;
 
   const isRedirectingToWormhole =
     !loading && !!extrinsic && isWormholeExtrinsic(extrinsic);
@@ -98,14 +107,14 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
 
   const extrinsicInfo: Partial<ExtrinsicDetail>[] = [
     {
-      id: extrinsic?.id,
+      id: primaryId,
       pallet: extrinsic?.pallet,
       call: extrinsic?.call,
       success: extrinsic?.success,
       fee: extrinsic?.fee,
-      timestamp: extrinsic?.timestamp,
+      timestamp: primaryTimestamp,
       signer: extrinsic?.signer,
-      block: extrinsic?.block
+      block: primaryBlock
     }
   ];
 
@@ -116,7 +125,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
         data={extrinsicInfo}
         fields={[
           {
-            label: 'Hash',
+            label: 'Hash / ID',
             key: 'id',
             render: (value) =>
               value ? (

@@ -11830,12 +11830,12 @@ export type GetUnifiedTransactionsQuery = {
     id: string;
     type: string;
     hash?: string | null;
-    block_height: number;
     timestamp: any;
     amount?: any | null;
     fee?: any | null;
     status: string;
     detail_id: string;
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
     from?: { __typename?: 'account'; id: string } | null;
     to?: { __typename?: 'account'; id: string } | null;
   }>;
@@ -11863,12 +11863,12 @@ export type GetRecentUnifiedTransactionsQuery = {
     id: string;
     type: string;
     hash?: string | null;
-    block_height: number;
     timestamp: any;
     amount?: any | null;
     fee?: any | null;
     status: string;
     detail_id: string;
+    block?: { __typename?: 'block'; height: number; hash: string } | null;
     from?: { __typename?: 'account'; id: string } | null;
     to?: { __typename?: 'account'; id: string } | null;
   }>;
@@ -29200,7 +29200,17 @@ export const GetUnifiedTransactionsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'block_height' }
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
@@ -29355,7 +29365,17 @@ export const GetRecentUnifiedTransactionsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'hash' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'block_height' }
+                  name: { kind: 'Name', value: 'block' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'height' }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'hash' } }
+                    ]
+                  }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'amount' } },

@@ -1,3 +1,4 @@
+import type { Block } from '@/__generated__/graphql';
 import { RESOURCES } from '@/constants/resources';
 
 export type UnifiedListTransactionType =
@@ -11,12 +12,14 @@ export interface UnifiedTransactionRouteInput {
   type: UnifiedListTransactionType | string;
   hash?: string | null;
   detailId: string;
+  block: Pick<Block, 'height' | 'hash'>;
 }
 
 export const getUnifiedTransactionDetailPath = ({
   type,
   hash,
-  detailId
+  detailId,
+  block
 }: UnifiedTransactionRouteInput): string => {
   switch (type) {
     case 'IMMEDIATE':

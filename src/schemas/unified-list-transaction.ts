@@ -1,3 +1,5 @@
+import type { Block } from '@/__generated__/graphql';
+
 export type UnifiedListTransactionType =
   | 'IMMEDIATE'
   | 'SCHEDULED_REVERSIBLE'
@@ -13,10 +15,10 @@ export type UnifiedListTransactionStatus =
   | 'CANCELLED';
 
 export interface UnifiedListTransaction {
+  block: Pick<Block, 'height' | 'hash'>;
   id: string;
   type: UnifiedListTransactionType;
   hash: string | null;
-  block_height: number;
   timestamp: string;
   amount: string | null;
   fee: string | null;
