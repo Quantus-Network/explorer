@@ -1,7 +1,9 @@
 import React from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
+import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { Skeleton } from '@/components/ui/skeleton';
+import { RESOURCES } from '@/constants/resources';
 
 import { useMinerLeaderboardChart } from './hook';
 
@@ -23,7 +25,7 @@ export const MinerLeaderboardChart = () => {
           {status === 'success' && segments.length > 0 && (
             <div className="flex flex-col gap-2.5">
               <div
-                className="flex h-[36px] w-full overflow-hidden"
+                className="flex h-9 w-full overflow-hidden"
                 role="img"
                 aria-label="Block mining distribution"
               >
@@ -32,7 +34,7 @@ export const MinerLeaderboardChart = () => {
                     key={segment.id ?? segment.label}
                     className="h-full min-w-px"
                     style={{
-                      width: `${segment.pct}%`,
+                      flex: `0 0 ${segment.pct}%`,
                       backgroundColor: segment.color
                     }}
                     title={`${segment.label}: ${segment.blocks.toLocaleString()} blocks (${segment.pct.toFixed(1)}%)`}
@@ -51,7 +53,16 @@ export const MinerLeaderboardChart = () => {
                       style={{ backgroundColor: item.color }}
                       aria-hidden
                     />
-                    <span>{item.label}</span>
+                    {item.id ? (
+                      <LinkWithCopy
+                        href={`${RESOURCES.accounts}/${item.id}`}
+                        text={item.label}
+                        truncate={false}
+                        className="text-[11px] text-muted-text hover:text-flare"
+                      />
+                    ) : (
+                      <span>{item.label}</span>
+                    )}
                   </div>
                 ))}
               </div>

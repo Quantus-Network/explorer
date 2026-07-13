@@ -8,7 +8,6 @@ import {
   MINER_LEADERBOARD_CHART_LEGEND_N,
   MINER_LEADERBOARD_CHART_TOP_N
 } from '@/constants/miner-leaderboard-chart';
-import { formatTxAddress } from '@/utils/formatter';
 
 export type DistributionSegment = {
   id: string | null;
@@ -34,7 +33,7 @@ export const useMinerLeaderboardChart = () => {
     if (!data) {
       return {
         segments: [] as DistributionSegment[],
-        legendItems: [],
+        legendItems: [] as DistributionSegment[],
         total: 0
       };
     }
@@ -51,7 +50,7 @@ export const useMinerLeaderboardChart = () => {
       const blocks = m.total_mined_blocks ?? 0;
       return {
         id: m.id ?? null,
-        label: formatTxAddress(m.id ?? ''),
+        label: m.id ?? '',
         blocks,
         pct: totalBlocks > 0 ? (blocks / totalBlocks) * 100 : 0,
         color:

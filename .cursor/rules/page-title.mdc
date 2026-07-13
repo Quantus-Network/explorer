@@ -1,0 +1,21 @@
+---
+description: Page titles must use the page-title class for consistent site-wide styling
+globs: src/routes/**/*.tsx,src/components/**/*Heading*.tsx,src/components/common/status-page/**/*.tsx
+alwaysApply: false
+---
+
+# Page titles
+
+Primary page headings must use the shared `page-title` class from `globals.css` so typography stays consistent across listing and detail pages.
+
+```tsx
+// Prefer
+<h1 className="page-title">Miner Leaderboard</h1>
+
+// Avoid
+<h1>Miner Leaderboard</h1>
+```
+
+- Use on the main route/feature `h1` (one per page).
+- Do not restyle page titles with ad-hoc text size/weight/tracking classes unless intentionally overriding a special case (e.g. status codes use separate display styles).
+- Optional supporting text under the title can use `page-subtitle`.

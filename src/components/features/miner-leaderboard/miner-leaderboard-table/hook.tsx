@@ -2,7 +2,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 
 import useApiClient from '@/api';
-import { MINER_LEADERBOARD_COLUMNS } from '@/components/common/table-columns/MINER_LEADERBOARD_COLUMNS';
+import { getMinerLeaderboardColumns } from '@/components/common/table-columns/MINER_LEADERBOARD_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { useTableState } from '@/hooks/useTableState';
@@ -25,7 +25,19 @@ export const useMinerLeaderboardTable = () => {
     }
   });
 
-  const minerLeaderboardColumns = useMemo(() => MINER_LEADERBOARD_COLUMNS, []);
+  const totalBlocks = data?.meta.block_height ?? 0;
+  const topMinerBlocks = data?.topMiner?.[0]?.total_mined_blocks ?? 0;
+  const maxSharePct =
+    totalBlocks > 0 ? (topMinerBlocks / totalBlocks) * 100 : 0;
+
+  const minerLeaderboardColumns = useMemo(
+    () =>
+      getMinerLeaderboardColumns({
+        totalBlocks,
+        maxSharePct
+      }),
+    [totalBlocks, maxSharePct]
+  );
   const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
   const table = useReactTable<MinerStats>({
