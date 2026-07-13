@@ -16,7 +16,6 @@ export const theme: Partial<
     fontFamily: {
       sans: ['var(--font-geist)', ...fontFamily.sans],
       mono: ['var(--font-geist-mono)', ...fontFamily.mono],
-      heading: ['var(--font-jet-brains)', ...fontFamily.sans],
       geist: ['var(--font-geist)', ...fontFamily.sans],
       'geist-mono': ['var(--font-geist-mono)', ...fontFamily.mono]
     },

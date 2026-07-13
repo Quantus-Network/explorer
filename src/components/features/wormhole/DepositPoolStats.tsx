@@ -59,14 +59,18 @@ export const DepositPoolStatsCard = () => {
       <CardContent>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-muted-foreground">Deposits Tracked</p>
-            <p className="text-2xl font-bold">
+            <p className="font-mono text-[11px] text-muted-text">
+              Deposits Tracked
+            </p>
+            <p className="font-mono text-2xl font-medium tracking-[-0.02em] text-content">
               {totalDeposits.toLocaleString()}
             </p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground">Last Updated</p>
-            <p className="text-2xl font-bold">
+            <p className="font-mono text-[11px] text-muted-text">
+              Last Updated
+            </p>
+            <p className="font-mono text-2xl font-medium tracking-[-0.02em] text-content">
               Block {stats.last_updated_block}
             </p>
           </div>

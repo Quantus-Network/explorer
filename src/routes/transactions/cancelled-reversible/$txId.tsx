@@ -17,7 +17,7 @@ function CancelledReversibleTransactionDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Cancelled Reversible Transaction</h1>
+        <h1 className="page-title">Cancelled Reversible Transaction</h1>
 
         <CancelledReversibleTransactionInformation txId={txId} />
       </ContentContainer>

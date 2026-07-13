@@ -8,9 +8,7 @@ import { BlocksTable } from '../block-tables/BlocksTable';
 export const RecentBlocks = () => {
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2 className="font-mono text-[11px] font-normal uppercase leading-none tracking-[0.06em] text-muted-text">
-        Recent Blocks
-      </h2>
+      <h2 className="section-label">Recent Blocks</h2>
 
       <BlocksTable />
 

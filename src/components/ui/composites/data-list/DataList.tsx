@@ -79,7 +79,7 @@ export function DataList<T>({
                         'border-b border-border-subtle'
                     )}
                   >
-                    <dt className="flex items-center gap-1 font-mono text-xs text-muted-text">
+                    <dt className="flex items-center gap-1 font-mono text-[12px] text-muted-text">
                       <span>{field.label}</span>
 
                       {field.tooltip && <Info>{field.tooltip}</Info>}

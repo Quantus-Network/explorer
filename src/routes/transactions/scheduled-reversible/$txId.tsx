@@ -17,7 +17,7 @@ function ScheduledReversibleTransactionDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Scheduled Reversible Transaction</h1>
+        <h1 className="page-title">Scheduled Reversible Transaction</h1>
 
         <ScheduledReversibleTransactionInformation txId={txId} />
       </ContentContainer>

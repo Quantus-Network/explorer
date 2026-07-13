@@ -111,7 +111,7 @@ export const createUnifiedTransactionColumns = (
         }
 
         if (!href) {
-          return <span className="text-muted-foreground">-</span>;
+          return <span className="text-muted-text">-</span>;
         }
 
         return (
@@ -131,7 +131,7 @@ export const createUnifiedTransactionColumns = (
       header: 'Timestamp',
       cell: (props) => {
         const timestamp = props.getValue();
-        if (!timestamp) return <span className="text-muted-foreground">-</span>;
+        if (!timestamp) return <span className="text-muted-text">-</span>;
         return <TimestampDisplay timestamp={timestamp} />;
       },
       enableSorting: true
@@ -157,7 +157,7 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.from && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">From:</span>
+                  <span className="text-muted-text">From:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.from.id}`}
                     text={formatTxAddress(row.from.id)}
@@ -167,7 +167,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.to && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">To:</span>
+                  <span className="text-muted-text">To:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.to.id}`}
                     text={formatTxAddress(row.to.id)}
@@ -183,7 +183,7 @@ export const createUnifiedTransactionColumns = (
         if (row.type === 'miner-reward' && row.miner) {
           return (
             <div className="flex items-center gap-1 text-xs">
-              <span className="text-muted-foreground">Miner:</span>
+              <span className="text-muted-text">Miner:</span>
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${row.miner.id}`}
                 text={formatTxAddress(row.miner.id)}
@@ -199,7 +199,7 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.who && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Beneficiary:</span>
+                  <span className="text-muted-text">Beneficiary:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.who.id}`}
                     text={formatTxAddress(row.who.id)}
@@ -209,7 +209,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.guardian && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Guardian:</span>
+                  <span className="text-muted-text">Guardian:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.guardian.id}`}
                     text={formatTxAddress(row.guardian.id)}
@@ -227,7 +227,7 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.outputs.slice(0, 2).map((output, idx) => (
                 <div key={idx} className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Exit:</span>
+                  <span className="text-muted-text">Exit:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${output.exitAccount.id}`}
                     text={formatTxAddress(output.exitAccount.id)}
@@ -236,7 +236,7 @@ export const createUnifiedTransactionColumns = (
                 </div>
               ))}
               {row.outputs.length > 2 && (
-                <span className="text-muted-foreground">
+                <span className="text-muted-text">
                   +{row.outputs.length - 2} more
                 </span>
               )}
@@ -250,13 +250,13 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.errorType && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Type:</span>
+                  <span className="text-muted-text">Type:</span>
                   <span>{row.errorType}</span>
                 </div>
               )}
               {row.errorName && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Name:</span>
+                  <span className="text-muted-text">Name:</span>
                   <span>{row.errorName}</span>
                 </div>
               )}
@@ -269,7 +269,7 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.creator && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Creator:</span>
+                  <span className="text-muted-text">Creator:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.creator.id}`}
                     text={formatTxAddress(row.creator.id)}
@@ -279,7 +279,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.threshold != null && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Threshold:</span>
+                  <span className="text-muted-text">Threshold:</span>
                   <span>{row.threshold}</span>
                 </div>
               )}
@@ -301,7 +301,7 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.proposalId && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Proposal:</span>
+                  <span className="text-muted-text">Proposal:</span>
                   {(() => {
                     const href = getMultisigProposalHref({
                       id: row.proposalId
@@ -321,7 +321,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.multisig && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Multisig:</span>
+                  <span className="text-muted-text">Multisig:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.multisig.id}`}
                     text={formatTxAddress(row.multisig.id)}
@@ -331,7 +331,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.approver && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Approver:</span>
+                  <span className="text-muted-text">Approver:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.approver.id}`}
                     text={formatTxAddress(row.approver.id)}
@@ -341,7 +341,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.cancelledBy && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Cancelled by:</span>
+                  <span className="text-muted-text">Cancelled by:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.cancelledBy.id}`}
                     text={formatTxAddress(row.cancelledBy.id)}
@@ -351,7 +351,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.removedBy && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Removed by:</span>
+                  <span className="text-muted-text">Removed by:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.removedBy.id}`}
                     text={formatTxAddress(row.removedBy.id)}
@@ -361,13 +361,13 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.approvalsCount != null && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Approvals:</span>
+                  <span className="text-muted-text">Approvals:</span>
                   <span>{row.approvalsCount}</span>
                 </div>
               )}
               {row.result && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Result:</span>
+                  <span className="text-muted-text">Result:</span>
                   <span>{row.result}</span>
                 </div>
               )}
@@ -380,7 +380,7 @@ export const createUnifiedTransactionColumns = (
             <div className="flex flex-col gap-1 text-xs">
               {row.claimer && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Claimer:</span>
+                  <span className="text-muted-text">Claimer:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.claimer.id}`}
                     text={formatTxAddress(row.claimer.id)}
@@ -390,7 +390,7 @@ export const createUnifiedTransactionColumns = (
               )}
               {row.multisig && (
                 <div className="flex items-center gap-1">
-                  <span className="text-muted-foreground">Multisig:</span>
+                  <span className="text-muted-text">Multisig:</span>
                   <LinkWithCopy
                     href={`${RESOURCES.accounts}/${row.multisig.id}`}
                     text={formatTxAddress(row.multisig.id)}
@@ -402,7 +402,7 @@ export const createUnifiedTransactionColumns = (
           );
         }
 
-        return <span className="text-muted-foreground">-</span>;
+        return <span className="text-muted-text">-</span>;
       }
     }),
 
@@ -439,7 +439,7 @@ export const createUnifiedTransactionColumns = (
         // For high security sets - show delay
         if (row.type === 'high-security' && row.delay !== undefined) {
           return (
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-muted-text">
               {formatDuration(row.delay)}
             </span>
           );
@@ -452,7 +452,7 @@ export const createUnifiedTransactionColumns = (
           return formatMonetaryValue(String(row.totalReturned), 5);
         }
 
-        return <span className="text-muted-foreground">-</span>;
+        return <span className="text-muted-text">-</span>;
       }
     })
   ];
@@ -464,7 +464,7 @@ export const createUnifiedTransactionColumns = (
       header: 'Block',
       cell: (props) => {
         const height = props.row.original.block?.height;
-        if (!height) return <span className="text-muted-foreground">-</span>;
+        if (!height) return <span className="text-muted-text">-</span>;
         return (
           <LinkWithCopy
             href={`${RESOURCES.blocks}/${height}`}

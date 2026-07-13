@@ -45,14 +45,7 @@ const CardTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      'font-mono text-[11px] font-normal uppercase leading-none tracking-[0.06em] text-muted-text [&_h1]:text-[inherit] [&_h1]:font-[inherit] [&_h1]:tracking-[inherit] [&_h2]:text-[inherit] [&_h2]:font-[inherit] [&_h2]:tracking-[inherit] [&_h3]:text-[inherit] [&_h3]:font-[inherit] [&_h3]:tracking-[inherit] [&_h4]:text-[inherit] [&_h4]:font-[inherit] [&_h4]:tracking-[inherit]',
-      className
-    )}
-    {...props}
-  />
+  <div ref={ref} className={cn('section-label', className)} {...props} />
 ));
 CardTitle.displayName = 'CardTitle';
 

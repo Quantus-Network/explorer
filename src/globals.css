@@ -4,10 +4,6 @@
 
 @layer base {
   :root {
-    /* Legacy fonts (still used by body / headings during migration) */
-    --font-inter: 'Inter', sans-serif;
-    --font-jet-brains: 'JetBrains Mono', monospace;
-
     /* Quantus v5 primitives */
     --void: #0e0e0e;
     --surface: #181818;
@@ -77,52 +73,29 @@
   }
 
   body {
-    @apply bg-void text-content h-full flex flex-col;
-  }
-
-  body {
-    font-family: var(--font-inter);
+    @apply flex h-full flex-col bg-void font-sans text-[14px] text-content;
   }
 
   main {
     @apply flex flex-col flex-grow flex-shrink-0 basis-0;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-heading font-bold;
-  }
-
-  h1 {
-    @apply text-4xl sm:text-5xl;
-  }
-
-  h2 {
-    @apply text-2xl sm:text-3xl;
-  }
-
-  h3 {
-    @apply text-xl;
-  }
-
-  h4 {
-    @apply text-lg;
-  }
-
-  h5 {
-    @apply text-base;
-  }
-
-  h6 {
-    @apply text-sm;
-  }
-
   a {
     @apply underline;
+  }
+}
+
+@layer components {
+  .page-title {
+    @apply text-[20px] font-medium tracking-[-0.02em] text-content;
+  }
+
+  .page-subtitle {
+    @apply mt-1 text-[13px] text-muted-text;
+  }
+
+  .section-label {
+    @apply font-mono text-[11px] font-normal uppercase leading-none tracking-[0.06em] text-muted-text;
   }
 }
 

@@ -15,7 +15,7 @@ function TransactionDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Transaction</h1>
+        <h1 className="page-title">Transaction</h1>
 
         <TransactionInformation hash={hash} />
       </ContentContainer>
