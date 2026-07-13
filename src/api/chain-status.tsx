@@ -68,11 +68,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay0: account_event_aggregate(
-      where: { timestamp: { _gte: $day0Start, _lte: $day0End } }
+    activeAccountsDay0: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day0Start, _lte: $day0End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
     blocksDay1: block_aggregate(
@@ -92,11 +95,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay1: account_event_aggregate(
-      where: { timestamp: { _gte: $day1Start, _lte: $day1End } }
+    activeAccountsDay1: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day1Start, _lte: $day1End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
     blocksDay2: block_aggregate(
@@ -116,11 +122,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay2: account_event_aggregate(
-      where: { timestamp: { _gte: $day2Start, _lte: $day2End } }
+    activeAccountsDay2: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day2Start, _lte: $day2End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
     blocksDay3: block_aggregate(
@@ -140,11 +149,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay3: account_event_aggregate(
-      where: { timestamp: { _gte: $day3Start, _lte: $day3End } }
+    activeAccountsDay3: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day3Start, _lte: $day3End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
     blocksDay4: block_aggregate(
@@ -164,11 +176,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay4: account_event_aggregate(
-      where: { timestamp: { _gte: $day4Start, _lte: $day4End } }
+    activeAccountsDay4: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day4Start, _lte: $day4End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
     blocksDay5: block_aggregate(
@@ -188,11 +203,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay5: account_event_aggregate(
-      where: { timestamp: { _gte: $day5Start, _lte: $day5End } }
+    activeAccountsDay5: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day5Start, _lte: $day5End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
     blocksDay6: block_aggregate(
@@ -212,11 +230,14 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    activeAccountsDay6: account_event_aggregate(
-      where: { timestamp: { _gte: $day6Start, _lte: $day6End } }
+    activeAccountsDay6: transfer_aggregate(
+      where: {
+        timestamp: { _gte: $day6Start, _lte: $day6End }
+        from_id: { _is_null: false }
+      }
     ) {
       aggregate {
-        count(columns: [account_id], distinct: true)
+        count(columns: [from_id], distinct: true)
       }
     }
   }

@@ -19,7 +19,6 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
     totalTransactions,
     last24HourTransactions,
     activeAccounts,
-    totalAccounts,
     blocksPoints,
     transfersPoints,
     activeAccountsPoints
@@ -58,7 +57,6 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
         loading={loading}
         error={errorMessage}
         value={activeAccounts.toLocaleString()}
-        subtitle={`${totalAccounts.toLocaleString()} total`}
         points={activeAccountsPoints}
         stroke={STROKE_MUTED}
       />
