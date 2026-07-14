@@ -9451,13 +9451,21 @@ export type GetAccountsQuery = {
     free: any;
     frozen: any;
     reserved: any;
+    flagEvents: Array<{
+      __typename?: 'account_event';
+      multisig_id?: string | null;
+      highSecuritySet?: {
+        __typename?: 'high_security_set';
+        who_id?: string | null;
+        guardian_id?: string | null;
+      } | null;
+    }>;
   }>;
   meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
 };
 
 export type GetAccountByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
-  limit: Scalars['Int']['input'];
 }>;
 
 export type GetAccountByIdQuery = {
@@ -9478,272 +9486,9 @@ export type GetAccountByIdQuery = {
     total_rewards: any;
     total_scheduled_transfers: number;
   } | null;
-  multisig?: {
-    __typename?: 'multisig';
-    id: string;
-    timestamp: any;
-    threshold: number;
-    nonce: any;
-    signers: Array<string>;
-    creator?: { __typename?: 'account'; id: string } | null;
-    block?: { __typename?: 'block'; height: number } | null;
-    extrinsic?: {
-      __typename?: 'extrinsic';
-      id: string;
-      pallet: string;
-      call: string;
-    } | null;
-  } | null;
-  accountEvents: Array<{
-    __typename?: 'account_event';
-    transfer?: {
-      __typename?: 'transfer';
-      fee: any;
-      amount: any;
-      timestamp: any;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      from?: { __typename?: 'account'; id: string } | null;
-      to?: { __typename?: 'account'; id: string } | null;
-    } | null;
-    scheduledReversibleTransfer?: {
-      __typename?: 'scheduled_reversible_transfer';
-      timestamp: any;
-      amount: any;
-      scheduled_at: any;
-      tx_id: string;
-      fee: any;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      from?: { __typename?: 'account'; id: string } | null;
-      to?: { __typename?: 'account'; id: string } | null;
-    } | null;
-    executedReversibleTransfer?: {
-      __typename?: 'executed_reversible_transfer';
-      timestamp: any;
-      tx_id: string;
-      block?: { __typename?: 'block'; height: number } | null;
-      scheduledTransfer?: {
-        __typename?: 'scheduled_reversible_transfer';
-        amount: any;
-        timestamp: any;
-        scheduled_at: any;
-        tx_id: string;
-        fee: any;
-        extrinsic?: {
-          __typename?: 'extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block?: { __typename?: 'block'; height: number } | null;
-        from?: { __typename?: 'account'; id: string } | null;
-        to?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    cancelledReversibleTransfer?: {
-      __typename?: 'cancelled_reversible_transfer';
-      timestamp: any;
-      tx_id: string;
-      block?: { __typename?: 'block'; height: number } | null;
-      cancelledBy?: { __typename?: 'account'; id: string } | null;
-      scheduledTransfer?: {
-        __typename?: 'scheduled_reversible_transfer';
-        amount: any;
-        timestamp: any;
-        scheduled_at: any;
-        tx_id: string;
-        fee: any;
-        extrinsic?: {
-          __typename?: 'extrinsic';
-          id: string;
-          pallet: string;
-          call: string;
-        } | null;
-        block?: { __typename?: 'block'; height: number } | null;
-        from?: { __typename?: 'account'; id: string } | null;
-        to?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    minerReward?: {
-      __typename?: 'miner_reward';
-      reward: any;
-      timestamp: any;
-      block?: { __typename?: 'block'; height: number; hash: string } | null;
-      miner?: { __typename?: 'account'; id: string } | null;
-    } | null;
-    multisig?: {
-      __typename?: 'multisig';
-      id: string;
-      timestamp: any;
-      threshold: number;
-      nonce: any;
-      signers: Array<string>;
-      creator?: { __typename?: 'account'; id: string } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-    } | null;
-    multisigProposalCreated?: {
-      __typename?: 'multisig_proposal_created';
-      id: string;
-      timestamp: any;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      proposal?: {
-        __typename?: 'multisig_proposal';
-        id: string;
-        multisig?: { __typename?: 'multisig'; id: string } | null;
-        proposer?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    multisigSignerApproved?: {
-      __typename?: 'multisig_signer_approved';
-      id: string;
-      timestamp: any;
-      approvals_count: number;
-      approver?: { __typename?: 'account'; id: string } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      proposal?: {
-        __typename?: 'multisig_proposal';
-        id: string;
-        multisig?: { __typename?: 'multisig'; id: string } | null;
-        proposer?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    multisigProposalReady?: {
-      __typename?: 'multisig_proposal_ready';
-      id: string;
-      timestamp: any;
-      approvals_count: number;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      proposal?: {
-        __typename?: 'multisig_proposal';
-        id: string;
-        multisig?: { __typename?: 'multisig'; id: string } | null;
-        proposer?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    executedMultisigProposal?: {
-      __typename?: 'executed_multisig_proposal';
-      id: string;
-      timestamp: any;
-      approvers: Array<string>;
-      result: string;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      proposal?: {
-        __typename?: 'multisig_proposal';
-        id: string;
-        multisig?: { __typename?: 'multisig'; id: string } | null;
-        proposer?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    cancelledMultisigProposal?: {
-      __typename?: 'cancelled_multisig_proposal';
-      id: string;
-      timestamp: any;
-      cancelledBy?: { __typename?: 'account'; id: string } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      proposal?: {
-        __typename?: 'multisig_proposal';
-        id: string;
-        multisig?: { __typename?: 'multisig'; id: string } | null;
-        proposer?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    removedMultisigProposal?: {
-      __typename?: 'removed_multisig_proposal';
-      id: string;
-      timestamp: any;
-      removedBy?: { __typename?: 'account'; id: string } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      proposal?: {
-        __typename?: 'multisig_proposal';
-        id: string;
-        multisig?: { __typename?: 'multisig'; id: string } | null;
-        proposer?: { __typename?: 'account'; id: string } | null;
-      } | null;
-    } | null;
-    multisigDepositsClaimed?: {
-      __typename?: 'multisig_deposits_claimed';
-      id: string;
-      timestamp: any;
-      total_returned: any;
-      proposals_removed: number;
-      claimer?: { __typename?: 'account'; id: string } | null;
-      multisig?: { __typename?: 'multisig'; id: string } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-    } | null;
-  }>;
+  multisig?: { __typename?: 'multisig'; id: string } | null;
   guardian: {
     __typename?: 'high_security_set_aggregate';
-    nodes: Array<{
-      __typename?: 'high_security_set';
-      timestamp: any;
-      block?: { __typename?: 'block'; height: number } | null;
-      guardian?: {
-        __typename?: 'account';
-        id: string;
-        free: any;
-        frozen: any;
-        reserved: any;
-      } | null;
-    }>;
     aggregate?: {
       __typename?: 'high_security_set_aggregate_fields';
       totalCount: number;
@@ -9751,49 +9496,11 @@ export type GetAccountByIdQuery = {
   };
   beneficiaries: {
     __typename?: 'high_security_set_aggregate';
-    nodes: Array<{
-      __typename?: 'high_security_set';
-      timestamp: any;
-      block?: { __typename?: 'block'; height: number } | null;
-      who?: {
-        __typename?: 'account';
-        id: string;
-        free: any;
-        frozen: any;
-        reserved: any;
-      } | null;
-    }>;
     aggregate?: {
       __typename?: 'high_security_set_aggregate_fields';
       totalCount: number;
     } | null;
   };
-  wormholeOutputs: Array<{
-    __typename?: 'wormhole_output';
-    id: string;
-    amount: any;
-    exitAccount?: { __typename?: 'account'; id: string } | null;
-    wormholeExtrinsic?: {
-      __typename?: 'wormhole_extrinsic';
-      id: string;
-      total_amount: any;
-      output_count: number;
-      timestamp: any;
-      extrinsic?: {
-        __typename?: 'extrinsic';
-        id: string;
-        pallet: string;
-        call: string;
-      } | null;
-      block?: { __typename?: 'block'; height: number } | null;
-      outputs: Array<{
-        __typename?: 'wormhole_output';
-        id: string;
-        amount: any;
-        exitAccount?: { __typename?: 'account'; id: string } | null;
-      }>;
-    } | null;
-  }>;
 };
 
 export type GetAccountsStatsQueryVariables = Exact<{
@@ -13072,7 +12779,119 @@ export const GetAccountsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'free' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'frozen' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'reserved' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'reserved' } },
+                {
+                  kind: 'Field',
+                  alias: { kind: 'Name', value: 'flagEvents' },
+                  name: { kind: 'Name', value: 'accountEvents' },
+                  arguments: [
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'where' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: '_or' },
+                            value: {
+                              kind: 'ListValue',
+                              values: [
+                                {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: {
+                                        kind: 'Name',
+                                        value: 'high_security_set_id'
+                                      },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: '_is_null'
+                                            },
+                                            value: {
+                                              kind: 'BooleanValue',
+                                              value: false
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  kind: 'ObjectValue',
+                                  fields: [
+                                    {
+                                      kind: 'ObjectField',
+                                      name: {
+                                        kind: 'Name',
+                                        value: 'multisig_id'
+                                      },
+                                      value: {
+                                        kind: 'ObjectValue',
+                                        fields: [
+                                          {
+                                            kind: 'ObjectField',
+                                            name: {
+                                              kind: 'Name',
+                                              value: '_is_null'
+                                            },
+                                            value: {
+                                              kind: 'BooleanValue',
+                                              value: false
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      kind: 'Argument',
+                      name: { kind: 'Name', value: 'limit' },
+                      value: { kind: 'IntValue', value: '20' }
+                    }
+                  ],
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'highSecuritySet' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'who_id' }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'guardian_id' }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'multisig_id' }
+                      }
+                    ]
+                  }
+                }
               ]
             }
           },
@@ -13117,17 +12936,6 @@ export const GetAccountByIdDocument = {
           type: {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'limit' }
-          },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
           }
         }
       ],
@@ -13210,1278 +13018,7 @@ export const GetAccountByIdDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'threshold' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'signers' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'creator' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'block' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'height' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'extrinsic' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'pallet' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'call' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'accountEvents' },
-            name: { kind: 'Name', value: 'account_event' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'account_id' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: '_eq' },
-                            value: {
-                              kind: 'Variable',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'transfer' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'amount' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'from' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'to' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'scheduledReversibleTransfer' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'amount' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduled_at' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'fee' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'from' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'to' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'executedReversibleTransfer' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledTransfer' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'extrinsic' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'pallet' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'call' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'amount' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'scheduled_at' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'tx_id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'fee' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'from' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'to' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'cancelledReversibleTransfer' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'tx_id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'cancelledBy' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'scheduledTransfer' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'extrinsic' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'pallet' }
-                                  },
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'call' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'amount' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'timestamp' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'scheduled_at' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'tx_id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'fee' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'block' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'height' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'from' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'to' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'minerReward' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'hash' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'reward' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'miner' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'multisig' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'threshold' }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'nonce' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'signers' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'creator' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'multisigProposalCreated' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposal' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'multisig' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposer' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'multisigSignerApproved' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'approvals_count' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'approver' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposal' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'multisig' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposer' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'multisigProposalReady' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'approvals_count' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposal' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'multisig' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposer' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'executedMultisigProposal' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'approvers' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'result' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposal' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'multisig' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposer' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'cancelledMultisigProposal' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'cancelledBy' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposal' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'multisig' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposer' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'removedMultisigProposal' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'removedBy' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposal' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'multisig' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'proposer' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'multisigDepositsClaimed' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'total_returned' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'proposals_removed' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'claimer' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'multisig' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
               ]
             }
           },
@@ -14490,28 +13027,6 @@ export const GetAccountByIdDocument = {
             alias: { kind: 'Name', value: 'guardian' },
             name: { kind: 'Name', value: 'high_security_set_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'order_by' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp' },
-                      value: { kind: 'EnumValue', value: 'desc' }
-                    }
-                  ]
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -14553,57 +13068,6 @@ export const GetAccountByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'nodes' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'guardian' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'free' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'frozen' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'reserved' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
                   name: { kind: 'Name', value: 'aggregate' },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -14624,28 +13088,6 @@ export const GetAccountByIdDocument = {
             alias: { kind: 'Name', value: 'beneficiaries' },
             name: { kind: 'Name', value: 'high_security_set_aggregate' },
             arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'order_by' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'timestamp' },
-                      value: { kind: 'EnumValue', value: 'desc' }
-                    }
-                  ]
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'where' },
@@ -14687,57 +13129,6 @@ export const GetAccountByIdDocument = {
               selections: [
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'nodes' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'who' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'free' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'frozen' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'reserved' }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
                   name: { kind: 'Name', value: 'aggregate' },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -14746,182 +13137,6 @@ export const GetAccountByIdDocument = {
                         kind: 'Field',
                         alias: { kind: 'Name', value: 'totalCount' },
                         name: { kind: 'Name', value: 'count' }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            alias: { kind: 'Name', value: 'wormholeOutputs' },
-            name: { kind: 'Name', value: 'wormhole_output' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'order_by' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'wormholeExtrinsic' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'timestamp' },
-                            value: { kind: 'EnumValue', value: 'desc' }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'limit' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'limit' }
-                }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'where' },
-                value: {
-                  kind: 'ObjectValue',
-                  fields: [
-                    {
-                      kind: 'ObjectField',
-                      name: { kind: 'Name', value: 'exitAccount' },
-                      value: {
-                        kind: 'ObjectValue',
-                        fields: [
-                          {
-                            kind: 'ObjectField',
-                            name: { kind: 'Name', value: 'id' },
-                            value: {
-                              kind: 'ObjectValue',
-                              fields: [
-                                {
-                                  kind: 'ObjectField',
-                                  name: { kind: 'Name', value: '_eq' },
-                                  value: {
-                                    kind: 'Variable',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'amount' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'exitAccount' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } }
-                    ]
-                  }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'wormholeExtrinsic' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'extrinsic' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'pallet' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'call' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'total_amount' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'output_count' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'timestamp' }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'block' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'height' }
-                            }
-                          ]
-                        }
-                      },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'outputs' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'id' }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'exitAccount' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'Field',
-                                    name: { kind: 'Name', value: 'id' }
-                                  }
-                                ]
-                              }
-                            },
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'amount' }
-                            }
-                          ]
-                        }
                       }
                     ]
                   }

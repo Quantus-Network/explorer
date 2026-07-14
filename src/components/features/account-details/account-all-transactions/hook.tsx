@@ -1,189 +1,82 @@
-import type { QueryResult } from '@apollo/client';
-import {
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable
-} from '@tanstack/react-table';
-import { useCallback, useMemo, useState } from 'react';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { useEffect, useMemo, useState } from 'react';
 
-import { createUnifiedTransactionColumns } from '@/components/common/table-columns/UNIFIED_TRANSACTION_COLUMNS';
+import useApiClient from '@/api';
+import { UNIFIED_LIST_TRANSACTION_COLUMNS } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
+import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import {
-  sortByTimestampDesc,
-  transformCancelledTransaction,
-  transformExecutedTransaction,
-  transformHighSecuritySet,
-  transformImmediateTransaction,
-  transformMinerReward,
-  transformMultisigCreated,
-  transformMultisigDepositsClaimed,
-  transformMultisigProposalCancelled,
-  transformMultisigProposalCreated,
-  transformMultisigProposalExecuted,
-  transformMultisigProposalReady,
-  transformMultisigProposalRemoved,
-  transformMultisigSignerApproved,
-  transformScheduledTransaction,
-  transformWormholeOutput
-} from '@/hooks/useUnifiedTransactions';
-import type { AccountResponse, UnifiedTransaction } from '@/schemas';
+import type { UnifiedListTransactionSorts } from '@/constants/query-sorts';
+import { useOrderBy } from '@/hooks/useOrderBy';
+import { useTableState } from '@/hooks/useTableState';
+import type { UnifiedListTransaction } from '@/schemas';
+import { transformSortLiteral } from '@/utils/transform-sort';
 
-// Account page shows block column
-const columns = createUnifiedTransactionColumns({ showBlockColumn: true });
+export const useAccountAllTransactions = (accountId: string) => {
+  const api = useApiClient();
 
-export const useAccountAllTransactions = (
-  query: QueryResult<AccountResponse>
-) => {
-  const { data, error: fetchError, loading } = query;
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: QUERY_DEFAULT_LIMIT
+  const {
+    orderBy,
+    limit,
+    currentPageIndex,
+    handleChangeSorting,
+    handleChangePagination,
+    paginationValue
+  } = useTableState(null, QUERY_DEFAULT_LIMIT);
+
+  const orderByObject = useOrderBy<UnifiedListTransactionSorts>(orderBy ?? '');
+  const sortingValue = transformSortLiteral(orderBy);
+
+  const where = useMemo(
+    () => ({
+      _or: [
+        { from: { id: { _eq: accountId } } },
+        { to: { id: { _eq: accountId } } }
+      ]
+    }),
+    [accountId]
+  );
+
+  const {
+    loading,
+    data,
+    error: fetchError
+  } = api.unifiedTransactions.useGetAll({
+    pollInterval: DATA_POOL_INTERVAL,
+    variables: {
+      orderBy: orderByObject,
+      limit,
+      offset: currentPageIndex * limit,
+      where
+    }
   });
 
-  // Transform all transaction types into unified format
-  const tableData = useMemo(() => {
-    if (!data) return [];
+  const transactionColumns = useMemo(
+    () => UNIFIED_LIST_TRANSACTION_COLUMNS,
+    []
+  );
+  const [rowCount, setRowCount] = useState<number>(
+    data?.meta.aggregate.totalCount ?? 0
+  );
 
-    const unified: UnifiedTransaction[] = [];
-
-    // Add immediate transactions
-    data.accountEvents?.forEach((event, idx) => {
-      if (event.transfer) {
-        unified.push(transformImmediateTransaction(event.transfer, idx));
-      }
-      if (event.scheduledReversibleTransfer) {
-        unified.push(
-          transformScheduledTransaction(event.scheduledReversibleTransfer)
-        );
-      }
-      if (event.executedReversibleTransfer) {
-        unified.push(
-          transformExecutedTransaction(event.executedReversibleTransfer)
-        );
-      }
-      if (event.cancelledReversibleTransfer) {
-        unified.push(
-          transformCancelledTransaction(event.cancelledReversibleTransfer)
-        );
-      }
-
-      if (event.minerReward) {
-        unified.push(transformMinerReward(event.minerReward, idx));
-      }
-      if (event.multisig) {
-        unified.push(transformMultisigCreated(event.multisig));
-      }
-      if (event.multisigProposalCreated) {
-        unified.push(
-          transformMultisigProposalCreated(event.multisigProposalCreated)
-        );
-      }
-      if (event.multisigSignerApproved) {
-        unified.push(
-          transformMultisigSignerApproved(event.multisigSignerApproved)
-        );
-      }
-      if (event.multisigProposalReady) {
-        unified.push(
-          transformMultisigProposalReady(event.multisigProposalReady)
-        );
-      }
-      if (event.executedMultisigProposal) {
-        unified.push(
-          transformMultisigProposalExecuted(event.executedMultisigProposal)
-        );
-      }
-      if (event.cancelledMultisigProposal) {
-        unified.push(
-          transformMultisigProposalCancelled(event.cancelledMultisigProposal)
-        );
-      }
-      if (event.removedMultisigProposal) {
-        unified.push(
-          transformMultisigProposalRemoved(event.removedMultisigProposal)
-        );
-      }
-      if (event.multisigDepositsClaimed) {
-        unified.push(
-          transformMultisigDepositsClaimed(event.multisigDepositsClaimed)
-        );
-      }
-    });
-
-    // Add guardian relationships (as high-security type)
-    data.guardian?.nodes?.forEach((guardian, idx) => {
-      unified.push(
-        transformHighSecuritySet(
-          {
-            timestamp: (guardian as { timestamp?: string }).timestamp ?? '',
-            block: (guardian as { block?: { height: number } }).block ?? {
-              height: 0
-            },
-            who: { id: '' }, // Guardian view doesn't have who (it's the current account)
-            guardian: guardian.guardian
-          },
-          idx
-        )
-      );
-    });
-
-    // Add beneficiary relationships (as high-security type)
-    data.beneficiaries?.nodes?.forEach((beneficiary, idx) => {
-      unified.push(
-        transformHighSecuritySet(
-          {
-            timestamp: (beneficiary as { timestamp?: string }).timestamp ?? '',
-            block: (beneficiary as { block?: { height: number } }).block ?? {
-              height: 0
-            },
-            who: beneficiary.who,
-            guardian: { id: '' } // Beneficiary view doesn't have guardian (it's the current account)
-          },
-          idx
-        )
-      );
-    });
-
-    // Add wormhole outputs
-    data.wormholeOutputs?.forEach((output, idx) => {
-      const { wormholeExtrinsic } = output;
-      if (wormholeExtrinsic) {
-        unified.push(
-          transformWormholeOutput(
-            {
-              id: wormholeExtrinsic.id,
-              extrinsic: wormholeExtrinsic.extrinsic,
-              timestamp: wormholeExtrinsic.timestamp,
-              totalAmount: wormholeExtrinsic.totalAmount,
-              outputCount: wormholeExtrinsic.outputCount,
-              outputs: wormholeExtrinsic.outputs,
-              block: wormholeExtrinsic.block
-            },
-            idx
-          )
-        );
-      }
-    });
-
-    return sortByTimestampDesc(unified);
-  }, [data]);
-
-  const table = useReactTable<UnifiedTransaction>({
-    data: tableData,
-    columns,
+  const table = useReactTable<UnifiedListTransaction>({
+    data: data?.transactions ?? [],
+    columns: transactionColumns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    enableSorting: false,
     state: {
-      pagination
+      sorting: sortingValue,
+      pagination: paginationValue
     },
-    onPaginationChange: setPagination
+    rowCount,
+    onSortingChange: handleChangeSorting,
+    onPaginationChange: handleChangePagination,
+    manualSorting: true,
+    manualPagination: true
   });
 
   const success = !loading && !fetchError;
   const error = !loading && fetchError;
 
-  const getStatus = useCallback(() => {
+  const getStatus = () => {
     switch (true) {
       case success:
         return 'success';
@@ -194,7 +87,12 @@ export const useAccountAllTransactions = (
       default:
         return 'idle';
     }
-  }, [success, error, loading]);
+  };
+
+  useEffect(() => {
+    if (!loading && data?.meta.aggregate.totalCount != null)
+      setRowCount(data.meta.aggregate.totalCount);
+  }, [loading, data?.meta.aggregate.totalCount]);
 
   return {
     table,

@@ -46,7 +46,6 @@ import {
 } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
-import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 
 import type { GraphqlBenchmarkRegistryEntry } from './types';
@@ -77,8 +76,7 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
   {
     name: 'GetAccountById',
     document: GetAccountByIdDocument,
-    getVariables: (ctx) =>
-      ctx.accountId ? { id: ctx.accountId, limit: QUERY_UNIFIED_LIMIT } : null
+    getVariables: (ctx) => (ctx.accountId ? { id: ctx.accountId } : null)
   },
   {
     name: 'GetAccountsStats',

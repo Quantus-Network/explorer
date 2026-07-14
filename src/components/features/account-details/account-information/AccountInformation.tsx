@@ -1,7 +1,7 @@
 import type { QueryResult } from '@apollo/client';
-import { Check, X } from 'lucide-react';
 import * as React from 'react';
 
+import { Badge } from '@/components/ui/badge';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -12,6 +12,19 @@ import { formatMonetaryValue } from '@/utils/formatter';
 export interface AccountInformationProps {
   accountId: string;
   query: QueryResult<AccountResponse>;
+}
+
+interface AccountDetailsInfo {
+  id: string;
+  free: number;
+  frozen: number;
+  reserved: number;
+  transactions: number;
+  miningRewards: number;
+  checksum: string;
+  isHighSecurity: boolean;
+  isGuardian: boolean;
+  isMultisig: boolean;
 }
 
 export const AccountInformation: React.FC<AccountInformationProps> = ({
@@ -25,50 +38,46 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
     loading,
     accountId
   );
-  const transactions = data?.accountStats.total_immediate_transfers;
-  const scheduledReversibleTransactions =
-    data?.accountStats.total_scheduled_transfers;
-  const executedReversibleTransactions =
-    data?.accountStats.total_executed_transfers;
-  const cancelledReversibleTransactions =
-    data?.accountStats.total_cancelled_transfers;
-  const miningRewards = data?.accountStats.total_mined_blocks;
-  const beneficiaries = data?.beneficiaries.aggregate.totalCount;
-  const guardians = data?.guardian.aggregate.totalCount;
 
-  const information = [
+  const stats = data?.accountStats;
+  const transactions =
+    (stats?.total_immediate_transfers ?? 0) +
+    (stats?.total_scheduled_transfers ?? 0) +
+    (stats?.total_executed_transfers ?? 0) +
+    (stats?.total_cancelled_transfers ?? 0);
+  const miningRewards = stats?.total_mined_blocks ?? 0;
+  const isHighSecurity = (data?.guardian?.aggregate.totalCount ?? 0) > 0;
+  const isGuardian = (data?.beneficiaries?.aggregate.totalCount ?? 0) > 0;
+  const isMultisig = !!data?.multisig;
+
+  const information: AccountDetailsInfo[] = [
     {
       id: accountId,
       free: account?.free ?? 0,
       frozen: account?.frozen ?? 0,
       reserved: account?.reserved ?? 0,
       transactions,
-      scheduledReversibleTransactions,
-      executedReversibleTransactions,
-      cancelledReversibleTransactions,
       miningRewards,
-      checksum,
-      isHighSecurity: guardians && guardians > 0,
-      isGuardian: beneficiaries && beneficiaries > 0,
-      isMultisig: !!data?.multisig
+      checksum: checksum ?? '',
+      isHighSecurity,
+      isGuardian,
+      isMultisig
     }
   ];
 
   return (
-    <DataList
+    <DataList<AccountDetailsInfo>
       loading={loading}
       data={information}
       fields={[
         {
-          label: 'ID',
+          label: 'Address',
           key: 'id',
           render: (value) => <TextWithCopy text={value} className="break-all" />
         },
         {
           label: 'Check Phrase',
           key: 'checksum',
-          tooltip:
-            'A human-readable checksum from cryptocurrency address; designed to make address verification easier and prevent address poisoning attacks—where attackers craft lookalike addresses to trick users.',
           render: (value) =>
             checksumLoading ? (
               <Skeleton className="h-6" />
@@ -77,31 +86,51 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             )
         },
         {
-          label: 'Is High Security',
+          label: 'Account type',
           key: 'isHighSecurity',
-          tooltip:
-            'Whether the account is a beneficiary of a high security set',
-          render: (value) =>
-            value ? <Check className="size-4" /> : <X className="size-4" />
-        },
-        {
-          label: 'Is Guardian',
-          key: 'isGuardian',
-          tooltip: 'Whether the account is a guardian of a high security set',
-          render: (value) =>
-            value ? <Check className="size-4" /> : <X className="size-4" />
-        },
-        {
-          label: 'Is Multisig',
-          key: 'isMultisig',
-          tooltip: 'Whether this account is a multisig wallet',
-          render: (value) =>
-            value ? <Check className="size-4" /> : <X className="size-4" />
+          render: (_value, item) => {
+            const badges: React.ReactNode[] = [];
+            if (item.isHighSecurity) {
+              badges.push(
+                <Badge key="high-sec" variant="immediate">
+                  High security beneficiary
+                </Badge>
+              );
+            }
+            if (item.isGuardian) {
+              badges.push(
+                <Badge key="guardian" variant="reversible">
+                  Guardian
+                </Badge>
+              );
+            }
+            if (item.isMultisig) {
+              badges.push(
+                <Badge key="multisig" variant="miner">
+                  Multisig
+                </Badge>
+              );
+            }
+            if (badges.length === 0) {
+              return (
+                <span className="font-mono text-[11px] text-muted-text">
+                  Standard
+                </span>
+              );
+            }
+            return (
+              <div className="flex flex-wrap items-center gap-1">{badges}</div>
+            );
+          }
         },
         {
           label: 'Free Balance',
           key: 'free',
-          render: (value) => formatMonetaryValue(value),
+          render: (value) => (
+            <span className="font-mono text-base text-flare">
+              {formatMonetaryValue(value)}
+            </span>
+          ),
           tooltip: 'The amount of tokens that can be used.'
         },
         {
@@ -118,34 +147,20 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           tooltip: 'The amount of tokens that are locked and cannot be used. '
         },
         {
-          label: 'Immediate Transactions',
+          label: 'Transactions',
           key: 'transactions',
-          render: (value) =>
-            value > 1 ? `${value} transactions` : `${value} transaction`
-        },
-        {
-          label: 'Scheduled Reversible Transactions',
-          key: 'scheduledReversibleTransactions',
-          render: (value) =>
-            value > 1 ? `${value} transactions` : `${value} transaction`
-        },
-        {
-          label: 'Executed Reversible Transactions',
-          key: 'executedReversibleTransactions',
-          render: (value) =>
-            value > 1 ? `${value} transactions` : `${value} transaction`
-        },
-        {
-          label: 'Cancelled Reversible Transactions',
-          key: 'cancelledReversibleTransactions',
-          render: (value) =>
-            value > 1 ? `${value} transactions` : `${value} transaction`
+          render: (value) => (
+            <span className="font-mono">{value.toLocaleString()}</span>
+          )
         },
         {
           label: 'Mining Rewards',
           key: 'miningRewards',
-          render: (value) =>
-            value > 1 ? `${value} rewards` : `${value} reward`
+          render: (value) => (
+            <span className="font-mono">
+              {value > 1 ? `${value} rewards` : `${value} reward`}
+            </span>
+          )
         }
       ]}
     />

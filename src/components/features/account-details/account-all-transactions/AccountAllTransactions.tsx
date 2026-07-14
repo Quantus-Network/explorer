@@ -1,23 +1,20 @@
-import type { QueryResult } from '@apollo/client';
 import React from 'react';
 
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
 import { FetchError } from '@/components/ui/composites/fetch-error/FetchError';
-import { ContentContainer } from '@/components/ui/content-container';
-import type { AccountResponse } from '@/schemas';
 
 import { useAccountAllTransactions } from './hook';
 
 interface Props {
-  query: QueryResult<AccountResponse>;
+  accountId: string;
 }
 
-export const AccountAllTransactions: React.FC<Props> = ({ query }) => {
-  const { getStatus, table, error } = useAccountAllTransactions(query);
+export const AccountAllTransactions: React.FC<Props> = ({ accountId }) => {
+  const { getStatus, table, error } = useAccountAllTransactions(accountId);
 
   return (
-    <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>All Account Activity</h2>
+    <div className="flex flex-col gap-4">
+      <h2>Activity</h2>
 
       <DataTable
         table={table}
@@ -27,6 +24,6 @@ export const AccountAllTransactions: React.FC<Props> = ({ query }) => {
         }}
         withControls
       />
-    </ContentContainer>
+    </div>
   );
 };

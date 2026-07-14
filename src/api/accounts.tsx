@@ -6,7 +6,6 @@ import { subDays } from 'date-fns/subDays';
 
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
-import { QUERY_UNIFIED_LIMIT } from '@/constants/query-unified-limit';
 import type {
   AccountListResponse,
   AccountResponse,
@@ -68,7 +67,7 @@ export const accounts = {
   },
   getById: () => {
     const GET_ACCOUNT = gql`
-      query GetAccountById($id: String!, $limit: Int!) {
+      query GetAccountById($id: String!) {
         account: account_by_pk(id: $id) {
           id
           free
@@ -85,390 +84,19 @@ export const accounts = {
         }
         multisig: multisig_by_pk(id: $id) {
           id
-          timestamp
-          threshold
-          nonce
-          signers
-          creator {
-            id
-          }
-          block {
-            height
-          }
-          extrinsic {
-            id
-            pallet
-            call
-          }
         }
-        accountEvents: account_event(
-          limit: $limit
-          where: { account_id: { _eq: $id } }
-        ) {
-          transfer {
-            fee
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            block {
-              height
-            }
-            amount
-            timestamp
-            from {
-              id
-            }
-            to {
-              id
-            }
-          }
-          scheduledReversibleTransfer {
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            timestamp
-            amount
-            timestamp
-            scheduled_at
-            tx_id
-            fee
-            block {
-              height
-            }
-            from {
-              id
-            }
-            to {
-              id
-            }
-          }
-          executedReversibleTransfer {
-            timestamp
-            tx_id
-            block {
-              height
-            }
-            scheduledTransfer {
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              amount
-              timestamp
-              scheduled_at
-              tx_id
-              fee
-              block {
-                height
-              }
-              from {
-                id
-              }
-              to {
-                id
-              }
-            }
-          }
-          cancelledReversibleTransfer {
-            timestamp
-            tx_id
-            block {
-              height
-            }
-            cancelledBy {
-              id
-            }
-            scheduledTransfer {
-              extrinsic {
-                id
-                pallet
-                call
-              }
-              amount
-              timestamp
-              scheduled_at
-              tx_id
-              fee
-              block {
-                height
-              }
-              from {
-                id
-              }
-              to {
-                id
-              }
-            }
-          }
-          minerReward {
-            block {
-              height
-              hash
-            }
-            reward
-            miner {
-              id
-            }
-            timestamp
-          }
-          multisig {
-            id
-            timestamp
-            threshold
-            nonce
-            signers
-            creator {
-              id
-            }
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-          }
-          multisigProposalCreated {
-            id
-            timestamp
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            proposal {
-              id
-              multisig {
-                id
-              }
-              proposer {
-                id
-              }
-            }
-          }
-          multisigSignerApproved {
-            id
-            timestamp
-            approvals_count
-            approver {
-              id
-            }
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            proposal {
-              id
-              multisig {
-                id
-              }
-              proposer {
-                id
-              }
-            }
-          }
-          multisigProposalReady {
-            id
-            timestamp
-            approvals_count
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            proposal {
-              id
-              multisig {
-                id
-              }
-              proposer {
-                id
-              }
-            }
-          }
-          executedMultisigProposal {
-            id
-            timestamp
-            approvers
-            result
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            proposal {
-              id
-              multisig {
-                id
-              }
-              proposer {
-                id
-              }
-            }
-          }
-          cancelledMultisigProposal {
-            id
-            timestamp
-            cancelledBy {
-              id
-            }
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            proposal {
-              id
-              multisig {
-                id
-              }
-              proposer {
-                id
-              }
-            }
-          }
-          removedMultisigProposal {
-            id
-            timestamp
-            removedBy {
-              id
-            }
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            proposal {
-              id
-              multisig {
-                id
-              }
-              proposer {
-                id
-              }
-            }
-          }
-          multisigDepositsClaimed {
-            id
-            timestamp
-            total_returned
-            proposals_removed
-            claimer {
-              id
-            }
-            multisig {
-              id
-            }
-            block {
-              height
-            }
-            extrinsic {
-              id
-              pallet
-              call
-            }
-          }
-        }
-
         guardian: high_security_set_aggregate(
-          order_by: { timestamp: desc }
-          limit: $limit
           where: { who: { id: { _eq: $id } } }
         ) {
-          nodes {
-            timestamp
-            block {
-              height
-            }
-            guardian {
-              id
-              free
-              frozen
-              reserved
-            }
-          }
           aggregate {
             totalCount: count
           }
         }
-
         beneficiaries: high_security_set_aggregate(
-          order_by: { timestamp: desc }
-          limit: $limit
           where: { guardian: { id: { _eq: $id } } }
         ) {
-          nodes {
-            timestamp
-            block {
-              height
-            }
-            who {
-              id
-              free
-              frozen
-              reserved
-            }
-          }
           aggregate {
             totalCount: count
-          }
-        }
-
-        wormholeOutputs: wormhole_output(
-          order_by: { wormholeExtrinsic: { timestamp: desc } }
-          limit: $limit
-          where: { exitAccount: { id: { _eq: $id } } }
-        ) {
-          id
-          amount
-          exitAccount {
-            id
-          }
-          wormholeExtrinsic {
-            id
-            extrinsic {
-              id
-              pallet
-              call
-            }
-            total_amount
-            output_count
-            timestamp
-            block {
-              height
-            }
-            outputs {
-              id
-              exitAccount {
-                id
-              }
-              amount
-            }
           }
         }
       }
@@ -479,8 +107,7 @@ export const accounts = {
         useQuery<AccountResponse>(GET_ACCOUNT, {
           ...config,
           variables: {
-            id,
-            limit: QUERY_UNIFIED_LIMIT
+            id
           }
         })
     };
