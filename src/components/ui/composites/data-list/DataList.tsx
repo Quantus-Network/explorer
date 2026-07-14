@@ -4,6 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
 
 import { Skeleton } from '../../skeleton';
+import { EmptyState } from '../empty-state/EmptyState';
 import { Info } from '../info/Info';
 
 interface Field<T> {
@@ -20,7 +21,8 @@ interface DataListProps<T> {
   loading?: boolean;
   error?: string | null;
   className?: string;
-  emptyFallback?: React.ReactNode;
+  emptyTitle?: string;
+  emptyDescription?: string;
   errorFallback?: (error: string) => React.ReactNode;
 }
 
@@ -31,7 +33,8 @@ export function DataList<T>({
   loading = false,
   error = null,
   className,
-  emptyFallback,
+  emptyTitle,
+  emptyDescription,
   errorFallback
 }: DataListProps<T>) {
   if (error)
@@ -46,12 +49,11 @@ export function DataList<T>({
 
   if (!data || data.length === 0)
     return (
-      <Alert className={cn(className)}>
-        <AlertTitle>No data found</AlertTitle>
-        <AlertDescription>
-          {emptyFallback || 'There is no data to display.'}
-        </AlertDescription>
-      </Alert>
+      <EmptyState
+        className={className}
+        title={emptyTitle}
+        description={emptyDescription}
+      />
     );
 
   return (

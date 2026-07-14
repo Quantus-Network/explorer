@@ -9,7 +9,6 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import { cn } from '@/lib/utils';
 
-import { Alert, AlertDescription, AlertTitle } from '../../alert';
 import {
   Table,
   TableBody,
@@ -18,6 +17,7 @@ import {
   TableHeader,
   TableRow
 } from '../../table';
+import { EmptyState } from '../empty-state/EmptyState';
 import { CardSkeleton } from './CardSkeleton';
 import { DataTableCards } from './DataTableCards';
 import { RowSkeleton } from './RowSkeleton';
@@ -33,6 +33,8 @@ interface DataTableProps {
   };
   withControls?: boolean;
   customCellProps?: Record<string, any>;
+  emptyTitle?: string;
+  emptyDescription?: string;
 }
 
 const SortIndicator = ({
@@ -65,7 +67,9 @@ export const DataTable = ({
   table,
   fetch,
   withControls = false,
-  customCellProps = {}
+  customCellProps = {},
+  emptyTitle,
+  emptyDescription
 }: DataTableProps) => {
   const isDesktop = useMediaQuery(MD_BREAKPOINT, {
     defaultValue: false,
@@ -153,14 +157,7 @@ export const DataTable = ({
   }
 
   if (status === 'success' && isEmptyData)
-    return (
-      <Alert>
-        <AlertTitle>No data found</AlertTitle>
-        <AlertDescription>
-          There is no data to display for this query.
-        </AlertDescription>
-      </Alert>
-    );
+    return <EmptyState title={emptyTitle} description={emptyDescription} />;
 
   if (!isDesktop) {
     const showInitialLoading =

@@ -61,8 +61,6 @@ export const useBlockAllTransactions = (query: QueryResult<BlockResponse>) => {
   return {
     table,
     getStatus,
-    error: fetchError,
-    loading,
-    hasExtrinsics: tableData.length > 0
+    error: fetchError
   };
 };
