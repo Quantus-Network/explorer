@@ -14,6 +14,8 @@ export interface ErrorEventInformationProps {
   id: string;
 }
 
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
 export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
   id
 }) => {
@@ -51,38 +53,62 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
                 className="break-all"
               />
             ) : (
-              '-'
+              <EmptyValue />
             )
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => <TimestampDisplay timestamp={value as string} />
+          render: (value) =>
+            value ? (
+              <TimestampDisplay timestamp={value as string} />
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Block',
           key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={formatBlockHeight((value as ErrorEvent['block']).height)}
-              href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
-              className="break-all"
-            />
-          )
+          render: (value) => {
+            const block = value as ErrorEvent['block'] | undefined;
+            if (!block) return <EmptyValue />;
+            return (
+              <LinkWithCopy
+                text={formatBlockHeight(block.height)}
+                href={`${RESOURCES.blocks}/${block.height}`}
+              />
+            );
+          }
         },
         {
           label: 'Error Type',
-          key: 'error_type'
+          key: 'error_type',
+          render: (value) =>
+            value ? (
+              <span className="font-mono">{value as string}</span>
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Error Module',
           key: 'error_module',
-          render: (value) => (value ? (value as string) : '-')
+          render: (value) =>
+            value ? (
+              <span className="font-mono">{value as string}</span>
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Error Name',
           key: 'error_name',
-          render: (value) => (value ? (value as string) : '-')
+          render: (value) =>
+            value ? (
+              <span className="font-mono">{value as string}</span>
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Error Docs',
@@ -91,7 +117,7 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
             value ? (
               <TextWithCopy text={value as string} className="break-all" />
             ) : (
-              '-'
+              <EmptyValue />
             )
         }
       ]}

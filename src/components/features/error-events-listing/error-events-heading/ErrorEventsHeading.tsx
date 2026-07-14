@@ -10,20 +10,20 @@ export const ErrorEventsHeading: React.FC<ErrorEventsHeadingProps> = () => {
 
   return (
     <div>
-      <h1>Error Events</h1>
+      <h1 className="page-title">Error Events</h1>
       {block ? (
-        <div className="mt-1 flex gap-1 text-sm text-muted-foreground">
+        <div className="page-subtitle flex gap-1">
           <span>In block</span>
           <Link
             to="/blocks/$id"
             params={{ id: block }}
-            className="text-primary hover:underline"
+            className="text-flare no-underline hover:underline"
           >
             {block}
           </Link>
         </div>
       ) : (
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="page-subtitle">
           A list of all error events that occurred on the network.
         </p>
       )}

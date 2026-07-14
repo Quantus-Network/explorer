@@ -32,38 +32,38 @@ export const ErrorEventsStats: React.FC<ErrorEventsStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <CardGroup className="grid-cols-1 sm:grid-cols-2">
+    <CardGroup className="max-w-[600px] grid-cols-1 sm:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle>Total Error Events</CardTitle>
+          <CardTitle>
+            <h3>Total Error Events</h3>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="text-2xl font-bold">
+            <p className="font-mono">
               {data?.allTime.total_error_events.toLocaleString()}
             </p>
           )}
-          {loading && <Skeleton className="h-8 w-24" />}
-          {error && (
-            <p className="text-sm text-destructive">Error: {error.message}</p>
-          )}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent Error Events (24H)</CardTitle>
+          <CardTitle>
+            <h3>Recent Error Events (24H)</h3>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="text-2xl font-bold">
+            <p className="font-mono">
               {data?.last24Hour.aggregate.totalCount.toLocaleString()}
             </p>
           )}
-          {loading && <Skeleton className="h-8 w-24" />}
-          {error && (
-            <p className="text-sm text-destructive">Error: {error.message}</p>
-          )}
+          {loading && <Skeleton className="h-6" />}
+          {error && <p>Error: {error.message}</p>}
         </CardContent>
       </Card>
     </CardGroup>
