@@ -6,6 +6,7 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigCreated } from '@/schemas';
 import { formatBlockHeight } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 type MultisigCreatedField = {
   label: string;
@@ -14,16 +15,28 @@ type MultisigCreatedField = {
   render?: (value: unknown, item: Partial<MultisigCreated>) => React.ReactNode;
 };
 
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
 const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
   {
     label: 'Threshold',
     key: 'threshold',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Nonce',
     key: 'nonce',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Creator',
@@ -35,10 +48,9 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
           href={`${RESOURCES.accounts}/${creatorId}`}
           text={creatorId}
           textCopy={creatorId}
-          className="break-all"
         />
       ) : (
-        '-'
+        <EmptyValue />
       );
     }
   },
@@ -47,7 +59,7 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
     key: 'signers',
     render: (value) => {
       const signers = value as string[] | undefined;
-      if (!signers?.length) return '-';
+      if (!signers?.length) return <EmptyValue />;
       return (
         <div className="flex flex-col gap-1">
           {signers.map((signer) => (
@@ -56,7 +68,6 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
               href={`${RESOURCES.accounts}/${signer}`}
               text={signer}
               textCopy={signer}
-              className="break-all"
             />
           ))}
         </div>
@@ -69,31 +80,48 @@ export const getMultisigCreatedEventFields = (): MultisigCreatedField[] => [
   {
     label: 'Extrinsic Hash',
     key: 'extrinsic',
-    render: (value) =>
-      (value as MultisigCreated['extrinsic'])?.id ? (
-        <TextWithCopy
-          text={(value as MultisigCreated['extrinsic'])?.id ?? '-'}
-          className="break-all"
-        />
+    render: (value) => {
+      const extrinsicId = (value as MultisigCreated['extrinsic'])?.id;
+      return extrinsicId ? (
+        <TextWithCopy text={extrinsicId} className="break-all" />
       ) : (
-        '-'
-      )
+        <EmptyValue />
+      );
+    }
   },
   {
     label: 'Timestamp',
     key: 'timestamp',
-    render: (value) => <TimestampDisplay timestamp={value as string} />
+    render: (value) =>
+      value ? <TimestampDisplay timestamp={value as string} /> : <EmptyValue />
   },
   {
     label: 'Block',
     key: 'block',
-    render: (value) => (
-      <LinkWithCopy
-        text={formatBlockHeight((value as MultisigCreated['block']).height)}
-        href={`${RESOURCES.blocks}/${(value as MultisigCreated['block']).height}`}
-        className="break-all"
-      />
-    )
+    render: (value) => {
+      const block = value as MultisigCreated['block'] | undefined;
+      if (!block) return <EmptyValue />;
+      return (
+        <LinkWithCopy
+          text={formatBlockHeight(block.height)}
+          href={`${RESOURCES.blocks}/${block.height}`}
+        />
+      );
+    }
+  },
+  {
+    label: 'Multisig',
+    key: 'id',
+    render: (value) =>
+      value ? (
+        <LinkWithCopy
+          href={getMultisigWalletHref(String(value))}
+          text={String(value)}
+          textCopy={String(value)}
+        />
+      ) : (
+        <EmptyValue />
+      )
   },
   ...getSharedMultisigConfigurationFields()
 ];
@@ -103,24 +131,32 @@ export const getMultisigAccountFields = (): MultisigCreatedField[] => [
     label: 'Address',
     key: 'id',
     render: (value) =>
-      value ? <TextWithCopy text={String(value)} className="break-all" /> : '-'
+      value ? (
+        <TextWithCopy text={String(value)} className="break-all" />
+      ) : (
+        <EmptyValue />
+      )
   },
   ...getSharedMultisigConfigurationFields(),
   {
     label: 'Created At',
     key: 'timestamp',
-    render: (value) => <TimestampDisplay timestamp={value as string} />
+    render: (value) =>
+      value ? <TimestampDisplay timestamp={value as string} /> : <EmptyValue />
   },
   {
     label: 'Block',
     key: 'block',
-    render: (value) => (
-      <LinkWithCopy
-        text={formatBlockHeight((value as MultisigCreated['block']).height)}
-        href={`${RESOURCES.blocks}/${(value as MultisigCreated['block']).height}`}
-        className="break-all"
-      />
-    )
+    render: (value) => {
+      const block = value as MultisigCreated['block'] | undefined;
+      if (!block) return <EmptyValue />;
+      return (
+        <LinkWithCopy
+          text={formatBlockHeight(block.height)}
+          href={`${RESOURCES.blocks}/${block.height}`}
+        />
+      );
+    }
   },
   {
     label: 'Creation Event',
@@ -132,7 +168,7 @@ export const getMultisigAccountFields = (): MultisigCreatedField[] => [
           text="View creation event"
         />
       ) : (
-        '-'
+        <EmptyValue />
       )
   }
 ];
