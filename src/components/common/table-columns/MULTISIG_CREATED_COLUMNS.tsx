@@ -5,10 +5,28 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigCreated } from '@/schemas';
 import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<MultisigCreated>();
 
 export const MULTISIG_CREATED_COLUMNS = [
+  columnHelper.accessor('id', {
+    id: 'wallet',
+    header: 'Wallet',
+    cell: (props) => {
+      const walletId = props.getValue();
+      return walletId ? (
+        <LinkWithCopy
+          href={getMultisigWalletHref(walletId)}
+          text={formatTxAddress(walletId)}
+          textCopy={walletId}
+        />
+      ) : (
+        '-'
+      );
+    },
+    enableSorting: false
+  }),
   columnHelper.accessor('extrinsic.id', {
     id: 'extrinsicHash',
     header: 'Hash',

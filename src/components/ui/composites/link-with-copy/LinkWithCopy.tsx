@@ -18,7 +18,7 @@ export const LinkWithCopy: React.FC<LinkWithCopyProps> = ({
   text,
   textCopy = text,
   className,
-  truncate = true
+  truncate = false
 }) => {
   return (
     <div className="group flex items-center gap-1">

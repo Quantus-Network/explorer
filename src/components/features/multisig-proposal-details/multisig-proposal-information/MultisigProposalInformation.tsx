@@ -18,6 +18,7 @@ import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { getMultisigProposalEventHref } from '@/utils/get-multisig-proposal-event-href';
 import { getMultisigProposalKind } from '@/utils/get-multisig-proposal-kind';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 export interface MultisigProposalInformationProps {
   id: string;
@@ -50,6 +51,17 @@ const accountLink = (accountId?: string | null) =>
     <LinkWithCopy
       href={`${RESOURCES.accounts}/${accountId}`}
       text={accountId}
+      className="break-all"
+    />
+  ) : (
+    '-'
+  );
+
+const walletLink = (walletId?: string | null) =>
+  walletId ? (
+    <LinkWithCopy
+      href={getMultisigWalletHref(walletId)}
+      text={walletId}
       className="break-all"
     />
   ) : (
@@ -143,7 +155,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
   {
     label: 'Multisig',
     key: 'multisig',
-    render: (value) => accountLink((value as MultisigProposal['multisig'])?.id)
+    render: (value) => walletLink((value as MultisigProposal['multisig'])?.id)
   },
   {
     label: 'Proposer',

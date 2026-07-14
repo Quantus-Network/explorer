@@ -9,6 +9,7 @@ import {
   formatMonetaryValue,
   formatTxAddress
 } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<MultisigDepositsClaimed>();
 
@@ -47,7 +48,7 @@ export const MULTISIG_DEPOSITS_CLAIMED_COLUMNS = [
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
-          href={`${RESOURCES.accounts}/${props.getValue()}`}
+          href={getMultisigWalletHref(props.getValue() ?? '')}
           text={formatTxAddress(props.getValue() ?? '-')}
           textCopy={props.getValue() ?? ''}
         />

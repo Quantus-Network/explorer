@@ -6,6 +6,7 @@ import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MultisigCreatedSorts } from '@/constants/query-sorts';
 import type {
+  MultisigByIdResponse,
   MultisigCreatedListResponse,
   MultisigCreatedResponse,
   MultisigCreatedStatsResponse,
@@ -156,6 +157,24 @@ export const multisigCreated = {
         useQuery<MultisigCreatedResponse>(GET_MULTISIG_CREATED_BY_HASH, {
           ...config,
           variables: { hash }
+        })
+    };
+  },
+  getById: () => {
+    const GET_MULTISIG_BY_ID = gql`
+      ${MULTISIG_CREATED_FIELDS}
+      query GetMultisigById($id: String!) {
+        multisig: multisig_by_pk(id: $id) {
+          ...MultisigCreatedFields
+        }
+      }
+    `;
+
+    return {
+      useQuery: (id: string, config?: QueryHookOptions<MultisigByIdResponse>) =>
+        useQuery<MultisigByIdResponse>(GET_MULTISIG_BY_ID, {
+          ...config,
+          variables: { id }
         })
     };
   }

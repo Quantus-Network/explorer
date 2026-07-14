@@ -13,6 +13,7 @@ import {
   formatTxAddress
 } from '@/utils/formatter';
 import { getMultisigProposalHref } from '@/utils/get-multisig-proposal-href';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<UnifiedTransaction>();
 
@@ -324,7 +325,7 @@ export const createUnifiedTransactionColumns = (
                 <div className="flex items-center gap-1">
                   <span className="text-muted-text">Multisig:</span>
                   <LinkWithCopy
-                    href={`${RESOURCES.accounts}/${row.multisig.id}`}
+                    href={getMultisigWalletHref(row.multisig.id)}
                     text={formatTxAddress(row.multisig.id)}
                     textCopy={row.multisig.id}
                   />
@@ -393,7 +394,7 @@ export const createUnifiedTransactionColumns = (
                 <div className="flex items-center gap-1">
                   <span className="text-muted-text">Multisig:</span>
                   <LinkWithCopy
-                    href={`${RESOURCES.accounts}/${row.multisig.id}`}
+                    href={getMultisigWalletHref(row.multisig.id)}
                     text={formatTxAddress(row.multisig.id)}
                     textCopy={row.multisig.id}
                   />

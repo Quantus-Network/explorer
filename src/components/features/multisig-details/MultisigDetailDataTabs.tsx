@@ -1,36 +1,37 @@
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { useNavigate, useParams, useSearch } from '@tanstack/react-router';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import * as React from 'react';
 
-import { MultisigCreatedTable } from '@/components/features/multisig-created-listing/multisig-created-table/MultisigCreatedTable';
-import { MultisigProposalTable } from '@/components/features/multisig-proposal-listing/multisig-proposal-table/MultisigProposalTable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import type { MultisigTab } from '@/constants/multisig-listing';
+import type { MultisigDetailTab } from '@/constants/multisig-detail';
 
-import { MultisigStatusFilter } from './MultisigStatusFilter';
+import { MultisigDetailProposals } from './multisig-proposals/MultisigDetailProposals';
+import { MultisigDetailTransactions } from './multisig-transactions/MultisigDetailTransactions';
+import { MultisigDetailStatusFilter } from './MultisigDetailStatusFilter';
 
-export const MultisigDataTabs: React.FC = () => {
+interface Props {
+  walletId: string;
+}
+
+export const MultisigDetailDataTabs: React.FC<Props> = ({ walletId }) => {
   const navigate = useNavigate();
+  const { id } = useParams({ from: '/multisig/$id' });
   const [, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [, setOrderBy] = useQueryState('order_by');
-  const {
-    tab = 'wallets',
-    status,
-    block
-  } = useSearch({
-    from: '/multisig/'
+  const { tab = 'transactions', status } = useSearch({
+    from: '/multisig/$id'
   });
 
   const handleTabChange = (value: string) => {
-    const nextTab = value as MultisigTab;
+    const nextTab = value as MultisigDetailTab;
     void setPage(1);
     void setOrderBy(null);
     void navigate({
-      to: '/multisig',
+      to: '/multisig/$id',
+      params: { id },
       search: {
         tab: nextTab,
-        status: nextTab === 'proposals' ? status ?? 'all' : 'all',
-        ...(block ? { block } : {})
+        status: nextTab === 'proposals' ? status : 'all'
       }
     });
   };
@@ -39,10 +40,10 @@ export const MultisigDataTabs: React.FC = () => {
     <Tabs value={tab} onValueChange={handleTabChange} className="gap-4">
       <TabsList className="h-auto w-full justify-start rounded-none border-b border-border-subtle bg-transparent p-0">
         <TabsTrigger
-          value="wallets"
+          value="transactions"
           className="-mb-px flex-none rounded-none border-0 border-b-2 border-transparent px-4 py-2 data-[state=active]:border-flare data-[state=active]:bg-transparent data-[state=active]:shadow-none"
         >
-          Wallets
+          Transactions
         </TabsTrigger>
         <TabsTrigger
           value="proposals"
@@ -52,13 +53,13 @@ export const MultisigDataTabs: React.FC = () => {
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="wallets" className="mt-0">
-        <MultisigCreatedTable />
+      <TabsContent value="transactions" className="mt-0">
+        <MultisigDetailTransactions walletId={walletId} />
       </TabsContent>
 
       <TabsContent value="proposals" className="mt-0 flex flex-col gap-4">
-        <MultisigStatusFilter />
-        <MultisigProposalTable />
+        <MultisigDetailStatusFilter />
+        <MultisigDetailProposals walletId={walletId} />
       </TabsContent>
     </Tabs>
   );

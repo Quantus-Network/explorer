@@ -26,6 +26,7 @@ import { Route as ErrorsIndexRouteImport } from './routes/errors/index'
 import { Route as BlocksIndexRouteImport } from './routes/blocks/index'
 import { Route as AccountsIndexRouteImport } from './routes/accounts/index'
 import { Route as TransactionsHashRouteImport } from './routes/transactions/$hash'
+import { Route as MultisigIdRouteImport } from './routes/multisig/$id'
 import { Route as MultisigSignerApprovedHashRouteImport } from './routes/multisig-signer-approved/$hash'
 import { Route as MultisigProposalsIdRouteImport } from './routes/multisig-proposals/$id'
 import { Route as MultisigProposalRemovedHashRouteImport } from './routes/multisig-proposal-removed/$hash'
@@ -136,6 +137,11 @@ const AccountsIndexRoute = AccountsIndexRouteImport.update({
 const TransactionsHashRoute = TransactionsHashRouteImport.update({
   id: '/transactions/$hash',
   path: '/transactions/$hash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MultisigIdRoute = MultisigIdRouteImport.update({
+  id: '/multisig/$id',
+  path: '/multisig/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MultisigSignerApprovedHashRoute =
@@ -261,6 +267,7 @@ export interface FileRoutesByFullPath {
   '/multisig-proposal-removed/$hash': typeof MultisigProposalRemovedHashRoute
   '/multisig-proposals/$id': typeof MultisigProposalsIdRoute
   '/multisig-signer-approved/$hash': typeof MultisigSignerApprovedHashRoute
+  '/multisig/$id': typeof MultisigIdRoute
   '/transactions/$hash': typeof TransactionsHashRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
@@ -299,6 +306,7 @@ export interface FileRoutesByTo {
   '/multisig-proposal-removed/$hash': typeof MultisigProposalRemovedHashRoute
   '/multisig-proposals/$id': typeof MultisigProposalsIdRoute
   '/multisig-signer-approved/$hash': typeof MultisigSignerApprovedHashRoute
+  '/multisig/$id': typeof MultisigIdRoute
   '/transactions/$hash': typeof TransactionsHashRoute
   '/accounts': typeof AccountsIndexRoute
   '/blocks': typeof BlocksIndexRoute
@@ -338,6 +346,7 @@ export interface FileRoutesById {
   '/multisig-proposal-removed/$hash': typeof MultisigProposalRemovedHashRoute
   '/multisig-proposals/$id': typeof MultisigProposalsIdRoute
   '/multisig-signer-approved/$hash': typeof MultisigSignerApprovedHashRoute
+  '/multisig/$id': typeof MultisigIdRoute
   '/transactions/$hash': typeof TransactionsHashRoute
   '/accounts/': typeof AccountsIndexRoute
   '/blocks/': typeof BlocksIndexRoute
@@ -378,6 +387,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-removed/$hash'
     | '/multisig-proposals/$id'
     | '/multisig-signer-approved/$hash'
+    | '/multisig/$id'
     | '/transactions/$hash'
     | '/accounts'
     | '/blocks'
@@ -416,6 +426,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-removed/$hash'
     | '/multisig-proposals/$id'
     | '/multisig-signer-approved/$hash'
+    | '/multisig/$id'
     | '/transactions/$hash'
     | '/accounts'
     | '/blocks'
@@ -454,6 +465,7 @@ export interface FileRouteTypes {
     | '/multisig-proposal-removed/$hash'
     | '/multisig-proposals/$id'
     | '/multisig-signer-approved/$hash'
+    | '/multisig/$id'
     | '/transactions/$hash'
     | '/accounts/'
     | '/blocks/'
@@ -493,6 +505,7 @@ export interface RootRouteChildren {
   MultisigProposalRemovedHashRoute: typeof MultisigProposalRemovedHashRoute
   MultisigProposalsIdRoute: typeof MultisigProposalsIdRoute
   MultisigSignerApprovedHashRoute: typeof MultisigSignerApprovedHashRoute
+  MultisigIdRoute: typeof MultisigIdRoute
   TransactionsHashRoute: typeof TransactionsHashRoute
   AccountsIndexRoute: typeof AccountsIndexRoute
   BlocksIndexRoute: typeof BlocksIndexRoute
@@ -635,6 +648,13 @@ declare module '@tanstack/react-router' {
       path: '/transactions/$hash'
       fullPath: '/transactions/$hash'
       preLoaderRoute: typeof TransactionsHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/multisig/$id': {
+      id: '/multisig/$id'
+      path: '/multisig/$id'
+      fullPath: '/multisig/$id'
+      preLoaderRoute: typeof MultisigIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/multisig-signer-approved/$hash': {
@@ -789,6 +809,7 @@ const rootRouteChildren: RootRouteChildren = {
   MultisigProposalRemovedHashRoute: MultisigProposalRemovedHashRoute,
   MultisigProposalsIdRoute: MultisigProposalsIdRoute,
   MultisigSignerApprovedHashRoute: MultisigSignerApprovedHashRoute,
+  MultisigIdRoute: MultisigIdRoute,
   TransactionsHashRoute: TransactionsHashRoute,
   AccountsIndexRoute: AccountsIndexRoute,
   BlocksIndexRoute: BlocksIndexRoute,

@@ -11,6 +11,10 @@ export interface MultisigCreatedResponse {
   multisigCreatedEvents: MultisigCreated[];
 }
 
+export interface MultisigByIdResponse {
+  multisig: MultisigCreated | null;
+}
+
 export interface MultisigCreatedListResponse {
   multisigCreatedEvents: MultisigCreated[];
   meta: {

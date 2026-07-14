@@ -99,6 +99,12 @@ export const getMultisigCreatedEventFields = (): MultisigCreatedField[] => [
 ];
 
 export const getMultisigAccountFields = (): MultisigCreatedField[] => [
+  {
+    label: 'Address',
+    key: 'id',
+    render: (value) =>
+      value ? <TextWithCopy text={String(value)} className="break-all" /> : '-'
+  },
   ...getSharedMultisigConfigurationFields(),
   {
     label: 'Created At',

@@ -1,4 +1,5 @@
 import type { QueryResult } from '@apollo/client';
+import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useChecksum } from '@/hooks/useChecksum';
 import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 export interface AccountInformationProps {
   accountId: string;
@@ -106,9 +108,13 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             }
             if (item.isMultisig) {
               badges.push(
-                <Badge key="multisig" variant="miner">
-                  Multisig
-                </Badge>
+                <Link
+                  key="multisig"
+                  to={getMultisigWalletHref(accountId)}
+                  className="hover:opacity-80"
+                >
+                  <Badge variant="miner">Multisig</Badge>
+                </Link>
               );
             }
             if (badges.length === 0) {

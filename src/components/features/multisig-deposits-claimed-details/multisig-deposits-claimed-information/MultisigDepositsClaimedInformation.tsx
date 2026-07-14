@@ -9,6 +9,7 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigDepositsClaimed } from '@/schemas';
 import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 export interface MultisigDepositsClaimedInformationProps {
   hash: string;
@@ -85,7 +86,7 @@ export const MultisigDepositsClaimedInformation: React.FC<
               ?.id;
             return multisigId ? (
               <LinkWithCopy
-                href={`${RESOURCES.accounts}/${multisigId}`}
+                href={getMultisigWalletHref(multisigId)}
                 text={multisigId}
                 className="break-all"
               />

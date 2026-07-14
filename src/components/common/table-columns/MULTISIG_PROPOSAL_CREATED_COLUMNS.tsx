@@ -6,6 +6,7 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCreated } from '@/schemas';
 import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<MultisigProposalCreated>();
 
@@ -51,7 +52,7 @@ export const MULTISIG_PROPOSAL_CREATED_COLUMNS = [
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
-          href={`${RESOURCES.accounts}/${props.getValue()}`}
+          href={getMultisigWalletHref(props.getValue() ?? '')}
           text={formatTxAddress(props.getValue() ?? '-')}
           textCopy={props.getValue() ?? ''}
         />

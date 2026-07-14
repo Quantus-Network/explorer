@@ -11,6 +11,7 @@ import {
   formatTxAddress
 } from '@/utils/formatter';
 import { getMultisigProposalHref } from '@/utils/get-multisig-proposal-href';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<MultisigProposal>();
 
@@ -66,7 +67,7 @@ export const MULTISIG_PROPOSAL_COLUMNS = [
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
-          href={`${RESOURCES.accounts}/${props.getValue()}`}
+          href={getMultisigWalletHref(props.getValue() ?? '')}
           text={formatTxAddress(props.getValue() ?? '-')}
           textCopy={props.getValue() ?? ''}
         />
