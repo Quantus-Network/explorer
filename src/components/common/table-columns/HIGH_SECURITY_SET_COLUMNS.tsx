@@ -4,7 +4,11 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { HighSecuritySet } from '@/schemas';
-import { formatDuration, formatTxAddress } from '@/utils/formatter';
+import {
+  formatBlockHeight,
+  formatDuration,
+  formatTxAddress
+} from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<HighSecuritySet>();
 
@@ -30,7 +34,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true

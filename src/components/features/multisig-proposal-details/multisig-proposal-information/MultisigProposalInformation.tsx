@@ -14,7 +14,7 @@ import type {
   MultisigProposalLifecycleEvent
 } from '@/schemas';
 import type { UnifiedTransactionType } from '@/schemas/unified-transaction';
-import { formatMonetaryValue } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { getMultisigProposalEventHref } from '@/utils/get-multisig-proposal-event-href';
 import { getMultisigProposalKind } from '@/utils/get-multisig-proposal-kind';
@@ -112,7 +112,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
       return block?.height != null ? (
         <LinkWithCopy
           href={`${RESOURCES.blocks}/${block.height}`}
-          text={String(block.height)}
+          text={formatBlockHeight(block.height)}
         />
       ) : (
         '-'
@@ -365,7 +365,7 @@ export const MultisigProposalInformation: React.FC<
                       {row.block?.height != null ? (
                         <LinkWithCopy
                           href={`${RESOURCES.blocks}/${row.block.height}`}
-                          text={String(row.block.height)}
+                          text={formatBlockHeight(row.block.height)}
                         />
                       ) : (
                         '-'

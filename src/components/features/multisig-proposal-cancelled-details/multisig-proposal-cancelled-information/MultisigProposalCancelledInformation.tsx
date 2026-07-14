@@ -9,6 +9,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCancelled } from '@/schemas';
+import { formatBlockHeight } from '@/utils/formatter';
 
 export interface MultisigProposalCancelledInformationProps {
   hash: string;
@@ -67,9 +68,9 @@ export const MultisigProposalCancelledInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(
-                value as MultisigProposalCancelled['block']
-              ).height.toString()}
+              text={formatBlockHeight(
+                (value as MultisigProposalCancelled['block']).height
+              )}
               href={`${RESOURCES.blocks}/${(value as MultisigProposalCancelled['block']).height}`}
               className="break-all"
             />

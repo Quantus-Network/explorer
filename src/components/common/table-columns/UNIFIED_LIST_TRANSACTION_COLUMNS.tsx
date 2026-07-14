@@ -9,7 +9,11 @@ import type {
   UnifiedListTransaction,
   UnifiedListTransactionStatus
 } from '@/schemas';
-import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
+import {
+  formatBlockHeight,
+  formatMonetaryValue,
+  formatTxAddress
+} from '@/utils/formatter';
 import { getUnifiedTransactionDetailPath } from '@/utils/get-unified-transaction-detail-path';
 
 type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>;
@@ -55,7 +59,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
         className="font-mono text-flare"
       />
     ),

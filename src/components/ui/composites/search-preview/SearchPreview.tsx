@@ -6,6 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
+import { formatBlockHeight } from '@/utils/formatter';
 
 // Helper: Preview link
 function PreviewLink({
@@ -203,7 +204,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         renderItem: (block: any) => (
           <PreviewLink
             href={`${RESOURCES.blocks}/${block.height}`}
-            label={`${block.height}`}
+            label={formatBlockHeight(block.height)}
             onSelect={handleClosePreview}
           />
         )

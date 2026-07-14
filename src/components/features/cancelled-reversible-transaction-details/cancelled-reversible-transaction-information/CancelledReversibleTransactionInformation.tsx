@@ -8,7 +8,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { CancelledReversibleTransactionResponse } from '@/schemas';
-import { formatMonetaryValue } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 export interface CancelledReversibleTransactionInformationProps {
   txId: string;
@@ -65,7 +65,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={value.height.toString()}
+              text={formatBlockHeight(value.height)}
               href={`${RESOURCES.blocks}/${value.height}`}
               className="break-all"
             />

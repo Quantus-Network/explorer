@@ -7,6 +7,7 @@ import { RESOURCES } from '@/constants/resources';
 import { TRANSACTION_TYPE_CONFIG } from '@/constants/transaction-types';
 import type { UnifiedTransaction } from '@/schemas/unified-transaction';
 import {
+  formatBlockHeight,
   formatDuration,
   formatMonetaryValue,
   formatTxAddress
@@ -67,14 +68,14 @@ export const createUnifiedTransactionColumns = (
           displayText = formatTxAddress(row.id);
         } else if (row.type === 'miner-reward' && row.block) {
           href = `${RESOURCES.blocks}/${row.block.height}`;
-          displayText = `Block #${row.block.height}`;
+          displayText = `Block #${formatBlockHeight(row.block.height)}`;
         } else if (row.type === 'high-security') {
           if (extrinsicId) {
             href = `${RESOURCES.highSecuritySets}/${extrinsicId}`;
             displayText = formatTxAddress(extrinsicId);
           } else if (row.block) {
             href = `${RESOURCES.highSecuritySets}`;
-            displayText = `Block #${row.block.height}`;
+            displayText = `Block #${formatBlockHeight(row.block.height)}`;
           }
         } else if (row.type === 'wormhole') {
           href = `${RESOURCES.wormhole}/${row.id}`;
@@ -468,7 +469,7 @@ export const createUnifiedTransactionColumns = (
         return (
           <LinkWithCopy
             href={`${RESOURCES.blocks}/${height}`}
-            text={height.toString()}
+            text={formatBlockHeight(height)}
           />
         );
       }

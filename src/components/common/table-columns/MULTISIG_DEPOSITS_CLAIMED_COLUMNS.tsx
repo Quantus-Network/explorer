@@ -4,7 +4,11 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigDepositsClaimed } from '@/schemas';
-import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
+import {
+  formatBlockHeight,
+  formatMonetaryValue,
+  formatTxAddress
+} from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<MultisigDepositsClaimed>();
 
@@ -32,7 +36,7 @@ export const MULTISIG_DEPOSITS_CLAIMED_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true

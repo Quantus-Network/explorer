@@ -8,7 +8,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MinerReward } from '@/schemas';
-import { formatMonetaryValue } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 export interface MinerRewardInformationProps {
   hash: string;
@@ -73,7 +73,7 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as MinerReward['block']).height.toString()}
+              text={formatBlockHeight((value as MinerReward['block']).height)}
               href={`${RESOURCES.blocks}/${(value as MinerReward['block']).height}`}
               className="break-all"
             />

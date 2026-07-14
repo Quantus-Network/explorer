@@ -8,7 +8,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigDepositsClaimed } from '@/schemas';
-import { formatMonetaryValue } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 export interface MultisigDepositsClaimedInformationProps {
   hash: string;
@@ -69,9 +69,9 @@ export const MultisigDepositsClaimedInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(
-                value as MultisigDepositsClaimed['block']
-              ).height.toString()}
+              text={formatBlockHeight(
+                (value as MultisigDepositsClaimed['block']).height
+              )}
               href={`${RESOURCES.blocks}/${(value as MultisigDepositsClaimed['block']).height}`}
               className="break-all"
             />

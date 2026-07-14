@@ -5,6 +5,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigCreated } from '@/schemas';
+import { formatBlockHeight } from '@/utils/formatter';
 
 type MultisigCreatedField = {
   label: string;
@@ -88,7 +89,7 @@ export const getMultisigCreatedEventFields = (): MultisigCreatedField[] => [
     key: 'block',
     render: (value) => (
       <LinkWithCopy
-        text={(value as MultisigCreated['block']).height.toString()}
+        text={formatBlockHeight((value as MultisigCreated['block']).height)}
         href={`${RESOURCES.blocks}/${(value as MultisigCreated['block']).height}`}
         className="break-all"
       />
@@ -109,7 +110,7 @@ export const getMultisigAccountFields = (): MultisigCreatedField[] => [
     key: 'block',
     render: (value) => (
       <LinkWithCopy
-        text={(value as MultisigCreated['block']).height.toString()}
+        text={formatBlockHeight((value as MultisigCreated['block']).height)}
         href={`${RESOURCES.blocks}/${(value as MultisigCreated['block']).height}`}
         className="break-all"
       />

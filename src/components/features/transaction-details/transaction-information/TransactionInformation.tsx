@@ -12,7 +12,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { ExtrinsicDetail, ExtrinsicTransfer } from '@/schemas';
-import { formatMonetaryValue } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 import { isWormholeExtrinsic } from '@/utils/get-extrinsic-detail-path';
 
 export interface TransactionInformationProps {
@@ -155,7 +155,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
               if (!block) return <span className="text-muted-text">—</span>;
               return (
                 <LinkWithCopy
-                  text={block.height.toString()}
+                  text={formatBlockHeight(block.height)}
                   href={`${RESOURCES.blocks}/${block.height}`}
                 />
               );

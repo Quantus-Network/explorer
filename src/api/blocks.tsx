@@ -117,7 +117,7 @@ export const blocks = {
             success
             fee
             timestamp
-            index_in_block: index_in_block
+            indexInBlock: index_in_block
             signer {
               id
             }

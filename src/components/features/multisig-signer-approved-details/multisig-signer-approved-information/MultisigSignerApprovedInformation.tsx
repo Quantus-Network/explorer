@@ -9,6 +9,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigSignerApproved } from '@/schemas';
+import { formatBlockHeight } from '@/utils/formatter';
 
 export interface MultisigSignerApprovedInformationProps {
   hash: string;
@@ -66,9 +67,9 @@ export const MultisigSignerApprovedInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(
-                value as MultisigSignerApproved['block']
-              ).height.toString()}
+              text={formatBlockHeight(
+                (value as MultisigSignerApproved['block']).height
+              )}
               href={`${RESOURCES.blocks}/${(value as MultisigSignerApproved['block']).height}`}
               className="break-all"
             />

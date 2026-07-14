@@ -8,7 +8,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { HighSecuritySetResponse } from '@/schemas';
-import { formatDuration } from '@/utils/formatter';
+import { formatBlockHeight, formatDuration } from '@/utils/formatter';
 
 export interface HighSecuritySetInformationProps {
   hash: string;
@@ -58,7 +58,9 @@ export const HighSecuritySetInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as HighSecuritySet['block']).height.toString()}
+              text={formatBlockHeight(
+                (value as HighSecuritySet['block']).height
+              )}
               href={`${RESOURCES.blocks}/${
                 (value as HighSecuritySet['block']).height
               }`}

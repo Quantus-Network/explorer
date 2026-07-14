@@ -5,8 +5,8 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { BlockExtrinsic } from '@/schemas/blocks';
-import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
+import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 
 const columnHelper = createColumnHelper<BlockExtrinsic>();
 
@@ -23,7 +23,7 @@ export const createExtrinsicColumns = () => {
     // Extrinsic Hash column
     columnHelper.accessor('id', {
       id: 'extrinsic',
-      header: 'Extrinsic',
+      header: 'Hash',
       cell: (props) => {
         const hash = props.getValue();
         const { pallet, call } = props.row.original;

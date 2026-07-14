@@ -4,8 +4,9 @@ import * as React from 'react';
 import useApiClient from '@/api';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
+import { formatBlockHeight } from '@/utils/formatter';
 
-import { BlockDataTabs } from './block-data-tabs/BlockDataTabs';
+import { BlockAllTransactions } from './block-all-transactions/BlockAllTransactions';
 import { BlockInformation } from './block-information/BlockInformation';
 
 interface Props {
@@ -19,17 +20,19 @@ export const BlockDetails: React.FC<Props> = ({ id }) => {
 
   if (!loading && !data?.blocks[0]) notFound();
 
+  const height = data?.blocks[0]?.height;
+  const title =
+    height != null ? `Block #${formatBlockHeight(height)}` : 'Block Details';
+
   return (
-    <>
-      <SectionContainer>
-        <ContentContainer className="flex flex-col gap-4">
-          <h1>Block Details</h1>
+    <SectionContainer>
+      <ContentContainer className="flex flex-col gap-6">
+        <h1 className="page-title">{title}</h1>
 
-          <BlockInformation query={query} />
-        </ContentContainer>
-      </SectionContainer>
+        <BlockInformation query={query} />
 
-      <BlockDataTabs query={query} />
-    </>
+        <BlockAllTransactions query={query} />
+      </ContentContainer>
+    </SectionContainer>
   );
 };

@@ -4,7 +4,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigCreated } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<MultisigCreated>();
 
@@ -32,7 +32,7 @@ export const MULTISIG_CREATED_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true

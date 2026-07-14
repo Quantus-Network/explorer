@@ -9,6 +9,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalReady } from '@/schemas';
+import { formatBlockHeight } from '@/utils/formatter';
 
 export interface MultisigProposalReadyInformationProps {
   hash: string;
@@ -65,7 +66,9 @@ export const MultisigProposalReadyInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as MultisigProposalReady['block']).height.toString()}
+              text={formatBlockHeight(
+                (value as MultisigProposalReady['block']).height
+              )}
               href={`${RESOURCES.blocks}/${(value as MultisigProposalReady['block']).height}`}
               className="break-all"
             />

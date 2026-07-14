@@ -8,6 +8,7 @@ import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { ErrorEvent } from '@/schemas';
+import { formatBlockHeight } from '@/utils/formatter';
 
 export interface ErrorEventInformationProps {
   id: string;
@@ -63,7 +64,7 @@ export const ErrorEventInformation: React.FC<ErrorEventInformationProps> = ({
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as ErrorEvent['block']).height.toString()}
+              text={formatBlockHeight((value as ErrorEvent['block']).height)}
               href={`${RESOURCES.blocks}/${(value as ErrorEvent['block']).height}`}
               className="break-all"
             />

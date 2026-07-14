@@ -31,7 +31,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono text-flare">
+            <p className="font-mono !text-flare">
               #{data?.chain.block_height.toLocaleString()}
             </p>
           )}

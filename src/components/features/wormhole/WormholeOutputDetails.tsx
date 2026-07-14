@@ -6,7 +6,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import { formatMonetaryValue } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 import { PrivacyScoreBadge } from './PrivacyScoreBadge';
 
@@ -111,7 +111,9 @@ export const WormholeOutputInformation = ({
               render: (value) => (
                 <LinkWithCopy
                   href={`${RESOURCES.blocks}/${(value as ExtrinsicInfo['block']).height}`}
-                  text={(value as ExtrinsicInfo['block']).height.toString()}
+                  text={formatBlockHeight(
+                    (value as ExtrinsicInfo['block']).height
+                  )}
                 />
               )
             },

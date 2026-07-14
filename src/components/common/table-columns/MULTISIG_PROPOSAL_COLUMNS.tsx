@@ -4,7 +4,11 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposal } from '@/schemas';
-import { formatMonetaryValue, formatTxAddress } from '@/utils/formatter';
+import {
+  formatBlockHeight,
+  formatMonetaryValue,
+  formatTxAddress
+} from '@/utils/formatter';
 import { getMultisigProposalHref } from '@/utils/get-multisig-proposal-href';
 
 const columnHelper = createColumnHelper<MultisigProposal>();
@@ -74,7 +78,7 @@ export const MULTISIG_PROPOSAL_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true
