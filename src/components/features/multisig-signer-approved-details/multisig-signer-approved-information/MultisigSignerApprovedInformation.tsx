@@ -16,6 +16,8 @@ export interface MultisigSignerApprovedInformationProps {
   hash: string;
 }
 
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
 export const MultisigSignerApprovedInformation: React.FC<
   MultisigSignerApprovedInformationProps
 > = ({ hash }) => {
@@ -48,33 +50,39 @@ export const MultisigSignerApprovedInformation: React.FC<
         {
           label: 'Extrinsic Hash',
           key: 'extrinsic',
-          render: (value) =>
-            (value as MultisigSignerApproved['extrinsic'])?.id ? (
-              <TextWithCopy
-                text={(value as MultisigSignerApproved['extrinsic'])?.id ?? '-'}
-                className="break-all"
-              />
+          render: (value) => {
+            const extrinsicId = (value as MultisigSignerApproved['extrinsic'])
+              ?.id;
+            return extrinsicId ? (
+              <TextWithCopy text={extrinsicId} className="break-all" />
             ) : (
-              '-'
-            )
+              <EmptyValue />
+            );
+          }
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => <TimestampDisplay timestamp={value as string} />
+          render: (value) =>
+            value ? (
+              <TimestampDisplay timestamp={value as string} />
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Block',
           key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={formatBlockHeight(
-                (value as MultisigSignerApproved['block']).height
-              )}
-              href={`${RESOURCES.blocks}/${(value as MultisigSignerApproved['block']).height}`}
-              className="break-all"
-            />
-          )
+          render: (value) => {
+            const block = value as MultisigSignerApproved['block'] | undefined;
+            if (!block) return <EmptyValue />;
+            return (
+              <LinkWithCopy
+                text={formatBlockHeight(block.height)}
+                href={`${RESOURCES.blocks}/${block.height}`}
+              />
+            );
+          }
         },
         {
           label: 'Approver',
@@ -86,17 +94,22 @@ export const MultisigSignerApprovedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${approverId}`}
                 text={approverId}
-                className="break-all"
+                textCopy={approverId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
         {
           label: 'Approvals Count',
           key: 'approvals_count',
-          render: (value) => (value != null ? String(value) : '-')
+          render: (value) =>
+            value != null ? (
+              <span className="font-mono">{String(value)}</span>
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Proposal',
@@ -117,10 +130,10 @@ export const MultisigSignerApprovedInformation: React.FC<
               <LinkWithCopy
                 href={getMultisigWalletHref(multisigId)}
                 text={multisigId}
-                className="break-all"
+                textCopy={multisigId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -134,10 +147,10 @@ export const MultisigSignerApprovedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
-                className="break-all"
+                textCopy={proposerId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         }

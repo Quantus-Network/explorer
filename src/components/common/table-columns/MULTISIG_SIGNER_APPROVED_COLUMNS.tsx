@@ -62,7 +62,9 @@ export const MULTISIG_SIGNER_APPROVED_COLUMNS = [
   columnHelper.accessor('proposal.id', {
     id: 'proposal',
     header: 'Proposal',
-    cell: (props) => <ProposalIdLink proposal={props.row.original.proposal} />,
+    cell: (props) => (
+      <ProposalIdLink proposal={props.row.original.proposal} truncate />
+    ),
     enableSorting: false
   }),
   columnHelper.accessor('timestamp', {

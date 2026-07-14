@@ -16,6 +16,8 @@ export interface MultisigProposalRemovedInformationProps {
   hash: string;
 }
 
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
 export const MultisigProposalRemovedInformation: React.FC<
   MultisigProposalRemovedInformationProps
 > = ({ hash }) => {
@@ -47,35 +49,39 @@ export const MultisigProposalRemovedInformation: React.FC<
         {
           label: 'Extrinsic Hash',
           key: 'extrinsic',
-          render: (value) =>
-            (value as MultisigProposalRemoved['extrinsic'])?.id ? (
-              <TextWithCopy
-                text={
-                  (value as MultisigProposalRemoved['extrinsic'])?.id ?? '-'
-                }
-                className="break-all"
-              />
+          render: (value) => {
+            const extrinsicId = (value as MultisigProposalRemoved['extrinsic'])
+              ?.id;
+            return extrinsicId ? (
+              <TextWithCopy text={extrinsicId} className="break-all" />
             ) : (
-              '-'
-            )
+              <EmptyValue />
+            );
+          }
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => <TimestampDisplay timestamp={value as string} />
+          render: (value) =>
+            value ? (
+              <TimestampDisplay timestamp={value as string} />
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Block',
           key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={formatBlockHeight(
-                (value as MultisigProposalRemoved['block']).height
-              )}
-              href={`${RESOURCES.blocks}/${(value as MultisigProposalRemoved['block']).height}`}
-              className="break-all"
-            />
-          )
+          render: (value) => {
+            const block = value as MultisigProposalRemoved['block'] | undefined;
+            if (!block) return <EmptyValue />;
+            return (
+              <LinkWithCopy
+                text={formatBlockHeight(block.height)}
+                href={`${RESOURCES.blocks}/${block.height}`}
+              />
+            );
+          }
         },
         {
           label: 'Proposal',
@@ -96,10 +102,10 @@ export const MultisigProposalRemovedInformation: React.FC<
               <LinkWithCopy
                 href={getMultisigWalletHref(multisigId)}
                 text={multisigId}
-                className="break-all"
+                textCopy={multisigId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -113,10 +119,10 @@ export const MultisigProposalRemovedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
-                className="break-all"
+                textCopy={proposerId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -130,10 +136,10 @@ export const MultisigProposalRemovedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${removedById}`}
                 text={removedById}
-                className="break-all"
+                textCopy={removedById}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         }

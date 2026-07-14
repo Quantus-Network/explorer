@@ -14,12 +14,8 @@ function MultisigProposalCancelledDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <div>
-          <h1>Proposal Cancelled</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Detailed information about a multisig proposal cancellation event.
-          </p>
-        </div>
+        <h1 className="page-title">Proposal Cancelled</h1>
+
         <MultisigProposalCancelledInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>

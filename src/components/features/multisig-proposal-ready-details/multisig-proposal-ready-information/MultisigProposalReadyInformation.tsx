@@ -16,6 +16,8 @@ export interface MultisigProposalReadyInformationProps {
   hash: string;
 }
 
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
 export const MultisigProposalReadyInformation: React.FC<
   MultisigProposalReadyInformationProps
 > = ({ hash }) => {
@@ -47,33 +49,39 @@ export const MultisigProposalReadyInformation: React.FC<
         {
           label: 'Extrinsic Hash',
           key: 'extrinsic',
-          render: (value) =>
-            (value as MultisigProposalReady['extrinsic'])?.id ? (
-              <TextWithCopy
-                text={(value as MultisigProposalReady['extrinsic'])?.id ?? '-'}
-                className="break-all"
-              />
+          render: (value) => {
+            const extrinsicId = (value as MultisigProposalReady['extrinsic'])
+              ?.id;
+            return extrinsicId ? (
+              <TextWithCopy text={extrinsicId} className="break-all" />
             ) : (
-              '-'
-            )
+              <EmptyValue />
+            );
+          }
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => <TimestampDisplay timestamp={value as string} />
+          render: (value) =>
+            value ? (
+              <TimestampDisplay timestamp={value as string} />
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Block',
           key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={formatBlockHeight(
-                (value as MultisigProposalReady['block']).height
-              )}
-              href={`${RESOURCES.blocks}/${(value as MultisigProposalReady['block']).height}`}
-              className="break-all"
-            />
-          )
+          render: (value) => {
+            const block = value as MultisigProposalReady['block'] | undefined;
+            if (!block) return <EmptyValue />;
+            return (
+              <LinkWithCopy
+                text={formatBlockHeight(block.height)}
+                href={`${RESOURCES.blocks}/${block.height}`}
+              />
+            );
+          }
         },
         {
           label: 'Proposal',
@@ -87,7 +95,12 @@ export const MultisigProposalReadyInformation: React.FC<
         {
           label: 'Approvals Count',
           key: 'approvals_count',
-          render: (value) => (value != null ? String(value) : '-')
+          render: (value) =>
+            value != null ? (
+              <span className="font-mono">{String(value)}</span>
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Multisig',
@@ -99,10 +112,10 @@ export const MultisigProposalReadyInformation: React.FC<
               <LinkWithCopy
                 href={getMultisigWalletHref(multisigId)}
                 text={multisigId}
-                className="break-all"
+                textCopy={multisigId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -116,10 +129,10 @@ export const MultisigProposalReadyInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
-                className="break-all"
+                textCopy={proposerId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         }

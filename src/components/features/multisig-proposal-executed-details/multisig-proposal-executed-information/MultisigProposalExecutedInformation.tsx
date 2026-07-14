@@ -16,6 +16,8 @@ export interface MultisigProposalExecutedInformationProps {
   hash: string;
 }
 
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
 export const MultisigProposalExecutedInformation: React.FC<
   MultisigProposalExecutedInformationProps
 > = ({ hash }) => {
@@ -48,35 +50,41 @@ export const MultisigProposalExecutedInformation: React.FC<
         {
           label: 'Extrinsic Hash',
           key: 'extrinsic',
-          render: (value) =>
-            (value as MultisigProposalExecuted['extrinsic'])?.id ? (
-              <TextWithCopy
-                text={
-                  (value as MultisigProposalExecuted['extrinsic'])?.id ?? '-'
-                }
-                className="break-all"
-              />
+          render: (value) => {
+            const extrinsicId = (value as MultisigProposalExecuted['extrinsic'])
+              ?.id;
+            return extrinsicId ? (
+              <TextWithCopy text={extrinsicId} className="break-all" />
             ) : (
-              '-'
-            )
+              <EmptyValue />
+            );
+          }
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => <TimestampDisplay timestamp={value as string} />
+          render: (value) =>
+            value ? (
+              <TimestampDisplay timestamp={value as string} />
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Block',
           key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={formatBlockHeight(
-                (value as MultisigProposalExecuted['block']).height
-              )}
-              href={`${RESOURCES.blocks}/${(value as MultisigProposalExecuted['block']).height}`}
-              className="break-all"
-            />
-          )
+          render: (value) => {
+            const block = value as
+              | MultisigProposalExecuted['block']
+              | undefined;
+            if (!block) return <EmptyValue />;
+            return (
+              <LinkWithCopy
+                text={formatBlockHeight(block.height)}
+                href={`${RESOURCES.blocks}/${block.height}`}
+              />
+            );
+          }
         },
         {
           label: 'Proposal',
@@ -97,10 +105,10 @@ export const MultisigProposalExecutedInformation: React.FC<
               <LinkWithCopy
                 href={getMultisigWalletHref(multisigId)}
                 text={multisigId}
-                className="break-all"
+                textCopy={multisigId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -114,10 +122,10 @@ export const MultisigProposalExecutedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
-                className="break-all"
+                textCopy={proposerId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -126,7 +134,7 @@ export const MultisigProposalExecutedInformation: React.FC<
           key: 'approvers',
           render: (value) => {
             const approvers = value as string[] | undefined;
-            if (!approvers?.length) return '-';
+            if (!approvers?.length) return <EmptyValue />;
             return (
               <div className="flex flex-col gap-1">
                 {approvers.map((approver) => (
@@ -134,7 +142,7 @@ export const MultisigProposalExecutedInformation: React.FC<
                     key={approver}
                     href={`${RESOURCES.accounts}/${approver}`}
                     text={approver}
-                    className="break-all"
+                    textCopy={approver}
                   />
                 ))}
               </div>
@@ -144,7 +152,12 @@ export const MultisigProposalExecutedInformation: React.FC<
         {
           label: 'Result',
           key: 'result',
-          render: (value) => (value != null ? String(value) : '-')
+          render: (value) =>
+            value != null ? (
+              <span className="font-mono">{String(value)}</span>
+            ) : (
+              <EmptyValue />
+            )
         }
       ]}
     />

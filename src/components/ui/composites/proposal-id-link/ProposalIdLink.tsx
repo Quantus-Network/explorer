@@ -6,18 +6,27 @@ import { getMultisigProposalHref } from '@/utils/get-multisig-proposal-href';
 
 export interface ProposalIdLinkProps {
   proposal?: { id?: string } | null;
+  truncate?: boolean;
 }
 
-export const ProposalIdLink: React.FC<ProposalIdLinkProps> = ({ proposal }) => {
+export const ProposalIdLink: React.FC<ProposalIdLinkProps> = ({
+  proposal,
+  truncate = false
+}) => {
   const id = proposal?.id;
-  if (!id) return <>-</>;
+  if (!id) return <span className="text-muted-text">—</span>;
 
   const href = getMultisigProposalHref(proposal);
   const text = formatTxAddress(id);
 
-  if (!href) return <>{text}</>;
+  if (!href) return text;
 
   return (
-    <LinkWithCopy href={href} text={text} textCopy={id} className="break-all" />
+    <LinkWithCopy
+      href={href}
+      text={truncate ? text : id}
+      textCopy={id}
+      className="break-all"
+    />
   );
 };

@@ -14,10 +14,8 @@ function MultisigProposalDetailsPage() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Multisig Proposal</h1>
-        <p className="text-sm text-muted-foreground">
-          Proposal state and related lifecycle events.
-        </p>
+        <h1 className="page-title">Multisig Proposal</h1>
+
         <MultisigProposalInformation id={id} />
       </ContentContainer>
     </SectionContainer>
