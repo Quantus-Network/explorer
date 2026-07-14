@@ -6,8 +6,8 @@ import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchEr
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
-import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { formatBlockHeight } from '@/utils/formatter';
+import { getUnifiedTransactionDetailPath } from '@/utils/get-unified-transaction-detail-path';
 
 // Helper: Preview link
 function PreviewLink({
@@ -103,27 +103,14 @@ interface SearchPreviewProps
 
 export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
   ({ isLoading, error, searchResult, onKeyDown, handleClosePreview }, ref) => {
-    const {
-      accounts,
-      transactions,
-      blocks,
-      scheduledReversibleTransactions,
-      executedReversibleTransactions,
-      cancelledReversibleTransactions,
-      minerRewards,
-      highSecuritySets,
-      errorEvents
-    } = searchResult || {};
+    const { accounts, transactions, blocks, highSecuritySets, errorEvents } =
+      searchResult || {};
 
     if (
       !isLoading &&
       !transactions &&
       !blocks &&
-      !minerRewards &&
       !accounts &&
-      !scheduledReversibleTransactions &&
-      !executedReversibleTransactions &&
-      !cancelledReversibleTransactions &&
       !highSecuritySets &&
       !errorEvents
     ) {
@@ -136,57 +123,23 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         title: 'Transactions',
         emptyMsg: 'No transactions found.',
         items: transactions,
-        renderItem: (tx: any) => {
-          const { id, pallet, call } = tx.extrinsic ?? {};
-          const href =
-            id && pallet && call
-              ? getExtrinsicDetailPath({ id, pallet, call })
-              : `${RESOURCES.transactions}/${id}`;
+        renderItem: (tx: SearchAllResponse['transactions'][number]) => {
+          const href = getUnifiedTransactionDetailPath({
+            type: tx.type,
+            hash: tx.hash,
+            detailId: tx.detail_id,
+            block: tx.block
+          });
+          const label = tx.hash ?? tx.detail_id ?? tx.id;
 
           return (
             <PreviewLink
               href={href}
-              label={`${id}`}
+              label={label}
               onSelect={handleClosePreview}
             />
           );
         }
-      },
-      {
-        title: 'Scheduled Reversible Transactions',
-        emptyMsg: 'No scheduled reversible transactions found.',
-        items: scheduledReversibleTransactions,
-        renderItem: (tx: any) => (
-          <PreviewLink
-            href={`${RESOURCES.scheduledReversibleTransactions}/${tx.txId}`}
-            label={`${tx.txId}`}
-            onSelect={handleClosePreview}
-          />
-        )
-      },
-      {
-        title: 'Executed Reversible Transactions',
-        emptyMsg: 'No executed reversible transactions found.',
-        items: executedReversibleTransactions,
-        renderItem: (tx: any) => (
-          <PreviewLink
-            href={`${RESOURCES.executedReversibleTransactions}/${tx.txId}`}
-            label={`${tx.txId}`}
-            onSelect={handleClosePreview}
-          />
-        )
-      },
-      {
-        title: 'Cancelled Reversible Transactions',
-        emptyMsg: 'No cancelled reversible transactions found.',
-        items: cancelledReversibleTransactions,
-        renderItem: (tx: any) => (
-          <PreviewLink
-            href={`${RESOURCES.cancelledReversibleTransactions}/${tx.txId}`}
-            label={`${tx.txId}`}
-            onSelect={handleClosePreview}
-          />
-        )
       },
       {
         title: 'Accounts',
@@ -208,18 +161,6 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
           <PreviewLink
             href={`${RESOURCES.blocks}/${block.height}`}
             label={formatBlockHeight(block.height)}
-            onSelect={handleClosePreview}
-          />
-        )
-      },
-      {
-        title: 'Miner Rewards',
-        emptyMsg: 'No miner rewards found.',
-        items: minerRewards,
-        renderItem: (minerReward: any) => (
-          <PreviewLink
-            href={`${RESOURCES.minerRewards}/${minerReward.block.hash}`}
-            label={`${minerReward.block.hash}`}
             onSelect={handleClosePreview}
           />
         )

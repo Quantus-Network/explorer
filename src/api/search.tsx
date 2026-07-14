@@ -28,38 +28,24 @@ export const search = (fetcher: DataFetcher) => ({
   all: () => {
     const SEARCH_ALL = gql`
       query SearchAll($keyword: String, $keyword_number: Int, $limit: Int) {
-        transactions: transfer(
+        transactions: unified_transaction(
           limit: $limit
-          where: { extrinsic: { id: { _ilike: $keyword } } }
-        ) {
-          extrinsic {
-            id
-            pallet
-            call
+          where: {
+            _or: [
+              { hash: { _ilike: $keyword } }
+              { detail_id: { _ilike: $keyword } }
+              { id: { _ilike: $keyword } }
+            ]
           }
-        }
-        scheduledReversibleTransactions: scheduled_reversible_transfer(
-          limit: $limit
-          where: { tx_id: { _ilike: $keyword } }
         ) {
-          extrinsic {
-            id
-            pallet
-            call
+          id
+          type
+          hash
+          detail_id
+          block {
+            height
+            hash
           }
-          tx_id
-        }
-        executedReversibleTransactions: executed_reversible_transfer(
-          limit: $limit
-          where: { tx_id: { _ilike: $keyword } }
-        ) {
-          tx_id
-        }
-        cancelledReversibleTransactions: cancelled_reversible_transfer(
-          limit: $limit
-          where: { tx_id: { _ilike: $keyword } }
-        ) {
-          tx_id
         }
         accounts: account(limit: $limit, where: { id: { _ilike: $keyword } }) {
           id
@@ -84,20 +70,6 @@ export const search = (fetcher: DataFetcher) => ({
             pallet
             call
           }
-        }
-        minerRewards: miner_reward(
-          limit: $limit
-          where: { block: { hash: { _ilike: $keyword } } }
-        ) {
-          block {
-            height
-            hash
-          }
-          reward
-          miner {
-            id
-          }
-          timestamp
         }
         errorEvents: error_event(
           limit: $limit
