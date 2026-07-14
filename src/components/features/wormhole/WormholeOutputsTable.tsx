@@ -7,6 +7,7 @@ import {
   type WormholeExtrinsicRow
 } from '@/components/common/table-columns/WORMHOLE_OUTPUT_COLUMNS';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
+import { FetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { type WormholeExtrinsicSorts } from '@/constants/query-sorts';
@@ -72,7 +73,7 @@ export const WormholeOutputsTable = () => {
       table={table}
       fetch={{
         status: getStatus(),
-        errorFallback: error ? <div>Error: {error.message}</div> : undefined
+        errorFallback: <FetchError error={error} />
       }}
       withControls
     />

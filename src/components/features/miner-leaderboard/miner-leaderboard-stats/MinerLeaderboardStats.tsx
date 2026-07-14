@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -32,7 +33,7 @@ export const MinerLeaderboardStats: React.FC = () => {
             <p>{data?.chain?.block_height?.toLocaleString() ?? '—'}</p>
           )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
@@ -47,7 +48,7 @@ export const MinerLeaderboardStats: React.FC = () => {
             <p>{data?.chain?.total_miners?.toLocaleString() ?? '—'}</p>
           )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
@@ -64,7 +65,7 @@ export const MinerLeaderboardStats: React.FC = () => {
             </p>
           )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
     </CardGroup>

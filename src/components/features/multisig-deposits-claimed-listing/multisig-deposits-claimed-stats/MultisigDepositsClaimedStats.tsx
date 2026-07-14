@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -42,9 +43,7 @@ export const MultisigDepositsClaimedStats: React.FC = () => {
             </p>
           )}
           {loading && <Skeleton className="h-8 w-24" />}
-          {error && (
-            <p className="text-sm text-destructive">Error: {error.message}</p>
-          )}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
@@ -59,9 +58,7 @@ export const MultisigDepositsClaimedStats: React.FC = () => {
             </p>
           )}
           {loading && <Skeleton className="h-8 w-24" />}
-          {error && (
-            <p className="text-sm text-destructive">Error: {error.message}</p>
-          )}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
     </CardGroup>

@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
+import { FetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { ContentContainer } from '@/components/ui/content-container';
 import { RESOURCES } from '@/constants/resources';
 import type { AccountResponse } from '@/schemas';
@@ -26,7 +27,7 @@ export const AccountBeneficiaries: React.FC<Props> = ({ query, accountId }) => {
         table={table}
         fetch={{
           status: getStatus(),
-          errorFallback: <p>Error: {error && error.message}</p>
+          errorFallback: <FetchError error={error} />
         }}
       />
 

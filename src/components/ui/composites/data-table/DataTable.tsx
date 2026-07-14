@@ -4,7 +4,6 @@ import {
   getCoreRowModel,
   useReactTable
 } from '@tanstack/react-table';
-import { Info } from 'lucide-react';
 import * as React from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -149,13 +148,16 @@ export const DataTable = ({
     return () => observer.disconnect();
   }, [canLoadMore, table, pageIndex]);
 
+  if (status === 'error') {
+    return <>{fetch?.errorFallback}</>;
+  }
+
   if (status === 'success' && isEmptyData)
     return (
-      <Alert className="ps-6">
-        <Info />
-        <AlertTitle>No data found!</AlertTitle>
+      <Alert>
+        <AlertTitle>No data found</AlertTitle>
         <AlertDescription>
-          It seems there are no data for the query.
+          There is no data to display for this query.
         </AlertDescription>
       </Alert>
     );
@@ -190,8 +192,6 @@ export const DataTable = ({
         {withControls && table.getCanNextPage() && (
           <div ref={sentinelRef} className="h-px w-full" aria-hidden />
         )}
-
-        {status === 'error' && fetch?.errorFallback}
       </div>
     );
   }
@@ -260,8 +260,6 @@ export const DataTable = ({
           </TableBody>
         </Table>
       </div>
-
-      {status === 'error' && fetch?.errorFallback}
 
       {withControls && <TableControls table={table} tableRef={tableRef} />}
     </div>

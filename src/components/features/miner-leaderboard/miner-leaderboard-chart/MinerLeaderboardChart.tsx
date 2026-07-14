@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 
@@ -21,7 +22,7 @@ export const MinerLeaderboardChart = () => {
       <Card className="border border-border-subtle">
         <CardContent className="p-5 px-6">
           {status === 'loading' && <Skeleton className="h-16" />}
-          {status === 'error' && <p>Error: {error && error.message}</p>}
+          {status === 'error' && <InlineFetchError error={error} />}
           {status === 'success' && segments.length > 0 && (
             <div className="flex flex-col gap-2.5">
               <div

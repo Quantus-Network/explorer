@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -42,7 +43,7 @@ export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
         <CardContent>
           {success && <p>{data?.allTime?.total_miner_rewards}</p>}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
@@ -55,7 +56,7 @@ export const MinerRewardsStats: React.FC<MinerRewardsStatsProps> = () => {
         <CardContent>
           {success && <p>{data?.last24Hour.aggregate.totalCount}</p>}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
     </CardGroup>

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
+import { FetchError } from '@/components/ui/composites/fetch-error/FetchError';
 
 import { useMinerRewardsTable } from './hook';
 
@@ -12,7 +13,7 @@ export const MinerRewardsTable = () => {
       table={table}
       fetch={{
         status: getStatus(),
-        errorFallback: <p>Error: {error && error.message}</p>
+        errorFallback: <FetchError error={error} />
       }}
       withControls
     />

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 
@@ -45,9 +46,7 @@ export const StatSparklineCard = ({
           </div>
         )}
 
-        {!loading && error && (
-          <div className="font-mono text-sm text-destructive">{error}</div>
-        )}
+        {!loading && error && <InlineFetchError error={error} />}
 
         {!loading && !error && (
           <>

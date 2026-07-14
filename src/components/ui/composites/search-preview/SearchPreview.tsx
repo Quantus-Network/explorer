@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import type { HTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
@@ -68,8 +69,10 @@ const Section = <T,>({
       )}
 
       {error && (
-        <div className="px-3.5 py-2 text-sm text-destructive">
-          Error loading {title.toLowerCase()}.
+        <div className="px-3.5 py-2">
+          <InlineFetchError>
+            Error loading {title.toLowerCase()}.
+          </InlineFetchError>
         </div>
       )}
 

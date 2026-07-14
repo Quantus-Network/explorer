@@ -36,7 +36,7 @@ export function DataList<T>({
 }: DataListProps<T>) {
   if (error)
     return (
-      <Alert variant="destructive" className={cn('my-4', className)}>
+      <Alert variant="destructive" className={cn(className)}>
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>
           {errorFallback ? errorFallback(error) : error}
@@ -46,7 +46,7 @@ export function DataList<T>({
 
   if (!data || data.length === 0)
     return (
-      <Alert className={cn('my-4', className)}>
+      <Alert className={cn(className)}>
         <AlertTitle>No data found</AlertTitle>
         <AlertDescription>
           {emptyFallback || 'There is no data to display.'}
