@@ -32,6 +32,21 @@ export const accounts = {
           free
           frozen
           reserved
+          flagEvents: accountEvents(
+            where: {
+              _or: [
+                { high_security_set_id: { _is_null: false } }
+                { multisig_id: { _is_null: false } }
+              ]
+            }
+            limit: 20
+          ) {
+            highSecuritySet {
+              who_id
+              guardian_id
+            }
+            multisig_id
+          }
         }
         meta: chain_stats_by_pk(id: "global") {
           totalCount: total_accounts

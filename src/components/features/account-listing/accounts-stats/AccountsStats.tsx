@@ -19,7 +19,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   const shouldHide = !!(accountId || block);
 
@@ -33,7 +33,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <CardGroup className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <CardGroup className="max-w-[600px] grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -41,7 +41,11 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.all.total_accounts}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.all.total_accounts.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
         </CardContent>
@@ -50,11 +54,15 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Active Accounts (7D)</h3>
+            <h3>Active (7D)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.recentlyActive.aggregate.count}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.recentlyActive.aggregate.count.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
         </CardContent>
@@ -63,11 +71,15 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Deposit Accounts (7D)</h3>
+            <h3>Deposit Accounts</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.recentlyDeposited.aggregate.count}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.recentlyDeposited.aggregate.count.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
         </CardContent>

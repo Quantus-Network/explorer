@@ -14,8 +14,18 @@ import type { ScheduledReversibleTransaction } from './scheduled-reversible-tran
 import type { Transaction } from './transcation';
 import type { WormholeOutput } from './wormhole';
 
+export interface AccountFlagEvent {
+  highSecuritySet?: {
+    who_id?: string | null;
+    guardian_id?: string | null;
+  } | null;
+  multisig_id?: string | null;
+}
+
 export interface Account
-  extends Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'> {}
+  extends Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'> {
+  flagEvents?: AccountFlagEvent[];
+}
 
 export interface AccountWormholeOutput {
   id: string;
