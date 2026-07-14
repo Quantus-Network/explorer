@@ -21,7 +21,7 @@ export const HighSecuritySetsStats: React.FC<
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   const shouldHide = !!(accountId || block);
 
@@ -35,15 +35,19 @@ export const HighSecuritySetsStats: React.FC<
   const success = !loading && !error;
 
   return (
-    <CardGroup className="grid-cols-1 sm:grid-cols-2">
+    <CardGroup className="max-w-[600px] grid-cols-1 sm:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total High Security Sets</h3>
+            <h3>Total</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.total_high_security_sets}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.allTime.total_high_security_sets.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
         </CardContent>
@@ -52,11 +56,15 @@ export const HighSecuritySetsStats: React.FC<
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Recent High Security Sets (24H)</h3>
+            <h3>Last 24h</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.aggregate.totalCount}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.last24Hour.aggregate.totalCount.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
         </CardContent>

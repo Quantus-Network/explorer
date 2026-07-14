@@ -24,7 +24,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
           textCopy={props.getValue() ?? ''}
         />
       ) : (
-        'Is not available'
+        <span className="text-muted-text">—</span>
       ),
     enableSorting: false
   }),
