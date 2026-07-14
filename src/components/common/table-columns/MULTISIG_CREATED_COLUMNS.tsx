@@ -11,7 +11,7 @@ const columnHelper = createColumnHelper<MultisigCreated>();
 export const MULTISIG_CREATED_COLUMNS = [
   columnHelper.accessor('extrinsic.id', {
     id: 'extrinsicHash',
-    header: 'Extrinsic Hash',
+    header: 'Hash',
     cell: (props) => {
       const extrinsicId = props.getValue();
       return extrinsicId ? (
@@ -70,7 +70,7 @@ export const MULTISIG_CREATED_COLUMNS = [
   }),
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
-    header: 'Timestamp',
+    header: 'Created',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   })

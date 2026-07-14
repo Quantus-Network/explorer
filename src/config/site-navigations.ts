@@ -37,7 +37,7 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
       },
       {
         label: 'Multisig',
-        path: '/multisig-created',
+        path: '/multisig',
         description: 'Threshold-signature wallets'
       },
       {
