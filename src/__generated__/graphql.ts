@@ -123,6 +123,10 @@ export type Account = {
   id: Scalars['String']['output'];
   is_deposit_only: Scalars['Boolean']['output'];
   last_updated: Scalars['Int']['output'];
+  /** An array relationship */
+  minedBlocks: Array<Block>;
+  /** An aggregate relationship */
+  minedBlocks_aggregate: Block_Aggregate;
   privacy_deposits: Scalars['String']['output'];
   reserved: Scalars['numeric']['output'];
   /** An array relationship */
@@ -169,6 +173,24 @@ export type AccountExtrinsics_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Extrinsic_Order_By>>;
   where?: InputMaybe<Extrinsic_Bool_Exp>;
+};
+
+/** columns and relationships of "account" */
+export type AccountMinedBlocksArgs = {
+  distinct_on?: InputMaybe<Array<Block_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Block_Order_By>>;
+  where?: InputMaybe<Block_Bool_Exp>;
+};
+
+/** columns and relationships of "account" */
+export type AccountMinedBlocks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Block_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Block_Order_By>>;
+  where?: InputMaybe<Block_Bool_Exp>;
 };
 
 /** columns and relationships of "account" */
@@ -259,6 +281,8 @@ export type Account_Bool_Exp = {
   id?: InputMaybe<String_Comparison_Exp>;
   is_deposit_only?: InputMaybe<Boolean_Comparison_Exp>;
   last_updated?: InputMaybe<Int_Comparison_Exp>;
+  minedBlocks?: InputMaybe<Block_Bool_Exp>;
+  minedBlocks_aggregate?: InputMaybe<Block_Aggregate_Bool_Exp>;
   privacy_deposits?: InputMaybe<String_Comparison_Exp>;
   reserved?: InputMaybe<Numeric_Comparison_Exp>;
   transfersFrom?: InputMaybe<Transfer_Bool_Exp>;
@@ -631,6 +655,7 @@ export type Account_Order_By = {
   id?: InputMaybe<Order_By>;
   is_deposit_only?: InputMaybe<Order_By>;
   last_updated?: InputMaybe<Order_By>;
+  minedBlocks_aggregate?: InputMaybe<Block_Aggregate_Order_By>;
   privacy_deposits?: InputMaybe<Order_By>;
   reserved?: InputMaybe<Order_By>;
   transfersFrom_aggregate?: InputMaybe<Transfer_Aggregate_Order_By>;
@@ -966,6 +991,8 @@ export type Block = {
   hash: Scalars['String']['output'];
   height: Scalars['Int']['output'];
   id: Scalars['String']['output'];
+  /** An object relationship */
+  minedBy?: Maybe<Account>;
   mined_by_id?: Maybe<Scalars['String']['output']>;
   reward: Scalars['numeric']['output'];
   timestamp: Scalars['timestamptz']['output'];
@@ -1036,6 +1063,17 @@ export type Block_Aggregate = {
   nodes: Array<Block>;
 };
 
+export type Block_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Block_Aggregate_Bool_Exp_Count>;
+};
+
+export type Block_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Block_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Block_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "block" */
 export type Block_Aggregate_Fields = {
   __typename?: 'block_aggregate_fields';
@@ -1058,11 +1096,32 @@ export type Block_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** order by aggregate values of table "block" */
+export type Block_Aggregate_Order_By = {
+  avg?: InputMaybe<Block_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Block_Max_Order_By>;
+  min?: InputMaybe<Block_Min_Order_By>;
+  stddev?: InputMaybe<Block_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Block_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Block_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Block_Sum_Order_By>;
+  var_pop?: InputMaybe<Block_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Block_Var_Samp_Order_By>;
+  variance?: InputMaybe<Block_Variance_Order_By>;
+};
+
 /** aggregate avg on columns */
 export type Block_Avg_Fields = {
   __typename?: 'block_avg_fields';
   height?: Maybe<Scalars['Float']['output']>;
   reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "block" */
+export type Block_Avg_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "block". All fields are combined with a logical 'AND'. */
@@ -1077,6 +1136,7 @@ export type Block_Bool_Exp = {
   hash?: InputMaybe<String_Comparison_Exp>;
   height?: InputMaybe<Int_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
+  minedBy?: InputMaybe<Account_Bool_Exp>;
   mined_by_id?: InputMaybe<String_Comparison_Exp>;
   reward?: InputMaybe<Numeric_Comparison_Exp>;
   timestamp?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -1095,6 +1155,16 @@ export type Block_Max_Fields = {
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
 };
 
+/** order by max() on columns of table "block" */
+export type Block_Max_Order_By = {
+  hash?: InputMaybe<Order_By>;
+  height?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  mined_by_id?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Block_Min_Fields = {
   __typename?: 'block_min_fields';
@@ -1106,6 +1176,16 @@ export type Block_Min_Fields = {
   timestamp?: Maybe<Scalars['timestamptz']['output']>;
 };
 
+/** order by min() on columns of table "block" */
+export type Block_Min_Order_By = {
+  hash?: InputMaybe<Order_By>;
+  height?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  mined_by_id?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+  timestamp?: InputMaybe<Order_By>;
+};
+
 /** Ordering options when selecting data from "block". */
 export type Block_Order_By = {
   events_aggregate?: InputMaybe<Event_Aggregate_Order_By>;
@@ -1113,6 +1193,7 @@ export type Block_Order_By = {
   hash?: InputMaybe<Order_By>;
   height?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  minedBy?: InputMaybe<Account_Order_By>;
   mined_by_id?: InputMaybe<Order_By>;
   reward?: InputMaybe<Order_By>;
   timestamp?: InputMaybe<Order_By>;
@@ -1142,6 +1223,12 @@ export type Block_Stddev_Fields = {
   reward?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev() on columns of table "block" */
+export type Block_Stddev_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_pop on columns */
 export type Block_Stddev_Pop_Fields = {
   __typename?: 'block_stddev_pop_fields';
@@ -1149,11 +1236,23 @@ export type Block_Stddev_Pop_Fields = {
   reward?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by stddev_pop() on columns of table "block" */
+export type Block_Stddev_Pop_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+};
+
 /** aggregate stddev_samp on columns */
 export type Block_Stddev_Samp_Fields = {
   __typename?: 'block_stddev_samp_fields';
   height?: Maybe<Scalars['Float']['output']>;
   reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "block" */
+export type Block_Stddev_Samp_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "block" */
@@ -1181,11 +1280,23 @@ export type Block_Sum_Fields = {
   reward?: Maybe<Scalars['numeric']['output']>;
 };
 
+/** order by sum() on columns of table "block" */
+export type Block_Sum_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+};
+
 /** aggregate var_pop on columns */
 export type Block_Var_Pop_Fields = {
   __typename?: 'block_var_pop_fields';
   height?: Maybe<Scalars['Float']['output']>;
   reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "block" */
+export type Block_Var_Pop_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -1195,11 +1306,23 @@ export type Block_Var_Samp_Fields = {
   reward?: Maybe<Scalars['Float']['output']>;
 };
 
+/** order by var_samp() on columns of table "block" */
+export type Block_Var_Samp_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
+};
+
 /** aggregate variance on columns */
 export type Block_Variance_Fields = {
   __typename?: 'block_variance_fields';
   height?: Maybe<Scalars['Float']['output']>;
   reward?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "block" */
+export type Block_Variance_Order_By = {
+  height?: InputMaybe<Order_By>;
+  reward?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "cancelled_multisig_proposal" */
@@ -9713,6 +9836,7 @@ export type GetBlocksQuery = {
     height: number;
     reward: any;
     timestamp: any;
+    mined_by_id?: string | null;
     extrinsics: Array<{ __typename?: 'extrinsic'; id: string }>;
   }>;
   meta?: { __typename?: 'chain_stats'; totalCount: number } | null;
@@ -9733,6 +9857,7 @@ export type GetRecentBlocksQuery = {
     height: number;
     reward: any;
     timestamp: any;
+    mined_by_id?: string | null;
     extrinsics: Array<{ __typename?: 'extrinsic'; id: string }>;
   }>;
 };
@@ -9759,7 +9884,7 @@ export type GetBlockByIdQuery = {
       success: boolean;
       fee: any;
       timestamp: any;
-      index_in_block: number;
+      indexInBlock: number;
       signer?: { __typename?: 'account'; id: string } | null;
     }>;
   }>;
@@ -15113,6 +15238,7 @@ export const GetBlocksDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'height' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'mined_by_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'extrinsics' },
@@ -15236,6 +15362,7 @@ export const GetRecentBlocksDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'height' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'reward' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'mined_by_id' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'extrinsics' },
@@ -15403,7 +15530,7 @@ export const GetBlockByIdDocument = {
                       },
                       {
                         kind: 'Field',
-                        alias: { kind: 'Name', value: 'index_in_block' },
+                        alias: { kind: 'Name', value: 'indexInBlock' },
                         name: { kind: 'Name', value: 'index_in_block' }
                       },
                       {
