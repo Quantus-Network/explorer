@@ -10,14 +10,11 @@ import {
   GetBlocksDocument,
   GetCancelledReversibleTransactionByTxIdDocument,
   GetCancelledReversibleTransactionsDocument,
-  GetCancelledReversibleTransactionsStatsDocument,
-  GetDepositPoolStatsDocument,
   GetErrorEventByHashDocument,
   GetErrorEventsDocument,
   GetErrorEventsStatsDocument,
   GetExecutedReversibleTransactionByTxIdDocument,
   GetExecutedReversibleTransactionsDocument,
-  GetExecutedReversibleTransactionsStatsDocument,
   GetExtrinsicByHashDocument,
   GetHighSecuritySetByHashDocument,
   GetHighSecuritySetsDocument,
@@ -26,26 +23,15 @@ import {
   GetMinerRewardByHashDocument,
   GetMinerRewardsDocument,
   GetMinerRewardsStatsDocument,
-  GetRecentBlocksDocument,
-  GetRecentCancelledReversibleTransactionsDocument,
-  GetRecentErrorEventsDocument,
-  GetRecentExecutedReversibleTransactionsDocument,
-  GetRecentHighSecuritySetsDocument,
-  GetRecentMinerRewardsDocument,
-  GetRecentScheduledReversibleTransactionsDocument,
-  GetRecentTransactionsDocument,
   GetScheduledReversibleTransactionByTxIdDocument,
   GetScheduledReversibleTransactionsDocument,
-  GetScheduledReversibleTransactionsStatsDocument,
   GetStatusDocument,
   GetTransactionsDocument,
-  GetTransactionsStatsDocument,
   GetWormholeExtrinsicByIdDocument,
   GetWormholeExtrinsicsDocument,
   SearchAllDocument
 } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 
 import type { GraphqlBenchmarkRegistryEntry } from './types';
@@ -93,14 +79,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     })
   },
   {
-    name: 'GetRecentBlocks',
-    document: GetRecentBlocksDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT
-    })
-  },
-  {
     name: 'GetBlockById',
     document: GetBlockByIdDocument,
     getVariables: (ctx) =>
@@ -121,19 +99,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     })
   },
   {
-    name: 'GetRecentCancelledReversibleTransactions',
-    document: GetRecentCancelledReversibleTransactionsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT
-    })
-  },
-  {
-    name: 'GetCancelledReversibleTransactionsStats',
-    document: GetCancelledReversibleTransactionsStatsDocument,
-    getVariables: () => statsDay()
-  },
-  {
     name: 'GetCancelledReversibleTransactionByTxId',
     document: GetCancelledReversibleTransactionByTxIdDocument,
     getVariables: (ctx) =>
@@ -151,14 +116,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
       orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
-    })
-  },
-  {
-    name: 'GetRecentErrorEvents',
-    document: GetRecentErrorEventsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT
     })
   },
   {
@@ -184,19 +141,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     })
   },
   {
-    name: 'GetRecentExecutedReversibleTransactions',
-    document: GetRecentExecutedReversibleTransactionsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT
-    })
-  },
-  {
-    name: 'GetExecutedReversibleTransactionsStats',
-    document: GetExecutedReversibleTransactionsStatsDocument,
-    getVariables: () => statsDay()
-  },
-  {
     name: 'GetExecutedReversibleTransactionByTxId',
     document: GetExecutedReversibleTransactionByTxIdDocument,
     getVariables: (ctx) =>
@@ -209,15 +153,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
       orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
-    })
-  },
-  {
-    name: 'GetRecentHighSecuritySets',
-    document: GetRecentHighSecuritySetsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT,
-      where: {}
     })
   },
   {
@@ -251,14 +186,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     })
   },
   {
-    name: 'GetRecentMinerRewards',
-    document: GetRecentMinerRewardsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT
-    })
-  },
-  {
     name: 'GetMinerRewardsStats',
     document: GetMinerRewardsStatsDocument,
     getVariables: () => statsDay()
@@ -277,19 +204,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
       limit: QUERY_DEFAULT_LIMIT,
       offset: 0
     })
-  },
-  {
-    name: 'GetRecentScheduledReversibleTransactions',
-    document: GetRecentScheduledReversibleTransactionsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT
-    })
-  },
-  {
-    name: 'GetScheduledReversibleTransactionsStats',
-    document: GetScheduledReversibleTransactionsStatsDocument,
-    getVariables: () => statsDay()
   },
   {
     name: 'GetScheduledReversibleTransactionByTxId',
@@ -317,20 +231,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     })
   },
   {
-    name: 'GetRecentTransactions',
-    document: GetRecentTransactionsDocument,
-    getVariables: () => ({
-      orderBy: { timestamp: 'desc' },
-      limit: QUERY_RECENT_LIMIT,
-      where: { extrinsic_id: { _is_null: false } }
-    })
-  },
-  {
-    name: 'GetTransactionsStats',
-    document: GetTransactionsStatsDocument,
-    getVariables: () => statsDay()
-  },
-  {
     name: 'GetExtrinsicByHash',
     document: GetExtrinsicByHashDocument,
     getVariables: (ctx) =>
@@ -350,10 +250,5 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     document: GetWormholeExtrinsicByIdDocument,
     getVariables: (ctx) =>
       ctx.wormholeExtrinsicId ? { id: ctx.wormholeExtrinsicId } : null
-  },
-  {
-    name: 'GetDepositPoolStats',
-    document: GetDepositPoolStatsDocument,
-    getVariables: () => ({})
   }
 ];

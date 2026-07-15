@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Error_Event_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { ErrorEventSorts } from '@/constants/query-sorts';
 import type {
   ErrorEventListResponse,
   ErrorEventResponse,
-  ErrorEventsStatsResponse,
-  RecentErrorEventsResponse
+  ErrorEventsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -67,51 +65,6 @@ export const errors = {
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
-      }
-    });
-  },
-  useGetRecent: (
-    config?: Omit<QueryHookOptions<RecentErrorEventsResponse>, 'variables'>
-  ) => {
-    const GET_RECENT_ERROR_EVENTS = gql`
-      query GetRecentErrorEvents(
-        $limit: Int
-        $offset: Int
-        $orderBy: [error_event_order_by!]
-        $where: error_event_bool_exp
-      ) {
-        errorEvents: error_event(
-          limit: $limit
-          offset: $offset
-          order_by: $orderBy
-          where: $where
-        ) {
-          error_docs
-          error_module
-          error_name
-          error_type
-          extrinsic {
-            id
-            pallet
-            call
-          }
-          id
-          timestamp
-          block {
-            height
-          }
-        }
-      }
-    `;
-
-    return useQuery<
-      RecentErrorEventsResponse,
-      PaginatedQueryVariables<ErrorEventSorts, Error_Event_Bool_Exp>
-    >(GET_RECENT_ERROR_EVENTS, {
-      ...config,
-      variables: {
-        orderBy: { timestamp: 'desc' },
-        limit: QUERY_RECENT_LIMIT
       }
     });
   },

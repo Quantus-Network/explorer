@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Multisig_Deposits_Claimed_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MultisigDepositsClaimedSorts } from '@/constants/query-sorts';
 import type {
   MultisigDepositsClaimedListResponse,
   MultisigDepositsClaimedResponse,
-  MultisigDepositsClaimedStatsResponse,
-  RecentMultisigDepositsClaimedResponse
+  MultisigDepositsClaimedStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -79,32 +77,6 @@ export const multisigDepositsClaimed = {
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
       }
-    });
-  },
-  useGetRecent: (
-    config?: Omit<
-      QueryHookOptions<RecentMultisigDepositsClaimedResponse>,
-      'variables'
-    >
-  ) => {
-    const QUERY = gql`
-      ${MULTISIG_DEPOSITS_CLAIMED_FIELDS}
-      query GetRecentMultisigDepositsClaimed(
-        $limit: Int
-        $orderBy: [multisig_deposits_claimed_order_by!]
-      ) {
-        multisigDepositsClaimedEvents: multisig_deposits_claimed(
-          limit: $limit
-          order_by: $orderBy
-        ) {
-          ...MultisigDepositsClaimedFields
-        }
-      }
-    `;
-
-    return useQuery(QUERY, {
-      ...config,
-      variables: { orderBy: { timestamp: 'desc' }, limit: QUERY_RECENT_LIMIT }
     });
   },
   useGetStats: (

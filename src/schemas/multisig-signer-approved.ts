@@ -26,10 +26,6 @@ export interface MultisigSignerApprovedListResponse {
   };
 }
 
-export interface RecentMultisigSignerApprovedResponse {
-  multisigSignerApprovedEvents: MultisigSignerApproved[];
-}
-
 export interface MultisigSignerApprovedStatsResponse {
   allTime: {
     total_multisig_signer_approved: number;

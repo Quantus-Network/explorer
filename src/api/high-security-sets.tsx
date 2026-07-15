@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { High_Security_Set_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { HighSecuritySetSorts } from '@/constants/query-sorts';
 import type {
   HighSecuritySetListResponse,
   HighSecuritySetResponse,
-  HighSecuritySetsStatsResponse,
-  RecentHighSecuritySetsResponse
+  HighSecuritySetsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -70,55 +68,6 @@ export const highSecuritySets = {
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
-      }
-    });
-  },
-  useGetRecent: (
-    config?: Omit<QueryHookOptions<RecentHighSecuritySetsResponse>, 'variables'>
-  ) => {
-    const GET_RECENT_HIGH_SECURITY_SETS = gql`
-      query GetRecentHighSecuritySets(
-        $limit: Int
-        $offset: Int
-        $orderBy: [high_security_set_order_by!]
-        $where: high_security_set_bool_exp
-      ) {
-        highSecuritySets: high_security_set(
-          limit: $limit
-          offset: $offset
-          order_by: $orderBy
-          where: $where
-        ) {
-          id
-          extrinsic {
-            id
-            pallet
-            call
-          }
-          who {
-            id
-          }
-          guardian {
-            id
-          }
-          timestamp
-          delay
-          block {
-            height
-          }
-        }
-      }
-    `;
-
-    return useQuery<
-      RecentHighSecuritySetsResponse,
-      PaginatedQueryVariables<HighSecuritySetSorts, High_Security_Set_Bool_Exp>
-    >(GET_RECENT_HIGH_SECURITY_SETS, {
-      ...config,
-      variables: {
-        orderBy: { timestamp: 'desc' },
-        limit: QUERY_RECENT_LIMIT,
-        where: {}
       }
     });
   },

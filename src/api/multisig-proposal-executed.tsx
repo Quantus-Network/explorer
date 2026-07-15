@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Executed_Multisig_Proposal_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MultisigProposalExecutedSorts } from '@/constants/query-sorts';
 import type {
   MultisigProposalExecutedListResponse,
   MultisigProposalExecutedResponse,
-  MultisigProposalExecutedStatsResponse,
-  RecentMultisigProposalExecutedResponse
+  MultisigProposalExecutedStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -82,32 +80,6 @@ export const multisigProposalExecuted = {
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
       }
-    });
-  },
-  useGetRecent: (
-    config?: Omit<
-      QueryHookOptions<RecentMultisigProposalExecutedResponse>,
-      'variables'
-    >
-  ) => {
-    const QUERY = gql`
-      ${MULTISIG_PROPOSAL_EXECUTED_FIELDS}
-      query GetRecentMultisigProposalExecuted(
-        $limit: Int
-        $orderBy: [executed_multisig_proposal_order_by!]
-      ) {
-        multisigProposalExecutedEvents: executed_multisig_proposal(
-          limit: $limit
-          order_by: $orderBy
-        ) {
-          ...MultisigProposalExecutedFields
-        }
-      }
-    `;
-
-    return useQuery(QUERY, {
-      ...config,
-      variables: { orderBy: { timestamp: 'desc' }, limit: QUERY_RECENT_LIMIT }
     });
   },
   useGetStats: (

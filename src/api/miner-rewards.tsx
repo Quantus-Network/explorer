@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Miner_Reward_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MinerRewardSorts } from '@/constants/query-sorts';
 import type {
   MinerRewardListResponse,
   MinerRewardResponse,
-  MinerRewardsStatsResponse,
-  RecentMinerRewardsResponse
+  MinerRewardsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -62,46 +60,6 @@ export const minerRewards = {
         limit: config?.variables?.limit ?? QUERY_DEFAULT_LIMIT,
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
-      }
-    });
-  },
-  useGetRecent: (
-    config?: Omit<QueryHookOptions<RecentMinerRewardsResponse>, 'variables'>
-  ) => {
-    const GET_RECENT_MINER_REWARDS = gql`
-      query GetRecentMinerRewards(
-        $limit: Int
-        $offset: Int
-        $orderBy: [miner_reward_order_by!]
-        $where: miner_reward_bool_exp
-      ) {
-        minerRewards: miner_reward(
-          limit: $limit
-          offset: $offset
-          order_by: $orderBy
-          where: $where
-        ) {
-          block {
-            height
-            hash
-          }
-          reward
-          miner {
-            id
-          }
-          timestamp
-        }
-      }
-    `;
-
-    return useQuery<
-      RecentMinerRewardsResponse,
-      PaginatedQueryVariables<MinerRewardSorts, Miner_Reward_Bool_Exp>
-    >(GET_RECENT_MINER_REWARDS, {
-      ...config,
-      variables: {
-        orderBy: { timestamp: 'desc' },
-        limit: QUERY_RECENT_LIMIT
       }
     });
   },

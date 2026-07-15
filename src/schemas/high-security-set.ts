@@ -23,10 +23,6 @@ export interface HighSecuritySetListResponse {
   };
 }
 
-export interface RecentHighSecuritySetsResponse {
-  highSecuritySets: HighSecuritySet[];
-}
-
 export interface HighSecuritySetsStatsResponse {
   allTime: {
     total_high_security_sets: number;

@@ -1,16 +1,12 @@
-import type { Decorator, StoryContext } from '@storybook/react-vite';
+import type { Decorator } from '@storybook/react-vite';
 import * as React from 'react';
 
-export const WrapTheme: Decorator = (Story, context: StoryContext) => {
-  const { theme } = context.globals as { theme: 'light' | 'dark' };
-
+/** App is dark-only; keep Storybook in sync with `index.html` (`class="dark"`). */
+export const WrapTheme: Decorator = (Story) => {
   React.useEffect(() => {
-    if (theme === 'dark') {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-  }, [theme]);
+    document.documentElement.classList.add('dark');
+    document.body.classList.add('dark');
+  }, []);
 
   return <Story />;
 };

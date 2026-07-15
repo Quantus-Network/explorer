@@ -67,10 +67,6 @@ export interface BlockListResponse {
   };
 }
 
-export interface RecentBlocksResponse {
-  blocks: Block[];
-}
-
 export interface BlockTransaction {
   node: Transaction;
 }

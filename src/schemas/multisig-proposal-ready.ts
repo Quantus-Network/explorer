@@ -24,10 +24,6 @@ export interface MultisigProposalReadyListResponse {
   };
 }
 
-export interface RecentMultisigProposalReadyResponse {
-  multisigProposalReadyEvents: MultisigProposalReady[];
-}
-
 export interface MultisigProposalReadyStatsResponse {
   allTime: {
     total_multisig_proposal_ready: number;

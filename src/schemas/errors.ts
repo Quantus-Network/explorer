@@ -17,10 +17,6 @@ export interface ErrorEventListResponse {
   };
 }
 
-export interface RecentErrorEventsResponse {
-  errorEvents: ErrorEvent[];
-}
-
 export interface ErrorEventsStatsResponse {
   allTime: {
     total_error_events: number;

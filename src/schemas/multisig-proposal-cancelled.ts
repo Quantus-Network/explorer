@@ -25,10 +25,6 @@ export interface MultisigProposalCancelledListResponse {
   };
 }
 
-export interface RecentMultisigProposalCancelledResponse {
-  multisigProposalCancelledEvents: MultisigProposalCancelled[];
-}
-
 export interface MultisigProposalCancelledStatsResponse {
   allTime: {
     total_multisig_proposals_cancelled: number;

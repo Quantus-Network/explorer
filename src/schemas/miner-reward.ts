@@ -19,10 +19,6 @@ export interface MinerRewardListResponse {
   };
 }
 
-export interface RecentMinerRewardsResponse {
-  minerRewards: MinerReward[];
-}
-
 export interface MinerRewardsStatsResponse {
   allTime: {
     total_miner_rewards: number;

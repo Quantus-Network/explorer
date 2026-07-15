@@ -29,10 +29,6 @@ export interface MultisigProposalCreatedListResponse {
   };
 }
 
-export interface RecentMultisigProposalCreatedResponse {
-  multisigProposalCreatedEvents: MultisigProposalCreated[];
-}
-
 export interface MultisigProposalCreatedStatsResponse {
   allTime: {
     total_multisig_proposals: number;

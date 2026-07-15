@@ -7,34 +7,6 @@ export interface Transaction
   block: Pick<gql.Block, 'height'>;
 }
 
-export interface TransactionResponse {
-  transactions: [Transaction];
-}
-
-export interface TransactionListResponse {
-  transactions: Transaction[];
-  meta: {
-    aggregate: {
-      totalCount: number;
-    };
-  };
-}
-
-export interface RecentTransactionsResponse {
-  transactions: Transaction[];
-}
-
-export interface TransactionsStatsResponse {
-  allTime: {
-    total_immediate_transfers: number;
-  };
-  last24Hour: {
-    aggregate: {
-      totalCount: number;
-    };
-  };
-}
-
 // Extrinsic detail response (for /transactions/{hash} page)
 export interface ExtrinsicDetail {
   id: string;

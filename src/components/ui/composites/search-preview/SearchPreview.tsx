@@ -42,7 +42,7 @@ interface SectionProps<T> {
   loading: boolean;
   error?: string;
   emptyMsg: string;
-  items?: T[];
+  items?: any[];
   renderItem: (item: T) => React.ReactNode;
 }
 

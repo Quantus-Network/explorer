@@ -25,10 +25,6 @@ export interface MultisigProposalRemovedListResponse {
   };
 }
 
-export interface RecentMultisigProposalRemovedResponse {
-  multisigProposalRemovedEvents: MultisigProposalRemoved[];
-}
-
 export interface MultisigProposalRemovedStatsResponse {
   allTime: {
     total_multisig_proposals_removed: number;

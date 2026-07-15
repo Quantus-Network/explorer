@@ -3,14 +3,12 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Multisig_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MultisigCreatedSorts } from '@/constants/query-sorts';
 import type {
   MultisigByIdResponse,
   MultisigCreatedListResponse,
   MultisigCreatedResponse,
-  MultisigCreatedStatsResponse,
-  RecentMultisigCreatedResponse
+  MultisigCreatedStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -79,32 +77,6 @@ export const multisigCreated = {
         where: config?.variables?.where
       }
     });
-  },
-  useGetRecent: (
-    config?: Omit<QueryHookOptions<RecentMultisigCreatedResponse>, 'variables'>
-  ) => {
-    const GET_RECENT_MULTISIG_CREATED = gql`
-      ${MULTISIG_CREATED_FIELDS}
-      query GetRecentMultisigCreated(
-        $limit: Int
-        $orderBy: [multisig_order_by!]
-      ) {
-        multisigCreatedEvents: multisig(limit: $limit, order_by: $orderBy) {
-          ...MultisigCreatedFields
-        }
-      }
-    `;
-
-    return useQuery<RecentMultisigCreatedResponse>(
-      GET_RECENT_MULTISIG_CREATED,
-      {
-        ...config,
-        variables: {
-          orderBy: { timestamp: 'desc' },
-          limit: QUERY_RECENT_LIMIT
-        }
-      }
-    );
   },
   useGetStats: (
     config?: Omit<QueryHookOptions<MultisigCreatedStatsResponse>, 'variables'>

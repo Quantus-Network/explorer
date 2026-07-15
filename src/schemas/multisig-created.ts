@@ -24,10 +24,6 @@ export interface MultisigCreatedListResponse {
   };
 }
 
-export interface RecentMultisigCreatedResponse {
-  multisigCreatedEvents: MultisigCreated[];
-}
-
 export interface MultisigCreatedStatsResponse {
   allTime: {
     total_multisigs_created: number;
