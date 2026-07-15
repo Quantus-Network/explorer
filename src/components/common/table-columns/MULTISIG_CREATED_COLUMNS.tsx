@@ -4,14 +4,32 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigCreated } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<MultisigCreated>();
 
 export const MULTISIG_CREATED_COLUMNS = [
+  columnHelper.accessor('id', {
+    id: 'wallet',
+    header: 'Wallet',
+    cell: (props) => {
+      const walletId = props.getValue();
+      return walletId ? (
+        <LinkWithCopy
+          href={getMultisigWalletHref(walletId)}
+          text={formatTxAddress(walletId)}
+          textCopy={walletId}
+        />
+      ) : (
+        '-'
+      );
+    },
+    enableSorting: false
+  }),
   columnHelper.accessor('extrinsic.id', {
     id: 'extrinsicHash',
-    header: 'Extrinsic Hash',
+    header: 'Hash',
     cell: (props) => {
       const extrinsicId = props.getValue();
       return extrinsicId ? (
@@ -32,7 +50,7 @@ export const MULTISIG_CREATED_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true
@@ -70,7 +88,7 @@ export const MULTISIG_CREATED_COLUMNS = [
   }),
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
-    header: 'Timestamp',
+    header: 'Created',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   })

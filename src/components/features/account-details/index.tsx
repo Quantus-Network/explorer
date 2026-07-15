@@ -6,9 +6,8 @@ import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 import { validateAccountId } from '@/utils/validate-account-id';
 
-import { AccountDataTabs } from './account-data-tabs/AccountDataTabs';
+import { AccountAllTransactions } from './account-all-transactions/AccountAllTransactions';
 import { AccountInformation } from './account-information/AccountInformation';
-import { AccountMultisigInformation } from './account-multisig-information/AccountMultisigInformation';
 
 interface Props {
   id: string;
@@ -23,23 +22,14 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
   if (!loading && !data?.account && !isAccountValid) throw notFound();
 
   return (
-    <>
-      <SectionContainer>
-        <ContentContainer className="flex flex-col gap-4">
-          <h1>Account Details</h1>
+    <SectionContainer>
+      <ContentContainer className="flex flex-col gap-6">
+        <h1 className="page-title">Account</h1>
 
-          <AccountInformation accountId={id} query={query} />
+        <AccountInformation accountId={id} query={query} />
 
-          {data?.multisig && (
-            <AccountMultisigInformation
-              multisig={data.multisig}
-              loading={loading}
-            />
-          )}
-        </ContentContainer>
-      </SectionContainer>
-
-      <AccountDataTabs query={query} />
-    </>
+        <AccountAllTransactions accountId={id} />
+      </ContentContainer>
+    </SectionContainer>
   );
 };

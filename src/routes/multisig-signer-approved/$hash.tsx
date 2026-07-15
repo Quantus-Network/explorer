@@ -14,12 +14,8 @@ function MultisigSignerApprovedDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <div>
-          <h1>Signer Approved</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Detailed information about a multisig signer approval event.
-          </p>
-        </div>
+        <h1 className="page-title">Signer Approved</h1>
+
         <MultisigSignerApprovedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>

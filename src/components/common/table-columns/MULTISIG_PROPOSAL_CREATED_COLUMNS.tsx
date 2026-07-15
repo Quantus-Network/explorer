@@ -5,7 +5,8 @@ import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/Prop
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCreated } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 const columnHelper = createColumnHelper<MultisigProposalCreated>();
 
@@ -33,7 +34,7 @@ export const MULTISIG_PROPOSAL_CREATED_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true
@@ -51,7 +52,7 @@ export const MULTISIG_PROPOSAL_CREATED_COLUMNS = [
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
-          href={`${RESOURCES.accounts}/${props.getValue()}`}
+          href={getMultisigWalletHref(props.getValue() ?? '')}
           text={formatTxAddress(props.getValue() ?? '-')}
           textCopy={props.getValue() ?? ''}
         />

@@ -6,13 +6,17 @@ import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCreated } from '@/schemas';
-import { formatTimestamp } from '@/utils/formatter';
+import { formatBlockHeight } from '@/utils/formatter';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 export interface MultisigProposalCreatedInformationProps {
   hash: string;
 }
+
+const EmptyValue = () => <span className="text-muted-text">—</span>;
 
 export const MultisigProposalCreatedInformation: React.FC<
   MultisigProposalCreatedInformationProps
@@ -44,35 +48,39 @@ export const MultisigProposalCreatedInformation: React.FC<
         {
           label: 'Extrinsic Hash',
           key: 'extrinsic',
-          render: (value) =>
-            (value as MultisigProposalCreated['extrinsic'])?.id ? (
-              <TextWithCopy
-                text={
-                  (value as MultisigProposalCreated['extrinsic'])?.id ?? '-'
-                }
-                className="break-all"
-              />
+          render: (value) => {
+            const extrinsicId = (value as MultisigProposalCreated['extrinsic'])
+              ?.id;
+            return extrinsicId ? (
+              <TextWithCopy text={extrinsicId} className="break-all" />
             ) : (
-              '-'
-            )
+              <EmptyValue />
+            );
+          }
         },
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) =>
+            value ? (
+              <TimestampDisplay timestamp={value as string} />
+            ) : (
+              <EmptyValue />
+            )
         },
         {
           label: 'Block',
           key: 'block',
-          render: (value) => (
-            <LinkWithCopy
-              text={(
-                value as MultisigProposalCreated['block']
-              ).height.toString()}
-              href={`${RESOURCES.blocks}/${(value as MultisigProposalCreated['block']).height}`}
-              className="break-all"
-            />
-          )
+          render: (value) => {
+            const block = value as MultisigProposalCreated['block'] | undefined;
+            if (!block) return <EmptyValue />;
+            return (
+              <LinkWithCopy
+                text={formatBlockHeight(block.height)}
+                href={`${RESOURCES.blocks}/${block.height}`}
+              />
+            );
+          }
         },
         {
           label: 'Proposal',
@@ -91,12 +99,12 @@ export const MultisigProposalCreatedInformation: React.FC<
               ?.multisig?.id;
             return multisigId ? (
               <LinkWithCopy
-                href={`${RESOURCES.accounts}/${multisigId}`}
+                href={getMultisigWalletHref(multisigId)}
                 text={multisigId}
-                className="break-all"
+                textCopy={multisigId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         },
@@ -110,10 +118,10 @@ export const MultisigProposalCreatedInformation: React.FC<
               <LinkWithCopy
                 href={`${RESOURCES.accounts}/${proposerId}`}
                 text={proposerId}
-                className="break-all"
+                textCopy={proposerId}
               />
             ) : (
-              '-'
+              <EmptyValue />
             );
           }
         }

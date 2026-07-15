@@ -3,20 +3,20 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 
 import useApiClient from '@/api';
-import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
+import { UNIFIED_LIST_TRANSACTION_COLUMNS } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { TransactionSorts } from '@/constants/query-sorts';
+import type { UnifiedListTransactionSorts } from '@/constants/query-sorts';
 import { useOrderBy } from '@/hooks/useOrderBy';
 import { useTableState } from '@/hooks/useTableState';
-import type { Transaction } from '@/schemas';
+import type { UnifiedListTransaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useTransactionsTable = () => {
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   const {
     orderBy,
@@ -27,38 +27,49 @@ export const useTransactionsTable = () => {
     paginationValue
   } = useTableState(null, QUERY_DEFAULT_LIMIT);
 
-  const orderByObject = useOrderBy<TransactionSorts>(orderBy ?? '');
+  const orderByObject = useOrderBy<UnifiedListTransactionSorts>(orderBy ?? '');
   const sortingValue = transformSortLiteral(orderBy);
+
+  const where = useMemo(() => {
+    if (accountId) {
+      return {
+        _or: [
+          { from: { id: { _eq: accountId } } },
+          { to: { id: { _eq: accountId } } }
+        ]
+      };
+    }
+    if (block) {
+      return {
+        block_height: { _eq: Number(block) }
+      };
+    }
+    return undefined;
+  }, [accountId, block]);
 
   const {
     loading,
     data,
     error: fetchError
-  } = api.transactions.useGetAll({
+  } = api.unifiedTransactions.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
       orderBy: orderByObject,
       limit,
       offset: currentPageIndex * limit,
-      ...(accountId && {
-        where: {
-          OR: [{ to: { id_eq: accountId } }, { from: { id_eq: accountId } }]
-        }
-      }),
-      ...(block && {
-        where: {
-          block: { height_eq: Number(block) }
-        }
-      })
+      where
     }
   });
 
-  const transactionColumns = useMemo(() => TRANSACTION_COLUMNS, []);
+  const transactionColumns = useMemo(
+    () => UNIFIED_LIST_TRANSACTION_COLUMNS,
+    []
+  );
   const [rowCount, setRowCount] = useState<number>(
     data?.meta.aggregate.totalCount ?? 0
   );
 
-  const table = useReactTable<Transaction>({
+  const table = useReactTable<UnifiedListTransaction>({
     data: data?.transactions ?? [],
     columns: transactionColumns,
     getCoreRowModel: getCoreRowModel(),
@@ -90,7 +101,7 @@ export const useTransactionsTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.aggregate.totalCount)
+    if (!loading && data?.meta.aggregate.totalCount != null)
       setRowCount(data.meta.aggregate.totalCount);
   }, [loading, data?.meta.aggregate.totalCount]);
 

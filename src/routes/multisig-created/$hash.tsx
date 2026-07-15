@@ -14,12 +14,8 @@ function MultisigCreatedDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <div>
-          <h1>Multisig Created</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Detailed information about a multisig creation event.
-          </p>
-        </div>
+        <h1 className="page-title">Multisig Created</h1>
+
         <MultisigCreatedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>

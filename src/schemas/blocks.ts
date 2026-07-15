@@ -25,7 +25,10 @@ export interface BlockExtrinsic {
 }
 
 export interface Block
-  extends Pick<gql.Block, 'id' | 'hash' | 'height' | 'timestamp' | 'reward'> {
+  extends Pick<
+    gql.Block,
+    'id' | 'hash' | 'height' | 'timestamp' | 'reward' | 'mined_by_id'
+  > {
   extrinsics: BlockExtrinsicMinimal[] | BlockExtrinsic[];
 }
 
@@ -62,10 +65,6 @@ export interface BlockListResponse {
   meta: {
     totalCount: number;
   };
-}
-
-export interface RecentBlocksResponse {
-  blocks: Block[];
 }
 
 export interface BlockTransaction {

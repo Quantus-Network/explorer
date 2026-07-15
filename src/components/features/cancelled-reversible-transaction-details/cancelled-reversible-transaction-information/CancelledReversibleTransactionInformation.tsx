@@ -5,9 +5,10 @@ import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { CancelledReversibleTransactionResponse } from '@/schemas';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 export interface CancelledReversibleTransactionInformationProps {
   txId: string;
@@ -64,7 +65,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={value.height.toString()}
+              text={formatBlockHeight(value.height)}
               href={`${RESOURCES.blocks}/${value.height}`}
               className="break-all"
             />
@@ -73,7 +74,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => <TimestampDisplay timestamp={value as string} />
         },
         {
           label: 'Cancelled By',

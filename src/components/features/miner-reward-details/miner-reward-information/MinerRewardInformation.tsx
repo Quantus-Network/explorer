@@ -5,9 +5,10 @@ import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MinerReward } from '@/schemas';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 export interface MinerRewardInformationProps {
   hash: string;
@@ -72,7 +73,7 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
           key: 'block',
           render: (value) => (
             <LinkWithCopy
-              text={(value as MinerReward['block']).height.toString()}
+              text={formatBlockHeight((value as MinerReward['block']).height)}
               href={`${RESOURCES.blocks}/${(value as MinerReward['block']).height}`}
               className="break-all"
             />
@@ -97,7 +98,7 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
         {
           label: 'Timestamp',
           key: 'timestamp',
-          render: (value) => formatTimestamp(value, true)
+          render: (value) => <TimestampDisplay timestamp={value as string} />
         }
       ]}
     />

@@ -2,6 +2,7 @@ import { useSearch } from '@tanstack/react-router';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 
+import type { Multisig_Proposal_Bool_Exp } from '@/__generated__/graphql';
 import useApiClient from '@/api';
 import { MULTISIG_PROPOSAL_COLUMNS } from '@/components/common/table-columns/MULTISIG_PROPOSAL_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
@@ -14,9 +15,9 @@ import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useMultisigProposalTable = () => {
   const api = useApiClient();
-  const { block } = useSearch({
+  const { block, status } = useSearch({
     strict: false
-  }) as { block?: string };
+  }) as { block?: string; status?: string };
 
   const {
     orderBy,
@@ -30,6 +31,20 @@ export const useMultisigProposalTable = () => {
   const orderByObject = useOrderBy<MultisigProposalSorts>(orderBy ?? '');
   const sortingValue = transformSortLiteral(orderBy);
 
+  const where = useMemo((): Multisig_Proposal_Bool_Exp | undefined => {
+    const filters: Multisig_Proposal_Bool_Exp = {};
+
+    if (block) {
+      filters.createdAtBlock = { height: { _eq: Number(block) } };
+    }
+
+    if (status && status !== 'all') {
+      filters.status = { _eq: status };
+    }
+
+    return Object.keys(filters).length > 0 ? filters : undefined;
+  }, [block, status]);
+
   const {
     loading,
     data,
@@ -40,11 +55,7 @@ export const useMultisigProposalTable = () => {
       orderBy: orderByObject,
       limit,
       offset: currentPageIndex * limit,
-      ...(block && {
-        where: {
-          createdAtBlock: { height: { _eq: Number(block) } }
-        }
-      })
+      ...(where && { where })
     }
   });
 
@@ -85,7 +96,7 @@ export const useMultisigProposalTable = () => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.aggregate.totalCount)
+    if (!loading && data?.meta.aggregate.totalCount !== undefined)
       setRowCount(data.meta.aggregate.totalCount);
   }, [loading, data?.meta.aggregate.totalCount]);
 

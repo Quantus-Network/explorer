@@ -14,12 +14,8 @@ function MultisigProposalCreatedDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <div>
-          <h1>Proposal Created</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Detailed information about a multisig proposal creation event.
-          </p>
-        </div>
+        <h1 className="page-title">Proposal Created</h1>
+
         <MultisigProposalCreatedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>

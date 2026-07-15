@@ -1,1 +1,1 @@
-export const QUERY_RECENT_LIMIT = 10;
+export const QUERY_RECENT_LIMIT = 6;

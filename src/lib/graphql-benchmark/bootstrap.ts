@@ -3,14 +3,14 @@ import type { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import {
   GetAccountsDocument,
   GetBlockByIdDocument,
+  GetBlocksDocument,
   GetCancelledReversibleTransactionsDocument,
   GetErrorEventsDocument,
   GetExecutedReversibleTransactionsDocument,
   GetHighSecuritySetsDocument,
-  GetRecentBlocksDocument,
-  GetRecentMinerRewardsDocument,
-  GetRecentTransactionsDocument,
+  GetMinerRewardsDocument,
   GetScheduledReversibleTransactionsDocument,
+  GetTransactionsDocument,
   GetWormholeExtrinsicsDocument,
   Order_By
 } from '@/__generated__/graphql';
@@ -33,9 +33,9 @@ export async function loadGraphqlBenchmarkContext(
 
   const blocks = await safeQuery(() =>
     client.query({
-      query: GetRecentBlocksDocument,
+      query: GetBlocksDocument,
       variables: {
-        orderBy: { timestamp: Order_By.Desc },
+        orderBy: [{ timestamp: Order_By.Desc }],
         limit: 1,
         offset: 0
       }
@@ -64,7 +64,7 @@ export async function loadGraphqlBenchmarkContext(
 
   const transfers = await safeQuery(() =>
     client.query({
-      query: GetRecentTransactionsDocument,
+      query: GetTransactionsDocument,
       variables: {
         orderBy: { timestamp: Order_By.Desc },
         limit: 1,
@@ -170,10 +170,11 @@ export async function loadGraphqlBenchmarkContext(
 
   const miners = await safeQuery(() =>
     client.query({
-      query: GetRecentMinerRewardsDocument,
+      query: GetMinerRewardsDocument,
       variables: {
         orderBy: { timestamp: Order_By.Desc },
-        limit: 1
+        limit: 1,
+        offset: 0
       }
     })
   );
@@ -185,23 +186,15 @@ export async function loadGraphqlBenchmarkContext(
   const sampleHeight = ctx.blockHeight;
   const sampleHash = ctx.blockHash;
   if (sampleHeight != null && sampleHash != null) {
-    const blockDetail = await safeQuery(() =>
+    await safeQuery(() =>
       client.query({
         query: GetBlockByIdDocument,
         variables: {
           height: sampleHeight,
-          hash: sampleHash,
-          limit: QUERY_DEFAULT_LIMIT
+          hash: sampleHash
         }
       })
     );
-    const r = blockDetail?.data;
-    if (r) {
-      const b = r.blocks?.[0];
-      if (b) {
-        // We need to find sample IDs from the block details if not already found
-      }
-    }
   }
 
   return ctx;

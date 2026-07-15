@@ -8,7 +8,7 @@ import { useCallback } from 'react';
 
 export const useTableState = (
   initialOrderBy: string | null = null,
-  initialLimit: number = 10
+  initialLimit: number = 6
 ) => {
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1));
   const [limit, setLimit] = useQueryState(

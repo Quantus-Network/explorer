@@ -2,9 +2,9 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
 import useApiClient from '@/api';
-import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
+import { RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
-import type { Transaction } from '@/schemas';
+import type { UnifiedListTransaction } from '@/schemas';
 
 export const useTransactionsTable = () => {
   const api = useApiClient();
@@ -12,12 +12,15 @@ export const useTransactionsTable = () => {
     loading,
     data,
     error: fetchError
-  } = api.transactions.useGetRecent({
+  } = api.unifiedTransactions.useGetRecent({
     pollInterval: DATA_POOL_INTERVAL
   });
-  const transactionColumns = useMemo(() => TRANSACTION_COLUMNS, []);
+  const transactionColumns = useMemo(
+    () => RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS,
+    []
+  );
 
-  const table = useReactTable<Transaction>({
+  const table = useReactTable<UnifiedListTransaction>({
     data: data?.transactions ?? [],
     columns: transactionColumns,
     getCoreRowModel: getCoreRowModel(),

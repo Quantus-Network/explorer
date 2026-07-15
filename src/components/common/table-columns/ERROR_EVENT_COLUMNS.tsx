@@ -4,23 +4,23 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { ErrorEvent } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<ErrorEvent>();
 
 export const ERROR_EVENT_COLUMNS = [
   columnHelper.accessor('extrinsic.id', {
     id: 'extrinsicHash',
-    header: 'Extrinsic Hash',
+    header: 'Hash',
     cell: (props) =>
       props.getValue() ? (
         <LinkWithCopy
           href={`${RESOURCES.errors}/${props.getValue()}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          text={formatTxAddress(props.getValue())}
+          textCopy={props.getValue()}
         />
       ) : (
-        'Is not available'
+        '-'
       ),
     enableSorting: false
   }),
@@ -30,17 +30,12 @@ export const ERROR_EVENT_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true
   }),
-  columnHelper.accessor('timestamp', {
-    id: 'timestamp',
-    header: 'Timestamp',
-    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
-    enableSorting: true
-  }),
+
   columnHelper.accessor('error_type', {
     id: 'errorType',
     header: 'Type',
@@ -51,6 +46,12 @@ export const ERROR_EVENT_COLUMNS = [
     id: 'errorName',
     header: 'Name',
     cell: (props) => props.getValue() ?? '-',
+    enableSorting: true
+  }),
+  columnHelper.accessor('timestamp', {
+    id: 'timestamp',
+    header: 'Timestamp',
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   })
 ];

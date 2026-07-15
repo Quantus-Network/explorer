@@ -2,7 +2,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useMemo } from 'react';
 
 import useApiClient from '@/api';
-import { BLOCK_COLUMNS } from '@/components/common/table-columns/BLOCK_COLUMNS';
+import { RECENT_BLOCK_COLUMNS } from '@/components/common/table-columns/RECENT_BLOCK_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { transformBlockOrderBy } from '@/constants/query-sorts';
 import { useTableState } from '@/hooks/useTableState';
@@ -39,7 +39,7 @@ export const useBlocksTable = () => {
     }
   });
 
-  const blockColumns = useMemo(() => BLOCK_COLUMNS, []);
+  const blockColumns = useMemo(() => RECENT_BLOCK_COLUMNS, []);
 
   const table = useReactTable<Block>({
     data: data?.blocks ?? [],

@@ -17,7 +17,7 @@ export const RowSkeleton: React.FC<RowSkeletonProps> = ({
       {Array.from({ length: columnsLength }).map((_b, cellIdx) => {
         return (
           <TableCell key={cellIdx}>
-            <Skeleton className="h-6 w-full" />
+            <Skeleton className="h-4 w-full" />
           </TableCell>
         );
       })}

@@ -14,27 +14,3 @@ export interface CancelledReversibleTransaction
 export interface CancelledReversibleTransactionResponse {
   cancelledReversibleTransactions: [CancelledReversibleTransaction];
 }
-
-export interface CancelledReversibleTransactionListResponse {
-  cancelledReversibleTransactions: CancelledReversibleTransaction[];
-  meta: {
-    aggregate: {
-      totalCount: number;
-    };
-  };
-}
-
-export interface RecentCancelledReversibleTransactionsResponse {
-  cancelledReversibleTransactions: CancelledReversibleTransaction[];
-}
-
-export interface CancelledReversibleTransactionsStatsResponse {
-  allTime: {
-    total_cancelled_transfers: number;
-  };
-  last24Hour: {
-    aggregate: {
-      totalCount: number;
-    };
-  };
-}

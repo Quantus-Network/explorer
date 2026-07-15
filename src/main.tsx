@@ -1,17 +1,17 @@
 import './globals.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/500.css';
-import '@fontsource/jetbrains-mono/600.css';
-import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/geist-sans/300.css';
+import '@fontsource/geist-sans/400.css';
+import '@fontsource/geist-sans/500.css';
+import '@fontsource/geist-sans/600.css';
+import '@fontsource/geist-mono/400.css';
+import '@fontsource/geist-mono/500.css';
 
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import ErrorPage from './error';
+import NotFound from './not-found';
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
 
@@ -22,7 +22,9 @@ const router = createRouter({
   defaultPreload: 'intent',
   scrollRestoration: true,
   defaultStructuralSharing: true,
-  defaultPreloadStaleTime: 0
+  defaultPreloadStaleTime: 0,
+  defaultNotFoundComponent: NotFound,
+  defaultErrorComponent: ErrorPage
 });
 
 // Register the router instance for type safety

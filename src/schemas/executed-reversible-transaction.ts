@@ -13,27 +13,3 @@ export interface ExecutedReversibleTransaction
 export interface ExecutedReversibleTransactionResponse {
   executedReversibleTransactions: [ExecutedReversibleTransaction];
 }
-
-export interface ExecutedReversibleTransactionListResponse {
-  executedReversibleTransactions: ExecutedReversibleTransaction[];
-  meta: {
-    aggregate: {
-      totalCount: number;
-    };
-  };
-}
-
-export interface RecentExecutedReversibleTransactionsResponse {
-  executedReversibleTransactions: ExecutedReversibleTransaction[];
-}
-
-export interface ExecutedReversibleTransactionsStatsResponse {
-  allTime: {
-    total_executed_transfers: number;
-  };
-  last24Hour: {
-    aggregate: {
-      totalCount: number;
-    };
-  };
-}

@@ -1,63 +1,137 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { Menu, X } from 'lucide-react';
+import { useEffect } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 
-import { Button } from '@/components/ui/button';
-import { ContentContainer } from '@/components/ui/content-container';
+import { NetworkSelect } from '@/components/ui/composites/network-select/NetworkSelect';
+import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
+import { SearchPreview } from '@/components/ui/composites/search-preview/SearchPreview';
 import env from '@/config/env';
-import { cn } from '@/lib/utils';
 
 import { DesktopMenu } from './DesktopMenu';
 import { useHeader } from './hook';
 import { MobileMenu } from './MobileMenu';
-import { Topbar } from './Topbar';
 
 export interface HeaderProps {}
 
-export const Header = (props: HeaderProps) => {
-  const { isOpen, toggleMenu, ...topbarProps } = useHeader();
+const SEARCH_PLACEHOLDER = 'Search by hash, address, block height…';
+const MD_BREAKPOINT = '(min-width: 768px)';
+
+export const Header = (_props: HeaderProps) => {
+  const {
+    isOpen,
+    toggleMenu,
+    handleKeywordChange,
+    handleInputFocus,
+    handleKeyDown,
+    handleClosePreview,
+    searchError,
+    searchLoading,
+    searchResult,
+    isResultVisible,
+    inputRef,
+    resultRef
+  } = useHeader();
+
+  const location = useLocation().pathname;
+  const rootPath = location.split('/')[1];
+  const isHomepage = rootPath === '';
+  const isDesktop = useMediaQuery(MD_BREAKPOINT, {
+    defaultValue: false,
+    initializeWithValue: false
+  });
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  const searchPreview = isResultVisible ? (
+    <SearchPreview
+      ref={resultRef}
+      onKeyDown={handleKeyDown}
+      searchResult={searchResult}
+      isLoading={searchLoading}
+      error={searchError}
+      handleClosePreview={handleClosePreview}
+    />
+  ) : null;
 
   return (
-    <div className="flex flex-col">
-      <Topbar {...topbarProps} />
-
-      <header className="relative z-10 w-full border-b border-solid bg-navbar">
-        <ContentContainer
-          className={cn(
-            'flex h-20 items-center justify-between',
-            isOpen && 'border-b border-solid'
-          )}
+    <div className="sticky top-0 z-[100] flex flex-col">
+      <header className="flex h-nav w-full items-center border-b border-border-subtle bg-void px-3.5 md:px-6">
+        <Link
+          to="/"
+          className="mr-4 flex shrink-0 items-center gap-2 no-underline md:mr-8"
         >
-          <Link to="/" className="flex items-center gap-2 no-underline">
-            <div className="size-10">
-              <img
-                src="/images/logomark.webp"
-                alt="Quantus Logo"
-                className="size-full"
-                fetchPriority="high"
-                loading="eager"
-                decoding="sync"
+          <img
+            src="/images/logomark.webp"
+            alt="Quantus Logo"
+            className="size-[18px]"
+            fetchPriority="high"
+            loading="eager"
+            decoding="sync"
+          />
+          <span className="text-sm font-medium tracking-[-0.01em] text-content">
+            {env.SITE_NAME}
+          </span>
+        </Link>
+
+        <DesktopMenu />
+
+        <div className="ml-auto flex shrink-0 items-center gap-3">
+          {!isHomepage && isDesktop && (
+            <div className="relative w-[260px]">
+              <SearchBox
+                ref={inputRef}
+                size="sm"
+                buttonVariant="ghost"
+                onFocus={handleInputFocus}
+                onKeyDown={handleKeyDown}
+                placeholder={SEARCH_PLACEHOLDER}
+                onKeywordChange={handleKeywordChange}
               />
+              {searchPreview}
             </div>
+          )}
 
-            <span className="text-xl font-bold text-primary">
-              {env.SITE_NAME}
-            </span>
-          </Link>
+          <NetworkSelect />
 
-          <DesktopMenu />
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="flex items-center justify-center md:hidden"
+          <button
+            type="button"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            className="flex size-9 items-center justify-center text-content md:hidden"
             onClick={toggleMenu}
           >
-            {isOpen ? <X className="!size-6" /> : <Menu className="!size-6" />}
-          </Button>
-        </ContentContainer>
-
-        <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
+            {isOpen ? (
+              <X className="size-[18px]" />
+            ) : (
+              <Menu className="size-[18px]" />
+            )}
+          </button>
+        </div>
       </header>
+
+      {!isHomepage && !isDesktop && (
+        <div className="border-b border-border-subtle bg-surface px-3.5 py-2.5">
+          <div className="relative w-full">
+            <SearchBox
+              ref={inputRef}
+              size="sm"
+              onFocus={handleInputFocus}
+              onKeyDown={handleKeyDown}
+              placeholder={SEARCH_PLACEHOLDER}
+              onKeywordChange={handleKeywordChange}
+              buttonVariant="ghost"
+            />
+            {searchPreview}
+          </div>
+        </div>
+      )}
+
+      <MobileMenu isOpen={isOpen} toggleMenu={toggleMenu} />
     </div>
   );
 };

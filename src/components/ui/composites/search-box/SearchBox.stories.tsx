@@ -6,26 +6,53 @@ const meta: Meta<SearchBoxProps> = {
   title: 'Components/UI/Composites/SearchBox',
   component: SearchBox,
   parameters: {
-    layout: 'fullscreen'
+    layout: 'padded'
   },
-  argTypes: {}
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['sm', 'md']
+    }
+  }
 };
 
 export default meta;
 
 type Story = StoryObj<SearchBoxProps>;
 
-export const Default: Story = {
-  args: {
-    onKeywordChange(val, e) {
-      if (!val) return;
-
-      console.log(val);
-    },
-    onSearch(val) {
-      if (!val) return;
-
-      console.log(val);
-    }
+const handlers = {
+  onKeywordChange(val: string) {
+    if (!val) return;
+    console.log(val);
+  },
+  onSearch(val: string) {
+    if (!val) return;
+    console.log(val);
   }
 };
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    placeholder: 'Search by hash, address, block height, or transaction ID…',
+    ...handlers
+  }
+};
+
+export const Small: Story = {
+  args: {
+    size: 'sm',
+    buttonVariant: 'ghost',
+    placeholder: 'Search by hash, address, block height…',
+    ...handlers
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[260px]">
+        <Story />
+      </div>
+    )
+  ]
+};
+
+export const Default: Story = Medium;

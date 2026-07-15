@@ -56,27 +56,12 @@ const preview: Preview = {
       }
     },
     backgrounds: {
-      default: 'light',
-      values: [
-        { name: 'light', value: '#fef2f2' },
-        { name: 'dark', value: '#171717' }
-      ]
+      default: 'dark',
+      values: [{ name: 'dark', value: '#0E0E0E' }]
     }
   },
   loaders: [mswLoader],
-  decorators: [WrapTheme],
-  globalTypes: {
-    theme: {
-      name: 'theme',
-      description: 'Select light or dark theme',
-      defaultValue: 'light',
-      toolbar: {
-        icon: 'mirror',
-        items: ['light', 'dark'],
-        showName: true
-      }
-    }
-  }
+  decorators: [WrapTheme]
 };
 
 export default preview;

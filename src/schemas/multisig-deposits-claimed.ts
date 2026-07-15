@@ -24,10 +24,6 @@ export interface MultisigDepositsClaimedListResponse {
   };
 }
 
-export interface RecentMultisigDepositsClaimedResponse {
-  multisigDepositsClaimedEvents: MultisigDepositsClaimed[];
-}
-
 export interface MultisigDepositsClaimedStatsResponse {
   allTime: {
     total_multisig_deposits_claimed: number;

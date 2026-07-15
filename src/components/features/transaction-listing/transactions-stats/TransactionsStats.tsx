@@ -2,7 +2,14 @@ import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import useApiClient from '@/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardGroup,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -12,11 +19,11 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   const shouldHide = !!(accountId || block);
 
-  const { loading, data, error } = api.transactions.useGetStats({
+  const { loading, data, error } = api.unifiedTransactions.useGetStats({
     pollInterval: DATA_POOL_INTERVAL,
     skip: shouldHide
   });
@@ -26,32 +33,36 @@ export const TransactionsStats: React.FC<TransactionsStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <CardGroup className="max-w-[500px] grid-cols-1 sm:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total Transactions</h3>
+            <h3>Total</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.total_immediate_transfers}</p>}
+          {success && (
+            <p>{data?.allTime.aggregate.totalCount.toLocaleString()}</p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Recent Transactions (24H)</h3>
+            <h3>Last 24h</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.aggregate.totalCount}</p>}
+          {success && (
+            <p>{data?.last24Hour.aggregate.totalCount.toLocaleString()}</p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
-    </div>
+    </CardGroup>
   );
 };

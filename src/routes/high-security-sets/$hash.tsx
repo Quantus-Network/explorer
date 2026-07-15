@@ -14,7 +14,7 @@ function HighSecuritySetDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>High Security Set Details</h1>
+        <h1 className="page-title">High Security Set</h1>
 
         <HighSecuritySetInformation hash={hash} />
       </ContentContainer>

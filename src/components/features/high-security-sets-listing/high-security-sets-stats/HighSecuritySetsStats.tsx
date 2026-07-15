@@ -2,7 +2,14 @@ import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import useApiClient from '@/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardGroup,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -14,7 +21,7 @@ export const HighSecuritySetsStats: React.FC<
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   const shouldHide = !!(accountId || block);
 
@@ -28,32 +35,40 @@ export const HighSecuritySetsStats: React.FC<
   const success = !loading && !error;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <CardGroup className="max-w-[600px] grid-cols-1 sm:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Total High Security Sets</h3>
+            <h3>Total</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.allTime.total_high_security_sets}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.allTime.total_high_security_sets.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Recent High Security Sets (24H)</h3>
+            <h3>Last 24h</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.last24Hour.aggregate.totalCount}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.last24Hour.aggregate.totalCount.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
-    </div>
+    </CardGroup>
   );
 };

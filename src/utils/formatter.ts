@@ -63,6 +63,8 @@ export const formatTxAddress = (address: string) => {
   return `${firstSix}....${lastFive}`;
 };
 
+export const formatBlockHeight = (height: number) => height.toLocaleString();
+
 /**
  * Capitalizes the first character of a string
  * @param sentence - The input string to capitalize

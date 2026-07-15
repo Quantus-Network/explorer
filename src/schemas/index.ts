@@ -19,5 +19,6 @@ export * from './multisig-signer-approved';
 export * from './scheduled-reversible-transaction';
 export * from './searchs';
 export * from './transcation';
+export * from './unified-list-transaction';
 export * from './unified-transaction';
 export * from './wormhole';

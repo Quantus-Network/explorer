@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router';
 
-import { Button } from '@/components/ui/button';
 import { ContentContainer } from '@/components/ui/content-container';
 import { RESOURCES } from '@/constants/resources';
 
@@ -9,13 +8,16 @@ import { TransactionsTable } from '../transactions-table/TransactionsTable';
 export const RecentTransactions = () => {
   return (
     <ContentContainer className="flex flex-col gap-4 px-0">
-      <h2>Recent Immediate Transactions</h2>
+      <h2 className="section-label">Recent Transactions</h2>
 
       <TransactionsTable />
 
-      <Button variant="link" className="mx-auto w-fit">
-        <Link to={RESOURCES.transactions}>See all immediate transactions</Link>
-      </Button>
+      <button
+        type="button"
+        className="w-fit bg-transparent p-0 font-mono text-xs text-muted-text transition-colors hover:text-content"
+      >
+        <Link to={RESOURCES.transactions}>View all transactions →</Link>
+      </button>
     </ContentContainer>
   );
 };

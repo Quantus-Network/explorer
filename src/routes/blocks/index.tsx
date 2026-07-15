@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import { BlocksHeading } from '@/components/features/block-listing/blocks-heading/BlocksHeading';
 import { BlocksStats } from '@/components/features/block-listing/blocks-stats/BlocksStats';
 import { BlocksTable } from '@/components/features/block-listing/blocks-table/BlocksTable';
 import { ContentContainer } from '@/components/ui/content-container';
@@ -13,7 +14,7 @@ function Blocks() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <h1>Blocks</h1>
+        <BlocksHeading />
 
         <BlocksStats />
 

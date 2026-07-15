@@ -5,7 +5,7 @@ import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/Prop
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalRemoved } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<MultisigProposalRemoved>();
 
@@ -33,7 +33,7 @@ export const MULTISIG_PROPOSAL_REMOVED_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true
@@ -41,7 +41,9 @@ export const MULTISIG_PROPOSAL_REMOVED_COLUMNS = [
   columnHelper.accessor('proposal.id', {
     id: 'proposal',
     header: 'Proposal',
-    cell: (props) => <ProposalIdLink proposal={props.row.original.proposal} />,
+    cell: (props) => (
+      <ProposalIdLink proposal={props.row.original.proposal} truncate />
+    ),
     enableSorting: false
   }),
   columnHelper.accessor('removedBy.id', {

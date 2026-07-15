@@ -1,125 +1,76 @@
-import {
-  ArcElement,
-  Chart,
-  type ChartOptions,
-  Legend,
-  Tooltip,
-  type TooltipItem
-} from 'chart.js';
-import React, { useMemo } from 'react';
-import { Pie } from 'react-chartjs-2';
-import { useMediaQuery } from 'usehooks-ts';
+import React from 'react';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatTxAddress } from '@/utils/formatter';
+import { RESOURCES } from '@/constants/resources';
 
 import { useMinerLeaderboardChart } from './hook';
 
-Chart.register(ArcElement, Legend, Tooltip);
-
-const SM_BREAKPOINT = '(min-width: 576px)';
-
 export const MinerLeaderboardChart = () => {
-  const isSmUp = useMediaQuery(SM_BREAKPOINT, {
-    defaultValue: false,
-    initializeWithValue: false
-  });
-
-  const { chartData, dominantMiner, total, getStatus, error } =
+  const { segments, legendItems, getStatus, error } =
     useMinerLeaderboardChart();
   const status = getStatus();
 
-  const pieOptions: ChartOptions<'pie'> = useMemo(
-    () => ({
-      responsive: true,
-      maintainAspectRatio: true,
-      aspectRatio: 1,
-      layout: {
-        padding: isSmUp ? 12 : 8
-      },
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: isSmUp
-            ? {
-                font: { size: 12 },
-                padding: 10,
-                boxWidth: 40
-              }
-            : {
-                font: { size: 10 },
-                padding: 4,
-                boxWidth: 12
-              }
-        },
-        tooltip: {
-          callbacks: {
-            title: (tooltipItems: TooltipItem<'pie'>[]) =>
-              tooltipItems[0]?.label ?? '',
-            label: (context: {
-              parsed: number;
-              dataset: { data: number[] };
-            }) => {
-              const totalBlocks = context.dataset.data.reduce(
-                (a, b) => a + b,
-                0
-              );
-              const pct =
-                totalBlocks > 0
-                  ? ((context.parsed / totalBlocks) * 100).toFixed(1)
-                  : '0';
-              return ` ${context.parsed.toLocaleString()} blocks (${pct}%)`;
-            }
-          }
-        }
-      }
-    }),
-    [isSmUp]
-  );
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <h2>Block Mining Distribution</h2>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {status === 'loading' && <Skeleton className="h-52 sm:h-64" />}
-        {status === 'error' && <p>Error: {error && error.message}</p>}
-        {status === 'success' && chartData && (
-          <div className="flex flex-col gap-4">
-            {dominantMiner && (
-              <p className="min-w-0 break-words text-sm text-muted-foreground">
-                Dominant miner:{' '}
-                <span className="font-medium text-foreground">
-                  {formatTxAddress(dominantMiner.id ?? '')}
-                </span>{' '}
-                with{' '}
-                <span className="font-medium text-foreground">
-                  {(dominantMiner.total_mined_blocks ?? 0).toLocaleString()}
-                </span>{' '}
-                blocks out of{' '}
-                <span className="font-medium text-foreground">
-                  {total.toLocaleString()}
-                </span>{' '}
-                total (
-                {total > 0
-                  ? (
-                      ((dominantMiner.total_mined_blocks ?? 0) / total) *
-                      100
-                    ).toFixed(1)
-                  : '0'}
-                %)
-              </p>
-            )}
-            <div className="mx-auto w-full min-w-0 max-w-full sm:max-w-sm">
-              <Pie data={chartData} options={pieOptions} />
+    <div className="flex flex-col gap-3">
+      <h2 className="font-mono text-[11px] font-normal uppercase tracking-[0.06em] text-muted-text">
+        Block Distribution
+      </h2>
+
+      <Card className="border border-border-subtle">
+        <CardContent className="p-5 px-6">
+          {status === 'loading' && <Skeleton className="h-16" />}
+          {status === 'error' && <InlineFetchError error={error} />}
+          {status === 'success' && segments.length > 0 && (
+            <div className="flex flex-col gap-2.5">
+              <div
+                className="flex h-9 w-full overflow-hidden"
+                role="img"
+                aria-label="Block mining distribution"
+              >
+                {segments.map((segment) => (
+                  <div
+                    key={segment.id ?? segment.label}
+                    className="h-full min-w-px"
+                    style={{
+                      flex: `0 0 ${segment.pct}%`,
+                      backgroundColor: segment.color
+                    }}
+                    title={`${segment.label}: ${segment.blocks.toLocaleString()} blocks (${segment.pct.toFixed(1)}%)`}
+                  />
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-x-3 gap-y-2">
+                {legendItems.map((item) => (
+                  <div
+                    key={item.id ?? item.label}
+                    className="flex items-center gap-1.5 font-mono text-[11px] text-muted-text"
+                  >
+                    <span
+                      className="size-2 shrink-0"
+                      style={{ backgroundColor: item.color }}
+                      aria-hidden
+                    />
+                    {item.id ? (
+                      <LinkWithCopy
+                        href={`${RESOURCES.accounts}/${item.id}`}
+                        text={item.label}
+                        truncate={false}
+                        className="text-[11px] text-muted-text hover:text-flare"
+                      />
+                    ) : (
+                      <span>{item.label}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 };

@@ -4,7 +4,11 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { Block } from '@/schemas';
-import { formatMonetaryValue } from '@/utils/formatter';
+import {
+  formatBlockHeight,
+  formatMonetaryValue,
+  formatTxAddress
+} from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<Block>();
 
@@ -15,7 +19,8 @@ export const BLOCK_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
+        className="font-mono text-flare"
       />
     ),
     enableSorting: false
@@ -23,29 +28,54 @@ export const BLOCK_COLUMNS = [
   columnHelper.accessor('hash', {
     id: 'hash',
     header: 'Hash',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
-      />
-    ),
+    cell: (props) => {
+      const hash = props.getValue();
+      return (
+        <LinkWithCopy
+          href={`${RESOURCES.blocks}/${hash}`}
+          text={formatTxAddress(hash)}
+          textCopy={hash}
+        />
+      );
+    },
     enableSorting: false
   }),
   columnHelper.accessor((row) => row.extrinsics.length, {
     id: 'extrinsicsCount',
-    header: 'Extrinsics',
-    cell: (props) => props.getValue(),
+    header: 'Txs',
+    cell: (props) => (
+      <span className="font-mono text-muted-text">{props.getValue()}</span>
+    ),
     enableSorting: true
   }),
   columnHelper.accessor('reward', {
     id: 'reward',
     header: 'Reward',
-    cell: (props) => formatMonetaryValue(props.getValue()),
+    cell: (props) => (
+      <span className="font-mono">{formatMonetaryValue(props.getValue())}</span>
+    ),
     enableSorting: true
+  }),
+  columnHelper.accessor('mined_by_id', {
+    id: 'miner',
+    header: 'Miner',
+    cell: (props) => {
+      const id = props.getValue();
+      if (!id) return <span className="font-mono text-muted-text">—</span>;
+      return (
+        <LinkWithCopy
+          href={`${RESOURCES.accounts}/${id}`}
+          text={formatTxAddress(id)}
+          textCopy={id}
+          className="font-mono text-flare"
+        />
+      );
+    },
+    enableSorting: false
   }),
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
-    header: 'Timestamp',
+    header: 'Time',
     cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   })

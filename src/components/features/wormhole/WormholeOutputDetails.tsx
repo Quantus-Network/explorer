@@ -1,13 +1,12 @@
 import { notFound } from '@tanstack/react-router';
 
 import useApiClient from '@/api';
-import { Card, CardContent } from '@/components/ui/card';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
-import { Skeleton } from '@/components/ui/skeleton';
+import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 import { PrivacyScoreBadge } from './PrivacyScoreBadge';
 
@@ -27,6 +26,12 @@ interface ExtrinsicInfo {
   privacyScore1Pct: string;
   privacyScore5Pct: string;
   poolSnapshot: string;
+}
+
+interface ExitOutputInfo {
+  label: string;
+  amount: string;
+  exitAccountId: string;
 }
 
 export const WormholeOutputInformation = ({
@@ -61,223 +66,215 @@ export const WormholeOutputInformation = ({
     }
   ];
 
-  return (
-    <>
-      <h2 className="text-lg font-semibold">Transaction Details</h2>
-      <DataList<Partial<ExtrinsicInfo>>
-        loading={loading}
-        data={extrinsicInfo}
-        fields={[
-          {
-            label: 'Extrinsic Hash',
-            key: 'extrinsic',
-            render: (value) =>
-              value && (value as ExtrinsicInfo['extrinsic'])?.id ? (
-                <TextWithCopy
-                  text={(value as ExtrinsicInfo['extrinsic'])!.id}
-                  className="break-all"
-                />
-              ) : (
-                <span className="text-muted-foreground">-</span>
-              )
-          },
-          {
-            label: 'Total Amount',
-            key: 'totalAmount',
-            render: (value) => formatMonetaryValue(value)
-          },
-          {
-            label: 'Exit Outputs',
-            key: 'outputCount',
-            render: (value) => `${value}`
-          },
-          {
-            label: 'Block',
-            key: 'block',
-            render: (value) => (
-              <LinkWithCopy
-                href={`${RESOURCES.blocks}/${(value as ExtrinsicInfo['block']).height}`}
-                text={(value as ExtrinsicInfo['block']).height.toString()}
-              />
-            )
-          },
-          {
-            label: 'Timestamp',
-            key: 'timestamp',
-            render: (value) => formatTimestamp(value, true)
-          }
-        ]}
-      />
+  const exitOutputItems: Partial<ExitOutputInfo>[] = loading
+    ? [{ label: '', amount: '', exitAccountId: '' }]
+    : outputs.map((output, idx) => ({
+        label: `Output ${idx + 1} of ${extrinsic!.output_count}`,
+        amount: output.amount,
+        exitAccountId: output.exitAccount.id
+      }));
 
-      <h2 className="text-lg font-semibold">Privacy Analysis</h2>
-      <DataList<Partial<ExtrinsicInfo>>
-        loading={loading}
-        data={extrinsicInfo}
-        fields={[
-          {
-            label: 'Privacy Score',
-            key: 'privacyScore',
-            render: (value, item) => (
-              <PrivacyScoreBadge
-                score={Number(value)}
-                label={(item.privacyLabel as string) ?? ''}
-              />
-            ),
-            tooltip:
-              'Estimated bits of anonymity at 0.01 DEV precision. Based on how many deposit subsets could produce this total.'
-          },
-          {
-            label: 'With 0.1% sacrifice',
-            key: 'privacyScore01Pct',
-            render: (value) => `${Number(value).toFixed(1)} bits`,
-            tooltip:
-              'Score if the user had sacrificed 0.1% of the output for privacy.'
-          },
-          {
-            label: 'With 1% sacrifice',
-            key: 'privacyScore1Pct',
-            render: (value) => `${Number(value).toFixed(1)} bits`,
-            tooltip:
-              'Score if the user had sacrificed 1% of the output for privacy.'
-          },
-          {
-            label: 'With 5% sacrifice',
-            key: 'privacyScore5Pct',
-            render: (value) => `${Number(value).toFixed(1)} bits`,
-            tooltip:
-              'Score if the user had sacrificed 5% of the output for privacy.'
-          },
-          {
-            label: 'Pool Snapshot',
-            key: 'poolSnapshot',
-            render: (value) => {
-              try {
-                const buckets = JSON.parse(value as string);
-                const nonEmpty = buckets.filter(
-                  (b: { count: number }) => b.count > 0
-                );
-                return `${nonEmpty.length} active buckets`;
-              } catch {
-                return '-';
-              }
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3">
+        <h2 className="section-label text-content">Transaction Details</h2>
+        <DataList<Partial<ExtrinsicInfo>>
+          loading={loading}
+          data={extrinsicInfo}
+          fields={[
+            {
+              label: 'Extrinsic Hash',
+              key: 'extrinsic',
+              render: (value) =>
+                value && (value as ExtrinsicInfo['extrinsic'])?.id ? (
+                  <TextWithCopy
+                    text={(value as ExtrinsicInfo['extrinsic'])!.id}
+                    className="break-all"
+                  />
+                ) : (
+                  <span className="text-muted-text">-</span>
+                )
             },
-            tooltip:
-              'Deposit pool bucket distribution at time of proof verification.'
-          }
-        ]}
-      />
+            {
+              label: 'Total Amount',
+              key: 'totalAmount',
+              render: (value) => formatMonetaryValue(value)
+            },
+            {
+              label: 'Exit Outputs',
+              key: 'outputCount',
+              render: (value) => `${value}`
+            },
+            {
+              label: 'Block',
+              key: 'block',
+              render: (value) => (
+                <LinkWithCopy
+                  href={`${RESOURCES.blocks}/${(value as ExtrinsicInfo['block']).height}`}
+                  text={formatBlockHeight(
+                    (value as ExtrinsicInfo['block']).height
+                  )}
+                />
+              )
+            },
+            {
+              label: 'Timestamp',
+              key: 'timestamp',
+              render: (value) => (
+                <TimestampDisplay timestamp={value as string} />
+              )
+            }
+          ]}
+        />
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <h2 className="section-label text-content">Privacy Analysis</h2>
+        <DataList<Partial<ExtrinsicInfo>>
+          loading={loading}
+          data={extrinsicInfo}
+          fields={[
+            {
+              label: 'Privacy Score',
+              key: 'privacyScore',
+              render: (value, item) => (
+                <PrivacyScoreBadge
+                  score={Number(value)}
+                  label={(item.privacyLabel as string) ?? ''}
+                />
+              ),
+              tooltip:
+                'Estimated bits of anonymity at 0.01 DEV precision. Based on how many deposit subsets could produce this total.'
+            },
+            {
+              label: 'With 0.1% sacrifice',
+              key: 'privacyScore01Pct',
+              render: (value) => `${Number(value).toFixed(1)} bits`,
+              tooltip:
+                'Score if the user had sacrificed 0.1% of the output for privacy.'
+            },
+            {
+              label: 'With 1% sacrifice',
+              key: 'privacyScore1Pct',
+              render: (value) => `${Number(value).toFixed(1)} bits`,
+              tooltip:
+                'Score if the user had sacrificed 1% of the output for privacy.'
+            },
+            {
+              label: 'With 5% sacrifice',
+              key: 'privacyScore5Pct',
+              render: (value) => `${Number(value).toFixed(1)} bits`,
+              tooltip:
+                'Score if the user had sacrificed 5% of the output for privacy.'
+            },
+            {
+              label: 'Pool Snapshot',
+              key: 'poolSnapshot',
+              render: (value) => {
+                try {
+                  const buckets = JSON.parse(value as string);
+                  const nonEmpty = buckets.filter(
+                    (b: { count: number }) => b.count > 0
+                  );
+                  return `${nonEmpty.length} active buckets`;
+                } catch {
+                  return '-';
+                }
+              },
+              tooltip:
+                'Deposit pool bucket distribution at time of proof verification.'
+            }
+          ]}
+        />
+      </div>
 
       {showExitOutputs && (
-        <>
-          <h2 className="text-lg font-semibold">Exit Outputs</h2>
+        <div className="flex flex-col gap-3">
+          <h2 className="section-label text-content">Exit Outputs</h2>
           <div className="flex flex-col gap-4">
-            {(loading ? [null] : outputs).map((output, idx) => (
-              <Card key={loading ? 'loading' : output!.id}>
-                <CardContent className="p-4">
-                  <dl className="grid grid-cols-1 gap-y-2">
-                    <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                      <dt className="font-medium text-muted-foreground">
-                        {loading ? (
-                          <Skeleton className="h-6 w-36" />
-                        ) : (
-                          `Output ${idx + 1} of ${extrinsic!.output_count}`
-                        )}
-                      </dt>
-                      {loading ? (
-                        <Skeleton className="h-6" />
-                      ) : (
-                        <dd>{formatMonetaryValue(output!.amount)}</dd>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                      <dt className="font-medium text-muted-foreground">
-                        Exit Account
-                      </dt>
-                      {loading ? (
-                        <Skeleton className="h-6" />
-                      ) : (
-                        <dd>
-                          <LinkWithCopy
-                            href={`${RESOURCES.accounts}/${output!.exitAccount.id}`}
-                            text={output!.exitAccount.id}
-                            className="break-all"
-                          />
-                        </dd>
-                      )}
-                    </div>
-                  </dl>
-                </CardContent>
-              </Card>
+            {exitOutputItems.map((item, idx) => (
+              <DataList<Partial<ExitOutputInfo>>
+                key={loading ? 'loading' : outputs[idx]!.id}
+                loading={loading}
+                data={[item]}
+                fields={[
+                  {
+                    label: loading
+                      ? 'Output'
+                      : (item.label as string) || `Output ${idx + 1}`,
+                    key: 'amount',
+                    render: (value) => formatMonetaryValue(value)
+                  },
+                  {
+                    label: 'Exit Account',
+                    key: 'exitAccountId',
+                    render: (value) => (
+                      <LinkWithCopy
+                        href={`${RESOURCES.accounts}/${value}`}
+                        text={value as string}
+                        truncate={false}
+                      />
+                    )
+                  }
+                ]}
+              />
             ))}
           </div>
-        </>
+        </div>
       )}
 
       {showNullifiers && (
-        <>
-          <h2 className="text-lg font-semibold">Nullifiers</h2>
-          <Card>
-            <CardContent className="p-4">
-              <p className="mb-3 text-sm text-muted-foreground">
-                {nullifierCount} nullifier
-                {nullifierCount !== 1 ? 's' : ''} consumed by this proof
-                verification. Each corresponds to a spent wormhole deposit.
-              </p>
-              <div className="space-y-2">
-                {loading
-                  ? Array.from({ length: 16 }, (_, idx) => (
-                      <div key={idx} className="rounded border p-2">
-                        <dl className="grid grid-cols-1 gap-y-1">
-                          <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                            <dt className="text-sm font-medium text-muted-foreground">
-                              Nullifier {idx + 1}
-                            </dt>
-                            <Skeleton className="h-6" />
-                          </div>
-                          <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                            <dt className="text-sm font-medium text-muted-foreground">
-                              Hash (blake3)
-                            </dt>
-                            <Skeleton className="h-6" />
-                          </div>
-                        </dl>
-                      </div>
-                    ))
-                  : nullifiers.map(
-                      (
-                        n: { nullifier: string; nullifier_hash: string },
-                        idx: number
-                      ) => (
-                        <div key={idx} className="rounded border p-2">
-                          <dl className="grid grid-cols-1 gap-y-1">
-                            <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                              <dt className="text-sm font-medium text-muted-foreground">
-                                Nullifier {idx + 1}
-                              </dt>
-                              <dd>
-                                <TextWithCopy
-                                  text={n.nullifier}
-                                  className="break-all text-xs"
-                                />
-                              </dd>
-                            </div>
-                            <div className="grid grid-cols-1 items-center lg:grid-cols-[300px_1fr]">
-                              <dt className="text-sm font-medium text-muted-foreground">
-                                Hash (blake3)
-                              </dt>
-                              <dd className="break-all text-xs text-muted-foreground">
-                                {n.nullifier_hash}
-                              </dd>
-                            </div>
-                          </dl>
-                        </div>
-                      )
-                    )}
-              </div>
-            </CardContent>
-          </Card>
-        </>
+        <div className="flex flex-col gap-3">
+          <h2 className="section-label text-content">Nullifiers</h2>
+          <p className="text-[13px] text-muted-text">
+            {nullifierCount} nullifier
+            {nullifierCount !== 1 ? 's' : ''} consumed by this proof
+            verification. Each corresponds to a spent wormhole deposit.
+          </p>
+          <div className="flex flex-col gap-4">
+            {(loading
+              ? Array.from({ length: 16 }, (_, idx) => ({
+                  idx,
+                  nullifier: '',
+                  nullifier_hash: ''
+                }))
+              : nullifiers.map(
+                  (
+                    n: { nullifier: string; nullifier_hash: string },
+                    idx: number
+                  ) => ({ ...n, idx })
+                )
+            ).map(({ idx, nullifier, nullifier_hash }) => (
+              <DataList
+                key={idx}
+                loading={loading}
+                data={[{ nullifier, nullifier_hash }]}
+                fields={[
+                  {
+                    label: `Nullifier ${idx + 1}`,
+                    key: 'nullifier',
+                    render: (value) => (
+                      <TextWithCopy
+                        text={value as string}
+                        className="break-all font-mono text-[12px]"
+                      />
+                    )
+                  },
+                  {
+                    label: 'Hash (blake3)',
+                    key: 'nullifier_hash',
+                    render: (value) => (
+                      <span className="break-all font-mono text-[12px] text-muted-text">
+                        {value as string}
+                      </span>
+                    )
+                  }
+                ]}
+              />
+            ))}
+          </div>
+        </div>
       )}
-    </>
+    </div>
   );
 };

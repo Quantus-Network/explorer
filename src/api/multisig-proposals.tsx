@@ -18,6 +18,7 @@ const MULTISIG_PROPOSAL_LIST_FIELDS = gql`
     status
     deposit
     expiry_block
+    approvals
     created_at
     multisig {
       id

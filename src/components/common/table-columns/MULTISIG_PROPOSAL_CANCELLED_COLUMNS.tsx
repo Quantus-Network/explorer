@@ -5,7 +5,7 @@ import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/Prop
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposalCancelled } from '@/schemas';
-import { formatTxAddress } from '@/utils/formatter';
+import { formatBlockHeight, formatTxAddress } from '@/utils/formatter';
 
 const columnHelper = createColumnHelper<MultisigProposalCancelled>();
 
@@ -33,7 +33,7 @@ export const MULTISIG_PROPOSAL_CANCELLED_COLUMNS = [
     cell: (props) => (
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={props.getValue().toString()}
+        text={formatBlockHeight(props.getValue())}
       />
     ),
     enableSorting: true

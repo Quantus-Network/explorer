@@ -3,9 +3,18 @@ import * as React from 'react';
 import { useMemo } from 'react';
 
 import useApiClient from '@/api';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import { TRANSACTION_TYPE_CONFIG } from '@/constants/transaction-types';
@@ -14,10 +23,11 @@ import type {
   MultisigProposalLifecycleEvent
 } from '@/schemas';
 import type { UnifiedTransactionType } from '@/schemas/unified-transaction';
-import { formatMonetaryValue, formatTimestamp } from '@/utils/formatter';
+import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import { getMultisigProposalEventHref } from '@/utils/get-multisig-proposal-event-href';
 import { getMultisigProposalKind } from '@/utils/get-multisig-proposal-kind';
+import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
 export interface MultisigProposalInformationProps {
   id: string;
@@ -25,6 +35,27 @@ export interface MultisigProposalInformationProps {
 
 type LifecycleRow = MultisigProposalLifecycleEvent & {
   type: UnifiedTransactionType;
+};
+
+const EmptyValue = () => <span className="text-muted-text">—</span>;
+
+const statusBadgeVariant = (
+  status: string | null | undefined
+): BadgeProps['variant'] => {
+  switch (status?.toUpperCase()) {
+    case 'SCHEDULED':
+      return 'reversible';
+    case 'APPROVED':
+    case 'READY':
+      return 'immediate';
+    case 'EXECUTED':
+      return 'success';
+    case 'CANCELLED':
+    case 'REMOVED':
+      return 'error';
+    default:
+      return 'miner';
+  }
 };
 
 const LIFECYCLE_SECTIONS: {
@@ -50,10 +81,21 @@ const accountLink = (accountId?: string | null) =>
     <LinkWithCopy
       href={`${RESOURCES.accounts}/${accountId}`}
       text={accountId}
-      className="break-all"
+      textCopy={accountId}
     />
   ) : (
-    '-'
+    <EmptyValue />
+  );
+
+const walletLink = (walletId?: string | null) =>
+  walletId ? (
+    <LinkWithCopy
+      href={getMultisigWalletHref(walletId)}
+      text={walletId}
+      textCopy={walletId}
+    />
+  ) : (
+    <EmptyValue />
   );
 
 type ProposalField = {
@@ -67,18 +109,35 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
     label: 'ID',
     key: 'id',
     render: (value) =>
-      value ? <TextWithCopy text={String(value)} className="break-all" /> : '-'
+      value ? (
+        <TextWithCopy text={String(value)} className="break-all" />
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Status',
     key: 'status',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <Badge variant={statusBadgeVariant(String(value))}>
+          {String(value)}
+        </Badge>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Deposit',
     key: 'deposit',
     render: (value) =>
-      value != null ? formatMonetaryValue(String(value), 5) : '-'
+      value != null ? (
+        <span className="font-mono">
+          {formatMonetaryValue(String(value), 5)}
+        </span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Expiry Block',
@@ -90,32 +149,39 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
           text={String(value)}
         />
       ) : (
-        '-'
+        <EmptyValue />
       )
   },
   {
     label: 'Pallet / Call',
     key: 'pallet',
     render: (_value, item) =>
-      item.pallet && item.call ? `${item.pallet}.${item.call}` : '-'
+      item.pallet && item.call ? (
+        <span className="font-mono">
+          {item.pallet}.{item.call}
+        </span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Created At',
     key: 'created_at',
-    render: (value) => formatTimestamp(value as string, true)
+    render: (value) =>
+      value ? <TimestampDisplay timestamp={value as string} /> : <EmptyValue />
   },
   {
     label: 'Creation Block',
     key: 'createdAtBlock',
     render: (value) => {
-      const block = value as MultisigProposal['createdAtBlock'];
+      const block = value as MultisigProposal['createdAtBlock'] | undefined;
       return block?.height != null ? (
         <LinkWithCopy
           href={`${RESOURCES.blocks}/${block.height}`}
-          text={String(block.height)}
+          text={formatBlockHeight(block.height)}
         />
       ) : (
-        '-'
+        <EmptyValue />
       );
     }
   },
@@ -123,8 +189,10 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
     label: 'Creation Extrinsic',
     key: 'createdExtrinsic',
     render: (value) => {
-      const extrinsic = value as MultisigProposal['createdExtrinsic'];
-      if (!extrinsic?.id) return '-';
+      const extrinsic = value as
+        | MultisigProposal['createdExtrinsic']
+        | undefined;
+      if (!extrinsic?.id) return <EmptyValue />;
       const href =
         extrinsic.pallet && extrinsic.call
           ? getExtrinsicDetailPath({
@@ -134,7 +202,12 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
             })
           : undefined;
       return href ? (
-        <LinkWithCopy href={href} text={extrinsic.id} className="break-all" />
+        <LinkWithCopy
+          href={href}
+          text={extrinsic.id}
+          textCopy={extrinsic.id}
+          className="break-all"
+        />
       ) : (
         <TextWithCopy text={extrinsic.id} className="break-all" />
       );
@@ -143,7 +216,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
   {
     label: 'Multisig',
     key: 'multisig',
-    render: (value) => accountLink((value as MultisigProposal['multisig'])?.id)
+    render: (value) => walletLink((value as MultisigProposal['multisig'])?.id)
   },
   {
     label: 'Proposer',
@@ -155,7 +228,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
     key: 'approvals',
     render: (value) => {
       const approvals = value as string[] | undefined;
-      if (!approvals?.length) return '-';
+      if (!approvals?.length) return <EmptyValue />;
       return (
         <div className="flex flex-col gap-1">
           {approvals.map((approver) => (
@@ -163,7 +236,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
               key={approver}
               href={`${RESOURCES.accounts}/${approver}`}
               text={approver}
-              className="break-all"
+              textCopy={approver}
             />
           ))}
         </div>
@@ -183,7 +256,13 @@ const BALANCE_TRANSFER_FIELDS: ProposalField[] = [
     label: 'Transfer Amount',
     key: 'transfer_amount',
     render: (value) =>
-      value != null ? formatMonetaryValue(String(value), 5) : '-'
+      value != null ? (
+        <span className="font-mono">
+          {formatMonetaryValue(String(value), 5)}
+        </span>
+      ) : (
+        <EmptyValue />
+      )
   }
 ];
 
@@ -198,34 +277,56 @@ const SCHEDULED_TRANSFER_FIELDS: ProposalField[] = [
     label: 'Schedule Amount',
     key: 'schedule_amount',
     render: (value) =>
-      value != null ? formatMonetaryValue(String(value), 5) : '-'
+      value != null ? (
+        <span className="font-mono">
+          {formatMonetaryValue(String(value), 5)}
+        </span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Delay Kind',
     key: 'delay_kind',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Delay Value',
     key: 'delay_value',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Schedule Asset ID',
     key: 'schedule_asset_id',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Tx ID',
     key: 'tx_id',
     render: (value) => {
-      if (!value) return '-';
+      if (!value) return <EmptyValue />;
       const txId = String(value);
 
       return (
         <LinkWithCopy
           href={`${RESOURCES.scheduledReversibleTransactions}/${value}`}
           text={txId}
+          textCopy={txId}
           className="break-all"
         />
       );
@@ -237,12 +338,22 @@ const SET_HIGH_SECURITY_FIELDS: ProposalField[] = [
   {
     label: 'Delay Value',
     key: 'delay_value',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Delay Kind',
     key: 'delay_kind',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <span className="font-mono">{String(value)}</span>
+      ) : (
+        <EmptyValue />
+      )
   },
   {
     label: 'Guardian',
@@ -264,7 +375,12 @@ const TAIL_PROPOSAL_FIELDS: ProposalField[] = [
   {
     label: 'Decode Error',
     key: 'decode_error',
-    render: (value) => (value != null ? String(value) : '-')
+    render: (value) =>
+      value != null ? (
+        <TextWithCopy text={String(value)} className="break-all" />
+      ) : (
+        <EmptyValue />
+      )
   }
 ];
 
@@ -308,7 +424,7 @@ export const MultisigProposalInformation: React.FC<
 
   if (!loading && !data?.multisigProposal) throw notFound();
 
-  const information: Partial<MultisigProposal>[] = proposal ? [proposal] : [];
+  const information: Partial<MultisigProposal>[] = [proposal ?? { id }];
 
   const lifecycleRows: LifecycleRow[] = LIFECYCLE_SECTIONS.flatMap(
     ({ type, key }) =>
@@ -321,66 +437,69 @@ export const MultisigProposalInformation: React.FC<
   );
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <DataList<Partial<MultisigProposal>>
         loading={loading}
         data={information}
         fields={fields}
       />
 
-      <h2 className="mt-6 text-lg font-semibold">Lifecycle Events</h2>
-      {loading && <p className="text-sm text-muted-foreground">Loading...</p>}
-      {!loading && lifecycleRows.length === 0 && (
-        <p className="text-sm text-muted-foreground">
-          No lifecycle events found.
-        </p>
-      )}
-      {!loading && lifecycleRows.length > 0 && (
-        <div className="overflow-x-auto rounded-md border">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50 text-left">
-                <th className="px-3 py-2 font-medium">Event</th>
-                <th className="px-3 py-2 font-medium">Block</th>
-                <th className="px-3 py-2 font-medium">Timestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lifecycleRows.map((row) => {
-                const config = TRANSACTION_TYPE_CONFIG[row.type];
-                const eventHref = getMultisigProposalEventHref(
-                  row.type,
-                  row.extrinsic?.id
-                );
-                return (
-                  <tr key={`${row.type}-${row.id}`} className="border-b">
-                    <td className="px-3 py-2">
-                      {eventHref ? (
-                        <LinkWithCopy href={eventHref} text={config.label} />
-                      ) : (
-                        config.label
-                      )}
-                    </td>
-                    <td className="px-3 py-2">
-                      {row.block?.height != null ? (
-                        <LinkWithCopy
-                          href={`${RESOURCES.blocks}/${row.block.height}`}
-                          text={String(row.block.height)}
-                        />
-                      ) : (
-                        '-'
-                      )}
-                    </td>
-                    <td className="px-3 py-2">
-                      <TimestampDisplay timestamp={row.timestamp} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </>
+      <div className="flex flex-col gap-3">
+        <h2 className="section-label">Lifecycle Events</h2>
+
+        {loading && <p className="text-[13px] text-muted-text">Loading...</p>}
+        {!loading && lifecycleRows.length === 0 && (
+          <p className="text-[13px] text-muted-text">
+            No lifecycle events found.
+          </p>
+        )}
+        {!loading && lifecycleRows.length > 0 && (
+          <div className="overflow-hidden rounded-none border border-border-subtle bg-surface">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Event</TableHead>
+                  <TableHead>Block</TableHead>
+                  <TableHead>Timestamp</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {lifecycleRows.map((row) => {
+                  const config = TRANSACTION_TYPE_CONFIG[row.type];
+                  const eventHref = getMultisigProposalEventHref(
+                    row.type,
+                    row.extrinsic?.id
+                  );
+                  return (
+                    <TableRow key={`${row.type}-${row.id}`}>
+                      <TableCell>
+                        {eventHref ? (
+                          <LinkWithCopy href={eventHref} text={config.label} />
+                        ) : (
+                          config.label
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {row.block?.height != null ? (
+                          <LinkWithCopy
+                            href={`${RESOURCES.blocks}/${row.block.height}`}
+                            text={formatBlockHeight(row.block.height)}
+                          />
+                        ) : (
+                          <EmptyValue />
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <TimestampDisplay timestamp={row.timestamp} />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };

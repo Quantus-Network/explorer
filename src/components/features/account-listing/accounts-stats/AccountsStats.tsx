@@ -2,7 +2,14 @@ import { useSearch } from '@tanstack/react-router';
 import React from 'react';
 
 import useApiClient from '@/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardGroup,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -12,7 +19,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
   const api = useApiClient();
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   const shouldHide = !!(accountId || block);
 
@@ -26,7 +33,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
   const success = !loading && !error;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <CardGroup className="max-w-[600px] grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>
@@ -34,37 +41,49 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.all.total_accounts}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.all.total_accounts.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Active Accounts (7D)</h3>
+            <h3>Active (7D)</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.recentlyActive.aggregate.count}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.recentlyActive.aggregate.count.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
 
       <Card>
         <CardHeader>
           <CardTitle>
-            <h3>Deposit Accounts (7D)</h3>
+            <h3>Deposit Accounts</h3>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && <p>{data?.recentlyDeposited.aggregate.count}</p>}
+          {success && (
+            <p className="font-mono">
+              {data?.recentlyDeposited.aggregate.count.toLocaleString()}
+            </p>
+          )}
           {loading && <Skeleton className="h-6" />}
-          {error && <p>Error: {error.message}</p>}
+          {error && <InlineFetchError error={error} />}
         </CardContent>
       </Card>
-    </div>
+    </CardGroup>
   );
 };

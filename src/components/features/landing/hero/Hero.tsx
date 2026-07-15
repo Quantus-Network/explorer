@@ -22,24 +22,18 @@ export const Hero = () => {
 
   return (
     <SectionContainer>
-      <ContentContainer className="flex flex-col gap-8">
-        <div className="flex flex-col items-center gap-8">
-          <h1 className="text-center">
-            Explore the Quantus Blockchain Network
-          </h1>
+      <ContentContainer className="flex flex-col gap-7">
+        <div className="relative w-full">
+          <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.08em] text-muted-text">
+            Search the chain
+          </div>
 
-          <p className="mx-auto max-w-xl text-center text-3xl text-secondary-foreground">
-            Discover, analyze, and track transactions across the blockchain
-            network in real-time
-          </p>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-3xl">
           <SearchBox
             ref={inputRef}
+            size="md"
             onFocus={handleInputFocus}
             onKeyDown={handleKeyDown}
-            placeholder="Search by hash, id, tx id, block height, or error name/type"
+            placeholder="Search by hash, address, block height, or transaction ID…"
             onKeywordChange={handleKeywordChange}
           />
 

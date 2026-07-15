@@ -6,25 +6,33 @@ export interface TransactionHeadingProps {}
 export const TransactionHeading: React.FC<TransactionHeadingProps> = () => {
   const { accountId, block } = useSearch({
     strict: false
-  }) as any;
+  }) as { accountId?: string; block?: string };
 
   return (
     <div>
-      <h1>Immediate Transactions</h1>
+      <h1 className="page-title">Transactions</h1>
 
       {block && (
-        <div className="flex gap-1">
+        <div className="page-subtitle flex gap-1">
           <span>In block</span>
-          <Link to="/blocks/$id" params={{ id: block }}>
+          <Link
+            className="text-flare no-underline hover:underline"
+            to="/blocks/$id"
+            params={{ id: block }}
+          >
             {block}
           </Link>
         </div>
       )}
 
       {accountId && (
-        <div className="flex gap-1">
+        <div className="page-subtitle flex gap-1">
           <span>By</span>
-          <Link to="/accounts/$id" params={{ id: accountId }}>
+          <Link
+            className="text-flare no-underline hover:underline"
+            to="/accounts/$id"
+            params={{ id: accountId }}
+          >
             {accountId}
           </Link>
         </div>

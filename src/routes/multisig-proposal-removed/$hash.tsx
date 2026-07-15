@@ -14,12 +14,8 @@ function MultisigProposalRemovedDetails() {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-4">
-        <div>
-          <h1>Proposal Removed</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Detailed information about a multisig proposal removal event.
-          </p>
-        </div>
+        <h1 className="page-title">Proposal Removed</h1>
+
         <MultisigProposalRemovedInformation hash={hash} />
       </ContentContainer>
     </SectionContainer>

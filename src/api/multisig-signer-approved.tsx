@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Multisig_Signer_Approved_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { MultisigSignerApprovedSorts } from '@/constants/query-sorts';
 import type {
   MultisigSignerApprovedListResponse,
   MultisigSignerApprovedResponse,
-  MultisigSignerApprovedStatsResponse,
-  RecentMultisigSignerApprovedResponse
+  MultisigSignerApprovedStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -84,32 +82,6 @@ export const multisigSignerApproved = {
         offset: config?.variables?.offset ?? 0,
         where: config?.variables?.where
       }
-    });
-  },
-  useGetRecent: (
-    config?: Omit<
-      QueryHookOptions<RecentMultisigSignerApprovedResponse>,
-      'variables'
-    >
-  ) => {
-    const QUERY = gql`
-      ${MULTISIG_SIGNER_APPROVED_FIELDS}
-      query GetRecentMultisigSignerApproved(
-        $limit: Int
-        $orderBy: [multisig_signer_approved_order_by!]
-      ) {
-        multisigSignerApprovedEvents: multisig_signer_approved(
-          limit: $limit
-          order_by: $orderBy
-        ) {
-          ...MultisigSignerApprovedFields
-        }
-      }
-    `;
-
-    return useQuery(QUERY, {
-      ...config,
-      variables: { orderBy: { timestamp: 'desc' }, limit: QUERY_RECENT_LIMIT }
     });
   },
   useGetStats: (

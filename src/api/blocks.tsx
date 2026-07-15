@@ -3,13 +3,11 @@ import { gql, useQuery } from '@apollo/client';
 
 import type { Block_Bool_Exp } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { BlockSorts } from '@/constants/query-sorts';
 import type {
   BlockListResponse,
   BlockResponse,
-  BlockStatsResponse,
-  RecentBlocksResponse
+  BlockStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -39,6 +37,7 @@ export const blocks = {
           height
           reward
           timestamp
+          mined_by_id
           extrinsics {
             id
           }
@@ -62,39 +61,6 @@ export const blocks = {
       }
     });
   },
-  useGetRecent: (
-    config?: Omit<QueryHookOptions<RecentBlocksResponse>, 'variables'>
-  ) => {
-    const GET_RECENT_BLOCKS = gql`
-      query GetRecentBlocks(
-        $limit: Int
-        $offset: Int
-        $orderBy: [block_order_by!]
-      ) {
-        blocks: block(limit: $limit, offset: $offset, order_by: $orderBy) {
-          id
-          hash
-          height
-          reward
-          timestamp
-          extrinsics {
-            id
-          }
-        }
-      }
-    `;
-
-    return useQuery<RecentBlocksResponse, PaginatedQueryVariables<BlockSorts>>(
-      GET_RECENT_BLOCKS,
-      {
-        ...config,
-        variables: {
-          orderBy: { timestamp: 'desc' },
-          limit: QUERY_RECENT_LIMIT
-        }
-      }
-    );
-  },
   getById: () => {
     const GET_BLOCK_BY_ID = gql`
       query GetBlockById($height: Int!, $hash: String!) {
@@ -115,7 +81,7 @@ export const blocks = {
             success
             fee
             timestamp
-            index_in_block: index_in_block
+            indexInBlock: index_in_block
             signer {
               id
             }
