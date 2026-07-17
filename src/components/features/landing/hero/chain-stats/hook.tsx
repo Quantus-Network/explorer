@@ -46,11 +46,7 @@ export const useChainStats = () => {
   const totalAccounts = status?.total_accounts ?? 0;
   const activeAccounts = totalAccounts - depositAccounts;
 
-  const totalTransactions =
-    (status?.total_immediate_transfers ?? 0) +
-    (status?.total_scheduled_transfers ?? 0) +
-    (status?.total_executed_transfers ?? 0) +
-    (status?.total_cancelled_transfers ?? 0);
+  const totalTransactions = data?.allTimeTransactions?.aggregate?.count ?? 0;
 
   const last24HourTransactions = data?.last24Hour?.aggregate?.count ?? 0;
 

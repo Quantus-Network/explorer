@@ -12,11 +12,22 @@ import {
   useHomeStatsDayWindows
 } from '@/utils/get-home-stats-day-windows';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
+import {
+  EXCLUDE_REWARD_TRANSFERS,
+  withExcludedRewardTransfers
+} from '@/utils/unified-transaction-filters';
 
 const GET_HOME_STATS = gql`
   query GetHomeChainStats(
-    $startDate: timestamptz!
-    $endDate: timestamptz!
+    $last24HourWhere: unified_transaction_bool_exp!
+    $allTimeWhere: unified_transaction_bool_exp!
+    $transfersDay0Where: unified_transaction_bool_exp!
+    $transfersDay1Where: unified_transaction_bool_exp!
+    $transfersDay2Where: unified_transaction_bool_exp!
+    $transfersDay3Where: unified_transaction_bool_exp!
+    $transfersDay4Where: unified_transaction_bool_exp!
+    $transfersDay5Where: unified_transaction_bool_exp!
+    $transfersDay6Where: unified_transaction_bool_exp!
     $day0Start: timestamptz!
     $day0End: timestamptz!
     $day1Start: timestamptz!
@@ -36,17 +47,13 @@ const GET_HOME_STATS = gql`
       block_height
       total_accounts
       total_deposit_accounts
-      total_executed_transfers
-      total_immediate_transfers
-      total_scheduled_transfers
-      total_cancelled_transfers
     }
-    last24Hour: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $startDate, _lte: $endDate }
-        extrinsic_id: { _is_null: false }
+    last24Hour: unified_transaction_aggregate(where: $last24HourWhere) {
+      aggregate {
+        count
       }
-    ) {
+    }
+    allTimeTransactions: unified_transaction_aggregate(where: $allTimeWhere) {
       aggregate {
         count
       }
@@ -58,12 +65,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay0: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day0Start, _lte: $day0End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay0: unified_transaction_aggregate(where: $transfersDay0Where) {
       aggregate {
         count
       }
@@ -85,12 +87,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay1: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day1Start, _lte: $day1End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay1: unified_transaction_aggregate(where: $transfersDay1Where) {
       aggregate {
         count
       }
@@ -112,12 +109,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay2: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day2Start, _lte: $day2End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay2: unified_transaction_aggregate(where: $transfersDay2Where) {
       aggregate {
         count
       }
@@ -139,12 +131,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay3: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day3Start, _lte: $day3End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay3: unified_transaction_aggregate(where: $transfersDay3Where) {
       aggregate {
         count
       }
@@ -166,12 +153,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay4: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day4Start, _lte: $day4End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay4: unified_transaction_aggregate(where: $transfersDay4Where) {
       aggregate {
         count
       }
@@ -193,12 +175,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay5: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day5Start, _lte: $day5End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay5: unified_transaction_aggregate(where: $transfersDay5Where) {
       aggregate {
         count
       }
@@ -220,12 +197,7 @@ const GET_HOME_STATS = gql`
         count
       }
     }
-    transfersDay6: transfer_aggregate(
-      where: {
-        timestamp: { _gte: $day6Start, _lte: $day6End }
-        extrinsic_id: { _is_null: false }
-      }
-    ) {
+    transfersDay6: unified_transaction_aggregate(where: $transfersDay6Where) {
       aggregate {
         count
       }
@@ -290,8 +262,31 @@ export const chainStatus = {
       }
 
       return {
-        startDate,
-        endDate,
+        last24HourWhere: withExcludedRewardTransfers({
+          timestamp: { _gte: startDate, _lte: endDate }
+        }),
+        allTimeWhere: EXCLUDE_REWARD_TRANSFERS,
+        transfersDay0Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day0.start, _lte: day0.end }
+        }),
+        transfersDay1Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day1.start, _lte: day1.end }
+        }),
+        transfersDay2Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day2.start, _lte: day2.end }
+        }),
+        transfersDay3Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day3.start, _lte: day3.end }
+        }),
+        transfersDay4Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day4.start, _lte: day4.end }
+        }),
+        transfersDay5Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day5.start, _lte: day5.end }
+        }),
+        transfersDay6Where: withExcludedRewardTransfers({
+          timestamp: { _gte: day6.start, _lte: day6.end }
+        }),
         day0Start: day0.start,
         day0End: day0.end,
         day1Start: day1.start,
