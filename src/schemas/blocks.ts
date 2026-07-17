@@ -40,6 +40,13 @@ export interface BlockMinerReward {
   block: { height: number; hash: string };
 }
 
+export interface BlockRewardTransfer {
+  amount: string | null;
+  detail_id: string;
+  from: { id: string } | null;
+  to: { id: string } | null;
+}
+
 // Wormhole extrinsic for block response
 export interface BlockWormholeExtrinsic {
   id: string;
@@ -58,6 +65,7 @@ export interface BlockWormholeExtrinsic {
 export interface BlockResponse {
   blocks: [Block];
   minerRewards: BlockMinerReward[];
+  rewardTransfers: BlockRewardTransfer[];
 }
 
 export interface BlockListResponse {

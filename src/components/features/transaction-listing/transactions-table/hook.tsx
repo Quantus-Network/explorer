@@ -11,6 +11,7 @@ import { useOrderBy } from '@/hooks/useOrderBy';
 import { useTableState } from '@/hooks/useTableState';
 import type { UnifiedListTransaction } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
+import { withExcludedRewardTransfers } from '@/utils/unified-transaction-filters';
 
 export const useTransactionsTable = () => {
   const api = useApiClient();
@@ -32,19 +33,19 @@ export const useTransactionsTable = () => {
 
   const where = useMemo(() => {
     if (accountId) {
-      return {
+      return withExcludedRewardTransfers({
         _or: [
           { from: { id: { _eq: accountId } } },
           { to: { id: { _eq: accountId } } }
         ]
-      };
+      });
     }
     if (block) {
-      return {
+      return withExcludedRewardTransfers({
         block_height: { _eq: Number(block) }
-      };
+      });
     }
-    return undefined;
+    return withExcludedRewardTransfers();
   }, [accountId, block]);
 
   const {

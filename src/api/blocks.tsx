@@ -104,6 +104,24 @@ export const blocks = {
             hash
           }
         }
+        rewardTransfers: unified_transaction(
+          where: {
+            type: { _eq: "IMMEDIATE" }
+            hash: { _is_null: true }
+            block: {
+              _or: [{ height: { _eq: $height } }, { hash: { _eq: $hash } }]
+            }
+          }
+        ) {
+          amount
+          detail_id
+          from {
+            id
+          }
+          to {
+            id
+          }
+        }
       }
     `;
 

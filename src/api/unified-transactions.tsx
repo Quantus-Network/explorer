@@ -12,6 +12,7 @@ import type {
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
+import { EXCLUDE_REWARD_TRANSFERS } from '@/utils/unified-transaction-filters';
 
 export const unifiedTransactions = {
   useGetAll: (
@@ -91,11 +92,13 @@ export const unifiedTransactions = {
         $limit: Int
         $offset: Int
         $orderBy: [unified_transaction_order_by!]
+        $where: unified_transaction_bool_exp
       ) {
         transactions: unified_transaction(
           limit: $limit
           offset: $offset
           order_by: $orderBy
+          where: $where
         ) {
           id
           type
@@ -125,7 +128,8 @@ export const unifiedTransactions = {
         ...config,
         variables: {
           orderBy: { timestamp: 'desc' },
-          limit: QUERY_RECENT_LIMIT
+          limit: QUERY_RECENT_LIMIT,
+          where: EXCLUDE_REWARD_TRANSFERS
         }
       }
     );
@@ -141,17 +145,15 @@ export const unifiedTransactions = {
 
     const GET_UNIFIED_TRANSACTIONS_STATS = gql`
       query GetUnifiedTransactionsStats(
-        $startDate: timestamptz!
-        $endDate: timestamptz!
+        $last24HourWhere: unified_transaction_bool_exp!
+        $allTimeWhere: unified_transaction_bool_exp!
       ) {
-        last24Hour: unified_transaction_aggregate(
-          where: { timestamp: { _gte: $startDate, _lte: $endDate } }
-        ) {
+        last24Hour: unified_transaction_aggregate(where: $last24HourWhere) {
           aggregate {
             totalCount: count
           }
         }
-        allTime: unified_transaction_aggregate {
+        allTime: unified_transaction_aggregate(where: $allTimeWhere) {
           aggregate {
             totalCount: count
           }
@@ -164,8 +166,13 @@ export const unifiedTransactions = {
       {
         ...config,
         variables: {
-          startDate,
-          endDate
+          last24HourWhere: {
+            _and: [
+              EXCLUDE_REWARD_TRANSFERS,
+              { timestamp: { _gte: startDate, _lte: endDate } }
+            ]
+          },
+          allTimeWhere: EXCLUDE_REWARD_TRANSFERS
         }
       }
     );
