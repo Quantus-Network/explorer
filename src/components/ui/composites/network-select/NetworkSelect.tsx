@@ -13,7 +13,7 @@ import {
 } from '../../select';
 
 const LONGEST_NETWORK_LABEL = Object.keys(NETWORKS)
-  .map((key) => key.toUpperCase())
+  .map((key) => (key === 'planck' ? 'PLANCK TESTNET' : key.toUpperCase()))
   .reduce((longest, label) =>
     label.length >= longest.length ? label : longest
   );
@@ -40,14 +40,14 @@ export const NetworkSelect = () => {
         </span>
       </SelectTrigger>
 
-      <SelectContent align="end" className="z-[200] min-w-[8rem] rounded-none">
+      <SelectContent align="end" className="z-[200] min-w-32 rounded-none">
         {Object.keys(NETWORKS).map((key) => (
           <SelectItem
             key={key}
             value={key}
             className="font-mono text-xs uppercase tracking-wider"
           >
-            {key.toUpperCase()}
+            {key === 'planck' ? 'PLANCK TESTNET' : key.toUpperCase()}
           </SelectItem>
         ))}
       </SelectContent>
