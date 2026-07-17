@@ -17,7 +17,8 @@ interface BlockDetails {
   height: number;
   hash: string;
   timestamp: string;
-  reward: number;
+  minerReward: string | null;
+  treasuryReward: string | null;
   miner: string;
   extrinsicsCount: number;
 }
@@ -35,38 +36,9 @@ function splitRewardTransfers(
   return { minerTransfer, treasuryTransfers };
 }
 
-function RewardRecipient({
-  label,
-  amount,
-  accountId,
-  fallbackAmount
-}: {
-  label: string;
-  amount: string | null | undefined;
-  accountId?: string | null;
-  fallbackAmount?: string | number | null;
-}) {
-  const displayAmount =
-    amount ?? (fallbackAmount != null ? String(fallbackAmount) : null);
-  if (displayAmount == null && !accountId) return null;
-
-  return (
-    <div className="flex flex-col gap-0.5 text-sm">
-      <span className="font-mono">
-        <span className="text-muted-text">{label}: </span>
-        {displayAmount != null ? formatMonetaryValue(displayAmount) : '—'}
-      </span>
-      {accountId ? (
-        <LinkWithCopy
-          href={`${RESOURCES.accounts}/${accountId}`}
-          text={accountId}
-          truncate={false}
-          textCopy={accountId}
-          className="text-xs text-muted-text"
-        />
-      ) : null}
-    </div>
-  );
+function formatRewardAmount(amount: string | null | undefined) {
+  if (amount == null) return <span className="text-muted-text">—</span>;
+  return <span className="font-mono">{formatMonetaryValue(amount)}</span>;
 }
 
 export const BlockInformation: React.FC<BlockInformationProps> = ({
@@ -84,12 +56,18 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
   );
   const treasuryTransfer = treasuryTransfers[0];
 
+  const minerReward =
+    minerTransfer?.amount ??
+    (minerRewardFallback != null ? String(minerRewardFallback) : null);
+  const treasuryReward = treasuryTransfer?.amount ?? null;
+
   const information: Partial<BlockDetails>[] = [
     {
       height: block?.height,
       hash: block?.hash,
       miner,
-      reward: block?.reward,
+      minerReward,
+      treasuryReward,
       timestamp: block?.timestamp,
       extrinsicsCount
     }
@@ -138,37 +116,14 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
             )
         },
         {
-          label: 'Reward',
-          key: 'reward',
-          render: (value) => {
-            const hasBreakdown =
-              minerTransfer != null ||
-              treasuryTransfer != null ||
-              minerRewardFallback != null;
-
-            return (
-              <div className="flex flex-col gap-2">
-                <span className="font-mono">
-                  {formatMonetaryValue(String(value ?? 0))}
-                </span>
-                {hasBreakdown ? (
-                  <div className="flex flex-col gap-2 border-t border-border-subtle pt-2">
-                    <RewardRecipient
-                      label="Miner"
-                      amount={minerTransfer?.amount}
-                      accountId={minerTransfer?.to?.id ?? miner}
-                      fallbackAmount={minerRewardFallback}
-                    />
-                    <RewardRecipient
-                      label="Treasury"
-                      amount={treasuryTransfer?.amount}
-                      accountId={treasuryTransfer?.to?.id}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            );
-          }
+          label: 'Miner reward',
+          key: 'minerReward',
+          render: (value) => formatRewardAmount(value as string | null)
+        },
+        {
+          label: 'Treasury reward',
+          key: 'treasuryReward',
+          render: (value) => formatRewardAmount(value as string | null)
         },
         {
           label: 'Time',
