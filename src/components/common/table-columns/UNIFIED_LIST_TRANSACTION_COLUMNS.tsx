@@ -34,7 +34,7 @@ const columnHelper = createColumnHelper<UnifiedListTransaction>();
 export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
   columnHelper.accessor((row) => row.hash ?? row.detail_id, {
     id: 'hash',
-    header: 'Hash / ID',
+    header: 'Hash',
     cell: (props) => {
       const row = props.row.original;
       const display = row.hash ?? row.detail_id;
@@ -150,7 +150,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
 export const RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS = [
   columnHelper.accessor((row) => row.hash ?? row.detail_id, {
     id: 'hash',
-    header: 'Hash / ID',
+    header: 'Hash',
     cell: (props) => {
       const row = props.row.original;
       const display = row.hash ?? row.detail_id;

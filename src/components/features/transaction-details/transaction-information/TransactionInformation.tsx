@@ -126,7 +126,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
         data={extrinsicInfo}
         fields={[
           {
-            label: 'Hash / ID',
+            label: 'Hash',
             key: 'id',
             render: (value) =>
               value ? (

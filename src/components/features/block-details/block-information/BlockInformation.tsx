@@ -6,7 +6,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import type { BlockResponse } from '@/schemas';
+import type { BlockResponse, BlockRewardTransfer } from '@/schemas';
 import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
 export interface BlockInformationProps {
@@ -17,9 +17,28 @@ interface BlockDetails {
   height: number;
   hash: string;
   timestamp: string;
-  reward: number;
+  minerReward: string | null;
+  treasuryReward: string | null;
   miner: string;
   extrinsicsCount: number;
+}
+
+function splitRewardTransfers(
+  transfers: BlockRewardTransfer[] | undefined,
+  minerId: string | undefined
+) {
+  const rows = transfers ?? [];
+  const minerTransfer = minerId
+    ? rows.find((row) => row.to?.id === minerId)
+    : undefined;
+  const treasuryTransfers = rows.filter((row) => row !== minerTransfer);
+
+  return { minerTransfer, treasuryTransfers };
+}
+
+function formatRewardAmount(amount: string | null | undefined) {
+  if (amount == null) return <span className="text-muted-text">—</span>;
+  return <span className="font-mono">{formatMonetaryValue(amount)}</span>;
 }
 
 export const BlockInformation: React.FC<BlockInformationProps> = ({
@@ -30,13 +49,25 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
 
   const extrinsicsCount = block?.extrinsics?.length ?? 0;
   const miner = data?.minerRewards?.[0]?.miner.id;
+  const minerRewardFallback = data?.minerRewards?.[0]?.reward;
+  const { minerTransfer, treasuryTransfers } = splitRewardTransfers(
+    data?.rewardTransfers,
+    miner
+  );
+  const treasuryTransfer = treasuryTransfers[0];
+
+  const minerReward =
+    minerTransfer?.amount ??
+    (minerRewardFallback != null ? String(minerRewardFallback) : null);
+  const treasuryReward = treasuryTransfer?.amount ?? null;
 
   const information: Partial<BlockDetails>[] = [
     {
       height: block?.height,
       hash: block?.hash,
       miner,
-      reward: block?.reward,
+      minerReward,
+      treasuryReward,
       timestamp: block?.timestamp,
       extrinsicsCount
     }
@@ -85,9 +116,14 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
             )
         },
         {
-          label: 'Reward',
-          key: 'reward',
-          render: (value) => formatMonetaryValue(value)
+          label: 'Miner reward',
+          key: 'minerReward',
+          render: (value) => formatRewardAmount(value as string | null)
+        },
+        {
+          label: 'Treasury reward',
+          key: 'treasuryReward',
+          render: (value) => formatRewardAmount(value as string | null)
         },
         {
           label: 'Time',
