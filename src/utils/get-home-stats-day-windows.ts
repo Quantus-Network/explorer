@@ -14,12 +14,31 @@ export interface DayWindow {
   label: string;
 }
 
-/** Formats a day label like the mock: "Jun 11". */
+/** Formats a day label like the mock: "Jun 11" (local timezone). */
 export const formatHomeStatsDayLabel = (date: Date) => format(date, 'MMM d');
+
+/** Formats a UTC calendar day as "Jun 11" regardless of viewer timezone. */
+export const formatHomeStatsUtcDayLabel = (date: Date) => {
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ] as const;
+  return `${months[date.getUTCMonth()]} ${date.getUTCDate()}`;
+};
 
 /**
  * Builds 7 chronological day windows ending today (oldest → newest).
- * Matches existing explorer date helpers (local calendar days).
+ * Local calendar days — kept for any callers that still need local windows.
  */
 export const useHomeStatsDayWindows = (): DayWindow[] =>
   useMemo(() => {

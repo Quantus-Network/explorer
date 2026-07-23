@@ -3,22 +3,39 @@ import { useMemo } from 'react';
 import useApiClient from '@/api';
 import type { SparklinePoint } from '@/components/ui/composites/stat-sparkline-card';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
-import type { HomeChainStatsResponse } from '@/schemas';
+import type { DailyChainStatRow, HomeChainStatsResponse } from '@/schemas';
 import {
-  HOME_STATS_DAY_COUNT,
-  useHomeStatsDayWindows
+  formatHomeStatsUtcDayLabel,
+  HOME_STATS_DAY_COUNT
 } from '@/utils/get-home-stats-day-windows';
+import { sumChainTransferTotals } from '@/utils/sum-chain-transfer-totals';
 
-const seriesFromDays = (
-  data: HomeChainStatsResponse | undefined,
-  prefix: 'blocksDay' | 'transfersDay' | 'activeAccountsDay'
-): number[] => {
-  if (!data) return [];
+/** Oldest → newest, pad missing UTC days with zeros so sparklines stay 7 points. */
+const alignDailyStats = (
+  rows: DailyChainStatRow[] | undefined
+): DailyChainStatRow[] => {
+  const byId = new Map((rows ?? []).map((row) => [row.id, row]));
+  const today = new Date();
+  const todayUtc = Date.UTC(
+    today.getUTCFullYear(),
+    today.getUTCMonth(),
+    today.getUTCDate()
+  );
 
   return Array.from({ length: HOME_STATS_DAY_COUNT }, (_, index) => {
-    const key = `${prefix}${index}` as keyof HomeChainStatsResponse;
-    const bucket = data[key] as HomeChainStatsResponse['blocksDay0'];
-    return bucket?.aggregate?.count ?? 0;
+    const dayMs =
+      todayUtc - (HOME_STATS_DAY_COUNT - 1 - index) * 24 * 60 * 60 * 1000;
+    const day = new Date(dayMs);
+    const id = day.toISOString().slice(0, 10);
+    return (
+      byId.get(id) ?? {
+        id,
+        date: `${id}T00:00:00.000Z`,
+        blocks_count: 0,
+        tx_count: 0,
+        active_accounts: 0
+      }
+    );
   });
 };
 
@@ -35,7 +52,6 @@ const toPoints = (
 
 export const useChainStats = () => {
   const api = useApiClient();
-  const dayWindows = useHomeStatsDayWindows();
   const { loading, data, error } = api.chainStatus.useGetHomeStats({
     pollInterval: DATA_POOL_INTERVAL
   });
@@ -46,43 +62,51 @@ export const useChainStats = () => {
   const totalAccounts = status?.total_accounts ?? 0;
   const activeAccounts = totalAccounts - depositAccounts;
 
-  const totalTransactions = data?.allTimeTransactions?.aggregate?.count ?? 0;
-
+  const totalTransactions = sumChainTransferTotals(status);
   const last24HourTransactions = data?.last24Hour?.aggregate?.count ?? 0;
 
+  const alignedDays = useMemo(
+    () => alignDailyStats(data?.dailyStats),
+    [data?.dailyStats]
+  );
+
   const dayLabels = useMemo(
-    () => dayWindows.map((window) => window.label),
-    [dayWindows]
+    () =>
+      alignedDays.map((row) => {
+        const label = formatHomeStatsUtcDayLabel(new Date(row.date));
+        return `${label} (UTC)`;
+      }),
+    [alignedDays]
   );
 
   const blocksPoints = useMemo(
     () =>
       toPoints(
-        seriesFromDays(data, 'blocksDay'),
+        alignedDays.map((row) => row.blocks_count),
         dayLabels,
         (value) => `${value.toLocaleString()} blocks`
       ),
-    [data, dayLabels]
+    [alignedDays, dayLabels]
   );
 
   const transfersPoints = useMemo(
     () =>
       toPoints(
-        seriesFromDays(data, 'transfersDay'),
+        alignedDays.map((row) => row.tx_count),
         dayLabels,
         (value) => `${value.toLocaleString()} txs`
       ),
-    [data, dayLabels]
+    [alignedDays, dayLabels]
   );
 
   const activeAccountsPoints = useMemo(
     () =>
       toPoints(
-        seriesFromDays(data, 'activeAccountsDay'),
+        alignedDays.map((row) => row.active_accounts),
         dayLabels,
         (value) => `${value.toLocaleString()} active`
       ),
-    [data, dayLabels]
+    [alignedDays, dayLabels]
   );
 
   return {
@@ -98,3 +122,6 @@ export const useChainStats = () => {
     activeAccountsPoints
   };
 };
+
+// Keep type import used for documentation / potential tests
+export type { HomeChainStatsResponse };

@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 import { subDays } from 'date-fns/subDays';
@@ -28,13 +29,45 @@ import {
   GetStatusDocument,
   GetTransactionsDocument,
   GetWormholeExtrinsicByIdDocument,
-  GetWormholeExtrinsicsDocument,
-  SearchAllDocument
+  GetWormholeExtrinsicsDocument
 } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 
 import type { GraphqlBenchmarkRegistryEntry } from './types';
+
+const SearchHexDocument = gql`
+  query SearchHex($keyword: String, $limit: Int) {
+    transactions: unified_transaction(
+      limit: $limit
+      where: {
+        _or: [{ hash: { _like: $keyword } }, { detail_id: { _like: $keyword } }]
+      }
+    ) {
+      id
+      type
+      hash
+      detail_id
+      block {
+        height
+        hash
+      }
+    }
+    blocks: block(limit: $limit, where: { hash: { _like: $keyword } }) {
+      height
+    }
+    highSecuritySets: high_security_set(
+      limit: $limit
+      where: { extrinsic: { id: { _like: $keyword } } }
+    ) {
+      extrinsic {
+        id
+        pallet
+        call
+      }
+    }
+  }
+`;
 
 function accountStatsDates() {
   return {
@@ -212,11 +245,10 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
       ctx.scheduledTxId ? { tx_id: ctx.scheduledTxId } : null
   },
   {
-    name: 'SearchAll',
-    document: SearchAllDocument,
+    name: 'SearchHex',
+    document: SearchHexDocument,
     getVariables: () => ({
-      keyword: '0x',
-      keyword_number: -1,
+      keyword: '0x%',
       limit: SEARCH_PREVIEW_RESULTS_LIMIT
     })
   },
