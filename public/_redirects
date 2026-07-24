@@ -1,0 +1,4 @@
+/immediate-transactions/:hash /transactions/:hash 302
+/cancelled-reversible-transactions/:hash /transactions/:hash 302
+/executed-reversible-transactions/:hash /transactions/:hash 302
+/scheduled-reversible-transactions/:hash /transactions/:hash 302
