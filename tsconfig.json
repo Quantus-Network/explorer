@@ -10,7 +10,7 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
-    "types": ["vite/client"],
+    "types": ["vite/client", "jest"],
 
     "noImplicitAny": true,
     "noImplicitReturns": true,
