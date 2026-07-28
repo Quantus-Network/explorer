@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import useApiClient from '@/api';
 import { RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
+import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { UnifiedListTransaction } from '@/schemas';
 
 export const useTransactionsTable = () => {
@@ -25,6 +26,9 @@ export const useTransactionsTable = () => {
     columns: transactionColumns,
     getCoreRowModel: getCoreRowModel(),
     enableSorting: false,
+    state: {
+      pagination: { pageSize: QUERY_RECENT_LIMIT, pageIndex: 0 }
+    },
     rowCount: data?.transactions?.length ?? 0,
     manualPagination: true,
     manualSorting: true

@@ -4,28 +4,11 @@ import { useMemo } from 'react';
 import useApiClient from '@/api';
 import { RECENT_BLOCK_COLUMNS } from '@/components/common/table-columns/RECENT_BLOCK_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
-import { transformBlockOrderBy } from '@/constants/query-sorts';
-import { useTableState } from '@/hooks/useTableState';
+import { QUERY_RECENT_LIMIT } from '@/constants/query-recent-limit';
 import type { Block } from '@/schemas';
-import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useBlocksTable = () => {
   const api = useApiClient();
-  const {
-    orderBy,
-    limit,
-    currentPageIndex,
-    handleChangeSorting,
-    handleChangePagination,
-    paginationValue
-  } = useTableState('timestamp:desc');
-
-  const orderByObject = useMemo(
-    () => transformBlockOrderBy(orderBy ?? 'timestamp:desc'),
-    [orderBy]
-  );
-  const sortingValue = transformSortLiteral(orderBy);
-
   const {
     loading,
     data,
@@ -33,9 +16,7 @@ export const useBlocksTable = () => {
   } = api.blocks.useGetAll({
     pollInterval: DATA_POOL_INTERVAL,
     variables: {
-      orderBy: orderByObject,
-      limit,
-      offset: currentPageIndex * limit
+      limit: QUERY_RECENT_LIMIT
     }
   });
 
@@ -44,13 +25,10 @@ export const useBlocksTable = () => {
   const table = useReactTable<Block>({
     data: data?.blocks ?? [],
     columns: blockColumns,
-    getCoreRowModel: getCoreRowModel(),
     state: {
-      sorting: sortingValue,
-      pagination: paginationValue
+      pagination: { pageSize: QUERY_RECENT_LIMIT, pageIndex: 0 }
     },
-    onSortingChange: handleChangeSorting,
-    onPaginationChange: handleChangePagination,
+    getCoreRowModel: getCoreRowModel(),
     rowCount: data?.meta?.totalCount ?? 0,
     manualPagination: true,
     manualSorting: true

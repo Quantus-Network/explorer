@@ -146,6 +146,42 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
   })
 ];
 
+/** Account Activity columns with viewer-relative IN/OUT direction */
+export const createAccountUnifiedTransactionColumns = (accountId: string) => {
+  const directionColumn = columnHelper.display({
+    id: 'direction',
+    header: '',
+    cell: ({ row }) => {
+      const fromId = row.original.from?.id;
+      const toId = row.original.to?.id;
+
+      if (fromId === accountId) {
+        return (
+          <Badge className="w-10 justify-center" variant="weak">
+            OUT
+          </Badge>
+        );
+      }
+      if (toId === accountId) {
+        return (
+          <Badge className="w-10 justify-center" variant="success">
+            IN
+          </Badge>
+        );
+      }
+      return <span className="font-mono text-muted-text">—</span>;
+    },
+    enableSorting: false
+  });
+
+  const fromIndex = UNIFIED_LIST_TRANSACTION_COLUMNS.findIndex(
+    (col) => col.id === 'from'
+  );
+  const columns = [...UNIFIED_LIST_TRANSACTION_COLUMNS];
+  columns.splice(fromIndex + 1, 0, directionColumn as any);
+  return columns;
+};
+
 /** Compact columns for landing recent transactions */
 export const RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS = [
   columnHelper.accessor((row) => row.hash ?? row.detail_id, {

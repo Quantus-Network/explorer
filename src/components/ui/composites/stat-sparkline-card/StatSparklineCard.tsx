@@ -38,7 +38,7 @@ export const StatSparklineCard = ({
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex flex-1 flex-col pb-0 pt-2">
+      <CardContent className="flex flex-1 flex-col pb-4 pt-2">
         {loading && (
           <div className="flex flex-col gap-2">
             <Skeleton className="h-7 w-28" />
@@ -61,7 +61,7 @@ export const StatSparklineCard = ({
               </div>
               {live && (
                 <span
-                  className="size-1.5 shrink-0 rounded-full bg-sage animate-live-pulse"
+                  className="size-1.5 shrink-0 animate-live-pulse rounded-full bg-sage"
                   aria-label="Live"
                 />
               )}

@@ -57,6 +57,7 @@
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-use-before-define": "off",
         "@typescript-eslint/no-throw-literal": "off",
+        "consistent-return": "off",
         "no-restricted-syntax": [
           "error",
           "ForInStatement",
