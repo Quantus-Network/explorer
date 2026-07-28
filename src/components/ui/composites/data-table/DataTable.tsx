@@ -63,6 +63,18 @@ const areSamePageData = (a: unknown[], b: unknown[]) => {
   return a.every((item, index) => item === b[index]);
 };
 
+const checkIfEmptyData = (
+  isDesktop: boolean,
+  withControls: boolean,
+  currentPageCount: number,
+  accumulatedData: unknown[]
+) => {
+  if (isDesktop) return currentPageCount === 0;
+  if (withControls) return accumulatedData.length === 0;
+
+  return currentPageCount === 0;
+};
+
 export const DataTable = ({
   table,
   fetch,
@@ -122,11 +134,12 @@ export const DataTable = ({
   });
 
   const currentPageCount = table.getRowModel().rows.length;
-  const isEmptyData = isDesktop
-    ? currentPageCount === 0
-    : withControls
-      ? accumulatedData.length === 0
-      : currentPageCount === 0;
+  const isEmptyData = checkIfEmptyData(
+    isDesktop,
+    withControls,
+    currentPageCount,
+    accumulatedData
+  );
 
   const canLoadMore =
     withControls &&
@@ -153,7 +166,7 @@ export const DataTable = ({
   }, [canLoadMore, table, pageIndex]);
 
   if (status === 'error') {
-    return <>{fetch?.errorFallback}</>;
+    return fetch?.errorFallback;
   }
 
   if (status === 'success' && isEmptyData)
@@ -195,8 +208,8 @@ export const DataTable = ({
 
   return (
     <div ref={containerRef}>
-      <div className="overflow-hidden rounded-none border border-border-subtle">
-        <Table ref={tableRef}>
+      <div className="overflow-x-auto rounded-none border border-border-subtle">
+        <Table ref={tableRef} className="w-max min-w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -243,7 +256,10 @@ export const DataTable = ({
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <TableCell key={cell.id}>
+                      <TableCell
+                        key={cell.id}
+                        className="whitespace-nowrap [&_a]:whitespace-nowrap [&_a]:break-normal"
+                      >
                         {flexRender(cell.column.columnDef.cell, {
                           ...cell.getContext(),
                           ...customCellProps
