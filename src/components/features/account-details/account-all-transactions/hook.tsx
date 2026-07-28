@@ -2,7 +2,7 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 
 import useApiClient from '@/api';
-import { UNIFIED_LIST_TRANSACTION_COLUMNS } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
+import { createAccountUnifiedTransactionColumns } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { UnifiedListTransactionSorts } from '@/constants/query-sorts';
@@ -53,8 +53,8 @@ export const useAccountAllTransactions = (accountId: string) => {
   });
 
   const transactionColumns = useMemo(
-    () => UNIFIED_LIST_TRANSACTION_COLUMNS,
-    []
+    () => createAccountUnifiedTransactionColumns(accountId),
+    [accountId]
   );
   const [rowCount, setRowCount] = useState<number>(
     data?.meta.aggregate.totalCount ?? 0
