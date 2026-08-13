@@ -51,6 +51,17 @@ export const getSearchVariables = (oriKeyword: string) => {
   };
 };
 
+/** Only include variables declared by the query for this shape. */
+function graphqlVariablesForShape(
+  variables: ReturnType<typeof getSearchVariables>
+) {
+  const { shape, keyword, keyword_number, limit } = variables;
+  if (shape === 'numeric') {
+    return { keyword, keyword_number, limit };
+  }
+  return { keyword, limit };
+}
+
 const SEARCH_HEX = gql`
   query SearchHex($keyword: String, $limit: Int) {
     transactions: unified_transaction(
@@ -170,11 +181,7 @@ export const search = (fetcher: DataFetcher) => ({
         const result = await fetcher.graphql<Partial<SearchAllResponse>>(
           {
             query: getGqlString(document),
-            variables: {
-              keyword: variables.keyword,
-              keyword_number: variables.keyword_number,
-              limit: variables.limit
-            },
+            variables: graphqlVariablesForShape(variables),
             operationName: operationNameForShape(variables.shape)
           },
           {
@@ -195,11 +202,7 @@ export const search = (fetcher: DataFetcher) => ({
         const document = documentForShape(variables.shape);
         const result = useQuery<SearchAllResponse>(document, {
           ...config,
-          variables: {
-            keyword: variables.keyword,
-            keyword_number: variables.keyword_number,
-            limit: variables.limit
-          }
+          variables: graphqlVariablesForShape(variables)
         } as QueryHookOptions<SearchAllResponse>);
 
         return {
