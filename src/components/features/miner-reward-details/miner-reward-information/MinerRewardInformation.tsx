@@ -76,6 +76,7 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
               text={formatBlockHeight((value as MinerReward['block']).height)}
               href={`${RESOURCES.blocks}/${(value as MinerReward['block']).height}`}
               className="break-all"
+              numeric
             />
           )
         },

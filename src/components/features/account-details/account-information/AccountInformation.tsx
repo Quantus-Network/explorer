@@ -133,7 +133,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           label: 'Free Balance',
           key: 'free',
           render: (value) => (
-            <span className="font-mono text-base text-flare">
+            <span className="numeric text-base text-flare">
               {formatMonetaryValue(value)}
             </span>
           ),
@@ -156,14 +156,14 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           label: 'Transactions',
           key: 'transactions',
           render: (value) => (
-            <span className="font-mono">{value.toLocaleString()}</span>
+            <span className="numeric">{value.toLocaleString()}</span>
           )
         },
         {
           label: 'Mining Rewards',
           key: 'miningRewards',
           render: (value) => (
-            <span className="font-mono">
+            <span className="numeric">
               {value > 1 ? `${value} rewards` : `${value} reward`}
             </span>
           )

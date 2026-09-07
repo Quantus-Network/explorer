@@ -82,6 +82,7 @@ export const MultisigProposalExecutedInformation: React.FC<
               <LinkWithCopy
                 text={formatBlockHeight(block.height)}
                 href={`${RESOURCES.blocks}/${block.height}`}
+                numeric
               />
             );
           }

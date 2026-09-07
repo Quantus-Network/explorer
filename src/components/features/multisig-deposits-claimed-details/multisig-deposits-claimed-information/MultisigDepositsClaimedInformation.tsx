@@ -75,6 +75,7 @@ export const MultisigDepositsClaimedInformation: React.FC<
               )}
               href={`${RESOURCES.blocks}/${(value as MultisigDepositsClaimed['block']).height}`}
               className="break-all"
+              numeric
             />
           )
         },

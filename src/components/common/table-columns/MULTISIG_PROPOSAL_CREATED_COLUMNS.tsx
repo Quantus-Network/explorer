@@ -35,6 +35,7 @@ export const MULTISIG_PROPOSAL_CREATED_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={formatBlockHeight(props.getValue())}
+        numeric
       />
     ),
     enableSorting: true

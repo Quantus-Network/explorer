@@ -11,6 +11,7 @@ export interface LinkWithCopyProps {
   textCopy?: string;
   className?: string;
   truncate?: boolean;
+  numeric?: boolean;
 }
 
 export const LinkWithCopy: React.FC<LinkWithCopyProps> = ({
@@ -18,17 +19,20 @@ export const LinkWithCopy: React.FC<LinkWithCopyProps> = ({
   text,
   textCopy = text,
   className,
-  truncate = false
+  truncate = false,
+  numeric = false
 }) => {
   return (
     <div className="group flex items-center gap-1">
       <Link
         className={cn(
-          'inline-block font-mono text-xs text-flare hover:underline',
+          'inline-block text-xs text-flare hover:underline',
+          !numeric && 'font-mono',
           truncate
             ? 'max-w-[200px] truncate'
             : 'max-w-none break-all whitespace-normal',
-          className
+          className,
+          numeric && 'numeric'
         )}
         to={href}
         title={textCopy}

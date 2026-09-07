@@ -90,6 +90,11 @@
     @apply text-[20px] font-medium tracking-[-0.02em] text-content;
   }
 
+  /* Geist Sans + tabular figures. Matches mobile amount styles. */
+  .numeric {
+    @apply font-sans tabular-nums;
+  }
+
   .page-subtitle {
     @apply mt-1 text-[13px] text-muted-text;
   }

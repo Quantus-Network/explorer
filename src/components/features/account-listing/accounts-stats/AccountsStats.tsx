@@ -41,11 +41,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {success && (
-            <p className="font-mono">
-              {data?.all.total_accounts.toLocaleString()}
-            </p>
-          )}
+          {success && <p>{data?.all.total_accounts.toLocaleString()}</p>}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
         </CardContent>
@@ -59,9 +55,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.recentlyActive.aggregate.count.toLocaleString()}
-            </p>
+            <p>{data?.recentlyActive.aggregate.count.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
@@ -76,9 +70,7 @@ export const AccountsStats: React.FC<AccountsStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.recentlyDeposited.aggregate.count.toLocaleString()}
-            </p>
+            <p>{data?.recentlyDeposited.aggregate.count.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}

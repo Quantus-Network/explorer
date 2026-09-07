@@ -35,6 +35,7 @@ export const HIGH_SECURITY_SET_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={formatBlockHeight(props.getValue())}
+        numeric
       />
     ),
     enableSorting: true

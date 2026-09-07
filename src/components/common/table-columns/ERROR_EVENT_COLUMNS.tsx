@@ -31,6 +31,7 @@ export const ERROR_EVENT_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={formatBlockHeight(props.getValue())}
+        numeric
       />
     ),
     enableSorting: true

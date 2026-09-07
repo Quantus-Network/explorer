@@ -2,7 +2,7 @@ const env = {
   SITE_NAME: 'Quantus Explorer',
   SITE_SHORT_NAME: 'QE',
   SITE_BASE_URL: import.meta.env.VITE_SITE_URL ?? '',
-  COIN_SYMBOL: 'QUAN'
+  COIN_SYMBOL: 'QTC'
 };
 
 export default env;

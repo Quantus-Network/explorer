@@ -79,6 +79,7 @@ export const MultisigProposalReadyInformation: React.FC<
               <LinkWithCopy
                 text={formatBlockHeight(block.height)}
                 href={`${RESOURCES.blocks}/${block.height}`}
+                numeric
               />
             );
           }
@@ -97,7 +98,7 @@ export const MultisigProposalReadyInformation: React.FC<
           key: 'approvals_count',
           render: (value) =>
             value != null ? (
-              <span className="font-mono">{String(value)}</span>
+              <span className="numeric">{String(value)}</span>
             ) : (
               <EmptyValue />
             )

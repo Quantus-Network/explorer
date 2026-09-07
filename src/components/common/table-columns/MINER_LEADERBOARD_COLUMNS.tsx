@@ -53,7 +53,7 @@ export const getMinerLeaderboardColumns = ({
       return (
         <div
           className={cn(
-            'w-8 font-mono text-xs text-center',
+            'w-8 numeric text-xs text-center',
             getRankClassName(rank)
           )}
         >
@@ -84,7 +84,7 @@ export const getMinerLeaderboardColumns = ({
     id: 'total_mined_blocks',
     header: 'Blocks Mined',
     cell: (props) => (
-      <span className="font-mono">
+      <span className="numeric">
         {(props.getValue() ?? 0).toLocaleString()}
       </span>
     ),
@@ -112,7 +112,7 @@ export const getMinerLeaderboardColumns = ({
               }}
             />
           </div>
-          <span className="font-mono text-muted-text">{pct.toFixed(1)}%</span>
+          <span className="numeric text-muted-text">{pct.toFixed(1)}%</span>
         </div>
       );
     },
@@ -122,7 +122,7 @@ export const getMinerLeaderboardColumns = ({
     id: 'total_rewards',
     header: 'Total Rewards',
     cell: (props) => (
-      <span className="font-mono">
+      <span className="numeric">
         {formatMonetaryValue(props.getValue(), 5)}
       </span>
     ),
