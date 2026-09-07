@@ -32,7 +32,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono !text-flare">
+            <p className="!text-flare">
               #{data?.chain.block_height.toLocaleString()}
             </p>
           )}
@@ -49,9 +49,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              #{data?.chain.finalized_block_height.toLocaleString()}
-            </p>
+            <p>#{data?.chain.finalized_block_height.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
@@ -66,9 +64,7 @@ export const BlocksStats: React.FC<BlocksStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.minedIn24Hours.aggregate.totalCount.toLocaleString()}
-            </p>
+            <p>{data?.minedIn24Hours.aggregate.totalCount.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}

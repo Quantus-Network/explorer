@@ -60,7 +60,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={formatBlockHeight(props.getValue())}
-        className="font-mono text-flare"
+        numeric
       />
     ),
     enableSorting: true
@@ -112,7 +112,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
       const value = props.getValue();
       if (value == null)
         return <span className="font-mono text-muted-text">—</span>;
-      return <span className="font-mono">{formatMonetaryValue(value, 5)}</span>;
+      return <span className="numeric">{formatMonetaryValue(value, 5)}</span>;
     },
     enableSorting: true
   }),
@@ -124,7 +124,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
       if (value == null)
         return <span className="font-mono text-muted-text">—</span>;
       return (
-        <span className="font-mono text-muted-text">
+        <span className="numeric text-muted-text">
           {formatMonetaryValue(value, 5)}
         </span>
       );
@@ -212,7 +212,7 @@ export const RECENT_UNIFIED_LIST_TRANSACTION_COLUMNS = [
       const value = props.getValue();
       if (value == null)
         return <span className="font-mono text-muted-text">—</span>;
-      return <span className="font-mono">{formatMonetaryValue(value, 5)}</span>;
+      return <span className="numeric">{formatMonetaryValue(value, 5)}</span>;
     },
     enableSorting: false
   }),

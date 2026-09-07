@@ -27,7 +27,7 @@ export const BlockDetails: React.FC<Props> = ({ id }) => {
   return (
     <SectionContainer>
       <ContentContainer className="flex flex-col gap-6">
-        <h1 className="page-title">{title}</h1>
+        <h1 className="page-title numeric">{title}</h1>
 
         <BlockInformation query={query} />
 

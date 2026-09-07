@@ -23,7 +23,7 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
     key: 'threshold',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">{String(value)}</span>
+        <span className="numeric">{String(value)}</span>
       ) : (
         <EmptyValue />
       )
@@ -33,7 +33,7 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
     key: 'nonce',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">{String(value)}</span>
+        <span className="numeric">{String(value)}</span>
       ) : (
         <EmptyValue />
       )
@@ -105,6 +105,7 @@ export const getMultisigCreatedEventFields = (): MultisigCreatedField[] => [
         <LinkWithCopy
           text={formatBlockHeight(block.height)}
           href={`${RESOURCES.blocks}/${block.height}`}
+          numeric
         />
       );
     }
@@ -154,6 +155,7 @@ export const getMultisigAccountFields = (): MultisigCreatedField[] => [
         <LinkWithCopy
           text={formatBlockHeight(block.height)}
           href={`${RESOURCES.blocks}/${block.height}`}
+          numeric
         />
       );
     }

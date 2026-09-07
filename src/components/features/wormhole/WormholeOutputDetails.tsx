@@ -114,6 +114,7 @@ export const WormholeOutputInformation = ({
                   text={formatBlockHeight(
                     (value as ExtrinsicInfo['block']).height
                   )}
+                  numeric
                 />
               )
             },

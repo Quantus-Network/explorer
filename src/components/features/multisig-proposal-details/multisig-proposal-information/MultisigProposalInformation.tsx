@@ -132,9 +132,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
     key: 'deposit',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">
-          {formatMonetaryValue(String(value), 5)}
-        </span>
+        <span className="numeric">{formatMonetaryValue(String(value), 5)}</span>
       ) : (
         <EmptyValue />
       )
@@ -147,6 +145,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
         <LinkWithCopy
           href={`${RESOURCES.blocks}/${value}`}
           text={String(value)}
+          numeric
         />
       ) : (
         <EmptyValue />
@@ -179,6 +178,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
         <LinkWithCopy
           href={`${RESOURCES.blocks}/${block.height}`}
           text={formatBlockHeight(block.height)}
+          numeric
         />
       ) : (
         <EmptyValue />
@@ -257,9 +257,7 @@ const BALANCE_TRANSFER_FIELDS: ProposalField[] = [
     key: 'transfer_amount',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">
-          {formatMonetaryValue(String(value), 5)}
-        </span>
+        <span className="numeric">{formatMonetaryValue(String(value), 5)}</span>
       ) : (
         <EmptyValue />
       )
@@ -278,9 +276,7 @@ const SCHEDULED_TRANSFER_FIELDS: ProposalField[] = [
     key: 'schedule_amount',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">
-          {formatMonetaryValue(String(value), 5)}
-        </span>
+        <span className="numeric">{formatMonetaryValue(String(value), 5)}</span>
       ) : (
         <EmptyValue />
       )
@@ -300,7 +296,7 @@ const SCHEDULED_TRANSFER_FIELDS: ProposalField[] = [
     key: 'delay_value',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">{String(value)}</span>
+        <span className="numeric">{String(value)}</span>
       ) : (
         <EmptyValue />
       )
@@ -340,7 +336,7 @@ const SET_HIGH_SECURITY_FIELDS: ProposalField[] = [
     key: 'delay_value',
     render: (value) =>
       value != null ? (
-        <span className="font-mono">{String(value)}</span>
+        <span className="numeric">{String(value)}</span>
       ) : (
         <EmptyValue />
       )
@@ -484,6 +480,7 @@ export const MultisigProposalInformation: React.FC<
                           <LinkWithCopy
                             href={`${RESOURCES.blocks}/${row.block.height}`}
                             text={formatBlockHeight(row.block.height)}
+                            numeric
                           />
                         ) : (
                           <EmptyValue />

@@ -42,9 +42,7 @@ export const ErrorEventsStats: React.FC<ErrorEventsStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.allTime.total_error_events.toLocaleString()}
-            </p>
+            <p>{data?.allTime.total_error_events.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
@@ -59,9 +57,7 @@ export const ErrorEventsStats: React.FC<ErrorEventsStatsProps> = () => {
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.last24Hour.aggregate.totalCount.toLocaleString()}
-            </p>
+            <p>{data?.last24Hour.aggregate.totalCount.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}

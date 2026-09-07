@@ -20,7 +20,7 @@ export const BLOCK_COLUMNS = [
       <LinkWithCopy
         href={`${RESOURCES.blocks}/${props.getValue()}`}
         text={formatBlockHeight(props.getValue())}
-        className="font-mono text-flare"
+        numeric
       />
     ),
     enableSorting: false
@@ -44,7 +44,7 @@ export const BLOCK_COLUMNS = [
     id: 'extrinsicsCount',
     header: 'Txs',
     cell: (props) => (
-      <span className="font-mono text-muted-text">{props.getValue()}</span>
+      <span className="numeric text-muted-text">{props.getValue()}</span>
     ),
     enableSorting: true
   }),
@@ -52,7 +52,7 @@ export const BLOCK_COLUMNS = [
     id: 'reward',
     header: 'Reward',
     cell: (props) => (
-      <span className="font-mono">{formatMonetaryValue(props.getValue())}</span>
+      <span className="numeric">{formatMonetaryValue(props.getValue())}</span>
     ),
     enableSorting: true
   }),

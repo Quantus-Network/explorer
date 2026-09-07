@@ -53,7 +53,7 @@ export const StatSparklineCard = ({
             <div className="flex items-center gap-2">
               <div
                 className={cn(
-                  'font-mono text-2xl font-medium tracking-[-0.02em] text-content',
+                  'numeric text-2xl font-medium tracking-[-0.02em] text-content',
                   valueClassName
                 )}
               >
@@ -68,7 +68,7 @@ export const StatSparklineCard = ({
             </div>
 
             {subtitle != null && (
-              <div className="mt-1 font-mono text-[11px] text-muted-text">
+              <div className="mt-1 numeric text-[11px] text-muted-text">
                 {subtitle}
               </div>
             )}

@@ -157,6 +157,7 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
                 <LinkWithCopy
                   text={formatBlockHeight(block.height)}
                   href={`${RESOURCES.blocks}/${block.height}`}
+                  numeric
                 />
               );
             }

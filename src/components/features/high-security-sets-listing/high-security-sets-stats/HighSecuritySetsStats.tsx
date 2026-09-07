@@ -44,9 +44,7 @@ export const HighSecuritySetsStats: React.FC<
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.allTime.total_high_security_sets.toLocaleString()}
-            </p>
+            <p>{data?.allTime.total_high_security_sets.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}
@@ -61,9 +59,7 @@ export const HighSecuritySetsStats: React.FC<
         </CardHeader>
         <CardContent>
           {success && (
-            <p className="font-mono">
-              {data?.last24Hour.aggregate.totalCount.toLocaleString()}
-            </p>
+            <p>{data?.last24Hour.aggregate.totalCount.toLocaleString()}</p>
           )}
           {loading && <Skeleton className="h-6" />}
           {error && <InlineFetchError error={error} />}

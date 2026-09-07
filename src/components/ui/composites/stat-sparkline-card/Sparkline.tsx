@@ -236,7 +236,7 @@ export const Sparkline = ({ points, stroke, className }: SparklineProps) => {
             />
             <div
               ref={tipRef}
-              className="pointer-events-none fixed z-[999] whitespace-nowrap border border-border-strong bg-surface-2 px-2.5 py-1 font-mono text-[10px] leading-[1.7] text-content"
+              className="pointer-events-none fixed z-[999] whitespace-nowrap border border-border-strong bg-surface-2 px-2.5 py-1 numeric text-[10px] leading-[1.7] text-content"
               style={{
                 display: hover && activePoint ? 'block' : 'none',
                 left: hover?.tipLeft,

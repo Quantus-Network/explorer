@@ -89,7 +89,7 @@ export function DataList<T>({
                     {loading && <Skeleton className="h-6" />}
 
                     {!loading && (
-                      <dd className="flex items-center gap-1.5 break-all text-[13px] text-content">
+                      <dd className="flex items-center gap-1.5 break-all text-[13px] tabular-nums text-content">
                         {field.render
                           ? field.render(item[field.key], item)
                           : String(item[field.key] ?? '')}

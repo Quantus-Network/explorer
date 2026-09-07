@@ -38,7 +38,7 @@ function splitRewardTransfers(
 
 function formatRewardAmount(amount: string | null | undefined) {
   if (amount == null) return <span className="text-muted-text">—</span>;
-  return <span className="font-mono">{formatMonetaryValue(amount)}</span>;
+  return <span className="numeric">{formatMonetaryValue(amount)}</span>;
 }
 
 export const BlockInformation: React.FC<BlockInformationProps> = ({
@@ -83,7 +83,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           key: 'height',
           render: (value) =>
             value != null ? (
-              <span className="font-mono text-flare">
+              <span className="numeric text-flare">
                 {formatBlockHeight(value as number)}
               </span>
             ) : (
@@ -133,9 +133,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
         {
           label: 'Transactions',
           key: 'extrinsicsCount',
-          render: (value) => (
-            <span className="font-mono">{value as number}</span>
-          )
+          render: (value) => <span className="numeric">{value as number}</span>
         }
       ]}
     />

@@ -68,6 +68,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
               text={formatBlockHeight(value.height)}
               href={`${RESOURCES.blocks}/${value.height}`}
               className="break-all"
+              numeric
             />
           )
         },
