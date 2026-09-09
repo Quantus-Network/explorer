@@ -4,6 +4,7 @@ const ENABLE_LOCAL_NETWORK =
   import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true';
 
 const BASE_NETWORKS = {
+  mainnet: 'https://subsquid-mainnet-app-1.quantus.com/v1/graphql',
   planck: 'https://sub2.quantus.com/v1/graphql'
 } as const;
 
@@ -30,8 +31,8 @@ type NetworkProviderState = {
 };
 
 const initialState: NetworkProviderState = {
-  networkUrl: BASE_NETWORKS.planck,
-  networkName: 'planck',
+  networkUrl: BASE_NETWORKS.mainnet,
+  networkName: 'mainnet',
   setNetwork: () => null
 };
 
@@ -40,7 +41,7 @@ const NetworkProviderContext =
 
 export function NetworkProvider({
   children,
-  defaultNetwork = 'planck',
+  defaultNetwork = 'mainnet',
   storageKey,
   ...props
 }: NetworkProviderProps) {
@@ -48,7 +49,7 @@ export function NetworkProvider({
     () => (localStorage.getItem(storageKey) as NetworkName) || defaultNetwork
   );
   const [networkUrl, setNetworkUrl] = useState(
-    () => NETWORKS[networkName] ?? BASE_NETWORKS.planck
+    () => NETWORKS[networkName] ?? BASE_NETWORKS.mainnet
   );
 
   const value = useMemo(() => {
@@ -58,7 +59,7 @@ export function NetworkProvider({
       setNetwork: (newNetworkName: NetworkName) => {
         localStorage.setItem(storageKey, newNetworkName);
         setNetwork(newNetworkName);
-        setNetworkUrl(NETWORKS[newNetworkName] ?? BASE_NETWORKS.planck);
+        setNetworkUrl(NETWORKS[newNetworkName] ?? BASE_NETWORKS.mainnet);
       }
     };
 

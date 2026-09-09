@@ -24,7 +24,10 @@ const DynamicApolloProvider = ({ children }: PropsWithChildren) => {
 const Providers = ({ children }: PropsWithChildren) => {
   return (
     <NuqsAdapter>
-      <NetworkProvider defaultNetwork="planck" storageKey="qube-network-planck">
+      <NetworkProvider
+        defaultNetwork="mainnet"
+        storageKey="qube-network-mainnet"
+      >
         <DynamicApolloProvider>{children}</DynamicApolloProvider>
       </NetworkProvider>
 
