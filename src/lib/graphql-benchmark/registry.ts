@@ -1,7 +1,6 @@
 import { gql } from '@apollo/client';
 import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
-import { subDays } from 'date-fns/subDays';
 
 import {
   GetAccountByIdDocument,
@@ -34,6 +33,7 @@ import {
 } from '@/__generated__/graphql';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
+import { getAccountStatsUtcDateRange } from '@/utils/get-account-stats-utc-date-range';
 
 import type { GraphqlBenchmarkRegistryEntry } from './types';
 
@@ -71,10 +71,7 @@ const SearchHexDocument = gql`
 `;
 
 function accountStatsDates() {
-  return {
-    startDate: subDays(startOfToday(), 7).toISOString(),
-    endDate: endOfToday().toISOString()
-  };
+  return getAccountStatsUtcDateRange();
 }
 
 function statsDay() {

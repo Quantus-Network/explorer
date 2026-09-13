@@ -1,8 +1,5 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import { endOfToday } from 'date-fns/endOfToday';
-import { startOfToday } from 'date-fns/startOfToday';
-import { subDays } from 'date-fns/subDays';
 
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
@@ -12,6 +9,7 @@ import type {
   AccountStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { getAccountStatsUtcDateRange } from '@/utils/get-account-stats-utc-date-range';
 
 export const accounts = {
   useGetAll: (
@@ -103,8 +101,7 @@ export const accounts = {
   useGetStats: (
     config?: Omit<QueryHookOptions<AccountStatsResponse>, 'variables'>
   ) => {
-    const startDate = subDays(startOfToday(), 7).toISOString();
-    const endDate = endOfToday().toISOString();
+    const { startDate, endDate } = getAccountStatsUtcDateRange();
 
     // daily_active_account is one row per (UTC day, account) with sent/received flags,
     // so the 7-day distinct counts read a few thousand indexed rows instead of the transfer table.
