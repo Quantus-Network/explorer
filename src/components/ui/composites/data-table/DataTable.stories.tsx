@@ -26,6 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 const mockTransactions: Transaction[] = Array.from({ length: 12 }, (_, i) => ({
   block: { height: 293293 + i },
+  block_height: 293293 + i,
   extrinsic: {
     id: `0xhash${i.toString().padStart(4, '0')}`,
     pallet: 'balances',
