@@ -3,23 +3,10 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { RESOURCES } from '@/constants/resources';
-import type { Account } from '@/schemas';
+import type { AccountListItem } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
 
-const columnHelper = createColumnHelper<Account>();
-
-const getAccountFlags = (account: Account) => {
-  const events = account.flagEvents ?? [];
-  const isHighSec = events.some(
-    (event) => event.highSecuritySet?.who_id === account.id
-  );
-  const isGuardian = events.some(
-    (event) => event.highSecuritySet?.guardian_id === account.id
-  );
-  const isMultisig = events.some((event) => !!event.multisig_id);
-
-  return { isHighSec, isGuardian, isMultisig };
-};
+const columnHelper = createColumnHelper<AccountListItem>();
 
 export const ACCOUNT_COLUMNS = [
   columnHelper.accessor('id', {
@@ -38,9 +25,11 @@ export const ACCOUNT_COLUMNS = [
     id: 'flags',
     header: 'Flags',
     cell: (props) => {
-      const { isHighSec, isGuardian, isMultisig } = getAccountFlags(
-        props.row.original
-      );
+      const {
+        is_high_security: isHighSec,
+        is_guardian: isGuardian,
+        is_multisig: isMultisig
+      } = props.row.original;
       const hasFlags = isHighSec || isGuardian || isMultisig;
 
       if (!hasFlags) {

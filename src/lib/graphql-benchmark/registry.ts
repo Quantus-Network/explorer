@@ -24,6 +24,7 @@ import {
   GetMinerRewardByHashDocument,
   GetMinerRewardsDocument,
   GetMinerRewardsStatsDocument,
+  GetMinerRewardsWithChainTotalDocument,
   GetScheduledReversibleTransactionByTxIdDocument,
   GetScheduledReversibleTransactionsDocument,
   GetStatusDocument,
@@ -212,6 +213,16 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
   {
     name: 'GetMinerRewards',
     document: GetMinerRewardsDocument,
+    getVariables: () => ({
+      orderBy: { timestamp: 'desc' },
+      limit: QUERY_DEFAULT_LIMIT,
+      offset: 0
+    })
+  },
+  {
+    // What the unfiltered miner-rewards listing actually issues (total from chain_stats).
+    name: 'GetMinerRewardsWithChainTotal',
+    document: GetMinerRewardsWithChainTotalDocument,
     getVariables: () => ({
       orderBy: { timestamp: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,

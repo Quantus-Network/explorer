@@ -1,16 +1,12 @@
 import type * as gql from '../__generated__/graphql';
 
-export interface AccountFlagEvent {
-  highSecuritySet?: {
-    who_id?: string | null;
-    guardian_id?: string | null;
-  } | null;
-  multisig_id?: string | null;
-}
+export type Account = Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'>;
 
-export interface Account
-  extends Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'> {
-  flagEvents?: AccountFlagEvent[];
+/** Listing row: flags are denormalized onto `account` by the indexer (no nested event lookups). */
+export interface AccountListItem extends Account {
+  is_high_security: boolean;
+  is_guardian: boolean;
+  is_multisig: boolean;
 }
 
 export interface AccountStats {
@@ -39,7 +35,7 @@ export interface AccountResponse {
 }
 
 export interface AccountListResponse {
-  accounts: Account[];
+  accounts: AccountListItem[];
   meta: {
     totalCount: number;
   };

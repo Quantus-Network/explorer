@@ -8,7 +8,7 @@ import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
 import { useOrderBy } from '@/hooks/useOrderBy';
 import { useTableState } from '@/hooks/useTableState';
-import type { Account } from '@/schemas';
+import type { AccountListItem } from '@/schemas';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useAccountsTable = () => {
@@ -42,7 +42,7 @@ export const useAccountsTable = () => {
   const accountColumns = useMemo(() => ACCOUNT_COLUMNS, []);
   const [rowCount, setRowCount] = useState<number>(data?.meta.totalCount ?? 0);
 
-  const table = useReactTable<Account>({
+  const table = useReactTable<AccountListItem>({
     data: data?.accounts ?? [],
     columns: accountColumns,
     getCoreRowModel: getCoreRowModel(),
