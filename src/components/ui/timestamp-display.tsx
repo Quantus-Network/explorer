@@ -20,13 +20,13 @@ export const TimestampDisplay: React.FC<TimestampDisplayProps> = ({
       <PopoverTrigger
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
-        className="whitespace-nowrap font-mono text-[11px] text-muted-text"
+        className="numeric whitespace-nowrap text-[11px] text-muted-text"
       >
         {timeinUtc}
       </PopoverTrigger>
       <PopoverContent
         side="top"
-        className="w-auto px-2.5 py-1.5 font-mono text-[11px] text-muted-text"
+        className="numeric w-auto px-2.5 py-1.5 text-[11px] text-muted-text"
       >
         {timeDistance}
       </PopoverContent>

@@ -1,8 +1,5 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
-import { endOfToday } from 'date-fns/endOfToday';
-import { startOfToday } from 'date-fns/startOfToday';
-import { subDays } from 'date-fns/subDays';
 
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { AccountSorts } from '@/constants/query-sorts';
@@ -12,6 +9,7 @@ import type {
   AccountStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
+import { getAccountStatsUtcDateRange } from '@/utils/get-account-stats-utc-date-range';
 
 export const accounts = {
   useGetAll: (
@@ -31,21 +29,9 @@ export const accounts = {
           free
           frozen
           reserved
-          flagEvents: accountEvents(
-            where: {
-              _or: [
-                { high_security_set_id: { _is_null: false } }
-                { multisig_id: { _is_null: false } }
-              ]
-            }
-            limit: 20
-          ) {
-            highSecuritySet {
-              who_id
-              guardian_id
-            }
-            multisig_id
-          }
+          is_high_security
+          is_guardian
+          is_multisig
         }
         meta: chain_stats_by_pk(id: "global") {
           totalCount: total_accounts
@@ -115,32 +101,35 @@ export const accounts = {
   useGetStats: (
     config?: Omit<QueryHookOptions<AccountStatsResponse>, 'variables'>
   ) => {
-    const startDate = subDays(startOfToday(), 7).toISOString();
-    const endDate = endOfToday().toISOString();
+    const { startDate, endDate } = getAccountStatsUtcDateRange();
 
+    // daily_active_account is one row per (UTC day, account) with sent/received flags,
+    // so the 7-day distinct counts read a few thousand indexed rows instead of the transfer table.
     const GET_ACCOUNTS_STATS = gql`
       query GetAccountsStats($startDate: timestamptz!, $endDate: timestamptz!) {
         all: chain_stats_by_pk(id: "global") {
           total_accounts
         }
 
-        recentlyActive: account_aggregate(
+        recentlyActive: daily_active_account_aggregate(
           where: {
-            transfersFrom: { timestamp: { _gte: $startDate, _lte: $endDate } }
+            date: { _gte: $startDate, _lte: $endDate }
+            sent: { _eq: true }
           }
         ) {
           aggregate {
-            count
+            count(columns: account_id, distinct: true)
           }
         }
 
-        recentlyDeposited: account_aggregate(
+        recentlyDeposited: daily_active_account_aggregate(
           where: {
-            transfersTo: { timestamp: { _gte: $startDate, _lte: $endDate } }
+            date: { _gte: $startDate, _lte: $endDate }
+            received: { _eq: true }
           }
         ) {
           aggregate {
-            count
+            count(columns: account_id, distinct: true)
           }
         }
       }

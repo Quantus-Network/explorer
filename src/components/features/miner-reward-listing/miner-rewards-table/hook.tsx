@@ -10,6 +10,7 @@ import type { MinerRewardSorts } from '@/constants/query-sorts';
 import { useOrderBy } from '@/hooks/useOrderBy';
 import { useTableState } from '@/hooks/useTableState';
 import type { MinerReward } from '@/schemas';
+import { minerRewardsOfMiner } from '@/utils/miner-reward-filters';
 import { transformSortLiteral } from '@/utils/transform-sort';
 
 export const useMinerRewardsTable = () => {
@@ -40,11 +41,7 @@ export const useMinerRewardsTable = () => {
       orderBy: orderByObject,
       limit,
       offset: currentPageIndex * limit,
-      ...(accountId && {
-        where: {
-          miner: { id_eq: accountId }
-        }
-      })
+      ...(accountId && { where: minerRewardsOfMiner(accountId) })
     }
   });
 
