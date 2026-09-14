@@ -14,7 +14,10 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { runGraphqlBenchmarks } from '@/lib/graphql-benchmark/run';
-import type { GraphqlBenchmarkRow } from '@/lib/graphql-benchmark/types';
+import type {
+  GraphqlBenchmarkRow,
+  GraphqlBenchmarkSuite
+} from '@/lib/graphql-benchmark/types';
 import { cn } from '@/lib/utils';
 
 export const Route = createFileRoute('/dev/graphql-benchmark/')({
@@ -28,9 +31,13 @@ export const Route = createFileRoute('/dev/graphql-benchmark/')({
 
 function resultsToCsv(rows: GraphqlBenchmarkRow[]) {
   const header = [
+    'group',
     'name',
     'durationMs',
+    'minMs',
+    'maxMs',
     'responseBytes',
+    'rowCount',
     'skipped',
     'skipReason',
     'errorMessage'
@@ -39,9 +46,13 @@ function resultsToCsv(rows: GraphqlBenchmarkRow[]) {
     header.join(','),
     ...rows.map((r) =>
       [
+        JSON.stringify(r.group ?? ''),
         JSON.stringify(r.name),
         r.durationMs,
+        r.minMs ?? '',
+        r.maxMs ?? '',
         r.responseBytes ?? '',
+        r.rowCount ?? '',
         r.skipped ? '1' : '0',
         r.skipReason ? JSON.stringify(r.skipReason) : '',
         r.errorMessage ? JSON.stringify(r.errorMessage) : ''
@@ -53,11 +64,14 @@ function resultsToCsv(rows: GraphqlBenchmarkRow[]) {
 
 function GraphqlBenchmarkPage() {
   const { networkUrl } = useNetwork();
+  const [suite, setSuite] = React.useState<GraphqlBenchmarkSuite>('explorer');
   const [running, setRunning] = React.useState(false);
   const [progress, setProgress] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [rows, setRows] = React.useState<GraphqlBenchmarkRow[] | null>(null);
   const [lastEndpoint, setLastEndpoint] = React.useState<string | null>(null);
+  const [lastSuite, setLastSuite] =
+    React.useState<GraphqlBenchmarkSuite | null>(null);
 
   const onRun = async () => {
     setRunning(true);
@@ -65,9 +79,12 @@ function GraphqlBenchmarkPage() {
     setProgress(null);
     setRows(null);
     setLastEndpoint(networkUrl);
+    setLastSuite(suite);
     try {
       const { results } = await runGraphqlBenchmarks({
         endpoint: networkUrl,
+        suite,
+        samples: suite === 'mobile' ? 5 : 1,
         onProgress: (name) => setProgress(name)
       });
       setRows(results);
@@ -86,6 +103,7 @@ function GraphqlBenchmarkPage() {
         JSON.stringify(
           {
             endpoint: lastEndpoint,
+            suite: lastSuite,
             at: new Date().toISOString(),
             results: rows
           },
@@ -113,20 +131,41 @@ function GraphqlBenchmarkPage() {
     return 'OK';
   };
 
+  const showGroup = rows?.some((r) => r.group) ?? false;
+
   return (
     <SectionContainer>
       <ContentContainer className="flex max-w-6xl flex-col gap-6">
         <div>
-          <h1 className="text-2xl font-semibold">GraphQL benchmarks</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Development only. Runs every explorer operation sequentially against
+          <h1 className="page-title">GraphQL benchmarks</h1>
+          <p className="page-subtitle mt-1">
+            Development only. Runs every {suite} operation sequentially against
             the selected network (
             <span className="font-mono text-xs">{networkUrl}</span>
             ), slowest first.
+            {suite === 'mobile'
+              ? ' Mobile suite uses the wallet SDK query shapes, plus legacy contrasts.'
+              : ''}
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          <Button
+            type="button"
+            variant={suite === 'explorer' ? 'default' : 'outline'}
+            disabled={running}
+            onClick={() => setSuite('explorer')}
+          >
+            Explorer
+          </Button>
+          <Button
+            type="button"
+            variant={suite === 'mobile' ? 'default' : 'outline'}
+            disabled={running}
+            onClick={() => setSuite('mobile')}
+          >
+            Mobile app
+          </Button>
           <Button
             type="button"
             onClick={onRun}
@@ -166,8 +205,11 @@ function GraphqlBenchmarkPage() {
           <Table>
             <TableHeader>
               <TableRow>
+                {showGroup ? <TableHead>Group</TableHead> : null}
                 <TableHead>Operation</TableHead>
-                <TableHead className="text-right">Duration (ms)</TableHead>
+                <TableHead className="text-right">Median (ms)</TableHead>
+                <TableHead className="text-right">Min–max</TableHead>
+                <TableHead className="text-right">Rows</TableHead>
                 <TableHead className="text-right">Response (bytes)</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
@@ -175,6 +217,11 @@ function GraphqlBenchmarkPage() {
             <TableBody>
               {rows.map((r) => (
                 <TableRow key={r.name}>
+                  {showGroup ? (
+                    <TableCell className="text-xs text-muted-foreground">
+                      {r.group ?? ''}
+                    </TableCell>
+                  ) : null}
                   <TableCell className="font-mono text-xs">{r.name}</TableCell>
                   <TableCell
                     className={cn(
@@ -183,6 +230,24 @@ function GraphqlBenchmarkPage() {
                     )}
                   >
                     {r.skipped ? '—' : r.durationMs}
+                  </TableCell>
+                  <TableCell
+                    className={cn(
+                      'text-right tabular-nums text-muted-foreground',
+                      r.skipped && 'text-muted-foreground'
+                    )}
+                  >
+                    {r.skipped || r.minMs == null || r.maxMs == null
+                      ? '—'
+                      : `${r.minMs}–${r.maxMs}`}
+                  </TableCell>
+                  <TableCell
+                    className={cn(
+                      'text-right tabular-nums',
+                      r.skipped && 'text-muted-foreground'
+                    )}
+                  >
+                    {r.rowCount != null ? r.rowCount : '—'}
                   </TableCell>
                   <TableCell
                     className={cn(
