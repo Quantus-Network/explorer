@@ -1,10 +1,11 @@
-import type {
-  GraphqlBenchmarkContext,
-  GraphqlBenchmarkRegistryEntry
-} from './types';
+import {
+  accountEventPageVariables,
+  MOBILE_HISTORY_FANOUT_COUNTS
+} from './mobile-account-event-query';
 import {
   AccountEventsAllAfterDocument,
   AccountEventsAllDocument,
+  accountEventsDocument,
   AccountEventsReceiveAfterDocument,
   AccountEventsReceiveDocument,
   AccountEventsSendAfterDocument,
@@ -21,6 +22,7 @@ import {
   MultisigProposalDocument,
   ScheduledReversibleAllAfterDocument,
   ScheduledReversibleAllDocument,
+  scheduledReversibleDocument,
   ScheduledReversibleReceiveDocument,
   ScheduledReversibleSendDocument,
   SearchByExtrinsicHashReversibleDocument,
@@ -37,6 +39,10 @@ import {
   TransfersToAddressesAfterDocument,
   TransfersToAddressesDocument
 } from './mobile-queries';
+import type {
+  GraphqlBenchmarkContext,
+  GraphqlBenchmarkRegistryEntry
+} from './types';
 
 const HISTORY_LIMIT = 21;
 const WORMHOLE_LIMIT = 300;
@@ -45,27 +51,110 @@ function pendingSinceIso() {
   return new Date(Date.now() - 2 * 60 * 1000).toISOString();
 }
 
+function oneAccount(accountId: string | undefined): string[] | undefined {
+  return accountId ? [accountId] : undefined;
+}
+
 function historyVars(
-  accountId: string | undefined,
+  accountIds: string[] | undefined,
   cursor?: { timestamp?: string; id?: string }
 ): Record<string, unknown> | null {
-  if (!accountId) return null;
-  return {
-    accounts: [accountId],
+  if (!accountIds?.length) return null;
+  const timestamp = cursor?.timestamp;
+  const id = cursor?.id;
+  return accountEventPageVariables({
+    accountIds,
     limit: HISTORY_LIMIT,
-    ...(cursor?.timestamp && cursor.id
-      ? { cursorTimestamp: cursor.timestamp, cursorId: cursor.id }
-      : {})
-  };
+    ...(timestamp && id ? { cursor: { timestamp, id } } : {})
+  });
 }
 
 function scheduledVars(
-  accountId: string | undefined,
+  accountIds: string[] | undefined,
   cursor?: { timestamp?: string; id?: string }
 ): Record<string, unknown> | null {
-  const base = historyVars(accountId, cursor);
+  const base = historyVars(accountIds, cursor);
   if (!base) return null;
   return { ...base, after: pendingSinceIso() };
+}
+
+type HistoryFilter = 'all' | 'send' | 'receive';
+
+const FANOUT_SPECS: Array<{
+  name: string;
+  filter: HistoryFilter;
+  withCursor: boolean;
+  scheduled: boolean;
+}> = [
+  {
+    name: 'AccountEvents.all',
+    filter: 'all',
+    withCursor: false,
+    scheduled: false
+  },
+  {
+    name: 'AccountEvents.send',
+    filter: 'send',
+    withCursor: false,
+    scheduled: false
+  },
+  {
+    name: 'AccountEvents.receive',
+    filter: 'receive',
+    withCursor: false,
+    scheduled: false
+  },
+  {
+    name: 'AccountEvents.all.after',
+    filter: 'all',
+    withCursor: true,
+    scheduled: false
+  },
+  {
+    name: 'ScheduledReversible.all',
+    filter: 'all',
+    withCursor: false,
+    scheduled: true
+  },
+  {
+    name: 'ScheduledReversible.send',
+    filter: 'send',
+    withCursor: false,
+    scheduled: true
+  },
+  {
+    name: 'ScheduledReversible.receive',
+    filter: 'receive',
+    withCursor: false,
+    scheduled: true
+  },
+  {
+    name: 'ScheduledReversible.all.after',
+    filter: 'all',
+    withCursor: true,
+    scheduled: true
+  }
+];
+
+function fanoutHistoryEntries(): GraphqlBenchmarkRegistryEntry[] {
+  return MOBILE_HISTORY_FANOUT_COUNTS.flatMap((count) =>
+    FANOUT_SPECS.map((spec) => {
+      const document = spec.scheduled
+        ? scheduledReversibleDocument(spec.filter, spec.withCursor, count)
+        : accountEventsDocument(spec.filter, spec.withCursor, count);
+      return entry(`${spec.name}.n${count}`, 'history', document, (ctx) => {
+        const ids = ctx.walletAccountIds;
+        if (!ids || ids.length < count) return null;
+        const accounts = ids.slice(0, count);
+        const cursor = spec.withCursor
+          ? { timestamp: ctx.cursorTimestamp, id: ctx.cursorId }
+          : undefined;
+        return spec.scheduled
+          ? scheduledVars(accounts, cursor)
+          : historyVars(accounts, cursor);
+      });
+    })
+  );
 }
 
 function discoverWhere(accountIds: string[]) {
@@ -95,23 +184,23 @@ export const mobileGraphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
   ),
 
   entry('AccountEvents.all', 'history', AccountEventsAllDocument, (ctx) =>
-    historyVars(ctx.busyAccountId)
+    historyVars(oneAccount(ctx.busyAccountId))
   ),
   entry('AccountEvents.send', 'history', AccountEventsSendDocument, (ctx) =>
-    historyVars(ctx.busyAccountId)
+    historyVars(oneAccount(ctx.busyAccountId))
   ),
   entry(
     'AccountEvents.receive',
     'history',
     AccountEventsReceiveDocument,
-    (ctx) => historyVars(ctx.busyAccountId)
+    (ctx) => historyVars(oneAccount(ctx.busyAccountId))
   ),
   entry(
     'AccountEvents.all.after',
     'history',
     AccountEventsAllAfterDocument,
     (ctx) =>
-      historyVars(ctx.busyAccountId, {
+      historyVars(oneAccount(ctx.busyAccountId), {
         timestamp: ctx.cursorTimestamp,
         id: ctx.cursorId
       })
@@ -121,7 +210,7 @@ export const mobileGraphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     'history',
     AccountEventsSendAfterDocument,
     (ctx) =>
-      historyVars(ctx.busyAccountId, {
+      historyVars(oneAccount(ctx.busyAccountId), {
         timestamp: ctx.cursorTimestamp,
         id: ctx.cursorId
       })
@@ -131,26 +220,26 @@ export const mobileGraphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     'history',
     AccountEventsReceiveAfterDocument,
     (ctx) =>
-      historyVars(ctx.busyAccountId, {
+      historyVars(oneAccount(ctx.busyAccountId), {
         timestamp: ctx.cursorTimestamp,
         id: ctx.cursorId
       })
   ),
   entry('AccountEvents.all.miner', 'history', AccountEventsAllDocument, (ctx) =>
-    historyVars(ctx.minerAccountId)
+    historyVars(oneAccount(ctx.minerAccountId))
   ),
   entry(
     'AccountEvents.receive.miner',
     'history',
     AccountEventsReceiveDocument,
-    (ctx) => historyVars(ctx.minerAccountId)
+    (ctx) => historyVars(oneAccount(ctx.minerAccountId))
   ),
   entry(
     'AccountEvents.all.miner.after',
     'history',
     AccountEventsAllAfterDocument,
     (ctx) =>
-      historyVars(ctx.minerAccountId, {
+      historyVars(oneAccount(ctx.minerAccountId), {
         timestamp: ctx.minerCursorTimestamp,
         id: ctx.minerCursorId
       })
@@ -160,7 +249,7 @@ export const mobileGraphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     'history',
     AccountEventsAllAfterDocument,
     (ctx) =>
-      historyVars(ctx.busyAccountId, {
+      historyVars(oneAccount(ctx.busyAccountId), {
         timestamp: ctx.deepCursorTimestamp,
         id: ctx.deepCursorId
       })
@@ -170,30 +259,32 @@ export const mobileGraphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     'ScheduledReversible.all',
     'history',
     ScheduledReversibleAllDocument,
-    (ctx) => scheduledVars(ctx.busyAccountId)
+    (ctx) => scheduledVars(oneAccount(ctx.busyAccountId))
   ),
   entry(
     'ScheduledReversible.send',
     'history',
     ScheduledReversibleSendDocument,
-    (ctx) => scheduledVars(ctx.busyAccountId)
+    (ctx) => scheduledVars(oneAccount(ctx.busyAccountId))
   ),
   entry(
     'ScheduledReversible.receive',
     'history',
     ScheduledReversibleReceiveDocument,
-    (ctx) => scheduledVars(ctx.busyAccountId)
+    (ctx) => scheduledVars(oneAccount(ctx.busyAccountId))
   ),
   entry(
     'ScheduledReversible.all.after',
     'history',
     ScheduledReversibleAllAfterDocument,
     (ctx) =>
-      scheduledVars(ctx.busyAccountId, {
+      scheduledVars(oneAccount(ctx.busyAccountId), {
         timestamp: ctx.cursorTimestamp,
         id: ctx.cursorId
       })
   ),
+
+  ...fanoutHistoryEntries(),
 
   entry(
     'ExecutedReversibleByTxId',

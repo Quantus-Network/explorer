@@ -1,5 +1,10 @@
 import { gql } from '@apollo/client';
 
+import {
+  buildAccountEventsQuery,
+  buildScheduledReversibleTransfersQuery
+} from './mobile-account-event-query';
+
 /** Field selections copied from `quantus_sdk` Dart query strings. */
 
 const MULTISIG_PROPOSAL_FIELDS = `
@@ -160,40 +165,7 @@ ${MULTISIG_PROPOSAL_FIELDS}
       }
     }`;
 
-const ACCOUNT_EVENT_ORDER = 'order_by: [{timestamp: desc}, {id: desc}]';
-const CURSOR_VARS = ', $cursorTimestamp: timestamptz!, $cursorId: String!';
-const CURSOR_PRED =
-  '{timestamp: {_lte: $cursorTimestamp}}, {_not: {timestamp: {_eq: $cursorTimestamp}, id: {_gte: $cursorId}}}';
-
-function directionPredicate(filter: 'all' | 'send' | 'receive') {
-  if (filter === 'send') return ', {outgoing: {_eq: true}}';
-  if (filter === 'receive') return ', {incoming: {_eq: true}}';
-  return '';
-}
-
-function accountEventsDocument(
-  filter: 'all' | 'send' | 'receive',
-  withCursor: boolean
-) {
-  const minerReward = filter === 'send' ? '' : MINER_REWARD_FIELD;
-  const where = `{_and: [{account_id: {_in: $accounts}}, {scheduled_reversible_transfer_id: {_is_null: true}}${directionPredicate(filter)}${withCursor ? `, ${CURSOR_PRED}` : ''}]}`;
-  return gql(`
-query AccountEvents($accounts: [String!]!, $limit: Int!${withCursor ? CURSOR_VARS : ''}) {
-  accountEvents: account_event(limit: $limit, where: ${where}, ${ACCOUNT_EVENT_ORDER}) {
-${ACCOUNT_EVENT_CORE}${minerReward}${MULTISIG_ACCOUNT_EVENT_FIELDS}
-  }
-}
-`);
-}
-
-function scheduledReversibleDocument(
-  filter: 'all' | 'send' | 'receive',
-  withCursor: boolean
-) {
-  const where = `{_and: [{account_id: {_in: $accounts}}, {scheduled_reversible_transfer_id: {_is_null: false}}${directionPredicate(filter)}, {scheduledReversibleTransfer: {scheduled_at: {_gt: $after}}}${withCursor ? `, ${CURSOR_PRED}` : ''}]}`;
-  return gql(`
-query ScheduledReversibleTransfersByAccounts($accounts: [String!]!, $limit: Int!, $after: timestamptz!${withCursor ? CURSOR_VARS : ''}) {
-  accountEvents: account_event(limit: $limit, where: ${where}, ${ACCOUNT_EVENT_ORDER}) {
+const SCHEDULED_REVERSIBLE_SELECTION = `
     id
     timestamp
     scheduledReversibleTransfer {
@@ -206,10 +178,37 @@ query ScheduledReversibleTransfersByAccounts($accounts: [String!]!, $limit: Int!
       scheduledAt: scheduled_at
       block { height hash }
       extrinsic { id }
-    }
-  }
+    }`;
+
+export function accountEventsDocument(
+  filter: 'all' | 'send' | 'receive',
+  withCursor: boolean,
+  accountCount: number
+) {
+  const minerReward = filter === 'send' ? '' : MINER_REWARD_FIELD;
+  return gql(
+    buildAccountEventsQuery({
+      filter,
+      withCursor,
+      accountCount,
+      selection: `${ACCOUNT_EVENT_CORE}${minerReward}${MULTISIG_ACCOUNT_EVENT_FIELDS}`
+    })
+  );
 }
-`);
+
+export function scheduledReversibleDocument(
+  filter: 'all' | 'send' | 'receive',
+  withCursor: boolean,
+  accountCount: number
+) {
+  return gql(
+    buildScheduledReversibleTransfersQuery({
+      filter,
+      withCursor,
+      accountCount,
+      selection: SCHEDULED_REVERSIBLE_SELECTION
+    })
+  );
 }
 
 export const AccountsQueryDocument = gql`
@@ -220,37 +219,52 @@ export const AccountsQueryDocument = gql`
   }
 `;
 
-export const AccountEventsAllDocument = accountEventsDocument('all', false);
-export const AccountEventsSendDocument = accountEventsDocument('send', false);
+export const AccountEventsAllDocument = accountEventsDocument('all', false, 1);
+export const AccountEventsSendDocument = accountEventsDocument(
+  'send',
+  false,
+  1
+);
 export const AccountEventsReceiveDocument = accountEventsDocument(
   'receive',
-  false
+  false,
+  1
 );
-export const AccountEventsAllAfterDocument = accountEventsDocument('all', true);
+export const AccountEventsAllAfterDocument = accountEventsDocument(
+  'all',
+  true,
+  1
+);
 export const AccountEventsSendAfterDocument = accountEventsDocument(
   'send',
-  true
+  true,
+  1
 );
 export const AccountEventsReceiveAfterDocument = accountEventsDocument(
   'receive',
-  true
+  true,
+  1
 );
 
 export const ScheduledReversibleAllDocument = scheduledReversibleDocument(
   'all',
-  false
+  false,
+  1
 );
 export const ScheduledReversibleSendDocument = scheduledReversibleDocument(
   'send',
-  false
+  false,
+  1
 );
 export const ScheduledReversibleReceiveDocument = scheduledReversibleDocument(
   'receive',
-  false
+  false,
+  1
 );
 export const ScheduledReversibleAllAfterDocument = scheduledReversibleDocument(
   'all',
-  true
+  true,
+  1
 );
 
 export const ExecutedReversibleTransferByTxIdDocument = gql`

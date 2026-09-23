@@ -9,6 +9,7 @@ import { loadGraphqlBenchmarkContext } from './bootstrap';
 import { loadMobileBenchmarkContext } from './mobile-bootstrap';
 import { mobileGraphqlBenchmarkRegistry } from './mobile-registry';
 import { graphqlBenchmarkRegistry } from './registry';
+import { benchmarkRowCount } from './row-count';
 import type {
   GraphqlBenchmarkContext,
   GraphqlBenchmarkRegistryEntry,
@@ -34,13 +35,6 @@ function responseByteLength(data: unknown): number {
   } catch {
     return 0;
   }
-}
-
-function firstArrayLength(data: unknown): number | undefined {
-  if (!data || typeof data !== 'object') return undefined;
-  const values = Object.values(data as Record<string, unknown>);
-  const firstArray = values.find((value) => Array.isArray(value));
-  return Array.isArray(firstArray) ? firstArray.length : undefined;
 }
 
 function roundMs(value: number) {
@@ -138,7 +132,7 @@ export async function runGraphqlBenchmarks(options: {
         const elapsed = roundMs(t1 - t0);
         if (!warmup || i > 0) timed.push(elapsed);
         responseBytes = responseByteLength(data);
-        rowCount = firstArrayLength(data);
+        rowCount = benchmarkRowCount(data);
         if (errors?.length) {
           errorMessage = errors.map((e) => e.message).join('; ');
           break;

@@ -1,9 +1,10 @@
 import {
-  gql,
   type ApolloClient,
+  gql,
   type NormalizedCacheObject
 } from '@apollo/client';
 
+import { MOBILE_HISTORY_ACCOUNT_SAMPLE } from './mobile-account-event-query';
 import type { GraphqlBenchmarkContext } from './types';
 
 const HISTORY_LOOKAHEAD = 21;
@@ -37,9 +38,9 @@ export async function loadMobileBenchmarkContext(
   const busy = await safeQuery(() =>
     client.query({
       query: gql`
-        query BusyAccount {
+        query BusyAccounts($limit: Int!) {
           account_stats(
-            limit: 1
+            limit: $limit
             order_by: { total_immediate_transfers: desc }
           ) {
             id
@@ -47,14 +48,23 @@ export async function loadMobileBenchmarkContext(
             total_mined_blocks
           }
         }
-      `
+      `,
+      variables: { limit: MOBILE_HISTORY_ACCOUNT_SAMPLE }
     })
   );
-  const busyRow = busy?.data?.account_stats?.[0];
-  if (busyRow?.id) {
-    ctx.busyAccountId = busyRow.id;
-    ctx.busyImmediateTransfers = asNumber(busyRow.total_immediate_transfers);
-    ctx.accountId = busyRow.id;
+  const busyRows = (busy?.data?.account_stats ?? []) as Array<{
+    id?: string;
+    total_immediate_transfers?: unknown;
+  }>;
+  const walletAccountIds = busyRows
+    .map((row) => row.id)
+    .filter((id): id is string => Boolean(id));
+  const busiest = busyRows.find((row) => row.id);
+  if (busiest?.id) {
+    ctx.walletAccountIds = walletAccountIds;
+    ctx.busyAccountId = busiest.id;
+    ctx.busyImmediateTransfers = asNumber(busiest.total_immediate_transfers);
+    ctx.accountId = busiest.id;
   }
 
   const miner = await safeQuery(() =>
