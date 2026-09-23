@@ -6,8 +6,20 @@ import {
 } from '@apollo/client';
 
 import { loadGraphqlBenchmarkContext } from './bootstrap';
+import { loadMobileBenchmarkContext } from './mobile-bootstrap';
+import { mobileGraphqlBenchmarkRegistry } from './mobile-registry';
+import {
+  BENCHMARK_QUERY_TIMEOUT_MS,
+  createBenchmarkQuerySignal
+} from './query-signal';
 import { graphqlBenchmarkRegistry } from './registry';
-import type { GraphqlBenchmarkContext, GraphqlBenchmarkRow } from './types';
+import { benchmarkRowCount } from './row-count';
+import type {
+  GraphqlBenchmarkContext,
+  GraphqlBenchmarkRegistryEntry,
+  GraphqlBenchmarkRow,
+  GraphqlBenchmarkSuite
+} from './types';
 
 export function createBenchmarkApolloClient(uri: string) {
   return new ApolloClient<NormalizedCacheObject>({
@@ -29,31 +41,70 @@ function responseByteLength(data: unknown): number {
   }
 }
 
+function roundMs(value: number) {
+  return Math.round(value * 100) / 100;
+}
+
+function median(values: number[]) {
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  if (sorted.length === 0) return 0;
+  if (sorted.length % 2 === 0) {
+    return (sorted[mid - 1]! + sorted[mid]!) / 2;
+  }
+  return sorted[mid]!;
+}
+
 export async function runGraphqlBenchmarks(options: {
   endpoint: string;
+  suite?: GraphqlBenchmarkSuite;
+  samples?: number;
+  warmup?: boolean;
+  timeoutMs?: number;
   signal?: AbortSignal;
   onProgress?: (name: string) => void;
 }): Promise<{
   bootstrapContext: GraphqlBenchmarkContext;
+  bootstrapRequestFailures: string[];
   results: GraphqlBenchmarkRow[];
 }> {
-  const { endpoint, signal, onProgress } = options;
+  const {
+    endpoint,
+    suite = 'explorer',
+    samples = 1,
+    warmup = samples > 1,
+    timeoutMs = BENCHMARK_QUERY_TIMEOUT_MS,
+    signal,
+    onProgress
+  } = options;
   const client = createBenchmarkApolloClient(endpoint);
+  const registry: GraphqlBenchmarkRegistryEntry[] =
+    suite === 'mobile'
+      ? mobileGraphqlBenchmarkRegistry
+      : graphqlBenchmarkRegistry;
 
-  const bootstrapContext = await loadGraphqlBenchmarkContext(client);
+  let bootstrapContext: GraphqlBenchmarkContext;
+  let bootstrapRequestFailures: string[] = [];
+  if (suite === 'mobile') {
+    const loaded = await loadMobileBenchmarkContext(client, {
+      timeoutMs,
+      signal
+    });
+    bootstrapContext = loaded.context;
+    bootstrapRequestFailures = loaded.requestFailures;
+  } else {
+    bootstrapContext = await loadGraphqlBenchmarkContext(client);
+  }
   const results: GraphqlBenchmarkRow[] = [];
 
-  const queryContext = signal
-    ? { fetchOptions: { signal } as RequestInit }
-    : undefined;
-
   /* eslint-disable no-await-in-loop -- benchmarks run strictly sequentially */
-  for (const entry of graphqlBenchmarkRegistry) {
+  for (const entry of registry) {
     onProgress?.(entry.name);
     const variables = entry.getVariables(bootstrapContext);
     if (variables === null) {
       results.push({
         name: entry.name,
+        group: entry.group,
         durationMs: 0,
         skipped: true,
         skipReason: 'No sample id from bootstrap for this operation'
@@ -61,34 +112,60 @@ export async function runGraphqlBenchmarks(options: {
       continue;
     }
 
-    const t0 = performance.now();
-    try {
-      const { data, errors } = await client.query({
-        query: entry.document,
-        variables,
-        context: queryContext
-      });
-      const t1 = performance.now();
-      const errorMessage = errors?.map((e) => e.message).join('; ');
-      results.push({
-        name: entry.name,
-        durationMs: Math.round((t1 - t0) * 100) / 100,
-        responseBytes: responseByteLength(data),
-        errorMessage: errorMessage || undefined
-      });
-    } catch (e) {
-      const t1 = performance.now();
-      const message = e instanceof Error ? e.message : String(e);
-      results.push({
-        name: entry.name,
-        durationMs: Math.round((t1 - t0) * 100) / 100,
-        errorMessage: message
-      });
+    const timed: number[] = [];
+    let responseBytes: number | undefined;
+    let rowCount: number | undefined;
+    let errorMessage: string | undefined;
+    const runs = samples + (warmup ? 1 : 0);
+
+    for (let i = 0; i < runs; i += 1) {
+      const timedOut = createBenchmarkQuerySignal(timeoutMs, signal);
+      const t0 = performance.now();
+      try {
+        const { data, errors } = await client.query({
+          query: entry.document,
+          variables,
+          context: { fetchOptions: { signal: timedOut.signal } as RequestInit }
+        });
+        const t1 = performance.now();
+        const elapsed = roundMs(t1 - t0);
+        if (!warmup || i > 0) timed.push(elapsed);
+        responseBytes = responseByteLength(data);
+        rowCount = benchmarkRowCount(data);
+        if (errors?.length) {
+          errorMessage = errors.map((e) => e.message).join('; ');
+          break;
+        }
+      } catch (e) {
+        const t1 = performance.now();
+        const elapsed = roundMs(t1 - t0);
+        if (!warmup || i > 0) timed.push(elapsed);
+        if (timedOut.signal.aborted && !signal?.aborted) {
+          errorMessage = `timed out after ${timeoutMs}ms`;
+        } else {
+          errorMessage = e instanceof Error ? e.message : String(e);
+        }
+        break;
+      } finally {
+        timedOut.cleanup();
+      }
     }
+
+    results.push({
+      name: entry.name,
+      group: entry.group,
+      durationMs: timed.length ? roundMs(median(timed)) : 0,
+      samplesMs: timed.length ? timed : undefined,
+      minMs: timed.length ? Math.min(...timed) : undefined,
+      maxMs: timed.length ? Math.max(...timed) : undefined,
+      responseBytes,
+      rowCount,
+      errorMessage
+    });
   }
   /* eslint-enable no-await-in-loop */
 
   results.sort((a, b) => b.durationMs - a.durationMs);
 
-  return { bootstrapContext, results };
+  return { bootstrapContext, bootstrapRequestFailures, results };
 }
