@@ -1,16 +1,20 @@
-import { useRef, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { type KeyboardEvent, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import useApiClient from '@/api';
 import type { SearchAllResponse } from '@/schemas/searchs';
+import { topSearchResultPathOnEnter } from '@/utils/get-top-search-result-path';
 
-export const useHero = () => {
+export const useChainSearch = () => {
   const api = useApiClient();
+  const navigate = useNavigate();
 
   const [searchResult, setSearchResult] = useState<SearchAllResponse>();
   const [searchLoading, setSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string>();
+  const [resultKeyword, setResultKeyword] = useState<string>();
   const [isResultVisible, setIsResultVisible] = useState(false);
 
   const inputRef = useRef<HTMLDivElement>(null);
@@ -23,11 +27,33 @@ export const useHero = () => {
     setIsResultVisible(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Escape') {
       e.currentTarget.blur();
       setIsResultVisible(false);
+      return;
     }
+
+    const inputValue =
+      e.target instanceof HTMLInputElement ? e.target.value : '';
+    const href = topSearchResultPathOnEnter({
+      key: e.key,
+      isComposing: e.nativeEvent.isComposing,
+      targetIsKeywordInput:
+        e.target instanceof HTMLInputElement && e.target.name === 'keyword',
+      isResultVisible,
+      isLoading: searchLoading,
+      hasError: Boolean(searchError),
+      inputValue,
+      resultKeyword,
+      result: searchResult
+    });
+
+    if (!href) return;
+
+    e.preventDefault();
+    setIsResultVisible(false);
+    navigate({ href });
   };
 
   const handleInputFocus = () => {
@@ -39,15 +65,18 @@ export const useHero = () => {
 
     if (!keyword) {
       setSearchResult(undefined);
+      setResultKeyword(undefined);
       return;
     }
 
     try {
+      setSearchError(undefined);
       setSearchLoading(true);
 
       const { data } = await api.search.all().query(keyword);
 
       setSearchResult(data);
+      setResultKeyword(keyword);
       setSearchLoading(false);
     } catch (err: any) {
       toast.error(err.message);

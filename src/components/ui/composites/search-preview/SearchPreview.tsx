@@ -4,10 +4,15 @@ import React, { forwardRef } from 'react';
 
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
-import { RESOURCES } from '@/constants/resources';
 import type { SearchAllResponse } from '@/schemas/searchs';
 import { formatBlockHeight } from '@/utils/formatter';
-import { getUnifiedTransactionDetailPath } from '@/utils/get-unified-transaction-detail-path';
+import {
+  getAccountSearchPath,
+  getBlockSearchPath,
+  getErrorEventSearchPath,
+  getHighSecuritySetSearchPath,
+  getTransactionSearchPath
+} from '@/utils/get-top-search-result-path';
 
 // Helper: Preview link
 function PreviewLink({
@@ -124,12 +129,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         emptyMsg: 'No transactions found.',
         items: transactions,
         renderItem: (tx: SearchAllResponse['transactions'][number]) => {
-          const href = getUnifiedTransactionDetailPath({
-            type: tx.type,
-            hash: tx.hash,
-            detailId: tx.detail_id,
-            block: tx.block
-          });
+          const href = getTransactionSearchPath(tx);
           const label = tx.hash ?? tx.detail_id ?? tx.id;
 
           return (
@@ -147,7 +147,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: accounts,
         renderItem: (acc: any) => (
           <PreviewLink
-            href={`${RESOURCES.accounts}/${acc.id}`}
+            href={getAccountSearchPath(acc.id)}
             label={`${acc.id}`}
             onSelect={handleClosePreview}
           />
@@ -159,7 +159,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: blocks,
         renderItem: (block: any) => (
           <PreviewLink
-            href={`${RESOURCES.blocks}/${block.height}`}
+            href={getBlockSearchPath(block.height)}
             label={formatBlockHeight(block.height)}
             onSelect={handleClosePreview}
           />
@@ -171,7 +171,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: highSecuritySets,
         renderItem: (highSecuritySet: any) => (
           <PreviewLink
-            href={`${RESOURCES.highSecuritySets}/${highSecuritySet.extrinsic?.id}`}
+            href={getHighSecuritySetSearchPath(highSecuritySet.extrinsic?.id)}
             label={`${highSecuritySet.extrinsic?.id}`}
             onSelect={handleClosePreview}
           />
@@ -183,7 +183,7 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         items: errorEvents,
         renderItem: (errorEvent: any) => (
           <PreviewLink
-            href={`${RESOURCES.errors}/${errorEvent.extrinsic?.id}`}
+            href={getErrorEventSearchPath(errorEvent.extrinsic?.id)}
             label={`${errorEvent.extrinsic?.id}`}
             onSelect={handleClosePreview}
           />

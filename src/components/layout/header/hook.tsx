@@ -1,13 +1,9 @@
 import { useLocation } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
-import { useOnClickOutside } from 'usehooks-ts';
+import { useEffect, useState } from 'react';
 
-import useApiClient from '@/api';
-import type { SearchAllResponse } from '@/schemas/searchs';
+import { useChainSearch } from '@/hooks/useChainSearch';
 
 export const useHeader = () => {
-  const api = useApiClient();
   const location = useLocation().pathname;
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen((open) => !open);
@@ -16,67 +12,10 @@ export const useHeader = () => {
     setIsOpen(false);
   }, [location]);
 
-  const [searchResult, setSearchResult] = useState<SearchAllResponse>();
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [searchError, setSearchError] = useState<string>();
-
-  const [isResultVisible, setIsResultVisible] = useState(false);
-
-  const inputRef = useRef<HTMLDivElement>(null);
-  const resultRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside([resultRef, inputRef] as any, () =>
-    setIsResultVisible(false)
-  );
-
-  const handleClosePreview = () => {
-    setIsResultVisible(false);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Escape') {
-      e.currentTarget.blur();
-      setIsResultVisible(false);
-    }
-  };
-
-  const handleInputFocus = () => {
-    setIsResultVisible(true);
-  };
-
-  const handleKeywordChange = async (val: string) => {
-    const keyword = val.trim();
-
-    if (!keyword) {
-      setSearchResult(undefined);
-      return;
-    }
-
-    try {
-      setSearchError(undefined);
-      setSearchLoading(true);
-
-      const { data } = await api.search.all().query(keyword);
-
-      setSearchResult(data);
-      setSearchLoading(false);
-    } catch (err: any) {
-      toast.error(err.message);
-      setSearchError(err.message);
-      setSearchLoading(false);
-    }
-  };
+  const search = useChainSearch();
 
   return {
-    isResultVisible,
-    resultRef,
-    inputRef,
-    handleClosePreview,
-    handleKeywordChange,
-    handleKeyDown,
-    handleInputFocus,
-    searchResult,
-    searchLoading,
-    searchError,
+    ...search,
     toggleMenu,
     isOpen
   };
