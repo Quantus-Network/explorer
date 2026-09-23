@@ -1,4 +1,5 @@
 import { runGraphqlBenchmarks } from '../src/lib/graphql-benchmark/run';
+import { graphqlBenchmarkRunFailed } from '../src/lib/graphql-benchmark/suite-failure';
 import type { GraphqlBenchmarkSuite } from '../src/lib/graphql-benchmark/types';
 
 const args = process.argv.slice(2);
@@ -29,13 +30,22 @@ const samples = Number(argValue('--samples') ?? (suite === 'mobile' ? 5 : 1));
 async function main() {
   // eslint-disable-next-line no-console
   console.error(`GraphQL bench [${suite}] samples=${samples} → ${endpoint}\n`);
-  const { results, bootstrapContext } = await runGraphqlBenchmarks({
-    endpoint,
-    suite,
-    samples
-  });
+  const { results, bootstrapContext, bootstrapRequestFailures } =
+    await runGraphqlBenchmarks({
+      endpoint,
+      suite,
+      samples
+    });
   // eslint-disable-next-line no-console
   console.log('Bootstrap context:', JSON.stringify(bootstrapContext, null, 2));
+  if (bootstrapRequestFailures.length > 0) {
+    // eslint-disable-next-line no-console
+    console.log('\nBootstrap request failures:');
+    for (const failure of bootstrapRequestFailures) {
+      // eslint-disable-next-line no-console
+      console.log(`  ${failure}`);
+    }
+  }
   // eslint-disable-next-line no-console
   console.log('\nResults (slowest first):');
   for (const r of results) {
@@ -55,8 +65,9 @@ async function main() {
       );
     }
   }
-  const hasFailure = results.some((r) => !r.skipped && r.errorMessage);
-  process.exit(hasFailure ? 1 : 0);
+  process.exit(
+    graphqlBenchmarkRunFailed(results, bootstrapRequestFailures) ? 1 : 0
+  );
 }
 
 main().catch((e) => {

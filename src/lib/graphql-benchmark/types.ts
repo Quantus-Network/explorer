@@ -16,6 +16,8 @@ export type GraphqlBenchmarkContext = {
   /** Account with the most immediate transfers (wallet-history worst case). */
   busyAccountId?: string;
   busyImmediateTransfers?: number;
+  /** Busiest accounts, longest history first, for multi-account fan-out. */
+  walletAccountIds?: string[];
   /** Account with the most mined blocks (receive/all feed worst case). */
   minerAccountId?: string;
   minerMinedBlocks?: number;
