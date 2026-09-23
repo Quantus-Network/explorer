@@ -1,10 +1,10 @@
 import { SearchBox } from '@/components/ui/composites/search-box/SearchBox';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
+import { useChainSearch } from '@/hooks/useChainSearch';
 
 import { SearchPreview } from '../../../ui/composites/search-preview/SearchPreview';
 import { ChainStats } from './chain-stats/ChainStats';
-import { useHero } from './hook';
 
 export const Hero = () => {
   const {
@@ -18,7 +18,7 @@ export const Hero = () => {
     searchLoading,
     searchResult,
     handleClosePreview
-  } = useHero();
+  } = useChainSearch();
 
   return (
     <SectionContainer>
