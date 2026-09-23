@@ -19,7 +19,7 @@ describe('graphqlBenchmarkRunFailed', () => {
   it('does not fail a suite that ran when an optional bootstrap query failed', () => {
     expect(
       graphqlBenchmarkRunFailed(
-        [{ skipped: true }, { durationMs: 12 }],
+        [{ skipped: true }, { skipped: false }],
         ['SampleNullifiers: field "wormhole_nullifier" not found']
       )
     ).toBe(false);
