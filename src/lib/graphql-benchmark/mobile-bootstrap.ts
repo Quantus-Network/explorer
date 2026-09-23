@@ -5,6 +5,10 @@ import {
 } from '@apollo/client';
 
 import { MOBILE_HISTORY_ACCOUNT_SAMPLE } from './mobile-account-event-query';
+import {
+  BENCHMARK_QUERY_TIMEOUT_MS,
+  createBenchmarkQuerySignal
+} from './query-signal';
 import type { GraphqlBenchmarkContext } from './types';
 
 const HISTORY_LOOKAHEAD = 21;
@@ -12,12 +16,91 @@ const WORMHOLE_PAGE = 300;
 const DISCOVERY_BATCH = 20;
 const NULLIFIER_BATCH = 300;
 
-async function safeQuery<T>(run: () => Promise<T>): Promise<T | undefined> {
-  try {
-    return await run();
-  } catch {
+export type MobileBenchmarkLoad = {
+  context: GraphqlBenchmarkContext;
+  requestFailures: string[];
+};
+
+function fetchSignalContext(signal: AbortSignal) {
+  return {
+    context: {
+      fetchOptions: { signal } as RequestInit
+    }
+  };
+}
+
+function throwIfAborted(signal?: AbortSignal): void {
+  if (!signal?.aborted) return;
+  const { reason } = signal;
+  if (reason instanceof Error) throw reason;
+  throw new Error(
+    typeof reason === 'string' && reason.length > 0
+      ? reason
+      : 'benchmark aborted'
+  );
+}
+
+function errorMessages(errors: unknown): string | undefined {
+  if (!Array.isArray(errors) || errors.length === 0) return undefined;
+  return errors
+    .map((error) => {
+      if (typeof error === 'object' && error !== null && 'message' in error) {
+        const { message } = error as { message?: unknown };
+        if (typeof message === 'string' && message.length > 0) return message;
+      }
+      return 'GraphQL error';
+    })
+    .join('; ');
+}
+
+function networkErrorOf(error: unknown): unknown {
+  if (
+    typeof error !== 'object' ||
+    error === null ||
+    !('networkError' in error)
+  ) {
     return undefined;
   }
+  const { networkError } = error as { networkError?: unknown };
+  return networkError ?? undefined;
+}
+
+function isHttpStatusError(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    typeof (error as { statusCode?: unknown }).statusCode === 'number'
+  );
+}
+
+/** Connection failures repeat on every query. HTTP and GraphQL errors do not. */
+function isUnreachable(error: unknown): boolean {
+  if (typeof error !== 'object' || error === null) return false;
+  if (errorMessages((error as { graphQLErrors?: unknown }).graphQLErrors)) {
+    return false;
+  }
+  const networkError = networkErrorOf(error);
+  if (networkError) return !isHttpStatusError(networkError);
+  return error instanceof TypeError;
+}
+
+function requestFailureText(
+  error: unknown,
+  timedOut: boolean,
+  timeoutMs: number
+): string {
+  if (timedOut) return `timed out after ${timeoutMs}ms`;
+  const graphqlMessage =
+    typeof error === 'object' && error !== null
+      ? errorMessages((error as { graphQLErrors?: unknown }).graphQLErrors)
+      : undefined;
+  if (graphqlMessage) return graphqlMessage;
+  const networkError = networkErrorOf(error);
+  if (networkError instanceof Error && networkError.message) {
+    return networkError.message;
+  }
+  if (error instanceof Error && error.message) return error.message;
+  return String(error);
 }
 
 function asString(value: unknown): string | undefined {
@@ -31,11 +114,46 @@ function asNumber(value: unknown): number | undefined {
 }
 
 export async function loadMobileBenchmarkContext(
-  client: ApolloClient<NormalizedCacheObject>
-): Promise<GraphqlBenchmarkContext> {
+  client: ApolloClient<NormalizedCacheObject>,
+  options?: { timeoutMs?: number; signal?: AbortSignal }
+): Promise<MobileBenchmarkLoad> {
   const ctx: GraphqlBenchmarkContext = {};
+  const requestFailures: string[] = [];
+  const timeoutMs = options?.timeoutMs ?? BENCHMARK_QUERY_TIMEOUT_MS;
+  const parentSignal = options?.signal;
+  let stopUnreachable = false;
 
-  const busy = await safeQuery(() =>
+  async function safeQuery<T>(
+    label: string,
+    run: (signal: AbortSignal) => Promise<T>
+  ): Promise<T | undefined> {
+    throwIfAborted(parentSignal);
+    if (stopUnreachable) return undefined;
+
+    const timed = createBenchmarkQuerySignal(timeoutMs, parentSignal);
+    try {
+      const result = await run(timed.signal);
+      const resolvedErrors = errorMessages(
+        (result as { errors?: unknown } | undefined)?.errors
+      );
+      if (resolvedErrors) requestFailures.push(`${label}: ${resolvedErrors}`);
+      return result;
+    } catch (error) {
+      if (parentSignal?.aborted) {
+        throw error instanceof Error ? error : new Error(String(error));
+      }
+      const timedOut = timed.signal.aborted;
+      requestFailures.push(
+        `${label}: ${requestFailureText(error, timedOut, timeoutMs)}`
+      );
+      if (!timedOut && isUnreachable(error)) stopUnreachable = true;
+      return undefined;
+    } finally {
+      timed.cleanup();
+    }
+  }
+
+  const busy = await safeQuery('BusyAccounts', (signal) =>
     client.query({
       query: gql`
         query BusyAccounts($limit: Int!) {
@@ -49,7 +167,8 @@ export async function loadMobileBenchmarkContext(
           }
         }
       `,
-      variables: { limit: MOBILE_HISTORY_ACCOUNT_SAMPLE }
+      variables: { limit: MOBILE_HISTORY_ACCOUNT_SAMPLE },
+      ...fetchSignalContext(signal)
     })
   );
   const busyRows = (busy?.data?.account_stats ?? []) as Array<{
@@ -67,7 +186,7 @@ export async function loadMobileBenchmarkContext(
     ctx.accountId = busiest.id;
   }
 
-  const miner = await safeQuery(() =>
+  const miner = await safeQuery('MinerAccount', (signal) =>
     client.query({
       query: gql`
         query MinerAccount {
@@ -76,7 +195,8 @@ export async function loadMobileBenchmarkContext(
             total_mined_blocks
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   const minerRow = miner?.data?.account_stats?.[0];
@@ -85,7 +205,7 @@ export async function loadMobileBenchmarkContext(
     ctx.minerMinedBlocks = asNumber(minerRow.total_mined_blocks);
   }
 
-  const discovery = await safeQuery(() =>
+  const discovery = await safeQuery('DiscoveryIds', (signal) =>
     client.query({
       query: gql`
         query DiscoveryIds($limit: Int!) {
@@ -94,7 +214,8 @@ export async function loadMobileBenchmarkContext(
           }
         }
       `,
-      variables: { limit: DISCOVERY_BATCH }
+      variables: { limit: DISCOVERY_BATCH },
+      ...fetchSignalContext(signal)
     })
   );
   const discoveryIds = (discovery?.data?.account ?? [])
@@ -108,7 +229,7 @@ export async function loadMobileBenchmarkContext(
   }
 
   if (ctx.busyAccountId) {
-    const page = await safeQuery(() =>
+    const page = await safeQuery('HistoryCursor', (signal) =>
       client.query({
         query: gql`
           query HistoryCursor($accounts: [String!]!, $limit: Int!) {
@@ -127,7 +248,8 @@ export async function loadMobileBenchmarkContext(
             }
           }
         `,
-        variables: { accounts: [ctx.busyAccountId], limit: HISTORY_LOOKAHEAD }
+        variables: { accounts: [ctx.busyAccountId], limit: HISTORY_LOOKAHEAD },
+        ...fetchSignalContext(signal)
       })
     );
     const rows = page?.data?.account_event ?? [];
@@ -137,7 +259,7 @@ export async function loadMobileBenchmarkContext(
       ctx.cursorTimestamp = cursorRow.timestamp;
     }
 
-    const deep = await safeQuery(() =>
+    const deep = await safeQuery('HistoryDeepCursor', (signal) =>
       client.query({
         query: gql`
           query HistoryDeepCursor($accounts: [String!]!) {
@@ -157,7 +279,8 @@ export async function loadMobileBenchmarkContext(
             }
           }
         `,
-        variables: { accounts: [ctx.busyAccountId] }
+        variables: { accounts: [ctx.busyAccountId] },
+        ...fetchSignalContext(signal)
       })
     );
     const deepRow = deep?.data?.account_event?.[0];
@@ -168,7 +291,7 @@ export async function loadMobileBenchmarkContext(
   }
 
   if (ctx.minerAccountId) {
-    const page = await safeQuery(() =>
+    const page = await safeQuery('MinerHistoryCursor', (signal) =>
       client.query({
         query: gql`
           query MinerHistoryCursor($accounts: [String!]!, $limit: Int!) {
@@ -187,7 +310,11 @@ export async function loadMobileBenchmarkContext(
             }
           }
         `,
-        variables: { accounts: [ctx.minerAccountId], limit: HISTORY_LOOKAHEAD }
+        variables: {
+          accounts: [ctx.minerAccountId],
+          limit: HISTORY_LOOKAHEAD
+        },
+        ...fetchSignalContext(signal)
       })
     );
     const rows = page?.data?.account_event ?? [];
@@ -198,7 +325,7 @@ export async function loadMobileBenchmarkContext(
     }
   }
 
-  const transfer = await safeQuery(() =>
+  const transfer = await safeQuery('SampleTransfer', (signal) =>
     client.query({
       query: gql`
         query SampleTransfer {
@@ -216,7 +343,8 @@ export async function loadMobileBenchmarkContext(
             }
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   const tx = transfer?.data?.transfer?.[0];
@@ -228,7 +356,7 @@ export async function loadMobileBenchmarkContext(
     ctx.extrinsicHash = asString(tx.extrinsic?.id);
   }
 
-  const scheduled = await safeQuery(() =>
+  const scheduled = await safeQuery('SampleScheduled', (signal) =>
     client.query({
       query: gql`
         query SampleScheduled {
@@ -251,7 +379,8 @@ export async function loadMobileBenchmarkContext(
             }
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   const sched = scheduled?.data?.scheduled_reversible_transfer?.[0];
@@ -264,7 +393,7 @@ export async function loadMobileBenchmarkContext(
     ctx.scheduledExtrinsicHash = asString(sched.extrinsic?.id);
   }
 
-  const executed = await safeQuery(() =>
+  const executed = await safeQuery('SampleExecuted', (signal) =>
     client.query({
       query: gql`
         query SampleExecuted {
@@ -275,14 +404,15 @@ export async function loadMobileBenchmarkContext(
             tx_id
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   ctx.executedTxId = asString(
     executed?.data?.executed_reversible_transfer?.[0]?.tx_id
   );
 
-  const wormhole = await safeQuery(() =>
+  const wormhole = await safeQuery('SampleWormholeRecipient', (signal) =>
     client.query({
       query: gql`
         query SampleWormholeRecipient {
@@ -294,13 +424,14 @@ export async function loadMobileBenchmarkContext(
             to_id
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   ctx.wormholeToId = asString(wormhole?.data?.transfer?.[0]?.to_id);
 
   if (ctx.wormholeToId) {
-    const page = await safeQuery(() =>
+    const page = await safeQuery('WormholeCursor', (signal) =>
       client.query({
         query: gql`
           query WormholeCursor($tos: [String!]!, $limit: Int!) {
@@ -314,7 +445,8 @@ export async function loadMobileBenchmarkContext(
             }
           }
         `,
-        variables: { tos: [ctx.wormholeToId], limit: WORMHOLE_PAGE }
+        variables: { tos: [ctx.wormholeToId], limit: WORMHOLE_PAGE },
+        ...fetchSignalContext(signal)
       })
     );
     const rows = page?.data?.transfer ?? [];
@@ -325,7 +457,7 @@ export async function loadMobileBenchmarkContext(
     }
   }
 
-  const nullifiers = await safeQuery(() =>
+  const nullifiers = await safeQuery('SampleNullifiers', (signal) =>
     client.query({
       query: gql`
         query SampleNullifiers($limit: Int!) {
@@ -334,7 +466,8 @@ export async function loadMobileBenchmarkContext(
           }
         }
       `,
-      variables: { limit: NULLIFIER_BATCH }
+      variables: { limit: NULLIFIER_BATCH },
+      ...fetchSignalContext(signal)
     })
   );
   const hashes = (nullifiers?.data?.wormhole_nullifier ?? [])
@@ -344,7 +477,7 @@ export async function loadMobileBenchmarkContext(
     ctx.nullifierHashes = hashes;
   }
 
-  const multisig = await safeQuery(() =>
+  const multisig = await safeQuery('SampleMultisig', (signal) =>
     client.query({
       query: gql`
         query SampleMultisig {
@@ -353,7 +486,8 @@ export async function loadMobileBenchmarkContext(
             signers
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   const ms = multisig?.data?.multisig?.[0];
@@ -364,7 +498,7 @@ export async function loadMobileBenchmarkContext(
       : [];
   }
 
-  const proposal = await safeQuery(() =>
+  const proposal = await safeQuery('SampleProposal', (signal) =>
     client.query({
       query: gql`
         query SampleProposal {
@@ -373,7 +507,8 @@ export async function loadMobileBenchmarkContext(
             multisig_id
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   const pr = proposal?.data?.multisig_proposal?.[0];
@@ -382,7 +517,7 @@ export async function loadMobileBenchmarkContext(
     ctx.proposalId = asNumber(pr.proposal_id);
   }
 
-  const created = await safeQuery(() =>
+  const created = await safeQuery('SampleProposalCreated', (signal) =>
     client.query({
       query: gql`
         query SampleProposalCreated {
@@ -392,14 +527,15 @@ export async function loadMobileBenchmarkContext(
             }
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   ctx.proposalCreatedHash = asString(
     created?.data?.multisig_proposal_created?.[0]?.extrinsic?.id
   );
 
-  const approved = await safeQuery(() =>
+  const approved = await safeQuery('SampleSignerApproved', (signal) =>
     client.query({
       query: gql`
         query SampleSignerApproved {
@@ -409,14 +545,15 @@ export async function loadMobileBenchmarkContext(
             }
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   ctx.signerApprovedHash = asString(
     approved?.data?.multisig_signer_approved?.[0]?.extrinsic?.id
   );
 
-  const executedMs = await safeQuery(() =>
+  const executedMs = await safeQuery('SampleProposalExecuted', (signal) =>
     client.query({
       query: gql`
         query SampleProposalExecuted {
@@ -426,14 +563,15 @@ export async function loadMobileBenchmarkContext(
             }
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   ctx.executedProposalHash = asString(
     executedMs?.data?.executed_multisig_proposal?.[0]?.extrinsic?.id
   );
 
-  const cancelled = await safeQuery(() =>
+  const cancelled = await safeQuery('SampleProposalCancelled', (signal) =>
     client.query({
       query: gql`
         query SampleProposalCancelled {
@@ -443,12 +581,13 @@ export async function loadMobileBenchmarkContext(
             }
           }
         }
-      `
+      `,
+      ...fetchSignalContext(signal)
     })
   );
   ctx.cancelledProposalHash = asString(
     cancelled?.data?.cancelled_multisig_proposal?.[0]?.extrinsic?.id
   );
 
-  return ctx;
+  return { context: ctx, requestFailures };
 }

@@ -8,6 +8,10 @@ import {
 import { loadGraphqlBenchmarkContext } from './bootstrap';
 import { loadMobileBenchmarkContext } from './mobile-bootstrap';
 import { mobileGraphqlBenchmarkRegistry } from './mobile-registry';
+import {
+  BENCHMARK_QUERY_TIMEOUT_MS,
+  createBenchmarkQuerySignal
+} from './query-signal';
 import { graphqlBenchmarkRegistry } from './registry';
 import { benchmarkRowCount } from './row-count';
 import type {
@@ -51,20 +55,6 @@ function median(values: number[]) {
   return sorted[mid]!;
 }
 
-function timeoutSignal(timeoutMs: number, parent?: AbortSignal) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  const onParentAbort = () => controller.abort();
-  parent?.addEventListener('abort', onParentAbort);
-  return {
-    signal: controller.signal,
-    cleanup: () => {
-      clearTimeout(timer);
-      parent?.removeEventListener('abort', onParentAbort);
-    }
-  };
-}
-
 export async function runGraphqlBenchmarks(options: {
   endpoint: string;
   suite?: GraphqlBenchmarkSuite;
@@ -75,6 +65,7 @@ export async function runGraphqlBenchmarks(options: {
   onProgress?: (name: string) => void;
 }): Promise<{
   bootstrapContext: GraphqlBenchmarkContext;
+  bootstrapRequestFailures: string[];
   results: GraphqlBenchmarkRow[];
 }> {
   const {
@@ -82,7 +73,7 @@ export async function runGraphqlBenchmarks(options: {
     suite = 'explorer',
     samples = 1,
     warmup = samples > 1,
-    timeoutMs = 30_000,
+    timeoutMs = BENCHMARK_QUERY_TIMEOUT_MS,
     signal,
     onProgress
   } = options;
@@ -92,10 +83,18 @@ export async function runGraphqlBenchmarks(options: {
       ? mobileGraphqlBenchmarkRegistry
       : graphqlBenchmarkRegistry;
 
-  const bootstrapContext =
-    suite === 'mobile'
-      ? await loadMobileBenchmarkContext(client)
-      : await loadGraphqlBenchmarkContext(client);
+  let bootstrapContext: GraphqlBenchmarkContext;
+  let bootstrapRequestFailures: string[] = [];
+  if (suite === 'mobile') {
+    const loaded = await loadMobileBenchmarkContext(client, {
+      timeoutMs,
+      signal
+    });
+    bootstrapContext = loaded.context;
+    bootstrapRequestFailures = loaded.requestFailures;
+  } else {
+    bootstrapContext = await loadGraphqlBenchmarkContext(client);
+  }
   const results: GraphqlBenchmarkRow[] = [];
 
   /* eslint-disable no-await-in-loop -- benchmarks run strictly sequentially */
@@ -120,7 +119,7 @@ export async function runGraphqlBenchmarks(options: {
     const runs = samples + (warmup ? 1 : 0);
 
     for (let i = 0; i < runs; i += 1) {
-      const timedOut = timeoutSignal(timeoutMs, signal);
+      const timedOut = createBenchmarkQuerySignal(timeoutMs, signal);
       const t0 = performance.now();
       try {
         const { data, errors } = await client.query({
@@ -168,5 +167,5 @@ export async function runGraphqlBenchmarks(options: {
 
   results.sort((a, b) => b.durationMs - a.durationMs);
 
-  return { bootstrapContext, results };
+  return { bootstrapContext, bootstrapRequestFailures, results };
 }

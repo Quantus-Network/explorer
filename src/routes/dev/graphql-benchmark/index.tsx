@@ -81,13 +81,18 @@ function GraphqlBenchmarkPage() {
     setLastEndpoint(networkUrl);
     setLastSuite(suite);
     try {
-      const { results } = await runGraphqlBenchmarks({
+      const { results, bootstrapRequestFailures } = await runGraphqlBenchmarks({
         endpoint: networkUrl,
         suite,
         samples: suite === 'mobile' ? 5 : 1,
         onProgress: (name) => setProgress(name)
       });
       setRows(results);
+      if (bootstrapRequestFailures.length > 0) {
+        setError(
+          `Bootstrap request failed: ${bootstrapRequestFailures.join('; ')}`
+        );
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
