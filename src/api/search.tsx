@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 import type { SearchAllResponse } from '@/schemas';
+import { collapseSearchTransactions } from '@/utils/collapse-search-transactions';
 import type DataFetcher from '@/utils/fetcher';
 import { getGqlString } from '@/utils/get-gql-string';
 
@@ -155,7 +156,7 @@ function normalizeSearchResponse(
   data: Partial<SearchAllResponse> | null | undefined
 ): SearchAllResponse {
   return {
-    transactions: data?.transactions ?? [],
+    transactions: collapseSearchTransactions(data?.transactions ?? []),
     accounts: data?.accounts ?? [],
     blocks: data?.blocks ?? [],
     highSecuritySets: data?.highSecuritySets ?? [],
