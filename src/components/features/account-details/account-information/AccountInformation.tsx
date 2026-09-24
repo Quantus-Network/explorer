@@ -11,6 +11,8 @@ import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
 import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
+import { accountBalanceOrZero } from './account-balance-or-zero';
+
 export interface AccountInformationProps {
   accountId: string;
   query: QueryResult<AccountResponse>;
@@ -18,9 +20,9 @@ export interface AccountInformationProps {
 
 interface AccountDetailsInfo {
   id: string;
-  free: number;
-  frozen: number;
-  reserved: number;
+  free: string;
+  frozen: string;
+  reserved: string;
   transactions: number;
   miningRewards: number;
   checksum: string;
@@ -55,9 +57,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const information: AccountDetailsInfo[] = [
     {
       id: accountId,
-      free: account?.free ?? 0,
-      frozen: account?.frozen ?? 0,
-      reserved: account?.reserved ?? 0,
+      free: accountBalanceOrZero(account?.free),
+      frozen: accountBalanceOrZero(account?.frozen),
+      reserved: accountBalanceOrZero(account?.reserved),
       transactions,
       miningRewards,
       checksum: checksum ?? '',

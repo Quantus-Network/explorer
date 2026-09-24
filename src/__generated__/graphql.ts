@@ -1734,8 +1734,10 @@ export type Cancelled_Reversible_Transfer_Stream_Cursor_Value_Input = {
 export type Chain_Stats = {
   __typename?: 'chain_stats';
   block_height: Scalars['Int']['output'];
+  circulating_supply: Scalars['numeric']['output'];
   finalized_block_height: Scalars['Int']['output'];
   id: Scalars['String']['output'];
+  max_supply: Scalars['numeric']['output'];
   total_accounts: Scalars['Int']['output'];
   total_cancelled_transfers: Scalars['Int']['output'];
   total_deposit_accounts: Scalars['Int']['output'];
@@ -1755,6 +1757,7 @@ export type Chain_Stats = {
   total_multisigs_created: Scalars['Int']['output'];
   total_runtime_upgrades: Scalars['Int']['output'];
   total_scheduled_transfers: Scalars['Int']['output'];
+  total_supply: Scalars['numeric']['output'];
   total_tech_referenda: Scalars['Int']['output'];
 };
 
@@ -1792,7 +1795,9 @@ export type Chain_Stats_Aggregate_FieldsCountArgs = {
 export type Chain_Stats_Avg_Fields = {
   __typename?: 'chain_stats_avg_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -1812,6 +1817,7 @@ export type Chain_Stats_Avg_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -1821,8 +1827,10 @@ export type Chain_Stats_Bool_Exp = {
   _not?: InputMaybe<Chain_Stats_Bool_Exp>;
   _or?: InputMaybe<Array<Chain_Stats_Bool_Exp>>;
   block_height?: InputMaybe<Int_Comparison_Exp>;
+  circulating_supply?: InputMaybe<Numeric_Comparison_Exp>;
   finalized_block_height?: InputMaybe<Int_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
+  max_supply?: InputMaybe<Numeric_Comparison_Exp>;
   total_accounts?: InputMaybe<Int_Comparison_Exp>;
   total_cancelled_transfers?: InputMaybe<Int_Comparison_Exp>;
   total_deposit_accounts?: InputMaybe<Int_Comparison_Exp>;
@@ -1842,6 +1850,7 @@ export type Chain_Stats_Bool_Exp = {
   total_multisigs_created?: InputMaybe<Int_Comparison_Exp>;
   total_runtime_upgrades?: InputMaybe<Int_Comparison_Exp>;
   total_scheduled_transfers?: InputMaybe<Int_Comparison_Exp>;
+  total_supply?: InputMaybe<Numeric_Comparison_Exp>;
   total_tech_referenda?: InputMaybe<Int_Comparison_Exp>;
 };
 
@@ -1849,8 +1858,10 @@ export type Chain_Stats_Bool_Exp = {
 export type Chain_Stats_Max_Fields = {
   __typename?: 'chain_stats_max_fields';
   block_height?: Maybe<Scalars['Int']['output']>;
+  circulating_supply?: Maybe<Scalars['numeric']['output']>;
   finalized_block_height?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  max_supply?: Maybe<Scalars['numeric']['output']>;
   total_accounts?: Maybe<Scalars['Int']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Int']['output']>;
@@ -1870,6 +1881,7 @@ export type Chain_Stats_Max_Fields = {
   total_multisigs_created?: Maybe<Scalars['Int']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Int']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_supply?: Maybe<Scalars['numeric']['output']>;
   total_tech_referenda?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -1877,8 +1889,10 @@ export type Chain_Stats_Max_Fields = {
 export type Chain_Stats_Min_Fields = {
   __typename?: 'chain_stats_min_fields';
   block_height?: Maybe<Scalars['Int']['output']>;
+  circulating_supply?: Maybe<Scalars['numeric']['output']>;
   finalized_block_height?: Maybe<Scalars['Int']['output']>;
   id?: Maybe<Scalars['String']['output']>;
+  max_supply?: Maybe<Scalars['numeric']['output']>;
   total_accounts?: Maybe<Scalars['Int']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Int']['output']>;
@@ -1898,14 +1912,17 @@ export type Chain_Stats_Min_Fields = {
   total_multisigs_created?: Maybe<Scalars['Int']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Int']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_supply?: Maybe<Scalars['numeric']['output']>;
   total_tech_referenda?: Maybe<Scalars['Int']['output']>;
 };
 
 /** Ordering options when selecting data from "chain_stats". */
 export type Chain_Stats_Order_By = {
   block_height?: InputMaybe<Order_By>;
+  circulating_supply?: InputMaybe<Order_By>;
   finalized_block_height?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  max_supply?: InputMaybe<Order_By>;
   total_accounts?: InputMaybe<Order_By>;
   total_cancelled_transfers?: InputMaybe<Order_By>;
   total_deposit_accounts?: InputMaybe<Order_By>;
@@ -1925,6 +1942,7 @@ export type Chain_Stats_Order_By = {
   total_multisigs_created?: InputMaybe<Order_By>;
   total_runtime_upgrades?: InputMaybe<Order_By>;
   total_scheduled_transfers?: InputMaybe<Order_By>;
+  total_supply?: InputMaybe<Order_By>;
   total_tech_referenda?: InputMaybe<Order_By>;
 };
 
@@ -1933,9 +1951,13 @@ export enum Chain_Stats_Select_Column {
   /** column name */
   BlockHeight = 'block_height',
   /** column name */
+  CirculatingSupply = 'circulating_supply',
+  /** column name */
   FinalizedBlockHeight = 'finalized_block_height',
   /** column name */
   Id = 'id',
+  /** column name */
+  MaxSupply = 'max_supply',
   /** column name */
   TotalAccounts = 'total_accounts',
   /** column name */
@@ -1975,6 +1997,8 @@ export enum Chain_Stats_Select_Column {
   /** column name */
   TotalScheduledTransfers = 'total_scheduled_transfers',
   /** column name */
+  TotalSupply = 'total_supply',
+  /** column name */
   TotalTechReferenda = 'total_tech_referenda'
 }
 
@@ -1982,7 +2006,9 @@ export enum Chain_Stats_Select_Column {
 export type Chain_Stats_Stddev_Fields = {
   __typename?: 'chain_stats_stddev_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -2002,6 +2028,7 @@ export type Chain_Stats_Stddev_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2009,7 +2036,9 @@ export type Chain_Stats_Stddev_Fields = {
 export type Chain_Stats_Stddev_Pop_Fields = {
   __typename?: 'chain_stats_stddev_pop_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -2029,6 +2058,7 @@ export type Chain_Stats_Stddev_Pop_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2036,7 +2066,9 @@ export type Chain_Stats_Stddev_Pop_Fields = {
 export type Chain_Stats_Stddev_Samp_Fields = {
   __typename?: 'chain_stats_stddev_samp_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -2056,6 +2088,7 @@ export type Chain_Stats_Stddev_Samp_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2070,8 +2103,10 @@ export type Chain_Stats_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Chain_Stats_Stream_Cursor_Value_Input = {
   block_height?: InputMaybe<Scalars['Int']['input']>;
+  circulating_supply?: InputMaybe<Scalars['numeric']['input']>;
   finalized_block_height?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
+  max_supply?: InputMaybe<Scalars['numeric']['input']>;
   total_accounts?: InputMaybe<Scalars['Int']['input']>;
   total_cancelled_transfers?: InputMaybe<Scalars['Int']['input']>;
   total_deposit_accounts?: InputMaybe<Scalars['Int']['input']>;
@@ -2091,6 +2126,7 @@ export type Chain_Stats_Stream_Cursor_Value_Input = {
   total_multisigs_created?: InputMaybe<Scalars['Int']['input']>;
   total_runtime_upgrades?: InputMaybe<Scalars['Int']['input']>;
   total_scheduled_transfers?: InputMaybe<Scalars['Int']['input']>;
+  total_supply?: InputMaybe<Scalars['numeric']['input']>;
   total_tech_referenda?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -2098,7 +2134,9 @@ export type Chain_Stats_Stream_Cursor_Value_Input = {
 export type Chain_Stats_Sum_Fields = {
   __typename?: 'chain_stats_sum_fields';
   block_height?: Maybe<Scalars['Int']['output']>;
+  circulating_supply?: Maybe<Scalars['numeric']['output']>;
   finalized_block_height?: Maybe<Scalars['Int']['output']>;
+  max_supply?: Maybe<Scalars['numeric']['output']>;
   total_accounts?: Maybe<Scalars['Int']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Int']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Int']['output']>;
@@ -2118,6 +2156,7 @@ export type Chain_Stats_Sum_Fields = {
   total_multisigs_created?: Maybe<Scalars['Int']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Int']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Int']['output']>;
+  total_supply?: Maybe<Scalars['numeric']['output']>;
   total_tech_referenda?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -2125,7 +2164,9 @@ export type Chain_Stats_Sum_Fields = {
 export type Chain_Stats_Var_Pop_Fields = {
   __typename?: 'chain_stats_var_pop_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -2145,6 +2186,7 @@ export type Chain_Stats_Var_Pop_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2152,7 +2194,9 @@ export type Chain_Stats_Var_Pop_Fields = {
 export type Chain_Stats_Var_Samp_Fields = {
   __typename?: 'chain_stats_var_samp_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -2172,6 +2216,7 @@ export type Chain_Stats_Var_Samp_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -2179,7 +2224,9 @@ export type Chain_Stats_Var_Samp_Fields = {
 export type Chain_Stats_Variance_Fields = {
   __typename?: 'chain_stats_variance_fields';
   block_height?: Maybe<Scalars['Float']['output']>;
+  circulating_supply?: Maybe<Scalars['Float']['output']>;
   finalized_block_height?: Maybe<Scalars['Float']['output']>;
+  max_supply?: Maybe<Scalars['Float']['output']>;
   total_accounts?: Maybe<Scalars['Float']['output']>;
   total_cancelled_transfers?: Maybe<Scalars['Float']['output']>;
   total_deposit_accounts?: Maybe<Scalars['Float']['output']>;
@@ -2199,6 +2246,7 @@ export type Chain_Stats_Variance_Fields = {
   total_multisigs_created?: Maybe<Scalars['Float']['output']>;
   total_runtime_upgrades?: Maybe<Scalars['Float']['output']>;
   total_scheduled_transfers?: Maybe<Scalars['Float']['output']>;
+  total_supply?: Maybe<Scalars['Float']['output']>;
   total_tech_referenda?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -5952,6 +6000,12 @@ export type Query_Root = {
   unified_transaction_aggregate: Unified_Transaction_Aggregate;
   /** fetch data from the table: "unified_transaction" using primary key columns */
   unified_transaction_by_pk?: Maybe<Unified_Transaction>;
+  /** fetch data from the table: "vesting_schedule" */
+  vesting_schedule: Array<Vesting_Schedule>;
+  /** fetch aggregated fields from the table: "vesting_schedule" */
+  vesting_schedule_aggregate: Vesting_Schedule_Aggregate;
+  /** fetch data from the table: "vesting_schedule" using primary key columns */
+  vesting_schedule_by_pk?: Maybe<Vesting_Schedule>;
   /** fetch data from the table: "wormhole_extrinsic" */
   wormhole_extrinsic: Array<Wormhole_Extrinsic>;
   /** fetch aggregated fields from the table: "wormhole_extrinsic" */
@@ -6636,6 +6690,29 @@ export type Query_RootUnified_Transaction_AggregateArgs = {
 
 
 export type Query_RootUnified_Transaction_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type Query_RootVesting_ScheduleArgs = {
+  distinct_on?: InputMaybe<Array<Vesting_Schedule_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Vesting_Schedule_Order_By>>;
+  where?: InputMaybe<Vesting_Schedule_Bool_Exp>;
+};
+
+
+export type Query_RootVesting_Schedule_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Vesting_Schedule_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Vesting_Schedule_Order_By>>;
+  where?: InputMaybe<Vesting_Schedule_Bool_Exp>;
+};
+
+
+export type Query_RootVesting_Schedule_By_PkArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -7538,6 +7615,14 @@ export type Subscription_Root = {
   unified_transaction_by_pk?: Maybe<Unified_Transaction>;
   /** fetch data from the table in a streaming manner: "unified_transaction" */
   unified_transaction_stream: Array<Unified_Transaction>;
+  /** fetch data from the table: "vesting_schedule" */
+  vesting_schedule: Array<Vesting_Schedule>;
+  /** fetch aggregated fields from the table: "vesting_schedule" */
+  vesting_schedule_aggregate: Vesting_Schedule_Aggregate;
+  /** fetch data from the table: "vesting_schedule" using primary key columns */
+  vesting_schedule_by_pk?: Maybe<Vesting_Schedule>;
+  /** fetch data from the table in a streaming manner: "vesting_schedule" */
+  vesting_schedule_stream: Array<Vesting_Schedule>;
   /** fetch data from the table: "wormhole_extrinsic" */
   wormhole_extrinsic: Array<Wormhole_Extrinsic>;
   /** fetch aggregated fields from the table: "wormhole_extrinsic" */
@@ -8432,6 +8517,36 @@ export type Subscription_RootUnified_Transaction_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Unified_Transaction_Stream_Cursor_Input>>;
   where?: InputMaybe<Unified_Transaction_Bool_Exp>;
+};
+
+
+export type Subscription_RootVesting_ScheduleArgs = {
+  distinct_on?: InputMaybe<Array<Vesting_Schedule_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Vesting_Schedule_Order_By>>;
+  where?: InputMaybe<Vesting_Schedule_Bool_Exp>;
+};
+
+
+export type Subscription_RootVesting_Schedule_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Vesting_Schedule_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Vesting_Schedule_Order_By>>;
+  where?: InputMaybe<Vesting_Schedule_Bool_Exp>;
+};
+
+
+export type Subscription_RootVesting_Schedule_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootVesting_Schedule_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Vesting_Schedule_Stream_Cursor_Input>>;
+  where?: InputMaybe<Vesting_Schedule_Bool_Exp>;
 };
 
 
@@ -9533,6 +9648,246 @@ export type Unified_Transaction_Variance_Fields = {
   amount?: Maybe<Scalars['Float']['output']>;
   block_height?: Maybe<Scalars['Float']['output']>;
   fee?: Maybe<Scalars['Float']['output']>;
+};
+
+/** columns and relationships of "vesting_schedule" */
+export type Vesting_Schedule = {
+  __typename?: 'vesting_schedule';
+  beneficiary: Scalars['String']['output'];
+  block_height: Scalars['Int']['output'];
+  claimed: Scalars['numeric']['output'];
+  cliff: Scalars['numeric']['output'];
+  end: Scalars['numeric']['output'];
+  id: Scalars['String']['output'];
+  last_claim_at?: Maybe<Scalars['numeric']['output']>;
+  start: Scalars['numeric']['output'];
+  total: Scalars['numeric']['output'];
+};
+
+/** aggregated selection of "vesting_schedule" */
+export type Vesting_Schedule_Aggregate = {
+  __typename?: 'vesting_schedule_aggregate';
+  aggregate?: Maybe<Vesting_Schedule_Aggregate_Fields>;
+  nodes: Array<Vesting_Schedule>;
+};
+
+/** aggregate fields of "vesting_schedule" */
+export type Vesting_Schedule_Aggregate_Fields = {
+  __typename?: 'vesting_schedule_aggregate_fields';
+  avg?: Maybe<Vesting_Schedule_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Vesting_Schedule_Max_Fields>;
+  min?: Maybe<Vesting_Schedule_Min_Fields>;
+  stddev?: Maybe<Vesting_Schedule_Stddev_Fields>;
+  stddev_pop?: Maybe<Vesting_Schedule_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Vesting_Schedule_Stddev_Samp_Fields>;
+  sum?: Maybe<Vesting_Schedule_Sum_Fields>;
+  var_pop?: Maybe<Vesting_Schedule_Var_Pop_Fields>;
+  var_samp?: Maybe<Vesting_Schedule_Var_Samp_Fields>;
+  variance?: Maybe<Vesting_Schedule_Variance_Fields>;
+};
+
+
+/** aggregate fields of "vesting_schedule" */
+export type Vesting_Schedule_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Vesting_Schedule_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Vesting_Schedule_Avg_Fields = {
+  __typename?: 'vesting_schedule_avg_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "vesting_schedule". All fields are combined with a logical 'AND'. */
+export type Vesting_Schedule_Bool_Exp = {
+  _and?: InputMaybe<Array<Vesting_Schedule_Bool_Exp>>;
+  _not?: InputMaybe<Vesting_Schedule_Bool_Exp>;
+  _or?: InputMaybe<Array<Vesting_Schedule_Bool_Exp>>;
+  beneficiary?: InputMaybe<String_Comparison_Exp>;
+  block_height?: InputMaybe<Int_Comparison_Exp>;
+  claimed?: InputMaybe<Numeric_Comparison_Exp>;
+  cliff?: InputMaybe<Numeric_Comparison_Exp>;
+  end?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  last_claim_at?: InputMaybe<Numeric_Comparison_Exp>;
+  start?: InputMaybe<Numeric_Comparison_Exp>;
+  total?: InputMaybe<Numeric_Comparison_Exp>;
+};
+
+/** aggregate max on columns */
+export type Vesting_Schedule_Max_Fields = {
+  __typename?: 'vesting_schedule_max_fields';
+  beneficiary?: Maybe<Scalars['String']['output']>;
+  block_height?: Maybe<Scalars['Int']['output']>;
+  claimed?: Maybe<Scalars['numeric']['output']>;
+  cliff?: Maybe<Scalars['numeric']['output']>;
+  end?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  last_claim_at?: Maybe<Scalars['numeric']['output']>;
+  start?: Maybe<Scalars['numeric']['output']>;
+  total?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate min on columns */
+export type Vesting_Schedule_Min_Fields = {
+  __typename?: 'vesting_schedule_min_fields';
+  beneficiary?: Maybe<Scalars['String']['output']>;
+  block_height?: Maybe<Scalars['Int']['output']>;
+  claimed?: Maybe<Scalars['numeric']['output']>;
+  cliff?: Maybe<Scalars['numeric']['output']>;
+  end?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  last_claim_at?: Maybe<Scalars['numeric']['output']>;
+  start?: Maybe<Scalars['numeric']['output']>;
+  total?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** Ordering options when selecting data from "vesting_schedule". */
+export type Vesting_Schedule_Order_By = {
+  beneficiary?: InputMaybe<Order_By>;
+  block_height?: InputMaybe<Order_By>;
+  claimed?: InputMaybe<Order_By>;
+  cliff?: InputMaybe<Order_By>;
+  end?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  last_claim_at?: InputMaybe<Order_By>;
+  start?: InputMaybe<Order_By>;
+  total?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "vesting_schedule" */
+export enum Vesting_Schedule_Select_Column {
+  /** column name */
+  Beneficiary = 'beneficiary',
+  /** column name */
+  BlockHeight = 'block_height',
+  /** column name */
+  Claimed = 'claimed',
+  /** column name */
+  Cliff = 'cliff',
+  /** column name */
+  End = 'end',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastClaimAt = 'last_claim_at',
+  /** column name */
+  Start = 'start',
+  /** column name */
+  Total = 'total'
+}
+
+/** aggregate stddev on columns */
+export type Vesting_Schedule_Stddev_Fields = {
+  __typename?: 'vesting_schedule_stddev_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Vesting_Schedule_Stddev_Pop_Fields = {
+  __typename?: 'vesting_schedule_stddev_pop_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Vesting_Schedule_Stddev_Samp_Fields = {
+  __typename?: 'vesting_schedule_stddev_samp_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "vesting_schedule" */
+export type Vesting_Schedule_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Vesting_Schedule_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Vesting_Schedule_Stream_Cursor_Value_Input = {
+  beneficiary?: InputMaybe<Scalars['String']['input']>;
+  block_height?: InputMaybe<Scalars['Int']['input']>;
+  claimed?: InputMaybe<Scalars['numeric']['input']>;
+  cliff?: InputMaybe<Scalars['numeric']['input']>;
+  end?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last_claim_at?: InputMaybe<Scalars['numeric']['input']>;
+  start?: InputMaybe<Scalars['numeric']['input']>;
+  total?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Vesting_Schedule_Sum_Fields = {
+  __typename?: 'vesting_schedule_sum_fields';
+  block_height?: Maybe<Scalars['Int']['output']>;
+  claimed?: Maybe<Scalars['numeric']['output']>;
+  cliff?: Maybe<Scalars['numeric']['output']>;
+  end?: Maybe<Scalars['numeric']['output']>;
+  last_claim_at?: Maybe<Scalars['numeric']['output']>;
+  start?: Maybe<Scalars['numeric']['output']>;
+  total?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** aggregate var_pop on columns */
+export type Vesting_Schedule_Var_Pop_Fields = {
+  __typename?: 'vesting_schedule_var_pop_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate var_samp on columns */
+export type Vesting_Schedule_Var_Samp_Fields = {
+  __typename?: 'vesting_schedule_var_samp_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate variance on columns */
+export type Vesting_Schedule_Variance_Fields = {
+  __typename?: 'vesting_schedule_variance_fields';
+  block_height?: Maybe<Scalars['Float']['output']>;
+  claimed?: Maybe<Scalars['Float']['output']>;
+  cliff?: Maybe<Scalars['Float']['output']>;
+  end?: Maybe<Scalars['Float']['output']>;
+  last_claim_at?: Maybe<Scalars['Float']['output']>;
+  start?: Maybe<Scalars['Float']['output']>;
+  total?: Maybe<Scalars['Float']['output']>;
 };
 
 /** columns and relationships of "wormhole_extrinsic" */
@@ -10749,6 +11104,113 @@ export type GetWormholeExtrinsicByIdQueryVariables = Exact<{
 
 export type GetWormholeExtrinsicByIdQuery = { __typename?: 'query_root', wormholeExtrinsicById?: { __typename?: 'wormhole_extrinsic', id: string, total_amount: any, output_count: number, timestamp: any, privacy_score: any, privacy_score01_pct: any, privacy_score1_pct: any, privacy_score5_pct: any, privacy_label: string, pool_snapshot: string, extrinsic?: { __typename?: 'extrinsic', id: string, pallet: string, call: string } | null, block?: { __typename?: 'block', id: string, height: number, hash: string, timestamp: any } | null, outputs: Array<{ __typename?: 'wormhole_output', id: string, amount: any, exitAccount?: { __typename?: 'account', id: string } | null }> } | null, wormholeNullifiers: Array<{ __typename?: 'wormhole_nullifier', nullifier: string, nullifier_hash: string }> };
 
+export type BusyAccountsQueryVariables = Exact<{
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type BusyAccountsQuery = { __typename?: 'query_root', account_stats: Array<{ __typename?: 'account_stats', id: string, total_immediate_transfers: number, total_mined_blocks: number }> };
+
+export type MinerAccountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MinerAccountQuery = { __typename?: 'query_root', account_stats: Array<{ __typename?: 'account_stats', id: string, total_mined_blocks: number }> };
+
+export type DiscoveryIdsQueryVariables = Exact<{
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type DiscoveryIdsQuery = { __typename?: 'query_root', account: Array<{ __typename?: 'account', id: string }> };
+
+export type HistoryCursorQueryVariables = Exact<{
+  accounts: Array<Scalars['String']['input']> | Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type HistoryCursorQuery = { __typename?: 'query_root', account_event: Array<{ __typename?: 'account_event', id: string, timestamp: any }> };
+
+export type HistoryDeepCursorQueryVariables = Exact<{
+  accounts: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type HistoryDeepCursorQuery = { __typename?: 'query_root', account_event: Array<{ __typename?: 'account_event', id: string, timestamp: any }> };
+
+export type MinerHistoryCursorQueryVariables = Exact<{
+  accounts: Array<Scalars['String']['input']> | Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type MinerHistoryCursorQuery = { __typename?: 'query_root', account_event: Array<{ __typename?: 'account_event', id: string, timestamp: any }> };
+
+export type SampleTransferQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleTransferQuery = { __typename?: 'query_root', transfer: Array<{ __typename?: 'transfer', from_id?: string | null, to_id?: string | null, amount: any, block_height: number, extrinsic?: { __typename?: 'extrinsic', id: string } | null }> };
+
+export type SampleScheduledQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleScheduledQuery = { __typename?: 'query_root', scheduled_reversible_transfer: Array<{ __typename?: 'scheduled_reversible_transfer', amount: any, from?: { __typename?: 'account', id: string } | null, to?: { __typename?: 'account', id: string } | null, block?: { __typename?: 'block', height: number } | null, extrinsic?: { __typename?: 'extrinsic', id: string } | null }> };
+
+export type SampleExecutedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleExecutedQuery = { __typename?: 'query_root', executed_reversible_transfer: Array<{ __typename?: 'executed_reversible_transfer', tx_id: string }> };
+
+export type SampleWormholeRecipientQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleWormholeRecipientQuery = { __typename?: 'query_root', transfer: Array<{ __typename?: 'transfer', to_id?: string | null }> };
+
+export type WormholeCursorQueryVariables = Exact<{
+  tos: Array<Scalars['String']['input']> | Scalars['String']['input'];
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type WormholeCursorQuery = { __typename?: 'query_root', transfer: Array<{ __typename?: 'transfer', id: string, block_height: number }> };
+
+export type SampleNullifiersQueryVariables = Exact<{
+  limit: Scalars['Int']['input'];
+}>;
+
+
+export type SampleNullifiersQuery = { __typename?: 'query_root', wormhole_nullifier: Array<{ __typename?: 'wormhole_nullifier', nullifier_hash: string }> };
+
+export type SampleMultisigQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleMultisigQuery = { __typename?: 'query_root', multisig: Array<{ __typename?: 'multisig', id: string, signers: Array<string> }> };
+
+export type SampleProposalQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleProposalQuery = { __typename?: 'query_root', multisig_proposal: Array<{ __typename?: 'multisig_proposal', proposal_id: number, multisig_id?: string | null }> };
+
+export type SampleProposalCreatedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleProposalCreatedQuery = { __typename?: 'query_root', multisig_proposal_created: Array<{ __typename?: 'multisig_proposal_created', extrinsic?: { __typename?: 'extrinsic', id: string } | null }> };
+
+export type SampleSignerApprovedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleSignerApprovedQuery = { __typename?: 'query_root', multisig_signer_approved: Array<{ __typename?: 'multisig_signer_approved', extrinsic?: { __typename?: 'extrinsic', id: string } | null }> };
+
+export type SampleProposalExecutedQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleProposalExecutedQuery = { __typename?: 'query_root', executed_multisig_proposal: Array<{ __typename?: 'executed_multisig_proposal', extrinsic?: { __typename?: 'extrinsic', id: string } | null }> };
+
+export type SampleProposalCancelledQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SampleProposalCancelledQuery = { __typename?: 'query_root', cancelled_multisig_proposal: Array<{ __typename?: 'cancelled_multisig_proposal', extrinsic?: { __typename?: 'extrinsic', id: string } | null }> };
+
 export type GetTransactionsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -10869,6 +11331,24 @@ export const SearchNumericDocument = {"kind":"Document","definitions":[{"kind":"
 export const SearchTextDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchText"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"keyword"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"accounts"},"name":{"kind":"Name","value":"account"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_like"},"value":{"kind":"Variable","name":{"kind":"Name","value":"keyword"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","alias":{"kind":"Name","value":"errorEvents"},"name":{"kind":"Name","value":"error_event"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"error_type"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"keyword"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"error_name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"keyword"}}}]}}]}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pallet"}},{"kind":"Field","name":{"kind":"Name","value":"call"}}]}}]}}]}}]} as unknown as DocumentNode<SearchTextQuery, SearchTextQueryVariables>;
 export const GetExtrinsicByHashDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExtrinsicByHash"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"hash"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"extrinsics"},"name":{"kind":"Name","value":"extrinsic"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hash"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pallet"}},{"kind":"Field","name":{"kind":"Name","value":"call"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"index_in_block"}},{"kind":"Field","name":{"kind":"Name","value":"signer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"transfersByExtrinsic"},"name":{"kind":"Name","value":"transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"extrinsic"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hash"}}}]}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"from"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"to"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pallet"}},{"kind":"Field","name":{"kind":"Name","value":"call"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"index_in_block"}},{"kind":"Field","name":{"kind":"Name","value":"signer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"transfersById"},"name":{"kind":"Name","value":"transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"hash"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"from"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"to"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pallet"}},{"kind":"Field","name":{"kind":"Name","value":"call"}},{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"fee"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"index_in_block"}},{"kind":"Field","name":{"kind":"Name","value":"signer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetExtrinsicByHashQuery, GetExtrinsicByHashQueryVariables>;
 export const GetWormholeExtrinsicByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWormholeExtrinsicById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"wormholeExtrinsicById"},"name":{"kind":"Name","value":"wormhole_extrinsic_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"pallet"}},{"kind":"Field","name":{"kind":"Name","value":"call"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total_amount"}},{"kind":"Field","name":{"kind":"Name","value":"output_count"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"privacy_score"}},{"kind":"Field","name":{"kind":"Name","value":"privacy_score01_pct"}},{"kind":"Field","name":{"kind":"Name","value":"privacy_score1_pct"}},{"kind":"Field","name":{"kind":"Name","value":"privacy_score5_pct"}},{"kind":"Field","name":{"kind":"Name","value":"privacy_label"}},{"kind":"Field","name":{"kind":"Name","value":"pool_snapshot"}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"hash"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}},{"kind":"Field","name":{"kind":"Name","value":"outputs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"exitAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"wormholeNullifiers"},"name":{"kind":"Name","value":"wormhole_nullifier"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"wormholeExtrinsic"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nullifier"}},{"kind":"Field","name":{"kind":"Name","value":"nullifier_hash"}}]}}]}}]} as unknown as DocumentNode<GetWormholeExtrinsicByIdQuery, GetWormholeExtrinsicByIdQueryVariables>;
+export const BusyAccountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BusyAccounts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account_stats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"total_immediate_transfers"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"total_immediate_transfers"}},{"kind":"Field","name":{"kind":"Name","value":"total_mined_blocks"}}]}}]}}]} as unknown as DocumentNode<BusyAccountsQuery, BusyAccountsQueryVariables>;
+export const MinerAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MinerAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account_stats"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"total_mined_blocks"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"total_mined_blocks"}}]}}]}}]} as unknown as DocumentNode<MinerAccountQuery, MinerAccountQueryVariables>;
+export const DiscoveryIdsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DiscoveryIds"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DiscoveryIdsQuery, DiscoveryIdsQueryVariables>;
+export const HistoryCursorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HistoryCursor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accounts"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account_event"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"account_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accounts"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"scheduled_reversible_transfer_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]} as unknown as DocumentNode<HistoryCursorQuery, HistoryCursorQueryVariables>;
+export const HistoryDeepCursorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"HistoryDeepCursor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accounts"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account_event"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"IntValue","value":"2000"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"account_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accounts"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"scheduled_reversible_transfer_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]} as unknown as DocumentNode<HistoryDeepCursorQuery, HistoryDeepCursorQueryVariables>;
+export const MinerHistoryCursorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MinerHistoryCursor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"accounts"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account_event"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"account_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"accounts"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"scheduled_reversible_transfer_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}}]}}]}}]} as unknown as DocumentNode<MinerHistoryCursorQuery, MinerHistoryCursorQueryVariables>;
+export const SampleTransferDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleTransfer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"extrinsic_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"from_id"}},{"kind":"Field","name":{"kind":"Name","value":"to_id"}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"block_height"}},{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SampleTransferQuery, SampleTransferQueryVariables>;
+export const SampleScheduledDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleScheduled"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"scheduled_reversible_transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"from"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"to"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"amount"}},{"kind":"Field","name":{"kind":"Name","value":"block"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SampleScheduledQuery, SampleScheduledQueryVariables>;
+export const SampleExecutedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleExecuted"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"executed_reversible_transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tx_id"}}]}}]}}]} as unknown as DocumentNode<SampleExecutedQuery, SampleExecutedQueryVariables>;
+export const SampleWormholeRecipientDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleWormholeRecipient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"leaf_index"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gt"},"value":{"kind":"StringValue","value":"0","block":false}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"transfer_count"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"to_id"}}]}}]}}]} as unknown as DocumentNode<SampleWormholeRecipientQuery, SampleWormholeRecipientQueryVariables>;
+export const WormholeCursorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"WormholeCursor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tos"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"to_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tos"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"block_height"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gt"},"value":{"kind":"IntValue","value":"0"}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"block_height"},"value":{"kind":"EnumValue","value":"asc"}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"EnumValue","value":"asc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"block_height"}}]}}]}}]} as unknown as DocumentNode<WormholeCursorQuery, WormholeCursorQueryVariables>;
+export const SampleNullifiersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleNullifiers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"wormhole_nullifier"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nullifier_hash"}}]}}]}}]} as unknown as DocumentNode<SampleNullifiersQuery, SampleNullifiersQueryVariables>;
+export const SampleMultisigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleMultisig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"multisig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"signers"}}]}}]}}]} as unknown as DocumentNode<SampleMultisigQuery, SampleMultisigQueryVariables>;
+export const SampleProposalDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleProposal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"multisig_proposal"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"updated_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"proposal_id"}},{"kind":"Field","name":{"kind":"Name","value":"multisig_id"}}]}}]}}]} as unknown as DocumentNode<SampleProposalQuery, SampleProposalQueryVariables>;
+export const SampleProposalCreatedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleProposalCreated"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"multisig_proposal_created"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SampleProposalCreatedQuery, SampleProposalCreatedQueryVariables>;
+export const SampleSignerApprovedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleSignerApproved"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"multisig_signer_approved"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SampleSignerApprovedQuery, SampleSignerApprovedQueryVariables>;
+export const SampleProposalExecutedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleProposalExecuted"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"executed_multisig_proposal"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SampleProposalExecutedQuery, SampleProposalExecutedQueryVariables>;
+export const SampleProposalCancelledDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SampleProposalCancelled"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cancelled_multisig_proposal"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"timestamp"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<SampleProposalCancelledQuery, SampleProposalCancelledQueryVariables>;
 export const GetTransactionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTransactions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"transfer_order_by"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"transfer_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"transactions"},"name":{"kind":"Name","value":"transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"extrinsic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetTransactionsQuery, GetTransactionsQueryVariables>;
 export const GetCancelledReversibleTransactionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCancelledReversibleTransactions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"cancelled_reversible_transfer_order_by"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"cancelled_reversible_transfer_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"cancelledReversibleTransactions"},"name":{"kind":"Name","value":"cancelled_reversible_transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tx_id"}}]}}]}}]} as unknown as DocumentNode<GetCancelledReversibleTransactionsQuery, GetCancelledReversibleTransactionsQueryVariables>;
 export const GetExecutedReversibleTransactionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExecutedReversibleTransactions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"executed_reversible_transfer_order_by"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"executed_reversible_transfer_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"executedReversibleTransactions"},"name":{"kind":"Name","value":"executed_reversible_transfer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tx_id"}}]}}]}}]} as unknown as DocumentNode<GetExecutedReversibleTransactionsQuery, GetExecutedReversibleTransactionsQueryVariables>;
