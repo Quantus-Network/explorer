@@ -47,5 +47,6 @@ export const SITE_NAVIGATIONS: (SiteNavigation | ParentNavigation)[] = [
       }
     ]
   },
-  { label: 'Miners', path: '/miner-leaderboard' }
+  { label: 'Miners', path: '/miner-leaderboard' },
+  { label: 'Vesting', path: '/vesting' }
 ];

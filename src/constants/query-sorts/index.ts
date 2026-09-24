@@ -13,3 +13,4 @@ export * from './multisig-proposal-ready';
 export * from './multisig-proposal-removed';
 export * from './multisig-signer-approved';
 export * from './unified-list-transactions';
+export * from './vesting-schedules';

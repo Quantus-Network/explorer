@@ -22,6 +22,7 @@ import { scheduledReversibleTransactions } from './scheduled-reversible-transact
 import { search } from './search';
 import { transactions } from './transactions';
 import { unifiedTransactions } from './unified-transactions';
+import { vestingSchedules } from './vesting-schedules';
 import { wormhole } from './wormhole';
 
 const useApiClient = () => {
@@ -50,7 +51,8 @@ const useApiClient = () => {
     multisigProposalExecuted,
     multisigProposalCancelled,
     multisigProposalRemoved,
-    multisigDepositsClaimed
+    multisigDepositsClaimed,
+    vestingSchedules
   };
 
   return api;

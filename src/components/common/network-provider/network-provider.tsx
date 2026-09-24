@@ -9,7 +9,7 @@ const BASE_NETWORKS = {
 } as const;
 
 const LOCAL_NETWORK = {
-  local: 'http://localhost:4350/v1/graphql',
+  local: 'http://localhost:4350/v1/graphql'
 } as const;
 
 export const NETWORKS: Record<string, string> = ENABLE_LOCAL_NETWORK

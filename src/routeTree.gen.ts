@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VestingIndexRouteImport } from './routes/vesting/index'
 import { Route as TransactionsIndexRouteImport } from './routes/transactions/index'
 import { Route as MultisigIndexRouteImport } from './routes/multisig/index'
 import { Route as MultisigSignerApprovedIndexRouteImport } from './routes/multisig-signer-approved/index'
@@ -50,6 +51,11 @@ import { Route as TransactionsCancelledReversibleTxIdRouteImport } from './route
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VestingIndexRoute = VestingIndexRouteImport.update({
+  id: '/vesting/',
+  path: '/vesting/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransactionsIndexRoute = TransactionsIndexRouteImport.update({
@@ -284,6 +290,7 @@ export interface FileRoutesByFullPath {
   '/multisig-signer-approved': typeof MultisigSignerApprovedIndexRoute
   '/multisig': typeof MultisigIndexRoute
   '/transactions': typeof TransactionsIndexRoute
+  '/vesting': typeof VestingIndexRoute
   '/transactions/cancelled-reversible/$txId': typeof TransactionsCancelledReversibleTxIdRoute
   '/transactions/executed-reversible/$txId': typeof TransactionsExecutedReversibleTxIdRoute
   '/transactions/scheduled-reversible/$txId': typeof TransactionsScheduledReversibleTxIdRoute
@@ -323,6 +330,7 @@ export interface FileRoutesByTo {
   '/multisig-signer-approved': typeof MultisigSignerApprovedIndexRoute
   '/multisig': typeof MultisigIndexRoute
   '/transactions': typeof TransactionsIndexRoute
+  '/vesting': typeof VestingIndexRoute
   '/transactions/cancelled-reversible/$txId': typeof TransactionsCancelledReversibleTxIdRoute
   '/transactions/executed-reversible/$txId': typeof TransactionsExecutedReversibleTxIdRoute
   '/transactions/scheduled-reversible/$txId': typeof TransactionsScheduledReversibleTxIdRoute
@@ -363,6 +371,7 @@ export interface FileRoutesById {
   '/multisig-signer-approved/': typeof MultisigSignerApprovedIndexRoute
   '/multisig/': typeof MultisigIndexRoute
   '/transactions/': typeof TransactionsIndexRoute
+  '/vesting/': typeof VestingIndexRoute
   '/transactions/cancelled-reversible/$txId': typeof TransactionsCancelledReversibleTxIdRoute
   '/transactions/executed-reversible/$txId': typeof TransactionsExecutedReversibleTxIdRoute
   '/transactions/scheduled-reversible/$txId': typeof TransactionsScheduledReversibleTxIdRoute
@@ -404,6 +413,7 @@ export interface FileRouteTypes {
     | '/multisig-signer-approved'
     | '/multisig'
     | '/transactions'
+    | '/vesting'
     | '/transactions/cancelled-reversible/$txId'
     | '/transactions/executed-reversible/$txId'
     | '/transactions/scheduled-reversible/$txId'
@@ -443,6 +453,7 @@ export interface FileRouteTypes {
     | '/multisig-signer-approved'
     | '/multisig'
     | '/transactions'
+    | '/vesting'
     | '/transactions/cancelled-reversible/$txId'
     | '/transactions/executed-reversible/$txId'
     | '/transactions/scheduled-reversible/$txId'
@@ -482,6 +493,7 @@ export interface FileRouteTypes {
     | '/multisig-signer-approved/'
     | '/multisig/'
     | '/transactions/'
+    | '/vesting/'
     | '/transactions/cancelled-reversible/$txId'
     | '/transactions/executed-reversible/$txId'
     | '/transactions/scheduled-reversible/$txId'
@@ -522,6 +534,7 @@ export interface RootRouteChildren {
   MultisigSignerApprovedIndexRoute: typeof MultisigSignerApprovedIndexRoute
   MultisigIndexRoute: typeof MultisigIndexRoute
   TransactionsIndexRoute: typeof TransactionsIndexRoute
+  VestingIndexRoute: typeof VestingIndexRoute
   TransactionsCancelledReversibleTxIdRoute: typeof TransactionsCancelledReversibleTxIdRoute
   TransactionsExecutedReversibleTxIdRoute: typeof TransactionsExecutedReversibleTxIdRoute
   TransactionsScheduledReversibleTxIdRoute: typeof TransactionsScheduledReversibleTxIdRoute
@@ -536,6 +549,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vesting/': {
+      id: '/vesting/'
+      path: '/vesting'
+      fullPath: '/vesting'
+      preLoaderRoute: typeof VestingIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transactions/': {
@@ -826,6 +846,7 @@ const rootRouteChildren: RootRouteChildren = {
   MultisigSignerApprovedIndexRoute: MultisigSignerApprovedIndexRoute,
   MultisigIndexRoute: MultisigIndexRoute,
   TransactionsIndexRoute: TransactionsIndexRoute,
+  VestingIndexRoute: VestingIndexRoute,
   TransactionsCancelledReversibleTxIdRoute:
     TransactionsCancelledReversibleTxIdRoute,
   TransactionsExecutedReversibleTxIdRoute:
