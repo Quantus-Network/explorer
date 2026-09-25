@@ -60,6 +60,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
     minerTransfer?.amount ??
     (minerRewardFallback != null ? String(minerRewardFallback) : null);
   const treasuryReward = treasuryTransfer?.amount ?? null;
+  const showTreasuryReward = !loading && treasuryReward != null;
 
   const information: Partial<BlockDetails>[] = [
     {
@@ -119,11 +120,15 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           key: 'minerReward',
           render: (value) => formatRewardAmount(value as string | null)
         },
-        {
-          label: 'Treasury reward',
-          key: 'treasuryReward',
-          render: (value) => formatRewardAmount(value as string | null)
-        },
+        ...(showTreasuryReward
+          ? [
+              {
+                label: 'Treasury reward',
+                key: 'treasuryReward' as const,
+                render: (value: string | null) => formatRewardAmount(value)
+              }
+            ]
+          : []),
         {
           label: 'Time',
           key: 'timestamp',
