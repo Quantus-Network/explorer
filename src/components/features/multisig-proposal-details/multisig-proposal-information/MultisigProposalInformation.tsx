@@ -5,6 +5,7 @@ import { useMemo } from 'react';
 import useApiClient from '@/api';
 import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import {
@@ -78,10 +79,9 @@ const LIFECYCLE_SECTIONS: {
 
 const accountLink = (accountId?: string | null) =>
   accountId ? (
-    <LinkWithCopy
+    <AccountAddressCell
+      address={accountId}
       href={`${RESOURCES.accounts}/${accountId}`}
-      text={accountId}
-      textCopy={accountId}
     />
   ) : (
     <EmptyValue />
@@ -89,10 +89,9 @@ const accountLink = (accountId?: string | null) =>
 
 const walletLink = (walletId?: string | null) =>
   walletId ? (
-    <LinkWithCopy
+    <AccountAddressCell
+      address={walletId}
       href={getMultisigWalletHref(walletId)}
-      text={walletId}
-      textCopy={walletId}
     />
   ) : (
     <EmptyValue />
@@ -232,11 +231,10 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
       return (
         <div className="flex flex-col gap-1">
           {approvals.map((approver) => (
-            <LinkWithCopy
+            <AccountAddressCell
               key={approver}
+              address={approver}
               href={`${RESOURCES.accounts}/${approver}`}
-              text={approver}
-              textCopy={approver}
             />
           ))}
         </div>

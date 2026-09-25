@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -84,8 +85,8 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
           label: 'Mined by',
           key: 'miner',
           render: (value) => (
-            <LinkWithCopy
-              text={(value as MinerReward['miner']).id}
+            <AccountAddressCell
+              address={(value as MinerReward['miner']).id}
               href={`${RESOURCES.accounts}/${(value as MinerReward['miner']).id}`}
               className="break-all"
             />

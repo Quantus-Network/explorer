@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
@@ -103,10 +104,9 @@ export const MultisigProposalCancelledInformation: React.FC<
             const multisigId = (value as MultisigProposalCancelled['proposal'])
               ?.multisig?.id;
             return multisigId ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={multisigId}
                 href={getMultisigWalletHref(multisigId)}
-                text={multisigId}
-                textCopy={multisigId}
               />
             ) : (
               <EmptyValue />
@@ -120,10 +120,9 @@ export const MultisigProposalCancelledInformation: React.FC<
             const proposerId = (value as MultisigProposalCancelled['proposal'])
               ?.proposer?.id;
             return proposerId ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={proposerId}
                 href={`${RESOURCES.accounts}/${proposerId}`}
-                text={proposerId}
-                textCopy={proposerId}
               />
             ) : (
               <EmptyValue />
@@ -138,10 +137,9 @@ export const MultisigProposalCancelledInformation: React.FC<
               value as MultisigProposalCancelled['cancelledBy']
             )?.id;
             return cancelledById ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={cancelledById}
                 href={`${RESOURCES.accounts}/${cancelledById}`}
-                text={cancelledById}
-                textCopy={cancelledById}
               />
             ) : (
               <EmptyValue />
