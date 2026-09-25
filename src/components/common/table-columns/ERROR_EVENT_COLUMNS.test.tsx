@@ -4,6 +4,10 @@ import type { ErrorEvent } from '@/schemas';
 
 import { ERROR_EVENT_COLUMNS } from './ERROR_EVENT_COLUMNS';
 
+type DocsCell = (
+  props: CellContext<ErrorEvent, string | null | undefined>
+) => string;
+
 function docsColumn() {
   const column = ERROR_EVENT_COLUMNS.find((col) => col.id === 'errorDocs');
   if (!column || typeof column.cell !== 'function') {
@@ -13,8 +17,9 @@ function docsColumn() {
 }
 
 function docsCell(errorDocs: string | null | undefined) {
-  const column = docsColumn();
-  return column.cell?.({
+  const cell = docsColumn().cell as DocsCell;
+
+  return cell({
     getValue: () => errorDocs
   } as CellContext<ErrorEvent, string | null | undefined>);
 }
