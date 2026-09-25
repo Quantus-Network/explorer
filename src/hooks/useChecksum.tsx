@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react';
 
 import { getChecksum } from '@/utils/get-checksum';
 
+type ResolvedChecksum = {
+  id: string;
+  checksum: string | null;
+  error: Error | null;
+};
+
 export const useChecksum = (wait: boolean, id?: string) => {
-  const [checksum, setChecksum] = useState<string | null>(null);
+  const [resolved, setResolved] = useState<ResolvedChecksum | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     if (!id || wait) return;
@@ -14,21 +19,22 @@ export const useChecksum = (wait: boolean, id?: string) => {
 
     const fetchChecksum = async () => {
       setLoading(true);
-      setError(null);
 
       try {
         const response = await getChecksum(id);
         if (cancelled) return;
-        setChecksum(response);
+        setResolved({ id, checksum: response, error: null });
         setLoading(false);
       } catch (caught) {
         if (cancelled) return;
-        setChecksum(null);
-        setError(
-          caught instanceof Error
-            ? caught
-            : new Error('Failed to load check phrase')
-        );
+        setResolved({
+          id,
+          checksum: null,
+          error:
+            caught instanceof Error
+              ? caught
+              : new Error('Failed to load check phrase')
+        });
         setLoading(false);
       }
     };
@@ -40,5 +46,11 @@ export const useChecksum = (wait: boolean, id?: string) => {
     };
   }, [id, wait]);
 
-  return { checksum, loading, error };
+  const current = resolved?.id === id ? resolved : null;
+
+  return {
+    checksum: current?.checksum ?? null,
+    loading: current ? loading : true,
+    error: current?.error ?? null
+  };
 };
