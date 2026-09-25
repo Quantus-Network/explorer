@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { Badge, type BadgeProps } from '@/components/ui/badge';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -66,10 +67,10 @@ export const MULTISIG_PROPOSAL_COLUMNS = [
     header: 'Wallet',
     cell: (props) =>
       props.getValue() ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={props.getValue() ?? ''}
           href={getMultisigWalletHref(props.getValue() ?? '')}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          text={formatTxAddress(props.getValue() ?? '')}
         />
       ) : (
         '-'
@@ -81,10 +82,10 @@ export const MULTISIG_PROPOSAL_COLUMNS = [
     header: 'Proposer',
     cell: (props) =>
       props.getValue() ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={props.getValue() ?? ''}
           href={`${RESOURCES.accounts}/${props.getValue()}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          text={formatTxAddress(props.getValue() ?? '')}
         />
       ) : (
         '-'

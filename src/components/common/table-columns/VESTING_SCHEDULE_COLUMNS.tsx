@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { VestingScheduleListItem } from '@/schemas';
@@ -33,13 +33,17 @@ export const VESTING_SCHEDULE_COLUMNS = [
   columnHelper.accessor('beneficiary', {
     id: 'beneficiary',
     header: 'Beneficiary',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.accounts}/${props.getValue()}`}
-        text={props.getValue() ?? '-'}
-        truncate={false}
-      />
-    ),
+    cell: (props) => {
+      const address = props.getValue();
+      if (!address) return '-';
+      return (
+        <AccountAddressCell
+          address={address}
+          href={`${RESOURCES.accounts}/${address}`}
+          truncate={false}
+        />
+      );
+    },
     enableSorting: true
   }),
   columnHelper.accessor('total', {

@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -44,10 +45,10 @@ export const MULTISIG_SIGNER_APPROVED_COLUMNS = [
     header: 'Approver',
     cell: (props) =>
       props.getValue() ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={props.getValue() ?? ''}
           href={`${RESOURCES.accounts}/${props.getValue()}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          text={formatTxAddress(props.getValue() ?? '')}
         />
       ) : (
         '-'

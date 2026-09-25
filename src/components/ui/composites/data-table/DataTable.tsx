@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow
 } from '../../table';
+import { CheckphraseReadyProvider } from '../checkphrase-ready/CheckphraseReady';
 import { EmptyState } from '../empty-state/EmptyState';
 import { CardSkeleton } from './CardSkeleton';
 import { DataTableCards } from './DataTableCards';
@@ -172,6 +173,8 @@ export const DataTable = ({
   if (status === 'success' && isEmptyData)
     return <EmptyState title={emptyTitle} description={emptyDescription} />;
 
+  const checkphraseReady = status !== 'loading';
+
   if (!isDesktop) {
     const showInitialLoading =
       status === 'loading' &&
@@ -181,100 +184,107 @@ export const DataTable = ({
     const cardsTable = withControls ? mobileTable : table;
 
     return (
-      <div ref={containerRef}>
-        {showInitialLoading ? (
-          <CardSkeleton cardCount={pageSize} fieldsLength={columnsLength} />
-        ) : (
-          <DataTableCards
-            table={cardsTable}
-            customCellProps={customCellProps}
-          />
-        )}
+      <CheckphraseReadyProvider ready={checkphraseReady}>
+        <div ref={containerRef}>
+          {showInitialLoading ? (
+            <CardSkeleton cardCount={pageSize} fieldsLength={columnsLength} />
+          ) : (
+            <DataTableCards
+              table={cardsTable}
+              customCellProps={customCellProps}
+            />
+          )}
 
-        {showLoadMoreSkeleton && (
-          <CardSkeleton
-            className="mt-4"
-            cardCount={1}
-            fieldsLength={columnsLength}
-          />
-        )}
+          {showLoadMoreSkeleton && (
+            <CardSkeleton
+              className="mt-4"
+              cardCount={1}
+              fieldsLength={columnsLength}
+            />
+          )}
 
-        {withControls && table.getCanNextPage() && (
-          <div ref={sentinelRef} className="h-px w-full" aria-hidden />
-        )}
-      </div>
+          {withControls && table.getCanNextPage() && (
+            <div ref={sentinelRef} className="h-px w-full" aria-hidden />
+          )}
+        </div>
+      </CheckphraseReadyProvider>
     );
   }
 
   return (
-    <div ref={containerRef}>
-      <div className="overflow-x-auto rounded-none border border-border-subtle">
-        <Table ref={tableRef} className="w-max min-w-full">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    onClick={header.column.getToggleSortingHandler()}
-                    data-sortable={header.column.getCanSort()}
-                    className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-text"
-                  >
-                    <div
-                      className={cn(
-                        'flex items-center gap-1',
-                        header.column.columnDef.meta?.header?.className
-                      )}
+    <CheckphraseReadyProvider ready={checkphraseReady}>
+      <div ref={containerRef}>
+        <div className="overflow-x-auto rounded-none border border-border-subtle">
+          <Table ref={tableRef} className="w-max min-w-full">
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      colSpan={header.colSpan}
+                      onClick={header.column.getToggleSortingHandler()}
+                      data-sortable={header.column.getCanSort()}
+                      className="data-[sortable=true]:cursor-pointer data-[sortable=true]:hover:text-muted-text"
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-
-                      {header.column.getCanSort() && (
-                        <SortIndicator
-                          direction={header.column.getIsSorted()}
-                        />
-                      )}
-                    </div>
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-
-          <TableBody>
-            {status === 'loading' && (
-              <RowSkeleton rowCount={pageSize} columnsLength={columnsLength} />
-            )}
-
-            {table.getRowModel().rows.map((row) => {
-              return (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => {
-                    return (
-                      <TableCell
-                        key={cell.id}
-                        className="whitespace-nowrap [&_a]:whitespace-nowrap [&_a]:break-normal"
+                      <div
+                        className={cn(
+                          'flex items-center gap-1',
+                          header.column.columnDef.meta?.header?.className
+                        )}
                       >
-                        {flexRender(cell.column.columnDef.cell, {
-                          ...cell.getContext(),
-                          ...customCellProps
-                        })}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </div>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
 
-      {withControls && <TableControls table={table} tableRef={tableRef} />}
-    </div>
+                        {header.column.getCanSort() && (
+                          <SortIndicator
+                            direction={header.column.getIsSorted()}
+                          />
+                        )}
+                      </div>
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+
+            <TableBody>
+              {status === 'loading' && (
+                <RowSkeleton
+                  rowCount={pageSize}
+                  columnsLength={columnsLength}
+                />
+              )}
+
+              {table.getRowModel().rows.map((row) => {
+                return (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <TableCell
+                          key={cell.id}
+                          className="whitespace-nowrap py-2 [&_a]:whitespace-nowrap [&_a]:break-normal"
+                        >
+                          {flexRender(cell.column.columnDef.cell, {
+                            ...cell.getContext(),
+                            ...customCellProps
+                          })}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+
+        {withControls && <TableControls table={table} tableRef={tableRef} />}
+      </div>
+    </CheckphraseReadyProvider>
   );
 };

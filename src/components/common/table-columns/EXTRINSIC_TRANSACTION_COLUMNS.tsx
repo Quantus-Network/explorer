@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { RESOURCES } from '@/constants/resources';
 import type { ExtrinsicTransfer } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
@@ -15,11 +15,10 @@ export const EXTRINSIC_TRANSACTION_COLUMNS = [
       const { id } = getValue();
 
       return (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={id}
           href={`${RESOURCES.accounts}/${id}`}
-          text={id}
           truncate={false}
-          textCopy={id}
         />
       );
     },
@@ -32,11 +31,10 @@ export const EXTRINSIC_TRANSACTION_COLUMNS = [
       const { id } = getValue();
 
       return (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={id}
           href={`${RESOURCES.accounts}/${id}`}
-          text={id}
           truncate={false}
-          textCopy={id}
         />
       );
     },
