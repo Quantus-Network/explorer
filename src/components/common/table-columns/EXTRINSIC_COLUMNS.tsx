@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { Badge } from '@/components/ui/badge';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -66,10 +67,10 @@ export const createExtrinsicColumns = () => {
           );
         }
         return (
-          <LinkWithCopy
+          <AccountAddressCell
+            address={signer.id}
             href={`${RESOURCES.accounts}/${signer.id}`}
             text={formatTxAddress(signer.id)}
-            textCopy={signer.id}
           />
         );
       },

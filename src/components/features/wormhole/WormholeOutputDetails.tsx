@@ -2,6 +2,7 @@ import { notFound } from '@tanstack/react-router';
 
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -210,9 +211,9 @@ export const WormholeOutputInformation = ({
                     label: 'Exit Account',
                     key: 'exitAccountId',
                     render: (value) => (
-                      <LinkWithCopy
+                      <AccountAddressCell
+                        address={value as string}
                         href={`${RESOURCES.accounts}/${value}`}
-                        text={value as string}
                         truncate={false}
                       />
                     )

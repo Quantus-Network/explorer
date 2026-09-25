@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { Badge } from '@/components/ui/badge';
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { RESOURCES } from '@/constants/resources';
 import type { AccountListItem } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
@@ -13,10 +13,10 @@ export const ACCOUNT_COLUMNS = [
     id: 'id',
     header: 'Address',
     cell: (props) => (
-      <LinkWithCopy
+      <AccountAddressCell
+        address={props.getValue()}
         href={`${RESOURCES.accounts}/${props.getValue()}`}
         truncate={false}
-        text={props.getValue()}
       />
     ),
     enableSorting: false

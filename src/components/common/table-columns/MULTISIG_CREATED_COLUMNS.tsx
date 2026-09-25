@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -16,10 +17,10 @@ export const MULTISIG_CREATED_COLUMNS = [
     cell: (props) => {
       const walletId = props.getValue();
       return walletId ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={walletId}
           href={getMultisigWalletHref(walletId)}
           text={formatTxAddress(walletId)}
-          textCopy={walletId}
         />
       ) : (
         '-'
@@ -61,10 +62,10 @@ export const MULTISIG_CREATED_COLUMNS = [
     header: 'Creator',
     cell: (props) =>
       props.getValue() ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={props.getValue() ?? ''}
           href={`${RESOURCES.accounts}/${props.getValue()}`}
-          text={formatTxAddress(props.getValue() ?? '-')}
-          textCopy={props.getValue() ?? ''}
+          text={formatTxAddress(props.getValue() ?? '')}
         />
       ) : (
         '-'

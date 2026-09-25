@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -72,8 +73,8 @@ export const ExecutedReversibleTransactionInformation: React.FC<
           label: 'From',
           key: 'scheduledTransfer',
           render: (value) => (
-            <LinkWithCopy
-              text={value.from.id}
+            <AccountAddressCell
+              address={value.from.id}
               href={`${RESOURCES.accounts}/${value.from.id}`}
               className="break-all"
             />
@@ -83,8 +84,8 @@ export const ExecutedReversibleTransactionInformation: React.FC<
           label: 'To',
           key: 'scheduledTransfer',
           render: (value) => (
-            <LinkWithCopy
-              text={value.to.id}
+            <AccountAddressCell
+              address={value.to.id}
               href={`${RESOURCES.accounts}/${value.to.id}`}
               className="break-all"
             />

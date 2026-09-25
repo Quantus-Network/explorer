@@ -1,15 +1,16 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { Transaction } from '@/schemas';
-import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 import {
   formatBlockHeight,
   formatMonetaryValue,
   formatTxAddress
 } from '@/utils/formatter';
+import { getExtrinsicDetailPath } from '@/utils/get-extrinsic-detail-path';
 
 const columnHelper = createColumnHelper<Transaction>();
 
@@ -19,7 +20,7 @@ export const TRANSACTION_COLUMNS = [
     header: 'Hash',
     cell: (props) => {
       const extrinsicId = props.getValue();
-      const extrinsic = props.row.original.extrinsic;
+      const { extrinsic } = props.row.original;
 
       if (!extrinsicId || !extrinsic?.pallet || !extrinsic?.call) {
         return 'Is not available';
@@ -61,10 +62,10 @@ export const TRANSACTION_COLUMNS = [
     id: 'from',
     header: 'From',
     cell: (props) => (
-      <LinkWithCopy
+      <AccountAddressCell
+        address={props.getValue()}
         href={`${RESOURCES.accounts}/${props.getValue()}`}
         text={formatTxAddress(props.getValue())}
-        textCopy={props.getValue()}
       />
     ),
     enableSorting: false
@@ -73,10 +74,10 @@ export const TRANSACTION_COLUMNS = [
     id: 'to',
     header: 'To',
     cell: (props) => (
-      <LinkWithCopy
+      <AccountAddressCell
+        address={props.getValue()}
         href={`${RESOURCES.accounts}/${props.getValue()}`}
         text={formatTxAddress(props.getValue())}
-        textCopy={props.getValue()}
       />
     ),
     enableSorting: false

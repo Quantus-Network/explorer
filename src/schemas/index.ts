@@ -21,4 +21,5 @@ export * from './searchs';
 export * from './transcation';
 export * from './unified-list-transaction';
 export * from './unified-transaction';
+export * from './vesting-schedule';
 export * from './wormhole';

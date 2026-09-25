@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -40,9 +41,10 @@ export const MINER_REWARD_COLUMNS = [
     id: 'miner',
     header: 'Mined by',
     cell: (props) => (
-      <LinkWithCopy
+      <AccountAddressCell
+        address={props.getValue()}
         href={`${RESOURCES.accounts}/${props.getValue()}`}
-        text={props.getValue()}
+        truncate={false}
       />
     ),
     enableSorting: false

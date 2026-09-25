@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -86,9 +87,9 @@ export const MultisigDepositsClaimedInformation: React.FC<
             const multisigId = (value as MultisigDepositsClaimed['multisig'])
               ?.id;
             return multisigId ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={multisigId}
                 href={getMultisigWalletHref(multisigId)}
-                text={multisigId}
                 className="break-all"
               />
             ) : (
@@ -102,9 +103,9 @@ export const MultisigDepositsClaimedInformation: React.FC<
           render: (value) => {
             const claimerId = (value as MultisigDepositsClaimed['claimer'])?.id;
             return claimerId ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={claimerId}
                 href={`${RESOURCES.accounts}/${claimerId}`}
-                text={claimerId}
                 className="break-all"
               />
             ) : (

@@ -4,12 +4,15 @@ import * as React from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useChecksum } from '@/hooks/useChecksum';
 import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
 import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
+
+import { accountBalanceOrZero } from './account-balance-or-zero';
 
 export interface AccountInformationProps {
   accountId: string;
@@ -18,9 +21,9 @@ export interface AccountInformationProps {
 
 interface AccountDetailsInfo {
   id: string;
-  free: number;
-  frozen: number;
-  reserved: number;
+  free: string;
+  frozen: string;
+  reserved: string;
   transactions: number;
   miningRewards: number;
   checksum: string;
@@ -36,10 +39,11 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const { data, loading } = query;
   const account = data?.account;
 
-  const { checksum, loading: checksumLoading } = useChecksum(
-    loading,
-    accountId
-  );
+  const {
+    checksum,
+    loading: checksumLoading,
+    error: checksumError
+  } = useChecksum(loading, accountId);
 
   const stats = data?.accountStats;
   const transactions =
@@ -55,9 +59,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const information: AccountDetailsInfo[] = [
     {
       id: accountId,
-      free: account?.free ?? 0,
-      frozen: account?.frozen ?? 0,
-      reserved: account?.reserved ?? 0,
+      free: accountBalanceOrZero(account?.free),
+      frozen: accountBalanceOrZero(account?.frozen),
+      reserved: accountBalanceOrZero(account?.reserved),
       transactions,
       miningRewards,
       checksum: checksum ?? '',
@@ -80,12 +84,18 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
         {
           label: 'Check Phrase',
           key: 'checksum',
-          render: (value) =>
-            checksumLoading ? (
-              <Skeleton className="h-6" />
-            ) : (
-              <TextWithCopy text={value} />
-            )
+          render: (value) => {
+            if (checksumLoading) return <Skeleton className="h-6" />;
+            if (checksumError) {
+              return (
+                <InlineFetchError
+                  error={checksumError}
+                  fallbackMessage="Check phrase failed"
+                />
+              );
+            }
+            return <TextWithCopy text={value} />;
+          }
         },
         {
           label: 'Account type',

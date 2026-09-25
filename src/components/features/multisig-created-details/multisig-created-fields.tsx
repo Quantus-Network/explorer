@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -44,10 +45,9 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
     render: (value) => {
       const creatorId = (value as MultisigCreated['creator'])?.id;
       return creatorId ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={creatorId}
           href={`${RESOURCES.accounts}/${creatorId}`}
-          text={creatorId}
-          textCopy={creatorId}
         />
       ) : (
         <EmptyValue />
@@ -63,11 +63,10 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
       return (
         <div className="flex flex-col gap-1">
           {signers.map((signer) => (
-            <LinkWithCopy
+            <AccountAddressCell
               key={signer}
+              address={signer}
               href={`${RESOURCES.accounts}/${signer}`}
-              text={signer}
-              textCopy={signer}
             />
           ))}
         </div>
@@ -115,10 +114,9 @@ export const getMultisigCreatedEventFields = (): MultisigCreatedField[] => [
     key: 'id',
     render: (value) =>
       value ? (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={String(value)}
           href={getMultisigWalletHref(String(value))}
-          text={String(value)}
-          textCopy={String(value)}
         />
       ) : (
         <EmptyValue />
@@ -133,7 +131,12 @@ export const getMultisigAccountFields = (): MultisigCreatedField[] => [
     key: 'id',
     render: (value) =>
       value ? (
-        <TextWithCopy text={String(value)} className="break-all" />
+        <AccountAddressCell
+          address={String(value)}
+          href={getMultisigWalletHref(String(value))}
+          truncate={false}
+          className="break-all"
+        />
       ) : (
         <EmptyValue />
       )

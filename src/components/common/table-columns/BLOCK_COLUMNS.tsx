@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -63,10 +64,10 @@ export const BLOCK_COLUMNS = [
       const id = props.getValue();
       if (!id) return <span className="font-mono text-muted-text">—</span>;
       return (
-        <LinkWithCopy
+        <AccountAddressCell
+          address={id}
           href={`${RESOURCES.accounts}/${id}`}
           text={formatTxAddress(id)}
-          textCopy={id}
           className="font-mono text-flare"
         />
       );

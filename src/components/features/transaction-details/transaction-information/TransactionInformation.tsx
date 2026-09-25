@@ -7,6 +7,7 @@ import { EXTRINSIC_TRANSACTION_COLUMNS } from '@/components/common/table-columns
 import { Badge } from '@/components/ui/badge';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { DataTable } from '@/components/ui/composites/data-table/DataTable';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -181,10 +182,10 @@ export const TransactionInformation: React.FC<TransactionInformationProps> = ({
                 return <span className="text-muted-text">unsigned</span>;
               }
               return (
-                <LinkWithCopy
-                  truncate={false}
-                  text={signer.id}
+                <AccountAddressCell
+                  address={signer.id}
                   href={`${RESOURCES.accounts}/${signer.id}`}
+                  truncate={false}
                   className="break-all"
                 />
               );

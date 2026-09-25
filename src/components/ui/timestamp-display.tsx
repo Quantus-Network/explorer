@@ -1,3 +1,5 @@
+import { utc } from '@date-fns/utc';
+import { format as formatDate } from 'date-fns/format';
 import * as React from 'react';
 
 import { formatDistanceTimestamp, formatTimestamp } from '@/utils/formatter';
@@ -6,13 +8,17 @@ import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 export interface TimestampDisplayProps {
   timestamp: string;
+  format?: string;
 }
 
 export const TimestampDisplay: React.FC<TimestampDisplayProps> = ({
-  timestamp
+  timestamp,
+  format: formatPattern
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const timeinUtc = formatTimestamp(timestamp);
+  const timeinUtc = formatPattern
+    ? formatDate(new Date(timestamp), formatPattern, { in: utc })
+    : formatTimestamp(timestamp);
   const timeDistance = formatDistanceTimestamp(timestamp);
 
   return (

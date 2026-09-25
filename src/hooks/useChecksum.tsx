@@ -1,28 +1,56 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
 import { getChecksum } from '@/utils/get-checksum';
 
+type ResolvedChecksum = {
+  id: string;
+  checksum: string | null;
+  error: Error | null;
+};
+
 export const useChecksum = (wait: boolean, id?: string) => {
-  const [checksum, setChecksum] = useState<string | null>(null);
+  const [resolved, setResolved] = useState<ResolvedChecksum | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!id || wait) return;
+
+    let cancelled = false;
+
     const fetchChecksum = async () => {
+      setLoading(true);
+
       try {
-        setLoading(true);
         const response = await getChecksum(id);
-        setChecksum(response);
+        if (cancelled) return;
+        setResolved({ id, checksum: response, error: null });
         setLoading(false);
-      } catch (error: any) {
-        toast.error('Error fetching checksum:', error.message);
+      } catch (caught) {
+        if (cancelled) return;
+        setResolved({
+          id,
+          checksum: null,
+          error:
+            caught instanceof Error
+              ? caught
+              : new Error('Failed to load check phrase')
+        });
+        setLoading(false);
       }
     };
 
-    if (id && !wait) {
-      fetchChecksum();
-    }
+    fetchChecksum();
+
+    return () => {
+      cancelled = true;
+    };
   }, [id, wait]);
 
-  return { checksum, loading };
+  const current = resolved?.id === id ? resolved : null;
+
+  return {
+    checksum: current?.checksum ?? null,
+    loading: current ? loading : true,
+    error: current?.error ?? null
+  };
 };
