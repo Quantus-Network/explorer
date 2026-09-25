@@ -90,7 +90,9 @@ describe('AccountAddressCell', () => {
     );
 
     await waitFor(() => {
-      expect(view.getByRole('status', { name: 'Loading check phrase' })).toBeTruthy();
+      expect(
+        view.getByRole('status', { name: 'Loading check phrase' })
+      ).toBeTruthy();
     });
     expect(getChecksumMock).not.toHaveBeenCalled();
 

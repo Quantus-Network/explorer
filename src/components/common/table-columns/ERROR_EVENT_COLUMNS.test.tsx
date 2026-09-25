@@ -14,11 +14,9 @@ function docsColumn() {
 
 function docsCell(errorDocs: string | null | undefined) {
   const column = docsColumn();
-  return column.cell?.(
-    {
-      getValue: () => errorDocs
-    } as CellContext<ErrorEvent, string | null | undefined>
-  );
+  return column.cell?.({
+    getValue: () => errorDocs
+  } as CellContext<ErrorEvent, string | null | undefined>);
 }
 
 describe('ERROR_EVENT_COLUMNS error docs', () => {

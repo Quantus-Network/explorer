@@ -37,7 +37,9 @@ const block = {
 
 describe('BlockInformation treasury reward', () => {
   it('omits treasury reward while the block is loading', () => {
-    const view = render(<BlockInformation query={blockQuery({ loading: true })} />);
+    const view = render(
+      <BlockInformation query={blockQuery({ loading: true })} />
+    );
 
     expect(view.queryByText('Treasury reward')).toBeNull();
     expect(view.getByText('Miner reward')).toBeTruthy();
