@@ -10486,6 +10486,9 @@ export type GetHomeChainStatsQuery = {
     total_scheduled_transfers: number;
     total_executed_transfers: number;
     total_cancelled_transfers: number;
+    circulating_supply: any;
+    max_supply: any;
+    total_supply: any;
   } | null;
   last24Hour: {
     __typename?: 'unified_transaction_aggregate';
@@ -14552,6 +14555,18 @@ export const GetHomeChainStatsDocument = {
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'total_cancelled_transfers' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'circulating_supply' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'max_supply' }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'total_supply' }
                 }
               ]
             }

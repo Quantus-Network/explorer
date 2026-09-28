@@ -24,6 +24,9 @@ const GET_HOME_STATS = gql`
       total_scheduled_transfers
       total_executed_transfers
       total_cancelled_transfers
+      circulating_supply
+      max_supply
+      total_supply
     }
     last24Hour: unified_transaction_aggregate(where: $last24HourWhere) {
       aggregate {

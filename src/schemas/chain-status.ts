@@ -28,6 +28,9 @@ export interface HomeChainStatsStatus {
   total_scheduled_transfers: number;
   total_executed_transfers: number;
   total_cancelled_transfers: number;
+  circulating_supply: string;
+  max_supply: string;
+  total_supply: string;
 }
 
 export interface DailyChainStatRow {

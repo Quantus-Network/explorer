@@ -119,7 +119,10 @@ export const useChainStats = () => {
     totalAccounts,
     blocksPoints,
     transfersPoints,
-    activeAccountsPoints
+    activeAccountsPoints,
+    maxSupply: status?.max_supply,
+    totalSupply: status?.total_supply,
+    circulatingSupply: status?.circulating_supply
   };
 };
 
