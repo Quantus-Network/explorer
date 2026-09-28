@@ -17,6 +17,7 @@ import { useChainStats } from './hook';
 const STROKE_FLARE = 'var(--flare)';
 const STROKE_GLACIER = 'var(--glacier)';
 const STROKE_MUTED = 'var(--muted-text)';
+const STROKE_SAGE = 'var(--sage)';
 
 export interface ChainStatsProps {}
 
@@ -60,6 +61,9 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
     blocksPoints,
     transfersPoints,
     activeAccountsPoints,
+    transferredPoints,
+    totalTransferred,
+    last24HourTransferred,
     maxSupply,
     totalSupply,
     circulatingSupply
@@ -68,58 +72,76 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
   const errorMessage = error?.message ?? null;
 
   return (
-    <CardGroup className="grid-cols-1 sm:grid-cols-3">
-      <StatSparklineCard
-        label="Latest Block"
-        loading={loading}
-        error={errorMessage}
-        live
-        value={
-          blockHeight != null ? `#${blockHeight.toLocaleString()}` : undefined
-        }
-        subtitle="~12s block time"
-        points={blocksPoints}
-        stroke={STROKE_FLARE}
-        valueClassName="text-flare"
-      />
+    <div className="flex flex-col gap-px bg-border-subtle">
+      <CardGroup className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <StatSparklineCard
+          label="Latest Block"
+          loading={loading}
+          error={errorMessage}
+          live
+          value={
+            blockHeight != null ? `#${blockHeight.toLocaleString()}` : undefined
+          }
+          subtitle="~12s block time"
+          points={blocksPoints}
+          stroke={STROKE_FLARE}
+          valueClassName="text-flare"
+        />
 
-      <StatSparklineCard
-        label="Total Transactions"
-        loading={loading}
-        error={errorMessage}
-        value={totalTransactions.toLocaleString()}
-        subtitle={`${last24HourTransactions.toLocaleString()} in last 24h`}
-        points={transfersPoints}
-        stroke={STROKE_GLACIER}
-      />
+        <StatSparklineCard
+          label="Total Transactions"
+          loading={loading}
+          error={errorMessage}
+          value={totalTransactions.toLocaleString()}
+          subtitle={`${last24HourTransactions.toLocaleString()} in last 24h`}
+          points={transfersPoints}
+          stroke={STROKE_GLACIER}
+        />
 
-      <StatSparklineCard
-        label="Active Accounts"
-        loading={loading}
-        error={errorMessage}
-        value={activeAccounts.toLocaleString()}
-        points={activeAccountsPoints}
-        stroke={STROKE_MUTED}
-      />
+        <StatSparklineCard
+          label="Total Transferred"
+          loading={loading}
+          error={errorMessage}
+          value={
+            totalTransferred != null
+              ? formatChainSupply(totalTransferred)
+              : undefined
+          }
+          subtitle={`${formatChainSupply(last24HourTransferred)} in last 24h`}
+          points={transferredPoints}
+          stroke={STROKE_SAGE}
+        />
 
-      <SupplyStatCard
-        label="Max Supply"
-        loading={loading}
-        error={errorMessage}
-        value={maxSupply}
-      />
-      <SupplyStatCard
-        label="Total Supply"
-        loading={loading}
-        error={errorMessage}
-        value={totalSupply}
-      />
-      <SupplyStatCard
-        label="Coin Circulation"
-        loading={loading}
-        error={errorMessage}
-        value={circulatingSupply}
-      />
-    </CardGroup>
+        <StatSparklineCard
+          label="Active Accounts"
+          loading={loading}
+          error={errorMessage}
+          value={activeAccounts.toLocaleString()}
+          points={activeAccountsPoints}
+          stroke={STROKE_MUTED}
+        />
+      </CardGroup>
+
+      <CardGroup className="grid-cols-1 sm:grid-cols-3">
+        <SupplyStatCard
+          label="Max Supply"
+          loading={loading}
+          error={errorMessage}
+          value={maxSupply}
+        />
+        <SupplyStatCard
+          label="Total Supply"
+          loading={loading}
+          error={errorMessage}
+          value={totalSupply}
+        />
+        <SupplyStatCard
+          label="Coin Circulation"
+          loading={loading}
+          error={errorMessage}
+          value={circulatingSupply}
+        />
+      </CardGroup>
+    </div>
   );
 };

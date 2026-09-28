@@ -9,11 +9,15 @@ import type {
 } from '@/schemas';
 import { HOME_STATS_DAY_COUNT } from '@/utils/get-home-stats-day-windows';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
-import { withExcludedRewardTransfers } from '@/utils/unified-transaction-filters';
+import {
+  last24HourTransferredWhere,
+  withExcludedRewardTransfers
+} from '@/utils/unified-transaction-filters';
 
 const GET_HOME_STATS = gql`
   query GetHomeChainStats(
     $last24HourWhere: unified_transaction_bool_exp!
+    $last24HourTransferredWhere: unified_transaction_bool_exp!
     $dayLimit: Int!
   ) {
     status: chain_stats_by_pk(id: "global") {
@@ -27,10 +31,20 @@ const GET_HOME_STATS = gql`
       circulating_supply
       max_supply
       total_supply
+      total_transferred_amount
     }
     last24Hour: unified_transaction_aggregate(where: $last24HourWhere) {
       aggregate {
         count
+      }
+    }
+    last24HourTransferred: unified_transaction_aggregate(
+      where: $last24HourTransferredWhere
+    ) {
+      aggregate {
+        sum {
+          amount
+        }
       }
     }
     dailyStats: daily_chain_stats(order_by: { date: desc }, limit: $dayLimit) {
@@ -39,6 +53,7 @@ const GET_HOME_STATS = gql`
       blocks_count
       tx_count
       active_accounts
+      transferred_amount
     }
   }
 `;
@@ -77,6 +92,10 @@ export const chainStatus = {
         last24HourWhere: withExcludedRewardTransfers({
           timestamp: { _gte: startDate, _lte: endDate }
         }),
+        last24HourTransferredWhere: last24HourTransferredWhere(
+          startDate,
+          endDate
+        ),
         // One extra row covers the in-progress UTC day, which the sparkline drops.
         dayLimit: HOME_STATS_DAY_COUNT + 1
       }),

@@ -8,6 +8,8 @@ import { formatHomeStatsUtcDayLabel } from '@/utils/get-home-stats-day-windows';
 import { sumChainTransferTotals } from '@/utils/sum-chain-transfer-totals';
 
 import { alignDailyStats } from './align-daily-stats';
+import { formatChainSupply } from './format-chain-supply';
+import { transferredAmountToChartValue } from './transferred-amount-chart-value';
 
 const toPoints = (
   values: number[],
@@ -34,6 +36,8 @@ export const useChainStats = () => {
 
   const totalTransactions = sumChainTransferTotals(status);
   const last24HourTransactions = data?.last24Hour?.aggregate?.count ?? 0;
+  const last24HourTransferred =
+    data?.last24HourTransferred?.aggregate?.sum?.amount ?? '0';
 
   const alignedDays = useMemo(
     () => alignDailyStats(data?.dailyStats, new Date()),
@@ -79,6 +83,16 @@ export const useChainStats = () => {
     [alignedDays, dayLabels]
   );
 
+  const transferredPoints = useMemo(
+    () =>
+      alignedDays.map((row, index) => ({
+        value: transferredAmountToChartValue(row.transferred_amount),
+        label: dayLabels[index] ?? '',
+        displayValue: formatChainSupply(row.transferred_amount)
+      })),
+    [alignedDays, dayLabels]
+  );
+
   return {
     loading,
     error,
@@ -90,6 +104,9 @@ export const useChainStats = () => {
     blocksPoints,
     transfersPoints,
     activeAccountsPoints,
+    transferredPoints,
+    totalTransferred: status?.total_transferred_amount,
+    last24HourTransferred,
     maxSupply: status?.max_supply,
     totalSupply: status?.total_supply,
     circulatingSupply: status?.circulating_supply

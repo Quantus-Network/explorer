@@ -20,6 +20,14 @@ export interface AggregateCount {
   } | null;
 }
 
+export interface AggregateAmountSum {
+  aggregate?: {
+    sum?: {
+      amount?: string | null;
+    } | null;
+  } | null;
+}
+
 export interface HomeChainStatsStatus {
   block_height: number;
   total_accounts: number;
@@ -31,6 +39,7 @@ export interface HomeChainStatsStatus {
   circulating_supply: string;
   max_supply: string;
   total_supply: string;
+  total_transferred_amount: string;
 }
 
 export interface DailyChainStatRow {
@@ -39,15 +48,18 @@ export interface DailyChainStatRow {
   blocks_count: number;
   tx_count: number;
   active_accounts: number;
+  transferred_amount: string;
 }
 
 export interface HomeChainStatsResponse {
   status: HomeChainStatsStatus | null;
   last24Hour: AggregateCount;
+  last24HourTransferred: AggregateAmountSum;
   dailyStats: DailyChainStatRow[];
 }
 
 export interface HomeChainStatsVariables {
   last24HourWhere: Unified_Transaction_Bool_Exp;
+  last24HourTransferredWhere: Unified_Transaction_Bool_Exp;
   dayLimit: number;
 }

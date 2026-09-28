@@ -8,7 +8,7 @@ const row = (
   id: string,
   counts: Pick<
     DailyChainStatRow,
-    'blocks_count' | 'tx_count' | 'active_accounts'
+    'blocks_count' | 'tx_count' | 'active_accounts' | 'transferred_amount'
   >
 ): DailyChainStatRow => ({
   id,
@@ -23,17 +23,20 @@ describe('alignDailyStats', () => {
         row('2026-09-28', {
           blocks_count: 40,
           tx_count: 12,
-          active_accounts: 3
+          active_accounts: 3,
+          transferred_amount: '10'
         }),
         row('2026-09-27', {
           blocks_count: 7200,
           tx_count: 1400,
-          active_accounts: 80
+          active_accounts: 80,
+          transferred_amount: '1500000000000'
         }),
         row('2026-09-21', {
           blocks_count: 7100,
           tx_count: 1300,
-          active_accounts: 70
+          active_accounts: 70,
+          transferred_amount: '20'
         })
       ],
       NOW
@@ -50,14 +53,16 @@ describe('alignDailyStats', () => {
     ]);
     expect(aligned.at(-1)).toMatchObject({
       id: '2026-09-27',
-      tx_count: 1400
+      tx_count: 1400,
+      transferred_amount: '1500000000000'
     });
     expect(aligned[1]).toEqual({
       id: '2026-09-22',
       date: '2026-09-22T00:00:00.000Z',
       blocks_count: 0,
       tx_count: 0,
-      active_accounts: 0
+      active_accounts: 0,
+      transferred_amount: '0'
     });
   });
 });

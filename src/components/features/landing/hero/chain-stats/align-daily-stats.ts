@@ -8,7 +8,8 @@ const emptyDay = (id: string): DailyChainStatRow => ({
   date: `${id}T00:00:00.000Z`,
   blocks_count: 0,
   tx_count: 0,
-  active_accounts: 0
+  active_accounts: 0,
+  transferred_amount: '0'
 });
 
 /**
