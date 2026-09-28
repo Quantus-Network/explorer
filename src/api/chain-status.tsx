@@ -77,7 +77,8 @@ export const chainStatus = {
         last24HourWhere: withExcludedRewardTransfers({
           timestamp: { _gte: startDate, _lte: endDate }
         }),
-        dayLimit: HOME_STATS_DAY_COUNT
+        // One extra row covers the in-progress UTC day, which the sparkline drops.
+        dayLimit: HOME_STATS_DAY_COUNT + 1
       }),
       [endDate, startDate]
     );
