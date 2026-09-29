@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 
 import { Badge } from '@/components/ui/badge';
+import { AccountAddressLabel } from '@/components/ui/composites/account-address-label/AccountAddressLabel';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
@@ -30,6 +31,7 @@ interface AccountDetailsInfo {
   isHighSecurity: boolean;
   isGuardian: boolean;
   isMultisig: boolean;
+  isDepositOnly: boolean | null;
 }
 
 export const AccountInformation: React.FC<AccountInformationProps> = ({
@@ -67,7 +69,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       checksum: checksum ?? '',
       isHighSecurity,
       isGuardian,
-      isMultisig
+      isMultisig,
+      isDepositOnly: account?.is_deposit_only ?? null
     }
   ];
 
@@ -127,15 +130,22 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
                 </Link>
               );
             }
+            const addressLabel = (
+              <AccountAddressLabel
+                isHighSecurity={item.isHighSecurity}
+                isGuardian={item.isGuardian}
+                isMultisig={item.isMultisig}
+                isDepositOnly={item.isDepositOnly}
+              />
+            );
             if (badges.length === 0) {
-              return (
-                <span className="font-mono text-[11px] text-muted-text">
-                  Standard
-                </span>
-              );
+              return addressLabel;
             }
             return (
-              <div className="flex flex-wrap items-center gap-1">{badges}</div>
+              <div className="flex flex-wrap items-center gap-1">
+                {badges}
+                {addressLabel}
+              </div>
             );
           }
         },

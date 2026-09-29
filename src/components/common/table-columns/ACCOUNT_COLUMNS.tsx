@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 import { Badge } from '@/components/ui/badge';
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
+import { AccountAddressLabel } from '@/components/ui/composites/account-address-label/AccountAddressLabel';
 import { RESOURCES } from '@/constants/resources';
 import type { AccountListItem } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
@@ -28,16 +29,21 @@ export const ACCOUNT_COLUMNS = [
       const {
         is_high_security: isHighSec,
         is_guardian: isGuardian,
-        is_multisig: isMultisig
+        is_multisig: isMultisig,
+        is_deposit_only: isDepositOnly
       } = props.row.original;
       const hasFlags = isHighSec || isGuardian || isMultisig;
+      const addressLabel = (
+        <AccountAddressLabel
+          isHighSecurity={isHighSec}
+          isGuardian={isGuardian}
+          isMultisig={isMultisig}
+          isDepositOnly={isDepositOnly}
+        />
+      );
 
       if (!hasFlags) {
-        return (
-          <span className="font-mono text-[11px] text-muted-text">
-            Standard
-          </span>
-        );
+        return addressLabel;
       }
 
       return (
@@ -45,6 +51,7 @@ export const ACCOUNT_COLUMNS = [
           {isHighSec && <Badge variant="reversible">High Sec</Badge>}
           {isGuardian && <Badge variant="immediate">Guardian</Badge>}
           {isMultisig && <Badge variant="miner">Multisig</Badge>}
+          {addressLabel}
         </div>
       );
     },

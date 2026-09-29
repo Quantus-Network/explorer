@@ -29,6 +29,7 @@ export const accounts = {
           free
           frozen
           reserved
+          is_deposit_only
           is_high_security
           is_guardian
           is_multisig
@@ -59,6 +60,7 @@ export const accounts = {
           free
           frozen
           reserved
+          is_deposit_only
         }
         accountStats: account_stats_by_pk(id: $id) {
           total_cancelled_transfers

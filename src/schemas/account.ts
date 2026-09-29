@@ -1,6 +1,9 @@
 import type * as gql from '../__generated__/graphql';
 
-export type Account = Pick<gql.Account, 'id' | 'free' | 'frozen' | 'reserved'>;
+export type Account = Pick<
+  gql.Account,
+  'id' | 'free' | 'frozen' | 'reserved' | 'is_deposit_only'
+>;
 
 /** Listing row: flags are denormalized onto `account` by the indexer (no nested event lookups). */
 export interface AccountListItem extends Account {
