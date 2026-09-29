@@ -7,7 +7,7 @@ export const transferredAmountToChartValue = (raw: string): number => {
   }
 
   const value = BigInt(raw);
-  const scale = 10n ** BigInt(TOKEN_DECIMALS);
+  const scale = BigInt(10) ** BigInt(TOKEN_DECIMALS);
   const whole = value / scale;
 
   if (whole > BigInt(Number.MAX_SAFE_INTEGER)) {

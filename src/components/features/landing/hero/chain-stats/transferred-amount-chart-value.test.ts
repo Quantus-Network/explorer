@@ -21,7 +21,7 @@ describe('transferredAmountToChartValue', () => {
   });
 
   it('rejects a whole-token part above Number.MAX_SAFE_INTEGER', () => {
-    const tooBig = `${BigInt(Number.MAX_SAFE_INTEGER) + 1n}${'0'.repeat(TOKEN_DECIMALS)}`;
+    const tooBig = `${BigInt(Number.MAX_SAFE_INTEGER) + BigInt(1)}${'0'.repeat(TOKEN_DECIMALS)}`;
 
     expect(() => transferredAmountToChartValue(tooBig)).toThrow(/too large/);
   });
