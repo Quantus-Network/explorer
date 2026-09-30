@@ -2,8 +2,34 @@ import {
   EXCLUDE_REWARD_TRANSFERS,
   extractAccountPartyId,
   isUnfilteredExcludeRewards,
+  last24HourTransferredWhere,
   withExcludedRewardTransfers
 } from './unified-transaction-filters';
+
+describe('last24HourTransferredWhere', () => {
+  it('includes signed immediate, wormhole, and executed reversible amounts only', () => {
+    const where = last24HourTransferredWhere(
+      '2026-09-27T15:30:00.000Z',
+      '2026-09-28T15:30:00.000Z'
+    );
+
+    expect(where).toEqual({
+      timestamp: {
+        _gte: '2026-09-27T15:30:00.000Z',
+        _lte: '2026-09-28T15:30:00.000Z'
+      },
+      _or: [
+        {
+          _and: [{ type: { _eq: 'IMMEDIATE' } }, { hash: { _is_null: false } }]
+        },
+        { type: { _eq: 'WORMHOLE' } },
+        { type: { _eq: 'EXECUTED_REVERSIBLE' } }
+      ]
+    });
+    expect(JSON.stringify(where)).not.toContain('SCHEDULED_REVERSIBLE');
+    expect(JSON.stringify(where)).not.toContain('CANCELLED_REVERSIBLE');
+  });
+});
 
 describe('isUnfilteredExcludeRewards', () => {
   it('treats undefined as unfiltered', () => {

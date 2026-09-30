@@ -14,6 +14,27 @@ export function withExcludedRewardTransfers(
   return { _and: [EXCLUDE_REWARD_TRANSFERS, where] };
 }
 
+/**
+ * Rolling-window sum for Total Transferred.
+ * Counts signed immediate amounts, wormhole outputs, and executed reversible amounts.
+ * Scheduled and cancelled rows are excluded: a reversible amount counts once, when it executes.
+ */
+export function last24HourTransferredWhere(
+  startDate: string,
+  endDate: string
+): Unified_Transaction_Bool_Exp {
+  return {
+    timestamp: { _gte: startDate, _lte: endDate },
+    _or: [
+      {
+        _and: [{ type: { _eq: 'IMMEDIATE' } }, { hash: { _is_null: false } }]
+      },
+      { type: { _eq: 'WORMHOLE' } },
+      { type: { _eq: 'EXECUTED_REVERSIBLE' } }
+    ]
+  };
+}
+
 /** True when where is exactly the global exclude-rewards filter (no extra predicates). */
 export function isUnfilteredExcludeRewards(
   where?: Unified_Transaction_Bool_Exp

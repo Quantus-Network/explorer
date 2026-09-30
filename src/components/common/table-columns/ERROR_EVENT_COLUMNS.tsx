@@ -49,6 +49,12 @@ export const ERROR_EVENT_COLUMNS = [
     cell: (props) => props.getValue() ?? '-',
     enableSorting: true
   }),
+  columnHelper.accessor('error_docs', {
+    id: 'errorDocs',
+    header: 'Docs',
+    cell: (props) => props.getValue() ?? '-',
+    enableSorting: false
+  }),
   columnHelper.accessor('timestamp', {
     id: 'timestamp',
     header: 'Timestamp',

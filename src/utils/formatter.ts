@@ -37,6 +37,11 @@ export const formatDistanceTimestamp = (timestamp?: string | Date) => {
   return distance;
 };
 
+const groupIntegerDigits = (integer: bigint) => {
+  const digits = integer.toString();
+  return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 export const formatMonetaryValue = (
   value: bigint | string,
   digits?: number
@@ -48,8 +53,15 @@ export const formatMonetaryValue = (
 
   const integerPart = result / factor;
   const fractionalPart = result % factor;
-  const combinedPart = `${integerPart}.${fractionalPart.toString().padStart(decimals, '0')}`;
-  const formatted = combinedPart.replace(/\.?(0+)$/, '');
+  const integerText = groupIntegerDigits(integerPart);
+  const fractionalText = fractionalPart
+    .toString()
+    .padStart(decimals, '0')
+    .replace(/0+$/, '');
+  const formatted =
+    fractionalText.length > 0
+      ? `${integerText}.${fractionalText}`
+      : integerText;
 
   return `${formatted} ${env.COIN_SYMBOL}`;
 };

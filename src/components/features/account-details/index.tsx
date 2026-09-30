@@ -4,7 +4,7 @@ import * as React from 'react';
 import useApiClient from '@/api';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
-import { validateAccountId } from '@/utils/validate-account-id';
+import { isUnknownAccountNotFound } from '@/utils/is-unknown-account-not-found';
 
 import { AccountAllTransactions } from './account-all-transactions/AccountAllTransactions';
 import { AccountInformation } from './account-information/AccountInformation';
@@ -15,11 +15,18 @@ interface Props {
 
 export const AccountDetails: React.FC<Props> = ({ id }) => {
   const api = useApiClient();
-  const isAccountValid = validateAccountId(id);
   const query = api.accounts.getById().useQuery(id);
   const { loading, data } = query;
 
-  if (!loading && !data?.account && !isAccountValid) throw notFound();
+  if (
+    isUnknownAccountNotFound({
+      loading,
+      account: data?.account,
+      accountId: id
+    })
+  ) {
+    throw notFound();
+  }
 
   return (
     <SectionContainer>

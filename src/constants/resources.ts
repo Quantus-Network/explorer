@@ -6,6 +6,7 @@ export const RESOURCES = {
   accounts: '/accounts',
   blocks: '/blocks',
   minerRewards: '/miner-rewards',
+  vesting: '/vesting',
   highSecuritySets: '/high-security-sets',
   errors: '/errors',
   wormhole: '/transactions/wormhole',

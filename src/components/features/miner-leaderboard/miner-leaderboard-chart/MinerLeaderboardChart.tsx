@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RESOURCES } from '@/constants/resources';
@@ -55,7 +55,8 @@ export const MinerLeaderboardChart = () => {
                       aria-hidden
                     />
                     {item.id ? (
-                      <LinkWithCopy
+                      <AccountAddressCell
+                        address={item.id}
                         href={`${RESOURCES.accounts}/${item.id}`}
                         text={item.label}
                         truncate={false}

@@ -5,7 +5,7 @@ import { startOfToday } from 'date-fns/startOfToday';
 import { subDays } from 'date-fns/subDays';
 import { useMemo } from 'react';
 
-/** Number of daily sparkline points (inclusive of today). */
+/** Number of completed UTC days shown on homepage sparklines. */
 export const HOME_STATS_DAY_COUNT = 7;
 
 export interface DayWindow {

@@ -3,41 +3,13 @@ import { useMemo } from 'react';
 import useApiClient from '@/api';
 import type { SparklinePoint } from '@/components/ui/composites/stat-sparkline-card';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
-import type { DailyChainStatRow, HomeChainStatsResponse } from '@/schemas';
-import {
-  formatHomeStatsUtcDayLabel,
-  HOME_STATS_DAY_COUNT
-} from '@/utils/get-home-stats-day-windows';
+import type { HomeChainStatsResponse } from '@/schemas';
+import { formatHomeStatsUtcDayLabel } from '@/utils/get-home-stats-day-windows';
 import { sumChainTransferTotals } from '@/utils/sum-chain-transfer-totals';
 
-/** Oldest → newest, pad missing UTC days with zeros so sparklines stay 7 points. */
-const alignDailyStats = (
-  rows: DailyChainStatRow[] | undefined
-): DailyChainStatRow[] => {
-  const byId = new Map((rows ?? []).map((row) => [row.id, row]));
-  const today = new Date();
-  const todayUtc = Date.UTC(
-    today.getUTCFullYear(),
-    today.getUTCMonth(),
-    today.getUTCDate()
-  );
-
-  return Array.from({ length: HOME_STATS_DAY_COUNT }, (_, index) => {
-    const dayMs =
-      todayUtc - (HOME_STATS_DAY_COUNT - 1 - index) * 24 * 60 * 60 * 1000;
-    const day = new Date(dayMs);
-    const id = day.toISOString().slice(0, 10);
-    return (
-      byId.get(id) ?? {
-        id,
-        date: `${id}T00:00:00.000Z`,
-        blocks_count: 0,
-        tx_count: 0,
-        active_accounts: 0
-      }
-    );
-  });
-};
+import { alignDailyStats } from './align-daily-stats';
+import { formatChainSupply } from './format-chain-supply';
+import { transferredAmountToChartValue } from './transferred-amount-chart-value';
 
 const toPoints = (
   values: number[],
@@ -64,9 +36,11 @@ export const useChainStats = () => {
 
   const totalTransactions = sumChainTransferTotals(status);
   const last24HourTransactions = data?.last24Hour?.aggregate?.count ?? 0;
+  const last24HourTransferred =
+    data?.last24HourTransferred?.aggregate?.sum?.amount ?? '0';
 
   const alignedDays = useMemo(
-    () => alignDailyStats(data?.dailyStats),
+    () => alignDailyStats(data?.dailyStats, new Date()),
     [data?.dailyStats]
   );
 
@@ -109,6 +83,16 @@ export const useChainStats = () => {
     [alignedDays, dayLabels]
   );
 
+  const transferredPoints = useMemo(
+    () =>
+      alignedDays.map((row, index) => ({
+        value: transferredAmountToChartValue(row.transferred_amount),
+        label: dayLabels[index] ?? '',
+        displayValue: formatChainSupply(row.transferred_amount)
+      })),
+    [alignedDays, dayLabels]
+  );
+
   return {
     loading,
     error,
@@ -119,7 +103,13 @@ export const useChainStats = () => {
     totalAccounts,
     blocksPoints,
     transfersPoints,
-    activeAccountsPoints
+    activeAccountsPoints,
+    transferredPoints,
+    totalTransferred: status?.total_transferred_amount,
+    last24HourTransferred,
+    maxSupply: status?.max_supply,
+    totalSupply: status?.total_supply,
+    circulatingSupply: status?.circulating_supply
   };
 };
 

@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import useApiClient from '@/api';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { ProposalIdLink } from '@/components/ui/composites/proposal-id-link/ProposalIdLink';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
@@ -99,10 +100,9 @@ export const MultisigProposalCreatedInformation: React.FC<
             const multisigId = (value as MultisigProposalCreated['proposal'])
               ?.multisig?.id;
             return multisigId ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={multisigId}
                 href={getMultisigWalletHref(multisigId)}
-                text={multisigId}
-                textCopy={multisigId}
               />
             ) : (
               <EmptyValue />
@@ -116,10 +116,9 @@ export const MultisigProposalCreatedInformation: React.FC<
             const proposerId = (value as MultisigProposalCreated['proposal'])
               ?.proposer?.id;
             return proposerId ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={proposerId}
                 href={`${RESOURCES.accounts}/${proposerId}`}
-                text={proposerId}
-                textCopy={proposerId}
               />
             ) : (
               <EmptyValue />

@@ -2,7 +2,7 @@ import type { QueryResult } from '@apollo/client';
 import * as React from 'react';
 
 import { DataList } from '@/components/ui/composites/data-list/DataList';
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -60,6 +60,7 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
     minerTransfer?.amount ??
     (minerRewardFallback != null ? String(minerRewardFallback) : null);
   const treasuryReward = treasuryTransfer?.amount ?? null;
+  const showTreasuryReward = !loading && treasuryReward != null;
 
   const information: Partial<BlockDetails>[] = [
     {
@@ -105,11 +106,10 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           key: 'miner',
           render: (value) =>
             value ? (
-              <LinkWithCopy
+              <AccountAddressCell
+                address={value as string}
                 href={`${RESOURCES.accounts}/${value}`}
-                text={value}
                 truncate={false}
-                textCopy={value as string}
               />
             ) : (
               "Miner address isn't registered."
@@ -120,11 +120,15 @@ export const BlockInformation: React.FC<BlockInformationProps> = ({
           key: 'minerReward',
           render: (value) => formatRewardAmount(value as string | null)
         },
-        {
-          label: 'Treasury reward',
-          key: 'treasuryReward',
-          render: (value) => formatRewardAmount(value as string | null)
-        },
+        ...(showTreasuryReward
+          ? [
+              {
+                label: 'Treasury reward',
+                key: 'treasuryReward' as const,
+                render: (value: string | null) => formatRewardAmount(value)
+              }
+            ]
+          : []),
         {
           label: 'Time',
           key: 'timestamp',

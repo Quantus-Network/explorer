@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
-import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import {
   MINER_DISTRIBUTION_COLORS,
   MINER_DISTRIBUTION_OTHERS_COLOR
@@ -72,9 +72,9 @@ export const getMinerLeaderboardColumns = ({
     id: 'miner',
     header: 'Miner',
     cell: (props) => (
-      <LinkWithCopy
+      <AccountAddressCell
+        address={props.getValue()}
         href={`${RESOURCES.accounts}/${props.getValue()}`}
-        text={props.getValue() ?? '-'}
         truncate={false}
       />
     ),

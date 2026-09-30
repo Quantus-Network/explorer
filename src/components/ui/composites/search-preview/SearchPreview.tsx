@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router';
 import type { HTMLAttributes } from 'react';
 import React, { forwardRef } from 'react';
 
+import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { SearchAllResponse } from '@/schemas/searchs';
@@ -146,11 +147,21 @@ export const SearchPreview = forwardRef<HTMLDivElement, SearchPreviewProps>(
         emptyMsg: 'No accounts found.',
         items: accounts,
         renderItem: (acc: any) => (
-          <PreviewLink
-            href={getAccountSearchPath(acc.id)}
-            label={`${acc.id}`}
-            onSelect={handleClosePreview}
-          />
+          <div
+            className="px-3.5 py-2"
+            onClick={(event) => {
+              if ((event.target as HTMLElement).closest('a')) {
+                handleClosePreview();
+              }
+            }}
+          >
+            <AccountAddressCell
+              address={acc.id}
+              href={getAccountSearchPath(acc.id)}
+              truncate={false}
+              className="text-sm text-muted-text"
+            />
+          </div>
         )
       },
       {
