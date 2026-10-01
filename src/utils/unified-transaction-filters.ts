@@ -53,6 +53,19 @@ function isExcludeRewardsClause(
   return hasImmediate && hasNullHash;
 }
 
+/**
+ * Rows where the account is sender or receiver; the shape {@link extractAccountPartyId} recognises.
+ * Filters the FK columns, not the `from` / `to` relationships: those compile to per-row EXISTS
+ * probes that walk the global timestamp index instead of the (from|to, timestamp) indexes.
+ */
+export function accountPartyWhere(
+  accountId: string
+): Unified_Transaction_Bool_Exp {
+  return {
+    _or: [{ from_id: { _eq: accountId } }, { to_id: { _eq: accountId } }]
+  };
+}
+
 function definedKeys(obj: object): string[] {
   return Object.keys(obj).filter(
     (k) => (obj as Record<string, unknown>)[k] != null
@@ -89,19 +102,13 @@ export function extractAccountPartyId(
 
   for (const clause of partyWhere._or) {
     if (!clause || definedKeys(clause).length !== 1) return null;
-    const fromEq = clause.from?.id?._eq;
-    const toEq = clause.to?.id?._eq;
-    if (typeof fromEq === 'string' && clause.from && !clause.to) {
-      if (definedKeys(clause.from).length !== 1) return null;
-      if (!clause.from.id || definedKeys(clause.from.id).length !== 1) {
-        return null;
-      }
+    const fromEq = clause.from_id?._eq;
+    const toEq = clause.to_id?._eq;
+    if (typeof fromEq === 'string' && clause.from_id) {
+      if (definedKeys(clause.from_id).length !== 1) return null;
       fromId = fromEq;
-    } else if (typeof toEq === 'string' && clause.to && !clause.from) {
-      if (definedKeys(clause.to).length !== 1) return null;
-      if (!clause.to.id || definedKeys(clause.to.id).length !== 1) {
-        return null;
-      }
+    } else if (typeof toEq === 'string' && clause.to_id) {
+      if (definedKeys(clause.to_id).length !== 1) return null;
       toId = toEq;
     } else {
       return null;

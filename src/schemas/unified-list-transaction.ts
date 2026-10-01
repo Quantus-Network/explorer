@@ -37,6 +37,11 @@ export interface UnifiedListTransactionListResponse {
   };
 }
 
+export interface UnifiedListTransactionPageResponse {
+  transactions: UnifiedListTransaction[];
+  hasNextPage: boolean;
+}
+
 export interface RecentUnifiedListTransactionsResponse {
   transactions: UnifiedListTransaction[];
 }

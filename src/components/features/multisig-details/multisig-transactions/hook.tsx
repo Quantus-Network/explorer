@@ -12,7 +12,10 @@ import { useTableState } from '@/hooks/useTableState';
 import type { UnifiedListTransaction } from '@/schemas';
 import { browsableRowCount } from '@/utils/browsable-page-depth';
 import { transformSortLiteral } from '@/utils/transform-sort';
-import { withExcludedRewardTransfers } from '@/utils/unified-transaction-filters';
+import {
+  accountPartyWhere,
+  withExcludedRewardTransfers
+} from '@/utils/unified-transaction-filters';
 
 export const useMultisigDetailTransactions = (walletId: string) => {
   const api = useApiClient();
@@ -35,13 +38,7 @@ export const useMultisigDetailTransactions = (walletId: string) => {
   });
 
   const where = useMemo(
-    () =>
-      withExcludedRewardTransfers({
-        _or: [
-          { from: { id: { _eq: walletId } } },
-          { to: { id: { _eq: walletId } } }
-        ]
-      }),
+    () => withExcludedRewardTransfers(accountPartyWhere(walletId)),
     [walletId]
   );
 

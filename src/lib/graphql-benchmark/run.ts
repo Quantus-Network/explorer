@@ -33,6 +33,37 @@ export function createBenchmarkApolloClient(uri: string) {
   });
 }
 
+/** Registry for the suite, narrowed to one group when given. */
+export function selectBenchmarkEntries(
+  suite: GraphqlBenchmarkSuite,
+  group?: string
+): GraphqlBenchmarkRegistryEntry[] {
+  const registry =
+    suite === 'mobile'
+      ? mobileGraphqlBenchmarkRegistry
+      : graphqlBenchmarkRegistry;
+  if (group === undefined) return registry;
+  const entries = registry.filter((entry) => entry.group === group);
+  if (entries.length === 0) {
+    throw new Error(`No ${suite} benchmark entries in group "${group}"`);
+  }
+  return entries;
+}
+
+export async function loadBenchmarkContext(
+  client: ApolloClient<NormalizedCacheObject>,
+  suite: GraphqlBenchmarkSuite,
+  options: { timeoutMs: number; signal?: AbortSignal }
+): Promise<{ context: GraphqlBenchmarkContext; requestFailures: string[] }> {
+  if (suite === 'mobile') {
+    return loadMobileBenchmarkContext(client, options);
+  }
+  return {
+    context: await loadGraphqlBenchmarkContext(client),
+    requestFailures: []
+  };
+}
+
 function responseByteLength(data: unknown): number {
   try {
     return new TextEncoder().encode(JSON.stringify(data)).length;
@@ -58,6 +89,7 @@ function median(values: number[]) {
 export async function runGraphqlBenchmarks(options: {
   endpoint: string;
   suite?: GraphqlBenchmarkSuite;
+  group?: string;
   samples?: number;
   warmup?: boolean;
   timeoutMs?: number;
@@ -71,30 +103,19 @@ export async function runGraphqlBenchmarks(options: {
   const {
     endpoint,
     suite = 'explorer',
+    group,
     samples = 1,
     warmup = samples > 1,
     timeoutMs = BENCHMARK_QUERY_TIMEOUT_MS,
     signal,
     onProgress
   } = options;
+  const registry = selectBenchmarkEntries(suite, group);
   const client = createBenchmarkApolloClient(endpoint);
-  const registry: GraphqlBenchmarkRegistryEntry[] =
-    suite === 'mobile'
-      ? mobileGraphqlBenchmarkRegistry
-      : graphqlBenchmarkRegistry;
-
-  let bootstrapContext: GraphqlBenchmarkContext;
-  let bootstrapRequestFailures: string[] = [];
-  if (suite === 'mobile') {
-    const loaded = await loadMobileBenchmarkContext(client, {
-      timeoutMs,
-      signal
-    });
-    bootstrapContext = loaded.context;
-    bootstrapRequestFailures = loaded.requestFailures;
-  } else {
-    bootstrapContext = await loadGraphqlBenchmarkContext(client);
-  }
+  const {
+    context: bootstrapContext,
+    requestFailures: bootstrapRequestFailures
+  } = await loadBenchmarkContext(client, suite, { timeoutMs, signal });
   const results: GraphqlBenchmarkRow[] = [];
 
   /* eslint-disable no-await-in-loop -- benchmarks run strictly sequentially */

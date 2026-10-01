@@ -8,6 +8,7 @@ import type { UnifiedListTransactionSorts } from '@/constants/query-sorts';
 import type {
   RecentUnifiedListTransactionsResponse,
   UnifiedListTransactionListResponse,
+  UnifiedListTransactionPageResponse,
   UnifiedListTransactionsStatsResponse
 } from '@/schemas';
 import type { PaginatedQueryVariables } from '@/types/query';
@@ -16,6 +17,7 @@ import {
   type ChainTransferTotals,
   sumChainTransferTotals
 } from '@/utils/sum-chain-transfer-totals';
+import { peekedLimit, takePeekedPage } from '@/utils/uncounted-pagination';
 import {
   EXCLUDE_REWARD_TRANSFERS,
   extractAccountPartyId,
@@ -77,7 +79,7 @@ const GET_UNIFIED_TRANSACTIONS = gql`
 `;
 
 /** Unfiltered list: total from O(1) chain_stats sum instead of full-table aggregate. */
-const GET_UNIFIED_TRANSACTIONS_WITH_CHAIN_TOTAL = gql`
+export const GET_UNIFIED_TRANSACTIONS_WITH_CHAIN_TOTAL = gql`
   query GetUnifiedTransactionsWithChainTotal(
     $limit: Int
     $offset: Int
@@ -99,7 +101,7 @@ const GET_UNIFIED_TRANSACTIONS_WITH_CHAIN_TOTAL = gql`
 `;
 
 /** Account party list: total from O(1) account_stats sum instead of filtered aggregate. */
-const GET_UNIFIED_TRANSACTIONS_WITH_ACCOUNT_TOTAL = gql`
+export const GET_UNIFIED_TRANSACTIONS_WITH_ACCOUNT_TOTAL = gql`
   query GetUnifiedTransactionsWithAccountTotal(
     $limit: Int
     $offset: Int
@@ -117,6 +119,25 @@ const GET_UNIFIED_TRANSACTIONS_WITH_ACCOUNT_TOTAL = gql`
     }
     meta: account_stats_by_pk(id: $accountId) {
       ${TRANSFER_TOTAL_FIELDS}
+    }
+  }
+`;
+
+/** Account-type filtered list: no total, the caller peeks one extra row instead. */
+export const GET_FILTERED_UNIFIED_TRANSACTIONS = gql`
+  query GetFilteredUnifiedTransactions(
+    $limit: Int
+    $offset: Int
+    $orderBy: [unified_transaction_order_by!]
+    $where: unified_transaction_bool_exp!
+  ) {
+    transactions: unified_transaction(
+      limit: $limit
+      offset: $offset
+      order_by: $orderBy
+      where: $where
+    ) {
+      ${UNIFIED_TX_FIELDS}
     }
   }
 `;
@@ -198,6 +219,50 @@ export const unifiedTransactions = {
           | undefined
       )
     };
+  },
+
+  useGetFiltered: (
+    config: Omit<
+      QueryHookOptions<
+        Pick<UnifiedListTransactionListResponse, 'transactions'>,
+        PaginatedQueryVariables<
+          UnifiedListTransactionSorts,
+          Unified_Transaction_Bool_Exp
+        >
+      >,
+      'variables'
+    > & {
+      variables: PaginatedQueryVariables<
+        UnifiedListTransactionSorts,
+        Unified_Transaction_Bool_Exp
+      > & { where: Unified_Transaction_Bool_Exp };
+    }
+  ) => {
+    const limit = config.variables.limit ?? QUERY_DEFAULT_LIMIT;
+
+    const result = useQuery<
+      Pick<UnifiedListTransactionListResponse, 'transactions'>,
+      PaginatedQueryVariables<
+        UnifiedListTransactionSorts,
+        Unified_Transaction_Bool_Exp
+      >
+    >(GET_FILTERED_UNIFIED_TRANSACTIONS, {
+      ...config,
+      variables: {
+        orderBy: config.variables.orderBy ?? { timestamp: 'desc' },
+        limit: peekedLimit(limit),
+        offset: config.variables.offset ?? 0,
+        where: config.variables.where
+      }
+    });
+
+    let data: UnifiedListTransactionPageResponse | undefined;
+    if (result.data) {
+      const page = takePeekedPage(result.data.transactions, limit);
+      data = { transactions: page.rows, hasNextPage: page.hasNextPage };
+    }
+
+    return { ...result, data };
   },
 
   useGetRecent: (

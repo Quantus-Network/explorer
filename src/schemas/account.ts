@@ -5,11 +5,21 @@ export type Account = Pick<
   'id' | 'free' | 'frozen' | 'reserved' | 'is_deposit_only'
 >;
 
+/** At most one mined block, fetched only to tell whether the account has ever mined. */
+export interface AccountMinedBlocksPeek {
+  minedBlocks: { height: number }[];
+}
+
 /** Listing row: flags are denormalized onto `account` by the indexer (no nested event lookups). */
-export interface AccountListItem extends Account {
+export interface AccountListItem extends Account, AccountMinedBlocksPeek {
   is_high_security: boolean;
   is_guardian: boolean;
   is_multisig: boolean;
+}
+
+export interface AccountListPageResponse {
+  accounts: AccountListItem[];
+  hasNextPage: boolean;
 }
 
 export interface AccountStats {
@@ -22,7 +32,7 @@ export interface AccountStats {
 }
 
 export interface AccountResponse {
-  account: Account;
+  account: (Account & AccountMinedBlocksPeek) | null;
   accountStats: AccountStats;
   multisig?: { id: string } | null;
   beneficiaries: {

@@ -1,7 +1,10 @@
-import type { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import {
+  type ApolloClient,
+  gql,
+  type NormalizedCacheObject
+} from '@apollo/client';
 
 import {
-  GetAccountsDocument,
   GetBlockByIdDocument,
   GetBlocksDocument,
   GetCancelledReversibleTransactionsDocument,
@@ -14,7 +17,9 @@ import {
   GetWormholeExtrinsicsDocument,
   Order_By
 } from '@/__generated__/graphql';
+import { GET_ACCOUNTS } from '@/api/accounts';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
+import type { AccountListResponse } from '@/schemas';
 
 import type { GraphqlBenchmarkContext } from './types';
 
@@ -48,8 +53,8 @@ export async function loadGraphqlBenchmarkContext(
   }
 
   const accounts = await safeQuery(() =>
-    client.query({
-      query: GetAccountsDocument,
+    client.query<AccountListResponse>({
+      query: GET_ACCOUNTS,
       variables: {
         orderBy: { id: Order_By.Asc },
         limit: 1,
@@ -60,6 +65,54 @@ export async function loadGraphqlBenchmarkContext(
   const firstAccount = accounts?.data?.accounts?.[0];
   if (firstAccount) {
     ctx.accountId = firstAccount.id;
+  }
+
+  const partySamples = await safeQuery(() =>
+    client.query<{
+      busiest: { id: string; total_immediate_transfers: number }[];
+      quietest: { id: string }[];
+      topMiner: { id: string; total_mined_blocks: number }[];
+    }>({
+      query: gql`
+        query AccountPartySamples {
+          busiest: account_stats(
+            limit: 1
+            order_by: { total_immediate_transfers: desc }
+          ) {
+            id
+            total_immediate_transfers
+          }
+          quietest: account_stats(
+            limit: 1
+            where: { total_immediate_transfers: { _gt: 0 } }
+            order_by: [{ total_immediate_transfers: asc }, { id: asc }]
+          ) {
+            id
+          }
+          topMiner: account_stats(
+            limit: 1
+            order_by: { total_mined_blocks: desc }
+          ) {
+            id
+            total_mined_blocks
+          }
+        }
+      `
+    })
+  );
+  const busiest = partySamples?.data?.busiest?.[0];
+  if (busiest) {
+    ctx.busyAccountId = busiest.id;
+    ctx.busyImmediateTransfers = busiest.total_immediate_transfers;
+  }
+  const quietest = partySamples?.data?.quietest?.[0];
+  if (quietest) {
+    ctx.quietAccountId = quietest.id;
+  }
+  const topMiner = partySamples?.data?.topMiner?.[0];
+  if (topMiner) {
+    ctx.minerAccountId = topMiner.id;
+    ctx.minerMinedBlocks = topMiner.total_mined_blocks;
   }
 
   const transfers = await safeQuery(() =>
