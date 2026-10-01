@@ -3,9 +3,6 @@ import { endOfToday } from 'date-fns/endOfToday';
 import { startOfToday } from 'date-fns/startOfToday';
 
 import {
-  GetAccountByIdDocument,
-  GetAccountsDocument,
-  GetAccountsStatsDocument,
   GetBlockByIdDocument,
   GetBlocksDocument,
   GetCancelledReversibleTransactionByTxIdDocument,
@@ -31,11 +28,24 @@ import {
   GetWormholeExtrinsicByIdDocument,
   GetWormholeExtrinsicsDocument
 } from '@/__generated__/graphql';
+import {
+  GET_ACCOUNT_BY_ID,
+  GET_ACCOUNTS,
+  GET_ACCOUNTS_STATS
+} from '@/api/accounts';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import { SEARCH_PREVIEW_RESULTS_LIMIT } from '@/constants/search-preview-results-limit';
 import { getAccountStatsUtcDateRange } from '@/utils/get-account-stats-utc-date-range';
 
+import { accountTypeFilterBenchmarkRegistry } from './account-type-filter-registry';
 import type { GraphqlBenchmarkRegistryEntry } from './types';
+
+/** Round trip with no database work; subtract it from other rows to estimate server time. */
+const NetworkFloorDocument = gql`
+  query NetworkFloor {
+    __typename
+  }
+`;
 
 const SearchHexDocument = gql`
   query SearchHex($keyword: String, $limit: Int) {
@@ -82,8 +92,13 @@ function statsDay() {
 
 export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
   {
+    name: 'NetworkFloor',
+    document: NetworkFloorDocument,
+    getVariables: () => ({})
+  },
+  {
     name: 'GetAccounts',
-    document: GetAccountsDocument,
+    document: GET_ACCOUNTS,
     getVariables: () => ({
       orderBy: { id: 'desc' },
       limit: QUERY_DEFAULT_LIMIT,
@@ -92,12 +107,12 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
   },
   {
     name: 'GetAccountById',
-    document: GetAccountByIdDocument,
+    document: GET_ACCOUNT_BY_ID,
     getVariables: (ctx) => (ctx.accountId ? { id: ctx.accountId } : null)
   },
   {
     name: 'GetAccountsStats',
-    document: GetAccountsStatsDocument,
+    document: GET_ACCOUNTS_STATS,
     getVariables: () => accountStatsDates()
   },
   {
@@ -290,5 +305,6 @@ export const graphqlBenchmarkRegistry: GraphqlBenchmarkRegistryEntry[] = [
     document: GetWormholeExtrinsicByIdDocument,
     getVariables: (ctx) =>
       ctx.wormholeExtrinsicId ? { id: ctx.wormholeExtrinsicId } : null
-  }
+  },
+  ...accountTypeFilterBenchmarkRegistry
 ];

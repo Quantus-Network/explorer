@@ -32,6 +32,7 @@ interface AccountDetailsInfo {
   isGuardian: boolean;
   isMultisig: boolean;
   isDepositOnly: boolean | null;
+  hasMinedBlocks: boolean;
 }
 
 export const AccountInformation: React.FC<AccountInformationProps> = ({
@@ -70,7 +71,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       isHighSecurity,
       isGuardian,
       isMultisig,
-      isDepositOnly: account?.is_deposit_only ?? null
+      isDepositOnly: account?.is_deposit_only ?? null,
+      hasMinedBlocks: (account?.minedBlocks.length ?? 0) > 0
     }
   ];
 
@@ -136,6 +138,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
                 isGuardian={item.isGuardian}
                 isMultisig={item.isMultisig}
                 isDepositOnly={item.isDepositOnly}
+                hasMinedBlocks={item.hasMinedBlocks}
               />
             );
             if (badges.length === 0) {

@@ -6,4 +6,9 @@ declare module '@tanstack/react-table' {
       className: string;
     };
   }
+
+  interface TableMeta<TData extends RowData> {
+    /** Filtered lists only know whether a next page exists, not the last page. */
+    totalCountUnknown?: boolean;
+  }
 }

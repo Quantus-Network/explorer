@@ -31,6 +31,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
 }) => {
   const { pageSize, pageIndex } = table.getState().pagination;
   const pageCount = table.getPageCount();
+  const totalCountUnknown = table.options.meta?.totalCountUnknown ?? false;
   const currentPage = pageIndex + 1;
 
   const [page, setPage] = React.useState<number | undefined>(currentPage);
@@ -114,7 +115,7 @@ export const TableControls: React.FC<TableControlsProps> = ({
               disabled={pageCount <= 1}
             />
 
-            <span>of {pageCount}</span>
+            {!totalCountUnknown && <span>of {pageCount}</span>}
           </div>
 
           <PaginationItem>

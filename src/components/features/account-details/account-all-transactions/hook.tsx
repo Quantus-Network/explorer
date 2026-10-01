@@ -1,22 +1,18 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 
-import useApiClient from '@/api';
 import { createAccountUnifiedTransactionColumns } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
-import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
 import type { UnifiedListTransactionSorts } from '@/constants/query-sorts';
+import { useAccountTypeFilteredTransactions } from '@/hooks/useAccountTypeFilteredTransactions';
 import { useBrowsablePageDepth } from '@/hooks/useBrowsablePageDepth';
 import { useOrderBy } from '@/hooks/useOrderBy';
 import { useTableState } from '@/hooks/useTableState';
 import type { UnifiedListTransaction } from '@/schemas';
-import { browsableRowCount } from '@/utils/browsable-page-depth';
 import { transformSortLiteral } from '@/utils/transform-sort';
-import { withExcludedRewardTransfers } from '@/utils/unified-transaction-filters';
+import { accountPartyWhere } from '@/utils/unified-transaction-filters';
 
 export const useAccountAllTransactions = (accountId: string) => {
-  const api = useApiClient();
-
   const {
     orderBy,
     limit,
@@ -34,42 +30,31 @@ export const useAccountAllTransactions = (accountId: string) => {
     handleChangePagination
   });
 
-  const where = useMemo(
-    () =>
-      withExcludedRewardTransfers({
-        _or: [
-          { from: { id: { _eq: accountId } } },
-          { to: { id: { _eq: accountId } } }
-        ]
-      }),
-    [accountId]
-  );
+  const baseWhere = useMemo(() => accountPartyWhere(accountId), [accountId]);
 
   const {
     loading,
-    data,
-    error: fetchError
-  } = api.unifiedTransactions.useGetAll({
-    skip: beyondDepth,
-    pollInterval: DATA_POOL_INTERVAL,
-    variables: {
-      orderBy: orderByObject,
-      limit,
-      offset: currentPageIndex * limit,
-      where
-    }
+    error: fetchError,
+    transactions,
+    latestRowCount,
+    isFiltered,
+    accountTypeFilters
+  } = useAccountTypeFilteredTransactions({
+    baseWhere,
+    orderBy: orderByObject,
+    limit,
+    currentPageIndex,
+    skip: beyondDepth
   });
 
   const transactionColumns = useMemo(
     () => createAccountUnifiedTransactionColumns(accountId),
     [accountId]
   );
-  const [rowCount, setRowCount] = useState<number>(
-    browsableRowCount(data?.meta.aggregate.totalCount ?? 0)
-  );
+  const [rowCount, setRowCount] = useState<number>(latestRowCount ?? 0);
 
   const table = useReactTable<UnifiedListTransaction>({
-    data: data?.transactions ?? [],
+    data: transactions ?? [],
     columns: transactionColumns,
     getCoreRowModel: getCoreRowModel(),
     state: {
@@ -77,6 +62,7 @@ export const useAccountAllTransactions = (accountId: string) => {
       pagination: paginationValue
     },
     rowCount,
+    meta: { totalCountUnknown: isFiltered },
     onSortingChange: handleChangeSorting,
     onPaginationChange: handleChangePagination,
     manualSorting: true,
@@ -100,13 +86,14 @@ export const useAccountAllTransactions = (accountId: string) => {
   };
 
   useEffect(() => {
-    if (!loading && data?.meta.aggregate.totalCount != null)
-      setRowCount(browsableRowCount(data.meta.aggregate.totalCount));
-  }, [loading, data?.meta.aggregate.totalCount]);
+    if (!loading && latestRowCount != null) setRowCount(latestRowCount);
+  }, [loading, latestRowCount]);
 
   return {
     table,
     getStatus,
-    error: fetchError
+    error: fetchError,
+    isFiltered,
+    accountTypeFilters
   };
 };

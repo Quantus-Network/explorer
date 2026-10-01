@@ -1,8 +1,18 @@
 export { loadGraphqlBenchmarkContext } from './bootstrap';
+export {
+  explainGraphqlBenchmarks,
+  explainGraphqlOperation,
+  type GraphqlExplainRow,
+  type HasuraExplainPlan
+} from './explain';
 export { loadMobileBenchmarkContext } from './mobile-bootstrap';
-export { graphqlBenchmarkRegistry } from './registry';
 export { mobileGraphqlBenchmarkRegistry } from './mobile-registry';
-export { createBenchmarkApolloClient, runGraphqlBenchmarks } from './run';
+export { graphqlBenchmarkRegistry } from './registry';
+export {
+  createBenchmarkApolloClient,
+  runGraphqlBenchmarks,
+  selectBenchmarkEntries
+} from './run';
 export type {
   GraphqlBenchmarkContext,
   GraphqlBenchmarkRegistryEntry,

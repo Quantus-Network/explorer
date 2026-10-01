@@ -1,10 +1,27 @@
 import {
+  accountPartyWhere,
   EXCLUDE_REWARD_TRANSFERS,
   extractAccountPartyId,
   isUnfilteredExcludeRewards,
   last24HourTransferredWhere,
   withExcludedRewardTransfers
 } from './unified-transaction-filters';
+
+describe('accountPartyWhere', () => {
+  it('matches rows where the account is sender or receiver', () => {
+    expect(accountPartyWhere('qz1')).toEqual({
+      _or: [{ from_id: { _eq: 'qz1' } }, { to_id: { _eq: 'qz1' } }]
+    });
+  });
+
+  it('is recognised as an account party list for the precomputed total', () => {
+    expect(
+      extractAccountPartyId(
+        withExcludedRewardTransfers(accountPartyWhere('qz1'))
+      )
+    ).toBe('qz1');
+  });
+});
 
 describe('last24HourTransferredWhere', () => {
   it('includes signed immediate, wormhole, and executed reversible amounts only', () => {
@@ -47,10 +64,7 @@ describe('isUnfilteredExcludeRewards', () => {
     expect(
       isUnfilteredExcludeRewards(
         withExcludedRewardTransfers({
-          _or: [
-            { from: { id: { _eq: 'acc1' } } },
-            { to: { id: { _eq: 'acc1' } } }
-          ]
+          _or: [{ from_id: { _eq: 'acc1' } }, { to_id: { _eq: 'acc1' } }]
         })
       )
     ).toBe(false);
@@ -70,10 +84,7 @@ describe('extractAccountPartyId', () => {
     expect(
       extractAccountPartyId(
         withExcludedRewardTransfers({
-          _or: [
-            { from: { id: { _eq: accountId } } },
-            { to: { id: { _eq: accountId } } }
-          ]
+          _or: [{ from_id: { _eq: accountId } }, { to_id: { _eq: accountId } }]
         })
       )
     ).toBe(accountId);
@@ -82,10 +93,7 @@ describe('extractAccountPartyId', () => {
   it('extracts id from bare from/to same-id OR', () => {
     expect(
       extractAccountPartyId({
-        _or: [
-          { from: { id: { _eq: accountId } } },
-          { to: { id: { _eq: accountId } } }
-        ]
+        _or: [{ from_id: { _eq: accountId } }, { to_id: { _eq: accountId } }]
       })
     ).toBe(accountId);
   });
@@ -104,10 +112,7 @@ describe('extractAccountPartyId', () => {
     expect(
       extractAccountPartyId(
         withExcludedRewardTransfers({
-          _or: [
-            { from: { id: { _eq: accountId } } },
-            { to: { id: { _eq: 'other' } } }
-          ]
+          _or: [{ from_id: { _eq: accountId } }, { to_id: { _eq: 'other' } }]
         })
       )
     ).toBeNull();
@@ -117,14 +122,14 @@ describe('extractAccountPartyId', () => {
     expect(
       extractAccountPartyId(
         withExcludedRewardTransfers({
-          from: { id: { _eq: accountId } }
+          from_id: { _eq: accountId }
         })
       )
     ).toBeNull();
     expect(
       extractAccountPartyId(
         withExcludedRewardTransfers({
-          _or: [{ from: { id: { _eq: accountId } } }]
+          _or: [{ from_id: { _eq: accountId } }]
         })
       )
     ).toBeNull();
