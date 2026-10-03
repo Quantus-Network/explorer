@@ -30,13 +30,13 @@ export function accountTypeWhere(type: AccountType): Account_Bool_Exp {
       return {
         ...STANDARD_ACCOUNT,
         is_deposit_only: { _eq: true },
-        _not: { minedBlocks: {} }
+        has_mined_blocks: { _eq: false }
       };
     case 'encrypted':
       return {
         ...STANDARD_ACCOUNT,
         is_deposit_only: { _eq: true },
-        minedBlocks: {}
+        has_mined_blocks: { _eq: true }
       };
     case 'high_security':
       return { is_high_security: { _eq: true } };

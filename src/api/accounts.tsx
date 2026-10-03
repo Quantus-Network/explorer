@@ -24,9 +24,7 @@ const ACCOUNT_LIST_FIELDS = `
   is_high_security
   is_guardian
   is_multisig
-  minedBlocks(limit: 1) {
-    height
-  }
+  has_mined_blocks
 `;
 
 export const GET_ACCOUNTS = gql`
@@ -71,9 +69,7 @@ export const GET_ACCOUNT_BY_ID = gql`
       frozen
       reserved
       is_deposit_only
-      minedBlocks(limit: 1) {
-        height
-      }
+      has_mined_blocks
     }
     accountStats: account_stats_by_pk(id: $id) {
       total_cancelled_transfers

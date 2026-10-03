@@ -27,7 +27,7 @@ describe('accountTypeWhere', () => {
     expect(accountTypeWhere('potential_encrypted')).toEqual({
       ...STANDARD,
       is_deposit_only: { _eq: true },
-      _not: { minedBlocks: {} }
+      has_mined_blocks: { _eq: false }
     });
   });
 
@@ -35,7 +35,7 @@ describe('accountTypeWhere', () => {
     expect(accountTypeWhere('encrypted')).toEqual({
       ...STANDARD,
       is_deposit_only: { _eq: true },
-      minedBlocks: {}
+      has_mined_blocks: { _eq: true }
     });
   });
 
