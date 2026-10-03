@@ -72,7 +72,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       isGuardian,
       isMultisig,
       isDepositOnly: account?.is_deposit_only ?? null,
-      hasMinedBlocks: (account?.minedBlocks.length ?? 0) > 0
+      hasMinedBlocks: account?.has_mined_blocks ?? false
     }
   ];
 

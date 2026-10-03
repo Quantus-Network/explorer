@@ -31,7 +31,7 @@ export const ACCOUNT_COLUMNS = [
         is_guardian: isGuardian,
         is_multisig: isMultisig,
         is_deposit_only: isDepositOnly,
-        minedBlocks
+        has_mined_blocks: hasMinedBlocks
       } = props.row.original;
       const hasFlags = isHighSec || isGuardian || isMultisig;
       const addressLabel = (
@@ -40,7 +40,7 @@ export const ACCOUNT_COLUMNS = [
           isGuardian={isGuardian}
           isMultisig={isMultisig}
           isDepositOnly={isDepositOnly}
-          hasMinedBlocks={minedBlocks.length > 0}
+          hasMinedBlocks={hasMinedBlocks}
         />
       );
 
