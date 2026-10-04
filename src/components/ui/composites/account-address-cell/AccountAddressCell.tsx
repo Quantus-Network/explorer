@@ -15,6 +15,26 @@ export interface AccountAddressCellProps {
   className?: string;
 }
 
+const useOnScreen = (ref: React.RefObject<HTMLElement | null>) => {
+  const [onScreen, setOnScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const element = ref.current;
+    if (!element) return undefined;
+
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      setOnScreen(entry.isIntersecting);
+    });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref]);
+
+  return onScreen;
+};
+
 export const AccountAddressCell: React.FC<AccountAddressCellProps> = ({
   address,
   href,
@@ -22,11 +42,16 @@ export const AccountAddressCell: React.FC<AccountAddressCellProps> = ({
   truncate = true,
   className
 }) => {
+  const rootRef = React.useRef<HTMLDivElement>(null);
   const dataReady = useCheckphraseReady();
-  const { checksum, loading, error } = useChecksum(!dataReady, address);
+  const onScreen = useOnScreen(rootRef);
+  const { checksum, loading, error } = useChecksum(
+    !dataReady || !onScreen,
+    address
+  );
 
   return (
-    <div className="flex flex-col items-start gap-1">
+    <div ref={rootRef} className="flex flex-col items-start gap-1">
       <LinkWithCopy
         href={href}
         text={text}

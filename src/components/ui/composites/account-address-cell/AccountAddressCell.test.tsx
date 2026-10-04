@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import { JSDOM } from 'jsdom';
 
 import { CheckphraseReadyProvider } from '@/components/ui/composites/checkphrase-ready/CheckphraseReady';
@@ -50,15 +50,73 @@ jest.mock('@/components/ui/composites/text-with-copy/TextWithCopy', () => ({
   }
 }));
 
-const renderedPhrases = () =>
-  ((globalThis as { __checkPhrases?: string[] }).__checkPhrases ??= []);
+const renderedPhrases = () => {
+  const holder = globalThis as { __checkPhrases?: string[] };
+  holder.__checkPhrases ??= [];
+  return holder.__checkPhrases;
+};
 
 const getChecksumMock = getChecksum as jest.Mock;
 
 const ADDRESS = 'qz1234567890address';
 const CHECK_PHRASE = 'alpha-bravo-charlie';
 
+class MockIntersectionObserver {
+  static instances: MockIntersectionObserver[] = [];
+
+  static visible = true;
+
+  callback: IntersectionObserverCallback;
+
+  target: Element | null = null;
+
+  constructor(callback: IntersectionObserverCallback) {
+    this.callback = callback;
+    MockIntersectionObserver.instances.push(this);
+  }
+
+  observe = (target: Element) => {
+    this.target = target;
+    this.emit(MockIntersectionObserver.visible);
+  };
+
+  emit(isIntersecting: boolean) {
+    if (!this.target) return;
+    this.callback(
+      [
+        {
+          isIntersecting,
+          target: this.target
+        } as IntersectionObserverEntry
+      ],
+      this as unknown as IntersectionObserver
+    );
+  }
+
+  unobserve() {}
+
+  disconnect() {}
+
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+
+  root = null;
+
+  rootMargin = '0px';
+
+  thresholds = [0];
+}
+
 describe('AccountAddressCell', () => {
+  beforeEach(() => {
+    MockIntersectionObserver.instances = [];
+    MockIntersectionObserver.visible = true;
+    Object.assign(globalThis, {
+      IntersectionObserver: MockIntersectionObserver
+    });
+  });
+
   it('shows the address immediately and skeletons only the check phrase', async () => {
     let resolveChecksum: (value: string) => void = () => {};
     getChecksumMock.mockReturnValue(
@@ -120,8 +178,111 @@ describe('AccountAddressCell', () => {
     );
 
     await waitFor(() => {
-      expect(getChecksumMock).toHaveBeenCalledWith(ADDRESS);
+      expect(getChecksumMock).toHaveBeenCalledWith(
+        ADDRESS,
+        expect.any(AbortSignal)
+      );
     });
+  });
+
+  it('computes a check phrase only after the address is on screen', async () => {
+    MockIntersectionObserver.visible = false;
+    getChecksumMock.mockClear();
+    getChecksumMock.mockReturnValue(new Promise(() => {}));
+
+    render(
+      <AccountAddressCell address={ADDRESS} href={`/accounts/${ADDRESS}`} />
+    );
+
+    await waitFor(() => {
+      expect(MockIntersectionObserver.instances.length).toBeGreaterThan(0);
+    });
+    expect(getChecksumMock).not.toHaveBeenCalled();
+
+    const observer = MockIntersectionObserver.instances.at(-1);
+    if (!observer) throw new Error('expected an intersection observer');
+
+    await act(async () => {
+      observer.emit(true);
+    });
+
+    await waitFor(() => {
+      expect(getChecksumMock).toHaveBeenCalledWith(
+        ADDRESS,
+        expect.any(AbortSignal)
+      );
+    });
+  });
+
+  it('stops a check phrase that leaves the screen before it finishes', async () => {
+    let signal: AbortSignal | undefined;
+    getChecksumMock.mockImplementation(
+      (_address: string, next?: AbortSignal) => {
+        signal = next;
+        return new Promise(() => {});
+      }
+    );
+
+    render(
+      <AccountAddressCell address={ADDRESS} href={`/accounts/${ADDRESS}`} />
+    );
+
+    await waitFor(() => {
+      expect(signal?.aborted).toBe(false);
+    });
+
+    const observer = MockIntersectionObserver.instances.at(-1);
+    if (!observer) throw new Error('expected an intersection observer');
+
+    await act(async () => {
+      observer.emit(false);
+    });
+
+    expect(signal?.aborted).toBe(true);
+  });
+
+  it('keeps a resolved check phrase visible when the address leaves and returns', async () => {
+    let calls = 0;
+    let resolveChecksum: (value: string) => void = () => {};
+    getChecksumMock.mockImplementation(() => {
+      calls += 1;
+      if (calls === 1) {
+        return new Promise((resolve) => {
+          resolveChecksum = resolve;
+        });
+      }
+      return new Promise(() => {});
+    });
+
+    const view = render(
+      <AccountAddressCell address={ADDRESS} href={`/accounts/${ADDRESS}`} />
+    );
+
+    await waitFor(() => {
+      expect(getChecksumMock).toHaveBeenCalled();
+    });
+    resolveChecksum(CHECK_PHRASE);
+
+    await waitFor(() => {
+      expect(view.getByText(CHECK_PHRASE)).toBeTruthy();
+    });
+
+    const observer = MockIntersectionObserver.instances.at(-1);
+    if (!observer) throw new Error('expected an intersection observer');
+
+    await act(async () => {
+      observer.emit(false);
+    });
+    expect(view.getByText(CHECK_PHRASE)).toBeTruthy();
+
+    await act(async () => {
+      observer.emit(true);
+    });
+
+    expect(
+      view.queryByRole('status', { name: 'Loading check phrase' })
+    ).toBeNull();
+    expect(view.getByText(CHECK_PHRASE)).toBeTruthy();
   });
 
   it('does not offer the previous check phrase after the address changes', async () => {
