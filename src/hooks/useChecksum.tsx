@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { getChecksum } from '@/utils/get-checksum';
 
@@ -8,25 +8,34 @@ type ResolvedChecksum = {
   error: Error | null;
 };
 
+const isAbort = (error: unknown) =>
+  typeof error === 'object' &&
+  error !== null &&
+  'name' in error &&
+  error.name === 'AbortError';
+
 export const useChecksum = (wait: boolean, id?: string) => {
   const [resolved, setResolved] = useState<ResolvedChecksum | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const resolvedRef = useRef<ResolvedChecksum | null>(null);
+  resolvedRef.current = resolved;
 
   useEffect(() => {
-    if (!id || wait) return;
+    if (!id || wait) return undefined;
 
+    const controller = new AbortController();
     let cancelled = false;
 
-    const fetchChecksum = async () => {
-      setLoading(true);
+    if (resolvedRef.current?.id !== id) setLoading(true);
 
+    const fetchChecksum = async () => {
       try {
-        const response = await getChecksum(id);
+        const response = await getChecksum(id, controller.signal);
         if (cancelled) return;
         setResolved({ id, checksum: response, error: null });
         setLoading(false);
       } catch (caught) {
-        if (cancelled) return;
+        if (cancelled || isAbort(caught)) return;
         setResolved({
           id,
           checksum: null,
@@ -43,6 +52,7 @@ export const useChecksum = (wait: boolean, id?: string) => {
 
     return () => {
       cancelled = true;
+      controller.abort();
     };
   }, [id, wait]);
 
