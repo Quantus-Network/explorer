@@ -83,7 +83,6 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
           address={id}
           href={`${RESOURCES.accounts}/${id}`}
           text={formatTxAddress(id)}
-          className="font-mono text-muted-text"
         />
       );
     },
@@ -100,7 +99,6 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
           address={id}
           href={`${RESOURCES.accounts}/${id}`}
           text={formatTxAddress(id)}
-          className="font-mono text-muted-text"
         />
       );
     },
@@ -114,21 +112,6 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
       if (value == null)
         return <span className="font-mono text-muted-text">—</span>;
       return <span className="numeric">{formatMonetaryValue(value, 5)}</span>;
-    },
-    enableSorting: true
-  }),
-  columnHelper.accessor('fee', {
-    id: 'fee',
-    header: 'Fee',
-    cell: (props) => {
-      const value = props.getValue();
-      if (value == null)
-        return <span className="font-mono text-muted-text">—</span>;
-      return (
-        <span className="numeric text-muted-text">
-          {formatMonetaryValue(value, 5)}
-        </span>
-      );
     },
     enableSorting: true
   }),

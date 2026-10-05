@@ -5,8 +5,8 @@ import useApiClient from '@/api';
 import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 
-import { MultisigDetailDataTabs } from './MultisigDetailDataTabs';
 import { MultisigInformation } from './multisig-information/MultisigInformation';
+import { MultisigDetailDataTabs } from './MultisigDetailDataTabs';
 
 interface Props {
   id: string;
