@@ -88,6 +88,7 @@ export const MinerRewardInformation: React.FC<MinerRewardInformationProps> = ({
             <AccountAddressCell
               address={(value as MinerReward['miner']).id}
               href={`${RESOURCES.accounts}/${(value as MinerReward['miner']).id}`}
+              truncate={false}
               className="break-all"
             />
           )

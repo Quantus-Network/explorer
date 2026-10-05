@@ -99,6 +99,7 @@ export const ScheduledReversibleTransactionInformation: React.FC<
             <AccountAddressCell
               address={value.id}
               href={`${RESOURCES.accounts}/${value.id}`}
+              truncate={false}
               className="break-all"
             />
           )
@@ -110,6 +111,7 @@ export const ScheduledReversibleTransactionInformation: React.FC<
             <AccountAddressCell
               address={value.id}
               href={`${RESOURCES.accounts}/${value.id}`}
+              truncate={false}
               className="break-all"
             />
           )

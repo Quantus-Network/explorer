@@ -82,6 +82,7 @@ const accountLink = (accountId?: string | null) =>
     <AccountAddressCell
       address={accountId}
       href={`${RESOURCES.accounts}/${accountId}`}
+      truncate={false}
     />
   ) : (
     <EmptyValue />
@@ -92,6 +93,7 @@ const walletLink = (walletId?: string | null) =>
     <AccountAddressCell
       address={walletId}
       href={getMultisigWalletHref(walletId)}
+      truncate={false}
     />
   ) : (
     <EmptyValue />
@@ -235,6 +237,7 @@ const BASE_PROPOSAL_FIELDS: ProposalField[] = [
               key={approver}
               address={approver}
               href={`${RESOURCES.accounts}/${approver}`}
+              truncate={false}
             />
           ))}
         </div>

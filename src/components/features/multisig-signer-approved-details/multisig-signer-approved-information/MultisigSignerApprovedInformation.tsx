@@ -96,6 +96,7 @@ export const MultisigSignerApprovedInformation: React.FC<
               <AccountAddressCell
                 address={approverId}
                 href={`${RESOURCES.accounts}/${approverId}`}
+                truncate={false}
               />
             ) : (
               <EmptyValue />
@@ -131,6 +132,7 @@ export const MultisigSignerApprovedInformation: React.FC<
               <AccountAddressCell
                 address={multisigId}
                 href={getMultisigWalletHref(multisigId)}
+                truncate={false}
               />
             ) : (
               <EmptyValue />
@@ -147,6 +149,7 @@ export const MultisigSignerApprovedInformation: React.FC<
               <AccountAddressCell
                 address={proposerId}
                 href={`${RESOURCES.accounts}/${proposerId}`}
+                truncate={false}
               />
             ) : (
               <EmptyValue />

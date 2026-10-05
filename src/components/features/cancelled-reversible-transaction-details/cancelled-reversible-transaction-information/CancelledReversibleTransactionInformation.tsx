@@ -85,6 +85,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
             <AccountAddressCell
               address={value.id}
               href={`${RESOURCES.accounts}/${value.id}`}
+              truncate={false}
               className="break-all"
             />
           )
@@ -96,6 +97,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
             <AccountAddressCell
               address={value.from.id}
               href={`${RESOURCES.accounts}/${value.from.id}`}
+              truncate={false}
               className="break-all"
             />
           )
@@ -107,6 +109,7 @@ export const CancelledReversibleTransactionInformation: React.FC<
             <AccountAddressCell
               address={value.to.id}
               href={`${RESOURCES.accounts}/${value.to.id}`}
+              truncate={false}
               className="break-all"
             />
           )

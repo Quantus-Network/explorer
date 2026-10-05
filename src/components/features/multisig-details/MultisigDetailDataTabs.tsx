@@ -32,7 +32,8 @@ export const MultisigDetailDataTabs: React.FC<Props> = ({ walletId }) => {
       search: {
         tab: nextTab,
         status: nextTab === 'proposals' ? status : 'all'
-      }
+      },
+      resetScroll: false
     });
   };
 

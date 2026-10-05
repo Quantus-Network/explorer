@@ -93,6 +93,7 @@ export const HighSecuritySetInformation: React.FC<
               <AccountAddressCell
                 address={whoId}
                 href={`${RESOURCES.accounts}/${whoId}`}
+                truncate={false}
               />
             ) : (
               <EmptyValue />
@@ -109,6 +110,7 @@ export const HighSecuritySetInformation: React.FC<
               <AccountAddressCell
                 address={guardianId}
                 href={`${RESOURCES.accounts}/${guardianId}`}
+                truncate={false}
               />
             ) : (
               <EmptyValue />

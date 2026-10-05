@@ -26,7 +26,8 @@ export const MultisigDetailStatusFilter: React.FC = () => {
       search: {
         tab: tab ?? 'proposals',
         status: nextStatus
-      }
+      },
+      resetScroll: false
     });
   };
 

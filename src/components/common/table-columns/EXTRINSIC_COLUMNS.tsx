@@ -1,6 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
-import { Badge } from '@/components/ui/badge';
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
@@ -87,21 +86,6 @@ export const createExtrinsicColumns = () => {
           return <span className="text-muted-foreground">-</span>;
         }
         return formatMonetaryValue(fee, 5);
-      },
-      enableSorting: false
-    }),
-
-    // Success column
-    columnHelper.accessor('success', {
-      id: 'success',
-      header: 'Result',
-      cell: (props) => {
-        const success = props.getValue();
-        return (
-          <Badge variant={success ? 'success' : 'error'}>
-            {success ? 'Success' : 'Failed'}
-          </Badge>
-        );
       },
       enableSorting: false
     }),

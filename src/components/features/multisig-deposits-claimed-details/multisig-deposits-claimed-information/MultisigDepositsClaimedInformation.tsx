@@ -90,6 +90,7 @@ export const MultisigDepositsClaimedInformation: React.FC<
               <AccountAddressCell
                 address={multisigId}
                 href={getMultisigWalletHref(multisigId)}
+                truncate={false}
                 className="break-all"
               />
             ) : (
@@ -106,6 +107,7 @@ export const MultisigDepositsClaimedInformation: React.FC<
               <AccountAddressCell
                 address={claimerId}
                 href={`${RESOURCES.accounts}/${claimerId}`}
+                truncate={false}
                 className="break-all"
               />
             ) : (

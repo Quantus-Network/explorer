@@ -60,7 +60,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
           address={id}
           href={`${RESOURCES.accounts}/${id}`}
           text={formatTxAddress(id)}
-          className="font-mono text-muted-text"
+          className="font-mono text-flare"
         />
       );
     },
@@ -77,7 +77,7 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
           address={id}
           href={`${RESOURCES.accounts}/${id}`}
           text={formatTxAddress(id)}
-          className="font-mono text-muted-text"
+          className="font-mono text-flare"
         />
       );
     },

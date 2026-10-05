@@ -114,6 +114,7 @@ export const MultisigProposalReadyInformation: React.FC<
               <AccountAddressCell
                 address={multisigId}
                 href={getMultisigWalletHref(multisigId)}
+                truncate={false}
               />
             ) : (
               <EmptyValue />
@@ -130,6 +131,7 @@ export const MultisigProposalReadyInformation: React.FC<
               <AccountAddressCell
                 address={proposerId}
                 href={`${RESOURCES.accounts}/${proposerId}`}
+                truncate={false}
               />
             ) : (
               <EmptyValue />

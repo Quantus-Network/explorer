@@ -6,11 +6,7 @@ import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWith
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import type { MultisigProposal } from '@/schemas';
-import {
-  formatBlockHeight,
-  formatMonetaryValue,
-  formatTxAddress
-} from '@/utils/formatter';
+import { formatTxAddress } from '@/utils/formatter';
 import { getMultisigProposalHref } from '@/utils/get-multisig-proposal-href';
 import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 
@@ -101,24 +97,6 @@ export const MULTISIG_PROPOSAL_COLUMNS = [
       return `${approvals.length} approver${approvals.length === 1 ? '' : 's'}`;
     },
     enableSorting: false
-  }),
-  columnHelper.accessor('deposit', {
-    id: 'deposit',
-    header: 'Deposit',
-    cell: (props) => formatMonetaryValue(props.getValue(), 5),
-    enableSorting: true
-  }),
-  columnHelper.accessor('expiry_block', {
-    id: 'expiry_block',
-    header: 'Expiry Block',
-    cell: (props) => (
-      <LinkWithCopy
-        href={`${RESOURCES.blocks}/${props.getValue()}`}
-        text={formatBlockHeight(props.getValue())}
-        numeric
-      />
-    ),
-    enableSorting: true
   }),
   columnHelper.accessor('created_at', {
     id: 'created_at',
