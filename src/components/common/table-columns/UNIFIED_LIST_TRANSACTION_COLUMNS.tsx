@@ -1,17 +1,31 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
-import { Badge } from '@/components/ui/badge';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import type { UnifiedListTransaction } from '@/schemas';
+import type {
+  UnifiedListTransaction,
+  UnifiedListTransactionStatus
+} from '@/schemas';
 import {
   formatBlockHeight,
   formatMonetaryValue,
   formatTxAddress
 } from '@/utils/formatter';
 import { getUnifiedTransactionDetailPath } from '@/utils/get-unified-transaction-detail-path';
+
+const STATUS_BADGE: Record<
+  UnifiedListTransactionStatus,
+  { label: string; variant: NonNullable<BadgeProps['variant']> }
+> = {
+  SUCCESS: { label: 'Success', variant: 'success' },
+  ERROR: { label: 'Error', variant: 'error' },
+  SCHEDULED: { label: 'Scheduled', variant: 'reversible' },
+  EXECUTED: { label: 'Executed', variant: 'success' },
+  CANCELLED: { label: 'Cancelled', variant: 'error' }
+};
 
 const columnHelper = createColumnHelper<UnifiedListTransaction>();
 
@@ -47,6 +61,12 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
         numeric
       />
     ),
+    enableSorting: true
+  }),
+  columnHelper.accessor('timestamp', {
+    id: 'timestamp',
+    header: 'Time',
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
   columnHelper.accessor((row) => row.from?.id, {
@@ -94,11 +114,15 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
     },
     enableSorting: true
   }),
-  columnHelper.accessor('timestamp', {
-    id: 'timestamp',
-    header: 'Time',
-    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
-    enableSorting: true
+  columnHelper.accessor('status', {
+    id: 'status',
+    header: 'Status',
+    cell: (props) => {
+      const status = props.getValue();
+      const config = STATUS_BADGE[status];
+      return <Badge variant={config.variant}>{config.label}</Badge>;
+    },
+    enableSorting: false
   })
 ];
 
