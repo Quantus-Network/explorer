@@ -1,34 +1,17 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import type { VariantProps } from 'class-variance-authority';
 
-import { Badge, type badgeVariants } from '@/components/ui/badge';
+import { Badge } from '@/components/ui/badge';
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
-import type {
-  UnifiedListTransaction,
-  UnifiedListTransactionStatus
-} from '@/schemas';
+import type { UnifiedListTransaction } from '@/schemas';
 import {
   formatBlockHeight,
   formatMonetaryValue,
   formatTxAddress
 } from '@/utils/formatter';
 import { getUnifiedTransactionDetailPath } from '@/utils/get-unified-transaction-detail-path';
-
-type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>;
-
-const STATUS_BADGE: Record<
-  UnifiedListTransactionStatus,
-  { label: string; variant: BadgeVariant }
-> = {
-  SUCCESS: { label: 'Success', variant: 'success' },
-  ERROR: { label: 'Error', variant: 'error' },
-  SCHEDULED: { label: 'Scheduled', variant: 'reversible' },
-  EXECUTED: { label: 'Executed', variant: 'success' },
-  CANCELLED: { label: 'Cancelled', variant: 'error' }
-};
 
 const columnHelper = createColumnHelper<UnifiedListTransaction>();
 
@@ -64,12 +47,6 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
         numeric
       />
     ),
-    enableSorting: true
-  }),
-  columnHelper.accessor('timestamp', {
-    id: 'timestamp',
-    header: 'Time',
-    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
   }),
   columnHelper.accessor((row) => row.from?.id, {
@@ -117,33 +94,11 @@ export const UNIFIED_LIST_TRANSACTION_COLUMNS = [
     },
     enableSorting: true
   }),
-  columnHelper.accessor('fee', {
-    id: 'fee',
-    header: 'Fee',
-    cell: (props) => {
-      const value = props.getValue();
-      if (value == null)
-        return <span className="font-mono text-muted-text">—</span>;
-      return (
-        <span className="numeric text-muted-text">
-          {formatMonetaryValue(value, 5)}
-        </span>
-      );
-    },
+  columnHelper.accessor('timestamp', {
+    id: 'timestamp',
+    header: 'Time',
+    cell: (props) => <TimestampDisplay timestamp={props.getValue()} />,
     enableSorting: true
-  }),
-  columnHelper.accessor('status', {
-    id: 'status',
-    header: 'Status',
-    cell: (props) => {
-      const status = props.getValue();
-      const config = STATUS_BADGE[status] ?? {
-        label: status,
-        variant: 'miner' as const
-      };
-      return <Badge variant={config.variant}>{config.label}</Badge>;
-    },
-    enableSorting: false
   })
 ];
 
