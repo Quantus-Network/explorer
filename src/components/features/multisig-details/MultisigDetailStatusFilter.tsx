@@ -19,14 +19,15 @@ export const MultisigDetailStatusFilter: React.FC = () => {
   });
 
   const handleStatusChange = (nextStatus: MultisigProposalStatusFilter) => {
-    void setPage(1);
-    void navigate({
+    setPage(1);
+    navigate({
       to: '/multisig/$id',
       params: { id },
       search: {
         tab: tab ?? 'proposals',
         status: nextStatus
-      }
+      },
+      resetScroll: false
     });
   };
 

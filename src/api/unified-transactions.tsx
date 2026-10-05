@@ -37,7 +37,6 @@ const UNIFIED_TX_FIELDS = `
   }
   timestamp
   amount
-  fee
   status
   detail_id
   from {

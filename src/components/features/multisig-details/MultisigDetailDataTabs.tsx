@@ -24,15 +24,16 @@ export const MultisigDetailDataTabs: React.FC<Props> = ({ walletId }) => {
 
   const handleTabChange = (value: string) => {
     const nextTab = value as MultisigDetailTab;
-    void setPage(1);
-    void setOrderBy(null);
-    void navigate({
+    setPage(1);
+    setOrderBy(null);
+    navigate({
       to: '/multisig/$id',
       params: { id },
       search: {
         tab: nextTab,
         status: nextTab === 'proposals' ? status : 'all'
-      }
+      },
+      resetScroll: false
     });
   };
 

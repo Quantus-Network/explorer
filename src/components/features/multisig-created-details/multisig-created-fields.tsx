@@ -48,6 +48,7 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
         <AccountAddressCell
           address={creatorId}
           href={`${RESOURCES.accounts}/${creatorId}`}
+          truncate={false}
         />
       ) : (
         <EmptyValue />
@@ -67,6 +68,7 @@ const getSharedMultisigConfigurationFields = (): MultisigCreatedField[] => [
               key={signer}
               address={signer}
               href={`${RESOURCES.accounts}/${signer}`}
+              truncate={false}
             />
           ))}
         </div>
