@@ -14,7 +14,7 @@ import {
   withExcludedRewardTransfers
 } from '@/utils/unified-transaction-filters';
 
-const GET_HOME_STATS = gql`
+export const GET_HOME_STATS = gql`
   query GetHomeChainStats(
     $last24HourWhere: unified_transaction_bool_exp!
     $last24HourTransferredWhere: unified_transaction_bool_exp!
@@ -30,7 +30,6 @@ const GET_HOME_STATS = gql`
       total_cancelled_transfers
       circulating_supply
       max_supply
-      total_supply
       total_transferred_amount
     }
     last24Hour: unified_transaction_aggregate(where: $last24HourWhere) {

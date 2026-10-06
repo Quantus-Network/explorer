@@ -65,7 +65,6 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
     totalTransferred,
     last24HourTransferred,
     maxSupply,
-    totalSupply,
     circulatingSupply
   } = useChainStats();
 
@@ -122,18 +121,12 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
         />
       </CardGroup>
 
-      <CardGroup className="grid-cols-1 sm:grid-cols-3">
+      <CardGroup className="grid-cols-1 sm:grid-cols-2">
         <SupplyStatCard
           label="Max Supply"
           loading={loading}
           error={errorMessage}
           value={maxSupply}
-        />
-        <SupplyStatCard
-          label="Total Supply"
-          loading={loading}
-          error={errorMessage}
-          value={totalSupply}
         />
         <SupplyStatCard
           label="Coin Circulation"

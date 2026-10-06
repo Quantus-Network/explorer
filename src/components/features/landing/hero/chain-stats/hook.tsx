@@ -108,7 +108,6 @@ export const useChainStats = () => {
     totalTransferred: status?.total_transferred_amount,
     last24HourTransferred,
     maxSupply: status?.max_supply,
-    totalSupply: status?.total_supply,
     circulatingSupply: status?.circulating_supply
   };
 };
