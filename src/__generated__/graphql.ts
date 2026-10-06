@@ -10451,7 +10451,6 @@ export type GetHomeChainStatsQuery = {
     total_cancelled_transfers: number;
     circulating_supply: any;
     max_supply: any;
-    total_supply: any;
     total_transferred_amount: any;
   } | null;
   last24Hour: {
@@ -14062,10 +14061,6 @@ export const GetHomeChainStatsDocument = {
                   name: { kind: 'Name', value: 'circulating_supply' }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'max_supply' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'total_supply' }
-                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'total_transferred_amount' }

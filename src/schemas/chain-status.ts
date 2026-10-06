@@ -38,7 +38,6 @@ export interface HomeChainStatsStatus {
   total_cancelled_transfers: number;
   circulating_supply: string;
   max_supply: string;
-  total_supply: string;
   total_transferred_amount: string;
 }
 
