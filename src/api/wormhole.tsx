@@ -14,12 +14,6 @@ const GET_WORMHOLE_EXTRINSIC_BY_ID = gql`
       total_amount
       output_count
       timestamp
-      privacy_score
-      privacy_score01_pct
-      privacy_score1_pct
-      privacy_score5_pct
-      privacy_label
-      pool_snapshot
       block {
         id
         height

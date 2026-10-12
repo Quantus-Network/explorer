@@ -13,9 +13,7 @@ const badgeVariants = cva(
         immediate: 'border-gamboge/30 text-gamboge',
         reversible: 'border-glacier/30 text-glacier',
         miner: 'border-gamboge/20 text-gamboge/70',
-        weak: 'border-ember/30 text-ember',
-        moderate: 'border-gamboge/30 text-gamboge',
-        strong: 'border-sage/30 text-sage'
+        weak: 'border-ember/30 text-ember'
       }
     },
     defaultVariants: {

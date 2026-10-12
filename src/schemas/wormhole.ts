@@ -4,16 +4,7 @@ import type * as gql from '../__generated__/graphql';
 export interface WormholeExtrinsicDetail
   extends Pick<
     gql.Wormhole_Extrinsic,
-    | 'id'
-    | 'total_amount'
-    | 'output_count'
-    | 'timestamp'
-    | 'privacy_score'
-    | 'privacy_score01_pct'
-    | 'privacy_score1_pct'
-    | 'privacy_score5_pct'
-    | 'privacy_label'
-    | 'pool_snapshot'
+    'id' | 'total_amount' | 'output_count' | 'timestamp'
   > {
   extrinsic: Pick<gql.Extrinsic, 'id' | 'pallet' | 'call'> | null;
   block: Pick<gql.Block, 'id' | 'height' | 'hash' | 'timestamp'>;
