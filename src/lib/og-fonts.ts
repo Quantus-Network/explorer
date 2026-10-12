@@ -33,7 +33,10 @@ export function loadOgFonts(origin: string): Promise<OgFont[]> {
           style: 'normal' as const
         };
       })
-    );
+    ).catch((error: unknown) => {
+      fontsPromise = null;
+      throw error;
+    });
   }
 
   return fontsPromise;
