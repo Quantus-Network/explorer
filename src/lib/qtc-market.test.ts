@@ -147,7 +147,7 @@ describe('Open Graph tags', () => {
 
   it('draws the card with the explorer flare, not the tracker accent', () => {
     const template = fs.readFileSync(
-      path.join(process.cwd(), 'src/lib/og-template.tsx'),
+      path.join(process.cwd(), 'src/lib/og-template.ts'),
       'utf8'
     );
 
