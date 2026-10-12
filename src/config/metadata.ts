@@ -1,4 +1,6 @@
 // src/lib/metadata.ts
+import { OG_HEIGHT, OG_IMAGE_URL, OG_WIDTH } from '@/lib/qtc-market';
+
 import env from './env';
 
 const siteName = env.SITE_NAME;
@@ -16,10 +18,10 @@ export const defaultMetadata = {
   baseUrl,
   canonical: baseUrl,
   images: {
-    url: `${baseUrl}/images/next.svg`,
+    url: OG_IMAGE_URL,
     alt: siteName,
-    width: 226,
-    height: 100
+    width: OG_WIDTH,
+    height: OG_HEIGHT
   },
   openGraph: {
     title: siteName,

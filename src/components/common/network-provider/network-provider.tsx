@@ -4,8 +4,8 @@ const ENABLE_LOCAL_NETWORK =
   import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true';
 
 const BASE_NETWORKS = {
-  mainnet: 'https://sqm.quantus.com/v1/graphql',
-  planck: 'https://sub2.quantus.com/v1/graphql'
+  mainnet: 'http://127.0.0.1:8080/https://sqm.quantus.com/v1/graphql',
+  planck: 'http://127.0.0.1:8080/https://sub2.quantus.com/v1/graphql'
 } as const;
 
 const LOCAL_NETWORK = {
