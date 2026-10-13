@@ -49,7 +49,8 @@
     "sonner": "^2.0.5",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "usehooks-ts": "^3.1.1"
+    "usehooks-ts": "^3.1.1",
+    "workers-og": "0.0.27"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",

@@ -9,8 +9,6 @@ import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
 import { formatBlockHeight, formatMonetaryValue } from '@/utils/formatter';
 
-import { PrivacyScoreBadge } from './PrivacyScoreBadge';
-
 interface WormholeOutputDetailsProps {
   id: string;
 }
@@ -21,12 +19,6 @@ interface ExtrinsicInfo {
   outputCount: number;
   block: { height: number; hash: string };
   timestamp: string;
-  privacyScore: string;
-  privacyLabel: string;
-  privacyScore01Pct: string;
-  privacyScore1Pct: string;
-  privacyScore5Pct: string;
-  poolSnapshot: string;
 }
 
 interface ExitOutputInfo {
@@ -57,13 +49,7 @@ export const WormholeOutputInformation = ({
       totalAmount: extrinsic?.total_amount,
       outputCount: extrinsic?.output_count,
       block: extrinsic?.block,
-      timestamp: extrinsic?.timestamp,
-      privacyScore: extrinsic?.privacy_score,
-      privacyLabel: extrinsic?.privacy_label,
-      privacyScore01Pct: extrinsic?.privacy_score01_pct,
-      privacyScore1Pct: extrinsic?.privacy_score1_pct,
-      privacyScore5Pct: extrinsic?.privacy_score5_pct,
-      poolSnapshot: extrinsic?.pool_snapshot
+      timestamp: extrinsic?.timestamp
     }
   ];
 
@@ -125,66 +111,6 @@ export const WormholeOutputInformation = ({
               render: (value) => (
                 <TimestampDisplay timestamp={value as string} />
               )
-            }
-          ]}
-        />
-      </div>
-
-      <div className="flex flex-col gap-3">
-        <h2 className="section-label text-content">Privacy Analysis</h2>
-        <DataList<Partial<ExtrinsicInfo>>
-          loading={loading}
-          data={extrinsicInfo}
-          fields={[
-            {
-              label: 'Privacy Score',
-              key: 'privacyScore',
-              render: (value, item) => (
-                <PrivacyScoreBadge
-                  score={Number(value)}
-                  label={(item.privacyLabel as string) ?? ''}
-                />
-              ),
-              tooltip:
-                'Estimated bits of anonymity at 0.01 DEV precision. Based on how many deposit subsets could produce this total.'
-            },
-            {
-              label: 'With 0.1% sacrifice',
-              key: 'privacyScore01Pct',
-              render: (value) => `${Number(value).toFixed(1)} bits`,
-              tooltip:
-                'Score if the user had sacrificed 0.1% of the output for privacy.'
-            },
-            {
-              label: 'With 1% sacrifice',
-              key: 'privacyScore1Pct',
-              render: (value) => `${Number(value).toFixed(1)} bits`,
-              tooltip:
-                'Score if the user had sacrificed 1% of the output for privacy.'
-            },
-            {
-              label: 'With 5% sacrifice',
-              key: 'privacyScore5Pct',
-              render: (value) => `${Number(value).toFixed(1)} bits`,
-              tooltip:
-                'Score if the user had sacrificed 5% of the output for privacy.'
-            },
-            {
-              label: 'Pool Snapshot',
-              key: 'poolSnapshot',
-              render: (value) => {
-                try {
-                  const buckets = JSON.parse(value as string);
-                  const nonEmpty = buckets.filter(
-                    (b: { count: number }) => b.count > 0
-                  );
-                  return `${nonEmpty.length} active buckets`;
-                } catch {
-                  return '-';
-                }
-              },
-              tooltip:
-                'Deposit pool bucket distribution at time of proof verification.'
             }
           ]}
         />

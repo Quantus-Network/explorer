@@ -10,9 +10,11 @@ import {
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { StatSparklineCard } from '@/components/ui/composites/stat-sparkline-card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { formatUsdPrice } from '@/lib/qtc-market';
 
 import { formatChainSupply } from './format-chain-supply';
 import { useChainStats } from './hook';
+import { useQtcPrice } from './use-qtc-price';
 
 const STROKE_FLARE = 'var(--flare)';
 const STROKE_GLACIER = 'var(--glacier)';
@@ -24,14 +26,19 @@ export interface ChainStatsProps {}
 const SupplyStatCard = ({
   label,
   value,
+  formatted,
   loading,
   error
 }: {
   label: string;
   value?: string;
+  formatted?: string;
   loading: boolean;
   error: string | null;
 }) => {
+  const text =
+    formatted ?? (value != null ? formatChainSupply(value) : undefined);
+
   return (
     <Card>
       <CardHeader>
@@ -42,9 +49,7 @@ const SupplyStatCard = ({
       <CardContent>
         {loading && <Skeleton className="h-7 w-28" />}
         {!loading && error && <InlineFetchError error={error} />}
-        {!loading && !error && value != null && (
-          <p>{formatChainSupply(value)}</p>
-        )}
+        {!loading && !error && text != null && <p>{text}</p>}
       </CardContent>
     </Card>
   );
@@ -67,6 +72,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
     maxSupply,
     circulatingSupply
   } = useChainStats();
+  const price = useQtcPrice();
 
   const errorMessage = error?.message ?? null;
 
@@ -121,7 +127,15 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
         />
       </CardGroup>
 
-      <CardGroup className="grid-cols-1 sm:grid-cols-2">
+      <CardGroup className="grid-cols-1 sm:grid-cols-3">
+        <SupplyStatCard
+          label="QTC Price"
+          loading={price.loading}
+          error={price.error}
+          formatted={
+            price.priceUsd != null ? formatUsdPrice(price.priceUsd) : undefined
+          }
+        />
         <SupplyStatCard
           label="Max Supply"
           loading={loading}

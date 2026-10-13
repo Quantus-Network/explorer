@@ -11888,12 +11888,6 @@ export type GetWormholeExtrinsicByIdQuery = {
     total_amount: any;
     output_count: number;
     timestamp: any;
-    privacy_score: any;
-    privacy_score01_pct: any;
-    privacy_score1_pct: any;
-    privacy_score5_pct: any;
-    privacy_label: string;
-    pool_snapshot: string;
     extrinsic?: {
       __typename?: 'extrinsic';
       id: string;
@@ -22830,30 +22824,6 @@ export const GetWormholeExtrinsicByIdDocument = {
                   name: { kind: 'Name', value: 'output_count' }
                 },
                 { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacy_score' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacy_score01_pct' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacy_score1_pct' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacy_score5_pct' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'privacy_label' }
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'pool_snapshot' }
-                },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'block' },
