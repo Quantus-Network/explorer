@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
+import { FromAddressCell } from '@/components/ui/composites/from-address-cell/FromAddressCell';
 import { LinkWithCopy } from '@/components/ui/composites/link-with-copy/LinkWithCopy';
 import { TimestampDisplay } from '@/components/ui/timestamp-display';
 import { RESOURCES } from '@/constants/resources';
@@ -62,7 +63,7 @@ export const TRANSACTION_COLUMNS = [
     id: 'from',
     header: 'From',
     cell: (props) => (
-      <AccountAddressCell
+      <FromAddressCell
         address={props.getValue()}
         href={`${RESOURCES.accounts}/${props.getValue()}`}
         text={formatTxAddress(props.getValue())}

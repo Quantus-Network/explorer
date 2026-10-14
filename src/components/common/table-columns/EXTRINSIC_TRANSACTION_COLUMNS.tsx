@@ -1,6 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
+import { FromAddressCell } from '@/components/ui/composites/from-address-cell/FromAddressCell';
 import { RESOURCES } from '@/constants/resources';
 import type { ExtrinsicTransfer } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
@@ -15,7 +16,7 @@ export const EXTRINSIC_TRANSACTION_COLUMNS = [
       const { id } = getValue();
 
       return (
-        <AccountAddressCell
+        <FromAddressCell
           address={id}
           href={`${RESOURCES.accounts}/${id}`}
           truncate={false}
