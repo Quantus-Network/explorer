@@ -11,9 +11,11 @@ export const OG_HEIGHT = 630;
 /** Shown on the Vite dev server, which is not the explorer origin. */
 export const DEV_QTC_PRICE_USD = 100;
 
+export const DEV_QTC_PRICE_CHANGE_PERCENTAGE_24H = 1.25;
+
 export const OBSERVED_AT_HEADER = 'X-Observed-At';
 
-export const OG_FRESHNESS_MS = 60 * 60 * 1000;
+export const OG_FRESHNESS_MS = 5 * 60 * 1000;
 
 export const OG_RETENTION_SECONDS = 7 * 24 * 60 * 60;
 
@@ -24,7 +26,13 @@ const QTC_COIN_ID = 'quantus';
 export interface QtcMarketQuote {
   priceUsd: number;
   marketCapUsd: number;
+  priceChangePercentage24h: number;
   updatedAt: string;
+}
+
+export interface QtcPrice {
+  priceUsd: number;
+  priceChangePercentage24h: number;
 }
 
 type TrackerFetch = (url: string, init?: RequestInit) => Promise<Response>;
@@ -70,12 +78,32 @@ export function qtcMarketQuote(body: unknown): QtcMarketQuote {
   ) {
     throw new Error('Quantus market cap is missing');
   }
+  if (
+    typeof coin.price_change_percentage_24h !== 'number' ||
+    !Number.isFinite(coin.price_change_percentage_24h)
+  ) {
+    throw new Error('Quantus 24h price change is missing');
+  }
 
   return {
     priceUsd: coin.current_price,
     marketCapUsd: coin.market_cap,
+    priceChangePercentage24h: coin.price_change_percentage_24h,
     updatedAt: record.updatedAt
   };
+}
+
+export function formatPriceChangePercentage(value: number): string {
+  const formatted = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+    signDisplay: 'exceptZero'
+  }).format(value);
+  return `${formatted}%`;
+}
+
+export function formatPriceChangeBeside(value: number): string {
+  return `(${formatPriceChangePercentage(value)})`;
 }
 
 export function formatUsdPrice(value: number): string {
@@ -121,13 +149,22 @@ export function ogBrowserMaxAgeSeconds(
 export async function loadQtcPrice(
   isDev: boolean,
   fetchImpl: TrackerFetch = fetch
-): Promise<number> {
-  if (!shouldFetchQtcPrice(isDev)) return DEV_QTC_PRICE_USD;
+): Promise<QtcPrice> {
+  if (!shouldFetchQtcPrice(isDev)) {
+    return {
+      priceUsd: DEV_QTC_PRICE_USD,
+      priceChangePercentage24h: DEV_QTC_PRICE_CHANGE_PERCENTAGE_24H
+    };
+  }
 
   const response = await fetchImpl(TRACKER_URL);
   if (!response.ok) {
     throw new Error(`Tracker request failed: ${response.status}`);
   }
 
-  return qtcMarketQuote(await response.json()).priceUsd;
+  const quote = qtcMarketQuote(await response.json());
+  return {
+    priceUsd: quote.priceUsd,
+    priceChangePercentage24h: quote.priceChangePercentage24h
+  };
 }

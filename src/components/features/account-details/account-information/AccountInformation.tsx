@@ -134,6 +134,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
             }
             const addressLabel = (
               <AccountAddressLabel
+                address={accountId}
                 isHighSecurity={item.isHighSecurity}
                 isGuardian={item.isGuardian}
                 isMultisig={item.isMultisig}

@@ -10,7 +10,7 @@ import {
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { StatSparklineCard } from '@/components/ui/composites/stat-sparkline-card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatUsdPrice } from '@/lib/qtc-market';
+import { formatPriceChangeBeside, formatUsdPrice } from '@/lib/qtc-market';
 
 import { formatChainSupply } from './format-chain-supply';
 import { useChainStats } from './hook';
@@ -23,16 +23,24 @@ const STROKE_SAGE = 'var(--sage)';
 
 export interface ChainStatsProps {}
 
+function priceChangeTone(value: number): string {
+  if (value > 0) return 'text-sage';
+  if (value < 0) return 'text-ember';
+  return 'text-muted-text';
+}
+
 const SupplyStatCard = ({
   label,
   value,
   formatted,
+  change,
   loading,
   error
 }: {
   label: string;
   value?: string;
   formatted?: string;
+  change?: number | null;
   loading: boolean;
   error: string | null;
 }) => {
@@ -49,7 +57,18 @@ const SupplyStatCard = ({
       <CardContent>
         {loading && <Skeleton className="h-7 w-28" />}
         {!loading && error && <InlineFetchError error={error} />}
-        {!loading && !error && text != null && <p>{text}</p>}
+        {!loading && !error && text != null && (
+          <p className="flex items-baseline gap-2 whitespace-nowrap">
+            <span>{text}</span>
+            {change != null && (
+              <span
+                className={`text-sm font-normal ${priceChangeTone(change)}`}
+              >
+                {formatPriceChangeBeside(change)}
+              </span>
+            )}
+          </p>
+        )}
       </CardContent>
     </Card>
   );
@@ -135,6 +154,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
           formatted={
             price.priceUsd != null ? formatUsdPrice(price.priceUsd) : undefined
           }
+          change={price.priceChangePercentage24h}
         />
         <SupplyStatCard
           label="Max Supply"

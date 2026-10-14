@@ -36,6 +36,7 @@ export const ACCOUNT_COLUMNS = [
       const hasFlags = isHighSec || isGuardian || isMultisig;
       const addressLabel = (
         <AccountAddressLabel
+          address={props.row.original.id}
           isHighSecurity={isHighSec}
           isGuardian={isGuardian}
           isMultisig={isMultisig}

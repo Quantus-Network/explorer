@@ -4,7 +4,10 @@ import path from 'node:path';
 import { defaultMetadata } from '@/config/metadata';
 
 import {
+  DEV_QTC_PRICE_CHANGE_PERCENTAGE_24H,
   DEV_QTC_PRICE_USD,
+  formatPriceChangeBeside,
+  formatPriceChangePercentage,
   formatUsdMarketCap,
   formatUsdPrice,
   isOgImageFresh,
@@ -21,7 +24,7 @@ import {
   TRACKER_URL
 } from './qtc-market';
 
-const UPDATED_AT = '2026-10-07T11:30:00.000Z';
+const UPDATED_AT = '2026-10-07T11:58:00.000Z';
 const NOW = Date.parse('2026-10-07T12:00:00.000Z');
 
 const snapshot = {
@@ -31,7 +34,8 @@ const snapshot = {
       id: 'quantus',
       symbol: 'QTC',
       current_price: 101.84,
-      market_cap: 27373239
+      market_cap: 27373239,
+      price_change_percentage_24h: 34.01095
     }
   ]
 };
@@ -41,6 +45,7 @@ describe('qtcMarketQuote', () => {
     expect(qtcMarketQuote(snapshot)).toEqual({
       priceUsd: 101.84,
       marketCapUsd: 27373239,
+      priceChangePercentage24h: 34.01095,
       updatedAt: UPDATED_AT
     });
   });
@@ -61,10 +66,35 @@ describe('qtcMarketQuote', () => {
         coins: [{ id: 'quantus', current_price: 1, market_cap: null }]
       })
     ).toThrow(/market cap/);
+    expect(() =>
+      qtcMarketQuote({
+        updatedAt: UPDATED_AT,
+        coins: [
+          {
+            id: 'quantus',
+            current_price: 1,
+            market_cap: 1,
+            price_change_percentage_24h: null
+          }
+        ]
+      })
+    ).toThrow(/24h/);
   });
 });
 
 describe('USD formatting', () => {
+  it('formats the 24h price change with a sign', () => {
+    expect(formatPriceChangePercentage(34.01095)).toBe('+34.01%');
+    expect(formatPriceChangePercentage(-1.84007)).toBe('-1.84%');
+    expect(formatPriceChangePercentage(0)).toBe('0.00%');
+  });
+
+  it('places the 24h change beside the price in parentheses', () => {
+    expect(formatPriceChangeBeside(34.01095)).toBe('(+34.01%)');
+    expect(formatPriceChangeBeside(-1.84007)).toBe('(-1.84%)');
+    expect(formatPriceChangeBeside(0)).toBe('(0.00%)');
+  });
+
   it('formats the spot price in dollars and cents', () => {
     expect(formatUsdPrice(101.84)).toBe('$101.84');
     expect(formatUsdPrice(DEV_QTC_PRICE_USD)).toBe('$100.00');
@@ -79,9 +109,10 @@ describe('loadQtcPrice', () => {
   it('returns the fixed local price without calling the tracker', async () => {
     const fetchImpl = jest.fn();
 
-    await expect(loadQtcPrice(true, fetchImpl)).resolves.toBe(
-      DEV_QTC_PRICE_USD
-    );
+    await expect(loadQtcPrice(true, fetchImpl)).resolves.toEqual({
+      priceUsd: DEV_QTC_PRICE_USD,
+      priceChangePercentage24h: DEV_QTC_PRICE_CHANGE_PERCENTAGE_24H
+    });
     expect(fetchImpl).not.toHaveBeenCalled();
   });
 
@@ -92,7 +123,10 @@ describe('loadQtcPrice', () => {
       json: async () => snapshot
     });
 
-    await expect(loadQtcPrice(false, fetchImpl)).resolves.toBe(101.84);
+    await expect(loadQtcPrice(false, fetchImpl)).resolves.toEqual({
+      priceUsd: 101.84,
+      priceChangePercentage24h: 34.01095
+    });
     expect(fetchImpl).toHaveBeenCalledWith(TRACKER_URL);
   });
 
@@ -110,7 +144,10 @@ describe('loadQtcPrice', () => {
 });
 
 describe('OG cache timing', () => {
-  it('treats an image as fresh for one hour after the tracker observation', () => {
+  it('treats an image as fresh for five minutes after the tracker observation', () => {
+    const observedAt = new Date(NOW).toISOString();
+    expect(isOgImageFresh(observedAt, NOW + 5 * 60 * 1000 - 1)).toBe(true);
+    expect(isOgImageFresh(observedAt, NOW + 5 * 60 * 1000)).toBe(false);
     expect(isOgImageFresh(UPDATED_AT, NOW)).toBe(true);
     expect(isOgImageFresh(UPDATED_AT, NOW + OG_FRESHNESS_MS)).toBe(false);
     expect(isOgImageFresh(null, NOW)).toBe(false);
@@ -118,7 +155,7 @@ describe('OG cache timing', () => {
   });
 
   it('keeps a short browser cache and a week-long stored copy', () => {
-    expect(ogBrowserMaxAgeSeconds(UPDATED_AT, NOW, false)).toBe(1800);
+    expect(ogBrowserMaxAgeSeconds(UPDATED_AT, NOW, false)).toBe(180);
     expect(ogBrowserMaxAgeSeconds(UPDATED_AT, NOW, true)).toBe(
       OG_STALE_BROWSER_MAX_AGE_SECONDS
     );
