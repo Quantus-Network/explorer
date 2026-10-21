@@ -1,4 +1,7 @@
-import type { Unified_Transaction_Bool_Exp } from '@/__generated__/graphql';
+import type {
+  Extrinsic_Bool_Exp,
+  Unified_Transaction_Bool_Exp
+} from '@/__generated__/graphql';
 
 export interface ChainStatus {
   block_height: number;
@@ -54,11 +57,13 @@ export interface HomeChainStatsResponse {
   status: HomeChainStatsStatus | null;
   last24Hour: AggregateCount;
   last24HourTransferred: AggregateAmountSum;
+  last24HourActiveAccounts: AggregateCount;
   dailyStats: DailyChainStatRow[];
 }
 
 export interface HomeChainStatsVariables {
   last24HourWhere: Unified_Transaction_Bool_Exp;
   last24HourTransferredWhere: Unified_Transaction_Bool_Exp;
+  last24HourActiveAccountsWhere: Extrinsic_Bool_Exp;
   dayLimit: number;
 }

@@ -38,6 +38,8 @@ export const useChainStats = () => {
   const last24HourTransactions = data?.last24Hour?.aggregate?.count ?? 0;
   const last24HourTransferred =
     data?.last24HourTransferred?.aggregate?.sum?.amount ?? '0';
+  const last24HourActiveAccounts =
+    data?.last24HourActiveAccounts?.aggregate?.count ?? 0;
 
   const alignedDays = useMemo(
     () => alignDailyStats(data?.dailyStats, new Date()),
@@ -99,6 +101,7 @@ export const useChainStats = () => {
     blockHeight: status?.block_height,
     totalTransactions,
     last24HourTransactions,
+    last24HourActiveAccounts,
     activeAccounts,
     totalAccounts,
     blocksPoints,

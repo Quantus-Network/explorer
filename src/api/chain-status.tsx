@@ -9,6 +9,7 @@ import type {
 } from '@/schemas';
 import { HOME_STATS_DAY_COUNT } from '@/utils/get-home-stats-day-windows';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
+import { last24HourActiveAccountsWhere } from '@/utils/last-24-hour-active-accounts';
 import {
   last24HourTransferredWhere,
   withExcludedRewardTransfers
@@ -18,6 +19,7 @@ export const GET_HOME_STATS = gql`
   query GetHomeChainStats(
     $last24HourWhere: unified_transaction_bool_exp!
     $last24HourTransferredWhere: unified_transaction_bool_exp!
+    $last24HourActiveAccountsWhere: extrinsic_bool_exp!
     $dayLimit: Int!
   ) {
     status: chain_stats_by_pk(id: "global") {
@@ -44,6 +46,13 @@ export const GET_HOME_STATS = gql`
         sum {
           amount
         }
+      }
+    }
+    last24HourActiveAccounts: extrinsic_aggregate(
+      where: $last24HourActiveAccountsWhere
+    ) {
+      aggregate {
+        count(columns: signer_id, distinct: true)
       }
     }
     dailyStats: daily_chain_stats(order_by: { date: desc }, limit: $dayLimit) {
@@ -92,6 +101,10 @@ export const chainStatus = {
           timestamp: { _gte: startDate, _lte: endDate }
         }),
         last24HourTransferredWhere: last24HourTransferredWhere(
+          startDate,
+          endDate
+        ),
+        last24HourActiveAccountsWhere: last24HourActiveAccountsWhere(
           startDate,
           endDate
         ),
