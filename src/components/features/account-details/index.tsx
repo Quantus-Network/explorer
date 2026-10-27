@@ -6,7 +6,7 @@ import { ContentContainer } from '@/components/ui/content-container';
 import { SectionContainer } from '@/components/ui/section-container';
 import { isUnknownAccountNotFound } from '@/utils/is-unknown-account-not-found';
 
-import { AccountAllTransactions } from './account-all-transactions/AccountAllTransactions';
+import { AccountDataTabs } from './AccountDataTabs';
 import { AccountInformation } from './account-information/AccountInformation';
 
 interface Props {
@@ -35,7 +35,12 @@ export const AccountDetails: React.FC<Props> = ({ id }) => {
 
         <AccountInformation accountId={id} query={query} />
 
-        <AccountAllTransactions accountId={id} />
+        <AccountDataTabs
+          accountId={id}
+          loading={loading}
+          hasMinedBlocks={data?.account?.has_mined_blocks ?? false}
+          totalMinedBlocks={data?.accountStats?.total_mined_blocks ?? 0}
+        />
       </ContentContainer>
     </SectionContainer>
   );
