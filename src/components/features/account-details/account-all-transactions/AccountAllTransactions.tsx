@@ -16,8 +16,6 @@ export const AccountAllTransactions: React.FC<Props> = ({ accountId }) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2>Activity</h2>
-
       <AccountTypeFilter state={accountTypeFilters} />
 
       <DataTable

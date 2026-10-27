@@ -62,3 +62,8 @@ export const MINER_REWARD_COLUMNS = [
     enableSorting: true
   })
 ];
+
+/** The account page is already scoped to one miner, so "Mined by" is omitted. */
+export const ACCOUNT_MINER_REWARD_COLUMNS = MINER_REWARD_COLUMNS.filter(
+  (column) => column.id !== 'miner'
+);
