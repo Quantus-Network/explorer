@@ -5,8 +5,7 @@ import useApiClient from '@/api';
 import { ACCOUNT_MINER_REWARD_COLUMNS } from '@/components/common/table-columns/MINER_REWARD_COLUMNS';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 import { QUERY_DEFAULT_LIMIT } from '@/constants/query-default-limit';
-import type { MinerRewardSorts } from '@/constants/query-sorts';
-import { useOrderBy } from '@/hooks/useOrderBy';
+import { transformMinerRewardOrderBy } from '@/constants/query-sorts';
 import { useTableState } from '@/hooks/useTableState';
 import type { MinerReward } from '@/schemas';
 import { minerRewardsOfMiner } from '@/utils/miner-reward-filters';
@@ -23,7 +22,10 @@ export const useAccountMinerRewards = (accountId: string) => {
     paginationValue
   } = useTableState(null, QUERY_DEFAULT_LIMIT);
 
-  const orderByObject = useOrderBy<MinerRewardSorts>(orderBy ?? '');
+  const orderByObject = useMemo(
+    () => transformMinerRewardOrderBy(orderBy ?? ''),
+    [orderBy]
+  );
   const sortingValue = transformSortLiteral(orderBy);
   const where = useMemo(() => minerRewardsOfMiner(accountId), [accountId]);
 
