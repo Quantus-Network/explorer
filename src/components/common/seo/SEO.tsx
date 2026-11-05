@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 
 import { defaultMetadata } from '../../../config/metadata';
 
@@ -33,7 +33,7 @@ export function SEO({
     : defaultMetadata.title.default;
 
   const finalDescription = description || defaultMetadata.description;
-  const finalCanonical = canonical || defaultMetadata.baseUrl;
+  const finalCanonical = canonical;
 
   const ogTitle = openGraph?.title || title || defaultMetadata.openGraph.title;
   const ogDescription = openGraph?.description || finalDescription;
@@ -45,24 +45,24 @@ export function SEO({
   const twitterDescription = twitter?.description || finalDescription;
   const twitterImage = twitter?.image || defaultMetadata.images.url;
 
+  useEffect(() => {
+    document.title = finalTitle;
+    syncHeadLink('canonical', finalCanonical);
+    syncMeta('property', 'og:url', ogUrl);
+    syncMeta('name', 'robots', noIndex ? 'noindex' : undefined);
+  }, [finalCanonical, finalTitle, noIndex, ogUrl]);
+
   return (
     <>
       {/* Basic Meta Tags */}
-      <title>{finalTitle}</title>
       <meta name="description" content={finalDescription} />
-      <link rel="canonical" href={finalCanonical} />
 
       {/* Apple Touch Icon */}
       <link rel="apple-touch-icon" href={defaultMetadata.icons.apple} />
 
-      {/* Robots */}
-      {noIndex && <meta name="robots" content="noindex,nofollow" />}
-
-      {/* Open Graph */}
       <meta property="og:type" content={defaultMetadata.openGraph.type} />
       <meta property="og:title" content={ogTitle} />
       <meta property="og:description" content={ogDescription} />
-      <meta property="og:url" content={ogUrl} />
       <meta property="og:site_name" content={defaultMetadata.siteName} />
       <meta property="og:locale" content={defaultMetadata.openGraph.locale} />
       <meta property="og:image" content={ogImage} />
@@ -99,4 +99,36 @@ export function SEO({
       /> */}
     </>
   );
+}
+
+function syncHeadLink(rel: string, href: string | undefined) {
+  const selector = `link[rel="${rel}"]`;
+  const existing = document.head.querySelector<HTMLLinkElement>(selector);
+  if (!href) {
+    existing?.remove();
+    return;
+  }
+
+  const link = existing ?? document.createElement('link');
+  link.setAttribute('rel', rel);
+  link.setAttribute('href', href);
+  if (!existing) document.head.appendChild(link);
+}
+
+function syncMeta(
+  attribute: 'name' | 'property',
+  key: string,
+  content: string | undefined
+) {
+  const selector = `meta[${attribute}="${key}"]`;
+  const existing = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!content) {
+    existing?.remove();
+    return;
+  }
+
+  const meta = existing ?? document.createElement('meta');
+  meta.setAttribute(attribute, key);
+  meta.setAttribute('content', content);
+  if (!existing) document.head.appendChild(meta);
 }

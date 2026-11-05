@@ -69,7 +69,7 @@ export function generatePageMetadata({
     : defaultMetadata.title.default;
 
   const finalDescription = pageDescription || defaultMetadata.description;
-  const finalCanonical = canonical || defaultMetadata.canonical;
+  const finalCanonical = canonical;
 
   return {
     title: finalTitle,
