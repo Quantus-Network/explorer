@@ -172,13 +172,26 @@ export function indexableMeta(
   };
 }
 
+// pathname is already percent-encoded. encodeURIComponent would turn %61 into %2561,
+// and the router would look up %61bc instead of abc. Keep a well-formed segment as-is.
+// A malformed escape cannot be preserved: the router throws on it, so encode it once.
+function legacyRedirectSegment(segment: string): string {
+  try {
+    decodeURIComponent(segment);
+  } catch (error) {
+    if (error instanceof URIError) return encodeURIComponent(segment);
+    throw error;
+  }
+  return segment;
+}
+
 function legacyRedirectTarget(pathname: string): string | null {
   const path = normalizePath(pathname);
   for (const prefix of LEGACY_TRANSACTION_PREFIXES) {
     if (!path.startsWith(prefix)) continue;
     const hash = path.slice(prefix.length);
     if (!hash || hash.includes('/')) return null;
-    return `/transactions/${encodeURIComponent(hash)}`;
+    return `/transactions/${legacyRedirectSegment(hash)}`;
   }
   return null;
 }

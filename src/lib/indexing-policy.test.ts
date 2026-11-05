@@ -286,6 +286,43 @@ describe('explorer indexing policy', () => {
     ).toBeNull();
   });
 
+  it('preserves escaped hashes in legacy transaction redirects', () => {
+    const decodedHex = 'ab'.repeat(32);
+    const escapedHex = `${decodedHex.slice(0, 32)}%61${decodedHex.slice(33)}`;
+    const hashes = ['%61bc', escapedHex];
+    const search = '?from=old&next=%61';
+
+    expect(decodedHex).toHaveLength(64);
+    expect(decodeURI(escapedHex)).toBe(decodedHex);
+
+    for (const prefix of [
+      '/immediate-transactions/',
+      '/cancelled-reversible-transactions/',
+      '/executed-reversible-transactions/',
+      '/scheduled-reversible-transactions/'
+    ]) {
+      for (const hash of hashes) {
+        const response = legacyRedirectResponse(
+          `${ORIGIN}${prefix}${hash}${search}`
+        );
+        expect(response?.status).toBe(302);
+        expect(response?.headers.get('location')).toBe(
+          `${ORIGIN}/transactions/${hash}${search}`
+        );
+      }
+    }
+  });
+
+  it('encodes a malformed legacy hash once so the router can parse it', () => {
+    const response = legacyRedirectResponse(
+      `${ORIGIN}/immediate-transactions/%ZZ?from=old`
+    );
+    expect(response?.status).toBe(302);
+    expect(response?.headers.get('location')).toBe(
+      `${ORIGIN}/transactions/%25ZZ?from=old`
+    );
+  });
+
   it('does not point robots.txt at another site or block crawlable routes', () => {
     const robots = fs.readFileSync(
       path.join(process.cwd(), 'public/robots.txt'),
