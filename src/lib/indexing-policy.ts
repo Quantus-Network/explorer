@@ -66,25 +66,83 @@ function normalizePath(pathname: string): string {
   return pathname;
 }
 
-function routeRegex(fullPath: string): RegExp {
-  const source = fullPath
-    .split('/')
-    .map((part) =>
-      part.startsWith('$')
-        ? '[^/]+'
-        : part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-    )
-    .join('/');
-  return new RegExp(`^${source}$`);
+// Same pathname rules as @tanstack/router-core matchByPath with caseSensitive
+// false: collapse repeated slashes, drop a trailing slash, decodeURI each
+// segment (keeping an invalid escape as-is), and compare static segments
+// without case. Dynamic segments stay case-sensitive.
+const PARSED_ROUTES = ROUTE_FULL_PATHS.map((fullPath) => {
+  const parts = fullPath === '/' ? [] : fullPath.split('/').slice(1);
+  return {
+    parts,
+    staticCount: parts.filter((part) => !part.startsWith('$')).length
+  };
+});
+
+function decodePathSegment(segment: string): string {
+  try {
+    if (segment.includes('%25')) {
+      return segment
+        .split('%25')
+        .map((part) => decodeURI(part))
+        .join('%25');
+    }
+    return decodeURI(segment);
+  } catch (error) {
+    if (error instanceof URIError) return segment;
+    throw error;
+  }
 }
 
-const ROUTE_MATCHERS = ROUTE_FULL_PATHS.map((fullPath) => routeRegex(fullPath));
+function requestSegments(pathname: string): string[] {
+  const trimmed = pathname === '/' ? pathname : pathname.replace(/\/+$/, '');
+  const collapsed = trimmed.replace(/\/{2,}/g, '/');
+  const withSlash = collapsed.startsWith('/') ? collapsed : `/${collapsed}`;
+  if (withSlash === '/') return [];
+  return withSlash.split('/').slice(1).map(decodePathSegment);
+}
+
+function canonicalAppPath(pathname: string): string | null {
+  const segments = requestSegments(pathname);
+  let best: { path: string; staticCount: number } | null = null;
+
+  for (const route of PARSED_ROUTES) {
+    if (route.parts.length !== segments.length) continue;
+
+    const canonical: string[] = [];
+    let matched = true;
+    for (let index = 0; index < route.parts.length; index += 1) {
+      const part = route.parts[index]!;
+      const segment = segments[index]!;
+      if (part.startsWith('$')) {
+        if (segment.length === 0) {
+          matched = false;
+          break;
+        }
+        canonical.push(segment);
+        continue;
+      }
+      if (part.toLowerCase() !== segment.toLowerCase()) {
+        matched = false;
+        break;
+      }
+      canonical.push(part);
+    }
+    if (!matched) continue;
+
+    const path = canonical.length === 0 ? '/' : `/${canonical.join('/')}`;
+    if (!best || route.staticCount > best.staticCount) {
+      best = { path, staticCount: route.staticCount };
+    }
+  }
+
+  return best?.path ?? null;
+}
 
 export function indexingDecision(pathname: string): IndexingDecision {
-  const path = normalizePath(pathname);
+  const path = canonicalAppPath(pathname);
+  if (path === null) return 'missing';
   if (INDEXABLE_PATHS.has(path)) return 'indexable';
-  if (ROUTE_MATCHERS.some((route) => route.test(path))) return 'noindex';
-  return 'missing';
+  return 'noindex';
 }
 
 export function canonicalUrl(origin: string, pathname: string): string {
@@ -99,8 +157,8 @@ export function indexableMeta(
   pathname: string,
   origin: string
 ): IndexablePageMeta | null {
-  const path = normalizePath(pathname);
-  if (indexingDecision(path) !== 'indexable') return null;
+  const path = canonicalAppPath(pathname);
+  if (path === null || !INDEXABLE_PATHS.has(path)) return null;
 
   let shortTitle: string | undefined;
   if (path === '/blocks') shortTitle = 'Blocks';

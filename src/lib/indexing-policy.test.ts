@@ -65,6 +65,73 @@ describe('explorer indexing policy', () => {
     expect(indexingDecision('/sitemap.xml')).toBe('missing');
     expect(indexingDecision('/this-page-does-not-exist')).toBe('missing');
     expect(indexingDecision('/blocks/1/extra')).toBe('missing');
+    expect(indexingDecision('/bl%2fcks')).toBe('missing');
+  });
+
+  it('keeps router spelling variants on the same index decision as the canonical route', async () => {
+    const listings = [
+      {
+        path: '/BLOCKS',
+        shortTitle: 'Blocks',
+        title: 'Blocks | Quantus Explorer',
+        canonical: `${ORIGIN}/blocks`
+      },
+      {
+        path: '/bl%6fcks',
+        shortTitle: 'Blocks',
+        title: 'Blocks | Quantus Explorer',
+        canonical: `${ORIGIN}/blocks`
+      },
+      {
+        path: '/Miner-Leaderboard',
+        shortTitle: 'Miner Leaderboard',
+        title: 'Miner Leaderboard | Quantus Explorer',
+        canonical: `${ORIGIN}/miner-leaderboard`
+      }
+    ];
+    const details = ['/blocks//42', '/TRANSACTIONS/abc', '/BLOCKS/42'];
+
+    for (const page of listings) {
+      expect(indexingDecision(page.path)).toBe('indexable');
+      expect(indexableMeta(page.path, ORIGIN)).toEqual({
+        shortTitle: page.shortTitle,
+        fullTitle: page.title,
+        canonical: page.canonical
+      });
+    }
+
+    for (const pagePath of details) {
+      expect(indexingDecision(pagePath)).toBe('noindex');
+      expect(indexableMeta(pagePath, ORIGIN)).toBeNull();
+    }
+
+    expect(indexingDecision('/blocks/%')).toBe('noindex');
+
+    await Promise.all(
+      listings.map(async (page) => {
+        const response = await applyExplorerIndexing(
+          `${ORIGIN}${page.path}`,
+          async () => htmlResponse(indexHtml)
+        );
+
+        expect(response.status).toBe(200);
+        expect(response.headers.get('x-robots-tag')).toBeNull();
+        expect(response.headers.get('location')).toBeNull();
+      })
+    );
+
+    await Promise.all(
+      details.map(async (pagePath) => {
+        const response = await applyExplorerIndexing(
+          `${ORIGIN}${pagePath}`,
+          async () => htmlResponse(indexHtml)
+        );
+
+        expect(response.status).toBe(200);
+        expect(response.headers.get('x-robots-tag')).toBe('noindex');
+        expect(response.headers.get('location')).toBeNull();
+      })
+    );
   });
 
   it('gives the three indexable pages their own title and self canonical', async () => {
