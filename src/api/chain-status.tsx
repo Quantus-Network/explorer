@@ -5,7 +5,9 @@ import { useMemo } from 'react';
 import type {
   ChainStatusResponse,
   HomeChainStatsResponse,
-  HomeChainStatsVariables
+  HomeChainStatsVariables,
+  SupplyDistributionResponse,
+  SupplyDistributionVariables
 } from '@/schemas';
 import { HOME_STATS_DAY_COUNT } from '@/utils/get-home-stats-day-windows';
 import { useGetRecentDateRange } from '@/utils/get-recent-date-range';
@@ -66,6 +68,20 @@ export const GET_HOME_STATS = gql`
   }
 `;
 
+export const GET_SUPPLY_DISTRIBUTION = gql`
+  query GetSupplyDistribution($holders: [String!]!) {
+    status: chain_stats_by_pk(id: "global") {
+      total_supply
+      circulating_supply
+    }
+    holders: account(where: { id: { _in: $holders } }) {
+      id
+      free
+      reserved
+    }
+  }
+`;
+
 export const chainStatus = {
   useGetStatus: (config?: QueryHookOptions) => {
     const GET_STATUS = gql`
@@ -86,6 +102,17 @@ export const chainStatus = {
       ...config
     });
   },
+
+  useGetSupplyDistribution: (
+    config: QueryHookOptions<
+      SupplyDistributionResponse,
+      SupplyDistributionVariables
+    >
+  ) =>
+    useQuery<SupplyDistributionResponse, SupplyDistributionVariables>(
+      GET_SUPPLY_DISTRIBUTION,
+      config
+    ),
 
   useGetHomeStats: (
     config?: Omit<

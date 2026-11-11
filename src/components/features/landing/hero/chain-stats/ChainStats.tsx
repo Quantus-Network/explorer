@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import React from 'react';
 
 import {
@@ -14,7 +15,9 @@ import { formatPriceChangeBeside, formatUsdPrice } from '@/lib/qtc-market';
 
 import { formatChainSupply } from './format-chain-supply';
 import { useChainStats } from './hook';
+import { SupplyDistribution } from './SupplyDistribution';
 import { useQtcPrice } from './use-qtc-price';
+import { useSupplyDistribution } from './use-supply-distribution';
 
 const STROKE_FLARE = 'var(--flare)';
 const STROKE_GLACIER = 'var(--glacier)';
@@ -35,7 +38,9 @@ const SupplyStatCard = ({
   formatted,
   change,
   loading,
-  error
+  error,
+  className,
+  children
 }: {
   label: string;
   value?: string;
@@ -43,12 +48,14 @@ const SupplyStatCard = ({
   change?: number | null;
   loading: boolean;
   error: string | null;
+  className?: string;
+  children?: ReactNode;
 }) => {
   const text =
     formatted ?? (value != null ? formatChainSupply(value) : undefined);
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>
           <h3>{label}</h3>
@@ -69,6 +76,7 @@ const SupplyStatCard = ({
             )}
           </p>
         )}
+        {children}
       </CardContent>
     </Card>
   );
@@ -93,6 +101,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
     circulatingSupply
   } = useChainStats();
   const price = useQtcPrice();
+  const distribution = useSupplyDistribution();
 
   const errorMessage = error?.message ?? null;
 
@@ -148,7 +157,7 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
         />
       </CardGroup>
 
-      <CardGroup className="grid-cols-1 sm:grid-cols-3">
+      <CardGroup className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         <SupplyStatCard
           label="QTC Price"
           loading={price.loading}
@@ -166,10 +175,25 @@ export const ChainStats: React.FC<ChainStatsProps> = () => {
         />
         <SupplyStatCard
           label="Coin Circulation"
+          className="sm:col-span-2 xl:col-span-1"
           loading={loading}
           error={errorMessage}
           value={circulatingSupply}
-        />
+        >
+          {distribution.enabled && (
+            <>
+              {distribution.loading && (
+                <Skeleton className="mt-3 h-14 w-full" />
+              )}
+              {!distribution.loading && distribution.error && (
+                <InlineFetchError error={distribution.error} />
+              )}
+              {!distribution.loading && distribution.buckets && (
+                <SupplyDistribution buckets={distribution.buckets} />
+              )}
+            </>
+          )}
+        </SupplyStatCard>
       </CardGroup>
     </div>
   );

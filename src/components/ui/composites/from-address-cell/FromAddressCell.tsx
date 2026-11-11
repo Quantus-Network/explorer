@@ -2,7 +2,7 @@ import {
   AccountAddressCell,
   type AccountAddressCellProps
 } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
-import { fromAddressPlainLabel } from '@/utils/minting-address-display';
+import { fromAddressPlainLabel } from '@/utils/known-address-display';
 
 export function FromAddressCell(props: AccountAddressCellProps) {
   const label = fromAddressPlainLabel(props.address);
