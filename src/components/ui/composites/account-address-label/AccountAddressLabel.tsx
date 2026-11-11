@@ -1,5 +1,5 @@
 import type { AccountAddressClassification } from '@/utils/classify-account-address';
-import { accountAddressTypeLabel } from '@/utils/minting-address-display';
+import { accountAddressTypeLabel } from '@/utils/known-address-display';
 
 export function AccountAddressLabel({
   address,

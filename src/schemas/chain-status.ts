@@ -67,3 +67,15 @@ export interface HomeChainStatsVariables {
   last24HourActiveAccountsWhere: Extrinsic_Bool_Exp;
   dayLimit: number;
 }
+
+export interface SupplyDistributionResponse {
+  status: {
+    total_supply: string;
+    circulating_supply: string;
+  } | null;
+  holders: Array<{ id: string; free: string; reserved: string }>;
+}
+
+export interface SupplyDistributionVariables {
+  holders: string[];
+}

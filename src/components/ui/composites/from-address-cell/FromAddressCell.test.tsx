@@ -7,14 +7,16 @@ import { EXTRINSIC_TRANSACTION_COLUMNS } from '@/components/common/table-columns
 import { TRANSACTION_COLUMNS } from '@/components/common/table-columns/TRANSACTION_COLUMNS';
 import { UNIFIED_LIST_TRANSACTION_COLUMNS } from '@/components/common/table-columns/UNIFIED_LIST_TRANSACTION_COLUMNS';
 import {
-  MINTING_ADDRESS,
+  KNOWN_ADDRESSES,
   MINTING_ADDRESS_FROM_LABEL
-} from '@/constants/minting-address';
+} from '@/constants/known-addresses';
 import type {
   ExtrinsicTransfer,
   Transaction,
   UnifiedListTransaction
 } from '@/schemas';
+
+const MINTING_ADDRESS = KNOWN_ADDRESSES.minting.address;
 
 const dom = new JSDOM('<!doctype html><html><body></body></html>');
 Object.assign(globalThis, {
