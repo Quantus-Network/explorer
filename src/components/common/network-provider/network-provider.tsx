@@ -1,20 +1,16 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-const ENABLE_LOCAL_NETWORK =
-  import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true';
+import { buildNetworks } from './networks';
 
-const BASE_NETWORKS = {
-  mainnet: 'http://127.0.0.1:8080/https://sqm.quantus.com/v1/graphql',
-  planck: 'http://127.0.0.1:8080/https://sub2.quantus.com/v1/graphql'
-} as const;
+const CONFIGURED_NETWORKS = buildNetworks({
+  isDev: import.meta.env.DEV === true,
+  devProxy: import.meta.env.VITE_DEV_GRAPHQL_PROXY,
+  enableLocalNetwork: import.meta.env.VITE_ENABLE_LOCAL_NETWORK === 'true'
+});
 
-const LOCAL_NETWORK = {
-  local: 'http://localhost:4350/v1/graphql'
-} as const;
+export const NETWORKS: Record<string, string> = CONFIGURED_NETWORKS;
 
-export const NETWORKS: Record<string, string> = ENABLE_LOCAL_NETWORK
-  ? { ...BASE_NETWORKS, ...LOCAL_NETWORK }
-  : BASE_NETWORKS;
+const DEFAULT_NETWORK_URL = CONFIGURED_NETWORKS.mainnet;
 
 type NetworkName = keyof typeof NETWORKS;
 
@@ -31,7 +27,7 @@ type NetworkProviderState = {
 };
 
 const initialState: NetworkProviderState = {
-  networkUrl: BASE_NETWORKS.mainnet,
+  networkUrl: DEFAULT_NETWORK_URL,
   networkName: 'mainnet',
   setNetwork: () => null
 };
@@ -49,7 +45,7 @@ export function NetworkProvider({
     () => (localStorage.getItem(storageKey) as NetworkName) || defaultNetwork
   );
   const [networkUrl, setNetworkUrl] = useState(
-    () => NETWORKS[networkName] ?? BASE_NETWORKS.mainnet
+    () => NETWORKS[networkName] ?? DEFAULT_NETWORK_URL
   );
 
   const value = useMemo(() => {
@@ -59,7 +55,7 @@ export function NetworkProvider({
       setNetwork: (newNetworkName: NetworkName) => {
         localStorage.setItem(storageKey, newNetworkName);
         setNetwork(newNetworkName);
-        setNetworkUrl(NETWORKS[newNetworkName] ?? BASE_NETWORKS.mainnet);
+        setNetworkUrl(NETWORKS[newNetworkName] ?? DEFAULT_NETWORK_URL);
       }
     };
 
