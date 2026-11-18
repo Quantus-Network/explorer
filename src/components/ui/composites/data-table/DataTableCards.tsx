@@ -1,6 +1,5 @@
 import type { Table as ReactTable } from '@tanstack/react-table';
 import { flexRender } from '@tanstack/react-table';
-import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -10,20 +9,17 @@ interface DataTableCardsProps {
   className?: string;
 }
 
-const getHeaderLabel = (header: unknown, fallback: string): React.ReactNode => {
-  if (typeof header === 'string' || typeof header === 'number') {
-    return header;
-  }
-
-  return fallback;
-};
-
 export const DataTableCards = ({
   table,
   customCellProps = {},
   className
 }: DataTableCardsProps) => {
   const rows = table.getRowModel().rows;
+  const headerContexts = new Map(
+    table
+      .getFlatHeaders()
+      .map((header) => [header.column.id, header.getContext()])
+  );
 
   return (
     <div className={cn('flex flex-col gap-4', className)}>
@@ -45,10 +41,10 @@ export const DataTableCards = ({
                       'border-b border-border-subtle'
                   )}
                 >
-                  <dt className="font-mono text-[12px] text-muted-text">
-                    {getHeaderLabel(
+                  <dt className="flex items-center gap-1 font-mono text-[12px] text-muted-text">
+                    {flexRender(
                       cell.column.columnDef.header,
-                      cell.column.id
+                      headerContexts.get(cell.column.id)!
                     )}
                   </dt>
                   <dd className="flex items-center gap-1.5 break-all text-[13px] text-content">

@@ -10,9 +10,9 @@ export type AccountType = (typeof ACCOUNT_TYPES)[number];
 
 export const ACCOUNT_TYPE_LABELS: Record<AccountType, string> = {
   transparent: 'Transparent',
-  potential_encrypted: 'Potential Encrypted',
+  potential_encrypted: 'Potentially Encrypted',
   encrypted: 'Encrypted',
-  high_security: 'High Security',
+  high_security: 'Advanced',
   guardian: 'Guardian',
   multisig: 'Multisig'
 };

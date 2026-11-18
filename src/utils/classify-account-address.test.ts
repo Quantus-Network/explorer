@@ -5,30 +5,35 @@ const standard = {
   isGuardian: false,
   isMultisig: false
 };
+const transparent = {
+  ...standard,
+  isDepositOnly: false,
+  hasMinedBlocks: false
+};
 
 describe('classifyAccountAddress', () => {
-  it('classifies a standard deposit-only account that has mined as an encrypted address', () => {
+  it('classifies a standard deposit-only account that has mined as encrypted', () => {
     expect(
       classifyAccountAddress({
         ...standard,
         isDepositOnly: true,
         hasMinedBlocks: true
       })
-    ).toBe('Encrypted Address');
+    ).toBe('encrypted');
   });
 
-  it('classifies a standard deposit-only account that never mined as a potential encrypted address', () => {
+  it('classifies a standard deposit-only account that never mined as potentially encrypted', () => {
     expect(
       classifyAccountAddress({
         ...standard,
         isDepositOnly: true,
         hasMinedBlocks: false
       })
-    ).toBe('Potential Encrypted Address');
+    ).toBe('potential_encrypted');
   });
 
   it.each([true, false])(
-    'classifies a standard account that is not deposit-only as a transparent address (hasMinedBlocks: %p)',
+    'classifies a standard account that is not deposit-only as transparent (hasMinedBlocks: %p)',
     (hasMinedBlocks) => {
       expect(
         classifyAccountAddress({
@@ -36,34 +41,71 @@ describe('classifyAccountAddress', () => {
           isDepositOnly: false,
           hasMinedBlocks
         })
-      ).toBe('Transparent Address');
+      ).toBe('transparent');
     }
   );
 
-  it('classifies a missing account row as a transparent address', () => {
+  it('classifies a missing account row as transparent', () => {
     expect(
       classifyAccountAddress({
         ...standard,
         isDepositOnly: null,
         hasMinedBlocks: false
       })
-    ).toBe('Transparent Address');
+    ).toBe('transparent');
   });
 
   it.each([
-    { isHighSecurity: true, isGuardian: false, isMultisig: false },
-    { isHighSecurity: false, isGuardian: true, isMultisig: false },
-    { isHighSecurity: false, isGuardian: false, isMultisig: true }
-  ])(
-    'classifies a flagged account as a transparent address even when it is deposit-only and has mined',
-    (flags) => {
-      expect(
-        classifyAccountAddress({
-          ...flags,
-          isDepositOnly: true,
-          hasMinedBlocks: true
-        })
-      ).toBe('Transparent Address');
-    }
-  );
+    ['multisig', { isMultisig: true }],
+    ['high_security', { isHighSecurity: true }],
+    ['guardian', { isGuardian: true }]
+  ] as const)('classifies a lone %s flag as that type', (type, flag) => {
+    expect(classifyAccountAddress({ ...transparent, ...flag })).toBe(type);
+  });
+
+  it('puts multisig ahead of advanced', () => {
+    expect(
+      classifyAccountAddress({
+        ...transparent,
+        isMultisig: true,
+        isHighSecurity: true
+      })
+    ).toBe('multisig');
+  });
+
+  it('puts advanced ahead of guardian', () => {
+    expect(
+      classifyAccountAddress({
+        ...transparent,
+        isHighSecurity: true,
+        isGuardian: true
+      })
+    ).toBe('high_security');
+  });
+
+  it('puts multisig ahead of every other flag', () => {
+    expect(
+      classifyAccountAddress({
+        ...transparent,
+        isMultisig: true,
+        isHighSecurity: true,
+        isGuardian: true
+      })
+    ).toBe('multisig');
+  });
+
+  it.each([
+    ['multisig', { isMultisig: true }],
+    ['high_security', { isHighSecurity: true }],
+    ['guardian', { isGuardian: true }]
+  ] as const)('puts %s ahead of the encrypted types', (type, flag) => {
+    expect(
+      classifyAccountAddress({
+        ...standard,
+        ...flag,
+        isDepositOnly: true,
+        hasMinedBlocks: true
+      })
+    ).toBe(type);
+  });
 });

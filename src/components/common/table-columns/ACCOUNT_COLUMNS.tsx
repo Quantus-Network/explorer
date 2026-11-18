@@ -1,11 +1,18 @@
 import { createColumnHelper } from '@tanstack/react-table';
 
-import { Badge } from '@/components/ui/badge';
 import { AccountAddressCell } from '@/components/ui/composites/account-address-cell/AccountAddressCell';
-import { AccountAddressLabel } from '@/components/ui/composites/account-address-label/AccountAddressLabel';
+import {
+  AccountAddressLabel,
+  AccountTags
+} from '@/components/ui/composites/account-address-label/AccountAddressLabel';
+import { Info } from '@/components/ui/composites/info/Info';
 import { RESOURCES } from '@/constants/resources';
 import type { AccountListItem } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
+import { knownAddressTags } from '@/utils/known-address-display';
+
+const ENCRYPTED_BALANCE_URL =
+  'https://x.com/QuantusNetwork/status/2122471182830055853';
 
 const columnHelper = createColumnHelper<AccountListItem>();
 
@@ -23,59 +30,56 @@ export const ACCOUNT_COLUMNS = [
     enableSorting: false
   }),
   columnHelper.display({
-    id: 'flags',
-    header: 'Flags',
+    id: 'account_type',
+    header: 'Account type',
     cell: (props) => {
-      const {
-        is_high_security: isHighSec,
-        is_guardian: isGuardian,
-        is_multisig: isMultisig,
-        is_deposit_only: isDepositOnly,
-        has_mined_blocks: hasMinedBlocks
-      } = props.row.original;
-      const hasFlags = isHighSec || isGuardian || isMultisig;
-      const addressLabel = (
-        <AccountAddressLabel
-          address={props.row.original.id}
-          isHighSecurity={isHighSec}
-          isGuardian={isGuardian}
-          isMultisig={isMultisig}
-          isDepositOnly={isDepositOnly}
-          hasMinedBlocks={hasMinedBlocks}
-        />
-      );
-
-      if (!hasFlags) {
-        return addressLabel;
-      }
+      const account = props.row.original;
 
       return (
-        <div className="flex flex-wrap items-center gap-1">
-          {isHighSec && <Badge variant="reversible">High Sec</Badge>}
-          {isGuardian && <Badge variant="immediate">Guardian</Badge>}
-          {isMultisig && <Badge variant="miner">Multisig</Badge>}
-          {addressLabel}
-        </div>
+        <AccountAddressLabel
+          isHighSecurity={account.is_high_security}
+          isGuardian={account.is_guardian}
+          isMultisig={account.is_multisig}
+          isDepositOnly={account.is_deposit_only}
+          hasMinedBlocks={account.has_mined_blocks}
+        />
       );
     },
     enableSorting: false
   }),
+  columnHelper.accessor('id', {
+    id: 'tags',
+    header: 'Tags',
+    cell: (props) => <AccountTags tags={knownAddressTags(props.getValue())} />,
+    enableSorting: false
+  }),
   columnHelper.accessor('free', {
     id: 'free',
-    header: 'Free',
+    header: () => (
+      <>
+        Balance
+        <span
+          role="presentation"
+          className="flex"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <Info>
+            Encrypted or potentially encrypted addresses may have a lower
+            balance than displayed onchain.{' '}
+            <a
+              href={ENCRYPTED_BALANCE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="text-flare"
+            >
+              Learn more
+            </a>
+          </Info>
+        </span>
+      </>
+    ),
     cell: (props) => formatMonetaryValue(props.getValue(), 5),
-    enableSorting: true
-  }),
-  columnHelper.accessor('frozen', {
-    id: 'frozen',
-    header: 'Frozen',
-    cell: (props) => formatMonetaryValue(props.getValue(), 5),
-    enableSorting: true
-  }),
-  columnHelper.accessor('reserved', {
-    id: 'reserved',
-    header: 'Reserved',
-    cell: (props) => formatMonetaryValue(props.getValue(), 5),
-    enableSorting: true
+    enableSorting: true,
+    sortDescFirst: true
   })
 ];

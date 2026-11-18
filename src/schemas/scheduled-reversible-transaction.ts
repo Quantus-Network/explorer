@@ -13,3 +13,12 @@ export interface ScheduledReversibleTransaction
 export interface ScheduledReversibleTransactionResponse {
   scheduledReversibleTransactions: [ScheduledReversibleTransaction];
 }
+
+export interface PendingInboundTransfersResponse {
+  scheduled: Pick<
+    gql.Scheduled_Reversible_Transfer,
+    'id' | 'amount' | 'from_id' | 'to_id'
+  >[];
+  executed: Pick<gql.Executed_Reversible_Transfer, 'scheduled_transfer_id'>[];
+  cancelled: Pick<gql.Cancelled_Reversible_Transfer, 'scheduled_transfer_id'>[];
+}

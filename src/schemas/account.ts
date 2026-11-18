@@ -1,9 +1,6 @@
 import type * as gql from '../__generated__/graphql';
 
-export type Account = Pick<
-  gql.Account,
-  'id' | 'free' | 'frozen' | 'reserved' | 'is_deposit_only'
->;
+export type Account = Pick<gql.Account, 'id' | 'free' | 'is_deposit_only'>;
 
 /** Listing row: flags are denormalized onto `account` by the indexer (no nested event lookups). */
 export interface AccountListItem extends Account {
@@ -28,7 +25,9 @@ export interface AccountStats {
 }
 
 export interface AccountResponse {
-  account: (Account & Pick<gql.Account, 'has_mined_blocks'>) | null;
+  account:
+    | (Account & Pick<gql.Account, 'reserved' | 'has_mined_blocks'>)
+    | null;
   accountStats: AccountStats;
   multisig?: { id: string } | null;
   beneficiaries: {

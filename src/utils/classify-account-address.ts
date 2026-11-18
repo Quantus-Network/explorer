@@ -1,6 +1,4 @@
-export const TRANSPARENT_ADDRESS_LABEL = 'Transparent Address';
-export const POTENTIAL_ENCRYPTED_ADDRESS_LABEL = 'Potential Encrypted Address';
-export const ENCRYPTED_ADDRESS_LABEL = 'Encrypted Address';
+import type { AccountType } from '@/constants/account-types';
 
 export interface AccountAddressClassification {
   isHighSecurity: boolean;
@@ -18,14 +16,13 @@ export function classifyAccountAddress({
   isMultisig,
   isDepositOnly,
   hasMinedBlocks
-}: AccountAddressClassification): string {
-  const isStandard = !isHighSecurity && !isGuardian && !isMultisig;
-
-  if (isStandard && isDepositOnly === true) {
-    return hasMinedBlocks
-      ? ENCRYPTED_ADDRESS_LABEL
-      : POTENTIAL_ENCRYPTED_ADDRESS_LABEL;
+}: AccountAddressClassification): AccountType {
+  if (isMultisig) return 'multisig';
+  if (isHighSecurity) return 'high_security';
+  if (isGuardian) return 'guardian';
+  if (isDepositOnly === true) {
+    return hasMinedBlocks ? 'encrypted' : 'potential_encrypted';
   }
 
-  return TRANSPARENT_ADDRESS_LABEL;
+  return 'transparent';
 }

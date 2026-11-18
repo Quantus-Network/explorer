@@ -1,7 +1,10 @@
 import type { QueryHookOptions } from '@apollo/client';
 import { gql, useQuery } from '@apollo/client';
 
-import type { ScheduledReversibleTransactionResponse } from '@/schemas';
+import type {
+  PendingInboundTransfersResponse,
+  ScheduledReversibleTransactionResponse
+} from '@/schemas';
 
 export const scheduledReversibleTransactions = {
   getByTxId: () => {
@@ -42,6 +45,43 @@ export const scheduledReversibleTransactions = {
           ...config,
           variables: {
             tx_id
+          }
+        })
+    };
+  },
+  getPendingInbound: () => {
+    const QUERY = gql`
+      query GetPendingInboundTransfers($to_id: String!) {
+        scheduled: scheduled_reversible_transfer(
+          where: { to_id: { _eq: $to_id } }
+        ) {
+          id
+          amount
+          from_id
+          to_id
+        }
+        executed: executed_reversible_transfer(
+          where: { scheduledTransfer: { to_id: { _eq: $to_id } } }
+        ) {
+          scheduled_transfer_id
+        }
+        cancelled: cancelled_reversible_transfer(
+          where: { scheduledTransfer: { to_id: { _eq: $to_id } } }
+        ) {
+          scheduled_transfer_id
+        }
+      }
+    `;
+
+    return {
+      useQuery: (
+        to_id: string,
+        config?: QueryHookOptions<PendingInboundTransfersResponse>
+      ) =>
+        useQuery<PendingInboundTransfersResponse>(QUERY, {
+          ...config,
+          variables: {
+            to_id
           }
         })
     };
