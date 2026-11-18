@@ -2,7 +2,6 @@ import type { QueryResult } from '@apollo/client';
 import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 
-import useApiClient from '@/api';
 import {
   AccountAddressLabel,
   AccountTags
@@ -18,7 +17,7 @@ import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
 import { knownAddressTags } from '@/utils/known-address-display';
 
 import { accountBalanceOrZero } from './account-balance-or-zero';
-import { sumPendingInbound } from './sum-pending-inbound';
+import { usePendingInbound } from './use-pending-inbound';
 
 export interface AccountInformationProps {
   accountId: string;
@@ -54,9 +53,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
     error: checksumError
   } = useChecksum(loading, accountId);
 
-  const pendingInbound = useApiClient()
-    .scheduledReversibleTransactions.getPendingInbound()
-    .useQuery(accountId);
+  const pendingInbound = usePendingInbound(accountId);
 
   const stats = data?.accountStats;
   const transactions =
@@ -75,8 +72,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
       tags: knownAddressTags(accountId),
       free: accountBalanceOrZero(account?.free),
       reserved: accountBalanceOrZero(account?.reserved),
-      pendingInbound:
-        pendingInbound.data && sumPendingInbound(pendingInbound.data),
+      pendingInbound: pendingInbound.amount,
       transactions,
       miningRewards,
       checksum: checksum ?? '',
@@ -171,7 +167,6 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           label: 'Pending Inbound QTC',
           key: 'pendingInbound',
           render: (value) => {
-            if (pendingInbound.loading) return <Skeleton className="h-6" />;
             if (pendingInbound.error) {
               return (
                 <InlineFetchError
@@ -180,6 +175,7 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
                 />
               );
             }
+            if (value === undefined) return <Skeleton className="h-6" />;
             return formatMonetaryValue(value);
           },
           tooltip:

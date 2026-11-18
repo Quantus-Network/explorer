@@ -18,8 +18,8 @@ const STANDARD_ACCOUNT = {
 } as const satisfies Account_Bool_Exp;
 
 /**
- * Flags take priority: flagged accounts only match their flag types, and the
- * three address types only match unflagged accounts.
+ * Each account matches exactly one type, with the precedence multisig, high
+ * security, guardian, then the three address types for unflagged accounts.
  * Keep in sync with `classifyAccountAddress`.
  */
 export function accountTypeWhere(type: AccountType): Account_Bool_Exp {
@@ -39,9 +39,13 @@ export function accountTypeWhere(type: AccountType): Account_Bool_Exp {
         has_mined_blocks: { _eq: true }
       };
     case 'high_security':
-      return { is_high_security: { _eq: true } };
+      return { is_high_security: { _eq: true }, is_multisig: { _eq: false } };
     case 'guardian':
-      return { is_guardian: { _eq: true } };
+      return {
+        is_guardian: { _eq: true },
+        is_high_security: { _eq: false },
+        is_multisig: { _eq: false }
+      };
     case 'multisig':
       return { is_multisig: { _eq: true } };
     default: {
