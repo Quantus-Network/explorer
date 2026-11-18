@@ -2,6 +2,7 @@ import { useApolloClient } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
 import useApiClient from '@/api';
+import { useNetwork } from '@/components/common/network-provider/network-provider';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
 import {
@@ -10,16 +11,19 @@ import {
 } from './sum-pending-inbound';
 
 interface PendingInbound {
-  accountId: string;
   amount?: bigint;
   error?: Error;
 }
 
 export const usePendingInbound = (accountId: string): PendingInbound => {
   const client = useApolloClient();
+  const { networkUrl } = useNetwork();
   const { fetchPage } =
     useApiClient().scheduledReversibleTransactions.getPendingInbound();
-  const [result, setResult] = useState<PendingInbound>({ accountId });
+  const scope = `${networkUrl} ${accountId}`;
+  const [result, setResult] = useState<PendingInbound & { scope: string }>({
+    scope
+  });
 
   useEffect(() => {
     let active = true;
@@ -30,11 +34,11 @@ export const usePendingInbound = (accountId: string): PendingInbound => {
         const rows = await fetchPendingInboundRows((cursors) =>
           fetchPage(client, { to_id: accountId, ...cursors })
         );
-        if (active) setResult({ accountId, amount: sumPendingInbound(rows) });
+        if (active) setResult({ scope, amount: sumPendingInbound(rows) });
       } catch (caught) {
         if (active) {
           setResult({
-            accountId,
+            scope,
             error: caught instanceof Error ? caught : new Error(String(caught))
           });
         }
@@ -47,7 +51,7 @@ export const usePendingInbound = (accountId: string): PendingInbound => {
       active = false;
       clearTimeout(timer);
     };
-  }, [client, accountId]);
+  }, [client, scope]);
 
-  return result.accountId === accountId ? result : { accountId };
+  return result.scope === scope ? result : {};
 };
