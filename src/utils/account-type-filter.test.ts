@@ -39,12 +39,25 @@ describe('accountTypeWhere', () => {
     });
   });
 
-  it.each([
-    ['high_security', { is_high_security: { _eq: true } }],
-    ['guardian', { is_guardian: { _eq: true } }],
-    ['multisig', { is_multisig: { _eq: true } }]
-  ] as const)('matches %s by its flag alone', (type, expected) => {
-    expect(accountTypeWhere(type)).toEqual(expected);
+  it('matches every multisig account as multisig', () => {
+    expect(accountTypeWhere('multisig')).toEqual({
+      is_multisig: { _eq: true }
+    });
+  });
+
+  it('excludes multisig accounts from high security', () => {
+    expect(accountTypeWhere('high_security')).toEqual({
+      is_high_security: { _eq: true },
+      is_multisig: { _eq: false }
+    });
+  });
+
+  it('excludes high security and multisig accounts from guardian', () => {
+    expect(accountTypeWhere('guardian')).toEqual({
+      is_guardian: { _eq: true },
+      is_high_security: { _eq: false },
+      is_multisig: { _eq: false }
+    });
   });
 });
 

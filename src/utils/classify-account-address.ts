@@ -1,6 +1,7 @@
-export const TRANSPARENT_ADDRESS_LABEL = 'Transparent Address';
-export const POTENTIAL_ENCRYPTED_ADDRESS_LABEL = 'Potential Encrypted Address';
-export const ENCRYPTED_ADDRESS_LABEL = 'Encrypted Address';
+import {
+  ACCOUNT_TYPE_LABELS,
+  type AccountType
+} from '@/constants/account-types';
 
 export interface AccountAddressClassification {
   isHighSecurity: boolean;
@@ -11,21 +12,33 @@ export interface AccountAddressClassification {
   hasMinedBlocks: boolean;
 }
 
-/** Keep in sync with `accountTypeWhere` in `account-type-filter.ts`. */
-export function classifyAccountAddress({
-  isHighSecurity,
-  isGuardian,
-  isMultisig,
+function classifyAddressType({
   isDepositOnly,
   hasMinedBlocks
-}: AccountAddressClassification): string {
-  const isStandard = !isHighSecurity && !isGuardian && !isMultisig;
-
-  if (isStandard && isDepositOnly === true) {
-    return hasMinedBlocks
-      ? ENCRYPTED_ADDRESS_LABEL
-      : POTENTIAL_ENCRYPTED_ADDRESS_LABEL;
+}: AccountAddressClassification): AccountType {
+  if (isDepositOnly === true) {
+    return hasMinedBlocks ? 'encrypted' : 'potential_encrypted';
   }
 
-  return TRANSPARENT_ADDRESS_LABEL;
+  return 'transparent';
+}
+
+/** Keep in sync with `accountTypeWhere` in `account-type-filter.ts`. */
+export function classifyAccountAddress(
+  account: AccountAddressClassification
+): AccountType {
+  if (account.isMultisig) return 'multisig';
+  if (account.isHighSecurity) return 'high_security';
+  if (account.isGuardian) return 'guardian';
+
+  return classifyAddressType(account);
+}
+
+export function accountTypeLabel(account: AccountAddressClassification) {
+  const type = classifyAccountAddress(account);
+  const label = ACCOUNT_TYPE_LABELS[type];
+
+  return type === 'guardian'
+    ? `${label} (${ACCOUNT_TYPE_LABELS[classifyAddressType(account)]})`
+    : label;
 }

@@ -2,8 +2,10 @@ import type { QueryResult } from '@apollo/client';
 import { Link } from '@tanstack/react-router';
 import * as React from 'react';
 
-import { Badge } from '@/components/ui/badge';
-import { AccountAddressLabel } from '@/components/ui/composites/account-address-label/AccountAddressLabel';
+import {
+  AccountAddressLabel,
+  AccountTags
+} from '@/components/ui/composites/account-address-label/AccountAddressLabel';
 import { DataList } from '@/components/ui/composites/data-list/DataList';
 import { InlineFetchError } from '@/components/ui/composites/fetch-error/FetchError';
 import { TextWithCopy } from '@/components/ui/composites/text-with-copy/TextWithCopy';
@@ -12,8 +14,10 @@ import { useChecksum } from '@/hooks/useChecksum';
 import type { AccountResponse } from '@/schemas';
 import { formatMonetaryValue } from '@/utils/formatter';
 import { getMultisigWalletHref } from '@/utils/get-multisig-wallet-href';
+import { knownAddressTags } from '@/utils/known-address-display';
 
 import { accountBalanceOrZero } from './account-balance-or-zero';
+import { usePendingInbound } from './use-pending-inbound';
 
 export interface AccountInformationProps {
   accountId: string;
@@ -22,9 +26,10 @@ export interface AccountInformationProps {
 
 interface AccountDetailsInfo {
   id: string;
+  tags: readonly string[];
   free: string;
-  frozen: string;
   reserved: string;
+  pendingInbound?: bigint;
   transactions: number;
   miningRewards: number;
   checksum: string;
@@ -48,6 +53,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
     error: checksumError
   } = useChecksum(loading, accountId);
 
+  const pendingInbound = usePendingInbound(accountId);
+
   const stats = data?.accountStats;
   const transactions =
     (stats?.total_immediate_transfers ?? 0) +
@@ -62,9 +69,10 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
   const information: AccountDetailsInfo[] = [
     {
       id: accountId,
+      tags: knownAddressTags(accountId),
       free: accountBalanceOrZero(account?.free),
-      frozen: accountBalanceOrZero(account?.frozen),
       reserved: accountBalanceOrZero(account?.reserved),
+      pendingInbound: pendingInbound.amount,
       transactions,
       miningRewards,
       checksum: checksum ?? '',
@@ -106,35 +114,8 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
           label: 'Account type',
           key: 'isHighSecurity',
           render: (_value, item) => {
-            const badges: React.ReactNode[] = [];
-            if (item.isHighSecurity) {
-              badges.push(
-                <Badge key="high-sec" variant="immediate">
-                  High security beneficiary
-                </Badge>
-              );
-            }
-            if (item.isGuardian) {
-              badges.push(
-                <Badge key="guardian" variant="reversible">
-                  Guardian
-                </Badge>
-              );
-            }
-            if (item.isMultisig) {
-              badges.push(
-                <Link
-                  key="multisig"
-                  to={getMultisigWalletHref(accountId)}
-                  className="hover:opacity-80"
-                >
-                  <Badge variant="miner">Multisig</Badge>
-                </Link>
-              );
-            }
-            const addressLabel = (
+            const label = (
               <AccountAddressLabel
-                address={accountId}
                 isHighSecurity={item.isHighSecurity}
                 isGuardian={item.isGuardian}
                 isMultisig={item.isMultisig}
@@ -142,39 +123,65 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
                 hasMinedBlocks={item.hasMinedBlocks}
               />
             );
-            if (badges.length === 0) {
-              return addressLabel;
-            }
-            return (
-              <div className="flex flex-wrap items-center gap-1">
-                {badges}
-                {addressLabel}
-              </div>
+
+            return item.isMultisig ? (
+              <Link
+                to={getMultisigWalletHref(accountId)}
+                className="hover:opacity-80"
+              >
+                {label}
+              </Link>
+            ) : (
+              label
             );
           }
         },
         {
-          label: 'Free Balance',
+          label: 'Tags',
+          key: 'tags',
+          render: (value) =>
+            value.length > 0 ? (
+              <AccountTags tags={value} />
+            ) : (
+              <span className="text-muted-text">-</span>
+            )
+        },
+        {
+          label: 'Balance',
           key: 'free',
           render: (value) => (
             <span className="numeric text-base text-flare">
               {formatMonetaryValue(value)}
             </span>
           ),
-          tooltip: 'The amount of tokens that can be used.'
+          tooltip: 'The amount of QTC available to spend.'
         },
         {
-          label: 'Frozen Balance',
-          key: 'frozen',
-          render: (value) => formatMonetaryValue(value),
-          tooltip:
-            'The amount of tokens that are locked and cannot be used. It will be released if reversible transaction is cancelled. If the reversible transaction is executed, it will be transferred and this frozen balance will be deducted.'
-        },
-        {
-          label: 'Reserved Balance',
+          label: 'Pending Outbound QTC',
           key: 'reserved',
           render: (value) => formatMonetaryValue(value),
-          tooltip: 'The amount of tokens that are locked and cannot be used. '
+          tooltip:
+            'QTC that has been sent but not yet finalized. This may be due to a time lock transaction or other advanced security features enabled on this account. May also include refundable deposits for multisig or governance actions.'
+        },
+        {
+          label: 'Pending Inbound QTC',
+          key: 'pendingInbound',
+          render: (value) => {
+            if (pendingInbound.error) {
+              return (
+                <InlineFetchError
+                  error={pendingInbound.error}
+                  fallbackMessage="Pending inbound failed"
+                />
+              );
+            }
+            if (value === undefined) {
+              return <Skeleton className="h-6 w-full" />;
+            }
+            return formatMonetaryValue(value);
+          },
+          tooltip:
+            "QTC that has been sent to this address but not yet finalized. These funds were likely sent from an address with advanced security features and are not yet available in this account's balance."
         },
         {
           label: 'Transactions',

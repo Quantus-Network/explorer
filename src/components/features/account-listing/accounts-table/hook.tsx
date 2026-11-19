@@ -16,6 +16,7 @@ import { transformSortLiteral } from '@/utils/transform-sort';
 import { uncountedRowCount } from '@/utils/uncounted-pagination';
 
 const ACCOUNT_FILTER_KEYS: readonly AccountTypeFilterKey[] = ['account_type'];
+const DEFAULT_ORDER_BY = 'free:desc';
 
 export const useAccountsTable = () => {
   const api = useApiClient();
@@ -26,13 +27,11 @@ export const useAccountsTable = () => {
     handleChangeSorting,
     handleChangePagination,
     paginationValue
-  } = useTableState('last_updated:desc', QUERY_DEFAULT_LIMIT);
+  } = useTableState(DEFAULT_ORDER_BY, QUERY_DEFAULT_LIMIT);
   const accountTypeFilters = useAccountTypeFilters(ACCOUNT_FILTER_KEYS);
   const accountTypeRule = accountTypeFilters.filters.account_type;
 
-  const orderByObject = useOrderBy<AccountSorts>(
-    orderBy ?? 'last_updated:desc'
-  );
+  const orderByObject = useOrderBy<AccountSorts>(orderBy ?? DEFAULT_ORDER_BY);
   const sortingValue = transformSortLiteral(orderBy);
 
   const where = useMemo(

@@ -18,8 +18,6 @@ import { peekedLimit, takePeekedPage } from '@/utils/uncounted-pagination';
 const ACCOUNT_LIST_FIELDS = `
   id
   free
-  frozen
-  reserved
   is_deposit_only
   is_high_security
   is_guardian
@@ -66,7 +64,6 @@ export const GET_ACCOUNT_BY_ID = gql`
     account: account_by_pk(id: $id) {
       id
       free
-      frozen
       reserved
       is_deposit_only
       has_mined_blocks

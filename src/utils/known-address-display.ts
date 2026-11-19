@@ -2,13 +2,9 @@ import {
   KNOWN_ADDRESSES,
   MINTING_ADDRESS_FROM_LABEL
 } from '@/constants/known-addresses';
-import {
-  type AccountAddressClassification,
-  classifyAccountAddress
-} from '@/utils/classify-account-address';
 
-const KNOWN_ADDRESS_LABELS = new Map<string, string>(
-  Object.values(KNOWN_ADDRESSES).map(({ address, label }) => [address, label])
+const KNOWN_ADDRESS_TAGS = new Map<string, readonly string[]>(
+  Object.values(KNOWN_ADDRESSES).map(({ address, tags }) => [address, tags])
 );
 
 /** Label for a From column, or null when the address should render as a normal account cell. */
@@ -19,15 +15,7 @@ export function fromAddressPlainLabel(address: string): string | null {
   return null;
 }
 
-/**
- * Display label for an account type. Known addresses are labeled on their
- * own; account-type filters still classify them from their flags.
- */
-export function accountAddressTypeLabel(
-  address: string,
-  classification: AccountAddressClassification
-): string {
-  return (
-    KNOWN_ADDRESS_LABELS.get(address) ?? classifyAccountAddress(classification)
-  );
+/** Tags for a known address; empty for every other address. */
+export function knownAddressTags(address: string): readonly string[] {
+  return KNOWN_ADDRESS_TAGS.get(address) ?? [];
 }
