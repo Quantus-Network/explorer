@@ -7,6 +7,8 @@ import type {
   ScheduledReversibleTransactionResponse
 } from '@/schemas';
 
+const PENDING_INBOUND_PAGE_SIZE = 200;
+
 export const scheduledReversibleTransactions = {
   getByTxId: () => {
     const QUERY = gql`
@@ -57,10 +59,12 @@ export const scheduledReversibleTransactions = {
         $scheduled_after: String!
         $executed_after: String!
         $cancelled_after: String!
+        $limit: Int!
       ) {
         scheduled: scheduled_reversible_transfer(
           where: { to_id: { _eq: $to_id }, id: { _gt: $scheduled_after } }
           order_by: { id: asc }
+          limit: $limit
         ) {
           id
           amount
@@ -73,6 +77,7 @@ export const scheduledReversibleTransactions = {
             id: { _gt: $executed_after }
           }
           order_by: { id: asc }
+          limit: $limit
         ) {
           id
           scheduled_transfer_id
@@ -83,6 +88,7 @@ export const scheduledReversibleTransactions = {
             id: { _gt: $cancelled_after }
           }
           order_by: { id: asc }
+          limit: $limit
         ) {
           id
           scheduled_transfer_id
@@ -119,7 +125,7 @@ export const scheduledReversibleTransactions = {
         (
           await client.query<PendingInboundTransfersResponse>({
             query: QUERY,
-            variables,
+            variables: { ...variables, limit: PENDING_INBOUND_PAGE_SIZE },
             fetchPolicy: 'no-cache'
           })
         ).data

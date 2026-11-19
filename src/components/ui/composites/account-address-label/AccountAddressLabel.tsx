@@ -1,10 +1,8 @@
 import { Badge, type BadgeProps } from '@/components/ui/badge';
-import {
-  ACCOUNT_TYPE_LABELS,
-  type AccountType
-} from '@/constants/account-types';
+import type { AccountType } from '@/constants/account-types';
 import {
   type AccountAddressClassification,
+  accountTypeLabel,
   classifyAccountAddress
 } from '@/utils/classify-account-address';
 
@@ -19,9 +17,8 @@ const BADGE_VARIANTS: Partial<Record<AccountType, BadgeProps['variant']>> = {
 export function AccountAddressLabel(
   classification: AccountAddressClassification
 ) {
-  const type = classifyAccountAddress(classification);
-  const variant = BADGE_VARIANTS[type];
-  const label = ACCOUNT_TYPE_LABELS[type];
+  const variant = BADGE_VARIANTS[classifyAccountAddress(classification)];
+  const label = accountTypeLabel(classification);
 
   return variant ? (
     <Badge variant={variant}>{label}</Badge>

@@ -50,7 +50,7 @@ describe('AccountAddressLabel', () => {
     ]);
   });
 
-  it.each(ACCOUNT_TYPES)(
+  it.each(ACCOUNT_TYPES.filter((type) => type !== 'guardian'))(
     'shows a %s account under its filter option label',
     (type) => {
       const { container } = render(<AccountAddressLabel {...ACCOUNTS[type]} />);
@@ -58,6 +58,19 @@ describe('AccountAddressLabel', () => {
       expect(container.textContent).toBe(ACCOUNT_TYPE_LABELS[type]);
     }
   );
+
+  it.each([
+    ['transparent', 'Guardian (Transparent)'],
+    ['potential_encrypted', 'Guardian (Potentially Encrypted)'],
+    ['encrypted', 'Guardian (Encrypted)']
+  ] as const)('shows a %s guardian as %s', (addressType, expected) => {
+    const { container } = render(
+      <AccountAddressLabel {...ACCOUNTS[addressType]} isGuardian />
+    );
+
+    expect(container.textContent).toBe(expected);
+    expect(container.children).toHaveLength(1);
+  });
 
   it('shows one value for an account with every flag', () => {
     const { container } = render(

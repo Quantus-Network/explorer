@@ -1,4 +1,7 @@
-import { classifyAccountAddress } from './classify-account-address';
+import {
+  accountTypeLabel,
+  classifyAccountAddress
+} from './classify-account-address';
 
 const standard = {
   isHighSecurity: false,
@@ -107,5 +110,41 @@ describe('classifyAccountAddress', () => {
         hasMinedBlocks: true
       })
     ).toBe(type);
+  });
+});
+
+describe('accountTypeLabel', () => {
+  it.each([
+    [{ isDepositOnly: false, hasMinedBlocks: false }, 'Guardian (Transparent)'],
+    [
+      { isDepositOnly: true, hasMinedBlocks: false },
+      'Guardian (Potentially Encrypted)'
+    ],
+    [{ isDepositOnly: true, hasMinedBlocks: true }, 'Guardian (Encrypted)'],
+    [{ isDepositOnly: null, hasMinedBlocks: false }, 'Guardian (Transparent)']
+  ])('names the address type of a guardian %o', (addressType, expected) => {
+    expect(
+      accountTypeLabel({ ...standard, ...addressType, isGuardian: true })
+    ).toBe(expected);
+  });
+
+  it('names no address type for an advanced account that is also a guardian', () => {
+    expect(
+      accountTypeLabel({
+        ...transparent,
+        isHighSecurity: true,
+        isGuardian: true
+      })
+    ).toBe('Advanced');
+  });
+
+  it.each([
+    ['Multisig', { isMultisig: true }],
+    ['Advanced', { isHighSecurity: true }],
+    ['Transparent', {}],
+    ['Potentially Encrypted', { isDepositOnly: true }],
+    ['Encrypted', { isDepositOnly: true, hasMinedBlocks: true }]
+  ])('labels a non-guardian account %s', (expected, flags) => {
+    expect(accountTypeLabel({ ...transparent, ...flags })).toBe(expected);
   });
 });
