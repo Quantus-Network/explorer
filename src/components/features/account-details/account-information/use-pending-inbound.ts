@@ -1,7 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 import { useEffect, useState } from 'react';
 
-import useApiClient from '@/api';
+import { scheduledReversibleTransactions } from '@/api/scheduled-reversible-transactions';
 import { useNetwork } from '@/components/common/network-provider/network-provider';
 import { DATA_POOL_INTERVAL } from '@/constants/data-pool-interval';
 
@@ -9,6 +9,8 @@ import {
   fetchPendingInboundRows,
   sumPendingInbound
 } from './sum-pending-inbound';
+
+const { fetchPage } = scheduledReversibleTransactions.getPendingInbound();
 
 interface PendingInbound {
   amount?: bigint;
@@ -18,8 +20,6 @@ interface PendingInbound {
 export const usePendingInbound = (accountId: string): PendingInbound => {
   const client = useApolloClient();
   const { networkUrl } = useNetwork();
-  const { fetchPage } =
-    useApiClient().scheduledReversibleTransactions.getPendingInbound();
   const scope = `${networkUrl} ${accountId}`;
   const [result, setResult] = useState<PendingInbound & { scope: string }>({
     scope

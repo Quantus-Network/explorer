@@ -175,7 +175,9 @@ export const AccountInformation: React.FC<AccountInformationProps> = ({
                 />
               );
             }
-            if (value === undefined) return <Skeleton className="h-6" />;
+            if (value === undefined) {
+              return <Skeleton className="h-6 w-full" />;
+            }
             return formatMonetaryValue(value);
           },
           tooltip:
